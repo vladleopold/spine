@@ -17,6 +17,10 @@ function contentTypeFor(path) {
   if (lowerPath.endsWith('.png')) return 'image/png';
   if (lowerPath.endsWith('.jpg') || lowerPath.endsWith('.jpeg')) return 'image/jpeg';
   if (lowerPath.endsWith('.webp')) return 'image/webp';
+  if (lowerPath.endsWith('.webm')) return 'video/webm';
+  if (lowerPath.endsWith('.html')) return 'text/html; charset=utf-8';
+  if (lowerPath.endsWith('.xml')) return 'application/xml; charset=utf-8';
+  if (lowerPath.endsWith('.txt')) return 'text/plain; charset=utf-8';
   if (lowerPath.endsWith('.skel')) return 'application/octet-stream';
   return 'application/octet-stream';
 }

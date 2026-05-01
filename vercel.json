@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/spine-link-video.html",
+      "destination": "/api/github-asset?path=spine-link-video.html"
+    },
+    {
+      "source": "/spine-link.webm",
+      "destination": "/api/github-asset?path=spine-link.webm"
+    },
+    {
+      "source": "/spine-link-video-thumbnail.png",
+      "destination": "/api/github-asset?path=spine-link-video-thumbnail.png"
+    },
+    {
+      "source": "/sitemap-video.xml",
+      "destination": "/api/github-asset?path=sitemap-video.xml"
+    },
+    {
       "source": "/p/:id",
       "destination": "/api/github-preview?path=library/:id"
     },
