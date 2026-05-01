@@ -178,7 +178,9 @@ declare global {
 const extensionOf = (name: string) => name.split(".").pop()?.toLowerCase() ?? "";
 const basename = (path: string) => path.split(/[\\/]/).pop() ?? path;
 const base62Alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? "";
+const googleClientId =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+  "452954491878-ebeqoeg5h7pr968uev0qbmtpsadg5mj3.apps.googleusercontent.com";
 const githubPublishSettings: GitHubSettings = {
   owner: import.meta.env.VITE_GITHUB_OWNER ?? "vladleopold",
   repo: import.meta.env.VITE_GITHUB_REPO ?? "spine",
