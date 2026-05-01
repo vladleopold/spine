@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spine-Link — Online Spine Preview, Spine Web Viewer & Animation Preview Tool</title>
+    <title>Spine-Link — Online Spine Preview and Spine Web Viewer</title>
     <meta
       name="description"
-      content="Spine-Link is a fast online Spine preview and Spine web viewer. Drag and drop Spine JSON, SKEL, atlas, and texture files to generate a permanent web preview link."
+      content="Preview Spine animations online with Spine-Link. Open Spine JSON, SKEL, atlas, PNG, JPG, and WEBP files in a browser-based Spine web viewer and share permanent preview links."
     />
     <meta
       name="keywords"
@@ -41,9 +41,17 @@
         "@type": "WebApplication",
         "name": "Spine-Link",
         "url": "https://spine-link.vercel.app/",
+        "inLanguage": "en",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any",
-        "description": "Online Spine preview and Spine web viewer for JSON, SKEL, atlas, and texture files.",
+        "description": "Online Spine preview and Spine web viewer for JSON, SKEL, atlas, PNG, JPG, and WEBP texture files.",
+        "browserRequirements": "Requires a modern browser with JavaScript and WebGL support.",
+        "featureList": [
+          "Preview Spine JSON and SKEL animation files online",
+          "Open atlas files and PNG, JPG, or WEBP textures",
+          "Generate permanent Spine web preview links",
+          "Switch animation sets and preview PMA or blend settings"
+        ],
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -57,8 +65,73 @@
         "keywords": "spine preview, spine online, spine web, spine webview, preview spine, spine viewer, spine animation preview"
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What Spine files can Spine-Link preview?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Spine-Link previews Spine JSON or SKEL skeleton files together with atlas files and PNG, JPG, or WEBP texture images."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I share a Spine animation preview online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Spine-Link can upload a preview package and create a permanent web link for sharing Spine animation previews in a browser."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      .search-content {
+        position: fixed;
+        left: 12px;
+        bottom: 10px;
+        z-index: 0;
+        max-width: 520px;
+        color: rgba(231, 237, 244, 0.46);
+        font: 10px/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        pointer-events: none;
+      }
+
+      .search-content h1,
+      .search-content h2,
+      .search-content p,
+      .search-content ul {
+        display: inline;
+        margin: 0;
+        padding: 0;
+        font: inherit;
+      }
+
+      .search-content li {
+        display: inline;
+      }
+    </style>
   </head>
   <body>
+    <section class="search-content" aria-label="Spine-Link search description">
+      <h1>Spine-Link online Spine preview and Spine web viewer.</h1>
+      <p>
+        Preview Spine animations online from JSON, SKEL, atlas, PNG, JPG, and WEBP files. Spine-Link helps artists,
+        animators, and game developers inspect Spine files in the browser, test animation playback, and create permanent
+        web preview links.
+      </p>
+      <h2>Spine preview features.</h2>
+      <ul>
+        <li>Browser-based Spine viewer.</li>
+        <li>Spine JSON and SKEL preview.</li>
+        <li>Atlas and texture loading.</li>
+        <li>Permanent Spine web links.</li>
+      </ul>
+    </section>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
