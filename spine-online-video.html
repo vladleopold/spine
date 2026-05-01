@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spine Online Video — Browser Spine Animation Preview</title>
+    <meta
+      name="description"
+      content="Watch a Spine online video demo showing browser-based Spine animation preview, Spine web player playback, and permanent web preview links with Spine-Link."
+    />
+    <meta name="robots" content="index, follow, max-video-preview:-1, max-image-preview:large" />
+    <link rel="canonical" href="https://spine-link.vercel.app/spine-online-video.html" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:url" content="https://spine-link.vercel.app/spine-online-video.html" />
+    <meta property="og:title" content="Spine Online Video — Browser Spine Animation Preview" />
+    <meta property="og:description" content="Video demo of Spine-Link for online Spine animation preview in the browser." />
+    <meta property="og:image" content="https://spine-link.vercel.app/video_tumbnail.png" />
+    <meta property="og:video" content="https://spine-link.vercel.app/spine-online.webm" />
+    <meta property="og:video:type" content="video/webm" />
+    <meta name="twitter:card" content="player" />
+    <meta name="twitter:title" content="Spine Online Video Demo" />
+    <meta name="twitter:description" content="Browser-based Spine animation preview and web viewer demo." />
+    <meta name="twitter:image" content="https://spine-link.vercel.app/video_tumbnail.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Spine online browser animation preview video",
+        "description": "A Spine online video demo showing Spine-Link as a browser-based Spine animation preview tool and Spine web viewer for shareable preview links.",
+        "thumbnailUrl": ["https://spine-link.vercel.app/video_tumbnail.png"],
+        "uploadDate": "2026-05-01T18:49:00+00:00",
+        "contentUrl": "https://spine-link.vercel.app/spine-online.webm",
+        "embedUrl": "https://spine-link.vercel.app/spine-online-video.html",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Spine-Link",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://spine-link.vercel.app/favicon-64.png",
+            "width": 64,
+            "height": 64
+          }
+        },
+        "potentialAction": {
+          "@type": "WatchAction",
+          "target": "https://spine-link.vercel.app/spine-online-video.html"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        color: #f7fbff;
+        background: #050607;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: #050607;
+      }
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 54px 20px 72px;
+      }
+
+      a {
+        color: #8cc7ff;
+      }
+
+      .brand {
+        color: #ff6a28;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 860px;
+        margin: 16px 0 18px;
+        font-size: clamp(38px, 7vw, 82px);
+        line-height: 0.95;
+      }
+
+      p,
+      li {
+        color: rgba(231, 237, 244, 0.78);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      video {
+        display: block;
+        width: 100%;
+        margin: 30px 0 28px;
+        border: 1px solid rgba(140, 199, 255, 0.28);
+        border-radius: 8px;
+        background: #000;
+      }
+
+      .cta {
+        display: inline-flex;
+        margin-top: 12px;
+        padding: 13px 18px;
+        border: 1px solid rgba(140, 199, 255, 0.7);
+        border-radius: 8px;
+        background: rgba(140, 199, 255, 0.12);
+        color: #fff;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      section {
+        margin-top: 34px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">Spine online video</div>
+      <h1>Spine online animation preview in the browser</h1>
+      <p>
+        This video demonstrates Spine-Link as a Spine online workflow for previewing animation files in the browser.
+        Use it to review Spine playback, test web viewer output, and share permanent preview links.
+      </p>
+      <video controls preload="metadata" poster="/video_tumbnail.png" width="1634" height="942">
+        <source src="/spine-online.webm" type="video/webm" />
+        <a href="/spine-online.webm">Download the Spine online video demo</a>.
+      </video>
+      <a class="cta" href="/">Open Spine-Link</a>
+      <section>
+        <h2>Spine online preview features</h2>
+        <ul>
+          <li>Preview Spine animation files without installing desktop software.</li>
+          <li>Use a browser Spine web viewer for quick review and sharing.</li>
+          <li>Create permanent links for animation previews and client feedback.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

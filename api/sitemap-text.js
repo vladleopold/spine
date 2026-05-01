@@ -5,6 +5,7 @@ export default function handler(_request, response) {
     'https://spine-link.vercel.app/',
     'https://spine-link.vercel.app/spine-preview.html',
     'https://spine-link.vercel.app/spine-link-video.html',
+    'https://spine-link.vercel.app/spine-online-video.html',
     'https://spine-link.vercel.app/sitemap.xml',
     'https://spine-link.vercel.app/sitemap-video.xml',
     'https://spine-link.vercel.app/robots.txt',
