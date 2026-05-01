@@ -7,6 +7,7 @@ import {
   ExternalLink,
   FileArchive,
   Layers,
+  Link as LinkIcon,
   LogOut,
   Loader2,
   RefreshCw,
@@ -1186,6 +1187,7 @@ function App() {
   const [anonymousAccount] = useState<AnonymousAccount>(() => getStoredAnonymousAccount());
   const [activeTreeDrawer, setActiveTreeDrawer] = useState<"render" | "zoom" | null>(null);
   const [generatedPreviewUrl, setGeneratedPreviewUrl] = useState("");
+  const [isPublishingLink, setIsPublishingLink] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const [previewNote, setPreviewNote] = useState("");
   const [previewNoteStatus, setPreviewNoteStatus] = useState("");
@@ -1424,6 +1426,7 @@ function App() {
         setActiveAnimation("");
         setZoom(1);
         setGeneratedPreviewUrl("");
+        setIsPublishingLink(false);
         setCopyStatus("");
         setPreviewNoteStatus("");
         setCurrentLibraryEntry(null);
@@ -1437,6 +1440,7 @@ function App() {
         setAnimations([]);
         setActiveAnimation("");
         setGeneratedPreviewUrl("");
+        setIsPublishingLink(false);
         setCopyStatus("");
         setPreviewNoteStatus("");
         setCurrentLibraryEntry(null);
@@ -1511,6 +1515,9 @@ function App() {
     setActiveAnimation(animationName);
     playAnimationWithLoopMode(playerRef.current, animationName, loopEnabledRef.current, () => loopEnabledRef.current);
     applyZoomToPlayer(zoomRef.current, false);
+    if (!generatedPreviewUrl && preparedSpine && animations.length) {
+      void publishToGitHub(preparedSpine, animations, animationName);
+    }
   };
 
   const changeZoom = useCallback((nextZoom: number) => {
@@ -1825,6 +1832,7 @@ function App() {
       if (publishedKeysRef.current.has(publishKey)) return;
 
       isPublishingRef.current = true;
+      setIsPublishingLink(true);
       publishedKeysRef.current.add(publishKey);
 
       try {
@@ -1937,6 +1945,7 @@ function App() {
         );
       } finally {
         isPublishingRef.current = false;
+        setIsPublishingLink(false);
       }
   }
 
@@ -2173,12 +2182,29 @@ function App() {
             <div className="link-panel">
               <div className="section-title">Link</div>
               <div className="generated-link-row">
-                <input readOnly value={generatedPreviewUrl || "Appears after upload and animation selection"} />
+                <input
+                  readOnly
+                  value={
+                    generatedPreviewUrl ||
+                    (isPublishingLink ? "Creating permanent link..." : "Upload files and choose an animation to create a permanent link")
+                  }
+                />
                 <button type="button" onClick={copyGeneratedLink} disabled={!generatedPreviewUrl} title="Copy link">
                   <Copy size={16} />
                 </button>
               </div>
               <div className="link-actions">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!preparedSpine || !animations.length || !activeAnimation) return;
+                    void publishToGitHub(preparedSpine, animations, activeAnimation);
+                  }}
+                  disabled={Boolean(generatedPreviewUrl) || !preparedSpine || !animations.length || !activeAnimation || isPublishingLink}
+                >
+                  {isPublishingLink ? <Loader2 className="spin" size={16} /> : <LinkIcon size={16} />}
+                  Create
+                </button>
                 <a className={!generatedPreviewUrl ? "disabled" : ""} href={generatedPreviewUrl || undefined} target="_blank" rel="noreferrer">
                   <ExternalLink size={16} />
                   Open
@@ -2192,7 +2218,7 @@ function App() {
                   Download HTML
                 </a>
               </div>
-              <p className="link-note">{copyStatus || "A permanent link appears after files are uploaded."}</p>
+              <p className="link-note">{copyStatus || "Permanent links work without Google sign-in."}</p>
             </div>
 
             <div className="note-panel">

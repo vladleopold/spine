@@ -824,7 +824,8 @@ h1 {
 }
 
 .generated-link-row button,
-.link-actions a {
+.link-actions a,
+.link-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -847,14 +848,16 @@ h1 {
 }
 
 .generated-link-row button:hover:not(:disabled),
-.link-actions a:hover:not(.disabled) {
+.link-actions a:hover:not(.disabled),
+.link-actions button:hover:not(:disabled) {
   border-color: rgba(140, 199, 255, 0.48);
   color: #ffffff;
   background: rgba(140, 199, 255, 0.1);
 }
 
 .generated-link-row button:disabled,
-.link-actions a.disabled {
+.link-actions a.disabled,
+.link-actions button:disabled {
   pointer-events: none;
   cursor: default;
   opacity: 0.48;
@@ -862,11 +865,12 @@ h1 {
 
 .link-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-.link-actions a {
+.link-actions a,
+.link-actions button {
   min-height: 38px;
   padding: 0 10px;
   font-size: 13px;
