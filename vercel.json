@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/sitemap.txt",
+      "destination": "/api/sitemap-text"
+    },
+    {
+      "source": "/sitemap-index.xml",
+      "destination": "/api/sitemap-index"
+    },
+    {
+      "source": "/p/:id",
+      "destination": "/api/github-preview?path=library/:id"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/api/github-asset?path=:path*"
+    }
+  ]
+}
