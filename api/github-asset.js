@@ -33,6 +33,7 @@ function contentTypeFor(path) {
   if (lowerPath.endsWith('.json')) return 'application/json; charset=utf-8';
   if (lowerPath.endsWith('.atlas') || lowerPath.endsWith('.atlas.txt') || lowerPath.endsWith('.atlas.docx')) return 'text/plain; charset=utf-8';
   if (lowerPath.endsWith('.png')) return 'image/png';
+  if (lowerPath.endsWith('.gif')) return 'image/gif';
   if (lowerPath.endsWith('.jpg') || lowerPath.endsWith('.jpeg')) return 'image/jpeg';
   if (lowerPath.endsWith('.webp')) return 'image/webp';
   if (lowerPath.endsWith('.webm')) return 'video/webm';
