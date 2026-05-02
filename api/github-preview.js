@@ -138,7 +138,8 @@ function createHtml(config) {
       *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       html, body, #app { width: 100%; height: 100%; margin: 0; }
       body { overflow: hidden; background: #000; color: #e7edf4; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      #app { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 18px; padding: 24px; background: #000; }
+      .particle-field { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; opacity: .78; }
+      #app { position: relative; z-index: 1; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 18px; padding: 24px; background: rgba(0,0,0,.78); }
       .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
       .brand-link { display: inline-block; color: inherit; text-decoration: none; }
       .brand-logo { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-family: "Trebuchet MS", Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; line-height: .78; letter-spacing: .18em; text-shadow: 0 0 1px rgba(255,255,255,.86), 0 6px 18px rgba(0,0,0,.42); }
@@ -198,6 +199,7 @@ function createHtml(config) {
     </style>
   </head>
   <body>
+    <canvas class="particle-field" id="particle-field" aria-hidden="true"></canvas>
     <div id="app">
       <header class="topbar">
         <a class="brand-link" href="/" aria-label="Spine-Link home"><span class="brand-logo" aria-hidden="true"><span>s</span><span>p</span><span class="brand-spine-mark"><i></i><i></i><i></i><i></i><i></i></span><span>n</span><span>e</span><span class="brand-plus">link</span></span></a>
@@ -220,6 +222,63 @@ function createHtml(config) {
     <script src="https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.2.113/dist/iife/spine-player.js"></script>
     <script type="application/json" id="spine-preview-config">${escapedJson(config)}</script>
     <script>
+      function startParticleField() {
+        const canvas = document.getElementById("particle-field");
+        const context = canvas?.getContext?.("2d");
+        if (!canvas || !context || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
+        const colors = ["92, 169, 255", "179, 255, 64", "255, 106, 40", "238, 246, 255"];
+        const particles = [];
+        let width = 0;
+        let height = 0;
+        let pixelRatio = 1;
+        let frame = 0;
+        function resetParticle(particle, randomizePosition) {
+          particle.x = Math.random() * width;
+          particle.y = randomizePosition ? Math.random() * height : height + Math.random() * 60;
+          particle.radius = 0.45 + Math.random() * 1.15;
+          particle.speedX = (Math.random() - 0.5) * 0.11;
+          particle.speedY = -(0.045 + Math.random() * 0.16);
+          particle.alpha = 0.08 + Math.random() * 0.22;
+          particle.pulse = Math.random() * Math.PI * 2;
+          particle.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        function resizeParticles() {
+          width = window.innerWidth || 1;
+          height = window.innerHeight || 1;
+          pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.floor(width * pixelRatio);
+          canvas.height = Math.floor(height * pixelRatio);
+          canvas.style.width = width + "px";
+          canvas.style.height = height + "px";
+          context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+          const targetCount = Math.max(28, Math.min(82, Math.floor((width * height) / 18000)));
+          while (particles.length < targetCount) {
+            const particle = {};
+            resetParticle(particle, true);
+            particles.push(particle);
+          }
+          particles.length = targetCount;
+        }
+        function drawParticles(time) {
+          context.clearRect(0, 0, width, height);
+          for (const particle of particles) {
+            particle.x += particle.speedX + Math.sin(time * 0.00018 + particle.pulse) * 0.018;
+            particle.y += particle.speedY;
+            if (particle.y < -20 || particle.x < -28 || particle.x > width + 28) resetParticle(particle, false);
+            const alpha = particle.alpha * (0.72 + Math.sin(time * 0.001 + particle.pulse) * 0.28);
+            context.beginPath();
+            context.fillStyle = "rgba(" + particle.color + ", " + alpha + ")";
+            context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            context.fill();
+          }
+          frame = window.requestAnimationFrame(drawParticles);
+        }
+        resizeParticles();
+        window.addEventListener("resize", resizeParticles, { passive: true });
+        frame = window.requestAnimationFrame(drawParticles);
+        window.addEventListener("pagehide", () => window.cancelAnimationFrame(frame), { once: true });
+      }
+      startParticleField();
       if (window.spine?.GLTexture) {
         window.spine.GLTexture.DISABLE_UNPACK_PREMULTIPLIED_ALPHA_WEBGL = true;
       }

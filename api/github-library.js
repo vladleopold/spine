@@ -104,7 +104,8 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       *::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: rgba(74,78,84,.72); background-clip: content-box; }
       *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       body { min-height: 100vh; margin: 0; color: #edf5ff; background: #070809; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 42px; }
+      .particle-field { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; opacity: .78; }
+      .page { position: relative; z-index: 1; width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 42px; }
       .top { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
       .brand { color: #fff; text-decoration: none; font-size: 34px; font-weight: 900; letter-spacing: .08em; }
       .brand span { color: #ff6a28; }
@@ -128,6 +129,7 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
     </style>
   </head>
   <body>
+    <canvas class="particle-field" id="particle-field" aria-hidden="true"></canvas>
     <main class="page">
       <div class="top"><a class="brand" href="/">spine<span>link</span></a></div>
       <section class="profile">
@@ -140,6 +142,63 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       ${entries.length ? `<section class="grid">${cards}</section>` : '<div class="empty">This public library is empty or hidden.</div>'}
     </main>
     <script>
+      function startParticleField() {
+        const canvas = document.getElementById("particle-field");
+        const context = canvas?.getContext?.("2d");
+        if (!canvas || !context || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
+        const colors = ["92, 169, 255", "179, 255, 64", "255, 106, 40", "238, 246, 255"];
+        const particles = [];
+        let width = 0;
+        let height = 0;
+        let pixelRatio = 1;
+        let frame = 0;
+        function resetParticle(particle, randomizePosition) {
+          particle.x = Math.random() * width;
+          particle.y = randomizePosition ? Math.random() * height : height + Math.random() * 60;
+          particle.radius = 0.45 + Math.random() * 1.15;
+          particle.speedX = (Math.random() - 0.5) * 0.11;
+          particle.speedY = -(0.045 + Math.random() * 0.16);
+          particle.alpha = 0.08 + Math.random() * 0.22;
+          particle.pulse = Math.random() * Math.PI * 2;
+          particle.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        function resizeParticles() {
+          width = window.innerWidth || 1;
+          height = window.innerHeight || 1;
+          pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.floor(width * pixelRatio);
+          canvas.height = Math.floor(height * pixelRatio);
+          canvas.style.width = width + "px";
+          canvas.style.height = height + "px";
+          context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+          const targetCount = Math.max(28, Math.min(82, Math.floor((width * height) / 18000)));
+          while (particles.length < targetCount) {
+            const particle = {};
+            resetParticle(particle, true);
+            particles.push(particle);
+          }
+          particles.length = targetCount;
+        }
+        function drawParticles(time) {
+          context.clearRect(0, 0, width, height);
+          for (const particle of particles) {
+            particle.x += particle.speedX + Math.sin(time * 0.00018 + particle.pulse) * 0.018;
+            particle.y += particle.speedY;
+            if (particle.y < -20 || particle.x < -28 || particle.x > width + 28) resetParticle(particle, false);
+            const alpha = particle.alpha * (0.72 + Math.sin(time * 0.001 + particle.pulse) * 0.28);
+            context.beginPath();
+            context.fillStyle = "rgba(" + particle.color + ", " + alpha + ")";
+            context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            context.fill();
+          }
+          frame = window.requestAnimationFrame(drawParticles);
+        }
+        resizeParticles();
+        window.addEventListener("resize", resizeParticles, { passive: true });
+        frame = window.requestAnimationFrame(drawParticles);
+        window.addEventListener("pagehide", () => window.cancelAnimationFrame(frame), { once: true });
+      }
+      startParticleField();
       const animatedThumbs = Array.from(document.querySelectorAll("img[data-gif-src]"));
       const visibleThumbs = new Set();
       let playbackIndex = 0;
