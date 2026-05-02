@@ -1182,6 +1182,7 @@ h1 {
 }
 
 .library-card {
+  position: relative;
   display: inline-block;
   width: 100%;
   margin: var(--library-card-offset, 0) 0 14px;
@@ -1190,20 +1191,44 @@ h1 {
   border-radius: 8px;
   color: inherit;
   background:
-    linear-gradient(rgba(8, 10, 12, 0.34), rgba(8, 10, 12, 0.52)),
-    var(--library-thumbnail),
     radial-gradient(circle at 22% 22%, rgba(255, 106, 40, 0.28), transparent 36%),
     radial-gradient(circle at 78% 16%, rgba(140, 199, 255, 0.32), transparent 32%),
     linear-gradient(135deg, rgba(32, 35, 38, 0.98), rgba(20, 22, 25, 0.98));
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover, 132% 132%, auto, auto, auto;
+  background-size: auto, auto, auto;
   break-inside: avoid;
   box-shadow: 0 0 0 2px rgba(71, 156, 255, 0.28);
   transition:
     transform 150ms ease,
     border-color 150ms ease,
     background 150ms ease;
+}
+
+.library-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--library-thumbnail);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.92;
+  transform: scale(1.18);
+  transform-origin: center;
+}
+
+.library-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(8, 10, 12, 0.34), rgba(8, 10, 12, 0.52)),
+    radial-gradient(circle at 22% 22%, rgba(255, 106, 40, 0.14), transparent 36%),
+    radial-gradient(circle at 78% 16%, rgba(140, 199, 255, 0.18), transparent 32%);
+  pointer-events: none;
 }
 
 .library-card.is-hidden {
@@ -1217,6 +1242,8 @@ h1 {
 }
 
 .library-card-link {
+  position: relative;
+  z-index: 1;
   display: block;
   color: inherit;
   text-decoration: none;
@@ -1247,6 +1274,8 @@ h1 {
 }
 
 .library-card-actions {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
