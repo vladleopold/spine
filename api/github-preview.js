@@ -121,6 +121,11 @@ function createHtml(config) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.2.113/dist/spine-player.css" />
     <style>
       * { box-sizing: border-box; }
+      * { scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
+      *::-webkit-scrollbar { width: 8px; height: 8px; }
+      *::-webkit-scrollbar-track { background: transparent; }
+      *::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: rgba(74,78,84,.72); background-clip: content-box; }
+      *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       html, body, #app { width: 100%; height: 100%; margin: 0; }
       body { overflow: hidden; background: #000; color: #e7edf4; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       #app { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 18px; padding: 24px; background: #000; }
@@ -166,7 +171,7 @@ function createHtml(config) {
       .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-library strong { color: #fff; font-size: 13px; text-shadow: 0 2px 12px rgba(0,0,0,.75); }
       .owner-library span { color: rgba(231,237,244,.7); font-size: 11px; }
-      @media (max-width: 760px) { body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } #player { height: 60vh; min-height: 360px; } .topbar { align-items: flex-start; flex-direction: column; } }
+      @media (max-width: 760px) { * { scrollbar-width: none; } *::-webkit-scrollbar { width: 0; height: 0; display: none; } body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } #player { height: 60vh; min-height: 360px; } .topbar { align-items: flex-start; flex-direction: column; } }
       .spine-link-loop-button { position: relative; margin-right: 12px !important; }
       .spine-player-controls { z-index: 4; }
       .spine-player-controls.spine-player-controls-hidden { pointer-events: auto; opacity: 1; }

@@ -99,6 +99,11 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
     <link rel="canonical" href="${origin}/u/${encodeURIComponent(publicOwnerId)}" />
     <style>
       * { box-sizing: border-box; }
+      * { scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
+      *::-webkit-scrollbar { width: 8px; height: 8px; }
+      *::-webkit-scrollbar-track { background: transparent; }
+      *::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: rgba(74,78,84,.72); background-clip: content-box; }
+      *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       body { min-height: 100vh; margin: 0; color: #edf5ff; background: #070809; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 42px; }
       .top { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
@@ -124,7 +129,7 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       .order-actions button:hover { border-color: rgba(179,255,64,.8); background: rgba(179,255,64,.16); }
       .order-actions button:disabled { cursor: default; opacity: .5; }
       .empty { padding: 34px; border: 1px dashed rgba(255,255,255,.16); border-radius: 8px; color: rgba(237,245,255,.68); text-align: center; }
-      @media (max-width: 640px) { .profile { grid-template-columns: 1fr; } .top { align-items: flex-start; flex-direction: column; } }
+      @media (max-width: 640px) { * { scrollbar-width: none; } *::-webkit-scrollbar { width: 0; height: 0; display: none; } .profile { grid-template-columns: 1fr; } .top { align-items: flex-start; flex-direction: column; } }
     </style>
   </head>
   <body>
