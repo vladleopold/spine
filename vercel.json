@@ -33,6 +33,10 @@
       "destination": "/api/github-preview?path=library/:id"
     },
     {
+      "source": "/u/:id",
+      "destination": "/api/github-library?user=:id"
+    },
+    {
       "source": "/assets/:path*",
       "destination": "/api/github-asset?path=:path*"
     }

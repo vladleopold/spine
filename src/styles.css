@@ -1135,7 +1135,22 @@ h1 {
   font-style: normal;
 }
 
-.library-profile-settings > button {
+.library-profile-settings-copy a {
+  overflow: hidden;
+  color: #b3ff40;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.library-profile-settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.library-profile-settings-actions > button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1151,10 +1166,15 @@ h1 {
   cursor: pointer;
 }
 
-.library-profile-settings > button.active {
+.library-profile-settings-actions > button.active {
   border-color: rgba(179, 255, 64, 0.56);
   color: #ffffff;
   background: rgba(179, 255, 64, 0.14);
+}
+
+.library-profile-settings-actions > button:disabled {
+  cursor: default;
+  opacity: 0.45;
 }
 
 .library-grid {

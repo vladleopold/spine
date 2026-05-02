@@ -277,6 +277,11 @@ function createHtml(config) {
         ownerSubtitle.textContent = owner.subtitle || "Public Spine library";
         ownerText.append(ownerName, ownerSubtitle);
         ownerProfile.append(avatar, ownerText);
+        if (owner.url) {
+          ownerProfile.style.cursor = "pointer";
+          ownerProfile.onclick = () => { window.location.href = owner.url; };
+          ownerProfile.title = "Open public library";
+        }
         items.forEach((item) => {
           const link = document.createElement("a");
           link.href = item.url;
@@ -405,6 +410,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         name: cleanPublicText(entry.ownerName || ownerEmail.split('@')[0] || 'Spine-Link creator'),
         picture: safePublicImage(entry.ownerPicture || ''),
         subtitle: ownerEntries.length > 1 ? `${ownerEntries.length} public uploads` : 'Public Spine library',
+        url: entry.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '',
         library: ownerEntries.slice(0, 6).map((item) => ({
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,

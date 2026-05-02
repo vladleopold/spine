@@ -117,6 +117,7 @@ type LibraryEntry = {
   ownerAnonFingerprint?: string;
   ownerName?: string;
   ownerPicture?: string;
+  publicOwnerId?: string;
   showOwnerLibrary?: boolean;
   uploadedAt: string;
   skeleton: string;
@@ -290,6 +291,11 @@ function readStoredProfileVisibility() {
 function storeProfileVisibility(value: boolean) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(profileVisibilityStorageKey, String(value));
+}
+
+function publicOwnerIdFor(user: GoogleUser | null, anonymousAccount: AnonymousAccount) {
+  const source = (user?.email || anonymousAccount.id).toLowerCase();
+  return `u_${hashString(source)}`;
 }
 
 function decodeJwtPayload<T = Record<string, unknown>>(token: string): T {
@@ -1227,6 +1233,10 @@ function App() {
   const [showProfileOnSharedPages, setShowProfileOnSharedPages] = useState(() => readStoredProfileVisibility());
   const [profileVisibilityStatus, setProfileVisibilityStatus] = useState("");
   const [renderSettingsByLabel, setRenderSettingsByLabel] = useState<Record<string, SkeletonRenderSettings>>({});
+  const publicLibraryUrl = useMemo(
+    () => new URL(`/u/${encodeURIComponent(publicOwnerIdFor(googleUser, anonymousAccount))}`, window.location.origin).toString(),
+    [anonymousAccount, googleUser],
+  );
 
   useEffect(() => {
     zoomRef.current = zoom;
@@ -1671,6 +1681,15 @@ function App() {
     }
   };
 
+  const copyPublicLibraryLink = async () => {
+    try {
+      await navigator.clipboard.writeText(publicLibraryUrl);
+      setProfileVisibilityStatus("Public library link copied");
+    } catch {
+      setProfileVisibilityStatus(publicLibraryUrl);
+    }
+  };
+
   const shareGeneratedLink = async () => {
     if (!generatedPreviewUrl) return;
 
@@ -1868,6 +1887,7 @@ function App() {
           showOwnerLibrary: nextValue,
           ownerName: googleUser?.name,
           ownerPicture: googleUser?.picture,
+          publicOwnerId: publicOwnerIdFor(googleUser, anonymousAccount),
           commitPrefix: "Update Spine-Link public profile setting",
         }),
       });
@@ -1978,6 +1998,7 @@ function App() {
           ownerEmail: googleUser?.email,
           ownerName: googleUser?.name,
           ownerPicture: googleUser?.picture,
+          publicOwnerId: publicOwnerIdFor(googleUser, anonymousAccount),
           ownerAnonId: anonymousAccount.id,
           ownerAnonFingerprint: anonymousAccount.fingerprint,
           showOwnerLibrary: showProfileOnSharedPages,
@@ -2402,17 +2423,28 @@ function App() {
               <span>
                 When enabled, publication pages you share can show your profile and other public uploads from this library.
               </span>
+              {showProfileOnSharedPages && (
+                <a href={publicLibraryUrl} target="_blank" rel="noreferrer">
+                  {publicLibraryUrl}
+                </a>
+              )}
               {profileVisibilityStatus && <em>{profileVisibilityStatus}</em>}
             </div>
-            <button
-              className={showProfileOnSharedPages ? "active" : ""}
-              type="button"
-              onClick={() => void updateSharedProfileVisibility(!showProfileOnSharedPages)}
-              aria-pressed={showProfileOnSharedPages}
-            >
-              {showProfileOnSharedPages ? <Eye size={17} /> : <EyeOff size={17} />}
-              {showProfileOnSharedPages ? "Visible" : "Hidden"}
-            </button>
+            <div className="library-profile-settings-actions">
+              <button
+                className={showProfileOnSharedPages ? "active" : ""}
+                type="button"
+                onClick={() => void updateSharedProfileVisibility(!showProfileOnSharedPages)}
+                aria-pressed={showProfileOnSharedPages}
+              >
+                {showProfileOnSharedPages ? <Eye size={17} /> : <EyeOff size={17} />}
+                {showProfileOnSharedPages ? "Visible" : "Hidden"}
+              </button>
+              <button type="button" onClick={copyPublicLibraryLink} disabled={!showProfileOnSharedPages}>
+                <Copy size={17} />
+                Copy link
+              </button>
+            </div>
           </div>
 
           {isLibraryLoading && libraryEntries.length === 0 ? (

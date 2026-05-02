@@ -153,6 +153,21 @@ function cleanPublicProfileImage(value = '') {
   return /^https:\/\/[^\s"'<>]+$/i.test(url) ? url : '';
 }
 
+function hashString(value = '') {
+  let hash = 5381;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 33) ^ value.charCodeAt(index);
+  }
+  return (hash >>> 0).toString(36);
+}
+
+function publicOwnerIdFor(googlePayload, anonymousAccount, fallback = '') {
+  const provided = String(fallback || '').trim();
+  if (/^u_[a-z0-9]{3,32}$/i.test(provided)) return provided;
+  const source = String(googlePayload?.email || anonymousAccount?.id || '').toLowerCase();
+  return source ? `u_${hashString(source)}` : '';
+}
+
 function canEditEntry(entry, googlePayload, anonymousAccount) {
   const userEmail = String(googlePayload?.email || '').toLowerCase();
   const ownerEmail = String(entry?.ownerEmail || '').toLowerCase();
@@ -286,6 +301,7 @@ export default async function handler(request, response) {
         ...(googlePayload?.name || entry?.ownerName ? { ownerName: cleanPublicProfileText(googlePayload?.name || entry?.ownerName) } : {}),
         ...(googlePayload?.picture || entry?.ownerPicture ? { ownerPicture: cleanPublicProfileImage(googlePayload?.picture || entry?.ownerPicture) } : {}),
         ...(anonymousAccount?.id ? { ownerAnonId: anonymousAccount.id, ownerAnonFingerprint: anonymousAccount.fingerprint } : {}),
+        publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
         showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
       };
       const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
@@ -324,6 +340,7 @@ export default async function handler(request, response) {
       const anonymousId = String(anonymousAccount?.id || '').toLowerCase();
       const ownerName = cleanPublicProfileText(googlePayload?.name || body?.ownerName || '');
       const ownerPicture = cleanPublicProfileImage(googlePayload?.picture || body?.ownerPicture || '');
+      const publicOwnerId = publicOwnerIdFor(googlePayload, anonymousAccount, body?.publicOwnerId);
       let changed = false;
       const nextEntries = currentEntries.map((currentEntry) => {
         const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
@@ -331,7 +348,7 @@ export default async function handler(request, response) {
         const isOwner = (userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId);
         if (!isOwner) return currentEntry;
         changed = true;
-        const nextEntry = { ...currentEntry, showOwnerLibrary };
+        const nextEntry = { ...currentEntry, publicOwnerId, showOwnerLibrary };
         if (googlePayload?.email) nextEntry.ownerEmail = googlePayload.email;
         if (ownerName) nextEntry.ownerName = ownerName;
         if (ownerPicture) nextEntry.ownerPicture = ownerPicture;
@@ -396,6 +413,7 @@ export default async function handler(request, response) {
         return {
           ...currentEntry,
           ownerEmail: googlePayload.email,
+          publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, currentEntry?.publicOwnerId),
           ...(googlePayload.name ? { ownerName: cleanPublicProfileText(googlePayload.name) } : {}),
           ...(googlePayload.picture ? { ownerPicture: cleanPublicProfileImage(googlePayload.picture) } : {}),
         };
@@ -433,6 +451,7 @@ export default async function handler(request, response) {
       ...(googlePayload?.name || entry?.ownerName ? { ownerName: cleanPublicProfileText(googlePayload?.name || entry?.ownerName) } : {}),
       ...(googlePayload?.picture || entry?.ownerPicture ? { ownerPicture: cleanPublicProfileImage(googlePayload?.picture || entry?.ownerPicture) } : {}),
       ...(anonymousAccount?.id ? { ownerAnonId: anonymousAccount.id, ownerAnonFingerprint: anonymousAccount.fingerprint } : {}),
+      publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
       showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
     };
     const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
