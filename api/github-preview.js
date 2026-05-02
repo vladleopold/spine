@@ -90,6 +90,16 @@ function hasPremultipliedAlpha(atlasText = '') {
   return match ? match[1].toLowerCase() === 'true' : false;
 }
 
+function compareLibraryEntries(a, b) {
+  const aOrder = Number(a?.libraryOrder);
+  const bOrder = Number(b?.libraryOrder);
+  const hasAOrder = Number.isFinite(aOrder);
+  const hasBOrder = Number.isFinite(bOrder);
+  if (hasAOrder && hasBOrder && aOrder !== bOrder) return aOrder - bOrder;
+  if (hasAOrder !== hasBOrder) return hasAOrder ? -1 : 1;
+  return String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || ''));
+}
+
 async function githubJson(settings, path) {
   const encodedPath = encodeURIComponent(path).replace(/%2F/g, '/');
   const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${encodedPath}?ref=${encodeURIComponent(settings.branch)}`, {
@@ -142,7 +152,13 @@ function createHtml(config) {
       .brand-plus { margin-left: 8px; color: #ff6a28; font-size: .72em; font-weight: 800; letter-spacing: .22em; line-height: 1; text-transform: uppercase; transform: translate(-15px, .18em); }
       .brand-link:hover .brand-plus { color: #8cc7ff; }
       .stage { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 18px; }
-      #player { min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#565656 25%, #505052 0 50%, #565656 0 75%, #505052 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
+      .player-frame { position: relative; min-width: 0; min-height: 0; }
+      #player { width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#565656 25%, #505052 0 50%, #565656 0 75%, #505052 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
+      .library-nav-button { position: absolute; top: 50%; z-index: 8; display: grid; place-items: center; width: 52px; min-height: 78px; padding: 0; border: 1px solid rgba(140,199,255,.55); border-radius: 8px; color: #f7fbff; background: rgba(9,13,17,.68); box-shadow: 0 16px 34px rgba(0,0,0,.38), inset 0 0 22px rgba(140,199,255,.08); font-size: 42px; font-weight: 800; line-height: 1; transform: translateY(-50%); backdrop-filter: blur(10px); }
+      .library-nav-button:hover { border-color: rgba(179,255,64,.78); background: rgba(23,31,18,.78); }
+      .library-nav-button:disabled { display: none; }
+      .library-nav-button--prev { left: 14px; }
+      .library-nav-button--next { right: 14px; }
       #sidebar { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 2px; }
       .preview-card { padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
       .section-title { margin: 0 0 10px; color: #f7fbff; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
@@ -171,7 +187,7 @@ function createHtml(config) {
       .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-library strong { color: #fff; font-size: 13px; text-shadow: 0 2px 12px rgba(0,0,0,.75); }
       .owner-library span { color: rgba(231,237,244,.7); font-size: 11px; }
-      @media (max-width: 760px) { * { scrollbar-width: none; } *::-webkit-scrollbar { width: 0; height: 0; display: none; } body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } #player { height: 60vh; min-height: 360px; } .topbar { align-items: flex-start; flex-direction: column; } }
+      @media (max-width: 760px) { * { scrollbar-width: none; } *::-webkit-scrollbar { width: 0; height: 0; display: none; } body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } .player-frame { height: 60vh; min-height: 360px; } #player { width: 100%; height: 100%; min-height: 0; } .library-nav-button { display: none; } .topbar { align-items: flex-start; flex-direction: column; } }
       .spine-link-loop-button { position: relative; margin-right: 12px !important; }
       .spine-player-controls { z-index: 4; }
       .spine-player-controls.spine-player-controls-hidden { pointer-events: auto; opacity: 1; }
@@ -187,7 +203,11 @@ function createHtml(config) {
         <a class="brand-link" href="/" aria-label="Spine-Link home"><span class="brand-logo" aria-hidden="true"><span>s</span><span>p</span><span class="brand-spine-mark"><i></i><i></i><i></i><i></i><i></i></span><span>n</span><span>e</span><span class="brand-plus">link</span></span></a>
       </header>
       <div class="stage">
-        <div id="player"></div>
+        <div class="player-frame">
+          <button class="library-nav-button library-nav-button--prev" id="library-nav-prev" type="button" aria-label="Previous Spine work" title="Previous Spine work">&lsaquo;</button>
+          <div id="player"></div>
+          <button class="library-nav-button library-nav-button--next" id="library-nav-next" type="button" aria-label="Next Spine work" title="Next Spine work">&rsaquo;</button>
+        </div>
         <aside id="sidebar">
           <div class="preview-card" id="set-card"><div class="section-title">Set</div><select id="set-select"></select></div>
           <div class="preview-card owner-card" id="owner-card"><div class="section-title">Creator</div><div id="owner-profile"></div></div>
@@ -230,7 +250,45 @@ function createHtml(config) {
       const ownerCard = document.getElementById("owner-card");
       const ownerProfile = document.getElementById("owner-profile");
       const ownerLibrary = document.getElementById("owner-library");
+      const libraryNavPrev = document.getElementById("library-nav-prev");
+      const libraryNavNext = document.getElementById("library-nav-next");
       const transparentPixel = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+      const profileNavigationItems = Array.isArray(config.ownerProfile?.navigation) ? config.ownerProfile.navigation : [];
+      function normalizedPath(url) {
+        try {
+          return new URL(url, window.location.origin).pathname.replace(/\\/+$/, "");
+        } catch {
+          return "";
+        }
+      }
+      function currentNavigationIndex() {
+        const currentPath = window.location.pathname.replace(/\\/+$/, "");
+        return profileNavigationItems.findIndex((item) => normalizedPath(item?.url || "") === currentPath);
+      }
+      function siblingNavigationUrl(direction) {
+        if (profileNavigationItems.length < 2) return "";
+        const index = currentNavigationIndex();
+        if (index < 0) return "";
+        const nextIndex = direction === "previous" ? index - 1 : index + 1;
+        if (nextIndex < 0 || nextIndex >= profileNavigationItems.length) return "";
+        return profileNavigationItems[nextIndex]?.url || "";
+      }
+      function navigateSibling(direction) {
+        const url = siblingNavigationUrl(direction);
+        if (url) window.location.href = url;
+      }
+      function syncLibraryNavigationButtons() {
+        const previousUrl = siblingNavigationUrl("previous");
+        const nextUrl = siblingNavigationUrl("next");
+        if (libraryNavPrev) {
+          libraryNavPrev.disabled = !previousUrl;
+          libraryNavPrev.onclick = () => navigateSibling("previous");
+        }
+        if (libraryNavNext) {
+          libraryNavNext.disabled = !nextUrl;
+          libraryNavNext.onclick = () => navigateSibling("next");
+        }
+      }
       function installLimitedAnimatedThumbnails(root) {
         const animatedThumbs = Array.from(root.querySelectorAll("img[data-gif-src]"));
         if (!animatedThumbs.length) return;
@@ -271,6 +329,7 @@ function createHtml(config) {
       const playerElement = document.getElementById("player");
       const pinchDistance = { value: null };
       const panPosition = { value: null };
+      const swipeStart = { value: null };
       let player;
       function syncUrl(replace = false) {
         if (!activeSet.value || !activeAnimation.name) return;
@@ -368,10 +427,32 @@ function createHtml(config) {
       function createPlayer() { if (!activeSet.value) return; player?.dispose(); document.getElementById("player").innerHTML = ""; baseViewport.value = null; player = new spine.SpinePlayer("player", { ...activeSet.value, showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: true, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); applyZoom(currentZoom.value); }); } }); }
       function renderAnimationList() { animationList.innerHTML = ""; animationNames.value.forEach((animationName) => { const button = document.createElement("button"); button.type = "button"; button.textContent = animationName; button.className = animationName === activeAnimation.name ? "active" : ""; button.onclick = () => { activeAnimation.name = animationName; syncUrl(); playActiveAnimationFromStart(); applyZoom(currentZoom.value); renderAnimationList(); }; animationList.appendChild(button); }); }
       playerElement.addEventListener("wheel", (event) => { event.preventDefault(); applyZoom(currentZoom.value + (event.deltaY > 0 ? -0.1 : 0.1)); }, { passive: false });
-      playerElement.addEventListener("touchstart", (event) => { if (event.touches.length === 2) pinchDistance.value = touchDistance(event.touches); }, { passive: false });
+      playerElement.addEventListener("touchstart", (event) => {
+        if (event.touches.length === 2) {
+          swipeStart.value = null;
+          pinchDistance.value = touchDistance(event.touches);
+          return;
+        }
+        if (event.touches.length === 1) {
+          const touch = event.touches.item(0);
+          swipeStart.value = touch ? { x: touch.clientX, y: touch.clientY, time: performance.now() } : null;
+        }
+      }, { passive: false });
       playerElement.addEventListener("touchmove", (event) => { if (event.touches.length !== 2 || pinchDistance.value === null) return; event.preventDefault(); const nextDistance = touchDistance(event.touches); applyZoom(currentZoom.value + (nextDistance - pinchDistance.value) / 220); pinchDistance.value = nextDistance; }, { passive: false });
-      playerElement.addEventListener("touchend", () => { pinchDistance.value = null; });
-      playerElement.addEventListener("touchcancel", () => { pinchDistance.value = null; });
+      playerElement.addEventListener("touchend", (event) => {
+        pinchDistance.value = null;
+        const start = swipeStart.value;
+        swipeStart.value = null;
+        if (!start || event.changedTouches.length !== 1) return;
+        const touch = event.changedTouches.item(0);
+        if (!touch) return;
+        const deltaX = touch.clientX - start.x;
+        const deltaY = touch.clientY - start.y;
+        const elapsed = performance.now() - start.time;
+        if (elapsed > 800 || Math.abs(deltaX) < 64 || Math.abs(deltaX) < Math.abs(deltaY) * 1.35) return;
+        navigateSibling(deltaX < 0 ? "next" : "previous");
+      });
+      playerElement.addEventListener("touchcancel", () => { pinchDistance.value = null; swipeStart.value = null; });
       playerElement.addEventListener("click", (event) => { if (event.target.closest(".spine-player-controls")) return; event.preventDefault(); event.stopImmediatePropagation(); if (event.button === 0) togglePlayback(); }, true);
       playerElement.addEventListener("dblclick", (event) => { if (event.target.closest(".spine-player-controls")) return; event.preventDefault(); event.stopImmediatePropagation(); }, true);
       playerElement.addEventListener("contextmenu", (event) => { event.preventDefault(); event.stopImmediatePropagation(); }, true);
@@ -380,7 +461,7 @@ function createHtml(config) {
       window.addEventListener("mouseup", (event) => { if (event.button !== 2) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
       setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); renderAnimationList(); syncUrl(); createPlayer(); };
       window.addEventListener("popstate", applySelectionFromUrl);
-      renderSetList(); syncSetInfo(); renderOwnerCard(); syncUrl(true); createPlayer(); renderAnimationList();
+      renderSetList(); syncSetInfo(); renderOwnerCard(); syncLibraryNavigationButtons(); syncUrl(true); createPlayer(); renderAnimationList();
     </script>
   </body>
 </html>`;
@@ -457,20 +538,23 @@ async function createDynamicPreview(settings, uploadPath, origin) {
             return sameOwner && item?.showOwnerLibrary;
           })
         : [];
+      ownerEntries.sort(compareLibraryEntries);
+      const ownerLibraryItems = ownerEntries.map((item) => ({
+        title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
+        url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
+        thumbnail: safePublicImage(item?.thumbnail || ''),
+        thumbnailPoster: safePublicImage(item?.thumbnailPoster || ''),
+        thumbnailType: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? 'gif' : '',
+        animations: Array.isArray(item?.animations) ? item.animations.length : 0,
+      }));
       ownerProfile = {
         visible: true,
         name: cleanPublicText(entry.ownerName || ownerEmail.split('@')[0] || 'Spine-Link creator'),
         picture: safePublicImage(entry.ownerPicture || ''),
         subtitle: `${ownerEntries.length} SPINE WORK'S`,
         url: entry.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '',
-        library: ownerEntries.slice(0, 6).map((item) => ({
-          title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
-          url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
-          thumbnail: safePublicImage(item?.thumbnail || ''),
-          thumbnailPoster: safePublicImage(item?.thumbnailPoster || ''),
-          thumbnailType: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? 'gif' : '',
-          animations: Array.isArray(item?.animations) ? item.animations.length : 0,
-        })),
+        library: ownerLibraryItems.slice(0, 6),
+        navigation: ownerLibraryItems.map((item) => ({ title: item.title, url: item.url })),
       };
     }
   } catch {
