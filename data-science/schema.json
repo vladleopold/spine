@@ -1,0 +1,382 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "animationAsset": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "AnimationAsset",
+    "type": "object",
+    "required": [
+      "id",
+      "domain",
+      "asset_category",
+      "animation_type",
+      "skeleton_type",
+      "content_type",
+      "taxonomy",
+      "tags"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "domain": {
+        "type": "string",
+        "enum": [
+          "gamedev"
+        ]
+      },
+      "asset_category": {
+        "type": "string",
+        "enum": [
+          "character",
+          "creature",
+          "animal",
+          "monster",
+          "npc",
+          "boss",
+          "object",
+          "prop",
+          "item",
+          "collectible",
+          "weapon",
+          "tool",
+          "environment",
+          "background",
+          "decor",
+          "architecture",
+          "foliage",
+          "vehicle",
+          "mech",
+          "robot",
+          "ui",
+          "ux",
+          "icon",
+          "hud",
+          "fx",
+          "vfx",
+          "particles",
+          "magic",
+          "weather",
+          "cinematic",
+          "cutscene",
+          "emote",
+          "pet",
+          "companion",
+          "mount"
+        ]
+      },
+      "animation_type": {
+        "type": "string",
+        "enum": [
+          "character",
+          "creature",
+          "object",
+          "environment",
+          "vehicle",
+          "ui",
+          "fx",
+          "cinematic",
+          "abstract",
+          "typography",
+          "logo",
+          "weapon",
+          "mechanical",
+          "nature",
+          "crowd",
+          "overlay",
+          "transition",
+          "loader",
+          "icon",
+          "background",
+          "pet"
+        ]
+      },
+      "skeleton_type": {
+        "type": "string",
+        "enum": [
+          "humanoid",
+          "quadruped",
+          "bird",
+          "fish",
+          "insect",
+          "snake",
+          "spider",
+          "dragon",
+          "creature",
+          "monster",
+          "robot",
+          "mech",
+          "mechanical",
+          "modular",
+          "weapon",
+          "gun",
+          "sword",
+          "vehicle",
+          "car",
+          "bike",
+          "tank",
+          "aircraft",
+          "spaceship",
+          "prop",
+          "object",
+          "item",
+          "plant",
+          "tree",
+          "foliage",
+          "ui",
+          "icon",
+          "cursor",
+          "fx",
+          "magic",
+          "fire",
+          "smoke",
+          "liquid",
+          "electricity",
+          "environment",
+          "architecture",
+          "background",
+          "logo",
+          "typography",
+          "crowd",
+          "npc",
+          "boss"
+        ]
+      },
+      "content_type": {
+        "type": "string",
+        "enum": [
+          "character",
+          "creature",
+          "object",
+          "environment",
+          "ui",
+          "fx",
+          "vehicle",
+          "weapon",
+          "architecture",
+          "typography",
+          "logo",
+          "cinematic",
+          "pet",
+          "overlay",
+          "abstract",
+          "background",
+          "icon",
+          "transition",
+          "loader",
+          "crowd",
+          "mechanical"
+        ]
+      },
+      "taxonomy": {
+        "type": "object",
+        "required": [
+          "category"
+        ],
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "tags": {
+        "type": "object",
+        "properties": {
+          "style": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "theme": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mood": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "gameplay_role": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rarity": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "action": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "direction": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "perspective": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "animation_state": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "loop_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "interaction_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "element": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "biome": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "faction": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "emotion": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "age_group": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "body_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "color_scheme": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quality_level": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "platform": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resolution": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rig_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "physics_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bone_count": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "procedural": {
+            "type": "boolean"
+          },
+          "modular": {
+            "type": "boolean"
+          },
+          "runtime_capable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  },
+  "zodSource": "import { z } from \"zod\";\n\nconst stringArray = z.array(z.string());\n\nexport const AnimationAssetSchema = z.object({\n  id: z.string(),\n  name: z.string().optional(),\n  domain: z.enum([\"gamedev\"]),\n  asset_category: z.enum([\"character\",\"creature\",\"animal\",\"monster\",\"npc\",\"boss\",\"object\",\"prop\",\"item\",\"collectible\",\"weapon\",\"tool\",\"environment\",\"background\",\"decor\",\"architecture\",\"foliage\",\"vehicle\",\"mech\",\"robot\",\"ui\",\"ux\",\"icon\",\"hud\",\"fx\",\"vfx\",\"particles\",\"magic\",\"weather\",\"cinematic\",\"cutscene\",\"emote\",\"pet\",\"companion\",\"mount\"]),\n  animation_type: z.enum([\"character\",\"creature\",\"object\",\"environment\",\"vehicle\",\"ui\",\"fx\",\"cinematic\",\"abstract\",\"typography\",\"logo\",\"weapon\",\"mechanical\",\"nature\",\"crowd\",\"overlay\",\"transition\",\"loader\",\"icon\",\"background\",\"pet\"]),\n  skeleton_type: z.enum([\"humanoid\",\"quadruped\",\"bird\",\"fish\",\"insect\",\"snake\",\"spider\",\"dragon\",\"creature\",\"monster\",\"robot\",\"mech\",\"mechanical\",\"modular\",\"weapon\",\"gun\",\"sword\",\"vehicle\",\"car\",\"bike\",\"tank\",\"aircraft\",\"spaceship\",\"prop\",\"object\",\"item\",\"plant\",\"tree\",\"foliage\",\"ui\",\"icon\",\"cursor\",\"fx\",\"magic\",\"fire\",\"smoke\",\"liquid\",\"electricity\",\"environment\",\"architecture\",\"background\",\"logo\",\"typography\",\"crowd\",\"npc\",\"boss\"]),\n  content_type: z.enum([\"character\",\"creature\",\"object\",\"environment\",\"ui\",\"fx\",\"vehicle\",\"weapon\",\"architecture\",\"typography\",\"logo\",\"cinematic\",\"pet\",\"overlay\",\"abstract\",\"background\",\"icon\",\"transition\",\"loader\",\"crowd\",\"mechanical\"]),\n  taxonomy: z.object({\n    category: z.string(),\n    class: z.string().optional(),\n    type: z.string().optional(),\n    group: z.string().optional(),\n    tags: stringArray.optional()\n  }),\n  tags: z.object({\n    style: stringArray.optional(),\n    theme: stringArray.optional(),\n    mood: stringArray.optional(),\n    gameplay_role: stringArray.optional(),\n    rarity: stringArray.optional(),\n    state: stringArray.optional(),\n    action: stringArray.optional(),\n    direction: stringArray.optional(),\n    perspective: stringArray.optional(),\n    animation_state: stringArray.optional(),\n    loop_type: stringArray.optional(),\n    interaction_type: stringArray.optional(),\n    material: stringArray.optional(),\n    element: stringArray.optional(),\n    biome: stringArray.optional(),\n    faction: stringArray.optional(),\n    emotion: stringArray.optional(),\n    age_group: stringArray.optional(),\n    body_type: stringArray.optional(),\n    color_scheme: stringArray.optional(),\n    quality_level: stringArray.optional(),\n    platform: stringArray.optional(),\n    resolution: stringArray.optional(),\n    rig_type: stringArray.optional(),\n    physics_type: stringArray.optional(),\n    bone_count: z.array(z.number()).optional(),\n    procedural: z.boolean().optional(),\n    modular: z.boolean().optional(),\n    runtime_capable: z.boolean().optional()\n  })\n});",
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "storageOnly": true
+  }
+}
