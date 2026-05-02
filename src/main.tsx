@@ -11,6 +11,7 @@ import {
   LogOut,
   Loader2,
   RefreshCw,
+  Send,
   SlidersHorizontal,
   Upload,
   X,
@@ -1190,6 +1191,7 @@ function App() {
   const [activeTreeDrawer, setActiveTreeDrawer] = useState<"render" | "zoom" | null>(null);
   const [generatedPreviewUrl, setGeneratedPreviewUrl] = useState("");
   const [isPublishingLink, setIsPublishingLink] = useState(false);
+  const [isLinkBannerOpen, setIsLinkBannerOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const [previewNote, setPreviewNote] = useState("");
   const [previewNoteStatus, setPreviewNoteStatus] = useState("");
@@ -1429,6 +1431,7 @@ function App() {
         setZoom(1);
         setGeneratedPreviewUrl("");
         setIsPublishingLink(false);
+        setIsLinkBannerOpen(false);
         setCopyStatus("");
         setPreviewNoteStatus("");
         setCurrentLibraryEntry(null);
@@ -1443,6 +1446,7 @@ function App() {
         setActiveAnimation("");
         setGeneratedPreviewUrl("");
         setIsPublishingLink(false);
+        setIsLinkBannerOpen(false);
         setCopyStatus("");
         setPreviewNoteStatus("");
         setCurrentLibraryEntry(null);
@@ -1649,6 +1653,26 @@ function App() {
     }
   };
 
+  const shareGeneratedLink = async () => {
+    if (!generatedPreviewUrl) return;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: currentLibraryEntry?.title || "Spine-Link preview",
+          text: "Spine animation preview",
+          url: generatedPreviewUrl,
+        });
+        setCopyStatus("Link shared");
+        return;
+      } catch (shareError) {
+        if (shareError instanceof DOMException && shareError.name === "AbortError") return;
+      }
+    }
+
+    await copyGeneratedLink();
+  };
+
   const savePreviewNote = async (nextNote = previewNote) => {
     if (!currentLibraryEntry) {
       setPreviewNoteStatus("Upload files first, then save text.");
@@ -1720,6 +1744,7 @@ function App() {
       if (currentLibraryEntry?.id === entry.id) {
         setCurrentLibraryEntry(null);
         setGeneratedPreviewUrl("");
+        setIsLinkBannerOpen(false);
         setPreviewNote("");
       }
     } catch (nextError) {
@@ -1936,6 +1961,7 @@ function App() {
         setCurrentLibraryEntry(entry);
         setPreviewNote(note);
         setGeneratedPreviewUrl(permanentPreviewUrl);
+        setIsLinkBannerOpen(true);
         setCopyStatus("Permanent link ready");
         setStatus(`Ready. Animations found: ${animationNames.length}. Uploaded.`);
       } catch (nextError) {
@@ -2034,6 +2060,29 @@ function App() {
               </div>
             )}
             <div className="player-host" ref={playerHostRef} aria-label="Spine preview canvas" />
+            {generatedPreviewUrl && isLinkBannerOpen && (
+              <div className="link-ready-banner" role="status" aria-live="polite">
+                <div className="link-ready-banner-main">
+                  <strong>Permanent link ready</strong>
+                  <a href={generatedPreviewUrl} target="_blank" rel="noreferrer">
+                    {generatedPreviewUrl}
+                  </a>
+                </div>
+                <div className="link-ready-banner-actions">
+                  <button type="button" onClick={copyGeneratedLink}>
+                    <Copy size={15} />
+                    Copy
+                  </button>
+                  <button type="button" onClick={shareGeneratedLink}>
+                    <Send size={15} />
+                    Share
+                  </button>
+                  <button type="button" onClick={() => setIsLinkBannerOpen(false)} aria-label="Close link banner">
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <aside className="inspector">
