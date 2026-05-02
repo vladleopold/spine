@@ -199,6 +199,10 @@ async function mountApp(initialFiles: File[] = []) {
 
 renderBootShell();
 
+if (new URLSearchParams(window.location.search).has("edit")) {
+  void mountApp();
+}
+
 document.addEventListener("dragover", (event) => {
   event.preventDefault();
   renderBootShell(true);
