@@ -261,7 +261,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
 
     sets.push({
       label: directory.name,
-      skeleton: versionedAssetUrl(origin, skeleton, assetVersion),
+      skeleton: `${origin}/assets/${encodeRepoPath(skeleton.path)}`,
       atlas: versionedAssetUrl(origin, atlas, assetVersion),
       animation: defaultAnimation,
       animations,
