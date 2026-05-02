@@ -32,6 +32,30 @@
         }
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a Spine web viewer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Spine web viewer opens Spine animation files in a browser so teams can review playback without installing a desktop tool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Spine-Link share a web viewer preview?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Spine-Link can publish a permanent browser preview link for a Spine animation package."
+            }
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         color: #f7fbff;
@@ -88,6 +112,18 @@
         font-weight: 800;
         text-decoration: none;
       }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 18px;
+        margin: 28px 0 6px;
+      }
+
+      nav a {
+        color: #dff1ff;
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
@@ -100,6 +136,11 @@
       </p>
       <a class="cta" href="/">Open the web viewer</a>
       <a class="cta" href="/spine-online-video.html">Watch browser demo</a>
+      <nav aria-label="Related Spine-Link pages">
+        <a href="/spine-preview-online.html">Spine preview online</a>
+        <a href="/spine-animation-preview.html">Spine animation preview</a>
+        <a href="/spine-link-video.html">Spine-Link video demo</a>
+      </nav>
       <section>
         <h2>What the Spine web viewer supports</h2>
         <ul>

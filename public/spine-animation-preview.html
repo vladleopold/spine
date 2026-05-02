@@ -32,6 +32,30 @@
         }
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I preview a Spine animation in the browser?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Upload the Spine skeleton file, atlas file, and texture images to Spine-Link, then choose an animation from the generated list."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I link to one specific Spine animation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Spine-Link creates a permanent preview URL that can open a specific uploaded Spine animation."
+            }
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         color: #f7fbff;
@@ -88,6 +112,18 @@
         font-weight: 800;
         text-decoration: none;
       }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 18px;
+        margin: 28px 0 6px;
+      }
+
+      nav a {
+        color: #dff1ff;
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
@@ -100,6 +136,11 @@
       </p>
       <a class="cta" href="/">Preview an animation</a>
       <a class="cta" href="/spine-link-video.html">Watch preview video</a>
+      <nav aria-label="Related Spine-Link pages">
+        <a href="/spine-preview-online.html">Spine preview online</a>
+        <a href="/spine-web-viewer.html">Spine web viewer</a>
+        <a href="/spine-online-video.html">Spine online video</a>
+      </nav>
       <section>
         <h2>Shareable Spine animation previews</h2>
         <ul>

@@ -32,6 +32,30 @@
         }
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I preview Spine files online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Spine-Link previews Spine JSON or SKEL files with atlas and texture images directly in a modern browser."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do permanent Spine preview links require a Google account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Spine-Link can create permanent preview links without Google sign-in."
+            }
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         color: #f7fbff;
@@ -88,6 +112,18 @@
         font-weight: 800;
         text-decoration: none;
       }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 18px;
+        margin: 28px 0 6px;
+      }
+
+      nav a {
+        color: #dff1ff;
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
@@ -101,6 +137,11 @@
       </p>
       <a class="cta" href="/">Open Spine-Link</a>
       <a class="cta" href="/spine-link-video.html">Watch video demo</a>
+      <nav aria-label="Related Spine-Link pages">
+        <a href="/spine-web-viewer.html">Spine web viewer</a>
+        <a href="/spine-animation-preview.html">Spine animation preview</a>
+        <a href="/spine-online-video.html">Spine online video</a>
+      </nav>
       <section>
         <h2>Online Spine preview features</h2>
         <ul>
