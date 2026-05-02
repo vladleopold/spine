@@ -3115,6 +3115,9 @@ export function App({ initialFiles }: AppProps) {
       <a className="site-credit" href="https://t.me/vladleopold" target="_blank" rel="noreferrer">
         by leopold
       </a>
+      <a className="world-archive-link" href="/world-spine-archive">
+        WORLD SPINE ARCHIVE
+      </a>
     </main>
   );
 }

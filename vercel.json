@@ -37,6 +37,14 @@
       "destination": "/api/github-library?user=:id"
     },
     {
+      "source": "/world-spine-archive",
+      "destination": "/api/github-archive"
+    },
+    {
+      "source": "/world-spine-archive/:id",
+      "destination": "/api/github-archive?id=:id"
+    },
+    {
       "source": "/assets/:path*",
       "destination": "/api/github-asset?path=:path*"
     }
