@@ -20,12 +20,8 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import { GLTexture, SpinePlayer, type SpinePlayerConfig } from "@esotericsoftware/spine-player";
-import JSZip from "jszip";
-import "@esotericsoftware/spine-player/dist/spine-player.css";
+import type { SpinePlayer as SpinePlayerInstance, SpinePlayerConfig } from "@esotericsoftware/spine-player";
 import "./styles.css";
-
-GLTexture.DISABLE_UNPACK_PREMULTIPLIED_ALPHA_WEBGL = true;
 
 type LoadedAsset = {
   file: File;
@@ -71,7 +67,7 @@ type PlayerWithViewport = {
   viewportTransitionStart?: number;
 };
 
-type PlayerWithLoopControls = SpinePlayer & {
+type PlayerWithLoopControls = SpinePlayerInstance & {
   dom?: HTMLElement;
   paused?: boolean;
   animationState?: {
@@ -195,6 +191,49 @@ const githubPublishSettings: GitHubSettings = {
   basePath: import.meta.env.VITE_GITHUB_BASE_PATH ?? "library",
   title: "",
 };
+
+type SpinePlayerModule = typeof import("@esotericsoftware/spine-player");
+
+let spinePlayerModulePromise: Promise<SpinePlayerModule> | null = null;
+let googleScriptPromise: Promise<void> | null = null;
+
+function loadSpinePlayerModule() {
+  if (!spinePlayerModulePromise) {
+    spinePlayerModulePromise = Promise.all([
+      import("@esotericsoftware/spine-player"),
+      import("@esotericsoftware/spine-player/dist/spine-player.css"),
+    ]).then(([module]) => {
+      module.GLTexture.DISABLE_UNPACK_PREMULTIPLIED_ALPHA_WEBGL = true;
+      return module;
+    });
+  }
+
+  return spinePlayerModulePromise;
+}
+
+function loadGoogleIdentityScript() {
+  if (window.google) return Promise.resolve();
+  if (!googleScriptPromise) {
+    googleScriptPromise = new Promise<void>((resolve, reject) => {
+      const existingScript = document.querySelector<HTMLScriptElement>('script[src="https://accounts.google.com/gsi/client"]');
+      if (existingScript) {
+        existingScript.addEventListener("load", () => resolve(), { once: true });
+        existingScript.addEventListener("error", () => reject(new Error("Could not load Google sign-in.")), { once: true });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Could not load Google sign-in."));
+      document.head.appendChild(script);
+    });
+  }
+
+  return googleScriptPromise;
+}
 
 const anonymousAccountStorageKey = "spine-link-anonymous-account";
 const googleSessionStorageKey = "spine-link-google-session";
@@ -460,6 +499,7 @@ async function readAtlasText(file: File) {
     return new TextDecoder().decode(buffer);
   }
 
+  const { default: JSZip } = await import("jszip");
   const zip = await JSZip.loadAsync(buffer);
   const documentXml = await zip.file("word/document.xml")?.async("text");
   if (!documentXml) throw new Error(`Could not find word/document.xml inside ${file.name}`);
@@ -1032,17 +1072,17 @@ function updateLoopButtonState(button: HTMLButtonElement, isLoopEnabled: boolean
   button.setAttribute("aria-pressed", String(isLoopEnabled));
 }
 
-function setPlayerTrackLoop(player: SpinePlayer | null, isLoopEnabled: boolean) {
+function setPlayerTrackLoop(player: SpinePlayerInstance | null, isLoopEnabled: boolean) {
   const trackEntry = (player as PlayerWithLoopControls | null)?.animationState?.getCurrent?.(0);
   if (trackEntry) trackEntry.loop = isLoopEnabled;
 }
 
-function disablePlayerMix(player: SpinePlayer | null) {
+function disablePlayerMix(player: SpinePlayerInstance | null) {
   const animationStateData = (player as PlayerWithLoopControls | null)?.animationState?.data;
   if (animationStateData) animationStateData.defaultMix = 0;
 }
 
-function playAnimationWithLoopMode(player: SpinePlayer | null, animationName: string, isLoopEnabled: boolean, isLoopEnabledNow: () => boolean) {
+function playAnimationWithLoopMode(player: SpinePlayerInstance | null, animationName: string, isLoopEnabled: boolean, isLoopEnabledNow: () => boolean) {
   if (!player || !animationName) return;
 
   disablePlayerMix(player);
@@ -1058,12 +1098,12 @@ function playAnimationWithLoopMode(player: SpinePlayer | null, animationName: st
   player.play();
 }
 
-function syncLoopButtons(player: SpinePlayer | null, isLoopEnabled: boolean) {
+function syncLoopButtons(player: SpinePlayerInstance | null, isLoopEnabled: boolean) {
   const buttons = (player as PlayerWithLoopControls | null)?.dom?.querySelectorAll<HTMLButtonElement>(".spine-link-loop-button");
   buttons?.forEach((button) => updateLoopButtonState(button, isLoopEnabled));
 }
 
-function installLoopButton(player: SpinePlayer, isLoopEnabled: boolean, onToggle: () => void, onPlayButton: () => void) {
+function installLoopButton(player: SpinePlayerInstance, isLoopEnabled: boolean, onToggle: () => void, onPlayButton: () => void) {
   const playerDom = (player as PlayerWithLoopControls).dom;
   const buttons = playerDom?.querySelector(".spine-player-buttons");
   const playButton = buttons?.querySelector(".spine-player-button");
@@ -1094,7 +1134,7 @@ function installLoopButton(player: SpinePlayer, isLoopEnabled: boolean, onToggle
   playButton.insertAdjacentElement("afterend", loopButton);
 }
 
-function togglePlayerPlayback(player: SpinePlayer | null, onPlayButton: () => void) {
+function togglePlayerPlayback(player: SpinePlayerInstance | null, onPlayButton: () => void) {
   const typedPlayer = player as PlayerWithLoopControls | null;
   if (!typedPlayer) return;
   if (typedPlayer.paused === false) {
@@ -1189,7 +1229,7 @@ function ParticleField() {
 }
 
 function App() {
-  const playerRef = useRef<SpinePlayer | null>(null);
+  const playerRef = useRef<SpinePlayerInstance | null>(null);
   const previewPanelRef = useRef<HTMLDivElement | null>(null);
   const playerHostRef = useRef<HTMLDivElement | null>(null);
   const googleTokenClientRef = useRef<GoogleTokenClient | null>(null);
@@ -1263,69 +1303,7 @@ function App() {
   useEffect(() => {
     if (!googleClientId) {
       setGoogleAuthError("Google OAuth Client ID is not configured.");
-      return;
     }
-
-    const initializeGoogleAuth = () => {
-      if (!window.google) return;
-      googleTokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
-        client_id: googleClientId,
-        scope: "openid email profile",
-        callback: async (response) => {
-          if (response.error || !response.access_token) {
-            if (googleUser || readStoredGoogleSession()?.user?.email) {
-              setGoogleIdToken("");
-              return;
-            }
-            setGoogleAuthError(response.error || "Google sign-in failed.");
-            return;
-          }
-
-          try {
-            const userResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-              headers: { Authorization: `Bearer ${response.access_token}` },
-            });
-            const payload = (await userResponse.json()) as { email?: string; name?: string; picture?: string; email_verified?: boolean };
-            const email = payload.email ?? "";
-            if (!userResponse.ok || !payload.email_verified || !email) {
-              setGoogleUser(null);
-              setGoogleIdToken("");
-              clearStoredGoogleSession();
-              setGoogleAuthError("Google email is not verified.");
-              return;
-            }
-
-            const nextGoogleUser = { email, name: payload.name, picture: payload.picture };
-            setGoogleUser(nextGoogleUser);
-            setGoogleIdToken(response.access_token);
-            storeGoogleSession(nextGoogleUser, response.access_token, response.expires_in);
-            setGoogleAuthError("");
-            setStatus("Signed in. Library account merged.");
-            void mergeAnonymousLibrary(response.access_token, nextGoogleUser);
-          } catch {
-            setGoogleAuthError("Could not read Google profile.");
-          }
-        },
-      });
-
-      const storedSession = readStoredGoogleSession();
-      if (storedSession?.user?.email && !getValidStoredGoogleToken()) {
-        googleTokenClientRef.current.requestAccessToken({ prompt: "" });
-      }
-    };
-
-    if (window.google) {
-      initializeGoogleAuth();
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = initializeGoogleAuth;
-    script.onerror = () => setGoogleAuthError("Could not load Google sign-in.");
-    document.head.appendChild(script);
   }, []);
 
   const fileSummary = useMemo(() => {
@@ -1491,6 +1469,7 @@ function App() {
   useEffect(() => {
     if (!configuredSpine || !playerHostRef.current) return;
 
+    let isCancelled = false;
     resetPlayer();
     const config: SpinePlayerConfig = {
       skeleton: configuredSpine.skeletonName,
@@ -1536,9 +1515,21 @@ function App() {
       },
     };
 
-    playerRef.current = new SpinePlayer(playerHostRef.current, config);
+    void loadSpinePlayerModule()
+      .then(({ SpinePlayer }) => {
+        if (isCancelled || !playerHostRef.current) return;
+        playerRef.current = new SpinePlayer(playerHostRef.current, config);
+      })
+      .catch(() => {
+        if (isCancelled) return;
+        setError("Spine runtime could not be loaded.");
+        setStatus("Preview error.");
+      });
 
-    return () => resetPlayer();
+    return () => {
+      isCancelled = true;
+      resetPlayer();
+    };
   }, [applyZoomToPlayer, configuredSpine, googleIdToken, googleUser, playActiveAnimationFromStart, rememberCurrentViewport, resetPlayer, toggleLoopEnabled]);
 
   useEffect(() => {
@@ -1902,16 +1893,72 @@ function App() {
     }
   };
 
-  const openGoogleSignIn = () => {
+  const ensureGoogleAuth = async () => {
     if (!googleClientId) {
       setGoogleAuthError("Google OAuth Client ID is not configured.");
-      return;
+      return false;
     }
 
-    if (!window.google || !googleTokenClientRef.current) {
-      setGoogleAuthError("Google sign-in is still loading.");
-      return;
+    try {
+      await loadGoogleIdentityScript();
+    } catch {
+      setGoogleAuthError("Could not load Google sign-in.");
+      return false;
     }
+
+    if (!window.google) {
+      setGoogleAuthError("Could not load Google sign-in.");
+      return false;
+    }
+
+    if (!googleTokenClientRef.current) {
+      googleTokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
+        client_id: googleClientId,
+        scope: "openid email profile",
+        callback: async (response) => {
+          if (response.error || !response.access_token) {
+            if (googleUser || readStoredGoogleSession()?.user?.email) {
+              setGoogleIdToken("");
+              return;
+            }
+            setGoogleAuthError(response.error || "Google sign-in failed.");
+            return;
+          }
+
+          try {
+            const userResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+              headers: { Authorization: `Bearer ${response.access_token}` },
+            });
+            const payload = (await userResponse.json()) as { email?: string; name?: string; picture?: string; email_verified?: boolean };
+            const email = payload.email ?? "";
+            if (!userResponse.ok || !payload.email_verified || !email) {
+              setGoogleUser(null);
+              setGoogleIdToken("");
+              clearStoredGoogleSession();
+              setGoogleAuthError("Google email is not verified.");
+              return;
+            }
+
+            const nextGoogleUser = { email, name: payload.name, picture: payload.picture };
+            setGoogleUser(nextGoogleUser);
+            setGoogleIdToken(response.access_token);
+            storeGoogleSession(nextGoogleUser, response.access_token, response.expires_in);
+            setGoogleAuthError("");
+            setStatus("Signed in. Library account merged.");
+            void mergeAnonymousLibrary(response.access_token, nextGoogleUser);
+          } catch {
+            setGoogleAuthError("Could not read Google profile.");
+          }
+        },
+      });
+    }
+
+    return true;
+  };
+
+  const openGoogleSignIn = async () => {
+    const isReady = await ensureGoogleAuth();
+    if (!isReady || !googleTokenClientRef.current) return;
 
     setGoogleAuthError("");
     googleTokenClientRef.current.requestAccessToken({ prompt: "select_account" });
