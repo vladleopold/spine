@@ -147,7 +147,7 @@ export default async function handler(request, response) {
     const indexText = await githubText(settings, `${settings.basePath}/index.json`);
     const allEntries = indexText ? JSON.parse(indexText) : [];
     const entries = Array.isArray(allEntries)
-      ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId)
+      ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId && entry?.hiddenFromPublicLibrary !== true)
       : [];
     entries.sort((a, b) => String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || '')));
 

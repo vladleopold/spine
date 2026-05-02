@@ -330,6 +330,26 @@ export default async function handler(request, response) {
       return response.status(200).json({ ok: true, entry: nextEntry });
     }
 
+    if (action === 'update-entry-visibility') {
+      if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+      const entryId = String(body?.entryId || '').trim();
+      if (!entryId) return response.status(400).json({ error: 'Invalid visibility payload' });
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const currentIndex = await getGitHubContent(settings, indexPath);
+      const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
+      const entryIndex = currentEntries.findIndex((currentEntry) => String(currentEntry?.id || '') === entryId);
+      if (entryIndex < 0) return response.status(404).json({ error: 'Library entry not found' });
+      if (!canEditEntry(currentEntries[entryIndex], googlePayload, anonymousAccount)) throw unauthorized('Only the owner can hide this entry', 403);
+      const hiddenFromPublicLibrary = Boolean(body?.hiddenFromPublicLibrary);
+      const nextEntry = { ...currentEntries[entryIndex] };
+      if (hiddenFromPublicLibrary) nextEntry.hiddenFromPublicLibrary = true;
+      else delete nextEntry.hiddenFromPublicLibrary;
+      const nextEntries = [...currentEntries];
+      nextEntries[entryIndex] = nextEntry;
+      await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update entry visibility`, currentIndex?.sha, origin);
+      return response.status(200).json({ ok: true, entry: nextEntry });
+    }
+
     if (action === 'update-profile-visibility') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       const indexPath = joinRepoPath(settings.basePath, 'index.json');

@@ -117,6 +117,7 @@ type LibraryEntry = {
   ownerPicture?: string;
   publicOwnerId?: string;
   showOwnerLibrary?: boolean;
+  hiddenFromPublicLibrary?: boolean;
   uploadedAt: string;
   skeleton: string;
   atlas: string;
@@ -1809,6 +1810,47 @@ export function App({ initialFiles }: AppProps) {
     void savePreviewNote("");
   };
 
+  const copyLibraryEntryLink = async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setLibraryError("");
+      setProfileVisibilityStatus("Preview link copied");
+    } catch {
+      setProfileVisibilityStatus(url);
+    }
+  };
+
+  const updateLibraryEntryVisibility = async (entry: LibraryEntry, hiddenFromPublicLibrary: boolean) => {
+    setLibraryError("");
+    try {
+      const requestHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
+      const response = await fetch("/api/github-upload", {
+        method: "POST",
+        headers: requestHeaders,
+        body: JSON.stringify({
+          action: "update-entry-visibility",
+          googleIdToken,
+          anonymousAccount,
+          settings: githubPublishSettings,
+          entryId: entry.id,
+          hiddenFromPublicLibrary,
+          commitPrefix: `${hiddenFromPublicLibrary ? "Hide" : "Show"} Spine preview ${entry.title || entry.id}`,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
+      const nextEntry = { ...entry, hiddenFromPublicLibrary };
+      setLibraryEntries((currentEntries) => currentEntries.map((currentEntry) => (currentEntry.id === entry.id ? nextEntry : currentEntry)));
+      if (currentLibraryEntry?.id === entry.id) setCurrentLibraryEntry(nextEntry);
+      setProfileVisibilityStatus(hiddenFromPublicLibrary ? "Preview hidden from public library" : "Preview visible in public library");
+    } catch (nextError) {
+      setLibraryError(nextError instanceof Error ? nextError.message : "Could not update preview visibility.");
+    }
+  };
+
   const deleteLibraryEntry = async (entry: LibraryEntry) => {
     if (!window.confirm(`Delete "${entry.title || entry.id}" from library?`)) return;
     setLibraryError("");
@@ -2587,10 +2629,9 @@ export function App({ initialFiles }: AppProps) {
               {libraryEntries.map((entry, index) => {
                 const previewUrl = new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
-                const isGifPreview = entry.thumbnailType === "gif" || entry.thumbnail?.startsWith("data:image/gif");
                 return (
                   <div
-                    className="library-card"
+                    className={`library-card${entry.hiddenFromPublicLibrary ? " is-hidden" : ""}`}
                     key={entry.id}
                     style={{
                       "--library-card-offset": `${(index % 4) * 18}px`,
@@ -2600,7 +2641,6 @@ export function App({ initialFiles }: AppProps) {
                     <a className="library-card-link" href={previewUrl} target="_blank" rel="noreferrer">
                     <div className="library-card-visual">
                       <Layers size={24} />
-                      {isGifPreview && <em>GIF preview</em>}
                       <span>{entry.animations?.length ?? 0}</span>
                     </div>
                     <div className="library-card-body">
@@ -2617,9 +2657,14 @@ export function App({ initialFiles }: AppProps) {
                       </div>
                     </div>
                     </a>
-                    <button className="library-delete-button" type="button" onClick={() => void deleteLibraryEntry(entry)}>
-                      Delete
-                    </button>
+                    <div className="library-card-actions" aria-label={`${entry.title || entry.id} actions`}>
+                      <a href={previewUrl} target="_blank" rel="noreferrer">Edit</a>
+                      <button type="button" onClick={() => void updateLibraryEntryVisibility(entry, !entry.hiddenFromPublicLibrary)}>
+                        {entry.hiddenFromPublicLibrary ? "Show" : "Hide"}
+                      </button>
+                      <button type="button" onClick={() => void copyLibraryEntryLink(previewUrl)}>Link</button>
+                      <button className="danger" type="button" onClick={() => void deleteLibraryEntry(entry)}>Delete</button>
+                    </div>
                   </div>
                 );
               })}
