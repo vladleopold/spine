@@ -11,6 +11,7 @@ import {
   Link as LinkIcon,
   LogOut,
   Loader2,
+  Plus,
   RefreshCw,
   Send,
   SlidersHorizontal,
@@ -1301,6 +1302,7 @@ export function App({ initialFiles }: AppProps) {
   const playerRef = useRef<SpinePlayerInstance | null>(null);
   const previewPanelRef = useRef<HTMLDivElement | null>(null);
   const playerHostRef = useRef<HTMLDivElement | null>(null);
+  const uploadInputRef = useRef<HTMLInputElement | null>(null);
   const googleTokenClientRef = useRef<GoogleTokenClient | null>(null);
   const baseViewportRef = useRef<PlayerViewport | null>(null);
   const pinchDistanceRef = useRef<number | null>(null);
@@ -2045,6 +2047,20 @@ export function App({ initialFiles }: AppProps) {
     void loadLibrary();
   };
 
+  const startNewLibraryEntry = () => {
+    setIsLibraryOpen(false);
+    setCurrentLibraryEntry(null);
+    setGeneratedPreviewUrl("");
+    setIsLinkBannerOpen(false);
+    setCopyStatus("");
+    setPreviewNote("");
+    setPreviewNoteStatus("");
+    setError("");
+    setStatus("Choose files for a new library card.");
+    publishedKeysRef.current.clear();
+    window.setTimeout(() => uploadInputRef.current?.click(), 0);
+  };
+
   const updateSharedProfileVisibility = async (nextValue: boolean) => {
     setShowProfileOnSharedPages(nextValue);
     storeProfileVisibility(nextValue);
@@ -2519,6 +2535,7 @@ export function App({ initialFiles }: AppProps) {
               onDrop={handleDrop}
             >
               <input
+                ref={uploadInputRef}
                 type="file"
                 multiple
                 accept=".json,.skel,.atlas,.txt,.docx,.png,.jpg,.jpeg,.webp"
@@ -2664,6 +2681,9 @@ export function App({ initialFiles }: AppProps) {
               <h2>YOUR</h2>
             </div>
             <div className="library-modal-actions">
+              <button type="button" onClick={startNewLibraryEntry} title="Add new animation card">
+                <Plus size={18} />
+              </button>
               <button type="button" onClick={loadLibrary} disabled={isLibraryLoading} title="Refresh library">
                 {isLibraryLoading ? <Loader2 className="spin" size={18} /> : <RefreshCw size={18} />}
               </button>
