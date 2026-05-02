@@ -1,4 +1,5 @@
 const taxonomyVersion = '2026-05-02';
+const domainEnum = ['gamedev'];
 
 const assetCategoryEnum = [
   'character', 'creature', 'animal', 'monster', 'npc', 'boss',
@@ -379,10 +380,11 @@ function animationAssetJsonSchema() {
     $schema: 'http://json-schema.org/draft-07/schema#',
     title: 'AnimationAsset',
     type: 'object',
-    required: ['id', 'asset_category', 'animation_type', 'skeleton_type', 'content_type', 'taxonomy', 'tags'],
+    required: ['id', 'domain', 'asset_category', 'animation_type', 'skeleton_type', 'content_type', 'taxonomy', 'tags'],
     properties: {
       id: { type: 'string' },
       name: { type: 'string' },
+      domain: { type: 'string', enum: domainEnum },
       asset_category: { type: 'string', enum: assetCategoryEnum },
       animation_type: { type: 'string', enum: animationTypeEnum },
       skeleton_type: { type: 'string', enum: skeletonTypeEnum },
@@ -423,6 +425,7 @@ const stringArray = z.array(z.string());
 export const AnimationAssetSchema = z.object({
   id: z.string(),
   name: z.string().optional(),
+  domain: z.enum(${JSON.stringify(domainEnum)}),
   asset_category: z.enum(${JSON.stringify(assetCategoryEnum)}),
   animation_type: z.enum(${JSON.stringify(animationTypeEnum)}),
   skeleton_type: z.enum(${JSON.stringify(skeletonTypeEnum)}),
@@ -475,6 +478,7 @@ function inferDataScienceMetadata(entry, settings = {}) {
   const animationAsset = {
     id: String(entry?.id || ''),
     ...(entry?.title || entry?.id ? { name: String(entry?.title || entry?.id) } : {}),
+    domain: 'gamedev',
     asset_category: validateEnum(base.asset_category, assetCategoryEnum, 'object'),
     animation_type: validateEnum(base.animation_type, animationTypeEnum, 'object'),
     skeleton_type: validateEnum(base.skeleton_type, skeletonTypeEnum, 'object'),
