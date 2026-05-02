@@ -798,6 +798,12 @@ function editEntryIdFromLocation() {
   return new URLSearchParams(window.location.search).get("edit") || "";
 }
 
+function previewUrlForEntry(entryId: string, animationName = "") {
+  const url = new URL(`/p/${encodeURIComponent(entryId)}`, window.location.origin);
+  if (animationName) url.searchParams.set("animation", animationName);
+  return url.toString();
+}
+
 async function fileFromLibraryPath(entry: LibraryEntry, fileName: string) {
   const assetPath = joinRepoPath(entry.previewPath, fileName);
   const response = await fetch(`/assets/${encodeRepoPath(assetPath)}`, { cache: "no-store" });
@@ -1739,7 +1745,7 @@ export function App({ initialFiles }: AppProps) {
         setCurrentLibraryEntry(entry);
         setLibraryEntries((currentEntries) => [entry, ...currentEntries.filter((currentEntry) => currentEntry.id !== entry.id)]);
         setPreviewNote(entry.note || "");
-        setGeneratedPreviewUrl(new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString());
+        setGeneratedPreviewUrl(previewUrlForEntry(entry.id, entry.defaultAnimation || nextSpine?.defaultAnimation || ""));
         setIsLinkBannerOpen(false);
         setCopyStatus("");
         setPreviewNoteStatus("");
@@ -1795,7 +1801,7 @@ export function App({ initialFiles }: AppProps) {
           installLoopButton(player, loopEnabledRef.current, toggleLoopEnabled, playActiveAnimationFromStart);
           rememberCurrentViewport();
           applyZoomToPlayer(zoomRef.current, false);
-          void publishToGitHub(configuredSpine, names, initialAnimation);
+          if (!currentLibraryEntry) void publishToGitHub(configuredSpine, names, initialAnimation);
         }
         setStatus(
           names.length
@@ -1834,6 +1840,15 @@ export function App({ initialFiles }: AppProps) {
     setActiveAnimation(animationName);
     playAnimationWithLoopMode(playerRef.current, animationName, loopEnabledRef.current, () => loopEnabledRef.current);
     applyZoomToPlayer(zoomRef.current, false);
+    if (currentLibraryEntry) {
+      setGeneratedPreviewUrl(previewUrlForEntry(currentLibraryEntry.id, animationName));
+      window.setTimeout(() => {
+        if (preparedSpineRef.current && animationsRef.current.length && activeAnimationRef.current === animationName) {
+          void publishToGitHub(preparedSpineRef.current, animationsRef.current, animationName);
+        }
+      }, 180);
+      return;
+    }
     if (!generatedPreviewUrl && preparedSpine && animations.length) {
       void publishToGitHub(preparedSpine, animations, animationName);
     }
@@ -2375,7 +2390,7 @@ export function App({ initialFiles }: AppProps) {
         const uploadedAt = new Date().toISOString();
         const uploadId = existingEntry?.id || `${safePathSegment(nextSettings.title)}-${uploadedAt.replace(/[:.]/g, "-")}`;
         const uploadPath = cleanRepoPath(existingEntry?.previewPath || joinRepoPath(nextSettings.basePath, uploadId));
-        const permanentPreviewUrl = new URL(`/p/${encodeURIComponent(uploadId)}`, window.location.origin).toString();
+        const permanentPreviewUrl = previewUrlForEntry(uploadId, defaultAnimation);
         const setsForPublish = spineOptions.length ? spineOptions : [spine];
         const note = limitWords(previewNote);
         const playerCanvas = (playerRef.current as unknown as { canvas?: HTMLCanvasElement | null } | null)?.canvas;
@@ -2917,7 +2932,7 @@ export function App({ initialFiles }: AppProps) {
           ) : (
             <div className="library-grid">
               {libraryEntries.map((entry, index) => {
-                const previewUrl = new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString();
+                const previewUrl = previewUrlForEntry(entry.id, entry.defaultAnimation);
                 const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
                 const hasAnimatedThumbnail = isAnimatedThumbnail(entry);
