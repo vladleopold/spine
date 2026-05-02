@@ -1,0 +1,234 @@
+<!doctype html>
+<html amp lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Spine-Link AMP - Online Spine Preview and Spine Web Viewer</title>
+    <link rel="canonical" href="https://spine-link.vercel.app/" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+    <meta
+      name="description"
+      content="Spine-Link is an online Spine preview and Spine web viewer for JSON, SKEL, atlas, and texture files."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Spine-Link",
+        "url": "https://spine-link.vercel.app/",
+        "inLanguage": "en",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "description": "Online Spine preview and Spine web viewer for JSON, SKEL, atlas, PNG, JPG, and WEBP texture files.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+    <style amp-custom>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: #eef6ff;
+        background: #070809;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .page {
+        width: min(1040px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 48px;
+      }
+
+      .brand {
+        display: inline-block;
+        margin-bottom: 46px;
+        color: #fff;
+        font-size: 34px;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-decoration: none;
+      }
+
+      .brand span {
+        color: #ff6a28;
+      }
+
+      .hero {
+        display: grid;
+        gap: 22px;
+        max-width: 760px;
+      }
+
+      h1 {
+        margin: 0;
+        color: #fff;
+        font-size: clamp(42px, 8vw, 82px);
+        line-height: .9;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        margin: 0;
+        color: rgba(238, 246, 255, .74);
+        font-size: clamp(18px, 2.4vw, 23px);
+        line-height: 1.42;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border: 1px solid rgba(179, 255, 64, .54);
+        border-radius: 7px;
+        color: #111;
+        background: #b3ff40;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .button.secondary {
+        color: #eef6ff;
+        background: rgba(255, 255, 255, .06);
+        border-color: rgba(255, 255, 255, .16);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 12px;
+        margin-top: 38px;
+      }
+
+      .feature {
+        min-height: 124px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .045);
+      }
+
+      .feature strong {
+        display: block;
+        margin-bottom: 9px;
+        color: #fff;
+        font-size: 18px;
+      }
+
+      .feature p {
+        margin: 0;
+        color: rgba(238, 246, 255, .68);
+        line-height: 1.42;
+      }
+
+      .note {
+        margin-top: 30px;
+        color: rgba(238, 246, 255, .52);
+        font-size: 14px;
+      }
+    </style>
+    <style amp-boilerplate>
+      body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+      }
+      @-webkit-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-moz-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-ms-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-o-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+    </style>
+    <noscript>
+      <style amp-boilerplate>
+        body {
+          -webkit-animation: none;
+          -moz-animation: none;
+          -ms-animation: none;
+          animation: none;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <main class="page">
+      <a class="brand" href="https://spine-link.vercel.app/">spine<span>link</span></a>
+      <section class="hero">
+        <h1>Online Spine preview and Spine web viewer</h1>
+        <p class="lead">
+          Preview Spine JSON, SKEL, atlas, PNG, JPG, and WEBP files in the browser. Generate permanent links for sharing
+          animation previews with teammates and clients.
+        </p>
+        <div class="actions">
+          <a class="button" href="https://spine-link.vercel.app/">Open Spine-Link</a>
+          <a class="button secondary" href="https://spine-link.vercel.app/spine-link-video.html">Watch preview video</a>
+        </div>
+      </section>
+      <section class="features">
+        <article class="feature">
+          <strong>Spine file preview</strong>
+          <p>Open skeleton, atlas, and texture files directly in a browser-based Spine viewer.</p>
+        </article>
+        <article class="feature">
+          <strong>Permanent links</strong>
+          <p>Create shareable web preview pages for a selected skeleton and animation.</p>
+        </article>
+        <article class="feature">
+          <strong>Public libraries</strong>
+          <p>Share a creator library when you want published previews to be visible together.</p>
+        </article>
+      </section>
+      <p class="note">This AMP page is a lightweight search-friendly version of the main interactive Spine-Link app.</p>
+    </main>
+  </body>
+</html>

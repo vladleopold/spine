@@ -3,6 +3,7 @@ export default function handler(_request, response) {
   response.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   return response.status(200).send([
     'https://spine-link.vercel.app/',
+    'https://spine-link.vercel.app/amp.html',
     'https://spine-link.vercel.app/spine-preview.html',
     'https://spine-link.vercel.app/spine-link-video.html',
     'https://spine-link.vercel.app/spine-online-video.html',

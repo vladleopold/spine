@@ -1,5 +1,6 @@
 const urls = [
   'https://spine-link.vercel.app/',
+  'https://spine-link.vercel.app/amp.html',
   'https://spine-link.vercel.app/spine-preview.html',
   'https://spine-link.vercel.app/spine-link-video.html',
   'https://spine-link.vercel.app/spine-online-video.html',
