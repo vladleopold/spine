@@ -326,8 +326,9 @@ function clearStoredGoogleSession() {
 }
 
 function readStoredProfileVisibility() {
-  if (typeof window === "undefined") return false;
-  return window.localStorage.getItem(profileVisibilityStorageKey) === "true";
+  if (typeof window === "undefined") return true;
+  const storedValue = window.localStorage.getItem(profileVisibilityStorageKey);
+  return storedValue === null ? true : storedValue === "true";
 }
 
 function storeProfileVisibility(value: boolean) {
@@ -1949,7 +1950,7 @@ export function App({ initialFiles }: AppProps) {
         throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
       }
       setLibraryEntries(Array.isArray(result.entries) ? result.entries : []);
-      setProfileVisibilityStatus(nextValue ? "Profile will be shown on shared pages" : "Profile is hidden on shared pages");
+      setProfileVisibilityStatus(nextValue ? "Your name is visible" : "Your name is hidden");
     } catch (nextError) {
       setProfileVisibilityStatus(nextError instanceof Error ? nextError.message : "Could not save profile setting.");
     }
@@ -2547,31 +2548,26 @@ export function App({ initialFiles }: AppProps) {
 
           <div className="library-profile-settings">
             <div className="library-profile-settings-copy">
-              <div className="section-title">Shared pages</div>
-              <strong>Show profile and library</strong>
-              <span>
-                When enabled, publication pages you share can show your profile and other public uploads from this library.
-              </span>
-              {showProfileOnSharedPages && (
-                <a href={publicLibraryUrl} target="_blank" rel="noreferrer">
-                  {publicLibraryUrl}
-                </a>
-              )}
+              <div className="section-title">Library link</div>
+              <strong>Share a link to your library</strong>
+              <a href={publicLibraryUrl} target="_blank" rel="noreferrer">
+                {publicLibraryUrl}
+              </a>
               {profileVisibilityStatus && <em>{profileVisibilityStatus}</em>}
             </div>
             <div className="library-profile-settings-actions">
-              <button
-                className={showProfileOnSharedPages ? "active" : ""}
-                type="button"
-                onClick={() => void updateSharedProfileVisibility(!showProfileOnSharedPages)}
-                aria-pressed={showProfileOnSharedPages}
-              >
-                {showProfileOnSharedPages ? <Eye size={17} /> : <EyeOff size={17} />}
-                {showProfileOnSharedPages ? "Visible" : "Hidden"}
-              </button>
-              <button type="button" onClick={copyPublicLibraryLink} disabled={!showProfileOnSharedPages}>
+              <button type="button" onClick={copyPublicLibraryLink}>
                 <Copy size={17} />
                 Copy link
+              </button>
+              <button
+                className={!showProfileOnSharedPages ? "active" : ""}
+                type="button"
+                onClick={() => void updateSharedProfileVisibility(!showProfileOnSharedPages)}
+                aria-pressed={!showProfileOnSharedPages}
+              >
+                {showProfileOnSharedPages ? <EyeOff size={17} /> : <Eye size={17} />}
+                {showProfileOnSharedPages ? "Hide my name" : "Show my name"}
               </button>
             </div>
           </div>

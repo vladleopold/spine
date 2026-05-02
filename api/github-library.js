@@ -45,8 +45,9 @@ async function githubText(settings, path) {
 
 function createLibraryHtml({ origin, publicOwnerId, entries }) {
   const firstEntry = entries[0] || {};
-  const ownerName = escapeHtml(firstEntry.ownerName || 'Spine-Link creator');
-  const ownerPicture = safeImage(firstEntry.ownerPicture || '');
+  const showOwnerName = firstEntry.showOwnerLibrary !== false;
+  const ownerName = escapeHtml(showOwnerName ? firstEntry.ownerName || 'Spine-Link creator' : 'Spine-Link library');
+  const ownerPicture = showOwnerName ? safeImage(firstEntry.ownerPicture || '') : '';
   const title = `${ownerName} - Spine-Link public library`;
   const cards = entries
     .map((entry) => {
@@ -146,7 +147,7 @@ export default async function handler(request, response) {
     const indexText = await githubText(settings, `${settings.basePath}/index.json`);
     const allEntries = indexText ? JSON.parse(indexText) : [];
     const entries = Array.isArray(allEntries)
-      ? allEntries.filter((entry) => entry?.showOwnerLibrary && String(entry?.publicOwnerId || '') === publicOwnerId)
+      ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId)
       : [];
     entries.sort((a, b) => String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || '')));
 
