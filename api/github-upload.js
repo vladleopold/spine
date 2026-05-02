@@ -186,6 +186,16 @@ function compareLibraryEntries(a, b) {
   return String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || ''));
 }
 
+function isSameLibraryOwner(entry, targetEntry) {
+  const publicOwnerId = String(targetEntry?.publicOwnerId || '');
+  const ownerEmail = String(targetEntry?.ownerEmail || '').toLowerCase();
+  const ownerAnonId = String(targetEntry?.ownerAnonId || '').toLowerCase();
+  const samePublicOwner = publicOwnerId && String(entry?.publicOwnerId || '') === publicOwnerId;
+  const sameEmail = ownerEmail && String(entry?.ownerEmail || '').toLowerCase() === ownerEmail;
+  const sameAnon = ownerAnonId && String(entry?.ownerAnonId || '').toLowerCase() === ownerAnonId;
+  return Boolean(samePublicOwner || sameEmail || sameAnon);
+}
+
 async function getGitHubContent(settings, path) {
   const encodedPath = encodeURIComponent(path).replace(/%2F/g, '/');
   const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${encodedPath}?ref=${encodeURIComponent(settings.branch)}`, {
@@ -372,25 +382,24 @@ export default async function handler(request, response) {
       const targetEntry = currentEntries.find((currentEntry) => String(currentEntry?.id || '') === entryId);
       if (!targetEntry) return response.status(404).json({ error: 'Library entry not found' });
       if (!canEditEntry(targetEntry, googlePayload, anonymousAccount)) throw unauthorized('Only the owner can reorder this library', 403);
-      const publicOwnerId = String(targetEntry.publicOwnerId || '');
-      const visibleOwnerEntries = currentEntries
-        .filter((currentEntry) => String(currentEntry?.publicOwnerId || '') === publicOwnerId && currentEntry?.hiddenFromPublicLibrary !== true)
+      const ownerEntries = currentEntries
+        .filter((currentEntry) => isSameLibraryOwner(currentEntry, targetEntry))
         .sort(compareLibraryEntries);
-      const currentPosition = visibleOwnerEntries.findIndex((currentEntry) => String(currentEntry?.id || '') === entryId);
+      const currentPosition = ownerEntries.findIndex((currentEntry) => String(currentEntry?.id || '') === entryId);
       const nextPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1;
-      if (currentPosition < 0 || nextPosition < 0 || nextPosition >= visibleOwnerEntries.length) {
-        return response.status(200).json({ ok: true, entries: visibleOwnerEntries, changed: false });
+      if (currentPosition < 0 || nextPosition < 0 || nextPosition >= ownerEntries.length) {
+        return response.status(200).json({ ok: true, entries: ownerEntries, changed: false });
       }
-      const nextVisibleEntries = [...visibleOwnerEntries];
-      const [movedEntry] = nextVisibleEntries.splice(currentPosition, 1);
-      nextVisibleEntries.splice(nextPosition, 0, movedEntry);
-      const orderById = new Map(nextVisibleEntries.map((entry, index) => [String(entry.id || ''), index + 1]));
+      const nextOwnerEntries = [...ownerEntries];
+      const [movedEntry] = nextOwnerEntries.splice(currentPosition, 1);
+      nextOwnerEntries.splice(nextPosition, 0, movedEntry);
+      const orderById = new Map(nextOwnerEntries.map((entry, index) => [String(entry.id || ''), index + 1]));
       const nextEntries = currentEntries.map((currentEntry) => {
         const nextOrder = orderById.get(String(currentEntry?.id || ''));
         return nextOrder ? { ...currentEntry, libraryOrder: nextOrder } : currentEntry;
       });
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update public library order`, currentIndex?.sha, origin);
-      return response.status(200).json({ ok: true, entries: nextVisibleEntries.map((entry, index) => ({ ...entry, libraryOrder: index + 1 })), changed: true });
+      return response.status(200).json({ ok: true, entries: nextOwnerEntries.map((entry, index) => ({ ...entry, libraryOrder: index + 1 })), changed: true });
     }
 
     if (action === 'update-profile-visibility') {
@@ -424,7 +433,7 @@ export default async function handler(request, response) {
         const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
         const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
         return (userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId);
-      });
+      }).sort(compareLibraryEntries);
       return response.status(200).json({ ok: true, entries, changed });
     }
 
@@ -456,7 +465,7 @@ export default async function handler(request, response) {
         const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
         const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
         return (userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId);
-      });
+      }).sort(compareLibraryEntries);
       return response.status(200).json({ ok: true, entries });
     }
 
@@ -500,7 +509,7 @@ export default async function handler(request, response) {
         const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
         const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
         return ownerEmail === userEmail || ownerAnonId === anonymousId;
-      });
+      }).sort(compareLibraryEntries);
       return response.status(200).json({ ok: true, entries, merged: changed });
     }
 

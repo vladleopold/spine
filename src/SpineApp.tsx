@@ -188,6 +188,31 @@ declare global {
 const extensionOf = (name: string) => name.split(".").pop()?.toLowerCase() ?? "";
 const basename = (path: string) => path.split(/[\\/]/).pop() ?? path;
 const base62Alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+function compareLibraryEntries(a: LibraryEntry, b: LibraryEntry) {
+  const aOrder = Number(a.libraryOrder);
+  const bOrder = Number(b.libraryOrder);
+  const hasAOrder = Number.isFinite(aOrder);
+  const hasBOrder = Number.isFinite(bOrder);
+  if (hasAOrder && hasBOrder && aOrder !== bOrder) return aOrder - bOrder;
+  if (hasAOrder !== hasBOrder) return hasAOrder ? -1 : 1;
+  return String(b.uploadedAt || "").localeCompare(String(a.uploadedAt || ""));
+}
+
+function normalizeLibraryOrder(entries: LibraryEntry[]) {
+  return [...entries].sort(compareLibraryEntries).map((entry, index) => ({ ...entry, libraryOrder: index + 1 }));
+}
+
+function moveLibraryEntryInList(entries: LibraryEntry[], entryId: string, direction: "up" | "down") {
+  const nextEntries = normalizeLibraryOrder(entries);
+  const currentPosition = nextEntries.findIndex((currentEntry) => currentEntry.id === entryId);
+  const nextPosition = direction === "up" ? currentPosition - 1 : currentPosition + 1;
+  if (currentPosition < 0 || nextPosition < 0 || nextPosition >= nextEntries.length) return nextEntries;
+  const [movedEntry] = nextEntries.splice(currentPosition, 1);
+  nextEntries.splice(nextPosition, 0, movedEntry);
+  return nextEntries.map((currentEntry, index) => ({ ...currentEntry, libraryOrder: index + 1 }));
+}
+
 const googleClientId =
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
   "452954491878-ebeqoeg5h7pr968uev0qbmtpsadg5mj3.apps.googleusercontent.com";
@@ -2059,6 +2084,7 @@ export function App({ initialFiles }: AppProps) {
   const moveLibraryEntry = async (entry: LibraryEntry, direction: "up" | "down") => {
     setLibraryError("");
     setProfileVisibilityStatus("Saving order...");
+    setLibraryEntries((currentEntries) => moveLibraryEntryInList(currentEntries, entry.id, direction));
     try {
       const requestHeaders: Record<string, string> = {
         "Content-Type": "application/json",
@@ -2079,9 +2105,14 @@ export function App({ initialFiles }: AppProps) {
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
-      await loadLibrary();
+      if (Array.isArray(result.entries)) {
+        setLibraryEntries(normalizeLibraryOrder(result.entries));
+      } else {
+        await loadLibrary();
+      }
       setProfileVisibilityStatus("Library order saved");
     } catch (nextError) {
+      await loadLibrary();
       setLibraryError(nextError instanceof Error ? nextError.message : "Could not save library order.");
       setProfileVisibilityStatus("");
     }
@@ -2153,7 +2184,7 @@ export function App({ initialFiles }: AppProps) {
       if (!response.ok) {
         throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
       }
-      setLibraryEntries(Array.isArray(result.entries) ? result.entries : []);
+      setLibraryEntries(Array.isArray(result.entries) ? normalizeLibraryOrder(result.entries) : []);
     } catch (nextError) {
       setGoogleAuthError(nextError instanceof Error ? nextError.message : "Could not merge browser library.");
     }
@@ -2184,7 +2215,7 @@ export function App({ initialFiles }: AppProps) {
         throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
       }
 
-      setLibraryEntries(Array.isArray(result.entries) ? result.entries : []);
+      setLibraryEntries(Array.isArray(result.entries) ? normalizeLibraryOrder(result.entries) : []);
     } catch (nextError) {
       setLibraryError(nextError instanceof Error ? nextError.message : "Could not load library.");
     } finally {
@@ -2241,7 +2272,7 @@ export function App({ initialFiles }: AppProps) {
       if (!response.ok) {
         throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
       }
-      setLibraryEntries(Array.isArray(result.entries) ? result.entries : []);
+      setLibraryEntries(Array.isArray(result.entries) ? normalizeLibraryOrder(result.entries) : []);
       setProfileVisibilityStatus(nextValue ? "Your name is visible" : "Your name is hidden");
     } catch (nextError) {
       setProfileVisibilityStatus(nextError instanceof Error ? nextError.message : "Could not save profile setting.");
