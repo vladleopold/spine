@@ -765,6 +765,18 @@ function textToBase64(text: string) {
   return btoa(unescape(encodeURIComponent(text)));
 }
 
+function editEntryIdFromLocation() {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("edit") || "";
+}
+
+async function fileFromLibraryPath(entry: LibraryEntry, fileName: string) {
+  const assetPath = joinRepoPath(entry.previewPath, fileName);
+  const response = await fetch(`/assets/${encodeRepoPath(assetPath)}`, { cache: "no-store" });
+  if (!response.ok) throw new Error(`Could not load ${fileName}`);
+  return new File([await response.blob()], basename(fileName), { type: response.headers.get("Content-Type") || "" });
+}
+
 function zoomedViewport(viewport: PreparedSpine["viewport"], zoomValue: number) {
   if (!viewport) return undefined;
 
@@ -1523,12 +1535,83 @@ export function App({ initialFiles }: AppProps) {
   );
 
   const initialFilesLoadedRef = useRef(false);
+  const editEntryLoadedRef = useRef(false);
 
   useEffect(() => {
     if (initialFilesLoadedRef.current || !initialFiles?.length) return;
     initialFilesLoadedRef.current = true;
     void prepareFromFiles(initialFiles);
   }, [initialFiles, prepareFromFiles]);
+
+  useEffect(() => {
+    const editEntryId = editEntryIdFromLocation();
+    if (editEntryLoadedRef.current || !editEntryId) return;
+    editEntryLoadedRef.current = true;
+
+    let isCancelled = false;
+    const loadEditableEntry = async () => {
+      setIsLoading(true);
+      setError("");
+      setStatus("Loading editable preview...");
+      try {
+        const requestHeaders: Record<string, string> = {
+          "Content-Type": "application/json",
+        };
+        if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
+        const response = await fetch("/api/github-upload", {
+          method: "POST",
+          headers: requestHeaders,
+          body: JSON.stringify({
+            action: "get-index",
+            googleIdToken,
+            anonymousAccount,
+            settings: githubPublishSettings,
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
+        const entry = (Array.isArray(result.entries) ? result.entries : []).find(
+          (candidate: LibraryEntry) => candidate.id === editEntryId,
+        ) as LibraryEntry | undefined;
+        if (!entry) throw new Error("This preview is not in your editable library.");
+        const entryFiles = Array.isArray(entry.files) ? entry.files : [];
+        const files = await Promise.all(entryFiles.map((fileName) => fileFromLibraryPath(entry, fileName)));
+        const nextSpineOptions = (await loadFiles(files)).map((set) => {
+          const isEntrySet = basename(set.skeletonName) === basename(entry.skeleton);
+          return isEntrySet && entry.defaultAnimation ? { ...set, defaultAnimation: entry.defaultAnimation } : set;
+        });
+        if (isCancelled) return;
+        const nextSpine =
+          nextSpineOptions.find((set) => basename(set.skeletonName) === basename(entry.skeleton)) ?? chooseInitialSet(nextSpineOptions);
+        resetPlayer();
+        setAnimations([]);
+        setActiveAnimation(entry.defaultAnimation || nextSpine?.defaultAnimation || "");
+        setZoom(1);
+        setSpineOptions(nextSpineOptions);
+        setPreparedSpine(nextSpine);
+        setCurrentLibraryEntry(entry);
+        setLibraryEntries((currentEntries) => [entry, ...currentEntries.filter((currentEntry) => currentEntry.id !== entry.id)]);
+        setPreviewNote(entry.note || "");
+        setGeneratedPreviewUrl(new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString());
+        setIsLinkBannerOpen(false);
+        setCopyStatus("");
+        setPreviewNoteStatus("");
+        publishedKeysRef.current.clear();
+        setStatus(`Editing "${entry.title || entry.id}". Choose an animation and save.`);
+      } catch (nextError) {
+        if (isCancelled) return;
+        setError(nextError instanceof Error ? nextError.message : "Could not load editable preview.");
+        setStatus("Edit stopped.");
+      } finally {
+        if (!isCancelled) setIsLoading(false);
+      }
+    };
+
+    void loadEditableEntry();
+    return () => {
+      isCancelled = true;
+    };
+  }, [anonymousAccount, googleIdToken, resetPlayer]);
 
   useEffect(() => {
     if (!configuredSpine || !playerHostRef.current) return;
@@ -2070,19 +2153,21 @@ export function App({ initialFiles }: AppProps) {
   };
 
   async function publishToGitHub(spine: PreparedSpine, animationNames: string[], defaultAnimation: string) {
+      const existingEntry = currentLibraryEntry;
       const nextSettings = {
         ...githubPublishSettings,
         owner: githubPublishSettings.owner.trim(),
         repo: githubPublishSettings.repo.trim(),
         branch: githubPublishSettings.branch.trim() || "main",
         basePath: cleanRepoPath(githubPublishSettings.basePath || "library"),
-        title: githubPublishSettings.title.trim() || spine.label,
+        title: existingEntry?.title || githubPublishSettings.title.trim() || spine.label,
       };
 
       if (!nextSettings.owner || !nextSettings.repo || isPublishingRef.current) return;
 
-      const publishKey = `${spine.label}:${spine.skeletonName}:${spine.atlasName}`;
-      if (publishedKeysRef.current.has(publishKey)) return;
+      const isEditingEntry = Boolean(existingEntry?.id);
+      const publishKey = `${existingEntry?.id || spine.label}:${spine.skeletonName}:${spine.atlasName}:${defaultAnimation}`;
+      if (!isEditingEntry && publishedKeysRef.current.has(publishKey)) return;
 
       isPublishingRef.current = true;
       setIsPublishingLink(true);
@@ -2090,8 +2175,8 @@ export function App({ initialFiles }: AppProps) {
 
       try {
         const uploadedAt = new Date().toISOString();
-        const uploadId = `${safePathSegment(nextSettings.title)}-${uploadedAt.replace(/[:.]/g, "-")}`;
-        const uploadPath = joinRepoPath(nextSettings.basePath, uploadId);
+        const uploadId = existingEntry?.id || `${safePathSegment(nextSettings.title)}-${uploadedAt.replace(/[:.]/g, "-")}`;
+        const uploadPath = cleanRepoPath(existingEntry?.previewPath || joinRepoPath(nextSettings.basePath, uploadId));
         const permanentPreviewUrl = new URL(`/p/${encodeURIComponent(uploadId)}`, window.location.origin).toString();
         const setsForPublish = spineOptions.length ? spineOptions : [spine];
         const note = limitWords(previewNote);
@@ -2111,7 +2196,7 @@ export function App({ initialFiles }: AppProps) {
           }
         }
         const files = Array.from(fileMap.entries()).map(([name, dataUri]) => ({ name, contentBase64: dataUriToBase64(dataUri) }));
-        const commitPrefix = `Add Spine preview ${nextSettings.title}`;
+        const commitPrefix = `${isEditingEntry ? "Update" : "Add"} Spine preview ${nextSettings.title}`;
 
         if (files.length < 3) {
           throw new Error("Could not collect skeleton, atlas, and texture for publishing.");
@@ -2150,15 +2235,16 @@ export function App({ initialFiles }: AppProps) {
 
         const entry: LibraryEntry = {
           id: uploadId,
-          title: nextSettings.title,
-          ownerEmail: googleUser?.email,
-          ownerName: googleUser?.name,
-          ownerPicture: googleUser?.picture,
-          publicOwnerId: publicOwnerIdFor(googleUser, anonymousAccount),
-          ownerAnonId: anonymousAccount.id,
-          ownerAnonFingerprint: anonymousAccount.fingerprint,
-          showOwnerLibrary: showProfileOnSharedPages,
-          uploadedAt,
+          title: nextSettings.title || existingEntry?.title || spine.label,
+          ownerEmail: googleUser?.email || existingEntry?.ownerEmail,
+          ownerName: googleUser?.name || existingEntry?.ownerName,
+          ownerPicture: googleUser?.picture || existingEntry?.ownerPicture,
+          publicOwnerId: existingEntry?.publicOwnerId || publicOwnerIdFor(googleUser, anonymousAccount),
+          ownerAnonId: existingEntry?.ownerAnonId || anonymousAccount.id,
+          ownerAnonFingerprint: existingEntry?.ownerAnonFingerprint || anonymousAccount.fingerprint,
+          showOwnerLibrary: existingEntry?.showOwnerLibrary ?? showProfileOnSharedPages,
+          hiddenFromPublicLibrary: existingEntry?.hiddenFromPublicLibrary,
+          uploadedAt: existingEntry?.uploadedAt || uploadedAt,
           skeleton: spine.skeletonName,
           atlas: spine.atlasName,
           textures: Array.from(new Set(setsForPublish.flatMap((nextSpine) => nextSpine.atlasPages.map(basename)))),
@@ -2166,7 +2252,7 @@ export function App({ initialFiles }: AppProps) {
           defaultAnimation,
           files: files.map((file) => file.name),
           previewPath: uploadPath,
-          repositoryUrl: "",
+          repositoryUrl: existingEntry?.repositoryUrl || "",
           ...(note ? { note } : {}),
           ...(thumbnail ? { thumbnail } : {}),
           ...(thumbnailType ? { thumbnailType } : {}),
@@ -2491,10 +2577,10 @@ export function App({ initialFiles }: AppProps) {
                     if (!preparedSpine || !animations.length || !activeAnimation) return;
                     void publishToGitHub(preparedSpine, animations, activeAnimation);
                   }}
-                  disabled={Boolean(generatedPreviewUrl) || !preparedSpine || !animations.length || !activeAnimation || isPublishingLink}
+                  disabled={(!currentLibraryEntry && Boolean(generatedPreviewUrl)) || !preparedSpine || !animations.length || !activeAnimation || isPublishingLink}
                 >
                   {isPublishingLink ? <Loader2 className="spin" size={16} /> : <LinkIcon size={16} />}
-                  Create
+                  {currentLibraryEntry ? "Save" : "Create"}
                 </button>
                 {generatedPreviewUrl ? (
                   <a href={generatedPreviewUrl} target="_blank" rel="noreferrer">
@@ -2628,6 +2714,7 @@ export function App({ initialFiles }: AppProps) {
             <div className="library-grid">
               {libraryEntries.map((entry, index) => {
                 const previewUrl = new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString();
+                const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
                 return (
                   <div
@@ -2658,7 +2745,7 @@ export function App({ initialFiles }: AppProps) {
                     </div>
                     </a>
                     <div className="library-card-actions" aria-label={`${entry.title || entry.id} actions`}>
-                      <a href={previewUrl} target="_blank" rel="noreferrer">Edit</a>
+                      <a href={editUrl}>Edit</a>
                       <button type="button" onClick={() => void updateLibraryEntryVisibility(entry, !entry.hiddenFromPublicLibrary)}>
                         {entry.hiddenFromPublicLibrary ? "Show" : "Hide"}
                       </button>

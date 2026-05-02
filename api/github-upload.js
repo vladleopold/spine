@@ -285,7 +285,8 @@ export default async function handler(request, response) {
       const contentBase64 = String(file?.contentBase64 || body?.contentBase64 || '');
       const message = String(body?.message || `${commitPrefix}: ${path.split('/').pop() || 'file'}`);
       if (!path || !contentBase64) return response.status(400).json({ error: 'Invalid file payload' });
-      await putGitHubContent(settings, path, contentBase64, message, undefined, origin);
+      const existingFile = await getGitHubContent(settings, path);
+      await putGitHubContent(settings, path, contentBase64, message, existingFile?.sha, origin);
       return response.status(200).json({ ok: true, path });
     }
 
@@ -456,11 +457,17 @@ export default async function handler(request, response) {
     if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
 
     for (const file of files) {
-      await putGitHubContent(settings, joinRepoPath(uploadPath, file.name), file.contentBase64, `${commitPrefix}: ${file.name}`, undefined, origin);
+      const filePath = joinRepoPath(uploadPath, file.name);
+      const currentFile = await getGitHubContent(settings, filePath);
+      await putGitHubContent(settings, filePath, file.contentBase64, `${commitPrefix}: ${file.name}`, currentFile?.sha, origin);
     }
 
-    await putGitHubContent(settings, joinRepoPath(uploadPath, 'preview.html'), textToBase64(previewHtml), `${commitPrefix}: preview.html`, undefined, origin);
-    await putGitHubContent(settings, joinRepoPath(uploadPath, 'manifest.json'), textToBase64(JSON.stringify(entry, null, 2)), `${commitPrefix}: manifest.json`, undefined, origin);
+    const previewPath = joinRepoPath(uploadPath, 'preview.html');
+    const manifestPath = joinRepoPath(uploadPath, 'manifest.json');
+    const currentPreview = await getGitHubContent(settings, previewPath);
+    const currentManifest = await getGitHubContent(settings, manifestPath);
+    await putGitHubContent(settings, previewPath, textToBase64(previewHtml), `${commitPrefix}: preview.html`, currentPreview?.sha, origin);
+    await putGitHubContent(settings, manifestPath, textToBase64(JSON.stringify(entry, null, 2)), `${commitPrefix}: manifest.json`, currentManifest?.sha, origin);
 
     const indexPath = joinRepoPath(settings.basePath, 'index.json');
     const currentIndex = await getGitHubContent(settings, indexPath);
