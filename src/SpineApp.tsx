@@ -78,7 +78,7 @@ type PlayerWithLoopControls = SpinePlayerInstance & {
       defaultMix?: number;
       setMix?: (fromName: string, toName: string, duration: number) => void;
     };
-    getCurrent?: (trackIndex: number) => { loop?: boolean } | null;
+    getCurrent?: (trackIndex: number) => { loop?: boolean; animation?: { duration?: number } } | null;
   } | null;
 };
 
@@ -880,6 +880,17 @@ function blobToDataUri(blob: Blob) {
   });
 }
 
+function compositeImageDataOnBackground(rgba: Uint8ClampedArray, background: [number, number, number]) {
+  for (let index = 0; index < rgba.length; index += 4) {
+    const alpha = rgba[index + 3] / 255;
+    if (alpha >= 1) continue;
+    rgba[index] = Math.round(rgba[index] * alpha + background[0] * (1 - alpha));
+    rgba[index + 1] = Math.round(rgba[index + 1] * alpha + background[1] * (1 - alpha));
+    rgba[index + 2] = Math.round(rgba[index + 2] * alpha + background[2] * (1 - alpha));
+    rgba[index + 3] = 255;
+  }
+}
+
 async function createCanvasImageThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 360, height = 220) {
   if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
 
@@ -902,7 +913,7 @@ async function createCanvasImageThumbnail(sourceCanvas?: HTMLCanvasElement | nul
   return canvas.toDataURL("image/webp", 0.86);
 }
 
-async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 360, height = 220) {
+async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | null, durationSeconds = 1.8, width = 360, height = 220) {
   if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
 
   try {
@@ -913,9 +924,10 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
     const context = canvas.getContext("2d", { willReadFrequently: true });
     if (!context) return "";
 
-    const gif = GIFEncoder({ initialCapacity: 512 * 1024 });
-    const frameCount = 12;
-    const frameDelay = 95;
+    const gif = GIFEncoder({ initialCapacity: 1024 * 1024 });
+    const frameDelay = 80;
+    const captureDuration = Math.max(1.6, Math.min(4, durationSeconds));
+    const frameCount = Math.max(20, Math.min(50, Math.round((captureDuration * 1000) / frameDelay)));
     const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
     const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
     const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
@@ -929,7 +941,8 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
       context.fillRect(0, 0, width, height);
       context.drawImage(sourceCanvas, offsetX, offsetY, nextWidth, nextHeight);
       const rgba = context.getImageData(0, 0, width, height).data;
-      const palette = quantize(rgba, 160, { format: "rgb444" });
+      compositeImageDataOnBackground(rgba, [5, 6, 7]);
+      const palette = quantize(rgba, 256, { format: "rgb444" });
       const index = applyPalette(rgba, palette, "rgb444");
       gif.writeFrame(index, width, height, { palette, delay: frameDelay, repeat: 0 });
     }
@@ -942,6 +955,12 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
   } catch {
     return "";
   }
+}
+
+function currentAnimationDurationSeconds(player: SpinePlayerInstance | null) {
+  const current = (player as PlayerWithLoopControls | null)?.animationState?.getCurrent?.(0);
+  const duration = Number(current?.animation?.duration);
+  return Number.isFinite(duration) && duration > 0 ? duration : 1.8;
 }
 
 function stripPackedPlaceholders(value: unknown) {
@@ -2394,7 +2413,7 @@ export function App({ initialFiles }: AppProps) {
         const setsForPublish = spineOptions.length ? spineOptions : [spine];
         const note = limitWords(previewNote);
         const playerCanvas = (playerRef.current as unknown as { canvas?: HTMLCanvasElement | null } | null)?.canvas;
-        const animatedThumbnail = await createAnimatedCanvasThumbnail(playerCanvas);
+        const animatedThumbnail = await createAnimatedCanvasThumbnail(playerCanvas, currentAnimationDurationSeconds(playerRef.current));
         const animatedThumbnailPoster = animatedThumbnail ? await createCanvasImageThumbnail(playerCanvas) : "";
         const thumbnailSourceName = spine.atlasPages[0] ? basename(spine.atlasPages[0]) : "";
         const thumbnailSource = thumbnailSourceName
