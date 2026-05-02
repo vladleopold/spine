@@ -460,6 +460,18 @@ export default async function handler(request, response) {
       return response.status(200).json({ ok: true, entries });
     }
 
+    if (action === 'get-entry') {
+      if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+      const entryId = String(body?.entryId || '').trim();
+      if (!entryId) return response.status(400).json({ error: 'Invalid entry payload' });
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const currentIndex = await getGitHubContent(settings, indexPath);
+      const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
+      const entry = currentEntries.find((currentEntry) => String(currentEntry?.id || '') === entryId);
+      if (!entry) return response.status(404).json({ error: 'Library entry not found' });
+      return response.status(200).json({ ok: true, entry, canEdit: canEditEntry(entry, googlePayload, anonymousAccount) });
+    }
+
     if (action === 'merge-anonymous-account') {
       if (!googlePayload?.email) throw unauthorized('Sign in with Google before merging library');
       if (!anonymousAccount) throw unauthorized('Anonymous account is required');

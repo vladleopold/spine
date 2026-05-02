@@ -1638,32 +1638,44 @@ export function App({ initialFiles }: AppProps) {
     editEntryLoadedRef.current = true;
 
     let isCancelled = false;
+    const fetchLibraryAction = async (action: "get-index" | "get-entry") => {
+      const requestHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
+      return fetch("/api/github-upload", {
+        method: "POST",
+        headers: requestHeaders,
+        body: JSON.stringify({
+          action,
+          googleIdToken,
+          anonymousAccount,
+          settings: githubPublishSettings,
+          ...(action === "get-entry" ? { entryId: editEntryId } : {}),
+        }),
+      });
+    };
+
     const loadEditableEntry = async () => {
       setIsLoading(true);
       setError("");
       setStatus("Loading editable preview...");
       try {
-        const requestHeaders: Record<string, string> = {
-          "Content-Type": "application/json",
-        };
-        if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
-        const response = await fetch("/api/github-upload", {
-          method: "POST",
-          headers: requestHeaders,
-          body: JSON.stringify({
-            action: "get-index",
-            googleIdToken,
-            anonymousAccount,
-            settings: githubPublishSettings,
-          }),
-        });
+        let response = await fetchLibraryAction("get-index");
         const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
-        const entry = (Array.isArray(result.entries) ? result.entries : []).find(
+        let entry = (Array.isArray(result.entries) ? result.entries : []).find(
           (candidate: LibraryEntry) => candidate.id === editEntryId,
         ) as LibraryEntry | undefined;
-        if (!entry) throw new Error("This preview is not in your editable library.");
+        if (!entry) {
+          response = await fetchLibraryAction("get-entry");
+          const entryResult = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(typeof entryResult?.error === "string" ? entryResult.error : `Library API ${response.status}`);
+          entry = entryResult.entry as LibraryEntry | undefined;
+        }
+        if (!entry) throw new Error("This preview is not in the library.");
         const entryFiles = Array.isArray(entry.files) ? entry.files : [];
+        if (!entryFiles.length) throw new Error("This preview has no editable files.");
         const files = await Promise.all(entryFiles.map((fileName) => fileFromLibraryPath(entry, fileName)));
         const nextSpineOptions = (await loadFiles(files)).map((set) => {
           const isEntrySet = basename(set.skeletonName) === basename(entry.skeleton);
