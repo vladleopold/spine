@@ -134,6 +134,9 @@ type LibraryEntry = {
   thumbnailPoster?: string;
   thumbnailType?: "gif" | "image";
   webmPreview?: string;
+  thumbnailPath?: string;
+  thumbnailPosterPath?: string;
+  webmPreviewPath?: string;
 };
 
 type UploadResponse = {
@@ -805,6 +808,15 @@ function previewUrlForEntry(entryId: string, animationName = "") {
   return url.toString();
 }
 
+function assetUrlForRepoPath(path: string) {
+  return `${window.location.origin}/assets/${encodeRepoPath(path)}`;
+}
+
+function safePreviewFileName(name: string, fallback: string) {
+  const cleaned = safePathSegment(name.replace(/\.[^.]+$/g, ""));
+  return cleaned ? `${cleaned}-${fallback}` : fallback;
+}
+
 async function fileFromLibraryPath(entry: LibraryEntry, fileName: string) {
   const assetPath = joinRepoPath(entry.previewPath, fileName);
   const response = await fetch(`/assets/${encodeRepoPath(assetPath)}`, { cache: "no-store" });
@@ -926,9 +938,9 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
     if (!context) return "";
 
     const gif = GIFEncoder({ initialCapacity: 1024 * 1024 });
-    const frameDelay = 80;
-    const captureDuration = Math.max(1.6, Math.min(4, durationSeconds));
-    const frameCount = Math.max(20, Math.min(50, Math.round((captureDuration * 1000) / frameDelay)));
+    const captureDuration = Math.max(0.25, durationSeconds);
+    const frameCount = Math.max(20, Math.min(50, Math.round(captureDuration * 12.5)));
+    const frameDelay = Math.max(20, Math.round((captureDuration * 1000) / frameCount));
     const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
     const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
     const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
@@ -971,7 +983,7 @@ async function createWebmCanvasPreview(sourceCanvas?: HTMLCanvasElement | null, 
     canvas.width = width;
     canvas.height = height;
     const context = canvas.getContext("2d");
-    const stream = canvas.captureStream(24);
+    const stream = canvas.captureStream(30);
     if (!context || !stream) return "";
 
     const chunks: BlobPart[] = [];
@@ -984,9 +996,9 @@ async function createWebmCanvasPreview(sourceCanvas?: HTMLCanvasElement | null, 
     const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
     const offsetX = Math.round((width - nextWidth) / 2);
     const offsetY = Math.round((height - nextHeight) / 2);
-    const captureDuration = Math.max(1.6, Math.min(4, durationSeconds));
-    const frameDelay = 1000 / 24;
-    const frameCount = Math.max(38, Math.min(96, Math.round((captureDuration * 1000) / frameDelay)));
+    const captureDuration = Math.max(0.25, durationSeconds);
+    const frameDelay = 1000 / 30;
+    const frameCount = Math.max(1, Math.round(captureDuration * 30));
 
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) chunks.push(event.data);
@@ -1067,7 +1079,7 @@ function stripPackedPlaceholders(value: unknown) {
 }
 
 function isWebmPreview(value = "") {
-  return /^data:video\/webm;base64,/i.test(value);
+  return /^data:video\/webm;base64,/i.test(value) || /^https:\/\/[^\s"'<>]+\.webm(?:[?#][^\s"'<>]*)?$/i.test(value);
 }
 
 function isAnimatedThumbnail(entry: Pick<LibraryEntry, "thumbnail" | "thumbnailType" | "webmPreview">) {
@@ -2511,6 +2523,15 @@ export function App({ initialFiles }: AppProps) {
             fileMap.set(`${nextSpine.label}/${file.name}`, file.dataUri);
           }
         }
+        const animatedThumbnailName = safePreviewFileName(defaultAnimation || "animation", "preview.gif");
+        const webmPreviewName = safePreviewFileName(defaultAnimation || "animation", "preview.webm");
+        const thumbnailPosterName = safePreviewFileName(defaultAnimation || "animation", "thumbnail.webp");
+        const animatedThumbnailPath = animatedThumbnail ? joinRepoPath(uploadPath, animatedThumbnailName) : "";
+        const webmPreviewPath = webmPreview ? joinRepoPath(uploadPath, webmPreviewName) : "";
+        const thumbnailPosterPath = animatedThumbnailPoster ? joinRepoPath(uploadPath, thumbnailPosterName) : "";
+        if (animatedThumbnail) fileMap.set(animatedThumbnailName, animatedThumbnail);
+        if (webmPreview) fileMap.set(webmPreviewName, webmPreview);
+        if (animatedThumbnailPoster) fileMap.set(thumbnailPosterName, animatedThumbnailPoster);
         const files = Array.from(fileMap.entries()).map(([name, dataUri]) => ({ name, contentBase64: dataUriToBase64(dataUri) }));
         const commitPrefix = `${isEditingEntry ? "Update" : "Add"} Spine preview ${nextSettings.title}`;
 
@@ -2570,10 +2591,18 @@ export function App({ initialFiles }: AppProps) {
           previewPath: uploadPath,
           repositoryUrl: existingEntry?.repositoryUrl || "",
           ...(note ? { note } : {}),
-          ...(thumbnail ? { thumbnail } : {}),
-          ...(animatedThumbnailPoster ? { thumbnailPoster: animatedThumbnailPoster } : existingEntry?.thumbnailPoster ? { thumbnailPoster: existingEntry.thumbnailPoster } : {}),
+          ...(animatedThumbnailPath ? { thumbnail: assetUrlForRepoPath(animatedThumbnailPath), thumbnailPath: animatedThumbnailPath } : thumbnail ? { thumbnail } : {}),
+          ...(thumbnailPosterPath
+            ? { thumbnailPoster: assetUrlForRepoPath(thumbnailPosterPath), thumbnailPosterPath }
+            : existingEntry?.thumbnailPoster
+              ? { thumbnailPoster: existingEntry.thumbnailPoster, ...(existingEntry.thumbnailPosterPath ? { thumbnailPosterPath: existingEntry.thumbnailPosterPath } : {}) }
+              : {}),
           ...(thumbnailType ? { thumbnailType } : {}),
-          ...(webmPreview ? { webmPreview } : existingEntry?.webmPreview ? { webmPreview: existingEntry.webmPreview } : {}),
+          ...(webmPreviewPath
+            ? { webmPreview: assetUrlForRepoPath(webmPreviewPath), webmPreviewPath }
+            : existingEntry?.webmPreview
+              ? { webmPreview: existingEntry.webmPreview, ...(existingEntry.webmPreviewPath ? { webmPreviewPath: existingEntry.webmPreviewPath } : {}) }
+              : {}),
         };
         const indexRequestHeaders: Record<string, string> = {
           "Content-Type": "application/json",
