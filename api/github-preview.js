@@ -156,14 +156,16 @@ function createHtml(config) {
       .owner-profile strong, .owner-profile span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-profile strong { color: #fff; font-size: 16px; }
       .owner-profile span { color: rgba(231,237,244,.62); font-size: 12px; }
-      .owner-library { display: none; gap: 8px; }
-      .owner-library.is-visible { display: grid; }
-      .owner-library a { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; min-height: 78px; padding: 7px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); }
-      .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); }
-      .owner-thumb { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; background: rgba(255,255,255,.08); }
+      .owner-library { display: none; gap: 10px; }
+      .owner-library.is-visible { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); align-items: stretch; }
+      .owner-library a { position: relative; display: block; overflow: hidden; min-height: 154px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); isolation: isolate; }
+      .owner-library a::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.18) 45%, rgba(8,10,12,.82)); pointer-events: none; }
+      .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); transform: translateY(-2px); }
+      .owner-thumb { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; background: rgba(255,255,255,.08); transform: scale(1.08); transform-origin: center; }
+      .owner-library a > div { position: absolute; right: 10px; bottom: 10px; left: 10px; z-index: 2; display: grid; gap: 3px; min-width: 0; }
       .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .owner-library strong { color: #fff; font-size: 13px; }
-      .owner-library span { color: rgba(231,237,244,.58); font-size: 11px; }
+      .owner-library strong { color: #fff; font-size: 13px; text-shadow: 0 2px 12px rgba(0,0,0,.75); }
+      .owner-library span { color: rgba(231,237,244,.7); font-size: 11px; }
       @media (max-width: 760px) { body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } #player { height: 60vh; min-height: 360px; } .topbar { align-items: flex-start; flex-direction: column; } }
       .spine-link-loop-button { position: relative; margin-right: 12px !important; }
       .spine-player-controls { z-index: 4; }
