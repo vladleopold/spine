@@ -533,7 +533,7 @@ h1 {
 }
 
 .app-shell.is-empty .preview-panel {
-  opacity: 0.05;
+  visibility: hidden;
 }
 
 .app-shell.is-empty .drop-zone {
@@ -553,8 +553,7 @@ h1 {
 }
 
 .app-shell.is-empty .inspector > :not(.drop-zone) {
-  opacity: 0.12;
-  filter: brightness(0.72);
+  visibility: hidden;
 }
 
 .app-shell.is-empty .drop-zone svg {
@@ -1749,7 +1748,7 @@ h1 {
 }
 
 .app-shell.is-empty .inspector > :not(.drop-zone) {
-  opacity: 0.05;
+  visibility: hidden;
   filter: none;
   pointer-events: none;
 }

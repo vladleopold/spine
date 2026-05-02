@@ -2137,7 +2137,7 @@ function App() {
                 <span>Waiting for Spine files</span>
               </div>
             )}
-            <div className="player-host" ref={playerHostRef} aria-label="Spine preview canvas" />
+            <div className="player-host" ref={playerHostRef} />
             {generatedPreviewUrl && isLinkBannerOpen && (
               <div className="link-ready-banner" role="status" aria-live="polite">
                 <div className="link-ready-banner-main">
@@ -2189,73 +2189,77 @@ function App() {
                 </button>
               </div>
             </div>
-            <div className={`tree-drawer ${activeTreeDrawer ? "is-open" : ""}`} aria-hidden={!activeTreeDrawer}>
-              <div className={`tree-drawer-panel render-drawer ${activeTreeDrawer === "render" ? "is-active" : ""}`}>
-                <SlidersHorizontal size={20} />
-                <div className="render-settings">
-                  <div className="render-setting-group" aria-label="Premultiplied alpha">
-                    <span>PMA</span>
-                    <button
-                      className={activeRenderSettings.pma ? "active" : ""}
-                      disabled={!preparedSpine}
-                      type="button"
-                      onClick={() => updateActiveRenderSettings({ pma: true })}
-                    >
-                      true
-                    </button>
-                    <button
-                      className={!activeRenderSettings.pma ? "active" : ""}
-                      disabled={!preparedSpine}
-                      type="button"
-                      onClick={() => updateActiveRenderSettings({ pma: false })}
-                    >
-                      false
-                    </button>
-                  </div>
-                  <div className="render-setting-group" aria-label="Blend mode">
-                    <span>Blend</span>
-                    {(["original", "normal", "screen", "additive"] as BlendOverride[]).map((blendMode) => (
+            <div className={`tree-drawer ${activeTreeDrawer ? "is-open" : ""}`}>
+              {activeTreeDrawer === "render" && (
+                <div className="tree-drawer-panel render-drawer is-active">
+                  <SlidersHorizontal size={20} />
+                  <div className="render-settings">
+                    <div className="render-setting-group" aria-label="Premultiplied alpha">
+                      <span>PMA</span>
                       <button
-                        className={activeRenderSettings.blend === blendMode ? "active" : ""}
+                        className={activeRenderSettings.pma ? "active" : ""}
                         disabled={!preparedSpine}
-                        key={blendMode}
                         type="button"
-                        onClick={() => updateActiveRenderSettings({ blend: blendMode })}
+                        onClick={() => updateActiveRenderSettings({ pma: true })}
                       >
-                        {blendMode}
+                        true
                       </button>
-                    ))}
+                      <button
+                        className={!activeRenderSettings.pma ? "active" : ""}
+                        disabled={!preparedSpine}
+                        type="button"
+                        onClick={() => updateActiveRenderSettings({ pma: false })}
+                      >
+                        false
+                      </button>
+                    </div>
+                    <div className="render-setting-group" aria-label="Blend mode">
+                      <span>Blend</span>
+                      {(["original", "normal", "screen", "additive"] as BlendOverride[]).map((blendMode) => (
+                        <button
+                          className={activeRenderSettings.blend === blendMode ? "active" : ""}
+                          disabled={!preparedSpine}
+                          key={blendMode}
+                          type="button"
+                          onClick={() => updateActiveRenderSettings({ blend: blendMode })}
+                        >
+                          {blendMode}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={`tree-drawer-panel zoom-drawer ${activeTreeDrawer === "zoom" ? "is-active" : ""}`}>
-                <div className="zoom-panel">
-                  <div className="zoom-header">
-                    <div className="section-title">Zoom</div>
-                    <button type="button" onClick={() => changeZoom(1)} disabled={zoom === 1}>
-                      <RefreshCw size={15} />
-                      {Math.round(zoom * 100)}%
-                    </button>
-                  </div>
-                  <div className="zoom-controls">
-                    <button type="button" onClick={() => changeZoom(zoom - 0.1)} disabled={zoom <= 0.25} title="Zoom out">
-                      <ZoomOut size={17} />
-                    </button>
-                    <input
-                      type="range"
-                      min="0.25"
-                      max="4"
-                      step="0.05"
-                      value={zoom}
-                      onChange={(event) => changeZoom(Number(event.target.value))}
-                      aria-label="Preview zoom"
-                    />
-                    <button type="button" onClick={() => changeZoom(zoom + 0.1)} disabled={zoom >= 4} title="Zoom in">
-                      <ZoomIn size={17} />
-                    </button>
+              )}
+              {activeTreeDrawer === "zoom" && (
+                <div className="tree-drawer-panel zoom-drawer is-active">
+                  <div className="zoom-panel">
+                    <div className="zoom-header">
+                      <div className="section-title">Zoom</div>
+                      <button type="button" onClick={() => changeZoom(1)} disabled={zoom === 1}>
+                        <RefreshCw size={15} />
+                        {Math.round(zoom * 100)}%
+                      </button>
+                    </div>
+                    <div className="zoom-controls">
+                      <button type="button" onClick={() => changeZoom(zoom - 0.1)} disabled={zoom <= 0.25} title="Zoom out">
+                        <ZoomOut size={17} />
+                      </button>
+                      <input
+                        type="range"
+                        min="0.25"
+                        max="4"
+                        step="0.05"
+                        value={zoom}
+                        onChange={(event) => changeZoom(Number(event.target.value))}
+                        aria-label="Preview zoom"
+                      />
+                      <button type="button" onClick={() => changeZoom(zoom + 0.1)} disabled={zoom >= 4} title="Zoom in">
+                        <ZoomIn size={17} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
             <label
               className={`drop-zone ${isDragging ? "is-dragging" : ""}`}
@@ -2312,6 +2316,7 @@ function App() {
               <div className="section-title">Link</div>
               <div className="generated-link-row">
                 <input
+                  aria-label="Generated permanent preview link"
                   readOnly
                   value={
                     generatedPreviewUrl ||
