@@ -288,16 +288,11 @@ function createHtml(config) {
         items.forEach((item) => {
           const link = document.createElement("a");
           link.href = item.url;
-          link.target = "_blank";
-          link.rel = "noreferrer";
           const thumb = item.thumbnail ? document.createElement("img") : document.createElement("div");
           thumb.className = "owner-thumb";
           if (item.thumbnail) {
             thumb.src = item.thumbnail;
             thumb.alt = "";
-          }
-          if (item.thumbnailType === "gif") {
-            thumb.title = "Animated GIF preview";
           }
           const text = document.createElement("div");
           const title = document.createElement("strong");
