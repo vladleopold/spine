@@ -84,10 +84,6 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
             <small>${animations} animations · ${escapeHtml(dateText)}</small>
           </div>
         </a>
-        <div class="order-actions" aria-label="Change ${itemTitle} order">
-          <button type="button" data-order="up" data-entry-id="${entryId}">Up</button>
-          <button type="button" data-order="down" data-entry-id="${entryId}">Down</button>
-        </div>
       </article>`;
     })
     .join('');
@@ -124,13 +120,9 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       .thumb { position: absolute; inset: 0; display: grid; place-items: center; min-height: 100%; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
       .thumb img { width: 100%; height: 100%; object-fit: cover; }
       .thumb-fallback { color: #fff; font-size: 56px; font-weight: 900; }
-      .card-body { position: absolute; right: 0; bottom: 48px; left: 0; z-index: 1; display: grid; gap: 7px; padding: 15px; background: rgba(32,35,38,.5); backdrop-filter: blur(10px); }
+      .card-body { position: absolute; right: 0; bottom: 0; left: 0; z-index: 1; display: grid; gap: 7px; padding: 15px; background: rgba(32,35,38,.5); backdrop-filter: blur(10px); }
       .card-body strong, .card-body span, .card-body small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .card-body span, .card-body small { color: rgba(237,245,255,.64); }
-      .order-actions { position: absolute; right: 12px; bottom: 12px; left: 12px; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-      .order-actions button { min-height: 34px; border: 1px solid rgba(179,255,64,.42); border-radius: 7px; color: #f4ffe8; background: rgba(11,16,18,.72); font: inherit; font-size: 12px; font-weight: 900; cursor: pointer; backdrop-filter: blur(8px); }
-      .order-actions button:hover { border-color: rgba(179,255,64,.8); background: rgba(179,255,64,.16); }
-      .order-actions button:disabled { cursor: default; opacity: .5; }
       .empty { padding: 34px; border: 1px dashed rgba(255,255,255,.16); border-radius: 8px; color: rgba(237,245,255,.68); text-align: center; }
       @media (max-width: 640px) { * { scrollbar-width: none; } *::-webkit-scrollbar { width: 0; height: 0; display: none; } .profile { grid-template-columns: 1fr; } .top { align-items: flex-start; flex-direction: column; } }
     </style>
@@ -148,40 +140,6 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       ${entries.length ? `<section class="grid">${cards}</section>` : '<div class="empty">This public library is empty or hidden.</div>'}
     </main>
     <script>
-      const anonymousAccountStorageKey = "spine-link-anonymous-account";
-      function readAnonymousAccount() {
-        try { return JSON.parse(window.localStorage.getItem(anonymousAccountStorageKey) || "null"); }
-        catch { return null; }
-      }
-      async function moveLibraryEntry(entryId, direction, button) {
-        const anonymousAccount = readAnonymousAccount();
-        if (!anonymousAccount?.id) return;
-        button.disabled = true;
-        try {
-          const response = await fetch("/api/github-upload", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              action: "update-library-order",
-              anonymousAccount,
-              entryId,
-              direction,
-              commitPrefix: "Reorder Spine-Link public library"
-            })
-          });
-          if (!response.ok) throw new Error("Order was not saved");
-          window.location.reload();
-        } catch {
-          button.disabled = false;
-        }
-      }
-      document.querySelectorAll("[data-order]").forEach((button) => {
-        button.addEventListener("click", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          moveLibraryEntry(button.dataset.entryId || "", button.dataset.order || "", button);
-        });
-      });
       const animatedThumbs = Array.from(document.querySelectorAll("img[data-gif-src]"));
       const visibleThumbs = new Set();
       let rotationIndex = 0;

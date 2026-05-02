@@ -1305,11 +1305,21 @@ h1 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
+  margin: 0 14px 8px;
+}
+
+.library-card-order-actions {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
   margin: 0 14px 14px;
 }
 
 .library-card-actions a,
-.library-card-actions button {
+.library-card-actions button,
+.library-card-order-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1328,17 +1338,35 @@ h1 {
 }
 
 .library-card-actions a,
-.library-card-actions button:not(.danger) {
+.library-card-actions button:not(.danger),
+.library-card-order-actions button {
   border-color: rgba(140, 199, 255, 0.34);
   color: rgba(237, 245, 255, 0.82);
   background: rgba(140, 199, 255, 0.09);
 }
 
 .library-card-actions a:hover,
-.library-card-actions button:hover {
+.library-card-actions button:hover,
+.library-card-order-actions button:hover:not(:disabled) {
   border-color: rgba(140, 199, 255, 0.72);
   color: #fff;
   background: rgba(140, 199, 255, 0.18);
+}
+
+.library-card-order-actions button {
+  border-color: rgba(179, 255, 64, 0.44);
+  color: #dfffc2;
+  background: rgba(179, 255, 64, 0.08);
+}
+
+.library-card-order-actions button:hover:not(:disabled) {
+  border-color: rgba(179, 255, 64, 0.78);
+  background: rgba(179, 255, 64, 0.16);
+}
+
+.library-card-order-actions button:disabled {
+  cursor: default;
+  opacity: 0.36;
 }
 
 .library-card-actions .danger:hover {

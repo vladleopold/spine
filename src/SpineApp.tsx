@@ -2035,6 +2035,37 @@ export function App({ initialFiles }: AppProps) {
     }
   };
 
+  const moveLibraryEntry = async (entry: LibraryEntry, direction: "up" | "down") => {
+    setLibraryError("");
+    setProfileVisibilityStatus("Saving order...");
+    try {
+      const requestHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
+      const response = await fetch("/api/github-upload", {
+        method: "POST",
+        headers: requestHeaders,
+        body: JSON.stringify({
+          action: "update-library-order",
+          googleIdToken,
+          anonymousAccount,
+          settings: githubPublishSettings,
+          entryId: entry.id,
+          direction,
+          commitPrefix: "Reorder Spine-Link library",
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
+      await loadLibrary();
+      setProfileVisibilityStatus("Library order saved");
+    } catch (nextError) {
+      setLibraryError(nextError instanceof Error ? nextError.message : "Could not save library order.");
+      setProfileVisibilityStatus("");
+    }
+  };
+
   const deleteLibraryEntry = async (entry: LibraryEntry) => {
     if (!window.confirm(`Delete "${entry.title || entry.id}" from library?`)) return;
     setLibraryError("");
@@ -2876,6 +2907,14 @@ export function App({ initialFiles }: AppProps) {
                       </button>
                       <button type="button" onClick={() => void copyLibraryEntryLink(previewUrl)}>Link</button>
                       <button className="danger" type="button" onClick={() => void deleteLibraryEntry(entry)}>Delete</button>
+                    </div>
+                    <div className="library-card-order-actions" aria-label={`${entry.title || entry.id} order`}>
+                      <button type="button" onClick={() => void moveLibraryEntry(entry, "up")} disabled={index === 0}>
+                        Up
+                      </button>
+                      <button type="button" onClick={() => void moveLibraryEntry(entry, "down")} disabled={index === libraryEntries.length - 1}>
+                        Down
+                      </button>
                     </div>
                   </div>
                 );
