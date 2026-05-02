@@ -1257,6 +1257,20 @@ h1 {
   pointer-events: none;
 }
 
+.library-card-webm {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.18);
+  transform-origin: center;
+  pointer-events: none;
+  opacity: 0.94;
+}
+
 .library-card.is-hidden {
   border-color: rgba(231, 237, 244, 0.32);
   filter: saturate(0.62);
@@ -1504,6 +1518,12 @@ h1 {
 
   .library-grid {
     column-count: 2;
+  }
+}
+
+@media (max-width: 760px), (pointer: coarse) {
+  .library-card-webm {
+    display: block;
   }
 }
 

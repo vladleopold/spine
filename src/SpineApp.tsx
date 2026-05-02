@@ -133,6 +133,7 @@ type LibraryEntry = {
   thumbnail?: string;
   thumbnailPoster?: string;
   thumbnailType?: "gif" | "image";
+  webmPreview?: string;
 };
 
 type UploadResponse = {
@@ -957,6 +958,65 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
   }
 }
 
+async function createWebmCanvasPreview(sourceCanvas?: HTMLCanvasElement | null, durationSeconds = 1.8, width = 360, height = 220) {
+  if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
+  if (typeof MediaRecorder === "undefined") return "";
+
+  const supportedMimeTypes = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"];
+  const mimeType = supportedMimeTypes.find((type) => MediaRecorder.isTypeSupported(type));
+  if (!mimeType) return "";
+
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    const stream = canvas.captureStream(24);
+    if (!context || !stream) return "";
+
+    const chunks: BlobPart[] = [];
+    const recorder = new MediaRecorder(stream, {
+      mimeType,
+      videoBitsPerSecond: 520_000,
+    });
+    const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
+    const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
+    const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
+    const offsetX = Math.round((width - nextWidth) / 2);
+    const offsetY = Math.round((height - nextHeight) / 2);
+    const captureDuration = Math.max(1.6, Math.min(4, durationSeconds));
+    const frameDelay = 1000 / 24;
+    const frameCount = Math.max(38, Math.min(96, Math.round((captureDuration * 1000) / frameDelay)));
+
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) chunks.push(event.data);
+    };
+    const stopped = new Promise<string>((resolve) => {
+      recorder.onstop = async () => {
+        stream.getTracks().forEach((track) => track.stop());
+        resolve(chunks.length ? await blobToDataUri(new Blob(chunks, { type: "video/webm" })) : "");
+      };
+      recorder.onerror = () => {
+        stream.getTracks().forEach((track) => track.stop());
+        resolve("");
+      };
+    });
+
+    recorder.start();
+    for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = "#050607";
+      context.fillRect(0, 0, width, height);
+      context.drawImage(sourceCanvas, offsetX, offsetY, nextWidth, nextHeight);
+      await wait(frameIndex === 0 ? 80 : frameDelay);
+    }
+    recorder.stop();
+    return stopped;
+  } catch {
+    return "";
+  }
+}
+
 function currentAnimationDurationSeconds(player: SpinePlayerInstance | null) {
   const current = (player as PlayerWithLoopControls | null)?.animationState?.getCurrent?.(0);
   const duration = Number(current?.animation?.duration);
@@ -1006,8 +1066,26 @@ function stripPackedPlaceholders(value: unknown) {
   return skeleton;
 }
 
-function isAnimatedThumbnail(entry: Pick<LibraryEntry, "thumbnail" | "thumbnailType">) {
-  return entry.thumbnailType === "gif" || /^data:image\/gif;base64,/i.test(entry.thumbnail || "");
+function isWebmPreview(value = "") {
+  return /^data:video\/webm;base64,/i.test(value);
+}
+
+function isAnimatedThumbnail(entry: Pick<LibraryEntry, "thumbnail" | "thumbnailType" | "webmPreview">) {
+  return entry.thumbnailType === "gif" || /^data:image\/gif;base64,/i.test(entry.thumbnail || "") || isWebmPreview(entry.webmPreview || "");
+}
+
+function useMobilePreviewMode() {
+  const [isMobilePreview, setIsMobilePreview] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 760px), (pointer: coarse)");
+    const sync = () => setIsMobilePreview(mediaQuery.matches);
+    sync();
+    mediaQuery.addEventListener("change", sync);
+    return () => mediaQuery.removeEventListener("change", sync);
+  }, []);
+
+  return isMobilePreview;
 }
 
 function useLimitedAnimatedThumbnails(entries: LibraryEntry[], isEnabled: boolean, maxActive = 2) {
@@ -1500,6 +1578,7 @@ export function App({ initialFiles }: AppProps) {
   const [showProfileOnSharedPages, setShowProfileOnSharedPages] = useState(() => readStoredProfileVisibility());
   const [profileVisibilityStatus, setProfileVisibilityStatus] = useState("");
   const [renderSettingsByLabel, setRenderSettingsByLabel] = useState<Record<string, SkeletonRenderSettings>>({});
+  const isMobilePreviewMode = useMobilePreviewMode();
   const activeAnimatedLibraryIds = useLimitedAnimatedThumbnails(libraryEntries, isLibraryOpen);
   const publicLibraryUrl = useMemo(
     () => new URL(`/u/${encodeURIComponent(publicOwnerIdFor(googleUser, anonymousAccount))}`, window.location.origin).toString(),
@@ -2413,8 +2492,12 @@ export function App({ initialFiles }: AppProps) {
         const setsForPublish = spineOptions.length ? spineOptions : [spine];
         const note = limitWords(previewNote);
         const playerCanvas = (playerRef.current as unknown as { canvas?: HTMLCanvasElement | null } | null)?.canvas;
-        const animatedThumbnail = await createAnimatedCanvasThumbnail(playerCanvas, currentAnimationDurationSeconds(playerRef.current));
-        const animatedThumbnailPoster = animatedThumbnail ? await createCanvasImageThumbnail(playerCanvas) : "";
+        const previewDuration = currentAnimationDurationSeconds(playerRef.current);
+        const [animatedThumbnail, webmPreview] = await Promise.all([
+          createAnimatedCanvasThumbnail(playerCanvas, previewDuration),
+          createWebmCanvasPreview(playerCanvas, previewDuration),
+        ]);
+        const animatedThumbnailPoster = animatedThumbnail || webmPreview ? await createCanvasImageThumbnail(playerCanvas) : "";
         const thumbnailSourceName = spine.atlasPages[0] ? basename(spine.atlasPages[0]) : "";
         const thumbnailSource = thumbnailSourceName
           ? spine.rawDataURIs[thumbnailSourceName] ?? spine.rawDataURIs[spine.atlasPages[0]]
@@ -2490,6 +2573,7 @@ export function App({ initialFiles }: AppProps) {
           ...(thumbnail ? { thumbnail } : {}),
           ...(animatedThumbnailPoster ? { thumbnailPoster: animatedThumbnailPoster } : existingEntry?.thumbnailPoster ? { thumbnailPoster: existingEntry.thumbnailPoster } : {}),
           ...(thumbnailType ? { thumbnailType } : {}),
+          ...(webmPreview ? { webmPreview } : existingEntry?.webmPreview ? { webmPreview: existingEntry.webmPreview } : {}),
         };
         const indexRequestHeaders: Record<string, string> = {
           "Content-Type": "application/json",
@@ -2955,8 +3039,14 @@ export function App({ initialFiles }: AppProps) {
                 const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
                 const hasAnimatedThumbnail = isAnimatedThumbnail(entry);
+                const hasWebmPreview = isWebmPreview(entry.webmPreview || "");
+                const isAnimatedActive = activeAnimatedLibraryIds.has(entry.id);
                 const thumbnailForCard =
-                  hasAnimatedThumbnail && !activeAnimatedLibraryIds.has(entry.id) ? entry.thumbnailPoster || "" : entry.thumbnail || entry.thumbnailPoster || "";
+                  isMobilePreviewMode && hasWebmPreview
+                    ? entry.thumbnailPoster || entry.thumbnail || ""
+                    : hasAnimatedThumbnail && !isAnimatedActive
+                      ? entry.thumbnailPoster || ""
+                      : entry.thumbnail || entry.thumbnailPoster || "";
                 return (
                   <div
                     className={`library-card${entry.hiddenFromPublicLibrary ? " is-hidden" : ""}`}
@@ -2967,6 +3057,19 @@ export function App({ initialFiles }: AppProps) {
                       ...(thumbnailForCard ? { "--library-thumbnail": `url(${thumbnailForCard})` } : {}),
                     } as React.CSSProperties}
                   >
+                    {hasWebmPreview ? (
+                      <video
+                        className="library-card-webm"
+                        src={isMobilePreviewMode && isAnimatedActive ? entry.webmPreview : undefined}
+                        poster={entry.thumbnailPoster || undefined}
+                        muted
+                        playsInline
+                        loop
+                        autoPlay
+                        preload="none"
+                        aria-hidden="true"
+                      />
+                    ) : null}
                     <a className="library-card-link" href={previewUrl} target="_blank" rel="noreferrer">
                     <div className="library-card-visual">
                       <Layers size={24} />
