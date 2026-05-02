@@ -2334,18 +2334,28 @@ function App() {
                   {isPublishingLink ? <Loader2 className="spin" size={16} /> : <LinkIcon size={16} />}
                   Create
                 </button>
-                <a className={!generatedPreviewUrl ? "disabled" : ""} href={generatedPreviewUrl || undefined} target="_blank" rel="noreferrer">
-                  <ExternalLink size={16} />
-                  Open
-                </a>
-                <a
-                  className={!generatedPreviewUrl ? "disabled" : ""}
-                  href={generatedPreviewUrl || undefined}
-                  download={`${activeAnimation || "spine"}-preview.html`}
-                >
-                  <Download size={16} />
-                  Download HTML
-                </a>
+                {generatedPreviewUrl ? (
+                  <a href={generatedPreviewUrl} target="_blank" rel="noreferrer">
+                    <ExternalLink size={16} />
+                    Open
+                  </a>
+                ) : (
+                  <button type="button" disabled>
+                    <ExternalLink size={16} />
+                    Open
+                  </button>
+                )}
+                {generatedPreviewUrl ? (
+                  <a href={generatedPreviewUrl} download={`${activeAnimation || "spine"}-preview.html`}>
+                    <Download size={16} />
+                    Download HTML
+                  </a>
+                ) : (
+                  <button type="button" disabled>
+                    <Download size={16} />
+                    Download HTML
+                  </button>
+                )}
               </div>
               <p className="link-note">{copyStatus || "Permanent links work without Google sign-in."}</p>
             </div>

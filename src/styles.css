@@ -936,7 +936,7 @@ h1 {
 }
 
 .generated-link-row button:hover:not(:disabled),
-.link-actions a:hover:not(.disabled),
+.link-actions a:hover,
 .link-actions button:hover:not(:disabled) {
   border-color: rgba(140, 199, 255, 0.48);
   color: #ffffff;
@@ -944,7 +944,6 @@ h1 {
 }
 
 .generated-link-row button:disabled,
-.link-actions a.disabled,
 .link-actions button:disabled {
   pointer-events: none;
   cursor: default;
