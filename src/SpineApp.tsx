@@ -962,12 +962,12 @@ function isAnimatedThumbnail(entry: Pick<LibraryEntry, "thumbnail" | "thumbnailT
 
 function useLimitedAnimatedThumbnails(entries: LibraryEntry[], isEnabled: boolean, maxActive = 2) {
   const [visibleIds, setVisibleIds] = useState<string[]>([]);
-  const [rotationIndex, setRotationIndex] = useState(0);
+  const [activeIds, setActiveIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!isEnabled) {
       setVisibleIds([]);
-      setRotationIndex(0);
+      setActiveIds(new Set());
       return;
     }
 
@@ -997,25 +997,46 @@ function useLimitedAnimatedThumbnails(entries: LibraryEntry[], isEnabled: boolea
   }, [entries, isEnabled]);
 
   useEffect(() => {
-    setRotationIndex(0);
-  }, [visibleIds.join("|")]);
-
-  useEffect(() => {
-    if (visibleIds.length <= maxActive) return;
-    const timer = window.setInterval(() => {
-      setRotationIndex((current) => (current + maxActive) % visibleIds.length);
-    }, 2600);
-    return () => window.clearInterval(timer);
-  }, [maxActive, visibleIds.length]);
-
-  return useMemo(() => {
-    if (visibleIds.length <= maxActive) return new Set(visibleIds);
-    const active = new Set<string>();
-    for (let offset = 0; offset < maxActive; offset += 1) {
-      active.add(visibleIds[(rotationIndex + offset) % visibleIds.length]);
+    if (!isEnabled || !visibleIds.length) {
+      setActiveIds(new Set());
+      return;
     }
-    return active;
-  }, [maxActive, rotationIndex, visibleIds]);
+
+    let cancelled = false;
+    let playbackIndex = 0;
+    let playTimer = 0;
+    let pauseTimer = 0;
+
+    const playBatch = () => {
+      if (cancelled || !visibleIds.length) return;
+      if (playbackIndex >= visibleIds.length) playbackIndex = 0;
+      const batch = new Set<string>();
+      for (let offset = 0; offset < Math.min(maxActive, visibleIds.length); offset += 1) {
+        batch.add(visibleIds[(playbackIndex + offset) % visibleIds.length]);
+      }
+      setActiveIds(new Set());
+      pauseTimer = window.setTimeout(() => {
+        if (cancelled) return;
+        setActiveIds(batch);
+      }, 80);
+      playTimer = window.setTimeout(() => {
+        if (cancelled) return;
+        setActiveIds(new Set());
+        playbackIndex = (playbackIndex + maxActive) % visibleIds.length;
+        pauseTimer = window.setTimeout(playBatch, 120);
+      }, 3000);
+    };
+
+    playBatch();
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(playTimer);
+      window.clearTimeout(pauseTimer);
+    };
+  }, [isEnabled, maxActive, visibleIds.join("|")]);
+
+  return activeIds;
 }
 
 async function loadFiles(files: File[]) {

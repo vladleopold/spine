@@ -293,22 +293,48 @@ function createHtml(config) {
         const animatedThumbs = Array.from(root.querySelectorAll("img[data-gif-src]"));
         if (!animatedThumbs.length) return;
         const visibleThumbs = new Set();
-        let rotationIndex = 0;
+        let playbackIndex = 0;
+        let playbackTimer = 0;
         const maxActive = 2;
         animatedThumbs.forEach((image) => { image.dataset.posterSrc = image.getAttribute("src") || transparentPixel; });
-        function syncAnimatedThumbs() {
-          const visible = animatedThumbs.filter((image) => visibleThumbs.has(image));
-          const active = new Set();
-          if (visible.length <= maxActive) visible.forEach((image) => active.add(image));
-          else {
-            for (let offset = 0; offset < maxActive; offset += 1) active.add(visible[(rotationIndex + offset) % visible.length]);
-          }
+        function stopAnimatedThumbs() {
           animatedThumbs.forEach((image) => {
             const gifSrc = image.dataset.gifSrc || "";
-            const posterSrc = image.dataset.posterSrc || transparentPixel;
-            if (active.has(image) && gifSrc && image.src !== gifSrc) image.src = gifSrc;
-            if (!active.has(image) && gifSrc && image.src === gifSrc) image.src = posterSrc;
+            if (gifSrc && image.src === gifSrc) image.src = image.dataset.posterSrc || transparentPixel;
           });
+        }
+        function visibleAnimatedThumbs() {
+          return animatedThumbs.filter((image) => visibleThumbs.has(image));
+        }
+        function playAnimatedBatch() {
+          window.clearTimeout(playbackTimer);
+          stopAnimatedThumbs();
+          const visible = visibleAnimatedThumbs();
+          if (!visible.length) return;
+          if (playbackIndex >= visible.length) playbackIndex = 0;
+          const active = [];
+          for (let offset = 0; offset < Math.min(maxActive, visible.length); offset += 1) {
+            active.push(visible[(playbackIndex + offset) % visible.length]);
+          }
+          window.setTimeout(() => {
+            active.forEach((image) => {
+              if (!visibleThumbs.has(image)) return;
+              const gifSrc = image.dataset.gifSrc || "";
+              if (gifSrc) image.src = gifSrc;
+            });
+          }, 80);
+          playbackTimer = window.setTimeout(() => {
+            stopAnimatedThumbs();
+            const nextVisible = visibleAnimatedThumbs();
+            if (!nextVisible.length) return;
+            playbackIndex = (playbackIndex + maxActive) % nextVisible.length;
+            playbackTimer = window.setTimeout(playAnimatedBatch, 120);
+          }, 3000);
+        }
+        function syncAnimatedThumbs() {
+          const visible = animatedThumbs.filter((image) => visibleThumbs.has(image));
+          if (playbackIndex >= visible.length) playbackIndex = 0;
+          playAnimatedBatch();
         }
         const observer = new IntersectionObserver((changes) => {
           changes.forEach((change) => {
@@ -318,13 +344,6 @@ function createHtml(config) {
           syncAnimatedThumbs();
         }, { rootMargin: "80px 0px", threshold: [0, .08, .35] });
         animatedThumbs.forEach((image) => observer.observe(image));
-        window.setInterval(() => {
-          const visibleCount = animatedThumbs.filter((image) => visibleThumbs.has(image)).length;
-          if (visibleCount > maxActive) {
-            rotationIndex = (rotationIndex + maxActive) % visibleCount;
-            syncAnimatedThumbs();
-          }
-        }, 2600);
       }
       const playerElement = document.getElementById("player");
       const pinchDistance = { value: null };

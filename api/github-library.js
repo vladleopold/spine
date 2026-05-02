@@ -142,26 +142,47 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
     <script>
       const animatedThumbs = Array.from(document.querySelectorAll("img[data-gif-src]"));
       const visibleThumbs = new Set();
-      let rotationIndex = 0;
+      let playbackIndex = 0;
+      let playbackTimer = 0;
       const maxActive = 2;
-      function syncAnimatedThumbs() {
-        const visible = animatedThumbs.filter((image) => visibleThumbs.has(image));
+      function stopAnimatedThumbs() {
         animatedThumbs.forEach((image) => {
-          if (!visibleThumbs.has(image) && image.src === image.dataset.gifSrc) image.src = "${transparentPixel}";
-        });
-        const active = new Set();
-        if (visible.length <= maxActive) visible.forEach((image) => active.add(image));
-        else {
-          for (let offset = 0; offset < maxActive; offset += 1) {
-            active.add(visible[(rotationIndex + offset) % visible.length]);
-          }
-        }
-        animatedThumbs.forEach((image) => {
-          const shouldPlay = active.has(image);
           const gifSrc = image.dataset.gifSrc || "";
-          if (shouldPlay && gifSrc && image.src !== gifSrc) image.src = gifSrc;
-          if (!shouldPlay && image.src === gifSrc) image.src = image.dataset.posterSrc || "${transparentPixel}";
+          if (gifSrc && image.src === gifSrc) image.src = image.dataset.posterSrc || "${transparentPixel}";
         });
+      }
+      function visibleAnimatedThumbs() {
+        return animatedThumbs.filter((image) => visibleThumbs.has(image));
+      }
+      function playAnimatedBatch() {
+        window.clearTimeout(playbackTimer);
+        stopAnimatedThumbs();
+        const visible = visibleAnimatedThumbs();
+        if (!visible.length) return;
+        if (playbackIndex >= visible.length) playbackIndex = 0;
+        const active = [];
+        for (let offset = 0; offset < Math.min(maxActive, visible.length); offset += 1) {
+          active.push(visible[(playbackIndex + offset) % visible.length]);
+        }
+        window.setTimeout(() => {
+          active.forEach((image) => {
+            if (!visibleThumbs.has(image)) return;
+            const gifSrc = image.dataset.gifSrc || "";
+            if (gifSrc) image.src = gifSrc;
+          });
+        }, 80);
+        playbackTimer = window.setTimeout(() => {
+          stopAnimatedThumbs();
+          const nextVisible = visibleAnimatedThumbs();
+          if (!nextVisible.length) return;
+          playbackIndex = (playbackIndex + maxActive) % nextVisible.length;
+          playbackTimer = window.setTimeout(playAnimatedBatch, 120);
+        }, 3000);
+      }
+      function syncAnimatedThumbs() {
+        const visible = visibleAnimatedThumbs();
+        if (playbackIndex >= visible.length) playbackIndex = 0;
+        playAnimatedBatch();
       }
       animatedThumbs.forEach((image) => { image.dataset.posterSrc = image.getAttribute("src") || "${transparentPixel}"; });
       const thumbObserver = new IntersectionObserver((changes) => {
@@ -172,13 +193,6 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
         syncAnimatedThumbs();
       }, { rootMargin: "80px 0px", threshold: [0, .08, .35] });
       animatedThumbs.forEach((image) => thumbObserver.observe(image));
-      window.setInterval(() => {
-        const visibleCount = animatedThumbs.filter((image) => visibleThumbs.has(image)).length;
-        if (visibleCount > maxActive) {
-          rotationIndex = (rotationIndex + maxActive) % visibleCount;
-          syncAnimatedThumbs();
-        }
-      }, 2600);
     </script>
   </body>
 </html>`;
