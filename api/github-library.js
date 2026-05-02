@@ -134,7 +134,7 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
         ${ownerPicture ? `<img class="avatar" src="${ownerPicture}" alt="" />` : `<div class="avatar avatar-fallback" aria-hidden="true">${ownerName.slice(0, 1).toUpperCase()}</div>`}
         <div>
           <h1>${ownerName}</h1>
-          <p>${entries.length} public Spine previews</p>
+          <p>${entries.length} SPINE WORK'S</p>
         </div>
       </section>
       ${entries.length ? `<section class="grid">${cards}</section>` : '<div class="empty">This public library is empty or hidden.</div>'}

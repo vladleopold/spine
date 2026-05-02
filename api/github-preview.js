@@ -461,7 +461,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         visible: true,
         name: cleanPublicText(entry.ownerName || ownerEmail.split('@')[0] || 'Spine-Link creator'),
         picture: safePublicImage(entry.ownerPicture || ''),
-        subtitle: ownerEntries.length > 1 ? `${ownerEntries.length} public uploads` : 'Public Spine library',
+        subtitle: `${ownerEntries.length} SPINE WORK'S`,
         url: entry.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '',
         library: ownerEntries.slice(0, 6).map((item) => ({
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
