@@ -144,6 +144,15 @@ function normalizeNote(value = '') {
   return words.join(' ');
 }
 
+function cleanPublicProfileText(value = '', maxLength = 120) {
+  return String(value).trim().slice(0, maxLength);
+}
+
+function cleanPublicProfileImage(value = '') {
+  const url = String(value).trim();
+  return /^https:\/\/[^\s"'<>]+$/i.test(url) ? url : '';
+}
+
 function canEditEntry(entry, googlePayload, anonymousAccount) {
   const userEmail = String(googlePayload?.email || '').toLowerCase();
   const ownerEmail = String(entry?.ownerEmail || '').toLowerCase();
@@ -274,7 +283,10 @@ export default async function handler(request, response) {
       const nextEntry = {
         ...entry,
         ...(googlePayload?.email ? { ownerEmail: googlePayload.email } : {}),
+        ...(googlePayload?.name || entry?.ownerName ? { ownerName: cleanPublicProfileText(googlePayload?.name || entry?.ownerName) } : {}),
+        ...(googlePayload?.picture || entry?.ownerPicture ? { ownerPicture: cleanPublicProfileImage(googlePayload?.picture || entry?.ownerPicture) } : {}),
         ...(anonymousAccount?.id ? { ownerAnonId: anonymousAccount.id, ownerAnonFingerprint: anonymousAccount.fingerprint } : {}),
+        showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
       };
       const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
@@ -300,6 +312,40 @@ export default async function handler(request, response) {
       nextEntries[entryIndex] = nextEntry;
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update preview text`, currentIndex?.sha, origin);
       return response.status(200).json({ ok: true, entry: nextEntry });
+    }
+
+    if (action === 'update-profile-visibility') {
+      if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const currentIndex = await getGitHubContent(settings, indexPath);
+      const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
+      const showOwnerLibrary = Boolean(body?.showOwnerLibrary);
+      const userEmail = String(googlePayload?.email || '').toLowerCase();
+      const anonymousId = String(anonymousAccount?.id || '').toLowerCase();
+      const ownerName = cleanPublicProfileText(googlePayload?.name || body?.ownerName || '');
+      const ownerPicture = cleanPublicProfileImage(googlePayload?.picture || body?.ownerPicture || '');
+      let changed = false;
+      const nextEntries = currentEntries.map((currentEntry) => {
+        const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
+        const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
+        const isOwner = (userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId);
+        if (!isOwner) return currentEntry;
+        changed = true;
+        const nextEntry = { ...currentEntry, showOwnerLibrary };
+        if (googlePayload?.email) nextEntry.ownerEmail = googlePayload.email;
+        if (ownerName) nextEntry.ownerName = ownerName;
+        if (ownerPicture) nextEntry.ownerPicture = ownerPicture;
+        return nextEntry;
+      });
+      if (changed || currentIndex?.sha) {
+        await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update public profile setting`, currentIndex?.sha, origin);
+      }
+      const entries = nextEntries.filter((currentEntry) => {
+        const ownerEmail = String(currentEntry?.ownerEmail || '').toLowerCase();
+        const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
+        return (userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId);
+      });
+      return response.status(200).json({ ok: true, entries, changed });
     }
 
     if (action === 'delete-entry') {
@@ -347,7 +393,12 @@ export default async function handler(request, response) {
         const ownerAnonId = String(currentEntry?.ownerAnonId || '').toLowerCase();
         if (ownerAnonId !== anonymousId) return currentEntry;
         changed = changed || String(currentEntry?.ownerEmail || '').toLowerCase() !== userEmail;
-        return { ...currentEntry, ownerEmail: googlePayload.email };
+        return {
+          ...currentEntry,
+          ownerEmail: googlePayload.email,
+          ...(googlePayload.name ? { ownerName: cleanPublicProfileText(googlePayload.name) } : {}),
+          ...(googlePayload.picture ? { ownerPicture: cleanPublicProfileImage(googlePayload.picture) } : {}),
+        };
       });
       if (changed) {
         await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: merge library account`, currentIndex?.sha, origin);
@@ -379,7 +430,10 @@ export default async function handler(request, response) {
     const nextEntry = {
       ...entry,
       ...(googlePayload?.email ? { ownerEmail: googlePayload.email } : {}),
+      ...(googlePayload?.name || entry?.ownerName ? { ownerName: cleanPublicProfileText(googlePayload?.name || entry?.ownerName) } : {}),
+      ...(googlePayload?.picture || entry?.ownerPicture ? { ownerPicture: cleanPublicProfileImage(googlePayload?.picture || entry?.ownerPicture) } : {}),
       ...(anonymousAccount?.id ? { ownerAnonId: anonymousAccount.id, ownerAnonFingerprint: anonymousAccount.fingerprint } : {}),
+      showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
     };
     const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
 

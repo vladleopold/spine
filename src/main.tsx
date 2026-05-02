@@ -4,6 +4,8 @@ import {
   Calendar,
   Copy,
   Download,
+  Eye,
+  EyeOff,
   ExternalLink,
   FileArchive,
   Layers,
@@ -113,6 +115,9 @@ type LibraryEntry = {
   ownerEmail?: string;
   ownerAnonId?: string;
   ownerAnonFingerprint?: string;
+  ownerName?: string;
+  ownerPicture?: string;
+  showOwnerLibrary?: boolean;
   uploadedAt: string;
   skeleton: string;
   atlas: string;
@@ -192,6 +197,7 @@ const githubPublishSettings: GitHubSettings = {
 
 const anonymousAccountStorageKey = "spine-link-anonymous-account";
 const googleSessionStorageKey = "spine-link-google-session";
+const profileVisibilityStorageKey = "spine-link-profile-visible-on-shares";
 
 type StoredGoogleSession = {
   user: GoogleUser;
@@ -274,6 +280,16 @@ function storeGoogleSession(user: GoogleUser, accessToken: string, expiresIn = 3
 function clearStoredGoogleSession() {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(googleSessionStorageKey);
+}
+
+function readStoredProfileVisibility() {
+  if (typeof window === "undefined") return false;
+  return window.localStorage.getItem(profileVisibilityStorageKey) === "true";
+}
+
+function storeProfileVisibility(value: boolean) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(profileVisibilityStorageKey, String(value));
 }
 
 function decodeJwtPayload<T = Record<string, unknown>>(token: string): T {
@@ -1208,6 +1224,8 @@ function App() {
   const [libraryEntries, setLibraryEntries] = useState<LibraryEntry[]>([]);
   const [isLibraryLoading, setIsLibraryLoading] = useState(false);
   const [libraryError, setLibraryError] = useState("");
+  const [showProfileOnSharedPages, setShowProfileOnSharedPages] = useState(() => readStoredProfileVisibility());
+  const [profileVisibilityStatus, setProfileVisibilityStatus] = useState("");
   const [renderSettingsByLabel, setRenderSettingsByLabel] = useState<Record<string, SkeletonRenderSettings>>({});
 
   useEffect(() => {
@@ -1828,6 +1846,42 @@ function App() {
     void loadLibrary();
   };
 
+  const updateSharedProfileVisibility = async (nextValue: boolean) => {
+    setShowProfileOnSharedPages(nextValue);
+    storeProfileVisibility(nextValue);
+    setProfileVisibilityStatus("Saving...");
+
+    try {
+      const requestHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (googleIdToken) requestHeaders.Authorization = `Bearer ${googleIdToken}`;
+
+      const response = await fetch("/api/github-upload", {
+        method: "POST",
+        headers: requestHeaders,
+        body: JSON.stringify({
+          action: "update-profile-visibility",
+          googleIdToken,
+          anonymousAccount,
+          settings: githubPublishSettings,
+          showOwnerLibrary: nextValue,
+          ownerName: googleUser?.name,
+          ownerPicture: googleUser?.picture,
+          commitPrefix: "Update Spine-Link public profile setting",
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(typeof result?.error === "string" ? result.error : `Library API ${response.status}`);
+      }
+      setLibraryEntries(Array.isArray(result.entries) ? result.entries : []);
+      setProfileVisibilityStatus(nextValue ? "Profile will be shown on shared pages" : "Profile is hidden on shared pages");
+    } catch (nextError) {
+      setProfileVisibilityStatus(nextError instanceof Error ? nextError.message : "Could not save profile setting.");
+    }
+  };
+
   const openGoogleSignIn = () => {
     if (!googleClientId) {
       setGoogleAuthError("Google OAuth Client ID is not configured.");
@@ -1922,8 +1976,11 @@ function App() {
           id: uploadId,
           title: nextSettings.title,
           ownerEmail: googleUser?.email,
+          ownerName: googleUser?.name,
+          ownerPicture: googleUser?.picture,
           ownerAnonId: anonymousAccount.id,
           ownerAnonFingerprint: anonymousAccount.fingerprint,
+          showOwnerLibrary: showProfileOnSharedPages,
           uploadedAt,
           skeleton: spine.skeletonName,
           atlas: spine.atlasName,
@@ -2337,6 +2394,26 @@ function App() {
           </div>
 
           {libraryError && <div className="library-error">{libraryError}</div>}
+
+          <div className="library-profile-settings">
+            <div className="library-profile-settings-copy">
+              <div className="section-title">Shared pages</div>
+              <strong>Show profile and library</strong>
+              <span>
+                When enabled, publication pages you share can show your profile and other public uploads from this library.
+              </span>
+              {profileVisibilityStatus && <em>{profileVisibilityStatus}</em>}
+            </div>
+            <button
+              className={showProfileOnSharedPages ? "active" : ""}
+              type="button"
+              onClick={() => void updateSharedProfileVisibility(!showProfileOnSharedPages)}
+              aria-pressed={showProfileOnSharedPages}
+            >
+              {showProfileOnSharedPages ? <Eye size={17} /> : <EyeOff size={17} />}
+              {showProfileOnSharedPages ? "Visible" : "Hidden"}
+            </button>
+          </div>
 
           {isLibraryLoading && libraryEntries.length === 0 ? (
             <div className="library-empty">

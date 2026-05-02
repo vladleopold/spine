@@ -31,6 +31,15 @@ function escapedJson(value) {
   return JSON.stringify(value).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 }
 
+function cleanPublicText(value = '', maxLength = 120) {
+  return String(value).trim().slice(0, maxLength);
+}
+
+function safePublicImage(value = '') {
+  const url = String(value).trim();
+  return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/(?:png|jpe?g|webp);base64,/i.test(url) ? url : '';
+}
+
 function githubHeaders(token) {
   return {
     Accept: 'application/vnd.github+json',
@@ -139,6 +148,21 @@ function createHtml(config) {
       #animation-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; }
       .note-text { margin: 0; color: rgba(231,237,244,.88); font-size: 16px; line-height: 1.45; overflow-wrap: anywhere; white-space: pre-wrap; }
       .note-card:empty { display: none; }
+      .owner-card { display: none; gap: 14px; }
+      .owner-card.is-visible { display: grid; }
+      .owner-profile { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 12px; align-items: center; }
+      .owner-avatar { width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; object-fit: cover; background: rgba(255,255,255,.08); }
+      .owner-avatar-fallback { display: grid; place-items: center; color: #111; font-weight: 900; background: #b3ff40; }
+      .owner-profile strong, .owner-profile span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .owner-profile strong { color: #fff; font-size: 16px; }
+      .owner-profile span { color: rgba(231,237,244,.62); font-size: 12px; }
+      .owner-library { display: grid; gap: 8px; }
+      .owner-library a { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; min-height: 50px; padding: 7px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); }
+      .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); }
+      .owner-thumb { width: 44px; height: 36px; border-radius: 6px; object-fit: cover; background: rgba(255,255,255,.08); }
+      .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .owner-library strong { color: #fff; font-size: 13px; }
+      .owner-library span { color: rgba(231,237,244,.58); font-size: 11px; }
       @media (max-width: 760px) { body { overflow: auto; } #app { height: auto; min-height: 100%; padding: 16px; } .stage { grid-template-columns: 1fr; } #player { height: 60vh; min-height: 360px; } .topbar { align-items: flex-start; flex-direction: column; } }
       .spine-link-loop-button { position: relative; margin-right: 12px !important; }
       .spine-player-controls { z-index: 4; }
@@ -158,6 +182,7 @@ function createHtml(config) {
         <div id="player"></div>
         <aside id="sidebar">
           <div class="preview-card" id="set-card"><div class="section-title">Set</div><select id="set-select"></select></div>
+          <div class="preview-card owner-card" id="owner-card"><div class="section-title">Creator</div><div id="owner-profile"></div><div class="owner-library" id="owner-library"></div></div>
           <div class="preview-card note-card" id="note-card"><div class="section-title">Text</div><p class="note-text" id="note-text"></p></div>
           <div class="preview-card animation-card"><div class="section-title">Animations</div><div id="animation-list"></div></div>
         </aside>
@@ -193,6 +218,9 @@ function createHtml(config) {
       const setSelect = document.getElementById("set-select");
       const noteCard = document.getElementById("note-card");
       const noteText = document.getElementById("note-text");
+      const ownerCard = document.getElementById("owner-card");
+      const ownerProfile = document.getElementById("owner-profile");
+      const ownerLibrary = document.getElementById("owner-library");
       const playerElement = document.getElementById("player");
       const pinchDistance = { value: null };
       const panPosition = { value: null };
@@ -225,6 +253,51 @@ function createHtml(config) {
         noteCard.style.display = note ? "" : "none";
       }
       function renderSetList() { setSelect.innerHTML = ""; sets.forEach((set) => { const option = document.createElement("option"); option.value = set.label; option.textContent = set.label; setSelect.appendChild(option); }); }
+      function renderOwnerCard() {
+        const owner = config.ownerProfile || {};
+        const items = Array.isArray(owner.library) ? owner.library : [];
+        ownerCard.classList.toggle("is-visible", Boolean(owner.visible));
+        ownerProfile.innerHTML = "";
+        ownerLibrary.innerHTML = "";
+        if (!owner.visible) return;
+        ownerProfile.className = "owner-profile";
+        const avatar = owner.picture ? document.createElement("img") : document.createElement("div");
+        avatar.className = owner.picture ? "owner-avatar" : "owner-avatar owner-avatar-fallback";
+        if (owner.picture) {
+          avatar.src = owner.picture;
+          avatar.alt = "";
+        } else {
+          avatar.setAttribute("aria-hidden", "true");
+          avatar.textContent = String(owner.name || "S").slice(0, 1).toUpperCase();
+        }
+        const ownerText = document.createElement("div");
+        const ownerName = document.createElement("strong");
+        ownerName.textContent = owner.name || "Spine-Link creator";
+        const ownerSubtitle = document.createElement("span");
+        ownerSubtitle.textContent = owner.subtitle || "Public Spine library";
+        ownerText.append(ownerName, ownerSubtitle);
+        ownerProfile.append(avatar, ownerText);
+        items.forEach((item) => {
+          const link = document.createElement("a");
+          link.href = item.url;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          const thumb = item.thumbnail ? document.createElement("img") : document.createElement("div");
+          thumb.className = "owner-thumb";
+          if (item.thumbnail) {
+            thumb.src = item.thumbnail;
+            thumb.alt = "";
+          }
+          const text = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = item.title || "Spine preview";
+          const meta = document.createElement("span");
+          meta.textContent = (item.animations || 0) + " animations";
+          text.append(title, meta);
+          link.append(thumb, text);
+          ownerLibrary.appendChild(link);
+        });
+      }
       function rememberBaseViewport() { if (!player?.currentViewport) return; const v = player.currentViewport; baseViewport.value = { x: v.x, y: v.y, width: v.width * currentZoom.value, height: v.height * currentZoom.value, padLeft: v.padLeft * currentZoom.value, padRight: v.padRight * currentZoom.value, padTop: v.padTop * currentZoom.value, padBottom: v.padBottom * currentZoom.value }; }
       function touchDistance(touches) { const a = touches.item(0), b = touches.item(1); if (!a || !b) return 0; return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
       function applyZoom(nextZoom) { currentZoom.value = Math.min(4, Math.max(0.25, Number(nextZoom))); playerElement.style.setProperty("--preview-pattern-size", (140 * currentZoom.value) + "px"); const b = baseViewport.value; if (!b || !player?.currentViewport) return; const cx = b.x + b.width / 2, cy = b.y + b.height / 2, width = b.width / currentZoom.value, height = b.height / currentZoom.value; const next = { x: cx - width / 2, y: cy - height / 2, width, height, padLeft: b.padLeft / currentZoom.value, padRight: b.padRight / currentZoom.value, padTop: b.padTop / currentZoom.value, padBottom: b.padBottom / currentZoom.value }; player.previousViewport = { ...next }; player.currentViewport = next; player.viewportTransitionStart = performance.now(); }
@@ -250,7 +323,7 @@ function createHtml(config) {
       window.addEventListener("mouseup", (event) => { if (event.button !== 2) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
       setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); renderAnimationList(); syncUrl(); createPlayer(); };
       window.addEventListener("popstate", applySelectionFromUrl);
-      renderSetList(); syncSetInfo(); syncUrl(true); createPlayer(); renderAnimationList();
+      renderSetList(); syncSetInfo(); renderOwnerCard(); syncUrl(true); createPlayer(); renderAnimationList();
     </script>
   </body>
 </html>`;
@@ -262,6 +335,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
   const setDirectories = directories.length ? directories : [{ name: uploadPath.split('/').pop(), path: uploadPath }];
   const sets = [];
   let note = '';
+  let ownerProfile = null;
 
   for (const directory of setDirectories) {
     const items = await githubList(settings, directory.path);
@@ -315,10 +389,34 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       ? entries.find((item) => item?.id === uploadId || cleanRepoPath(item?.previewPath || '') === cleanRepoPath(uploadPath))
       : null;
     note = String(entry?.note || '').trim();
+    if (entry?.showOwnerLibrary) {
+      const ownerEmail = String(entry?.ownerEmail || '').toLowerCase();
+      const ownerAnonId = String(entry?.ownerAnonId || '').toLowerCase();
+      const ownerEntries = Array.isArray(entries)
+        ? entries.filter((item) => {
+            const itemEmail = String(item?.ownerEmail || '').toLowerCase();
+            const itemAnonId = String(item?.ownerAnonId || '').toLowerCase();
+            const sameOwner = (ownerEmail && itemEmail === ownerEmail) || (ownerAnonId && itemAnonId === ownerAnonId);
+            return sameOwner && item?.showOwnerLibrary;
+          })
+        : [];
+      ownerProfile = {
+        visible: true,
+        name: cleanPublicText(entry.ownerName || ownerEmail.split('@')[0] || 'Spine-Link creator'),
+        picture: safePublicImage(entry.ownerPicture || ''),
+        subtitle: ownerEntries.length > 1 ? `${ownerEntries.length} public uploads` : 'Public Spine library',
+        library: ownerEntries.slice(0, 6).map((item) => ({
+          title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
+          url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
+          thumbnail: safePublicImage(item?.thumbnail || ''),
+          animations: Array.isArray(item?.animations) ? item.animations.length : 0,
+        })),
+      };
+    }
   } catch {
     note = '';
   }
-  return createHtml({ sets, note });
+  return createHtml({ sets, note, ownerProfile });
 }
 
 export default async function handler(request, response) {
