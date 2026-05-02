@@ -43,6 +43,16 @@ async function githubText(settings, path) {
   return data?.content ? base64ToText(data.content) : '';
 }
 
+function compareLibraryEntries(a, b) {
+  const aOrder = Number(a?.libraryOrder);
+  const bOrder = Number(b?.libraryOrder);
+  const hasAOrder = Number.isFinite(aOrder);
+  const hasBOrder = Number.isFinite(bOrder);
+  if (hasAOrder && hasBOrder && aOrder !== bOrder) return aOrder - bOrder;
+  if (hasAOrder !== hasBOrder) return hasAOrder ? -1 : 1;
+  return String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || ''));
+}
+
 function createLibraryHtml({ origin, publicOwnerId, entries }) {
   const firstEntry = entries[0] || {};
   const showOwnerName = firstEntry.showOwnerLibrary !== false;
@@ -58,17 +68,24 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       const date = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
       const dateText = date && !Number.isNaN(date.getTime()) ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Saved';
       const animations = Array.isArray(entry.animations) ? entry.animations.length : 0;
+      const entryId = escapeHtml(String(entry.id || ''));
       const image = thumbnail
-        ? `<img src="${thumbnail}" alt="" />${isGifPreview ? '<em>GIF preview</em>' : ''}`
+        ? `<img src="${thumbnail}" alt="" />${isGifPreview ? '' : ''}`
         : `<div class="thumb-fallback" aria-hidden="true">${animations}</div>`;
-      return `<a class="card" href="${previewUrl}">
-        <div class="thumb">${image}</div>
-        <div class="card-body">
-          <strong>${itemTitle}</strong>
-          <span>${escapeHtml(entry.skeleton || 'Spine preview')}</span>
-          <small>${animations} animations · ${escapeHtml(dateText)}</small>
+      return `<article class="card" data-entry-id="${entryId}">
+        <a class="card-link" href="${previewUrl}" aria-label="Open ${itemTitle}">
+          <div class="thumb">${image}</div>
+          <div class="card-body">
+            <strong>${itemTitle}</strong>
+            <span>${escapeHtml(entry.skeleton || 'Spine preview')}</span>
+            <small>${animations} animations · ${escapeHtml(dateText)}</small>
+          </div>
+        </a>
+        <div class="order-actions" aria-label="Change ${itemTitle} order">
+          <button type="button" data-order="up" data-entry-id="${entryId}">Up</button>
+          <button type="button" data-order="down" data-entry-id="${entryId}">Down</button>
         </div>
-      </a>`;
+      </article>`;
     })
     .join('');
 
@@ -93,15 +110,19 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       h1 { margin: 0 0 7px; font-size: clamp(30px, 5vw, 58px); line-height: 1; letter-spacing: 0; }
       .profile p { margin: 0; color: rgba(237,245,255,.66); font-size: 15px; }
       .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-      .card { position: relative; display: block; overflow: hidden; min-height: 320px; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: inherit; text-decoration: none; background: #060708; transition: transform 150ms ease, border-color 150ms ease; }
+      .card { position: relative; display: block; overflow: hidden; min-height: 320px; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: inherit; background: #060708; transition: transform 150ms ease, border-color 150ms ease; }
       .card:hover { transform: translateY(-3px); border-color: rgba(179,255,64,.68); }
+      .card-link { position: absolute; inset: 0; color: inherit; text-decoration: none; }
       .thumb { position: absolute; inset: 0; display: grid; place-items: center; min-height: 100%; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
       .thumb img { width: 100%; height: 100%; object-fit: cover; }
-      .thumb em { position: absolute; z-index: 2; top: 14px; left: 14px; padding: 5px 7px; border: 1px solid rgba(179,255,64,.56); border-radius: 7px; color: #f4ffe8; background: rgba(11,16,18,.58); font-size: 10px; font-style: normal; font-weight: 900; text-transform: uppercase; backdrop-filter: blur(8px); }
       .thumb-fallback { color: #fff; font-size: 56px; font-weight: 900; }
-      .card-body { position: absolute; right: 0; bottom: 0; left: 0; z-index: 1; display: grid; gap: 7px; padding: 15px; background: rgba(32,35,38,.5); backdrop-filter: blur(10px); }
+      .card-body { position: absolute; right: 0; bottom: 48px; left: 0; z-index: 1; display: grid; gap: 7px; padding: 15px; background: rgba(32,35,38,.5); backdrop-filter: blur(10px); }
       .card-body strong, .card-body span, .card-body small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .card-body span, .card-body small { color: rgba(237,245,255,.64); }
+      .order-actions { position: absolute; right: 12px; bottom: 12px; left: 12px; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .order-actions button { min-height: 34px; border: 1px solid rgba(179,255,64,.42); border-radius: 7px; color: #f4ffe8; background: rgba(11,16,18,.72); font: inherit; font-size: 12px; font-weight: 900; cursor: pointer; backdrop-filter: blur(8px); }
+      .order-actions button:hover { border-color: rgba(179,255,64,.8); background: rgba(179,255,64,.16); }
+      .order-actions button:disabled { cursor: default; opacity: .5; }
       .empty { padding: 34px; border: 1px dashed rgba(255,255,255,.16); border-radius: 8px; color: rgba(237,245,255,.68); text-align: center; }
       @media (max-width: 640px) { .profile { grid-template-columns: 1fr; } .top { align-items: flex-start; flex-direction: column; } }
     </style>
@@ -118,6 +139,42 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       </section>
       ${entries.length ? `<section class="grid">${cards}</section>` : '<div class="empty">This public library is empty or hidden.</div>'}
     </main>
+    <script>
+      const anonymousAccountStorageKey = "spine-link-anonymous-account";
+      function readAnonymousAccount() {
+        try { return JSON.parse(window.localStorage.getItem(anonymousAccountStorageKey) || "null"); }
+        catch { return null; }
+      }
+      async function moveLibraryEntry(entryId, direction, button) {
+        const anonymousAccount = readAnonymousAccount();
+        if (!anonymousAccount?.id) return;
+        button.disabled = true;
+        try {
+          const response = await fetch("/api/github-upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "update-library-order",
+              anonymousAccount,
+              entryId,
+              direction,
+              commitPrefix: "Reorder Spine-Link public library"
+            })
+          });
+          if (!response.ok) throw new Error("Order was not saved");
+          window.location.reload();
+        } catch {
+          button.disabled = false;
+        }
+      }
+      document.querySelectorAll("[data-order]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          moveLibraryEntry(button.dataset.entryId || "", button.dataset.order || "", button);
+        });
+      });
+    </script>
   </body>
 </html>`;
 }
@@ -149,7 +206,7 @@ export default async function handler(request, response) {
     const entries = Array.isArray(allEntries)
       ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId && entry?.hiddenFromPublicLibrary !== true)
       : [];
-    entries.sort((a, b) => String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || '')));
+    entries.sort(compareLibraryEntries);
 
     response.setHeader('Content-Type', 'text/html; charset=utf-8');
     response.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');

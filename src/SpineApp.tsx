@@ -118,6 +118,7 @@ type LibraryEntry = {
   publicOwnerId?: string;
   showOwnerLibrary?: boolean;
   hiddenFromPublicLibrary?: boolean;
+  libraryOrder?: number;
   uploadedAt: string;
   skeleton: string;
   atlas: string;

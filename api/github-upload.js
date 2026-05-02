@@ -176,6 +176,16 @@ function canEditEntry(entry, googlePayload, anonymousAccount) {
   return Boolean((userEmail && ownerEmail === userEmail) || (anonymousId && ownerAnonId === anonymousId));
 }
 
+function compareLibraryEntries(a, b) {
+  const aOrder = Number(a?.libraryOrder);
+  const bOrder = Number(b?.libraryOrder);
+  const hasAOrder = Number.isFinite(aOrder);
+  const hasBOrder = Number.isFinite(bOrder);
+  if (hasAOrder && hasBOrder && aOrder !== bOrder) return aOrder - bOrder;
+  if (hasAOrder !== hasBOrder) return hasAOrder ? -1 : 1;
+  return String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || ''));
+}
+
 async function getGitHubContent(settings, path) {
   const encodedPath = encodeURIComponent(path).replace(/%2F/g, '/');
   const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${encodedPath}?ref=${encodeURIComponent(settings.branch)}`, {
@@ -349,6 +359,38 @@ export default async function handler(request, response) {
       nextEntries[entryIndex] = nextEntry;
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update entry visibility`, currentIndex?.sha, origin);
       return response.status(200).json({ ok: true, entry: nextEntry });
+    }
+
+    if (action === 'update-library-order') {
+      if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+      const entryId = String(body?.entryId || '').trim();
+      const direction = String(body?.direction || '').trim().toLowerCase();
+      if (!entryId || !['up', 'down'].includes(direction)) return response.status(400).json({ error: 'Invalid order payload' });
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const currentIndex = await getGitHubContent(settings, indexPath);
+      const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
+      const targetEntry = currentEntries.find((currentEntry) => String(currentEntry?.id || '') === entryId);
+      if (!targetEntry) return response.status(404).json({ error: 'Library entry not found' });
+      if (!canEditEntry(targetEntry, googlePayload, anonymousAccount)) throw unauthorized('Only the owner can reorder this library', 403);
+      const publicOwnerId = String(targetEntry.publicOwnerId || '');
+      const visibleOwnerEntries = currentEntries
+        .filter((currentEntry) => String(currentEntry?.publicOwnerId || '') === publicOwnerId && currentEntry?.hiddenFromPublicLibrary !== true)
+        .sort(compareLibraryEntries);
+      const currentPosition = visibleOwnerEntries.findIndex((currentEntry) => String(currentEntry?.id || '') === entryId);
+      const nextPosition = direction === 'up' ? currentPosition - 1 : currentPosition + 1;
+      if (currentPosition < 0 || nextPosition < 0 || nextPosition >= visibleOwnerEntries.length) {
+        return response.status(200).json({ ok: true, entries: visibleOwnerEntries, changed: false });
+      }
+      const nextVisibleEntries = [...visibleOwnerEntries];
+      const [movedEntry] = nextVisibleEntries.splice(currentPosition, 1);
+      nextVisibleEntries.splice(nextPosition, 0, movedEntry);
+      const orderById = new Map(nextVisibleEntries.map((entry, index) => [String(entry.id || ''), index + 1]));
+      const nextEntries = currentEntries.map((currentEntry) => {
+        const nextOrder = orderById.get(String(currentEntry?.id || ''));
+        return nextOrder ? { ...currentEntry, libraryOrder: nextOrder } : currentEntry;
+      });
+      await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update public library order`, currentIndex?.sha, origin);
+      return response.status(200).json({ ok: true, entries: nextVisibleEntries.map((entry, index) => ({ ...entry, libraryOrder: index + 1 })), changed: true });
     }
 
     if (action === 'update-profile-visibility') {
