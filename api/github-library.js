@@ -25,6 +25,8 @@ function safeImage(value = '') {
   return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/(?:gif|png|jpe?g|webp);base64,/i.test(url) ? url : '';
 }
 
+const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
 function githubHeaders(token) {
   return {
     Accept: 'application/vnd.github+json',
@@ -64,13 +66,14 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       const itemTitle = escapeHtml(entry.title || entry.id || 'Spine preview');
       const previewUrl = `/p/${encodeURIComponent(String(entry.id || ''))}`;
       const thumbnail = safeImage(entry.thumbnail || '');
+      const thumbnailPoster = safeImage(entry.thumbnailPoster || '');
       const isGifPreview = entry.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(thumbnail);
       const date = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
       const dateText = date && !Number.isNaN(date.getTime()) ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Saved';
       const animations = Array.isArray(entry.animations) ? entry.animations.length : 0;
       const entryId = escapeHtml(String(entry.id || ''));
       const image = thumbnail
-        ? `<img src="${thumbnail}" alt="" />${isGifPreview ? '' : ''}`
+        ? `<img src="${escapeHtml(isGifPreview ? thumbnailPoster || transparentPixel : thumbnail)}" ${isGifPreview ? `data-gif-src="${escapeHtml(thumbnail)}"` : ''} alt="" loading="lazy" decoding="async" />`
         : `<div class="thumb-fallback" aria-hidden="true">${animations}</div>`;
       return `<article class="card" data-entry-id="${entryId}">
         <a class="card-link" href="${previewUrl}" aria-label="Open ${itemTitle}">
@@ -179,6 +182,45 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
           moveLibraryEntry(button.dataset.entryId || "", button.dataset.order || "", button);
         });
       });
+      const animatedThumbs = Array.from(document.querySelectorAll("img[data-gif-src]"));
+      const visibleThumbs = new Set();
+      let rotationIndex = 0;
+      const maxActive = 2;
+      function syncAnimatedThumbs() {
+        const visible = animatedThumbs.filter((image) => visibleThumbs.has(image));
+        animatedThumbs.forEach((image) => {
+          if (!visibleThumbs.has(image) && image.src === image.dataset.gifSrc) image.src = "${transparentPixel}";
+        });
+        const active = new Set();
+        if (visible.length <= maxActive) visible.forEach((image) => active.add(image));
+        else {
+          for (let offset = 0; offset < maxActive; offset += 1) {
+            active.add(visible[(rotationIndex + offset) % visible.length]);
+          }
+        }
+        animatedThumbs.forEach((image) => {
+          const shouldPlay = active.has(image);
+          const gifSrc = image.dataset.gifSrc || "";
+          if (shouldPlay && gifSrc && image.src !== gifSrc) image.src = gifSrc;
+          if (!shouldPlay && image.src === gifSrc) image.src = image.dataset.posterSrc || "${transparentPixel}";
+        });
+      }
+      animatedThumbs.forEach((image) => { image.dataset.posterSrc = image.getAttribute("src") || "${transparentPixel}"; });
+      const thumbObserver = new IntersectionObserver((changes) => {
+        changes.forEach((change) => {
+          if (change.isIntersecting && change.intersectionRatio > 0.08) visibleThumbs.add(change.target);
+          else visibleThumbs.delete(change.target);
+        });
+        syncAnimatedThumbs();
+      }, { rootMargin: "80px 0px", threshold: [0, .08, .35] });
+      animatedThumbs.forEach((image) => thumbObserver.observe(image));
+      window.setInterval(() => {
+        const visibleCount = animatedThumbs.filter((image) => visibleThumbs.has(image)).length;
+        if (visibleCount > maxActive) {
+          rotationIndex = (rotationIndex + maxActive) % visibleCount;
+          syncAnimatedThumbs();
+        }
+      }, 2600);
     </script>
   </body>
 </html>`;

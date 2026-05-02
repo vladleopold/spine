@@ -131,6 +131,7 @@ type LibraryEntry = {
   repositoryUrl: string;
   note?: string;
   thumbnail?: string;
+  thumbnailPoster?: string;
   thumbnailType?: "gif" | "image";
 };
 
@@ -848,7 +849,29 @@ function blobToDataUri(blob: Blob) {
   });
 }
 
-async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 220, height = 136) {
+async function createCanvasImageThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 360, height = 220) {
+  if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (!context) return "";
+
+  const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
+  const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
+  const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
+  const offsetX = Math.round((width - nextWidth) / 2);
+  const offsetY = Math.round((height - nextHeight) / 2);
+
+  context.clearRect(0, 0, width, height);
+  context.fillStyle = "#050607";
+  context.fillRect(0, 0, width, height);
+  context.drawImage(sourceCanvas, offsetX, offsetY, nextWidth, nextHeight);
+  return canvas.toDataURL("image/webp", 0.86);
+}
+
+async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 360, height = 220) {
   if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
 
   try {
@@ -859,9 +882,9 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
     const context = canvas.getContext("2d", { willReadFrequently: true });
     if (!context) return "";
 
-    const gif = GIFEncoder({ initialCapacity: 256 * 1024 });
-    const frameCount = 8;
-    const frameDelay = 110;
+    const gif = GIFEncoder({ initialCapacity: 512 * 1024 });
+    const frameCount = 12;
+    const frameDelay = 95;
     const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
     const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
     const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
@@ -875,7 +898,7 @@ async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | 
       context.fillRect(0, 0, width, height);
       context.drawImage(sourceCanvas, offsetX, offsetY, nextWidth, nextHeight);
       const rgba = context.getImageData(0, 0, width, height).data;
-      const palette = quantize(rgba, 96, { format: "rgb444" });
+      const palette = quantize(rgba, 160, { format: "rgb444" });
       const index = applyPalette(rgba, palette, "rgb444");
       gif.writeFrame(index, width, height, { palette, delay: frameDelay, repeat: 0 });
     }
@@ -931,6 +954,68 @@ function stripPackedPlaceholders(value: unknown) {
   }
 
   return skeleton;
+}
+
+function isAnimatedThumbnail(entry: Pick<LibraryEntry, "thumbnail" | "thumbnailType">) {
+  return entry.thumbnailType === "gif" || /^data:image\/gif;base64,/i.test(entry.thumbnail || "");
+}
+
+function useLimitedAnimatedThumbnails(entries: LibraryEntry[], isEnabled: boolean, maxActive = 2) {
+  const [visibleIds, setVisibleIds] = useState<string[]>([]);
+  const [rotationIndex, setRotationIndex] = useState(0);
+
+  useEffect(() => {
+    if (!isEnabled) {
+      setVisibleIds([]);
+      setRotationIndex(0);
+      return;
+    }
+
+    const visible = new Set<string>();
+    const syncVisibleIds = () => {
+      const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-animated-thumbnail-id]"));
+      setVisibleIds(nodes.map((node) => node.dataset.animatedThumbnailId || "").filter((id) => id && visible.has(id)));
+    };
+    const observer = new IntersectionObserver(
+      (changes) => {
+        changes.forEach((change) => {
+          const id = (change.target as HTMLElement).dataset.animatedThumbnailId || "";
+          if (!id) return;
+          if (change.isIntersecting && change.intersectionRatio > 0.08) visible.add(id);
+          else visible.delete(id);
+        });
+        syncVisibleIds();
+      },
+      { root: null, rootMargin: "80px 0px", threshold: [0, 0.08, 0.35] },
+    );
+
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-animated-thumbnail-id]"));
+    nodes.forEach((node) => observer.observe(node));
+    syncVisibleIds();
+
+    return () => observer.disconnect();
+  }, [entries, isEnabled]);
+
+  useEffect(() => {
+    setRotationIndex(0);
+  }, [visibleIds.join("|")]);
+
+  useEffect(() => {
+    if (visibleIds.length <= maxActive) return;
+    const timer = window.setInterval(() => {
+      setRotationIndex((current) => (current + maxActive) % visibleIds.length);
+    }, 2600);
+    return () => window.clearInterval(timer);
+  }, [maxActive, visibleIds.length]);
+
+  return useMemo(() => {
+    if (visibleIds.length <= maxActive) return new Set(visibleIds);
+    const active = new Set<string>();
+    for (let offset = 0; offset < maxActive; offset += 1) {
+      active.add(visibleIds[(rotationIndex + offset) % visibleIds.length]);
+    }
+    return active;
+  }, [maxActive, rotationIndex, visibleIds]);
 }
 
 async function loadFiles(files: File[]) {
@@ -1344,6 +1429,7 @@ export function App({ initialFiles }: AppProps) {
   const [showProfileOnSharedPages, setShowProfileOnSharedPages] = useState(() => readStoredProfileVisibility());
   const [profileVisibilityStatus, setProfileVisibilityStatus] = useState("");
   const [renderSettingsByLabel, setRenderSettingsByLabel] = useState<Record<string, SkeletonRenderSettings>>({});
+  const activeAnimatedLibraryIds = useLimitedAnimatedThumbnails(libraryEntries, isLibraryOpen);
   const publicLibraryUrl = useMemo(
     () => new URL(`/u/${encodeURIComponent(publicOwnerIdFor(googleUser, anonymousAccount))}`, window.location.origin).toString(),
     [anonymousAccount, googleUser],
@@ -2199,6 +2285,7 @@ export function App({ initialFiles }: AppProps) {
         const note = limitWords(previewNote);
         const playerCanvas = (playerRef.current as unknown as { canvas?: HTMLCanvasElement | null } | null)?.canvas;
         const animatedThumbnail = await createAnimatedCanvasThumbnail(playerCanvas);
+        const animatedThumbnailPoster = animatedThumbnail ? await createCanvasImageThumbnail(playerCanvas) : "";
         const thumbnailSourceName = spine.atlasPages[0] ? basename(spine.atlasPages[0]) : "";
         const thumbnailSource = thumbnailSourceName
           ? spine.rawDataURIs[thumbnailSourceName] ?? spine.rawDataURIs[spine.atlasPages[0]]
@@ -2272,6 +2359,7 @@ export function App({ initialFiles }: AppProps) {
           repositoryUrl: existingEntry?.repositoryUrl || "",
           ...(note ? { note } : {}),
           ...(thumbnail ? { thumbnail } : {}),
+          ...(animatedThumbnailPoster ? { thumbnailPoster: animatedThumbnailPoster } : existingEntry?.thumbnailPoster ? { thumbnailPoster: existingEntry.thumbnailPoster } : {}),
           ...(thumbnailType ? { thumbnailType } : {}),
         };
         const indexRequestHeaders: Record<string, string> = {
@@ -2737,13 +2825,17 @@ export function App({ initialFiles }: AppProps) {
                 const previewUrl = new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
+                const hasAnimatedThumbnail = isAnimatedThumbnail(entry);
+                const thumbnailForCard =
+                  hasAnimatedThumbnail && !activeAnimatedLibraryIds.has(entry.id) ? entry.thumbnailPoster || "" : entry.thumbnail || entry.thumbnailPoster || "";
                 return (
                   <div
                     className={`library-card${entry.hiddenFromPublicLibrary ? " is-hidden" : ""}`}
                     key={entry.id}
+                    {...(hasAnimatedThumbnail ? { "data-animated-thumbnail-id": entry.id } : {})}
                     style={{
                       "--library-card-offset": `${(index % 4) * 18}px`,
-                      ...(entry.thumbnail ? { "--library-thumbnail": `url(${entry.thumbnail})` } : {}),
+                      ...(thumbnailForCard ? { "--library-thumbnail": `url(${thumbnailForCard})` } : {}),
                     } as React.CSSProperties}
                   >
                     <a className="library-card-link" href={previewUrl} target="_blank" rel="noreferrer">

@@ -230,6 +230,44 @@ function createHtml(config) {
       const ownerCard = document.getElementById("owner-card");
       const ownerProfile = document.getElementById("owner-profile");
       const ownerLibrary = document.getElementById("owner-library");
+      const transparentPixel = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+      function installLimitedAnimatedThumbnails(root) {
+        const animatedThumbs = Array.from(root.querySelectorAll("img[data-gif-src]"));
+        if (!animatedThumbs.length) return;
+        const visibleThumbs = new Set();
+        let rotationIndex = 0;
+        const maxActive = 2;
+        animatedThumbs.forEach((image) => { image.dataset.posterSrc = image.getAttribute("src") || transparentPixel; });
+        function syncAnimatedThumbs() {
+          const visible = animatedThumbs.filter((image) => visibleThumbs.has(image));
+          const active = new Set();
+          if (visible.length <= maxActive) visible.forEach((image) => active.add(image));
+          else {
+            for (let offset = 0; offset < maxActive; offset += 1) active.add(visible[(rotationIndex + offset) % visible.length]);
+          }
+          animatedThumbs.forEach((image) => {
+            const gifSrc = image.dataset.gifSrc || "";
+            const posterSrc = image.dataset.posterSrc || transparentPixel;
+            if (active.has(image) && gifSrc && image.src !== gifSrc) image.src = gifSrc;
+            if (!active.has(image) && gifSrc && image.src === gifSrc) image.src = posterSrc;
+          });
+        }
+        const observer = new IntersectionObserver((changes) => {
+          changes.forEach((change) => {
+            if (change.isIntersecting && change.intersectionRatio > 0.08) visibleThumbs.add(change.target);
+            else visibleThumbs.delete(change.target);
+          });
+          syncAnimatedThumbs();
+        }, { rootMargin: "80px 0px", threshold: [0, .08, .35] });
+        animatedThumbs.forEach((image) => observer.observe(image));
+        window.setInterval(() => {
+          const visibleCount = animatedThumbs.filter((image) => visibleThumbs.has(image)).length;
+          if (visibleCount > maxActive) {
+            rotationIndex = (rotationIndex + maxActive) % visibleCount;
+            syncAnimatedThumbs();
+          }
+        }, 2600);
+      }
       const playerElement = document.getElementById("player");
       const pinchDistance = { value: null };
       const panPosition = { value: null };
@@ -298,7 +336,12 @@ function createHtml(config) {
           const thumb = item.thumbnail ? document.createElement("img") : document.createElement("div");
           thumb.className = "owner-thumb";
           if (item.thumbnail) {
-            thumb.src = item.thumbnail;
+            if (item.thumbnailType === "gif") {
+              thumb.src = item.thumbnailPoster || transparentPixel;
+              thumb.dataset.gifSrc = item.thumbnail;
+            } else {
+              thumb.src = item.thumbnail;
+            }
             thumb.alt = "";
           }
           const text = document.createElement("div");
@@ -310,6 +353,7 @@ function createHtml(config) {
           link.append(thumb, text);
           ownerLibrary.appendChild(link);
         });
+        installLimitedAnimatedThumbnails(ownerLibrary);
       }
       function rememberBaseViewport() { if (!player?.currentViewport) return; const v = player.currentViewport; baseViewport.value = { x: v.x, y: v.y, width: v.width * currentZoom.value, height: v.height * currentZoom.value, padLeft: v.padLeft * currentZoom.value, padRight: v.padRight * currentZoom.value, padTop: v.padTop * currentZoom.value, padBottom: v.padBottom * currentZoom.value }; }
       function touchDistance(touches) { const a = touches.item(0), b = touches.item(1); if (!a || !b) return 0; return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
@@ -423,6 +467,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: safePublicImage(item?.thumbnail || ''),
+          thumbnailPoster: safePublicImage(item?.thumbnailPoster || ''),
           thumbnailType: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? 'gif' : '',
           animations: Array.isArray(item?.animations) ? item.animations.length : 0,
         })),
