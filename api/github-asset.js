@@ -43,6 +43,22 @@ function contentTypeFor(path) {
   return 'application/octet-stream';
 }
 
+function isAtlasPath(path) {
+  const lowerPath = path.toLowerCase();
+  return lowerPath.endsWith('.atlas') || lowerPath.endsWith('.atlas.txt') || lowerPath.endsWith('.atlas.docx');
+}
+
+function withAtlasPageCacheBuster(buffer, version) {
+  if (!version) return buffer;
+
+  const text = buffer.toString('utf8');
+  const nextText = text.replace(
+    /^([^\r\n:]+?\.(?:png|jpe?g|webp))(?:\?v=[^\r\n]*)?$/gim,
+    (_match, pageName) => `${pageName}?v=${encodeURIComponent(version)}`,
+  );
+  return Buffer.from(nextText, 'utf8');
+}
+
 function githubHeaders(token) {
   return {
     Accept: 'application/vnd.github+json',
@@ -62,6 +78,7 @@ export default async function handler(request, response) {
 
   const path = cleanRepoPath(request.query?.path || '');
   if (!path) return response.status(400).send('Invalid asset path');
+  const assetVersion = typeof request.query?.v === 'string' ? request.query.v : '';
 
   const owner = process.env.GITHUB_OWNER || defaultOwner;
   const repo = process.env.GITHUB_REPO || defaultRepo;
@@ -76,10 +93,13 @@ export default async function handler(request, response) {
     if (!githubResponse.ok) return response.status(githubResponse.status).send('Asset not found');
 
     const data = await githubResponse.json();
-    const buffer = await contentBufferFromGitHubContent(data, token);
+    let buffer = await contentBufferFromGitHubContent(data, token);
     if (!buffer.length) return response.status(404).send('Asset is empty');
+    if (isAtlasPath(path)) {
+      buffer = withAtlasPageCacheBuster(buffer, assetVersion);
+    }
     response.setHeader('Content-Type', contentTypeFor(path));
-    response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    response.setHeader('Cache-Control', assetVersion ? 'public, max-age=31536000, immutable' : 'public, max-age=3600, stale-while-revalidate=86400');
     return response.status(200).send(buffer);
   } catch (error) {
     return response.status(500).send(error instanceof Error ? error.message : 'Asset failed');

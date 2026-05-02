@@ -18,6 +18,11 @@ function encodeRepoPath(path) {
     .join('/');
 }
 
+function versionedAssetUrl(origin, item, version) {
+  const url = `${origin}/assets/${encodeRepoPath(item.path)}`;
+  return version ? `${url}?v=${encodeURIComponent(version)}` : url;
+}
+
 function base64ToText(base64) {
   return Buffer.from(String(base64).replace(/\s/g, ''), 'base64').toString('utf8');
 }
@@ -252,10 +257,12 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       animations[0] ??
       '';
 
+    const assetVersion = [skeleton.sha, atlas.sha, ...textures.map((texture) => texture.sha)].filter(Boolean).join('-');
+
     sets.push({
       label: directory.name,
-      skeleton: `${origin}/assets/${encodeRepoPath(skeleton.path)}`,
-      atlas: `${origin}/assets/${encodeRepoPath(atlas.path)}`,
+      skeleton: versionedAssetUrl(origin, skeleton, assetVersion),
+      atlas: versionedAssetUrl(origin, atlas, assetVersion),
       animation: defaultAnimation,
       animations,
       textures: textures.map((texture) => texture.name),
