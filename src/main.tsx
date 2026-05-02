@@ -820,6 +820,57 @@ function createImageThumbnail(dataUri: string, width = 360, height = 220) {
   });
 }
 
+function blobToDataUri(blob: Blob) {
+  return new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    reader.onerror = () => resolve("");
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function createAnimatedCanvasThumbnail(sourceCanvas?: HTMLCanvasElement | null, width = 220, height = 136) {
+  if (!sourceCanvas || sourceCanvas.width === 0 || sourceCanvas.height === 0) return "";
+
+  try {
+    const { GIFEncoder, applyPalette, quantize } = await import("gifenc");
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) return "";
+
+    const gif = GIFEncoder({ initialCapacity: 256 * 1024 });
+    const frameCount = 8;
+    const frameDelay = 110;
+    const scale = Math.min(width / sourceCanvas.width, height / sourceCanvas.height);
+    const nextWidth = Math.max(1, Math.round(sourceCanvas.width * scale));
+    const nextHeight = Math.max(1, Math.round(sourceCanvas.height * scale));
+    const offsetX = Math.round((width - nextWidth) / 2);
+    const offsetY = Math.round((height - nextHeight) / 2);
+
+    for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
+      await wait(frameIndex === 0 ? 80 : frameDelay);
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = "#050607";
+      context.fillRect(0, 0, width, height);
+      context.drawImage(sourceCanvas, offsetX, offsetY, nextWidth, nextHeight);
+      const rgba = context.getImageData(0, 0, width, height).data;
+      const palette = quantize(rgba, 96, { format: "rgb444" });
+      const index = applyPalette(rgba, palette, "rgb444");
+      gif.writeFrame(index, width, height, { palette, delay: frameDelay, repeat: 0 });
+    }
+
+    gif.finish();
+    const bytes = gif.bytes();
+    const gifBuffer = new ArrayBuffer(bytes.byteLength);
+    new Uint8Array(gifBuffer).set(bytes);
+    return blobToDataUri(new Blob([gifBuffer], { type: "image/gif" }));
+  } catch {
+    return "";
+  }
+}
+
 function stripPackedPlaceholders(value: unknown) {
   if (!value || typeof value !== "object") return value;
 
@@ -1990,11 +2041,14 @@ function App() {
         const permanentPreviewUrl = new URL(`/p/${encodeURIComponent(uploadId)}`, window.location.origin).toString();
         const setsForPublish = spineOptions.length ? spineOptions : [spine];
         const note = limitWords(previewNote);
+        const playerCanvas = (playerRef.current as unknown as { canvas?: HTMLCanvasElement | null } | null)?.canvas;
+        const animatedThumbnail = await createAnimatedCanvasThumbnail(playerCanvas);
         const thumbnailSourceName = spine.atlasPages[0] ? basename(spine.atlasPages[0]) : "";
         const thumbnailSource = thumbnailSourceName
           ? spine.rawDataURIs[thumbnailSourceName] ?? spine.rawDataURIs[spine.atlasPages[0]]
           : "";
-        const thumbnail = thumbnailSource?.startsWith("data:image/") ? await createImageThumbnail(thumbnailSource) : "";
+        const fallbackThumbnail = thumbnailSource?.startsWith("data:image/") ? await createImageThumbnail(thumbnailSource) : "";
+        const thumbnail = animatedThumbnail || fallbackThumbnail;
         const fileMap = new Map<string, string>();
         for (const nextSpine of setsForPublish) {
           for (const file of filesForLibrary(nextSpine)) {

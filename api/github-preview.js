@@ -37,7 +37,7 @@ function cleanPublicText(value = '', maxLength = 120) {
 
 function safePublicImage(value = '') {
   const url = String(value).trim();
-  return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/(?:png|jpe?g|webp);base64,/i.test(url) ? url : '';
+  return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/(?:gif|png|jpe?g|webp);base64,/i.test(url) ? url : '';
 }
 
 function githubHeaders(token) {
