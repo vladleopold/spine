@@ -171,8 +171,19 @@ function createHtml(config) {
       }
       const config = JSON.parse(document.getElementById("spine-preview-config").textContent);
       const sets = config.sets || [];
-      const activeSet = { value: sets.find((set) => set.label === config.activeLabel) || sets[0] };
-      const activeAnimation = { name: activeSet.value?.animation || "" };
+      function queryValue(name) { return new URLSearchParams(window.location.search).get(name) || ""; }
+      function setHasAnimation(set, animationName) { return Boolean(set && animationName && (set.animations || []).includes(animationName)); }
+      function initialSet() {
+        const querySet = queryValue("set");
+        const queryAnimation = queryValue("animation");
+        return sets.find((set) => set.label === querySet) || sets.find((set) => setHasAnimation(set, queryAnimation)) || sets.find((set) => set.label === config.activeLabel) || sets[0];
+      }
+      function initialAnimation(set) {
+        const queryAnimation = queryValue("animation");
+        return setHasAnimation(set, queryAnimation) ? queryAnimation : set?.animation || "";
+      }
+      const activeSet = { value: initialSet() };
+      const activeAnimation = { name: initialAnimation(activeSet.value) };
       const loopEnabled = { value: true };
       const currentZoom = { value: config.zoom || 1 };
       const baseViewport = { value: null };
@@ -186,6 +197,24 @@ function createHtml(config) {
       const pinchDistance = { value: null };
       const panPosition = { value: null };
       let player;
+      function syncUrl(replace = false) {
+        if (!activeSet.value || !activeAnimation.name) return;
+        const url = new URL(window.location.href);
+        if (sets.length > 1) url.searchParams.set("set", activeSet.value.label);
+        else url.searchParams.delete("set");
+        url.searchParams.set("animation", activeAnimation.name);
+        const nextUrl = url.pathname + url.search + url.hash;
+        if (nextUrl === window.location.pathname + window.location.search + window.location.hash) return;
+        window.history[replace ? "replaceState" : "pushState"]({}, "", nextUrl);
+      }
+      function applySelectionFromUrl() {
+        const nextSet = initialSet();
+        activeSet.value = nextSet;
+        activeAnimation.name = initialAnimation(nextSet);
+        syncSetInfo();
+        renderAnimationList();
+        createPlayer();
+      }
       function syncSetInfo() {
         if (!activeSet.value) return;
         animationNames.value = activeSet.value.animations || [];
@@ -207,7 +236,7 @@ function createHtml(config) {
       function installLoopButton() { const buttons = player?.dom?.querySelector(".spine-player-buttons"); const playButton = buttons?.querySelector(".spine-player-button"); if (!buttons || !playButton) return; playButton.onclick = (event) => { event.preventDefault(); event.stopPropagation(); togglePlayback(); }; if (buttons.querySelector(".spine-link-loop-button")) return; const button = document.createElement("button"); button.type = "button"; button.className = "spine-player-button spine-link-loop-button"; updateLoopButtonState(button); button.onclick = (event) => { event.preventDefault(); event.stopPropagation(); loopEnabled.value = !loopEnabled.value; setTrackLoop(); updateLoopButtonState(button); }; playButton.insertAdjacentElement("afterend", button); }
       function panByPixels(deltaX, deltaY) { const v = player?.currentViewport, b = baseViewport.value, canvas = player?.canvas; if (!v || !b || !canvas) return; const totalWidth = v.width + v.padLeft + v.padRight, totalHeight = v.height + v.padTop + v.padBottom; const worldDeltaX = deltaX / Math.max(1, canvas.clientWidth) * totalWidth, worldDeltaY = deltaY / Math.max(1, canvas.clientHeight) * totalHeight; v.x -= worldDeltaX; v.y += worldDeltaY; b.x -= worldDeltaX * currentZoom.value; b.y += worldDeltaY * currentZoom.value; player.previousViewport = { ...v }; player.viewportTransitionStart = performance.now(); }
       function createPlayer() { if (!activeSet.value) return; player?.dispose(); document.getElementById("player").innerHTML = ""; baseViewport.value = null; player = new spine.SpinePlayer("player", { ...activeSet.value, showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: true, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); applyZoom(currentZoom.value); }); } }); }
-      function renderAnimationList() { animationList.innerHTML = ""; animationNames.value.forEach((animationName) => { const button = document.createElement("button"); button.type = "button"; button.textContent = animationName; button.className = animationName === activeAnimation.name ? "active" : ""; button.onclick = () => { activeAnimation.name = animationName; playActiveAnimationFromStart(); applyZoom(currentZoom.value); renderAnimationList(); }; animationList.appendChild(button); }); }
+      function renderAnimationList() { animationList.innerHTML = ""; animationNames.value.forEach((animationName) => { const button = document.createElement("button"); button.type = "button"; button.textContent = animationName; button.className = animationName === activeAnimation.name ? "active" : ""; button.onclick = () => { activeAnimation.name = animationName; syncUrl(); playActiveAnimationFromStart(); applyZoom(currentZoom.value); renderAnimationList(); }; animationList.appendChild(button); }); }
       playerElement.addEventListener("wheel", (event) => { event.preventDefault(); applyZoom(currentZoom.value + (event.deltaY > 0 ? -0.1 : 0.1)); }, { passive: false });
       playerElement.addEventListener("touchstart", (event) => { if (event.touches.length === 2) pinchDistance.value = touchDistance(event.touches); }, { passive: false });
       playerElement.addEventListener("touchmove", (event) => { if (event.touches.length !== 2 || pinchDistance.value === null) return; event.preventDefault(); const nextDistance = touchDistance(event.touches); applyZoom(currentZoom.value + (nextDistance - pinchDistance.value) / 220); pinchDistance.value = nextDistance; }, { passive: false });
@@ -219,8 +248,9 @@ function createHtml(config) {
       playerElement.addEventListener("mousedown", (event) => { if (event.button !== 2) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = { x: event.clientX, y: event.clientY }; }, true);
       window.addEventListener("mousemove", (event) => { if (!panPosition.value) return; event.preventDefault(); event.stopImmediatePropagation(); const deltaX = event.clientX - panPosition.value.x, deltaY = event.clientY - panPosition.value.y; panPosition.value = { x: event.clientX, y: event.clientY }; panByPixels(deltaX, deltaY); }, { passive: false, capture: true });
       window.addEventListener("mouseup", (event) => { if (event.button !== 2) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
-      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); renderAnimationList(); createPlayer(); };
-      renderSetList(); syncSetInfo(); createPlayer(); renderAnimationList();
+      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); renderAnimationList(); syncUrl(); createPlayer(); };
+      window.addEventListener("popstate", applySelectionFromUrl);
+      renderSetList(); syncSetInfo(); syncUrl(true); createPlayer(); renderAnimationList();
     </script>
   </body>
 </html>`;
