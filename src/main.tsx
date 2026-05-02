@@ -126,6 +126,7 @@ type LibraryEntry = {
   repositoryUrl: string;
   note?: string;
   thumbnail?: string;
+  thumbnailType?: "gif" | "image";
 };
 
 type UploadResponse = {
@@ -2049,6 +2050,7 @@ function App() {
           : "";
         const fallbackThumbnail = thumbnailSource?.startsWith("data:image/") ? await createImageThumbnail(thumbnailSource) : "";
         const thumbnail = animatedThumbnail || fallbackThumbnail;
+        const thumbnailType = animatedThumbnail ? "gif" : thumbnail ? "image" : undefined;
         const fileMap = new Map<string, string>();
         for (const nextSpine of setsForPublish) {
           for (const file of filesForLibrary(nextSpine)) {
@@ -2114,6 +2116,7 @@ function App() {
           repositoryUrl: "",
           ...(note ? { note } : {}),
           ...(thumbnail ? { thumbnail } : {}),
+          ...(thumbnailType ? { thumbnailType } : {}),
         };
         const indexRequestHeaders: Record<string, string> = {
           "Content-Type": "application/json",
@@ -2578,6 +2581,7 @@ function App() {
               {libraryEntries.map((entry, index) => {
                 const previewUrl = new URL(`/p/${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
+                const isGifPreview = entry.thumbnailType === "gif" || entry.thumbnail?.startsWith("data:image/gif");
                 return (
                   <div
                     className="library-card"
@@ -2590,6 +2594,7 @@ function App() {
                       style={entry.thumbnail ? { "--library-thumbnail": `url(${entry.thumbnail})` } as React.CSSProperties : undefined}
                     >
                       <Layers size={24} />
+                      {isGifPreview && <em>GIF preview</em>}
                       <span>{entry.animations?.length ?? 0}</span>
                     </div>
                     <div className="library-card-body">

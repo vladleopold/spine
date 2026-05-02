@@ -53,11 +53,12 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       const itemTitle = escapeHtml(entry.title || entry.id || 'Spine preview');
       const previewUrl = `/p/${encodeURIComponent(String(entry.id || ''))}`;
       const thumbnail = safeImage(entry.thumbnail || '');
+      const isGifPreview = entry.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(thumbnail);
       const date = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
       const dateText = date && !Number.isNaN(date.getTime()) ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Saved';
       const animations = Array.isArray(entry.animations) ? entry.animations.length : 0;
       const image = thumbnail
-        ? `<img src="${thumbnail}" alt="" />`
+        ? `<img src="${thumbnail}" alt="" />${isGifPreview ? '<em>GIF preview</em>' : ''}`
         : `<div class="thumb-fallback" aria-hidden="true">${animations}</div>`;
       return `<a class="card" href="${previewUrl}">
         <div class="thumb">${image}</div>
@@ -93,8 +94,9 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
       .card { overflow: hidden; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: inherit; text-decoration: none; background: #202326; transition: transform 150ms ease, border-color 150ms ease; }
       .card:hover { transform: translateY(-3px); border-color: rgba(179,255,64,.68); }
-      .thumb { display: grid; place-items: center; min-height: 150px; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
+      .thumb { position: relative; display: grid; place-items: center; min-height: 150px; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
       .thumb img { width: 100%; height: 150px; object-fit: contain; }
+      .thumb em { position: absolute; top: 10px; left: 10px; padding: 5px 7px; border: 1px solid rgba(179,255,64,.46); border-radius: 7px; color: #eaffd0; background: rgba(11,16,18,.68); font-size: 10px; font-style: normal; font-weight: 900; text-transform: uppercase; }
       .thumb-fallback { color: #fff; font-size: 56px; font-weight: 900; }
       .card-body { display: grid; gap: 7px; padding: 13px; }
       .card-body strong, .card-body span, .card-body small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

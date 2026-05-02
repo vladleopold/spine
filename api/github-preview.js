@@ -293,6 +293,9 @@ function createHtml(config) {
             thumb.src = item.thumbnail;
             thumb.alt = "";
           }
+          if (item.thumbnailType === "gif") {
+            thumb.title = "Animated GIF preview";
+          }
           const text = document.createElement("div");
           const title = document.createElement("strong");
           title.textContent = item.title || "Spine preview";
@@ -415,6 +418,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: safePublicImage(item?.thumbnail || ''),
+          thumbnailType: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? 'gif' : '',
           animations: Array.isArray(item?.animations) ? item.animations.length : 0,
         })),
       };
