@@ -3,12 +3,18 @@ import "./styles.css";
 const root = document.getElementById("root");
 let isAppLoading = false;
 let isAppMounted = false;
+let bootDraggingState: boolean | null = null;
+let stopBootParticles: (() => void) | null = null;
 
 function renderBootShell(isDragging = false) {
   if (!root || isAppMounted) return;
+  if (bootDraggingState === isDragging && root.querySelector(".app-shell")) return;
+  bootDraggingState = isDragging;
+  stopBootParticles?.();
 
   root.innerHTML = `
     <main class="app-shell is-empty ${isDragging ? "is-docking" : ""}">
+      <canvas class="particle-field" aria-hidden="true"></canvas>
       <section class="seo-intro" aria-label="Spine-Link SEO description">
         <h1>Spine-Link online Spine preview and Spine web viewer</h1>
         <p>Spine-Link is a browser based Spine preview tool for Spine online workflows, Spine web previews, Spine webview links, JSON and SKEL animation files, atlas files, and texture images.</p>
@@ -62,12 +68,16 @@ function renderBootShell(isDragging = false) {
     const input = event.currentTarget as HTMLInputElement;
     if (input.files?.length) void mountApp(Array.from(input.files));
   });
+  startBootParticles();
 }
 
 function renderLoadingShell() {
   if (!root) return;
+  bootDraggingState = null;
+  stopBootParticles?.();
   root.innerHTML = `
     <main class="app-shell is-empty">
+      <canvas class="particle-field" aria-hidden="true"></canvas>
       <section class="workspace">
         <div class="stage">
           <div class="preview-panel">
@@ -80,6 +90,95 @@ function renderLoadingShell() {
       </section>
     </main>
   `;
+  startBootParticles();
+}
+
+function startBootParticles() {
+  const canvas = root?.querySelector<HTMLCanvasElement>(".particle-field");
+  const context = canvas?.getContext("2d");
+  if (!canvas || !context) return;
+
+  const colors = ["255,255,255", "140,199,255", "255,106,40"];
+  const particles: Array<{
+    x: number;
+    y: number;
+    radius: number;
+    speedX: number;
+    speedY: number;
+    alpha: number;
+    pulse: number;
+    color: string;
+  }> = [];
+  let width = 0;
+  let height = 0;
+  let pixelRatio = 1;
+  let animationFrame = 0;
+
+  const resetParticle = (particle: (typeof particles)[number], randomizePosition = false) => {
+    particle.x = Math.random() * width;
+    particle.y = randomizePosition ? Math.random() * height : height + Math.random() * 80;
+    particle.radius = 0.55 + Math.random() * 1.8;
+    particle.speedX = (Math.random() - 0.5) * 0.16;
+    particle.speedY = -(0.08 + Math.random() * 0.34);
+    particle.alpha = 0.18 + Math.random() * 0.64;
+    particle.pulse = Math.random() * Math.PI * 2;
+    particle.color = colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const resize = () => {
+    pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * pixelRatio);
+    canvas.height = Math.floor(height * pixelRatio);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    const targetCount = Math.min(170, Math.max(72, Math.floor((width * height) / 9000)));
+    while (particles.length < targetCount) {
+      const particle = {} as (typeof particles)[number];
+      resetParticle(particle, true);
+      particles.push(particle);
+    }
+    particles.length = targetCount;
+  };
+
+  const draw = (time: number) => {
+    context.clearRect(0, 0, width, height);
+
+    for (const particle of particles) {
+      particle.x += particle.speedX + Math.sin(time * 0.00025 + particle.pulse) * 0.035;
+      particle.y += particle.speedY;
+
+      if (particle.y < -24 || particle.x < -32 || particle.x > width + 32) {
+        resetParticle(particle);
+      }
+
+      const alpha = particle.alpha * (0.68 + Math.sin(time * 0.0012 + particle.pulse) * 0.32);
+      const glowRadius = particle.radius * 5.5;
+      const gradient = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius);
+      gradient.addColorStop(0, `rgba(${particle.color}, ${alpha})`);
+      gradient.addColorStop(0.42, `rgba(${particle.color}, ${alpha * 0.24})`);
+      gradient.addColorStop(1, `rgba(${particle.color}, 0)`);
+      context.fillStyle = gradient;
+      context.beginPath();
+      context.arc(particle.x, particle.y, glowRadius, 0, Math.PI * 2);
+      context.fill();
+    }
+
+    animationFrame = window.requestAnimationFrame(draw);
+  };
+
+  resize();
+  animationFrame = window.requestAnimationFrame(draw);
+  window.addEventListener("resize", resize);
+
+  stopBootParticles = () => {
+    window.cancelAnimationFrame(animationFrame);
+    window.removeEventListener("resize", resize);
+    stopBootParticles = null;
+  };
 }
 
 async function mountApp(initialFiles: File[] = []) {
@@ -94,6 +193,7 @@ async function mountApp(initialFiles: File[] = []) {
   ]);
 
   isAppMounted = true;
+  stopBootParticles?.();
   createRoot(root).render(createElement(StrictMode, null, createElement(App, { initialFiles })));
 }
 
