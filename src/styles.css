@@ -1189,7 +1189,15 @@ h1 {
   border: 2px solid rgba(140, 199, 255, 0.9);
   border-radius: 8px;
   color: inherit;
-  background: #202326;
+  background:
+    linear-gradient(rgba(8, 10, 12, 0.34), rgba(8, 10, 12, 0.52)),
+    var(--library-thumbnail),
+    radial-gradient(circle at 22% 22%, rgba(255, 106, 40, 0.28), transparent 36%),
+    radial-gradient(circle at 78% 16%, rgba(140, 199, 255, 0.32), transparent 32%),
+    linear-gradient(135deg, rgba(32, 35, 38, 0.98), rgba(20, 22, 25, 0.98));
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover, cover, auto, auto, auto;
   break-inside: avoid;
   box-shadow: 0 0 0 2px rgba(71, 156, 255, 0.28);
   transition:
@@ -1201,7 +1209,6 @@ h1 {
 .library-card:hover {
   transform: translateY(-3px);
   border-color: #8cc7ff;
-  background: #252a2f;
 }
 
 .library-card-link {
@@ -1217,15 +1224,7 @@ h1 {
   min-height: 150px;
   padding: 28px 28px 24px;
   color: #ffffff;
-  background:
-    linear-gradient(rgba(25, 27, 30, 0.38), rgba(25, 27, 30, 0.7)),
-    var(--library-thumbnail),
-    radial-gradient(circle at 22% 22%, rgba(255, 106, 40, 0.28), transparent 36%),
-    radial-gradient(circle at 78% 16%, rgba(140, 199, 255, 0.32), transparent 32%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover, contain, auto, auto, auto;
+  background: linear-gradient(rgba(9, 11, 13, 0.05), rgba(9, 11, 13, 0.18));
 }
 
 .library-card-visual span {
@@ -1252,6 +1251,8 @@ h1 {
   display: grid;
   gap: 8px;
   padding: 14px;
+  background: rgba(32, 35, 38, 0.5);
+  backdrop-filter: blur(10px);
 }
 
 .library-delete-button {

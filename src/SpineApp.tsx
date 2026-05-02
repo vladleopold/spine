@@ -2531,8 +2531,8 @@ export function App({ initialFiles }: AppProps) {
         <div className="library-modal" role="dialog" aria-modal="true" aria-label="Library">
           <div className="library-modal-top">
             <div>
-              <div className="library-kicker">Library</div>
-              <h2>Upload history</h2>
+              <div className="library-kicker">LIBRARY</div>
+              <h2>YOUR</h2>
             </div>
             <div className="library-modal-actions">
               <button type="button" onClick={loadLibrary} disabled={isLibraryLoading} title="Refresh library">
@@ -2592,13 +2592,13 @@ export function App({ initialFiles }: AppProps) {
                   <div
                     className="library-card"
                     key={entry.id}
-                    style={{ "--library-card-offset": `${(index % 4) * 18}px` } as React.CSSProperties}
+                    style={{
+                      "--library-card-offset": `${(index % 4) * 18}px`,
+                      ...(entry.thumbnail ? { "--library-thumbnail": `url(${entry.thumbnail})` } : {}),
+                    } as React.CSSProperties}
                   >
                     <a className="library-card-link" href={previewUrl} target="_blank" rel="noreferrer">
-                    <div
-                      className="library-card-visual"
-                      style={entry.thumbnail ? { "--library-thumbnail": `url(${entry.thumbnail})` } as React.CSSProperties : undefined}
-                    >
+                    <div className="library-card-visual">
                       <Layers size={24} />
                       {isGifPreview && <em>GIF preview</em>}
                       <span>{entry.animations?.length ?? 0}</span>
