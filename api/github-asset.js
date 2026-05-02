@@ -10,6 +10,24 @@ function base64ToBuffer(base64) {
   return Buffer.from(String(base64).replace(/\s/g, ''), 'base64');
 }
 
+async function contentBufferFromGitHubContent(data, token) {
+  if (typeof data?.content === 'string' && data.content.trim()) {
+    return base64ToBuffer(data.content);
+  }
+
+  if (typeof data?.download_url === 'string' && data.download_url) {
+    const rawResponse = await fetch(data.download_url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!rawResponse.ok) throw new Error(`Raw asset did not load: ${rawResponse.status}`);
+    return Buffer.from(await rawResponse.arrayBuffer());
+  }
+
+  throw new Error('Asset content is empty');
+}
+
 function contentTypeFor(path) {
   const lowerPath = path.toLowerCase();
   if (lowerPath.endsWith('.json')) return 'application/json; charset=utf-8';
@@ -58,7 +76,8 @@ export default async function handler(request, response) {
     if (!githubResponse.ok) return response.status(githubResponse.status).send('Asset not found');
 
     const data = await githubResponse.json();
-    const buffer = base64ToBuffer(data.content || '');
+    const buffer = await contentBufferFromGitHubContent(data, token);
+    if (!buffer.length) return response.status(404).send('Asset is empty');
     response.setHeader('Content-Type', contentTypeFor(path));
     response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     return response.status(200).send(buffer);
