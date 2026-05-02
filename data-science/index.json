@@ -1,5 +1,121 @@
 [
   {
+    "id": "3x7_logo-2026-05-02T13-50-05-580Z",
+    "name": "3x7_logo",
+    "updatedAt": "2026-05-02T13:50:29.297Z",
+    "animation_asset": {
+      "id": "3x7_logo-2026-05-02T13-50-05-580Z",
+      "name": "3x7_logo",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "logo",
+      "skeleton_type": "logo",
+      "content_type": "logo",
+      "taxonomy": {
+        "category": "branding",
+        "class": "logo",
+        "type": "logo-animation",
+        "tags": [
+          "logo"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "branding"
+        ],
+        "style": [
+          "logo"
+        ],
+        "animation_state": [
+          "animation",
+          "animation2"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/3x7_logo-2026-05-02T13-50-05-580Z",
+      "manifestPath": "library/3x7_logo-2026-05-02T13-50-05-580Z/manifest.json",
+      "files": [
+        {
+          "path": "library/3x7_logo-2026-05-02T13-50-05-580Z/3x7_logo/3x7_logo.json",
+          "name": "3x7_logo/3x7_logo.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/3x7_logo-2026-05-02T13-50-05-580Z/3x7_logo/3x7_logo.atlas",
+          "name": "3x7_logo/3x7_logo.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/3x7_logo-2026-05-02T13-50-05-580Z/3x7_logo/3x7_logo.png",
+          "name": "3x7_logo/3x7_logo.png",
+          "role": "texture",
+          "format": "png"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "3x7_logo.json",
+      "atlas": "3x7_logo.atlas",
+      "textures": [
+        "3x7_logo.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "animation",
+        "animation2"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 3,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 1
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "logo"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_logo-2026-05-02T13-49-00-170Z",
     "name": "ct_logo",
     "updatedAt": "2026-05-02T13:49:23.394Z",
