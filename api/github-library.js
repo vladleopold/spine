@@ -92,13 +92,13 @@ function createLibraryHtml({ origin, publicOwnerId, entries }) {
       h1 { margin: 0 0 7px; font-size: clamp(30px, 5vw, 58px); line-height: 1; letter-spacing: 0; }
       .profile p { margin: 0; color: rgba(237,245,255,.66); font-size: 15px; }
       .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-      .card { overflow: hidden; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: inherit; text-decoration: none; background: #202326; transition: transform 150ms ease, border-color 150ms ease; }
+      .card { position: relative; display: block; overflow: hidden; min-height: 320px; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: inherit; text-decoration: none; background: #060708; transition: transform 150ms ease, border-color 150ms ease; }
       .card:hover { transform: translateY(-3px); border-color: rgba(179,255,64,.68); }
-      .thumb { position: relative; display: grid; place-items: center; min-height: 150px; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
-      .thumb img { width: 100%; height: 150px; object-fit: contain; }
-      .thumb em { position: absolute; top: 10px; left: 10px; padding: 5px 7px; border: 1px solid rgba(179,255,64,.46); border-radius: 7px; color: #eaffd0; background: rgba(11,16,18,.68); font-size: 10px; font-style: normal; font-weight: 900; text-transform: uppercase; }
+      .thumb { position: absolute; inset: 0; display: grid; place-items: center; min-height: 100%; background: linear-gradient(135deg, rgba(255,106,40,.18), rgba(140,199,255,.16)); }
+      .thumb img { width: 100%; height: 100%; object-fit: cover; }
+      .thumb em { position: absolute; z-index: 2; top: 14px; left: 14px; padding: 5px 7px; border: 1px solid rgba(179,255,64,.56); border-radius: 7px; color: #f4ffe8; background: rgba(11,16,18,.58); font-size: 10px; font-style: normal; font-weight: 900; text-transform: uppercase; backdrop-filter: blur(8px); }
       .thumb-fallback { color: #fff; font-size: 56px; font-weight: 900; }
-      .card-body { display: grid; gap: 7px; padding: 13px; }
+      .card-body { position: absolute; right: 0; bottom: 0; left: 0; z-index: 1; display: grid; gap: 7px; padding: 15px; background: rgba(32,35,38,.5); backdrop-filter: blur(10px); }
       .card-body strong, .card-body span, .card-body small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .card-body span, .card-body small { color: rgba(237,245,255,.64); }
       .empty { padding: 34px; border: 1px dashed rgba(255,255,255,.16); border-radius: 8px; color: rgba(237,245,255,.68); text-align: center; }
