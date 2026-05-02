@@ -2,6 +2,7 @@ const defaultOwner = 'vladleopold';
 const defaultRepo = 'spine';
 const defaultBranch = 'main';
 const defaultBasePath = 'library';
+import { dataScienceSchema, inferDataScienceMetadata } from './spine-data-science.js';
 
 function cleanRepoPath(value = '') {
   return String(value).trim().replace(/^\/+|\/+$/g, '').replace(/\/+/g, '/');
@@ -196,6 +197,43 @@ function isSameLibraryOwner(entry, targetEntry) {
   return Boolean(samePublicOwner || sameEmail || sameAnon);
 }
 
+function dataScienceBasePathFor(body) {
+  return cleanRepoPath(process.env.DATA_SCIENCE_BASE_PATH || body?.dataScience?.basePath || 'data-science');
+}
+
+async function updateDataScienceCatalog(settings, body, entry, commitPrefix, origin) {
+  if (body?.dataScience?.enabled === false) return null;
+  const basePath = dataScienceBasePathFor(body);
+  if (!basePath) return null;
+
+  const metadata = inferDataScienceMetadata(entry, settings);
+  const animationAsset = metadata.animation_asset || {};
+  const itemId = String(animationAsset.id || entry?.id || '');
+  const itemPath = joinRepoPath(basePath, 'items', `${itemId}.json`);
+  const indexPath = joinRepoPath(basePath, 'index.json');
+  const schemaPath = joinRepoPath(basePath, 'schema.json');
+  const currentItem = await getGitHubContent(settings, itemPath);
+  const currentIndex = await getGitHubContent(settings, indexPath);
+  const currentSchema = await getGitHubContent(settings, schemaPath);
+  const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
+  const indexRecord = {
+    id: itemId,
+    name: animationAsset.name || itemId,
+    updatedAt: metadata.updatedAt,
+    animation_asset: animationAsset,
+    source: metadata.source,
+    spine_spec: metadata.spine_spec,
+    inference: metadata.inference,
+    privacy: metadata.privacy,
+  };
+  const nextEntries = [indexRecord, ...currentEntries.filter((currentEntry) => String(currentEntry?.id || '') !== itemId)];
+
+  await putGitHubContent(settings, itemPath, textToBase64(JSON.stringify(metadata, null, 2)), `${commitPrefix}: data-science item`, currentItem?.sha, origin);
+  await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: data-science index`, currentIndex?.sha, origin);
+  await putGitHubContent(settings, schemaPath, textToBase64(JSON.stringify(dataScienceSchema(), null, 2)), `${commitPrefix}: data-science schema`, currentSchema?.sha, origin);
+  return { basePath, itemPath, indexPath, schemaPath, animation_asset: animationAsset, inference: metadata.inference };
+}
+
 async function getGitHubContent(settings, path) {
   const encodedPath = encodeURIComponent(path).replace(/%2F/g, '/');
   const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${encodedPath}?ref=${encodeURIComponent(settings.branch)}`, {
@@ -327,7 +365,8 @@ export default async function handler(request, response) {
       };
       const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
-      return response.status(200).json({ ok: true, indexed: nextEntries.length });
+      const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
+      return response.status(200).json({ ok: true, indexed: nextEntries.length, dataScience });
     }
 
 
@@ -547,12 +586,14 @@ export default async function handler(request, response) {
     const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
 
     await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
+    const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
 
     return response.status(200).json({
       ok: true,
       repositoryUrl: entry.repositoryUrl,
       previewUrl: `/api/github-preview?path=${encodeURIComponent(entry.previewPath)}`,
       uploaded: files.length + 3,
+      dataScience,
     });
   } catch (error) {
     const statusCode = Number(error?.statusCode) || 500;
