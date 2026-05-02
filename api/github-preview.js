@@ -156,10 +156,11 @@ function createHtml(config) {
       .owner-profile strong, .owner-profile span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-profile strong { color: #fff; font-size: 16px; }
       .owner-profile span { color: rgba(231,237,244,.62); font-size: 12px; }
-      .owner-library { display: grid; gap: 8px; }
-      .owner-library a { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; min-height: 50px; padding: 7px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); }
+      .owner-library { display: none; gap: 8px; }
+      .owner-library.is-visible { display: grid; }
+      .owner-library a { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; min-height: 78px; padding: 7px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); }
       .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); }
-      .owner-thumb { width: 44px; height: 36px; border-radius: 6px; object-fit: cover; background: rgba(255,255,255,.08); }
+      .owner-thumb { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; background: rgba(255,255,255,.08); }
       .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-library strong { color: #fff; font-size: 13px; }
       .owner-library span { color: rgba(231,237,244,.58); font-size: 11px; }
@@ -182,9 +183,10 @@ function createHtml(config) {
         <div id="player"></div>
         <aside id="sidebar">
           <div class="preview-card" id="set-card"><div class="section-title">Set</div><select id="set-select"></select></div>
-          <div class="preview-card owner-card" id="owner-card"><div class="section-title">Creator</div><div id="owner-profile"></div><div class="owner-library" id="owner-library"></div></div>
+          <div class="preview-card owner-card" id="owner-card"><div class="section-title">Creator</div><div id="owner-profile"></div></div>
           <div class="preview-card note-card" id="note-card"><div class="section-title">Text</div><p class="note-text" id="note-text"></p></div>
           <div class="preview-card animation-card"><div class="section-title">Animations</div><div id="animation-list"></div></div>
+          <div class="preview-card owner-library" id="owner-library"></div>
         </aside>
       </div>
     </div>
@@ -257,6 +259,7 @@ function createHtml(config) {
         const owner = config.ownerProfile || {};
         const items = Array.isArray(owner.library) ? owner.library : [];
         ownerCard.classList.toggle("is-visible", Boolean(owner.visible));
+        ownerLibrary.classList.toggle("is-visible", Boolean(owner.visible && items.length));
         ownerProfile.innerHTML = "";
         ownerLibrary.innerHTML = "";
         if (!owner.visible) return;
