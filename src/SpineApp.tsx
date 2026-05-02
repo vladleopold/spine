@@ -1661,7 +1661,7 @@ export function App({ initialFiles }: AppProps) {
     };
 
     const handlePreviewClick = (event: MouseEvent) => {
-      if (!preparedSpine || (event.target as Element | null)?.closest(".spine-player-controls")) return;
+      if (!preparedSpine || (event.target as Element | null)?.closest(".spine-player-controls, .link-ready-banner")) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       if (event.type === "click" && event.button === 0) togglePreviewPlayback();
