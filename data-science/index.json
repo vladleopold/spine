@@ -2,7 +2,7 @@
   {
     "id": "bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z",
     "name": "bg_for_spine_05.04.2026_001",
-    "updatedAt": "2026-05-04T20:27:34.370Z",
+    "updatedAt": "2026-05-04T20:28:35.686Z",
     "animation_asset": {
       "id": "bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z",
       "name": "bg_for_spine_05.04.2026_001",
@@ -35,7 +35,7 @@
           "loop"
         ],
         "state": [
-          "default-animation"
+          "default-loop"
         ],
         "platform": [
           "web"
@@ -84,14 +84,14 @@
           "format": "png"
         },
         {
-          "path": "library/bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z/animation-preview.webm",
-          "name": "animation-preview.webm",
+          "path": "library/bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z/loop-preview.webm",
+          "name": "loop-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z/animation-preview.webp",
-          "name": "animation-preview.webp",
+          "path": "library/bg_for_spine_05.04.2026_001-2026-05-04T20-27-23-524Z/loop-preview.webp",
+          "name": "loop-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -108,7 +108,7 @@
         "animation",
         "Loop"
       ],
-      "defaultAnimation": "animation",
+      "defaultAnimation": "Loop",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
