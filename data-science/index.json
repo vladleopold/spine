@@ -2,7 +2,7 @@
   {
     "id": "lucy-2026-05-04T10-45-24-264Z",
     "name": "lucy",
-    "updatedAt": "2026-05-04T10:45:36.511Z",
+    "updatedAt": "2026-05-04T10:45:56.655Z",
     "animation_asset": {
       "id": "lucy-2026-05-04T10-45-24-264Z",
       "name": "lucy",
@@ -48,7 +48,7 @@
           "one-shot"
         ],
         "state": [
-          "default-idle"
+          "default-attack_1"
         ],
         "action": [
           "walk",
@@ -96,14 +96,14 @@
           "format": "png"
         },
         {
-          "path": "library/lucy-2026-05-04T10-45-24-264Z/idle-preview.webm",
-          "name": "idle-preview.webm",
+          "path": "library/lucy-2026-05-04T10-45-24-264Z/attack_1-preview.webm",
+          "name": "attack_1-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/lucy-2026-05-04T10-45-24-264Z/idle-preview.webp",
-          "name": "idle-preview.webp",
+          "path": "library/lucy-2026-05-04T10-45-24-264Z/attack_1-preview.webp",
+          "name": "attack_1-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -130,7 +130,7 @@
         "Ultimate",
         "Walk"
       ],
-      "defaultAnimation": "Idle",
+      "defaultAnimation": "Attack_1",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
