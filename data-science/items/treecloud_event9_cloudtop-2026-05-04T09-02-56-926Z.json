@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-04T09:02:56.926Z",
-  "updatedAt": "2026-05-04T09:03:08.955Z",
+  "updatedAt": "2026-05-04T09:03:28.666Z",
   "animation_asset": {
     "id": "treecloud_event9_cloudtop-2026-05-04T09-02-56-926Z",
     "name": "treecloud_event9_cloudtop",
@@ -38,7 +38,7 @@
         "loop"
       ],
       "state": [
-        "default-cloud_idle"
+        "default-cloud_still_a_to_b"
       ],
       "direction": [
         "up"
@@ -90,14 +90,14 @@
         "format": "png"
       },
       {
-        "path": "library/treecloud_event9_cloudtop-2026-05-04T09-02-56-926Z/cloud_idle-preview.webm",
-        "name": "cloud_idle-preview.webm",
+        "path": "library/treecloud_event9_cloudtop-2026-05-04T09-02-56-926Z/cloud_still_a_to_b-preview.webm",
+        "name": "cloud_still_a_to_b-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/treecloud_event9_cloudtop-2026-05-04T09-02-56-926Z/cloud_idle-preview.webp",
-        "name": "cloud_idle-preview.webp",
+        "path": "library/treecloud_event9_cloudtop-2026-05-04T09-02-56-926Z/cloud_still_a_to_b-preview.webp",
+        "name": "cloud_still_a_to_b-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -116,7 +116,7 @@
       "Cloud_Still_A_to_B",
       "Cloud_Still_B"
     ],
-    "defaultAnimation": "Cloud_Idle",
+    "defaultAnimation": "Cloud_Still_A_to_B",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
