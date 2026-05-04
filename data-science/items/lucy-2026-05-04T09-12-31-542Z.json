@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-04T09:12:31.542Z",
-  "updatedAt": "2026-05-04T09:12:47.526Z",
+  "updatedAt": "2026-05-04T09:14:01.030Z",
   "animation_asset": {
     "id": "lucy-2026-05-04T09-12-31-542Z",
     "name": "lucy",
@@ -49,7 +49,7 @@
         "one-shot"
       ],
       "state": [
-        "default-idle"
+        "default-pain"
       ],
       "action": [
         "walk",
@@ -103,14 +103,14 @@
         "format": "json"
       },
       {
-        "path": "library/lucy-2026-05-04T09-12-31-542Z/idle-preview.webm",
-        "name": "idle-preview.webm",
+        "path": "library/lucy-2026-05-04T09-12-31-542Z/pain-preview.webm",
+        "name": "pain-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/lucy-2026-05-04T09-12-31-542Z/idle-preview.webp",
-        "name": "idle-preview.webp",
+        "path": "library/lucy-2026-05-04T09-12-31-542Z/pain-preview.webp",
+        "name": "pain-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -137,7 +137,7 @@
       "Ultimate",
       "Walk"
     ],
-    "defaultAnimation": "Idle",
+    "defaultAnimation": "Pain",
     "fileCount": 6,
     "skeletonCount": 2,
     "atlasCount": 1,
