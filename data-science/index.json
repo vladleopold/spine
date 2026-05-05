@@ -1,5 +1,179 @@
 [
   {
+    "id": "yuina_unisp_ml-2026-05-05T01-11-20-586Z",
+    "name": "yuina_unisp_ml",
+    "updatedAt": "2026-05-05T01:11:33.840Z",
+    "animation_asset": {
+      "id": "yuina_unisp_ml-2026-05-05T01-11-20-586Z",
+      "name": "yuina_unisp_ml",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "a_mth_talk1",
+          "a_mth_talk2",
+          "a_mth_talk3",
+          "a_mth_talk4",
+          "a_pose1",
+          "a_pose2",
+          "a_shy1_eye",
+          "a_shy3",
+          "a_smile1_eye",
+          "a_smile2_eye",
+          "a_smile3",
+          "a_smile4",
+          "b_intro",
+          "b_laugh1",
+          "b_laugh1_eye",
+          "b_shy3_eye",
+          "b_sorrow3_eye",
+          "face.ani.yuina.memorial.1",
+          "face.ani.yuina.memorial.2",
+          "face.ani.yuina.memorial.3",
+          "face.ani.yuina.memorial.4",
+          "face.ani.yuina.memorial.5",
+          "idle",
+          "idle_ml"
+        ],
+        "state": [
+          "default-a_mth_talk1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z",
+      "manifestPath": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/manifest.json",
+      "files": [
+        {
+          "path": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/yuina_unisp_ml/Yuina_UniSp_ML.skel",
+          "name": "yuina_unisp_ml/Yuina_UniSp_ML.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/yuina_unisp_ml/Yuina_UniSp_ML.atlas",
+          "name": "yuina_unisp_ml/Yuina_UniSp_ML.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/yuina_unisp_ml/Yuina_UniSp_ML.png",
+          "name": "yuina_unisp_ml/Yuina_UniSp_ML.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/a_mth_talk1-preview.webm",
+          "name": "a_mth_talk1-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/yuina_unisp_ml-2026-05-05T01-11-20-586Z/a_mth_talk1-preview.webp",
+          "name": "a_mth_talk1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Yuina_UniSp_ML.skel",
+      "atlas": "Yuina_UniSp_ML.atlas",
+      "textures": [
+        "Yuina_UniSp_ML.png"
+      ],
+      "animationCount": 24,
+      "animationNames": [
+        "A_Mth_Talk1",
+        "A_Mth_Talk2",
+        "A_Mth_Talk3",
+        "A_Mth_Talk4",
+        "A_pose1",
+        "A_pose2",
+        "A_Shy1_Eye",
+        "A_Shy3",
+        "A_Smile1_Eye",
+        "A_Smile2_Eye",
+        "A_Smile3",
+        "A_Smile4",
+        "B_Intro",
+        "B_Laugh1",
+        "B_Laugh1_Eye",
+        "B_Shy3_Eye",
+        "B_Sorrow3_Eye",
+        "Face.Ani.Yuina.Memorial.1",
+        "Face.Ani.Yuina.Memorial.2",
+        "Face.Ani.Yuina.Memorial.3",
+        "Face.Ani.Yuina.Memorial.4",
+        "Face.Ani.Yuina.Memorial.5",
+        "Idle",
+        "Idle_ML"
+      ],
+      "defaultAnimation": "A_Mth_Talk1",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "drone-373x183-2026-05-04T22-02-03-197Z",
     "name": "drone 373x183",
     "updatedAt": "2026-05-04T22:02:13.676Z",
