@@ -2,7 +2,7 @@
   {
     "id": "kiwi-2026-05-05T07-15-13-594Z",
     "name": "kiwi",
-    "updatedAt": "2026-05-05T07:15:29.659Z",
+    "updatedAt": "2026-05-05T07:15:51.742Z",
     "animation_asset": {
       "id": "kiwi-2026-05-05T07-15-13-594Z",
       "name": "kiwi",
@@ -45,7 +45,7 @@
           "loop"
         ],
         "state": [
-          "default-idle"
+          "default-water"
         ],
         "platform": [
           "web"
@@ -88,14 +88,14 @@
           "format": "png"
         },
         {
-          "path": "library/kiwi-2026-05-05T07-15-13-594Z/idle-preview.webm",
-          "name": "idle-preview.webm",
+          "path": "library/kiwi-2026-05-05T07-15-13-594Z/water-preview.webm",
+          "name": "water-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/kiwi-2026-05-05T07-15-13-594Z/idle-preview.webp",
-          "name": "idle-preview.webp",
+          "path": "library/kiwi-2026-05-05T07-15-13-594Z/water-preview.webp",
+          "name": "water-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -120,7 +120,7 @@
         "swish_s3",
         "water"
       ],
-      "defaultAnimation": "idle",
+      "defaultAnimation": "water",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
