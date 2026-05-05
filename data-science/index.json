@@ -1,5 +1,141 @@
 [
   {
+    "id": "bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z",
+    "name": "bg_for_spine_05.04.2026_002",
+    "updatedAt": "2026-05-05T21:12:16.466Z",
+    "animation_asset": {
+      "id": "bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z",
+      "name": "bg_for_spine_05.04.2026_002",
+      "domain": "gamedev",
+      "asset_category": "background",
+      "animation_type": "background",
+      "skeleton_type": "background",
+      "content_type": "background",
+      "taxonomy": {
+        "category": "environment",
+        "class": "background",
+        "type": "animated-background",
+        "tags": [
+          "bg"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "scene-background"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "dead_04",
+          "loop_03",
+          "starter_01",
+          "starter_to_loop_02"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-dead_04",
+          "lose"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z",
+      "manifestPath": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/manifest.json",
+      "files": [
+        {
+          "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/bg_for_spine_05.04.2026_002/BG_For_Spine_05.04.2026_002.skel",
+          "name": "bg_for_spine_05.04.2026_002/BG_For_Spine_05.04.2026_002.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/bg_for_spine_05.04.2026_002/Bg_City.atlas",
+          "name": "bg_for_spine_05.04.2026_002/Bg_City.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/bg_for_spine_05.04.2026_002/Bg_City.webp",
+          "name": "bg_for_spine_05.04.2026_002/Bg_City.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/dead_04-preview.webm",
+          "name": "dead_04-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T21-12-04-228Z/dead_04-preview.webp",
+          "name": "dead_04-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "BG_For_Spine_05.04.2026_002.skel",
+      "atlas": "Bg_City.atlas",
+      "textures": [
+        "Bg_City.webp"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "Dead_04",
+        "Loop_03",
+        "Starter_01",
+        "Starter_To_Loop_02"
+      ],
+      "defaultAnimation": "Dead_04",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "bg"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "bg_for_spine_05.04.2026_002-2026-05-05T21-11-15-265Z",
     "name": "bg_for_spine_05.04.2026_002",
     "updatedAt": "2026-05-05T21:11:26.515Z",
