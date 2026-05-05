@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-05T22:08:17.802Z",
-  "updatedAt": "2026-05-05T22:08:29.260Z",
+  "updatedAt": "2026-05-05T22:08:47.416Z",
   "animation_asset": {
     "id": "bg_for_spine_05.04.2026_002-2026-05-05T22-08-17-802Z",
     "name": "bg_for_spine_05.04.2026_002",
@@ -37,7 +37,7 @@
         "loop"
       ],
       "state": [
-        "default-dead_04",
+        "default-starter_01",
         "lose"
       ],
       "platform": [
@@ -86,14 +86,14 @@
         "format": "webp"
       },
       {
-        "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T22-08-17-802Z/dead_04-preview.webm",
-        "name": "dead_04-preview.webm",
+        "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T22-08-17-802Z/starter_01-preview.webm",
+        "name": "starter_01-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T22-08-17-802Z/dead_04-preview.webp",
-        "name": "dead_04-preview.webp",
+        "path": "library/bg_for_spine_05.04.2026_002-2026-05-05T22-08-17-802Z/starter_01-preview.webp",
+        "name": "starter_01-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -112,7 +112,7 @@
       "Starter_01",
       "Starter_To_Loop_02"
     ],
-    "defaultAnimation": "Dead_04",
+    "defaultAnimation": "Starter_01",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
