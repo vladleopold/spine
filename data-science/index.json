@@ -1,5 +1,150 @@
 [
   {
+    "id": "ct_win_panel-2026-05-06T01-30-41-983Z",
+    "name": "ct_win_panel",
+    "updatedAt": "2026-05-06T01:31:09.668Z",
+    "animation_asset": {
+      "id": "ct_win_panel-2026-05-06T01-30-41-983Z",
+      "name": "ct_win_panel",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "panel"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "appear",
+          "disappear",
+          "hit",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ct_win_panel-2026-05-06T01-30-41-983Z",
+      "manifestPath": "library/ct_win_panel-2026-05-06T01-30-41-983Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ct_win_panel-2026-05-06T01-30-41-983Z/ct_win_panel/ct_win_panel.json",
+          "name": "ct_win_panel/ct_win_panel.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ct_win_panel-2026-05-06T01-30-41-983Z/ct_win_panel/ct_win_panel.atlas.txt",
+          "name": "ct_win_panel/ct_win_panel.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/ct_win_panel-2026-05-06T01-30-41-983Z/ct_win_panel/ct_win_panel.png",
+          "name": "ct_win_panel/ct_win_panel.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ct_win_panel-2026-05-06T01-30-41-983Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/ct_win_panel-2026-05-06T01-30-41-983Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ct_win_panel.json",
+      "atlas": "ct_win_panel.atlas.txt",
+      "textures": [
+        "ct_win_panel.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "appear",
+        "disappear",
+        "hit",
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "panel"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_win_panel-2026-05-06T01-29-18-995Z",
     "name": "ct_win_panel",
     "updatedAt": "2026-05-06T01:30:12.977Z",
