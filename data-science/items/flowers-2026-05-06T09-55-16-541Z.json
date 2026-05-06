@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-06T09:55:16.541Z",
+  "updatedAt": "2026-05-06T09:55:32.251Z",
+  "animation_asset": {
+    "id": "flowers-2026-05-06T09-55-16-541Z",
+    "name": "flowers",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "1-2_upgrade_1-3",
+        "1_upgrade_1-2",
+        "1_upgrade_2-2",
+        "1_upgrade_3-2",
+        "1_upgrade_4-2",
+        "1_upgrade_5-2",
+        "1_upgrade_6-2",
+        "2-2_upgrade_2-3",
+        "3-2_upgrade_3-3_standby",
+        "4-2_upgrade_4-3_standby",
+        "5-2_upgrade_5-3_standby",
+        "6-2_upgrade_6-3_standby",
+        "sapling_in"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-1-2_upgrade_1-3"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/flowers-2026-05-06T09-55-16-541Z",
+    "manifestPath": "library/flowers-2026-05-06T09-55-16-541Z/manifest.json",
+    "files": [
+      {
+        "path": "library/flowers-2026-05-06T09-55-16-541Z/flowers/flowers.json",
+        "name": "flowers/flowers.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/flowers-2026-05-06T09-55-16-541Z/flowers/flowers.atlas",
+        "name": "flowers/flowers.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/flowers-2026-05-06T09-55-16-541Z/flowers/flowers.png",
+        "name": "flowers/flowers.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/flowers-2026-05-06T09-55-16-541Z/1-2_upgrade_1-3-preview.webm",
+        "name": "1-2_upgrade_1-3-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/flowers-2026-05-06T09-55-16-541Z/1-2_upgrade_1-3-preview.webp",
+        "name": "1-2_upgrade_1-3-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "flowers.json",
+    "atlas": "flowers.atlas",
+    "textures": [
+      "flowers.png"
+    ],
+    "animationCount": 13,
+    "animationNames": [
+      "1-2_upgrade_1-3",
+      "1_upgrade_1-2",
+      "1_upgrade_2-2",
+      "1_upgrade_3-2",
+      "1_upgrade_4-2",
+      "1_upgrade_5-2",
+      "1_upgrade_6-2",
+      "2-2_upgrade_2-3",
+      "3-2_upgrade_3-3_standby",
+      "4-2_upgrade_4-3_standby",
+      "5-2_upgrade_5-3_standby",
+      "6-2_upgrade_6-3_standby",
+      "sapling_in"
+    ],
+    "defaultAnimation": "1-2_upgrade_1-3",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
