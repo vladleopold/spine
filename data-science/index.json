@@ -1,5 +1,138 @@
 [
   {
+    "id": "ct_logo-2026-05-06T00-16-04-369Z",
+    "name": "ct_logo",
+    "updatedAt": "2026-05-06T00:16:30.110Z",
+    "animation_asset": {
+      "id": "ct_logo-2026-05-06T00-16-04-369Z",
+      "name": "ct_logo",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "logo",
+      "skeleton_type": "logo",
+      "content_type": "logo",
+      "taxonomy": {
+        "category": "branding",
+        "class": "logo",
+        "type": "logo-animation",
+        "tags": [
+          "logo"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "branding"
+        ],
+        "style": [
+          "logo"
+        ],
+        "animation_state": [
+          "hit",
+          "win"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-hit",
+          "win"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ct_logo-2026-05-06T00-16-04-369Z",
+      "manifestPath": "library/ct_logo-2026-05-06T00-16-04-369Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ct_logo-2026-05-06T00-16-04-369Z/ct_logo/ct_logo.json",
+          "name": "ct_logo/ct_logo.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ct_logo-2026-05-06T00-16-04-369Z/ct_logo/ct_logo.atlas.docx",
+          "name": "ct_logo/ct_logo.atlas.docx",
+          "role": "support",
+          "format": "docx"
+        },
+        {
+          "path": "library/ct_logo-2026-05-06T00-16-04-369Z/ct_logo/ct_logo.png",
+          "name": "ct_logo/ct_logo.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ct_logo-2026-05-06T00-16-04-369Z/hit-preview.webm",
+          "name": "hit-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/ct_logo-2026-05-06T00-16-04-369Z/hit-preview.webp",
+          "name": "hit-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ct_logo.json",
+      "atlas": "ct_logo.atlas.docx",
+      "textures": [
+        "ct_logo.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "hit",
+        "win"
+      ],
+      "defaultAnimation": "hit",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 0,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "logo"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_logo_clover-2026-05-06T00-15-41-664Z",
     "name": "ct_logo_clover",
     "updatedAt": "2026-05-06T00:16:09.950Z",
