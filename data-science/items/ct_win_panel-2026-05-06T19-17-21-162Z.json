@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-06T19:17:21.162Z",
-  "updatedAt": "2026-05-06T19:57:01.296Z",
+  "updatedAt": "2026-05-06T20:10:26.037Z",
   "animation_asset": {
     "id": "ct_win_panel-2026-05-06T19-17-21-162Z",
     "name": "ct_win_panel",
@@ -42,7 +42,7 @@
         "one-shot"
       ],
       "state": [
-        "default-hit",
+        "default-disappear",
         "win"
       ],
       "action": [
@@ -95,14 +95,14 @@
         "format": "png"
       },
       {
-        "path": "library/ct_win_panel-2026-05-06T19-17-21-162Z/hit-preview.webm",
-        "name": "hit-preview.webm",
+        "path": "library/ct_win_panel-2026-05-06T19-17-21-162Z/disappear-preview.webm",
+        "name": "disappear-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/ct_win_panel-2026-05-06T19-17-21-162Z/hit-preview.webp",
-        "name": "hit-preview.webp",
+        "path": "library/ct_win_panel-2026-05-06T19-17-21-162Z/disappear-preview.webp",
+        "name": "disappear-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -121,7 +121,7 @@
       "hit",
       "idle"
     ],
-    "defaultAnimation": "hit",
+    "defaultAnimation": "disappear",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
