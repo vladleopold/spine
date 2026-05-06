@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-06T20:19:28.697Z",
-  "updatedAt": "2026-05-06T20:27:54.291Z",
+  "updatedAt": "2026-05-06T20:30:55.045Z",
   "animation_asset": {
     "id": "wild-2026-05-06T20-19-28-697Z",
     "name": "wild",
@@ -39,7 +39,7 @@
         "loop"
       ],
       "state": [
-        "default-bottom"
+        "default-top"
       ],
       "direction": [
         "up",
@@ -86,14 +86,14 @@
         "format": "png"
       },
       {
-        "path": "library/wild-2026-05-06T20-19-28-697Z/bottom-preview.webm",
-        "name": "bottom-preview.webm",
+        "path": "library/wild-2026-05-06T20-19-28-697Z/top-preview.webm",
+        "name": "top-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/wild-2026-05-06T20-19-28-697Z/bottom-preview.webp",
-        "name": "bottom-preview.webp",
+        "path": "library/wild-2026-05-06T20-19-28-697Z/top-preview.webp",
+        "name": "top-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -112,7 +112,7 @@
       "middle",
       "top"
     ],
-    "defaultAnimation": "bottom",
+    "defaultAnimation": "top",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
