@@ -2,7 +2,7 @@
   {
     "id": "bigwin-2026-05-06T18-55-51-276Z",
     "name": "bigwin",
-    "updatedAt": "2026-05-06T18:56:34.257Z",
+    "updatedAt": "2026-05-06T18:57:19.806Z",
     "animation_asset": {
       "id": "bigwin-2026-05-06T18-55-51-276Z",
       "name": "bigwin",
@@ -41,7 +41,7 @@
           "one-shot"
         ],
         "state": [
-          "default-big_win",
+          "default-major_win",
           "win"
         ],
         "platform": [
@@ -91,14 +91,14 @@
           "format": "png"
         },
         {
-          "path": "library/bigwin-2026-05-06T18-55-51-276Z/big_win-preview.webm",
-          "name": "big_win-preview.webm",
+          "path": "library/bigwin-2026-05-06T18-55-51-276Z/major_win-preview.webm",
+          "name": "major_win-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/bigwin-2026-05-06T18-55-51-276Z/big_win-preview.webp",
-          "name": "big_win-preview.webp",
+          "path": "library/bigwin-2026-05-06T18-55-51-276Z/major_win-preview.webp",
+          "name": "major_win-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -122,7 +122,7 @@
         "turbo_major_win",
         "win"
       ],
-      "defaultAnimation": "big_win",
+      "defaultAnimation": "major_win",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
