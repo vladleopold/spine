@@ -1,5 +1,126 @@
 [
   {
+    "id": "ct_bar-2026-05-06T04-33-17-852Z",
+    "name": "ct_bar",
+    "updatedAt": "2026-05-06T04:33:43.906Z",
+    "animation_asset": {
+      "id": "ct_bar-2026-05-06T04-33-17-852Z",
+      "name": "ct_bar",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ct_bar-2026-05-06T04-33-17-852Z",
+      "manifestPath": "library/ct_bar-2026-05-06T04-33-17-852Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ct_bar-2026-05-06T04-33-17-852Z/ct_bar/ct_bar.json",
+          "name": "ct_bar/ct_bar.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ct_bar-2026-05-06T04-33-17-852Z/ct_bar/ct_bar.atlas",
+          "name": "ct_bar/ct_bar.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ct_bar-2026-05-06T04-33-17-852Z/ct_bar/ct_bar.png",
+          "name": "ct_bar/ct_bar.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ct_bar-2026-05-06T04-33-17-852Z/animation-preview.webm",
+          "name": "animation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/ct_bar-2026-05-06T04-33-17-852Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ct_bar.json",
+      "atlas": "ct_bar.atlas",
+      "textures": [
+        "ct_bar.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_wild-2026-05-06T04-31-35-571Z",
     "name": "ct_wild",
     "updatedAt": "2026-05-06T04:32:03.153Z",
