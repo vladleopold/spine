@@ -1,5 +1,131 @@
 [
   {
+    "id": "grand_major_win-2026-05-06T01-25-48-134Z",
+    "name": "grand_major_win",
+    "updatedAt": "2026-05-06T01:26:14.277Z",
+    "animation_asset": {
+      "id": "grand_major_win-2026-05-06T01-25-48-134Z",
+      "name": "grand_major_win",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "grand",
+          "major"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-grand",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/grand_major_win-2026-05-06T01-25-48-134Z",
+      "manifestPath": "library/grand_major_win-2026-05-06T01-25-48-134Z/manifest.json",
+      "files": [
+        {
+          "path": "library/grand_major_win-2026-05-06T01-25-48-134Z/grand_major_win/grand_major_win.json",
+          "name": "grand_major_win/grand_major_win.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/grand_major_win-2026-05-06T01-25-48-134Z/grand_major_win/grand_major_win.atlas",
+          "name": "grand_major_win/grand_major_win.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/grand_major_win-2026-05-06T01-25-48-134Z/grand_major_win/grand_major_win.png",
+          "name": "grand_major_win/grand_major_win.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/grand_major_win-2026-05-06T01-25-48-134Z/grand-preview.webp",
+          "name": "grand-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "grand_major_win.json",
+      "atlas": "grand_major_win.atlas",
+      "textures": [
+        "grand_major_win.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "grand",
+        "major"
+      ],
+      "defaultAnimation": "grand",
+      "fileCount": 4,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_logo_part-2026-05-06T00-17-13-876Z",
     "name": "ct_logo_part",
     "updatedAt": "2026-05-06T00:18:59.288Z",
