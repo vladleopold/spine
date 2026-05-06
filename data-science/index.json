@@ -2,7 +2,7 @@
   {
     "id": "ct_win_panel-2026-05-06T01-29-18-995Z",
     "name": "ct_win_panel",
-    "updatedAt": "2026-05-06T01:29:47.247Z",
+    "updatedAt": "2026-05-06T01:30:12.977Z",
     "animation_asset": {
       "id": "ct_win_panel-2026-05-06T01-29-18-995Z",
       "name": "ct_win_panel",
@@ -42,7 +42,7 @@
           "one-shot"
         ],
         "state": [
-          "default-idle",
+          "default-appear",
           "win"
         ],
         "action": [
@@ -95,14 +95,14 @@
           "format": "png"
         },
         {
-          "path": "library/ct_win_panel-2026-05-06T01-29-18-995Z/idle-preview.webm",
-          "name": "idle-preview.webm",
+          "path": "library/ct_win_panel-2026-05-06T01-29-18-995Z/appear-preview.webm",
+          "name": "appear-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/ct_win_panel-2026-05-06T01-29-18-995Z/idle-preview.webp",
-          "name": "idle-preview.webp",
+          "path": "library/ct_win_panel-2026-05-06T01-29-18-995Z/appear-preview.webp",
+          "name": "appear-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -121,7 +121,7 @@
         "hit",
         "idle"
       ],
-      "defaultAnimation": "idle",
+      "defaultAnimation": "appear",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
