@@ -1,5 +1,139 @@
 [
   {
+    "id": "wild-2026-05-04T17-13-52-116Z",
+    "name": "wild",
+    "updatedAt": "2026-05-06T18:31:31.286Z",
+    "animation_asset": {
+      "id": "wild-2026-05-04T17-13-52-116Z",
+      "name": "wild",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "bottom",
+          "idle",
+          "middle",
+          "top"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-middle"
+        ],
+        "direction": [
+          "up",
+          "down"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/wild-2026-05-04T17-13-52-116Z",
+      "manifestPath": "library/wild-2026-05-04T17-13-52-116Z/manifest.json",
+      "files": [
+        {
+          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.json",
+          "name": "wild/wild.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.atlas",
+          "name": "wild/wild.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.png",
+          "name": "wild/wild.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/wild-2026-05-04T17-13-52-116Z/middle-preview.webm",
+          "name": "middle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/wild-2026-05-04T17-13-52-116Z/middle-preview.webp",
+          "name": "middle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "wild.json",
+      "atlas": "wild.atlas",
+      "textures": [
+        "wild.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "bottom",
+        "idle",
+        "middle",
+        "top"
+      ],
+      "defaultAnimation": "middle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "drone-373x183-2026-05-06T10-59-59-786Z",
     "name": "drone 373x183",
     "updatedAt": "2026-05-06T11:00:12.098Z",
@@ -20673,140 +20807,6 @@
         "Starter_To_Fly_02"
       ],
       "defaultAnimation": "Dead_04",
-      "fileCount": 5,
-      "skeletonCount": 1,
-      "atlasCount": 1,
-      "textureCount": 2
-    },
-    "inference": {
-      "method": "filename-animation-keyword-rules",
-      "matchedKeywords": [],
-      "confidence": 0.35,
-      "needsHumanReview": true
-    },
-    "privacy": {
-      "public": false,
-      "ownerScoped": false,
-      "ownerFieldsRemoved": true,
-      "exposeInSitemap": false,
-      "exposeInProfile": false,
-      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
-    }
-  },
-  {
-    "id": "wild-2026-05-04T17-13-52-116Z",
-    "name": "wild",
-    "updatedAt": "2026-05-04T17:16:22.443Z",
-    "animation_asset": {
-      "id": "wild-2026-05-04T17-13-52-116Z",
-      "name": "wild",
-      "domain": "gamedev",
-      "asset_category": "object",
-      "animation_type": "object",
-      "skeleton_type": "object",
-      "content_type": "object",
-      "taxonomy": {
-        "category": "object",
-        "class": "game-object",
-        "type": "prop"
-      },
-      "tags": {
-        "gameplay_role": [
-          "game-object"
-        ],
-        "rig_type": [
-          "skeletal-2d",
-          "spine-json"
-        ],
-        "quality_level": [
-          "unreviewed",
-          "auto-tagged"
-        ],
-        "animation_state": [
-          "bottom",
-          "idle",
-          "middle",
-          "top"
-        ],
-        "loop_type": [
-          "loop-candidate",
-          "loop"
-        ],
-        "state": [
-          "default-top"
-        ],
-        "direction": [
-          "up",
-          "down"
-        ],
-        "platform": [
-          "web"
-        ],
-        "resolution": [
-          "texture-png",
-          "texture-webp"
-        ],
-        "material": [
-          "atlas-mapped"
-        ],
-        "procedural": false,
-        "modular": false,
-        "runtime_capable": true
-      }
-    },
-    "source": {
-      "storage": "github",
-      "repository": "vladleopold/spine",
-      "branch": "main",
-      "previewPath": "library/wild-2026-05-04T17-13-52-116Z",
-      "manifestPath": "library/wild-2026-05-04T17-13-52-116Z/manifest.json",
-      "files": [
-        {
-          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.json",
-          "name": "wild/wild.json",
-          "role": "skeleton",
-          "format": "json"
-        },
-        {
-          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.atlas",
-          "name": "wild/wild.atlas",
-          "role": "atlas",
-          "format": "atlas"
-        },
-        {
-          "path": "library/wild-2026-05-04T17-13-52-116Z/wild/wild.png",
-          "name": "wild/wild.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/wild-2026-05-04T17-13-52-116Z/top-preview.webm",
-          "name": "top-preview.webm",
-          "role": "support",
-          "format": "webm"
-        },
-        {
-          "path": "library/wild-2026-05-04T17-13-52-116Z/top-preview.webp",
-          "name": "top-preview.webp",
-          "role": "texture",
-          "format": "webp"
-        }
-      ]
-    },
-    "spine_spec": {
-      "skeleton": "wild.json",
-      "atlas": "wild.atlas",
-      "textures": [
-        "wild.png"
-      ],
-      "animationCount": 4,
-      "animationNames": [
-        "bottom",
-        "idle",
-        "middle",
-        "top"
-      ],
-      "defaultAnimation": "top",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
