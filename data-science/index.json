@@ -1,5 +1,135 @@
 [
   {
+    "id": "coi-2026-05-07T10-08-35-343Z",
+    "name": "coi",
+    "updatedAt": "2026-05-07T10:08:45.709Z",
+    "animation_asset": {
+      "id": "coi-2026-05-07T10-08-35-343Z",
+      "name": "coi",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "collect",
+          "idle",
+          "landing",
+          "stop"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/coi-2026-05-07T10-08-35-343Z",
+      "manifestPath": "library/coi-2026-05-07T10-08-35-343Z/manifest.json",
+      "files": [
+        {
+          "path": "library/coi-2026-05-07T10-08-35-343Z/coi/COI.json",
+          "name": "coi/COI.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/coi-2026-05-07T10-08-35-343Z/coi/COI.atlas",
+          "name": "coi/COI.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/coi-2026-05-07T10-08-35-343Z/coi/COI.png",
+          "name": "coi/COI.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/coi-2026-05-07T10-08-35-343Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/coi-2026-05-07T10-08-35-343Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "COI.json",
+      "atlas": "COI.atlas",
+      "textures": [
+        "COI.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "collect",
+        "idle",
+        "landing",
+        "stop"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_win_panel-2026-05-07T09-46-37-917Z",
     "name": "ct_win_panel",
     "updatedAt": "2026-05-07T09:47:05.834Z",
