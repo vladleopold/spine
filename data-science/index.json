@@ -1,5 +1,137 @@
 [
   {
+    "id": "scatter-2026-05-07T14-20-38-728Z",
+    "name": "scatter",
+    "updatedAt": "2026-05-07T14:21:06.839Z",
+    "animation_asset": {
+      "id": "scatter-2026-05-07T14-20-38-728Z",
+      "name": "scatter",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "fall",
+          "win"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-fall",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/scatter-2026-05-07T14-20-38-728Z",
+      "manifestPath": "library/scatter-2026-05-07T14-20-38-728Z/manifest.json",
+      "files": [
+        {
+          "path": "library/scatter-2026-05-07T14-20-38-728Z/scatter/scatter.json",
+          "name": "scatter/scatter.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/scatter-2026-05-07T14-20-38-728Z/scatter/scatter.atlas",
+          "name": "scatter/scatter.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/scatter-2026-05-07T14-20-38-728Z/scatter/scatter.png",
+          "name": "scatter/scatter.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/scatter-2026-05-07T14-20-38-728Z/fall-preview.webm",
+          "name": "fall-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/scatter-2026-05-07T14-20-38-728Z/fall-preview.webp",
+          "name": "fall-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "scatter.json",
+      "atlas": "scatter.atlas",
+      "textures": [
+        "scatter.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "fall",
+        "win"
+      ],
+      "defaultAnimation": "fall",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "scatter-2026-05-07T14-01-56-271Z",
     "name": "scatter",
     "updatedAt": "2026-05-07T14:02:25.646Z",
