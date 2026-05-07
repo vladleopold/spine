@@ -1,5 +1,151 @@
 [
   {
+    "id": "bigwin-2026-05-07T10-16-13-405Z",
+    "name": "bigwin",
+    "updatedAt": "2026-05-07T10:16:58.571Z",
+    "animation_asset": {
+      "id": "bigwin-2026-05-07T10-16-13-405Z",
+      "name": "bigwin",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "big_win",
+          "grand_win",
+          "major_win",
+          "total_win1",
+          "total_win2",
+          "turbo_big_win",
+          "turbo_grand_win",
+          "turbo_major_win",
+          "win"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-big_win",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/bigwin-2026-05-07T10-16-13-405Z",
+      "manifestPath": "library/bigwin-2026-05-07T10-16-13-405Z/manifest.json",
+      "files": [
+        {
+          "path": "library/bigwin-2026-05-07T10-16-13-405Z/bigwin/bigwin.json",
+          "name": "bigwin/bigwin.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/bigwin-2026-05-07T10-16-13-405Z/bigwin/bigwin.atlas",
+          "name": "bigwin/bigwin.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/bigwin-2026-05-07T10-16-13-405Z/bigwin/bigwin.png",
+          "name": "bigwin/bigwin.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/bigwin-2026-05-07T10-16-13-405Z/big_win-preview.webm",
+          "name": "big_win-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/bigwin-2026-05-07T10-16-13-405Z/big_win-preview.webp",
+          "name": "big_win-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "bigwin.json",
+      "atlas": "bigwin.atlas",
+      "textures": [
+        "bigwin.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "big_win",
+        "grand_win",
+        "major_win",
+        "total_win1",
+        "total_win2",
+        "turbo_big_win",
+        "turbo_grand_win",
+        "turbo_major_win",
+        "win"
+      ],
+      "defaultAnimation": "big_win",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "hv1-2026-05-07T10-09-03-633Z",
     "name": "hv1",
     "updatedAt": "2026-05-07T10:09:14.068Z",
