@@ -1,5 +1,127 @@
 [
   {
+    "id": "spine-2026-05-07T17-30-14-779Z",
+    "name": "spine",
+    "updatedAt": "2026-05-07T17:30:36.993Z",
+    "animation_asset": {
+      "id": "spine-2026-05-07T17-30-14-779Z",
+      "name": "spine",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "1"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/spine-2026-05-07T17-30-14-779Z",
+      "manifestPath": "library/spine-2026-05-07T17-30-14-779Z/manifest.json",
+      "files": [
+        {
+          "path": "library/spine-2026-05-07T17-30-14-779Z/spine/spine.json",
+          "name": "spine/spine.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/spine-2026-05-07T17-30-14-779Z/spine/spine.atlas",
+          "name": "spine/spine.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/spine-2026-05-07T17-30-14-779Z/spine/HCG03_19.png",
+          "name": "spine/HCG03_19.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-05-07T17-30-14-779Z/spine/HCG03_19_2.png",
+          "name": "spine/HCG03_19_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-05-07T17-30-14-779Z/spine/HCG03_19_3.png",
+          "name": "spine/HCG03_19_3.png",
+          "role": "texture",
+          "format": "png"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "spine.json",
+      "atlas": "spine.atlas",
+      "textures": [
+        "HCG03_19.png",
+        "HCG03_19_2.png",
+        "HCG03_19_3.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "1"
+      ],
+      "defaultAnimation": "1",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "grand_major_win-2026-05-07T14-21-24-176Z",
     "name": "grand_major_win",
     "updatedAt": "2026-05-07T14:21:52.105Z",
