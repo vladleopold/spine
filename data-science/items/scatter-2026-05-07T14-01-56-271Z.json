@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-07T14:01:56.271Z",
-  "updatedAt": "2026-05-08T21:20:01.609Z",
+  "updatedAt": "2026-05-08T21:20:20.893Z",
   "animation_asset": {
     "id": "scatter-2026-05-07T14-01-56-271Z",
     "name": "scatter",
@@ -34,7 +34,7 @@
         "one-shot"
       ],
       "state": [
-        "default-fall",
+        "default-win",
         "win"
       ],
       "platform": [
@@ -84,14 +84,14 @@
         "format": "png"
       },
       {
-        "path": "library/scatter-2026-05-07T14-01-56-271Z/fall-preview.webm",
-        "name": "fall-preview.webm",
+        "path": "library/scatter-2026-05-07T14-01-56-271Z/win-preview.webm",
+        "name": "win-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/scatter-2026-05-07T14-01-56-271Z/fall-preview.webp",
-        "name": "fall-preview.webp",
+        "path": "library/scatter-2026-05-07T14-01-56-271Z/win-preview.webp",
+        "name": "win-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -108,7 +108,7 @@
       "fall",
       "win"
     ],
-    "defaultAnimation": "fall",
+    "defaultAnimation": "win",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
