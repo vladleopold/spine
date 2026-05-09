@@ -1,5 +1,146 @@
 [
   {
+    "id": "zombie_polevaulter-2026-05-09T10-22-46-403Z",
+    "name": "zombie_polevaulter",
+    "updatedAt": "2026-05-09T10:23:17.712Z",
+    "animation_asset": {
+      "id": "zombie_polevaulter-2026-05-09T10-22-46-403Z",
+      "name": "zombie_polevaulter",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "death",
+          "eat",
+          "idle",
+          "jump",
+          "mowered",
+          "run",
+          "walk"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-death",
+          "lose"
+        ],
+        "action": [
+          "walk",
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z",
+      "manifestPath": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/manifest.json",
+      "files": [
+        {
+          "path": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/zombie_polevaulter/Zombie_polevaulter.skel",
+          "name": "zombie_polevaulter/Zombie_polevaulter.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/zombie_polevaulter/Zombie_polevaulter.atlas",
+          "name": "zombie_polevaulter/Zombie_polevaulter.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/zombie_polevaulter/Zombie_polevaulter.png",
+          "name": "zombie_polevaulter/Zombie_polevaulter.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/death-preview.webm",
+          "name": "death-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/zombie_polevaulter-2026-05-09T10-22-46-403Z/death-preview.webp",
+          "name": "death-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Zombie_polevaulter.skel",
+      "atlas": "Zombie_polevaulter.atlas",
+      "textures": [
+        "Zombie_polevaulter.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "death",
+        "eat",
+        "idle",
+        "jump",
+        "mowered",
+        "run",
+        "walk"
+      ],
+      "defaultAnimation": "death",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "wingspike_sara-2026-05-09T09-27-16-211Z",
     "name": "wingspike_sara",
     "updatedAt": "2026-05-09T09:28:48.748Z",
