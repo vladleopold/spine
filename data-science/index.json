@@ -1,5 +1,132 @@
 [
   {
+    "id": "phoebe-clotherig-2026-05-11T22-56-26-512Z",
+    "name": "phoebe-clotherig",
+    "updatedAt": "2026-05-11T22:56:35.409Z",
+    "animation_asset": {
+      "id": "phoebe-clotherig-2026-05-11T22-56-26-512Z",
+      "name": "phoebe-clotherig",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation",
+          "blink",
+          "lipflap",
+          "none"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z",
+      "manifestPath": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/phoebe-clotherig/phoebe-clotherig.json",
+          "name": "phoebe-clotherig/phoebe-clotherig.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/phoebe-clotherig/phoebe-clotherig.atlas",
+          "name": "phoebe-clotherig/phoebe-clotherig.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/phoebe-clotherig/phoebe-clotherig.png",
+          "name": "phoebe-clotherig/phoebe-clotherig.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/animation-preview.webm",
+          "name": "animation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-clotherig-2026-05-11T22-56-26-512Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-clotherig.json",
+      "atlas": "phoebe-clotherig.atlas",
+      "textures": [
+        "phoebe-clotherig.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "animation",
+        "blink",
+        "lipflap",
+        "none"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "jay-intro-2026-05-11T22-55-50-656Z",
     "name": "jay-intro",
     "updatedAt": "2026-05-11T22:55:57.938Z",
