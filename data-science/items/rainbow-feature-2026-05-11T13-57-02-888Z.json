@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T13:57:02.888Z",
+  "updatedAt": "2026-05-11T13:57:19.477Z",
+  "animation_asset": {
+    "id": "rainbow-feature-2026-05-11T13-57-02-888Z",
+    "name": "rainbow-feature",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "level-1-loop",
+        "level-1-start",
+        "level-2-loop",
+        "level-2-start",
+        "level-3-loop",
+        "level-3-start",
+        "level-4-loop",
+        "level-4-start",
+        "level-5-loop",
+        "level-5-start",
+        "level-6-loop",
+        "level-6-start",
+        "level-7-loop",
+        "level-7-start",
+        "rainbow_l2r_reveal",
+        "rainbow_pop"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-level-1-loop"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/rainbow-feature-2026-05-11T13-57-02-888Z",
+    "manifestPath": "library/rainbow-feature-2026-05-11T13-57-02-888Z/manifest.json",
+    "files": [
+      {
+        "path": "library/rainbow-feature-2026-05-11T13-57-02-888Z/rainbow-feature/rainbow-feature.json",
+        "name": "rainbow-feature/rainbow-feature.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/rainbow-feature-2026-05-11T13-57-02-888Z/rainbow-feature/rainbow-feature.atlas",
+        "name": "rainbow-feature/rainbow-feature.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/rainbow-feature-2026-05-11T13-57-02-888Z/rainbow-feature/rainbow-feature.webp",
+        "name": "rainbow-feature/rainbow-feature.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/rainbow-feature-2026-05-11T13-57-02-888Z/level-1-loop-preview.webm",
+        "name": "level-1-loop-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/rainbow-feature-2026-05-11T13-57-02-888Z/level-1-loop-preview.webp",
+        "name": "level-1-loop-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "rainbow-feature.json",
+    "atlas": "rainbow-feature.atlas",
+    "textures": [
+      "rainbow-feature.webp"
+    ],
+    "animationCount": 16,
+    "animationNames": [
+      "level-1-loop",
+      "level-1-start",
+      "level-2-loop",
+      "level-2-start",
+      "level-3-loop",
+      "level-3-start",
+      "level-4-loop",
+      "level-4-start",
+      "level-5-loop",
+      "level-5-start",
+      "level-6-loop",
+      "level-6-start",
+      "level-7-loop",
+      "level-7-start",
+      "Rainbow_L2R_Reveal",
+      "Rainbow_Pop"
+    ],
+    "defaultAnimation": "level-1-loop",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
