@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-01T22:51:41.840Z",
-  "updatedAt": "2026-05-11T21:36:56.178Z",
+  "updatedAt": "2026-05-11T21:51:11.587Z",
   "animation_asset": {
     "id": "stu_ball-2026-05-01T22-51-41-840Z",
     "name": "stu_ball",
@@ -77,7 +77,7 @@
         "loop"
       ],
       "state": [
-        "default-stu_ball_animations/ball_idle_1"
+        "default-ground_stu_animations/idle_1"
       ],
       "action": [
         "walk"
@@ -126,14 +126,14 @@
         "format": "png"
       },
       {
-        "path": "library/stu_ball-2026-05-01T22-51-41-840Z/stu_ball_animations-ball_idle_1-preview.webm",
-        "name": "stu_ball_animations-ball_idle_1-preview.webm",
+        "path": "library/stu_ball-2026-05-01T22-51-41-840Z/ground_stu_animations-idle_1-preview.webm",
+        "name": "ground_stu_animations-idle_1-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/stu_ball-2026-05-01T22-51-41-840Z/stu_ball_animations-ball_idle_1-preview.webp",
-        "name": "stu_ball_animations-ball_idle_1-preview.webp",
+        "path": "library/stu_ball-2026-05-01T22-51-41-840Z/ground_stu_animations-idle_1-preview.webp",
+        "name": "ground_stu_animations-idle_1-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -189,7 +189,7 @@
       "stu_frisbee_animations/frisbee_to_splat",
       "stu_frisbee_animations/idle_to_frisbee"
     ],
-    "defaultAnimation": "stu_ball_animations/ball_idle_1",
+    "defaultAnimation": "ground_stu_animations/idle_1",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
