@@ -1,5 +1,149 @@
 [
   {
+    "id": "phoebe-dancerig-2026-05-11T22-57-37-910Z",
+    "name": "phoebe-dancerig",
+    "updatedAt": "2026-05-11T22:57:45.144Z",
+    "animation_asset": {
+      "id": "phoebe-dancerig-2026-05-11T22-57-37-910Z",
+      "name": "phoebe-dancerig",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "arm-left-down",
+          "arm-left-up",
+          "arm-right-down",
+          "arm-right-up",
+          "blink",
+          "idle",
+          "lipflap",
+          "none"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "direction": [
+          "left",
+          "right",
+          "up",
+          "down"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z",
+      "manifestPath": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/phoebe-dancerig/phoebe-dancerig.json",
+          "name": "phoebe-dancerig/phoebe-dancerig.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/phoebe-dancerig/phoebe-dancerig.atlas",
+          "name": "phoebe-dancerig/phoebe-dancerig.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/phoebe-dancerig/phoebe-dancerig.png",
+          "name": "phoebe-dancerig/phoebe-dancerig.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-dancerig-2026-05-11T22-57-37-910Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-dancerig.json",
+      "atlas": "phoebe-dancerig.atlas",
+      "textures": [
+        "phoebe-dancerig.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "arm-left-down",
+        "arm-left-up",
+        "arm-right-down",
+        "arm-right-up",
+        "blink",
+        "idle",
+        "lipflap",
+        "none"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "jay-clotherig-2026-05-11T22-57-10-051Z",
     "name": "jay-clotherig",
     "updatedAt": "2026-05-11T22:57:17.532Z",
