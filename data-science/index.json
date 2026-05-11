@@ -2,7 +2,7 @@
   {
     "id": "dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
     "name": "dis-ariel-splash-char",
-    "updatedAt": "2026-05-11T22:07:44.241Z",
+    "updatedAt": "2026-05-11T22:08:04.860Z",
     "animation_asset": {
       "id": "dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
       "name": "dis-ariel-splash-char",
@@ -37,7 +37,7 @@
           "loop"
         ],
         "state": [
-          "default-splash-char-idle"
+          "default-splash-char-build-in"
         ],
         "platform": [
           "web"
@@ -83,14 +83,14 @@
           "format": "png"
         },
         {
-          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-idle-preview.webm",
-          "name": "splash-char-idle-preview.webm",
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-build-in-preview.webm",
+          "name": "splash-char-build-in-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-idle-preview.webp",
-          "name": "splash-char-idle-preview.webp",
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-build-in-preview.webp",
+          "name": "splash-char-build-in-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -107,7 +107,7 @@
         "splash-char-build-in",
         "splash-char-idle"
       ],
-      "defaultAnimation": "splash-char-idle",
+      "defaultAnimation": "splash-char-build-in",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
