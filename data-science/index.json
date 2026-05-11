@@ -1,5 +1,134 @@
 [
   {
+    "id": "jay-loader-2026-05-11T23-07-36-524Z",
+    "name": "jay-loader",
+    "updatedAt": "2026-05-11T23:07:46.957Z",
+    "animation_asset": {
+      "id": "jay-loader-2026-05-11T23-07-36-524Z",
+      "name": "jay-loader",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "loader",
+      "skeleton_type": "ui",
+      "content_type": "loader",
+      "taxonomy": {
+        "category": "ui",
+        "class": "feedback",
+        "type": "loader",
+        "tags": [
+          "loader"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "loading-feedback"
+        ],
+        "loop_type": [
+          "loop"
+        ],
+        "animation_state": [
+          "walk"
+        ],
+        "state": [
+          "default-walk"
+        ],
+        "action": [
+          "walk"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/jay-loader-2026-05-11T23-07-36-524Z",
+      "manifestPath": "library/jay-loader-2026-05-11T23-07-36-524Z/manifest.json",
+      "files": [
+        {
+          "path": "library/jay-loader-2026-05-11T23-07-36-524Z/jay-loader/jay-loader.json",
+          "name": "jay-loader/jay-loader.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/jay-loader-2026-05-11T23-07-36-524Z/jay-loader/jay-loader.atlas",
+          "name": "jay-loader/jay-loader.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/jay-loader-2026-05-11T23-07-36-524Z/jay-loader/jay-loader.png",
+          "name": "jay-loader/jay-loader.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/jay-loader-2026-05-11T23-07-36-524Z/walk-preview.webm",
+          "name": "walk-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/jay-loader-2026-05-11T23-07-36-524Z/walk-preview.webp",
+          "name": "walk-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "jay-loader.json",
+      "atlas": "jay-loader.atlas",
+      "textures": [
+        "jay-loader.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "walk"
+      ],
+      "defaultAnimation": "walk",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "loader"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "phoebe-loader-2026-05-11T23-06-59-092Z",
     "name": "phoebe-loader",
     "updatedAt": "2026-05-11T23:07:10.817Z",
