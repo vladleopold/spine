@@ -1,5 +1,126 @@
 [
   {
+    "id": "partyroom-2026-05-11T22-49-33-769Z",
+    "name": "partyroom",
+    "updatedAt": "2026-05-11T22:49:42.648Z",
+    "animation_asset": {
+      "id": "partyroom-2026-05-11T22-49-33-769Z",
+      "name": "partyroom",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/partyroom-2026-05-11T22-49-33-769Z",
+      "manifestPath": "library/partyroom-2026-05-11T22-49-33-769Z/manifest.json",
+      "files": [
+        {
+          "path": "library/partyroom-2026-05-11T22-49-33-769Z/partyroom/partyroom.json",
+          "name": "partyroom/partyroom.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/partyroom-2026-05-11T22-49-33-769Z/partyroom/partyroom.atlas",
+          "name": "partyroom/partyroom.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/partyroom-2026-05-11T22-49-33-769Z/partyroom/partyroom.png",
+          "name": "partyroom/partyroom.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/partyroom-2026-05-11T22-49-33-769Z/animation-preview.webm",
+          "name": "animation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/partyroom-2026-05-11T22-49-33-769Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "partyroom.json",
+      "atlas": "partyroom.atlas",
+      "textures": [
+        "partyroom.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "butterflies-2026-05-11T22-49-10-823Z",
     "name": "butterflies",
     "updatedAt": "2026-05-11T22:49:21.478Z",
