@@ -2,7 +2,7 @@
   {
     "id": "lyla-face-2026-05-01T22-44-04-249Z",
     "name": "lyla-face",
-    "updatedAt": "2026-05-11T21:17:50.641Z",
+    "updatedAt": "2026-05-11T21:18:09.737Z",
     "animation_asset": {
       "id": "lyla-face-2026-05-01T22-44-04-249Z",
       "name": "lyla-face",
@@ -77,7 +77,7 @@
           "one-shot"
         ],
         "state": [
-          "default-eyes-open"
+          "default-blink"
         ],
         "interaction_type": [
           "open-close"
@@ -123,14 +123,14 @@
           "format": "png"
         },
         {
-          "path": "library/lyla-face-2026-05-01T22-44-04-249Z/eyes-open-preview.webm",
-          "name": "eyes-open-preview.webm",
+          "path": "library/lyla-face-2026-05-01T22-44-04-249Z/blink-preview.webm",
+          "name": "blink-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/lyla-face-2026-05-01T22-44-04-249Z/eyes-open-preview.webp",
-          "name": "eyes-open-preview.webp",
+          "path": "library/lyla-face-2026-05-01T22-44-04-249Z/blink-preview.webp",
+          "name": "blink-preview.webp",
           "role": "texture",
           "format": "webp"
         }
@@ -188,7 +188,7 @@
         "lipsync/twistintro",
         "lipsync/water-support"
       ],
-      "defaultAnimation": "eyes-open",
+      "defaultAnimation": "blink",
       "fileCount": 5,
       "skeletonCount": 1,
       "atlasCount": 1,
