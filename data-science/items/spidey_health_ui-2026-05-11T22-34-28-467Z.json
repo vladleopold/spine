@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T22:34:28.467Z",
+  "updatedAt": "2026-05-11T22:34:37.282Z",
+  "animation_asset": {
+    "id": "spidey_health_ui-2026-05-11T22-34-28-467Z",
+    "name": "spidey_health_ui",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "heath_meter_appear",
+        "heath_meter_heal_1_2",
+        "heath_meter_heal_2_3",
+        "heath_meter_hurt_1",
+        "heath_meter_hurt_2",
+        "heath_meter_hurt_3"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-heath_meter_appear"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/spidey_health_ui-2026-05-11T22-34-28-467Z",
+    "manifestPath": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/manifest.json",
+    "files": [
+      {
+        "path": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/spidey_health_ui/spidey_health_ui.json",
+        "name": "spidey_health_ui/spidey_health_ui.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/spidey_health_ui/spidey_health_ui.atlas",
+        "name": "spidey_health_ui/spidey_health_ui.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/spidey_health_ui/spidey_health_ui.png",
+        "name": "spidey_health_ui/spidey_health_ui.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/heath_meter_appear-preview.webm",
+        "name": "heath_meter_appear-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/spidey_health_ui-2026-05-11T22-34-28-467Z/heath_meter_appear-preview.webp",
+        "name": "heath_meter_appear-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "spidey_health_ui.json",
+    "atlas": "spidey_health_ui.atlas",
+    "textures": [
+      "spidey_health_ui.png"
+    ],
+    "animationCount": 6,
+    "animationNames": [
+      "heath_meter_appear",
+      "heath_meter_heal_1_2",
+      "heath_meter_heal_2_3",
+      "heath_meter_hurt_1",
+      "heath_meter_hurt_2",
+      "heath_meter_hurt_3"
+    ],
+    "defaultAnimation": "heath_meter_appear",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
