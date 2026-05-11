@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T22:09:59.462Z",
+  "updatedAt": "2026-05-11T22:10:10.869Z",
+  "animation_asset": {
+    "id": "dis-ariel-logo-2026-05-11T22-09-59-462Z",
+    "name": "dis-ariel-logo",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "logo",
+    "skeleton_type": "logo",
+    "content_type": "logo",
+    "taxonomy": {
+      "category": "branding",
+      "class": "logo",
+      "type": "logo-animation",
+      "tags": [
+        "logo"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "branding"
+      ],
+      "style": [
+        "logo"
+      ],
+      "animation_state": [
+        "logo-build-in",
+        "logo-idle",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-logo-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z",
+    "manifestPath": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/manifest.json",
+    "files": [
+      {
+        "path": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/dis-ariel-logo/dis-ariel-logo.json",
+        "name": "dis-ariel-logo/dis-ariel-logo.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/dis-ariel-logo/dis-ariel-logo.atlas",
+        "name": "dis-ariel-logo/dis-ariel-logo.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/dis-ariel-logo/dis-ariel-logo.png",
+        "name": "dis-ariel-logo/dis-ariel-logo.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/logo-idle-preview.webm",
+        "name": "logo-idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/dis-ariel-logo-2026-05-11T22-09-59-462Z/logo-idle-preview.webp",
+        "name": "logo-idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "dis-ariel-logo.json",
+    "atlas": "dis-ariel-logo.atlas",
+    "textures": [
+      "dis-ariel-logo.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "logo-build-in",
+      "logo-idle"
+    ],
+    "defaultAnimation": "logo-idle",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "logo"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
