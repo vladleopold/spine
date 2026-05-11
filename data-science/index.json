@@ -1,5 +1,131 @@
 [
   {
+    "id": "phoebe-counter-2026-05-11T23-00-58-833Z",
+    "name": "phoebe-counter",
+    "updatedAt": "2026-05-11T23:01:15.740Z",
+    "animation_asset": {
+      "id": "phoebe-counter-2026-05-11T23-00-58-833Z",
+      "name": "phoebe-counter",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "happy",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-counter-2026-05-11T23-00-58-833Z",
+      "manifestPath": "library/phoebe-counter-2026-05-11T23-00-58-833Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-counter-2026-05-11T23-00-58-833Z/phoebe-counter/phoebe-counter.json",
+          "name": "phoebe-counter/phoebe-counter.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-counter-2026-05-11T23-00-58-833Z/phoebe-counter/counter-rigs.atlas",
+          "name": "phoebe-counter/counter-rigs.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-counter-2026-05-11T23-00-58-833Z/phoebe-counter/counter-rigs.png",
+          "name": "phoebe-counter/counter-rigs.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-counter-2026-05-11T23-00-58-833Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-counter-2026-05-11T23-00-58-833Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-counter.json",
+      "atlas": "counter-rigs.atlas",
+      "textures": [
+        "counter-rigs.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "happy",
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "jay-intro-2026-05-11T23-00-20-874Z",
     "name": "jay-intro",
     "updatedAt": "2026-05-11T23:00:28.770Z",
