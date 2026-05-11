@@ -1,5 +1,143 @@
 [
   {
+    "id": "blueberry-2026-05-11T05-42-09-239Z",
+    "name": "blueberry",
+    "updatedAt": "2026-05-11T05:42:22.952Z",
+    "animation_asset": {
+      "id": "blueberry-2026-05-11T05-42-09-239Z",
+      "name": "blueberry",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "eating_s1",
+          "eating_s2",
+          "eating_s3",
+          "idle",
+          "idle_eb",
+          "shivering",
+          "sneeze",
+          "straw_animation"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/blueberry-2026-05-11T05-42-09-239Z",
+      "manifestPath": "library/blueberry-2026-05-11T05-42-09-239Z/manifest.json",
+      "files": [
+        {
+          "path": "library/blueberry-2026-05-11T05-42-09-239Z/blueberry/blueberry.json",
+          "name": "blueberry/blueberry.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/blueberry-2026-05-11T05-42-09-239Z/blueberry/blueberry.atlas",
+          "name": "blueberry/blueberry.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/blueberry-2026-05-11T05-42-09-239Z/blueberry/blueberry.png",
+          "name": "blueberry/blueberry.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/blueberry-2026-05-11T05-42-09-239Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/blueberry-2026-05-11T05-42-09-239Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "blueberry.json",
+      "atlas": "blueberry.atlas",
+      "textures": [
+        "blueberry.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "eating_s1",
+        "eating_s2",
+        "eating_s3",
+        "idle",
+        "idle_eb",
+        "shivering",
+        "sneeze",
+        "straw_animation"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "zombie_polevaulter-2026-05-09T10-22-46-403Z",
     "name": "zombie_polevaulter",
     "updatedAt": "2026-05-09T10:23:17.712Z",
