@@ -1,5 +1,136 @@
 [
   {
+    "id": "loadingscreen-en-2026-05-01T22-48-15-856Z",
+    "name": "loadingscreen-en",
+    "updatedAt": "2026-05-11T21:29:23.869Z",
+    "animation_asset": {
+      "id": "loadingscreen-en-2026-05-01T22-48-15-856Z",
+      "name": "loadingscreen-en",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "screen"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "loading"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-loading"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/loadingscreen-en-2026-05-01T22-48-15-856Z",
+      "manifestPath": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/manifest.json",
+      "files": [
+        {
+          "path": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/loadingscreen-en/loadingScreen-en.json",
+          "name": "loadingscreen-en/loadingScreen-en.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/loadingscreen-en/loadingScreen-en.atlas",
+          "name": "loadingscreen-en/loadingScreen-en.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/loadingscreen-en/loadingScreen-en.png",
+          "name": "loadingscreen-en/loadingScreen-en.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/loading-preview.webm",
+          "name": "loading-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/loadingscreen-en-2026-05-01T22-48-15-856Z/loading-preview.webp",
+          "name": "loading-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "loadingScreen-en.json",
+      "atlas": "loadingScreen-en.atlas",
+      "textures": [
+        "loadingScreen-en.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "loading"
+      ],
+      "defaultAnimation": "loading",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "screen"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stu-fullbody-2026-05-01T22-47-19-018Z",
     "name": "stu-fullbody",
     "updatedAt": "2026-05-11T21:28:29.156Z",
