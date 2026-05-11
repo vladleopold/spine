@@ -1,5 +1,133 @@
 [
   {
+    "id": "tobsysparkle-signs-2026-05-11T22-50-04-918Z",
+    "name": "tobsysparkle-signs",
+    "updatedAt": "2026-05-11T22:50:14.694Z",
+    "animation_asset": {
+      "id": "tobsysparkle-signs-2026-05-11T22-50-04-918Z",
+      "name": "tobsysparkle-signs",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "loop"
+        ],
+        "state": [
+          "default-loop"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z",
+      "manifestPath": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/manifest.json",
+      "files": [
+        {
+          "path": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/tobsysparkle-signs/tobsysparkle-signs.json",
+          "name": "tobsysparkle-signs/tobsysparkle-signs.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/tobsysparkle-signs/tobsysparkle-signs.atlas",
+          "name": "tobsysparkle-signs/tobsysparkle-signs.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/tobsysparkle-signs/tobsysparkle-signs-intro.png",
+          "name": "tobsysparkle-signs/tobsysparkle-signs-intro.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/loop-preview.webm",
+          "name": "loop-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/tobsysparkle-signs-2026-05-11T22-50-04-918Z/loop-preview.webp",
+          "name": "loop-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "tobsysparkle-signs.json",
+      "atlas": "tobsysparkle-signs.atlas",
+      "textures": [
+        "tobsysparkle-signs-intro.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "loop"
+      ],
+      "defaultAnimation": "loop",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "partyroom-2026-05-11T22-49-33-769Z",
     "name": "partyroom",
     "updatedAt": "2026-05-11T22:49:42.648Z",
