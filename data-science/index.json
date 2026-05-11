@@ -1,5 +1,141 @@
 [
   {
+    "id": "phoebe-intro-2026-05-11T22-54-44-041Z",
+    "name": "phoebe-intro",
+    "updatedAt": "2026-05-11T22:54:51.218Z",
+    "animation_asset": {
+      "id": "phoebe-intro-2026-05-11T22-54-44-041Z",
+      "name": "phoebe-intro",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "blink",
+          "bodyflap-1",
+          "bodyflap-2",
+          "cheer",
+          "lipflap",
+          "none"
+        ],
+        "state": [
+          "default-blink"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-intro-2026-05-11T22-54-44-041Z",
+      "manifestPath": "library/phoebe-intro-2026-05-11T22-54-44-041Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-intro-2026-05-11T22-54-44-041Z/phoebe-intro/phoebe-intro.json",
+          "name": "phoebe-intro/phoebe-intro.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-intro-2026-05-11T22-54-44-041Z/phoebe-intro/phoebe-intro.atlas",
+          "name": "phoebe-intro/phoebe-intro.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-intro-2026-05-11T22-54-44-041Z/phoebe-intro/phoebe-intro.png",
+          "name": "phoebe-intro/phoebe-intro.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-intro-2026-05-11T22-54-44-041Z/blink-preview.webm",
+          "name": "blink-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-intro-2026-05-11T22-54-44-041Z/blink-preview.webp",
+          "name": "blink-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-intro.json",
+      "atlas": "phoebe-intro.atlas",
+      "textures": [
+        "phoebe-intro.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "blink",
+        "bodyflap-1",
+        "bodyflap-2",
+        "cheer",
+        "lipflap",
+        "none"
+      ],
+      "defaultAnimation": "blink",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "spotlight-2026-05-11T22-54-20-398Z",
     "name": "spotlight",
     "updatedAt": "2026-05-11T22:54:30.588Z",
