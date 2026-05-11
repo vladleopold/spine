@@ -1,5 +1,160 @@
 [
   {
+    "id": "symbols-2026-05-11T22-00-04-484Z",
+    "name": "symbols",
+    "updatedAt": "2026-05-11T22:00:39.830Z",
+    "animation_asset": {
+      "id": "symbols-2026-05-11T22-00-04-484Z",
+      "name": "symbols",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "bag",
+          "bag_static",
+          "card_suit_1",
+          "card_suit_1_static",
+          "card_suit_2",
+          "card_suit_2_static",
+          "card_suit_3",
+          "card_suit_3_static",
+          "card_suit_4",
+          "card_suit_4_static",
+          "crystals",
+          "crystals_static",
+          "lamp",
+          "lamp_static",
+          "pickaxe",
+          "pickaxe_static",
+          "trolley",
+          "trolley_static"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-card_suit_1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/symbols-2026-05-11T22-00-04-484Z",
+      "manifestPath": "library/symbols-2026-05-11T22-00-04-484Z/manifest.json",
+      "files": [
+        {
+          "path": "library/symbols-2026-05-11T22-00-04-484Z/symbols/symbols.json",
+          "name": "symbols/symbols.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/symbols-2026-05-11T22-00-04-484Z/symbols/symbols.atlas.txt",
+          "name": "symbols/symbols.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/symbols-2026-05-11T22-00-04-484Z/symbols/symbols.png",
+          "name": "symbols/symbols.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/symbols-2026-05-11T22-00-04-484Z/card_suit_1-preview.webm",
+          "name": "card_suit_1-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/symbols-2026-05-11T22-00-04-484Z/card_suit_1-preview.webp",
+          "name": "card_suit_1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "symbols.json",
+      "atlas": "symbols.atlas.txt",
+      "textures": [
+        "symbols.png"
+      ],
+      "animationCount": 18,
+      "animationNames": [
+        "bag",
+        "bag_static",
+        "card_suit_1",
+        "card_suit_1_static",
+        "card_suit_2",
+        "card_suit_2_static",
+        "card_suit_3",
+        "card_suit_3_static",
+        "card_suit_4",
+        "card_suit_4_static",
+        "crystals",
+        "crystals_static",
+        "lamp",
+        "lamp_static",
+        "pickaxe",
+        "pickaxe_static",
+        "trolley",
+        "trolley_static"
+      ],
+      "defaultAnimation": "card_suit_1",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
     "name": "dis-ariel-splash-char",
     "updatedAt": "2026-05-11T22:00:16.503Z",
