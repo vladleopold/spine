@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T22:51:39.596Z",
+  "updatedAt": "2026-05-11T22:51:49.954Z",
+  "animation_asset": {
+    "id": "jay-intro-2026-05-11T22-51-39-596Z",
+    "name": "jay-intro",
+    "domain": "gamedev",
+    "asset_category": "cinematic",
+    "animation_type": "cinematic",
+    "skeleton_type": "object",
+    "content_type": "cinematic",
+    "taxonomy": {
+      "category": "cinematic",
+      "class": "sequence",
+      "type": "cutscene",
+      "tags": [
+        "intro"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "storytelling"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "blink",
+        "bodyflap-1",
+        "bodyflap-2",
+        "cheer",
+        "cover2idle",
+        "highlight-off",
+        "highlight-on",
+        "idle",
+        "idle-cover-eyes",
+        "idle2cover",
+        "lipflap",
+        "none",
+        "walk"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "walk"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/jay-intro-2026-05-11T22-51-39-596Z",
+    "manifestPath": "library/jay-intro-2026-05-11T22-51-39-596Z/manifest.json",
+    "files": [
+      {
+        "path": "library/jay-intro-2026-05-11T22-51-39-596Z/jay-intro/jay-intro.json",
+        "name": "jay-intro/jay-intro.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/jay-intro-2026-05-11T22-51-39-596Z/jay-intro/jay-intro.atlas",
+        "name": "jay-intro/jay-intro.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/jay-intro-2026-05-11T22-51-39-596Z/jay-intro/jay-intro.png",
+        "name": "jay-intro/jay-intro.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/jay-intro-2026-05-11T22-51-39-596Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/jay-intro-2026-05-11T22-51-39-596Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "jay-intro.json",
+    "atlas": "jay-intro.atlas",
+    "textures": [
+      "jay-intro.png"
+    ],
+    "animationCount": 13,
+    "animationNames": [
+      "blink",
+      "bodyflap-1",
+      "bodyflap-2",
+      "cheer",
+      "cover2idle",
+      "highlight-off",
+      "highlight-on",
+      "idle",
+      "idle-cover-eyes",
+      "idle2cover",
+      "lipflap",
+      "none",
+      "walk"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "intro"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
