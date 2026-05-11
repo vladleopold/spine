@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T22:57:10.051Z",
+  "updatedAt": "2026-05-11T22:57:17.532Z",
+  "animation_asset": {
+    "id": "jay-clotherig-2026-05-11T22-57-10-051Z",
+    "name": "jay-clotherig",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "blink",
+        "lipflap",
+        "none"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-blink"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/jay-clotherig-2026-05-11T22-57-10-051Z",
+    "manifestPath": "library/jay-clotherig-2026-05-11T22-57-10-051Z/manifest.json",
+    "files": [
+      {
+        "path": "library/jay-clotherig-2026-05-11T22-57-10-051Z/jay-clotherig/jay-clotherig.json",
+        "name": "jay-clotherig/jay-clotherig.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/jay-clotherig-2026-05-11T22-57-10-051Z/jay-clotherig/jay-clotherig.atlas",
+        "name": "jay-clotherig/jay-clotherig.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/jay-clotherig-2026-05-11T22-57-10-051Z/jay-clotherig/jay-clotherig.png",
+        "name": "jay-clotherig/jay-clotherig.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/jay-clotherig-2026-05-11T22-57-10-051Z/blink-preview.webm",
+        "name": "blink-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/jay-clotherig-2026-05-11T22-57-10-051Z/blink-preview.webp",
+        "name": "blink-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "jay-clotherig.json",
+    "atlas": "jay-clotherig.atlas",
+    "textures": [
+      "jay-clotherig.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "blink",
+      "lipflap",
+      "none"
+    ],
+    "defaultAnimation": "blink",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
