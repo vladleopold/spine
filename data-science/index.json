@@ -1,5 +1,144 @@
 [
   {
+    "id": "rafia_v01-2026-05-11T22-47-34-899Z",
+    "name": "rafia_v01",
+    "updatedAt": "2026-05-11T22:47:41.885Z",
+    "animation_asset": {
+      "id": "rafia_v01-2026-05-11T22-47-34-899Z",
+      "name": "rafia_v01",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "fall",
+          "idle",
+          "jump",
+          "lipsync",
+          "rise",
+          "run"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-jump"
+        ],
+        "action": [
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/rafia_v01-2026-05-11T22-47-34-899Z",
+      "manifestPath": "library/rafia_v01-2026-05-11T22-47-34-899Z/manifest.json",
+      "files": [
+        {
+          "path": "library/rafia_v01-2026-05-11T22-47-34-899Z/rafia_v01/rafia_v01.json",
+          "name": "rafia_v01/rafia_v01.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/rafia_v01-2026-05-11T22-47-34-899Z/rafia_v01/rafia_v01.atlas",
+          "name": "rafia_v01/rafia_v01.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/rafia_v01-2026-05-11T22-47-34-899Z/rafia_v01/rafia_v01.png",
+          "name": "rafia_v01/rafia_v01.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/rafia_v01-2026-05-11T22-47-34-899Z/jump-preview.webm",
+          "name": "jump-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/rafia_v01-2026-05-11T22-47-34-899Z/jump-preview.webp",
+          "name": "jump-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "rafia_v01.json",
+      "atlas": "rafia_v01.atlas",
+      "textures": [
+        "rafia_v01.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "blink",
+        "fall",
+        "idle",
+        "jump",
+        "lipsync",
+        "rise",
+        "run"
+      ],
+      "defaultAnimation": "jump",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "andre_v01-2026-05-11T22-46-44-951Z",
     "name": "andre_v01",
     "updatedAt": "2026-05-11T22:46:52.870Z",
