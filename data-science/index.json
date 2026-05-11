@@ -1,5 +1,218 @@
 [
   {
+    "id": "char_blue-2026-05-11T20-22-20-214Z",
+    "name": "char_blue",
+    "updatedAt": "2026-05-11T21:49:19.718Z",
+    "animation_asset": {
+      "id": "char_blue-2026-05-11T20-22-20-214Z",
+      "name": "char_blue",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "char"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "blowing_bubbles",
+          "dance",
+          "default",
+          "drag_idle",
+          "drag_idle_start",
+          "eat",
+          "hopscotch",
+          "idle",
+          "idle_happy",
+          "idle_sad",
+          "inst_bongos",
+          "inst_hand_shakers",
+          "inst_triangle",
+          "inst_xylophone",
+          "react",
+          "seesaw",
+          "sidewalk_chalk",
+          "sit_read",
+          "slide_swing_sit",
+          "walk",
+          "washhands"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "action": [
+          "walk"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/char_blue-2026-05-11T20-22-20-214Z",
+      "manifestPath": "library/char_blue-2026-05-11T20-22-20-214Z/manifest.json",
+      "files": [
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.json",
+          "name": "char_blue/char_blue.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.atlas",
+          "name": "char_blue/char_blue.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.png",
+          "name": "char_blue/char_blue.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue2.png",
+          "name": "char_blue/char_blue2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue3.png",
+          "name": "char_blue/char_blue3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue4.png",
+          "name": "char_blue/char_blue4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue5.png",
+          "name": "char_blue/char_blue5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue6.png",
+          "name": "char_blue/char_blue6.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue7.png",
+          "name": "char_blue/char_blue7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/char_blue-2026-05-11T20-22-20-214Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "char_blue.json",
+      "atlas": "char_blue.atlas",
+      "textures": [
+        "char_blue.png",
+        "char_blue2.png",
+        "char_blue3.png",
+        "char_blue4.png",
+        "char_blue5.png",
+        "char_blue6.png",
+        "char_blue7.png"
+      ],
+      "animationCount": 21,
+      "animationNames": [
+        "blowing_bubbles",
+        "dance",
+        "default",
+        "drag_idle",
+        "drag_idle_start",
+        "eat",
+        "hopscotch",
+        "idle",
+        "idle_happy",
+        "idle_sad",
+        "inst_bongos",
+        "inst_hand_shakers",
+        "inst_triangle",
+        "inst_xylophone",
+        "react",
+        "seesaw",
+        "sidewalk_chalk",
+        "sit_read",
+        "slide_swing_sit",
+        "walk",
+        "washhands"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 11,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 8
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "char"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stumobile-2026-05-01T23-07-52-129Z",
     "name": "stumobile",
     "updatedAt": "2026-05-11T21:41:01.770Z",
@@ -2839,219 +3052,6 @@
       "method": "filename-animation-keyword-rules",
       "matchedKeywords": [],
       "confidence": 0.35,
-      "needsHumanReview": true
-    },
-    "privacy": {
-      "public": false,
-      "ownerScoped": false,
-      "ownerFieldsRemoved": true,
-      "exposeInSitemap": false,
-      "exposeInProfile": false,
-      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
-    }
-  },
-  {
-    "id": "char_blue-2026-05-11T20-22-20-214Z",
-    "name": "char_blue",
-    "updatedAt": "2026-05-11T20:22:43.326Z",
-    "animation_asset": {
-      "id": "char_blue-2026-05-11T20-22-20-214Z",
-      "name": "char_blue",
-      "domain": "gamedev",
-      "asset_category": "character",
-      "animation_type": "character",
-      "skeleton_type": "humanoid",
-      "content_type": "character",
-      "taxonomy": {
-        "category": "character",
-        "class": "humanoid",
-        "type": "character",
-        "tags": [
-          "char"
-        ]
-      },
-      "tags": {
-        "gameplay_role": [
-          "avatar"
-        ],
-        "rig_type": [
-          "skeletal-2d",
-          "spine-json"
-        ],
-        "animation_state": [
-          "blowing_bubbles",
-          "dance",
-          "default",
-          "drag_idle",
-          "drag_idle_start",
-          "eat",
-          "hopscotch",
-          "idle",
-          "idle_happy",
-          "idle_sad",
-          "inst_bongos",
-          "inst_hand_shakers",
-          "inst_triangle",
-          "inst_xylophone",
-          "react",
-          "seesaw",
-          "sidewalk_chalk",
-          "sit_read",
-          "slide_swing_sit",
-          "walk",
-          "washhands"
-        ],
-        "loop_type": [
-          "loop-candidate",
-          "loop"
-        ],
-        "state": [
-          "default-idle"
-        ],
-        "action": [
-          "walk"
-        ],
-        "platform": [
-          "web"
-        ],
-        "resolution": [
-          "texture-png",
-          "texture-webp"
-        ],
-        "quality_level": [
-          "auto-tagged"
-        ],
-        "material": [
-          "atlas-mapped"
-        ],
-        "procedural": false,
-        "modular": false,
-        "runtime_capable": true
-      }
-    },
-    "source": {
-      "storage": "github",
-      "repository": "vladleopold/spine",
-      "branch": "main",
-      "previewPath": "library/char_blue-2026-05-11T20-22-20-214Z",
-      "manifestPath": "library/char_blue-2026-05-11T20-22-20-214Z/manifest.json",
-      "files": [
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.json",
-          "name": "char_blue/char_blue.json",
-          "role": "skeleton",
-          "format": "json"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.atlas",
-          "name": "char_blue/char_blue.atlas",
-          "role": "atlas",
-          "format": "atlas"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue.png",
-          "name": "char_blue/char_blue.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue2.png",
-          "name": "char_blue/char_blue2.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue3.png",
-          "name": "char_blue/char_blue3.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue4.png",
-          "name": "char_blue/char_blue4.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue5.png",
-          "name": "char_blue/char_blue5.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue6.png",
-          "name": "char_blue/char_blue6.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/char_blue/char_blue7.png",
-          "name": "char_blue/char_blue7.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/idle-preview.webm",
-          "name": "idle-preview.webm",
-          "role": "support",
-          "format": "webm"
-        },
-        {
-          "path": "library/char_blue-2026-05-11T20-22-20-214Z/idle-preview.webp",
-          "name": "idle-preview.webp",
-          "role": "texture",
-          "format": "webp"
-        }
-      ]
-    },
-    "spine_spec": {
-      "skeleton": "char_blue.json",
-      "atlas": "char_blue.atlas",
-      "textures": [
-        "char_blue.png",
-        "char_blue2.png",
-        "char_blue3.png",
-        "char_blue4.png",
-        "char_blue5.png",
-        "char_blue6.png",
-        "char_blue7.png"
-      ],
-      "animationCount": 21,
-      "animationNames": [
-        "blowing_bubbles",
-        "dance",
-        "default",
-        "drag_idle",
-        "drag_idle_start",
-        "eat",
-        "hopscotch",
-        "idle",
-        "idle_happy",
-        "idle_sad",
-        "inst_bongos",
-        "inst_hand_shakers",
-        "inst_triangle",
-        "inst_xylophone",
-        "react",
-        "seesaw",
-        "sidewalk_chalk",
-        "sit_read",
-        "slide_swing_sit",
-        "walk",
-        "washhands"
-      ],
-      "defaultAnimation": "idle",
-      "fileCount": 11,
-      "skeletonCount": 1,
-      "atlasCount": 1,
-      "textureCount": 8
-    },
-    "inference": {
-      "method": "filename-animation-keyword-rules",
-      "matchedKeywords": [
-        "char"
-      ],
-      "confidence": 0.55,
       "needsHumanReview": true
     },
     "privacy": {
