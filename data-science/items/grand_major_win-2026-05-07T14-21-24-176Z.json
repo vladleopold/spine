@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-07T14:21:24.176Z",
-  "updatedAt": "2026-05-07T14:21:52.105Z",
+  "updatedAt": "2026-05-11T22:03:20.969Z",
   "animation_asset": {
     "id": "grand_major_win-2026-05-07T14-21-24-176Z",
     "name": "grand_major_win",
@@ -34,7 +34,7 @@
         "one-shot"
       ],
       "state": [
-        "default-grand",
+        "default-major",
         "win"
       ],
       "platform": [
@@ -84,14 +84,14 @@
         "format": "png"
       },
       {
-        "path": "library/grand_major_win-2026-05-07T14-21-24-176Z/grand-preview.webm",
-        "name": "grand-preview.webm",
+        "path": "library/grand_major_win-2026-05-07T14-21-24-176Z/major-preview.webm",
+        "name": "major-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/grand_major_win-2026-05-07T14-21-24-176Z/grand-preview.webp",
-        "name": "grand-preview.webp",
+        "path": "library/grand_major_win-2026-05-07T14-21-24-176Z/major-preview.webp",
+        "name": "major-preview.webp",
         "role": "texture",
         "format": "webp"
       }
@@ -108,7 +108,7 @@
       "grand",
       "major"
     ],
-    "defaultAnimation": "grand",
+    "defaultAnimation": "major",
     "fileCount": 5,
     "skeletonCount": 1,
     "atlasCount": 1,
