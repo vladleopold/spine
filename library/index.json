@@ -1,5 +1,63 @@
 [
   {
+    "id": "stumobile-2026-05-01T23-07-52-129Z",
+    "title": "stumobile",
+    "publicOwnerId": "u_2v72ke",
+    "ownerAnonId": "anon_1tasoe_1f29vnl",
+    "ownerAnonFingerprint": "1tasoe",
+    "showOwnerLibrary": false,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-01T23:07:52.129Z",
+    "skeleton": "stuMobile.json",
+    "atlas": "stuMobile.atlas",
+    "textures": [
+      "stuMobile.png"
+    ],
+    "animations": [
+      "balloon-end",
+      "balloon-hold",
+      "balloon-start",
+      "bubble-end",
+      "bubble-hold",
+      "bubble-start",
+      "cheer",
+      "hitReact",
+      "idle",
+      "spring",
+      "stretch",
+      "stretch-end",
+      "stretch-hold",
+      "stretch-spin-test-drawOrderChange",
+      "stretch-spin-test-noDrawOrderChange",
+      "stretch-start",
+      "archive/balloon-testSeq",
+      "archive/bubble-testSeq",
+      "archive/bubble-testSeq-noBubble",
+      "archive/bubble-testSeq-noCar",
+      "archive/stretch-testSeq"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "stumobile/stuMobile.json",
+      "stumobile/stuMobile.atlas",
+      "stumobile/stuMobile.png",
+      "idle-preview.webm",
+      "idle-preview.webp"
+    ],
+    "previewPath": "library/stumobile-2026-05-01T23-07-52-129Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webp",
+    "thumbnailPath": "library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webp",
+    "thumbnailPosterPath": "library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webp",
+    "previewWidth": 720,
+    "previewHeight": 754,
+    "previewDuration": 1,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webm",
+    "webmPreviewPath": "library/stumobile-2026-05-01T23-07-52-129Z/idle-preview.webm"
+  },
+  {
     "id": "stumobile-notebookanims-2026-05-01T23-07-22-811Z",
     "title": "stumobile-notebookanims",
     "publicOwnerId": "u_2v72ke",
@@ -8477,53 +8535,5 @@
     "thumbnailPoster": "data:image/webp;base64,UklGRngEAABXRUJQVlA4WAoAAAAgAAAAZwEA2wAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggigIAALAfAJ0BKmgB3AA+SSSORiKiISEgVVlwUAkJaW7jQByWJp6m0s+vyB3hiAA6kvAope4s8W+1Y+tFt9qyDY3tFt9qx9aLbbSjjuLnyLb7Vj60W2wLA9qk4wMsFvtWPrRbbEqFvNsgUQt6pNKzdBMfVMmd7bcTUDjgJovxjTIcWeLfFMm5LvLADHf11xXMWI33AUXtFLUQ4s845X63/2WNKAclhksQX3mObqQ/8+4s8W+/zAQHJHFNVi4sYsCx9aLb7Uk1/uEiLXdXrpjhiD/h3otvtWPrVr9b+DF4jHZ98jhnWi2+1Y/cTY9TjL3Fni32rH1v54SAwreUUvcWeLfasfViXBotswAA/v9sIXW0AABOknTTydGhAugcZJuuxD0HxcZiYRW8VQR0SINDPVUhDOUQ5dUv/w0mRoc2tsbW0tmnBJzK4iHA4EILjF5S9rjtXp6CDwwuRwbzxhnz4Nn5OMVn7dusxEHJ+Y9pvZIWCTkI6tjsbci+MMXyVEbokT5q9SqexyWOL2HlAApbhWYJhBTIZPDOdp/FEg/aIH5/WTNGX0QwY6OU8gUbGjFa7Y/5t1IadzW+d0Yor1H92cYjFTikyRghi0CAARnsrohCpJELd1Nbkb/7TyFJ89OQF3iqsyt8F6wL//N1bx4xL21K2uNPpaPRp7sRYYfUgAZByF+m3aQG6tBy2JVm0Z9MGMk5wvIZi5oIapQr/pyi9p7LnkGTqQikicW3TUGi7yFgUBTAIOJnjDKUiJ1OAoQwBkHPZCEssc+IYDFIGUZpsWO73XsioZT0Kb/8DSrRZb/o5w5yLJfjIbjIxJac2jErtxJnwgGXtXXhLvwfH7g1MbwlSC0ggAAAAAAAAAAA",
     "thumbnailType": "gif",
     "libraryOrder": 1
-  },
-  {
-    "id": "stumobile-2026-05-01T23-07-52-129Z",
-    "title": "stumobile",
-    "ownerAnonId": "anon_1tasoe_1f29vnl",
-    "ownerAnonFingerprint": "1tasoe",
-    "uploadedAt": "2026-05-01T23:07:52.129Z",
-    "skeleton": "stuMobile.json",
-    "atlas": "stuMobile.atlas",
-    "textures": [
-      "stuMobile.png"
-    ],
-    "animations": [
-      "balloon-end",
-      "balloon-hold",
-      "balloon-start",
-      "bubble-end",
-      "bubble-hold",
-      "bubble-start",
-      "cheer",
-      "hitReact",
-      "idle",
-      "spring",
-      "stretch",
-      "stretch-end",
-      "stretch-hold",
-      "stretch-spin-test-drawOrderChange",
-      "stretch-spin-test-noDrawOrderChange",
-      "stretch-start",
-      "archive/balloon-testSeq",
-      "archive/bubble-testSeq",
-      "archive/bubble-testSeq-noBubble",
-      "archive/bubble-testSeq-noCar",
-      "archive/stretch-testSeq"
-    ],
-    "defaultAnimation": "idle",
-    "files": [
-      "stumobile/stuMobile.json",
-      "stumobile/stuMobile.atlas",
-      "stumobile/stuMobile.png"
-    ],
-    "previewPath": "library/stumobile-2026-05-01T23-07-52-129Z",
-    "repositoryUrl": "",
-    "thumbnail": "https://spine-link.vercel.app/assets/library/stumobile-2026-05-01T23-07-52-129Z/thumbnail.gif?v=gif-stumobile-2026-05-01T23-07-52-129Z",
-    "thumbnailType": "gif",
-    "publicOwnerId": "u_2v72ke",
-    "showOwnerLibrary": false,
-    "libraryOrder": 2
   }
 ]
