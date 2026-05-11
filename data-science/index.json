@@ -1,5 +1,152 @@
 [
   {
+    "id": "adults-2026-05-11T23-05-58-439Z",
+    "name": "adults",
+    "updatedAt": "2026-05-11T23:06:09.278Z",
+    "animation_asset": {
+      "id": "adults-2026-05-11T23-05-58-439Z",
+      "name": "adults",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "aguilar-shake",
+          "blink-at-cam",
+          "blink-at-kids",
+          "blink-to-cam",
+          "blink-to-kids",
+          "highlight-off",
+          "highlight-on",
+          "idle-happy",
+          "idle-payme",
+          "look-at-cam",
+          "look-at-kids",
+          "none",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle-happy"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/adults-2026-05-11T23-05-58-439Z",
+      "manifestPath": "library/adults-2026-05-11T23-05-58-439Z/manifest.json",
+      "files": [
+        {
+          "path": "library/adults-2026-05-11T23-05-58-439Z/adults/adults.json",
+          "name": "adults/adults.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/adults-2026-05-11T23-05-58-439Z/adults/adults.atlas",
+          "name": "adults/adults.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/adults-2026-05-11T23-05-58-439Z/adults/adults.png",
+          "name": "adults/adults.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/adults-2026-05-11T23-05-58-439Z/idle-happy-preview.webm",
+          "name": "idle-happy-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/adults-2026-05-11T23-05-58-439Z/idle-happy-preview.webp",
+          "name": "idle-happy-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "adults.json",
+      "atlas": "adults.atlas",
+      "textures": [
+        "adults.png"
+      ],
+      "animationCount": 12,
+      "animationNames": [
+        "aguilar-shake",
+        "blink-at-cam",
+        "blink-at-kids",
+        "blink-to-cam",
+        "blink-to-kids",
+        "highlight-off",
+        "highlight-on",
+        "idle-happy",
+        "idle-payme",
+        "look-at-cam",
+        "look-at-kids",
+        "none"
+      ],
+      "defaultAnimation": "idle-happy",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "jay-lobby-2026-05-11T23-05-10-308Z",
     "name": "jay-lobby",
     "updatedAt": "2026-05-11T23:05:25.419Z",
