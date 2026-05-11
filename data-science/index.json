@@ -1,5 +1,157 @@
 [
   {
+    "id": "stu-2026-05-01T22-49-21-477Z",
+    "name": "stu",
+    "updatedAt": "2026-05-11T21:34:01.794Z",
+    "animation_asset": {
+      "id": "stu-2026-05-01T22-49-21-477Z",
+      "name": "stu",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "bend_idle",
+          "drop-powerup",
+          "hold-powerup",
+          "idle_1",
+          "idle_2",
+          "jump_broad",
+          "run-start",
+          "sit_on_ground_idle",
+          "skid-powerup",
+          "walk_1",
+          "walk_2",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle_1"
+        ],
+        "action": [
+          "walk",
+          "run"
+        ],
+        "direction": [
+          "up"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/stu-2026-05-01T22-49-21-477Z",
+      "manifestPath": "library/stu-2026-05-01T22-49-21-477Z/manifest.json",
+      "files": [
+        {
+          "path": "library/stu-2026-05-01T22-49-21-477Z/stu/stu.json",
+          "name": "stu/stu.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/stu-2026-05-01T22-49-21-477Z/stu/stu.atlas",
+          "name": "stu/stu.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/stu-2026-05-01T22-49-21-477Z/stu/stu.png",
+          "name": "stu/stu.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/stu-2026-05-01T22-49-21-477Z/idle_1-preview.webm",
+          "name": "idle_1-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/stu-2026-05-01T22-49-21-477Z/idle_1-preview.webp",
+          "name": "idle_1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "stu.json",
+      "atlas": "stu.atlas",
+      "textures": [
+        "stu.png"
+      ],
+      "animationCount": 11,
+      "animationNames": [
+        "bend_idle",
+        "drop-powerUp",
+        "hold-powerUp",
+        "idle_1",
+        "idle_2",
+        "jump_broad",
+        "run-start",
+        "sit_on_ground_idle",
+        "skid-powerUp",
+        "walk_1",
+        "walk_2"
+      ],
+      "defaultAnimation": "idle_1",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "lyla-gameplay-2026-05-01T22-48-53-835Z",
     "name": "lyla-gameplay",
     "updatedAt": "2026-05-11T21:33:24.857Z",
