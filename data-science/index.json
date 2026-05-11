@@ -1,5 +1,135 @@
 [
   {
+    "id": "phoebe-lobby-2026-05-11T23-04-31-458Z",
+    "name": "phoebe-lobby",
+    "updatedAt": "2026-05-11T23:04:46.765Z",
+    "animation_asset": {
+      "id": "phoebe-lobby-2026-05-11T23-04-31-458Z",
+      "name": "phoebe-lobby",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "happy",
+          "idle",
+          "sit",
+          "stand"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-lobby-2026-05-11T23-04-31-458Z",
+      "manifestPath": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/phoebe-lobby/phoebe-lobby.json",
+          "name": "phoebe-lobby/phoebe-lobby.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/phoebe-lobby/lobby-rigs.atlas",
+          "name": "phoebe-lobby/lobby-rigs.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/phoebe-lobby/lobby-rigs.png",
+          "name": "phoebe-lobby/lobby-rigs.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-lobby-2026-05-11T23-04-31-458Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-lobby.json",
+      "atlas": "lobby-rigs.atlas",
+      "textures": [
+        "lobby-rigs.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "happy",
+        "idle",
+        "sit",
+        "stand"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "jay-counter-2026-05-11T23-01-58-360Z",
     "name": "jay-counter",
     "updatedAt": "2026-05-11T23:03:46.014Z",
