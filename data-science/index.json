@@ -1,5 +1,150 @@
 [
   {
+    "id": "junior_v01-2026-05-11T22-45-12-580Z",
+    "name": "junior_v01",
+    "updatedAt": "2026-05-11T22:45:20.512Z",
+    "animation_asset": {
+      "id": "junior_v01-2026-05-11T22-45-12-580Z",
+      "name": "junior_v01",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "fall",
+          "fall_roar",
+          "idle",
+          "jump",
+          "jump_roar",
+          "lipsync",
+          "roar_arms",
+          "run",
+          "run_roar"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-jump"
+        ],
+        "action": [
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/junior_v01-2026-05-11T22-45-12-580Z",
+      "manifestPath": "library/junior_v01-2026-05-11T22-45-12-580Z/manifest.json",
+      "files": [
+        {
+          "path": "library/junior_v01-2026-05-11T22-45-12-580Z/junior_v01/junior_v01.json",
+          "name": "junior_v01/junior_v01.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/junior_v01-2026-05-11T22-45-12-580Z/junior_v01/junior_v01.atlas",
+          "name": "junior_v01/junior_v01.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/junior_v01-2026-05-11T22-45-12-580Z/junior_v01/junior_v01.png",
+          "name": "junior_v01/junior_v01.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/junior_v01-2026-05-11T22-45-12-580Z/jump-preview.webm",
+          "name": "jump-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/junior_v01-2026-05-11T22-45-12-580Z/jump-preview.webp",
+          "name": "jump-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "junior_v01.json",
+      "atlas": "junior_v01.atlas",
+      "textures": [
+        "junior_v01.png"
+      ],
+      "animationCount": 10,
+      "animationNames": [
+        "blink",
+        "fall",
+        "fall_roar",
+        "idle",
+        "jump",
+        "jump_roar",
+        "lipsync",
+        "roar_arms",
+        "run",
+        "run_roar"
+      ],
+      "defaultAnimation": "jump",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "alma_v01-2026-05-11T22-42-18-888Z",
     "name": "alma_v01",
     "updatedAt": "2026-05-11T22:42:49.391Z",
