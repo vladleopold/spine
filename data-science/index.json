@@ -1,5 +1,158 @@
 [
   {
+    "id": "phoebe-sidescroller-2026-05-11T22-51-07-841Z",
+    "name": "phoebe-sidescroller",
+    "updatedAt": "2026-05-11T22:51:18.704Z",
+    "animation_asset": {
+      "id": "phoebe-sidescroller-2026-05-11T22-51-07-841Z",
+      "name": "phoebe-sidescroller",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "bodyflap-1",
+          "bodyflap-2",
+          "cheer",
+          "cover2idle",
+          "highlight-off",
+          "highlight-on",
+          "idle",
+          "idle-cover-eyes",
+          "idle-firepose",
+          "idle2cover",
+          "lipflap",
+          "none",
+          "walk"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "action": [
+          "walk"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z",
+      "manifestPath": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/manifest.json",
+      "files": [
+        {
+          "path": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/phoebe-sidescroller/phoebe-sidescroller.json",
+          "name": "phoebe-sidescroller/phoebe-sidescroller.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/phoebe-sidescroller/phoebe-sidescroller.atlas",
+          "name": "phoebe-sidescroller/phoebe-sidescroller.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/phoebe-sidescroller/phoebe-sidescroller.png",
+          "name": "phoebe-sidescroller/phoebe-sidescroller.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/phoebe-sidescroller-2026-05-11T22-51-07-841Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "phoebe-sidescroller.json",
+      "atlas": "phoebe-sidescroller.atlas",
+      "textures": [
+        "phoebe-sidescroller.png"
+      ],
+      "animationCount": 14,
+      "animationNames": [
+        "blink",
+        "bodyflap-1",
+        "bodyflap-2",
+        "cheer",
+        "cover2idle",
+        "highlight-off",
+        "highlight-on",
+        "idle",
+        "idle-cover-eyes",
+        "idle-firepose",
+        "idle2cover",
+        "lipflap",
+        "none",
+        "walk"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "phoebe-intro-2026-05-11T22-50-27-650Z",
     "name": "phoebe-intro",
     "updatedAt": "2026-05-11T22:50:38.080Z",
