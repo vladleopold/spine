@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T22:49:10.823Z",
+  "updatedAt": "2026-05-11T22:49:21.478Z",
+  "animation_asset": {
+    "id": "butterflies-2026-05-11T22-49-10-823Z",
+    "name": "butterflies",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "flutter-seq",
+        "none"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-flutter-seq"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/butterflies-2026-05-11T22-49-10-823Z",
+    "manifestPath": "library/butterflies-2026-05-11T22-49-10-823Z/manifest.json",
+    "files": [
+      {
+        "path": "library/butterflies-2026-05-11T22-49-10-823Z/butterflies/butterflies.json",
+        "name": "butterflies/butterflies.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/butterflies-2026-05-11T22-49-10-823Z/butterflies/butterflies.atlas",
+        "name": "butterflies/butterflies.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/butterflies-2026-05-11T22-49-10-823Z/butterflies/butterflies.png",
+        "name": "butterflies/butterflies.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/butterflies-2026-05-11T22-49-10-823Z/flutter-seq-preview.webm",
+        "name": "flutter-seq-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/butterflies-2026-05-11T22-49-10-823Z/flutter-seq-preview.webp",
+        "name": "flutter-seq-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "butterflies.json",
+    "atlas": "butterflies.atlas",
+    "textures": [
+      "butterflies.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "flutter-seq",
+      "none"
+    ],
+    "defaultAnimation": "flutter-seq",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
