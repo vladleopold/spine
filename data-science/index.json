@@ -1,5 +1,133 @@
 [
   {
+    "id": "spine_warlock_11-2026-05-11T19-16-56-383Z",
+    "name": "spine_warlock_11",
+    "updatedAt": "2026-05-11T19:17:20.081Z",
+    "animation_asset": {
+      "id": "spine_warlock_11-2026-05-11T19-16-56-383Z",
+      "name": "spine_warlock_11",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/spine_warlock_11-2026-05-11T19-16-56-383Z",
+      "manifestPath": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/manifest.json",
+      "files": [
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/spine_warlock_11/spine_warlock_11.skel",
+          "name": "spine_warlock_11/spine_warlock_11.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/spine_warlock_11/spine_warlock_11.atlas",
+          "name": "spine_warlock_11/spine_warlock_11.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/spine_warlock_11/spine_warlock_11.png",
+          "name": "spine_warlock_11/spine_warlock_11.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/spine_warlock_11/spine_warlock_11_2.png",
+          "name": "spine_warlock_11/spine_warlock_11_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/animation-preview.webm",
+          "name": "animation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/spine_warlock_11-2026-05-11T19-16-56-383Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "spine_warlock_11.skel",
+      "atlas": "spine_warlock_11.atlas",
+      "textures": [
+        "spine_warlock_11.png",
+        "spine_warlock_11_2.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "drone-373x183-2026-05-11T18-28-35-596Z",
     "name": "drone 373x183",
     "updatedAt": "2026-05-11T18:28:46.546Z",
