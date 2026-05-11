@@ -1,5 +1,136 @@
 [
   {
+    "id": "dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
+    "name": "dis-ariel-splash-char",
+    "updatedAt": "2026-05-11T21:57:40.756Z",
+    "animation_asset": {
+      "id": "dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
+      "name": "dis-ariel-splash-char",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "char"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "splash-char-build-in",
+          "splash-char-idle",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-splash-char-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z",
+      "manifestPath": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/manifest.json",
+      "files": [
+        {
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/dis-ariel-splash-char/dis-ariel-splash-char.json",
+          "name": "dis-ariel-splash-char/dis-ariel-splash-char.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/dis-ariel-splash-char/dis-ariel-splash-char.atlas",
+          "name": "dis-ariel-splash-char/dis-ariel-splash-char.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/dis-ariel-splash-char/dis-ariel-splash-char.png",
+          "name": "dis-ariel-splash-char/dis-ariel-splash-char.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-idle-preview.webm",
+          "name": "splash-char-idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/dis-ariel-splash-char-2026-05-11T21-57-30-209Z/splash-char-idle-preview.webp",
+          "name": "splash-char-idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "dis-ariel-splash-char.json",
+      "atlas": "dis-ariel-splash-char.atlas",
+      "textures": [
+        "dis-ariel-splash-char.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "splash-char-build-in",
+        "splash-char-idle"
+      ],
+      "defaultAnimation": "splash-char-idle",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "char"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stu_ball-2026-05-01T22-51-41-840Z",
     "name": "stu_ball",
     "updatedAt": "2026-05-11T21:51:11.587Z",
