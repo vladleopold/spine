@@ -1,5 +1,134 @@
 [
   {
+    "id": "spine_warlock_06-2026-05-11T19-19-28-733Z",
+    "name": "spine_warlock_06",
+    "updatedAt": "2026-05-11T19:19:43.589Z",
+    "animation_asset": {
+      "id": "spine_warlock_06-2026-05-11T19-19-28-733Z",
+      "name": "spine_warlock_06",
+      "domain": "gamedev",
+      "asset_category": "background",
+      "animation_type": "background",
+      "skeleton_type": "background",
+      "content_type": "background",
+      "taxonomy": {
+        "category": "environment",
+        "class": "background",
+        "type": "animated-background",
+        "tags": [
+          "bg"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "scene-background"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "bg",
+          "main"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-bg"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/spine_warlock_06-2026-05-11T19-19-28-733Z",
+      "manifestPath": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/manifest.json",
+      "files": [
+        {
+          "path": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/spine_warlock_06/spine_warlock_06.skel",
+          "name": "spine_warlock_06/spine_warlock_06.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/spine_warlock_06/spine_warlock_06.atlas",
+          "name": "spine_warlock_06/spine_warlock_06.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/spine_warlock_06/spine_warlock_06.png",
+          "name": "spine_warlock_06/spine_warlock_06.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/bg-preview.webm",
+          "name": "bg-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/spine_warlock_06-2026-05-11T19-19-28-733Z/bg-preview.webp",
+          "name": "bg-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "spine_warlock_06.skel",
+      "atlas": "spine_warlock_06.atlas",
+      "textures": [
+        "spine_warlock_06.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "bg",
+        "main"
+      ],
+      "defaultAnimation": "bg",
+      "fileCount": 5,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "bg"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "spine_warlock_11-2026-05-11T19-16-56-383Z",
     "name": "spine_warlock_11",
     "updatedAt": "2026-05-11T19:17:20.081Z",
