@@ -1,5 +1,262 @@
 [
   {
+    "id": "vfx_glow-2026-05-13T09-36-25-939Z",
+    "title": "vfx_glow",
+    "publicOwnerId": "u_1isp6tb",
+    "ownerAnonId": "anon_h0oehi_motm1m",
+    "ownerAnonFingerprint": "h0oehi",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-13T09:36:25.939Z",
+    "skeleton": "vfx_glow.json",
+    "atlas": "vfx_glow.atlas",
+    "textures": [
+      "vfx_glow.png"
+    ],
+    "animations": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "files": [
+      "vfx_glow/vfx_glow.json",
+      "vfx_glow/vfx_glow.atlas",
+      "vfx_glow/vfx_glow.png",
+      "animation-preview.webm",
+      "animation-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/vfx_glow-2026-05-13T09-36-25-939Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+    "thumbnailPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+    "thumbnailPosterPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+    "previewWidth": 1246,
+    "previewHeight": 752,
+    "previewDuration": 1.333299994468689,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webm",
+    "webmPreviewPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "vfx_glow-2026-05-13T09-36-25-939Z",
+      "title": "vfx_glow",
+      "uploadedAt": "2026-05-13T09:36:25.939Z",
+      "proofPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_h0oehi_motm1m",
+        "anonymousFingerprint": "h0oehi",
+        "browserFingerprintSha256": "68ec51ffd2512afc1fc9cab857778e8e070fc5ef0e4085da0257a8605d5f8418",
+        "browserEnvironmentHashSha256": "aa42323cec73ecbae8e7d8274cdea3a9fe3313c46b5653eb3f0851322e0d6219",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1710,
+            "height": 1107,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Saigon",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/vfx_glow-2026-05-13T09-36-25-939Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:a569f3cfff06ab3943909bdd71b7622117cf6e511df219cdbaf0c954438634f5",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "animation-preview.webm",
+          "bytes": 325433,
+          "sha256": "9cb13c23d2cb2fecf5a76a5c158a16317995ed04fbace0c6a0b74dddabfb1490"
+        },
+        {
+          "name": "animation-preview.webp",
+          "bytes": 46880,
+          "sha256": "659b2c8283a773bf83d4245cf7976c48fa22989c11cfade32effde8fab429f58"
+        },
+        {
+          "name": "vfx_glow/vfx_glow.atlas",
+          "bytes": 142,
+          "sha256": "d39f45229f8d89c13c2d754cfe80ba5553c6a52d819366d97d9233d1c62479ee"
+        },
+        {
+          "name": "vfx_glow/vfx_glow.json",
+          "bytes": 4298,
+          "sha256": "2a09ff3b8b25a19fbf44c63d5e0be6f5521f5adb601286c38884dd6d36ea091f"
+        },
+        {
+          "name": "vfx_glow/vfx_glow.png",
+          "bytes": 27439,
+          "sha256": "d3be0c9fb5c9353d596407ea355795df2a10a5d5a932e564e3aad38d247e4ca7"
+        }
+      ],
+      "proofHash": "a569f3cfff06ab3943909bdd71b7622117cf6e511df219cdbaf0c954438634f5"
+    },
+    "sourceProofPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-13T09:36:41.151Z",
+      "entryId": "vfx_glow-2026-05-13T09-36-25-939Z",
+      "title": "vfx_glow",
+      "uploadedAt": "2026-05-13T09:36:25.939Z",
+      "sourceProofHash": "a569f3cfff06ab3943909bdd71b7622117cf6e511df219cdbaf0c954438634f5",
+      "sourceProofPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_h0oehi_motm1m",
+        "anonymousFingerprint": "h0oehi",
+        "browserFingerprintSha256": "68ec51ffd2512afc1fc9cab857778e8e070fc5ef0e4085da0257a8605d5f8418",
+        "browserEnvironmentHashSha256": "aa42323cec73ecbae8e7d8274cdea3a9fe3313c46b5653eb3f0851322e0d6219",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1710,
+            "height": 1107,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Saigon",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/vfx_glow-2026-05-13T09-36-25-939Z",
+        "files": [
+          {
+            "name": "vfx_glow/vfx_glow.json",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.json",
+            "bytes": 4298,
+            "sha256": "2a09ff3b8b25a19fbf44c63d5e0be6f5521f5adb601286c38884dd6d36ea091f",
+            "github": {
+              "contentSha": "7d52840a89af14a99c391b3d6bfdcb311e55c13a",
+              "commitSha": "0ca750c65f0faf8f49cb3131aa861f84cb2b1057",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0ca750c65f0faf8f49cb3131aa861f84cb2b1057",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.json?token=ACCECW4HO2J5GQLMI65DWWTKARDFU"
+            }
+          },
+          {
+            "name": "vfx_glow/vfx_glow.atlas",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.atlas",
+            "bytes": 142,
+            "sha256": "d39f45229f8d89c13c2d754cfe80ba5553c6a52d819366d97d9233d1c62479ee",
+            "github": {
+              "contentSha": "33793d24b0c51feba32887e699cda84e1f8f1407",
+              "commitSha": "ced3be905f96858102667c7813c29fa9ef4f4c95",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ced3be905f96858102667c7813c29fa9ef4f4c95",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.atlas?token=ACCECWZWGRXPDLBD4SVVZ5TKARDFW"
+            }
+          },
+          {
+            "name": "vfx_glow/vfx_glow.png",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.png",
+            "bytes": 27439,
+            "sha256": "d3be0c9fb5c9353d596407ea355795df2a10a5d5a932e564e3aad38d247e4ca7",
+            "github": {
+              "contentSha": "40f8059e15f2b5c0a4423eb5cca096559ad59589",
+              "commitSha": "696b0cd1b60245f7dcb7b2c4b6f1403f14cfb022",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/696b0cd1b60245f7dcb7b2c4b6f1403f14cfb022",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.png?token=ACCECW2TCCPYMSLYJCQI2WLKARDF2"
+            }
+          },
+          {
+            "name": "animation-preview.webm",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webm",
+            "bytes": 325433,
+            "sha256": "9cb13c23d2cb2fecf5a76a5c158a16317995ed04fbace0c6a0b74dddabfb1490",
+            "github": {
+              "contentSha": "5315ce4375cb8204eb3fdeb1e3cdd44d269573d4",
+              "commitSha": "274ad5a1556ceca94ed81b1b2bae7135898d6e55",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/274ad5a1556ceca94ed81b1b2bae7135898d6e55",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webm?token=ACCECW7HQOR5PF4US7SAQUDKARDGA"
+            }
+          },
+          {
+            "name": "animation-preview.webp",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+            "bytes": 46880,
+            "sha256": "659b2c8283a773bf83d4245cf7976c48fa22989c11cfade32effde8fab429f58",
+            "github": {
+              "contentSha": "6da012db8c1b8c6af8b86061379ed151c56603a7",
+              "commitSha": "5692ec6f28fe33cfaa74b94d5d91e61ab69a5c18",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5692ec6f28fe33cfaa74b94d5d91e61ab69a5c18",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp?token=ACCECW5RYD5YMBQVUQZBELLKARDGE"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+            "bytes": 2655,
+            "sha256": "d7fa48940d2e9d952be6b2d0180bd5ab7f1256c861380e5ad4f542e1530b863c",
+            "github": {
+              "contentSha": "6c20c4d28813f284d282419a022f133f5348ec3d",
+              "commitSha": "df81d80335aa75322f2ffd20b5915b670a9574b7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/df81d80335aa75322f2ffd20b5915b670a9574b7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json?token=ACCECW4TM62UNN2IWB7AJ5LKARDGI"
+            }
+          }
+        ],
+        "anchorPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/blockchain-anchor.json",
+        "anchorCommitSha": "4a3c212d27a1fe52da20212beb92b9b913875543",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/4a3c212d27a1fe52da20212beb92b9b913875543"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "dc1113ad7d2ca5a8903f0b38e85c859cdcbdd954c7c98d841080d9a289ae52cb",
+      "recommendedAnchorPayload": "sha256:dc1113ad7d2ca5a8903f0b38e85c859cdcbdd954c7c98d841080d9a289ae52cb",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0xdc1113ad7d2ca5a8903f0b38e85c859cdcbdd954c7c98d841080d9a289ae52cb",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "skeleton-2026-05-12T20-24-24-003Z",
     "title": "skeleton",
     "publicOwnerId": "u_12oc30x",
