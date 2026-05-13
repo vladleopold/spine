@@ -1,5 +1,149 @@
 [
   {
+    "id": "vfx_glow-2026-05-13T09-36-25-939Z",
+    "name": "vfx_glow",
+    "updatedAt": "2026-05-13T09:36:43.843Z",
+    "animation_asset": {
+      "id": "vfx_glow-2026-05-13T09-36-25-939Z",
+      "name": "vfx_glow",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "vfx",
+          "glow"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/vfx_glow-2026-05-13T09-36-25-939Z",
+      "manifestPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/manifest.json",
+      "files": [
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.json",
+          "name": "vfx_glow/vfx_glow.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.atlas",
+          "name": "vfx_glow/vfx_glow.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/vfx_glow/vfx_glow.png",
+          "name": "vfx_glow/vfx_glow.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webm",
+          "name": "animation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/vfx_glow-2026-05-13T09-36-25-939Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "vfx_glow.json",
+      "atlas": "vfx_glow.atlas",
+      "textures": [
+        "vfx_glow.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "vfx",
+        "glow"
+      ],
+      "confidence": 0.65,
+      "needsHumanReview": false
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "skeleton-2026-05-12T20-24-24-003Z",
     "name": "skeleton",
     "updatedAt": "2026-05-12T20:24:37.186Z",
