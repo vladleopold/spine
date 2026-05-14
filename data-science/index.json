@@ -1,5 +1,123 @@
 [
   {
+    "id": "anim3-2026-05-14T09-12-59-844Z",
+    "name": "anim3",
+    "updatedAt": "2026-05-14T09:13:36.233Z",
+    "animation_asset": {
+      "id": "anim3-2026-05-14T09-12-59-844Z",
+      "name": "anim3",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/anim3-2026-05-14T09-12-59-844Z",
+      "manifestPath": "library/anim3-2026-05-14T09-12-59-844Z/manifest.json",
+      "files": [
+        {
+          "path": "library/anim3-2026-05-14T09-12-59-844Z/fool_hv_1.json",
+          "name": "fool_hv_1.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/anim3-2026-05-14T09-12-59-844Z/fool_hv_1.atlas",
+          "name": "fool_hv_1.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/anim3-2026-05-14T09-12-59-844Z/fool_hv_1_fool_hv_1.png",
+          "name": "fool_hv_1_fool_hv_1.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/anim3-2026-05-14T09-12-59-844Z/fool_hv_1_fool_hv_12.png",
+          "name": "fool_hv_1_fool_hv_12.png",
+          "role": "texture",
+          "format": "png"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "fool_hv_1.json",
+      "atlas": "fool_hv_1.atlas",
+      "textures": [
+        "fool_hv_1_fool_hv_1.png",
+        "fool_hv_1_fool_hv_12.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 4,
+      "skeletonCount": 1,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "fool_banner-2026-05-14T08-28-48-152Z",
     "name": "fool_banner",
     "updatedAt": "2026-05-14T08:31:40.035Z",
