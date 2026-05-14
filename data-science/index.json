@@ -1,5 +1,147 @@
 [
   {
+    "id": "transition-2026-05-14T16-31-21-769Z",
+    "name": "transition",
+    "updatedAt": "2026-05-14T16:31:34.430Z",
+    "animation_asset": {
+      "id": "transition-2026-05-14T16-31-21-769Z",
+      "name": "transition",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "transition",
+      "skeleton_type": "ui",
+      "content_type": "transition",
+      "taxonomy": {
+        "category": "ui",
+        "class": "transition",
+        "type": "screen-transition",
+        "tags": [
+          "transition"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "screen-transition"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "pink",
+          "red",
+          "teal"
+        ],
+        "state": [
+          "default-pink"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/transition-2026-05-14T16-31-21-769Z",
+      "manifestPath": "library/transition-2026-05-14T16-31-21-769Z/manifest.json",
+      "files": [
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/transition/Transition.json",
+          "name": "transition/Transition.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/transition/beams_04.atlas",
+          "name": "transition/beams_04.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/transition/beams_04.png",
+          "name": "transition/beams_04.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/pink-preview.webm",
+          "name": "pink-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/pink-preview.webp",
+          "name": "pink-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/transition-2026-05-14T16-31-21-769Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Transition.json",
+      "atlas": "beams_04.atlas",
+      "textures": [
+        "beams_04.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "Pink",
+        "Red",
+        "Teal"
+      ],
+      "defaultAnimation": "Pink",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "transition"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "anim3-2026-05-14T09-12-59-844Z",
     "name": "anim3",
     "updatedAt": "2026-05-14T09:13:36.233Z",
