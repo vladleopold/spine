@@ -1,5 +1,642 @@
 [
   {
+    "id": "fool_banner-2026-05-14T08-28-48-152Z",
+    "name": "fool_banner",
+    "updatedAt": "2026-05-14T08:31:40.035Z",
+    "animation_asset": {
+      "id": "fool_banner-2026-05-14T08-28-48-152Z",
+      "name": "fool_banner",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "fx"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "fool_banner_in",
+          "fool_banner_loop",
+          "fool_banner_out"
+        ],
+        "state": [
+          "default-fool_banner_in"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/fool_banner-2026-05-14T08-28-48-152Z",
+      "manifestPath": "library/fool_banner-2026-05-14T08-28-48-152Z/manifest.json",
+      "files": [
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.json",
+          "name": "fool_banner/fool_banner.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.atlas",
+          "name": "fool_banner/fool_banner.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner.png",
+          "name": "fool_banner/fool_banner_fool_banner.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner2.png",
+          "name": "fool_banner/fool_banner_fool_banner2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner3.png",
+          "name": "fool_banner/fool_banner_fool_banner3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner4.png",
+          "name": "fool_banner/fool_banner_fool_banner4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner5.png",
+          "name": "fool_banner/fool_banner_fool_banner5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.json",
+          "name": "fool_basegame/fool_basegame.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.atlas",
+          "name": "fool_basegame/fool_basegame.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame.png",
+          "name": "fool_basegame/fool_basegame_fool_basegame.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame2.png",
+          "name": "fool_basegame/fool_basegame_fool_basegame2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame3.png",
+          "name": "fool_basegame/fool_basegame_fool_basegame3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame4.png",
+          "name": "fool_basegame/fool_basegame_fool_basegame4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.json",
+          "name": "fool_bigwin/fool_bigwin.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.atlas",
+          "name": "fool_bigwin/fool_bigwin.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin2.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin3.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin4.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin5.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin6.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin6.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin7.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin8.png",
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin8.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.json",
+          "name": "fool_character_basegame/fool_character_basegame.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.atlas",
+          "name": "fool_character_basegame/fool_character_basegame.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.json",
+          "name": "fool_character_freegame/fool_character_freegame.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.atlas",
+          "name": "fool_character_freegame/fool_character_freegame.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.json",
+          "name": "fool_demo_fx/fool_demo_fx.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.atlas",
+          "name": "fool_demo_fx/fool_demo_fx.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx_Material.png",
+          "name": "fool_demo_fx/fool_demo_fx_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.json",
+          "name": "fool_freegame/fool_freegame.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.atlas",
+          "name": "fool_freegame/fool_freegame.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame.png",
+          "name": "fool_freegame/fool_freegame_fool_freegame.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame2.png",
+          "name": "fool_freegame/fool_freegame_fool_freegame2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame3.png",
+          "name": "fool_freegame/fool_freegame_fool_freegame3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame4.png",
+          "name": "fool_freegame/fool_freegame_fool_freegame4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame5.png",
+          "name": "fool_freegame/fool_freegame_fool_freegame5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.json",
+          "name": "fool_hv_1/fool_hv_1.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.atlas",
+          "name": "fool_hv_1/fool_hv_1.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_1.png",
+          "name": "fool_hv_1/fool_hv_1_fool_hv_1.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_12.png",
+          "name": "fool_hv_1/fool_hv_1_fool_hv_12.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.json",
+          "name": "fool_hv_2/fool_hv_2.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.atlas",
+          "name": "fool_hv_2/fool_hv_2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2_Material.png",
+          "name": "fool_hv_2/fool_hv_2_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.json",
+          "name": "fool_hv_3/fool_hv_3.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.atlas",
+          "name": "fool_hv_3/fool_hv_3.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3_Material.png",
+          "name": "fool_hv_3/fool_hv_3_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.json",
+          "name": "fool_hv_4/fool_hv_4.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.atlas",
+          "name": "fool_hv_4/fool_hv_4.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4_Material.png",
+          "name": "fool_hv_4/fool_hv_4_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.json",
+          "name": "fool_lv_1/fool_lv_1.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.atlas",
+          "name": "fool_lv_1/fool_lv_1.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1_Material.png",
+          "name": "fool_lv_1/fool_lv_1_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.json",
+          "name": "fool_lv_2/fool_lv_2.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.atlas",
+          "name": "fool_lv_2/fool_lv_2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2_Material.png",
+          "name": "fool_lv_2/fool_lv_2_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.json",
+          "name": "fool_lv_3/fool_lv_3.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.atlas",
+          "name": "fool_lv_3/fool_lv_3.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3_Material.png",
+          "name": "fool_lv_3/fool_lv_3_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.json",
+          "name": "fool_pillar_effects/fool_pillar_effects.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.atlas",
+          "name": "fool_pillar_effects/fool_pillar_effects.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webm",
+          "name": "fool_banner_in-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp",
+          "name": "fool_banner_in-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fool_banner-2026-05-14T08-28-48-152Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "fool_banner.json",
+      "atlas": "fool_banner.atlas",
+      "textures": [
+        "fool_banner_fool_banner.png",
+        "fool_banner_fool_banner2.png",
+        "fool_banner_fool_banner3.png",
+        "fool_banner_fool_banner4.png",
+        "fool_banner_fool_banner5.png",
+        "fool_basegame_fool_basegame.png",
+        "fool_basegame_fool_basegame2.png",
+        "fool_basegame_fool_basegame3.png",
+        "fool_basegame_fool_basegame4.png",
+        "fool_bigwin_fool_bigwin.png",
+        "fool_bigwin_fool_bigwin2.png",
+        "fool_bigwin_fool_bigwin3.png",
+        "fool_bigwin_fool_bigwin4.png",
+        "fool_bigwin_fool_bigwin5.png",
+        "fool_bigwin_fool_bigwin6.png",
+        "fool_bigwin_fool_bigwin7.png",
+        "fool_bigwin_fool_bigwin8.png",
+        "fool_character_basegame_fool_character_basegame.png",
+        "fool_character_basegame_fool_character_basegame2.png",
+        "fool_character_basegame_fool_character_basegame3.png",
+        "fool_character_basegame_fool_character_basegame4.png",
+        "fool_character_basegame_fool_character_basegame5.png",
+        "fool_character_basegame_fool_character_basegame6.png",
+        "fool_character_basegame_fool_character_basegame7.png",
+        "fool_character_basegame_fool_character_basegame8.png",
+        "fool_character_freegame_fool_character_freegame.png",
+        "fool_character_freegame_fool_character_freegame2.png",
+        "fool_character_freegame_fool_character_freegame3.png",
+        "fool_character_freegame_fool_character_freegame4.png",
+        "fool_character_freegame_fool_character_freegame5.png",
+        "fool_demo_fx_Material.png",
+        "fool_freegame_fool_freegame.png",
+        "fool_freegame_fool_freegame2.png",
+        "fool_freegame_fool_freegame3.png",
+        "fool_freegame_fool_freegame4.png",
+        "fool_freegame_fool_freegame5.png",
+        "fool_hv_1_fool_hv_1.png",
+        "fool_hv_1_fool_hv_12.png",
+        "fool_hv_2_Material.png",
+        "fool_hv_3_Material.png",
+        "fool_hv_4_Material.png",
+        "fool_lv_1_Material.png",
+        "fool_lv_2_Material.png",
+        "fool_lv_3_Material.png",
+        "fool_pillar_effects_fool_pillar_effects.png",
+        "fool_pillar_effects_fool_pillar_effects2.png",
+        "fool_pillar_effects_fool_pillar_effects3.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "fool_banner_in",
+        "fool_banner_loop",
+        "fool_banner_out"
+      ],
+      "defaultAnimation": "fool_banner_in",
+      "fileCount": 81,
+      "skeletonCount": 17,
+      "atlasCount": 15,
+      "textureCount": 48
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "fx"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "speedline_effect-2026-05-14T08-27-10-956Z",
     "name": "speedline_effect",
     "updatedAt": "2026-05-14T08:27:45.110Z",
