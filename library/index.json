@@ -1,5 +1,384 @@
 [
   {
+    "id": "instruction-2026-05-14T07-09-57-306Z",
+    "title": "instruction",
+    "ownerEmail": "alla.kuzarina1993@gmail.com",
+    "ownerName": "Алла Кузарина",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocI5HFJR1KmBh8gz4ApzcMBAvuu-SzAkxGheM54dDmvGb-tJ3A=s96-c",
+    "publicOwnerId": "u_i2kv4p",
+    "ownerAnonId": "anon_1kaqmj9_1ta1udm",
+    "ownerAnonFingerprint": "1kaqmj9",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-14T07:09:57.306Z",
+    "skeleton": "instruction.json",
+    "atlas": "instruction.atlas",
+    "textures": [
+      "instruction.png",
+      "instruction2.png",
+      "transition.png",
+      "transition2.png",
+      "transition3.png"
+    ],
+    "animations": [
+      "idle_landscape",
+      "idle_portrait"
+    ],
+    "defaultAnimation": "idle_landscape",
+    "files": [
+      "instruction/instruction.json",
+      "instruction/instruction.atlas",
+      "instruction/instruction.png",
+      "instruction/instruction2.png",
+      "transition/transition.json",
+      "transition/transition.atlas",
+      "transition/transition.png",
+      "transition/transition2.png",
+      "transition/transition3.png",
+      "idle_landscape-preview.webm",
+      "idle_landscape-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/instruction-2026-05-14T07-09-57-306Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp?v=2026-05-14T07-09-57.306Z",
+    "thumbnailPath": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp?v=2026-05-14T07-09-57.306Z",
+    "thumbnailPosterPath": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp",
+    "previewWidth": 1280,
+    "previewHeight": 678,
+    "previewDuration": 2,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webm?v=2026-05-14T07-09-57.306Z",
+    "webmPreviewPath": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "instruction-2026-05-14T07-09-57-306Z",
+      "title": "instruction",
+      "uploadedAt": "2026-05-14T07:09:57.306Z",
+      "proofPath": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/source-proof.json?v=2026-05-14T07-09-57.306Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+        "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+        "anonymousFingerprint": "1kaqmj9",
+        "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+        "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk-UA",
+          "languages": [
+            "uk-UA",
+            "uk",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/instruction-2026-05-14T07-09-57-306Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:fc53654e161f461a9fbe9e79c38ad912058135b967ab3ad4b76f8b958e505409",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle_landscape-preview.webm",
+          "bytes": 494583,
+          "sha256": "9b34f2871a283b40c063bcac11f3ccf315980b70fe55119fb4868fca0bd0c5cb"
+        },
+        {
+          "name": "idle_landscape-preview.webp",
+          "bytes": 142632,
+          "sha256": "41f0dde2ae1c50acbe0260463176483a7e3511eadde41347c99729cf015bea8c"
+        },
+        {
+          "name": "instruction/instruction.atlas",
+          "bytes": 4760,
+          "sha256": "3c81dd7b8de1c18ab2c0a7fe8758f5ca37ca730dfa5c708ae5489ea8b573899d"
+        },
+        {
+          "name": "instruction/instruction.json",
+          "bytes": 60418,
+          "sha256": "f3037c07b33914fcc8c7a656f8560ba2a64f7e8cd1160e39cb6dce468a3fa4dc"
+        },
+        {
+          "name": "instruction/instruction.png",
+          "bytes": 966253,
+          "sha256": "8fccd33c5fe152cc51ec11b7bdf099aee47fdf50d0f34c8ef749845aafb4d4f2"
+        },
+        {
+          "name": "instruction/instruction2.png",
+          "bytes": 275443,
+          "sha256": "8860da4ddb6b534ffca6159f0bcef157d613b8ebef49cfc906a91fa94cf6aea0"
+        },
+        {
+          "name": "transition/transition.atlas",
+          "bytes": 11054,
+          "sha256": "66ff0add10cbee82424b38013ab6cb867d5decd32a037149ecb41bb8b547b710"
+        },
+        {
+          "name": "transition/transition.json",
+          "bytes": 144938,
+          "sha256": "02f94e09f4a1454b7704631b169f0896ecb4f94b4f0330027c9178efa6a1a22f"
+        },
+        {
+          "name": "transition/transition.png",
+          "bytes": 1083922,
+          "sha256": "bae7b90947d147e7536848ab01e3d17c86b706675f9c28bae9d9266bf811acaa"
+        },
+        {
+          "name": "transition/transition2.png",
+          "bytes": 1225815,
+          "sha256": "ccafe7386a398fdd95d75f9d4725edd5b7483283c4bc96cfc425fe60b0bb3bbb"
+        },
+        {
+          "name": "transition/transition3.png",
+          "bytes": 1235675,
+          "sha256": "c6151947b8c7072eae17b5559652c00ba3de726de564163eaac2d4e842d6d640"
+        }
+      ],
+      "proofHash": "fc53654e161f461a9fbe9e79c38ad912058135b967ab3ad4b76f8b958e505409"
+    },
+    "sourceProofPath": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/source-proof.json?v=2026-05-14T07-09-57.306Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-14T07:10:44.004Z",
+      "entryId": "instruction-2026-05-14T07-09-57-306Z",
+      "title": "instruction",
+      "uploadedAt": "2026-05-14T07:09:57.306Z",
+      "sourceProofHash": "fc53654e161f461a9fbe9e79c38ad912058135b967ab3ad4b76f8b958e505409",
+      "sourceProofPath": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/source-proof.json?v=2026-05-14T07-09-57.306Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+        "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+        "anonymousFingerprint": "1kaqmj9",
+        "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+        "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk-UA",
+          "languages": [
+            "uk-UA",
+            "uk",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/instruction-2026-05-14T07-09-57-306Z",
+        "files": [
+          {
+            "name": "instruction/instruction.json",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.json",
+            "bytes": 60418,
+            "sha256": "f3037c07b33914fcc8c7a656f8560ba2a64f7e8cd1160e39cb6dce468a3fa4dc",
+            "github": {
+              "contentSha": "af0ec51caf1b2821da08f1249c9331bc254bddad",
+              "commitSha": "72cc383274fdd0c0a74da354f26372898542531b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/72cc383274fdd0c0a74da354f26372898542531b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.json?token=ACCECW3562JPASF7EZEVSMDKAV2Z2"
+            }
+          },
+          {
+            "name": "instruction/instruction.atlas",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.atlas",
+            "bytes": 4760,
+            "sha256": "3c81dd7b8de1c18ab2c0a7fe8758f5ca37ca730dfa5c708ae5489ea8b573899d",
+            "github": {
+              "contentSha": "273d22ad1dfe89ec6e875040c50820efdb265089",
+              "commitSha": "334b42c716c9f98a14eb92c6d1e51a8179604ec5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/334b42c716c9f98a14eb92c6d1e51a8179604ec5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.atlas?token=ACCECW4IHJK6FBYGC7XTTZ3KAV2Z4"
+            }
+          },
+          {
+            "name": "instruction/instruction.png",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.png",
+            "bytes": 966253,
+            "sha256": "8fccd33c5fe152cc51ec11b7bdf099aee47fdf50d0f34c8ef749845aafb4d4f2",
+            "github": {
+              "contentSha": "41a491f115ae273a263bf5e703f768a4b0aee68c",
+              "commitSha": "c52ae4a131b2eebda20c4cb01575c6d4db1b8a9f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c52ae4a131b2eebda20c4cb01575c6d4db1b8a9f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.png?token=ACCECWYLKLZYRSQUB27QUS3KAV22A"
+            }
+          },
+          {
+            "name": "instruction/instruction2.png",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction2.png",
+            "bytes": 275443,
+            "sha256": "8860da4ddb6b534ffca6159f0bcef157d613b8ebef49cfc906a91fa94cf6aea0",
+            "github": {
+              "contentSha": "054d063ef5d432c90367f72795f77321edef42aa",
+              "commitSha": "cff5d29315cd371cbe54185443eab77f1a171c5e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cff5d29315cd371cbe54185443eab77f1a171c5e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction2.png?token=ACCECW4IM7DKFXFFK2VFGE3KAV22E"
+            }
+          },
+          {
+            "name": "transition/transition.json",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.json",
+            "bytes": 144938,
+            "sha256": "02f94e09f4a1454b7704631b169f0896ecb4f94b4f0330027c9178efa6a1a22f",
+            "github": {
+              "contentSha": "f43b4bcb3c14a7da6980130b27fb023f5f8b9663",
+              "commitSha": "79f901003e20b71b8485119a163cae3b8069ff6a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/79f901003e20b71b8485119a163cae3b8069ff6a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/transition/transition.json?token=ACCECWZXMIURUJKXCKOOR4TKAV22G"
+            }
+          },
+          {
+            "name": "transition/transition.atlas",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.atlas",
+            "bytes": 11054,
+            "sha256": "66ff0add10cbee82424b38013ab6cb867d5decd32a037149ecb41bb8b547b710",
+            "github": {
+              "contentSha": "a416b151533fd34ea92368b6dcc63b5ec8304b6f",
+              "commitSha": "ef52450d71c09768360c8693e7d8712857180c13",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ef52450d71c09768360c8693e7d8712857180c13",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/transition/transition.atlas?token=ACCECW752OU633M2IV3LSBTKAV22I"
+            }
+          },
+          {
+            "name": "transition/transition.png",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.png",
+            "bytes": 1083922,
+            "sha256": "bae7b90947d147e7536848ab01e3d17c86b706675f9c28bae9d9266bf811acaa",
+            "github": {
+              "contentSha": "98482fafbd16a6276c56373881e7074bf732cddf",
+              "commitSha": "b2fef81b2a46de734625d5d0f747fe6e3f7c1d87",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b2fef81b2a46de734625d5d0f747fe6e3f7c1d87",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/transition/transition.png?token=ACCECWZK3GDUNYMXCU5RXUDKAV22M"
+            }
+          },
+          {
+            "name": "transition/transition2.png",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition2.png",
+            "bytes": 1225815,
+            "sha256": "ccafe7386a398fdd95d75f9d4725edd5b7483283c4bc96cfc425fe60b0bb3bbb",
+            "github": {
+              "contentSha": "6fc5dd93663a7a50cb013a27354311b5a1a69bda",
+              "commitSha": "f8b9e96da8432d5b7bff498b56807a134a26890c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f8b9e96da8432d5b7bff498b56807a134a26890c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/transition/transition2.png?token=ACCECW6XZJG7432GQCUNEWLKAV22S"
+            }
+          },
+          {
+            "name": "transition/transition3.png",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition3.png",
+            "bytes": 1235675,
+            "sha256": "c6151947b8c7072eae17b5559652c00ba3de726de564163eaac2d4e842d6d640",
+            "github": {
+              "contentSha": "5eeefb7df52bc66d353e7e06f7c73a0f63a2a1bc",
+              "commitSha": "12a91ece102f3df8d8b4a5a63b9465c9bb6f2c03",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/12a91ece102f3df8d8b4a5a63b9465c9bb6f2c03",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/transition/transition3.png?token=ACCECW7PLK33A6JBIBI3ZMLKAV22W"
+            }
+          },
+          {
+            "name": "idle_landscape-preview.webm",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webm",
+            "bytes": 494583,
+            "sha256": "9b34f2871a283b40c063bcac11f3ccf315980b70fe55119fb4868fca0bd0c5cb",
+            "github": {
+              "contentSha": "868f505d8b9cbe76fe00a4ece8a0f1a128206d96",
+              "commitSha": "cc2e052482fe0b4f60643949d6dcbce7828a8b98",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cc2e052482fe0b4f60643949d6dcbce7828a8b98",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webm?token=ACCECW3EV6OF7O4CHZLV5HTKAV222"
+            }
+          },
+          {
+            "name": "idle_landscape-preview.webp",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp",
+            "bytes": 142632,
+            "sha256": "41f0dde2ae1c50acbe0260463176483a7e3511eadde41347c99729cf015bea8c",
+            "github": {
+              "contentSha": "c148460b0fe308fec11c4a067f4a73d44bd23bee",
+              "commitSha": "22d29b8916f479aa213d8b2e676a9ec30d4c76b1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/22d29b8916f479aa213d8b2e676a9ec30d4c76b1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp?token=ACCECW63CSVLVI2IOFSHRY3KAV224"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+            "bytes": 3835,
+            "sha256": "773b432a7efb030ebbf33f14ccd08c0e4d47e9db25244ac55d9d2bfd8bc9f321",
+            "github": {
+              "contentSha": "c36f988934e230fe4d76ae5acc1fd58cdc2c2ccb",
+              "commitSha": "fe4a4eb858462fc247dab32dc37dbbfc0b964bd5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fe4a4eb858462fc247dab32dc37dbbfc0b964bd5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/instruction-2026-05-14T07-09-57-306Z/source-proof.json?token=ACCECW43VPHPZ22VJUW2J2LKAV226"
+            }
+          }
+        ],
+        "anchorPath": "library/instruction-2026-05-14T07-09-57-306Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/blockchain-anchor.json",
+        "anchorCommitSha": "c62d71443a1c1121d2a4030bb95933b248064d6b",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/c62d71443a1c1121d2a4030bb95933b248064d6b"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "88b264a0ca287116152ef6dd73818bd1ac325f043dccca715e03878a6406057e",
+      "recommendedAnchorPayload": "sha256:88b264a0ca287116152ef6dd73818bd1ac325f043dccca715e03878a6406057e",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x88b264a0ca287116152ef6dd73818bd1ac325f043dccca715e03878a6406057e",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/instruction-2026-05-14T07-09-57-306Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "placeholder_3-2026-05-14T07-08-11-324Z",
     "title": "placeholder_3",
     "ownerEmail": "alla.kuzarina1993@gmail.com",
