@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-14T01:46:14.205Z",
+  "updatedAt": "2026-05-14T01:46:56.944Z",
+  "animation_asset": {
+    "id": "pickmode-2x-2026-05-14T01-46-14-205Z",
+    "name": "pickmode@2x",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fire",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "elemental",
+      "type": "fire",
+      "tags": [
+        "fire"
+      ]
+    },
+    "tags": {
+      "element": [
+        "fire"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "sup_expanding_idle",
+        "sup_expanding_idle_select",
+        "sup_expanding_start",
+        "sup_expanding_transition",
+        "sup_multiplier_idle",
+        "sup_multiplier_idle_select",
+        "sup_multiplier_start",
+        "sup_multiplier_transition",
+        "sup_mystery_idle",
+        "sup_mystery_idle_select",
+        "sup_mystery_start",
+        "sup_mystery_transition",
+        "s_expanding_idle",
+        "s_expanding_idle_select",
+        "s_expanding_start",
+        "s_expanding_transition",
+        "s_multiplier_idle",
+        "s_multiplier_idle_select",
+        "s_multiplier_start",
+        "s_multiplier_transition",
+        "s_mystery_idle",
+        "s_mystery_idle_select",
+        "s_mystery_start",
+        "s_mystery_transition",
+        "u_expanding_idle",
+        "u_expanding_idle_select",
+        "u_expanding_start",
+        "u_expanding_transition",
+        "u_multiplier_idle",
+        "u_multiplier_idle_select",
+        "u_multiplier_start",
+        "u_multiplier_transition",
+        "u_mystery_idle",
+        "u_mystery_idle_select",
+        "u_mystery_start",
+        "u_mystery_transition",
+        "z-map_transition",
+        "_temp_fireloop",
+        "_temp_lines",
+        "_temp_smoke",
+        "idle"
+      ],
+      "state": [
+        "default-sup_expanding_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/pickmode-2x-2026-05-14T01-46-14-205Z",
+    "manifestPath": "library/pickmode-2x-2026-05-14T01-46-14-205Z/manifest.json",
+    "files": [
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/pickmode@2x/pickmode@2x.json",
+        "name": "pickmode@2x/pickmode@2x.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/pickmode@2x/pickmode@2x.atlas",
+        "name": "pickmode@2x/pickmode@2x.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/pickmode@2x/pickmode@2x.webp",
+        "name": "pickmode@2x/pickmode@2x.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/pickmode@2x/pickmode@2x_2.webp",
+        "name": "pickmode@2x/pickmode@2x_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/sup_expanding_idle-preview.webm",
+        "name": "sup_expanding_idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/sup_expanding_idle-preview.webp",
+        "name": "sup_expanding_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/pickmode-2x-2026-05-14T01-46-14-205Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "pickmode@2x.json",
+    "atlas": "pickmode@2x.atlas",
+    "textures": [
+      "pickmode@2x.webp",
+      "pickmode@2x_2.webp"
+    ],
+    "animationCount": 40,
+    "animationNames": [
+      "SUP_expanding_idle",
+      "SUP_expanding_idle_select",
+      "SUP_expanding_start",
+      "SUP_expanding_transition",
+      "SUP_multiplier_idle",
+      "SUP_multiplier_idle_select",
+      "SUP_multiplier_start",
+      "SUP_multiplier_transition",
+      "SUP_mystery_idle",
+      "SUP_mystery_idle_select",
+      "SUP_mystery_start",
+      "SUP_mystery_transition",
+      "S_expanding_idle",
+      "S_expanding_idle_select",
+      "S_expanding_start",
+      "S_expanding_transition",
+      "S_multiplier_idle",
+      "S_multiplier_idle_select",
+      "S_multiplier_start",
+      "S_multiplier_transition",
+      "S_mystery_idle",
+      "S_mystery_idle_select",
+      "S_mystery_start",
+      "S_mystery_transition",
+      "U_expanding_idle",
+      "U_expanding_idle_select",
+      "U_expanding_start",
+      "U_expanding_transition",
+      "U_multiplier_idle",
+      "U_multiplier_idle_select",
+      "U_multiplier_start",
+      "U_multiplier_transition",
+      "U_mystery_idle",
+      "U_mystery_idle_select",
+      "U_mystery_start",
+      "U_mystery_transition",
+      "Z-map_transition",
+      "_TEMP_fireLoop",
+      "_TEMP_lines",
+      "_TEMP_smoke"
+    ],
+    "defaultAnimation": "SUP_expanding_idle",
+    "fileCount": 8,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "fire"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
