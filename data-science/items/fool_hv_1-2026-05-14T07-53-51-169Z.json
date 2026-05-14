@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-14T07:53:51.169Z",
+  "updatedAt": "2026-05-14T07:54:31.149Z",
+  "animation_asset": {
+    "id": "fool_hv_1-2026-05-14T07-53-51-169Z",
+    "name": "fool_hv_1",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "fool_hv_1"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-fool_hv_1"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/fool_hv_1-2026-05-14T07-53-51-169Z",
+    "manifestPath": "library/fool_hv_1-2026-05-14T07-53-51-169Z/manifest.json",
+    "files": [
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1/fool_hv_1.json",
+        "name": "fool_hv_1/fool_hv_1.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1/fool_hv_1.atlas",
+        "name": "fool_hv_1/fool_hv_1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1/fool_hv_1_fool_hv_1.png",
+        "name": "fool_hv_1/fool_hv_1_fool_hv_1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1/fool_hv_1_fool_hv_12.png",
+        "name": "fool_hv_1/fool_hv_1_fool_hv_12.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1-preview.webm",
+        "name": "fool_hv_1-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/fool_hv_1-preview.webp",
+        "name": "fool_hv_1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/fool_hv_1-2026-05-14T07-53-51-169Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "fool_hv_1.json",
+    "atlas": "fool_hv_1.atlas",
+    "textures": [
+      "fool_hv_1_fool_hv_1.png",
+      "fool_hv_1_fool_hv_12.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "fool_hv_1"
+    ],
+    "defaultAnimation": "fool_hv_1",
+    "fileCount": 8,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
