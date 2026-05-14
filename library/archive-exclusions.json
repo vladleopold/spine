@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-11T22:19:59.095Z",
+  "updatedAt": "2026-05-14T22:53:08.051Z",
   "updatedBy": "vladyslavchaplygin@gmail.com",
   "rules": [
     {
@@ -700,6 +700,55 @@
       "type": "regex",
       "field": "id",
       "pattern": "^bg_for_spine_05\\.04\\.2026_001-2026-05-04T20-27-23-524Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^fool_banner-2026-05-14T08-28-48-152Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^fool_demo_fx-2026-05-14T08-20-31-261Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^speedline_effect-2026-05-14T08-27-10-956Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^fool_hv_1-2026-05-14T07-53-51-169Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^placeholder_3-2026-05-14T07-08-11-324Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^fool_hv_1-2026-05-14T06-47-54-433Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^wheel_drops-2026-05-14T06-46-33-428Z$",
       "flags": "i"
     }
   ]
