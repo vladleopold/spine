@@ -1,5 +1,231 @@
 [
   {
+    "id": "wheel_drops-2026-05-14T06-46-33-428Z",
+    "name": "wheel_drops",
+    "updatedAt": "2026-05-14T06:47:09.248Z",
+    "animation_asset": {
+      "id": "wheel_drops-2026-05-14T06-46-33-428Z",
+      "name": "wheel_drops",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "2_1_in",
+          "2_1_loop",
+          "2_2_in",
+          "2_2_loop",
+          "3_1_in",
+          "3_1_loop",
+          "3_2_in",
+          "3_2_loop",
+          "3_3_in",
+          "3_3_loop",
+          "4_1_in",
+          "4_1_loop",
+          "4_2_in",
+          "4_2_loop",
+          "4_3_in",
+          "4_3_loop",
+          "4_4_in",
+          "4_4_loop",
+          "6_1_in",
+          "6_1_loop",
+          "6_2_in",
+          "6_2_loop",
+          "6_3_in",
+          "6_3_loop",
+          "6_4_in",
+          "6_4_loop",
+          "6_5_in",
+          "6_5_loop",
+          "6_6_in",
+          "6_6_loop",
+          "8_1_in",
+          "8_1_loop",
+          "8_2_in",
+          "8_2_loop",
+          "8_3_in",
+          "8_3_loop",
+          "8_4_in",
+          "8_4_loop",
+          "8_5_in",
+          "8_5_loop",
+          "8_6_in",
+          "8_6_loop",
+          "8_7_in",
+          "8_7_loop",
+          "8_8_in",
+          "8_8_loop"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-2_1_in"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/wheel_drops-2026-05-14T06-46-33-428Z",
+      "manifestPath": "library/wheel_drops-2026-05-14T06-46-33-428Z/manifest.json",
+      "files": [
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/wheel_drops/wheel_drops.json",
+          "name": "wheel_drops/wheel_drops.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/wheel_drops/wheel_drops.atlas",
+          "name": "wheel_drops/wheel_drops.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/wheel_drops/wheel_drops_Material.png",
+          "name": "wheel_drops/wheel_drops_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/2_1_in-preview.webm",
+          "name": "2_1_in-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/2_1_in-preview.webp",
+          "name": "2_1_in-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/wheel_drops-2026-05-14T06-46-33-428Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "wheel_drops.json",
+      "atlas": "wheel_drops.atlas",
+      "textures": [
+        "wheel_drops_Material.png"
+      ],
+      "animationCount": 46,
+      "animationNames": [
+        "2_1_in",
+        "2_1_loop",
+        "2_2_in",
+        "2_2_loop",
+        "3_1_in",
+        "3_1_loop",
+        "3_2_in",
+        "3_2_loop",
+        "3_3_in",
+        "3_3_loop",
+        "4_1_in",
+        "4_1_loop",
+        "4_2_in",
+        "4_2_loop",
+        "4_3_in",
+        "4_3_loop",
+        "4_4_in",
+        "4_4_loop",
+        "6_1_in",
+        "6_1_loop",
+        "6_2_in",
+        "6_2_loop",
+        "6_3_in",
+        "6_3_loop",
+        "6_4_in",
+        "6_4_loop",
+        "6_5_in",
+        "6_5_loop",
+        "6_6_in",
+        "6_6_loop",
+        "8_1_in",
+        "8_1_loop",
+        "8_2_in",
+        "8_2_loop",
+        "8_3_in",
+        "8_3_loop",
+        "8_4_in",
+        "8_4_loop",
+        "8_5_in",
+        "8_5_loop",
+        "8_6_in",
+        "8_6_loop",
+        "8_7_in",
+        "8_7_loop",
+        "8_8_in",
+        "8_8_loop"
+      ],
+      "defaultAnimation": "2_1_in",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "fool_hv_1-2026-05-14T03-23-38-897Z",
     "name": "fool_hv_1",
     "updatedAt": "2026-05-14T03:24:16.177Z",
