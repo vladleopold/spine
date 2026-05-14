@@ -1,5 +1,1651 @@
 [
   {
+    "id": "fool_banner-2026-05-14T08-28-48-152Z",
+    "title": "fool_banner",
+    "ownerEmail": "vladyslavchaplygin@gmail.com",
+    "ownerName": "Leopold",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
+    "publicOwnerId": "u_yois91",
+    "ownerAnonId": "anon_r5bhfn_158byx9",
+    "ownerAnonFingerprint": "r5bhfn",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-14T08:28:48.152Z",
+    "skeleton": "fool_banner.json",
+    "atlas": "fool_banner.atlas",
+    "textures": [
+      "fool_banner_fool_banner.png",
+      "fool_banner_fool_banner2.png",
+      "fool_banner_fool_banner3.png",
+      "fool_banner_fool_banner4.png",
+      "fool_banner_fool_banner5.png",
+      "fool_basegame_fool_basegame.png",
+      "fool_basegame_fool_basegame2.png",
+      "fool_basegame_fool_basegame3.png",
+      "fool_basegame_fool_basegame4.png",
+      "fool_bigwin_fool_bigwin.png",
+      "fool_bigwin_fool_bigwin2.png",
+      "fool_bigwin_fool_bigwin3.png",
+      "fool_bigwin_fool_bigwin4.png",
+      "fool_bigwin_fool_bigwin5.png",
+      "fool_bigwin_fool_bigwin6.png",
+      "fool_bigwin_fool_bigwin7.png",
+      "fool_bigwin_fool_bigwin8.png",
+      "fool_character_basegame_fool_character_basegame.png",
+      "fool_character_basegame_fool_character_basegame2.png",
+      "fool_character_basegame_fool_character_basegame3.png",
+      "fool_character_basegame_fool_character_basegame4.png",
+      "fool_character_basegame_fool_character_basegame5.png",
+      "fool_character_basegame_fool_character_basegame6.png",
+      "fool_character_basegame_fool_character_basegame7.png",
+      "fool_character_basegame_fool_character_basegame8.png",
+      "fool_character_freegame_fool_character_freegame.png",
+      "fool_character_freegame_fool_character_freegame2.png",
+      "fool_character_freegame_fool_character_freegame3.png",
+      "fool_character_freegame_fool_character_freegame4.png",
+      "fool_character_freegame_fool_character_freegame5.png",
+      "fool_demo_fx_Material.png",
+      "fool_freegame_fool_freegame.png",
+      "fool_freegame_fool_freegame2.png",
+      "fool_freegame_fool_freegame3.png",
+      "fool_freegame_fool_freegame4.png",
+      "fool_freegame_fool_freegame5.png",
+      "fool_hv_1_fool_hv_1.png",
+      "fool_hv_1_fool_hv_12.png",
+      "fool_hv_2_Material.png",
+      "fool_hv_3_Material.png",
+      "fool_hv_4_Material.png",
+      "fool_lv_1_Material.png",
+      "fool_lv_2_Material.png",
+      "fool_lv_3_Material.png",
+      "fool_pillar_effects_fool_pillar_effects.png",
+      "fool_pillar_effects_fool_pillar_effects2.png",
+      "fool_pillar_effects_fool_pillar_effects3.png"
+    ],
+    "animations": [
+      "fool_banner_in",
+      "fool_banner_loop",
+      "fool_banner_out"
+    ],
+    "defaultAnimation": "fool_banner_in",
+    "files": [
+      "fool_banner/fool_banner.json",
+      "fool_banner/fool_banner.atlas",
+      "fool_banner/fool_banner_fool_banner.png",
+      "fool_banner/fool_banner_fool_banner2.png",
+      "fool_banner/fool_banner_fool_banner3.png",
+      "fool_banner/fool_banner_fool_banner4.png",
+      "fool_banner/fool_banner_fool_banner5.png",
+      "fool_basegame/fool_basegame.json",
+      "fool_basegame/fool_basegame.atlas",
+      "fool_basegame/fool_basegame_fool_basegame.png",
+      "fool_basegame/fool_basegame_fool_basegame2.png",
+      "fool_basegame/fool_basegame_fool_basegame3.png",
+      "fool_basegame/fool_basegame_fool_basegame4.png",
+      "fool_bigwin/fool_bigwin.json",
+      "fool_bigwin/fool_bigwin.atlas",
+      "fool_bigwin/fool_bigwin_fool_bigwin.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin2.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin3.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin4.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin5.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin6.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin7.png",
+      "fool_bigwin/fool_bigwin_fool_bigwin8.png",
+      "fool_character_basegame/fool_character_basegame.json",
+      "fool_character_basegame/fool_character_basegame.atlas",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+      "fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+      "fool_character_freegame/fool_character_freegame.json",
+      "fool_character_freegame/fool_character_freegame.atlas",
+      "fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+      "fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+      "fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+      "fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+      "fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+      "fool_demo_fx/fool_demo_fx.json",
+      "fool_demo_fx/fool_demo_fx.atlas",
+      "fool_demo_fx/fool_demo_fx_Material.png",
+      "fool_freegame/fool_freegame.json",
+      "fool_freegame/fool_freegame.atlas",
+      "fool_freegame/fool_freegame_fool_freegame.png",
+      "fool_freegame/fool_freegame_fool_freegame2.png",
+      "fool_freegame/fool_freegame_fool_freegame3.png",
+      "fool_freegame/fool_freegame_fool_freegame4.png",
+      "fool_freegame/fool_freegame_fool_freegame5.png",
+      "fool_hv_1/fool_hv_1.json",
+      "fool_hv_1/fool_hv_1.atlas",
+      "fool_hv_1/fool_hv_1_fool_hv_1.png",
+      "fool_hv_1/fool_hv_1_fool_hv_12.png",
+      "fool_hv_2/fool_hv_2.json",
+      "fool_hv_2/fool_hv_2.atlas",
+      "fool_hv_2/fool_hv_2_Material.png",
+      "fool_hv_3/fool_hv_3.json",
+      "fool_hv_3/fool_hv_3.atlas",
+      "fool_hv_3/fool_hv_3_Material.png",
+      "fool_hv_4/fool_hv_4.json",
+      "fool_hv_4/fool_hv_4.atlas",
+      "fool_hv_4/fool_hv_4_Material.png",
+      "fool_lv_1/fool_lv_1.json",
+      "fool_lv_1/fool_lv_1.atlas",
+      "fool_lv_1/fool_lv_1_Material.png",
+      "fool_lv_2/fool_lv_2.json",
+      "fool_lv_2/fool_lv_2.atlas",
+      "fool_lv_2/fool_lv_2_Material.png",
+      "fool_lv_3/fool_lv_3.json",
+      "fool_lv_3/fool_lv_3.atlas",
+      "fool_lv_3/fool_lv_3_Material.png",
+      "fool_pillar_effects/fool_pillar_effects.json",
+      "fool_pillar_effects/fool_pillar_effects.atlas",
+      "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+      "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+      "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+      "fool_banner_in-preview.webm",
+      "fool_banner_in-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/fool_banner-2026-05-14T08-28-48-152Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp?v=2026-05-14T08-28-48.152Z",
+    "thumbnailPath": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp?v=2026-05-14T08-28-48.152Z",
+    "thumbnailPosterPath": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp",
+    "previewWidth": 680,
+    "previewHeight": 1280,
+    "previewDuration": 0.833299994468689,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webm?v=2026-05-14T08-28-48.152Z",
+    "webmPreviewPath": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "fool_banner-2026-05-14T08-28-48-152Z",
+      "title": "fool_banner",
+      "uploadedAt": "2026-05-14T08:28:48.152Z",
+      "proofPath": "library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json?v=2026-05-14T08-28-48.152Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/fool_banner-2026-05-14T08-28-48-152Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:3a6770bf9faa28ef3ff50dc7bbb08bb937270a1fc9587917d4ae0c8711c15325",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "fool_banner_in-preview.webm",
+          "bytes": 4301,
+          "sha256": "9993f939df964792a79115a21a724cc4c72a35721eb6b88a5e152181b061772f"
+        },
+        {
+          "name": "fool_banner_in-preview.webp",
+          "bytes": 2436,
+          "sha256": "7fcacd41d5d5cd3c99758891ba1e535ad8fd14fed7f154117799e28e1d3ed7f9"
+        },
+        {
+          "name": "fool_banner/fool_banner_fool_banner.png",
+          "bytes": 742270,
+          "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38"
+        },
+        {
+          "name": "fool_banner/fool_banner_fool_banner2.png",
+          "bytes": 742270,
+          "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38"
+        },
+        {
+          "name": "fool_banner/fool_banner_fool_banner3.png",
+          "bytes": 742270,
+          "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38"
+        },
+        {
+          "name": "fool_banner/fool_banner_fool_banner4.png",
+          "bytes": 742270,
+          "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38"
+        },
+        {
+          "name": "fool_banner/fool_banner_fool_banner5.png",
+          "bytes": 742270,
+          "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38"
+        },
+        {
+          "name": "fool_banner/fool_banner.atlas",
+          "bytes": 5115,
+          "sha256": "2bffe8b32d410ae3608664a22d5a93673517ef037d35b345efa5105aea4bd03f"
+        },
+        {
+          "name": "fool_banner/fool_banner.json",
+          "bytes": 56755,
+          "sha256": "89779173909dccd42ad7fbb073da6ae734ab704433b624567a6f4f0893c5fd20"
+        },
+        {
+          "name": "fool_basegame/fool_basegame_fool_basegame.png",
+          "bytes": 191417,
+          "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb"
+        },
+        {
+          "name": "fool_basegame/fool_basegame_fool_basegame2.png",
+          "bytes": 191417,
+          "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb"
+        },
+        {
+          "name": "fool_basegame/fool_basegame_fool_basegame3.png",
+          "bytes": 191417,
+          "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb"
+        },
+        {
+          "name": "fool_basegame/fool_basegame_fool_basegame4.png",
+          "bytes": 191417,
+          "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb"
+        },
+        {
+          "name": "fool_basegame/fool_basegame.atlas",
+          "bytes": 11886,
+          "sha256": "3a35843264b564fec35fb2a626e2d905ccb92f2902a2745ef96a96ae4b252467"
+        },
+        {
+          "name": "fool_basegame/fool_basegame.json",
+          "bytes": 55072,
+          "sha256": "d36c1d3b400b50dc4e9f91f251ae319170d69b8fa67aee6264eadaf3c133678d"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin2.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin3.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin4.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin5.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin6.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin7.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin_fool_bigwin8.png",
+          "bytes": 1273261,
+          "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin.atlas",
+          "bytes": 18396,
+          "sha256": "5a4fed11742ef6eab3d247cf298af693544fc09e86e72e27ec86ee35086e7e94"
+        },
+        {
+          "name": "fool_bigwin/fool_bigwin.json",
+          "bytes": 533712,
+          "sha256": "94321769951dcb86da7772966afd82a6dbcd411d5adc2b6d38f08939b3a32eb9"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+          "bytes": 2111479,
+          "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame.atlas",
+          "bytes": 38089,
+          "sha256": "629a305452f60821d8f358a3a2084bd44a164bbaba0cb703da74706e231899a1"
+        },
+        {
+          "name": "fool_character_basegame/fool_character_basegame.json",
+          "bytes": 481665,
+          "sha256": "15af32382fac2bb521e86d56b5e365fe02371cf6dd5977bbf45194657f892bc6"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+          "bytes": 8247,
+          "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+          "bytes": 8247,
+          "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+          "bytes": 8247,
+          "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+          "bytes": 8247,
+          "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+          "bytes": 8247,
+          "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame.atlas",
+          "bytes": 17206,
+          "sha256": "67a5a3ff663cac1a72d6216d79ee2057305468321672709485a86f1bb44df11a"
+        },
+        {
+          "name": "fool_character_freegame/fool_character_freegame.json",
+          "bytes": 414734,
+          "sha256": "f3a8d001b9a04753bf541f9a62ec807f3839ecda9c1a41f036974826767ea8d6"
+        },
+        {
+          "name": "fool_demo_fx/fool_demo_fx_Material.png",
+          "bytes": 1660638,
+          "sha256": "17cc94c0d9d287f2d6a35ad154023020a9fdba0462b282d396767e2d232bb2d0"
+        },
+        {
+          "name": "fool_demo_fx/fool_demo_fx.atlas",
+          "bytes": 3119,
+          "sha256": "e903c6f9006d5c270d475b493c4d1b6d3292c8c3a3c44079b5767414ca6b24ac"
+        },
+        {
+          "name": "fool_demo_fx/fool_demo_fx.json",
+          "bytes": 4778,
+          "sha256": "91fc930686c6c52f8860ae4504acb99d05e56ba26392486d58c9712105dd4c28"
+        },
+        {
+          "name": "fool_freegame/fool_freegame_fool_freegame.png",
+          "bytes": 2000837,
+          "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297"
+        },
+        {
+          "name": "fool_freegame/fool_freegame_fool_freegame2.png",
+          "bytes": 2000837,
+          "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297"
+        },
+        {
+          "name": "fool_freegame/fool_freegame_fool_freegame3.png",
+          "bytes": 2000837,
+          "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297"
+        },
+        {
+          "name": "fool_freegame/fool_freegame_fool_freegame4.png",
+          "bytes": 2000837,
+          "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297"
+        },
+        {
+          "name": "fool_freegame/fool_freegame_fool_freegame5.png",
+          "bytes": 2000837,
+          "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297"
+        },
+        {
+          "name": "fool_freegame/fool_freegame.atlas",
+          "bytes": 15712,
+          "sha256": "537067489deb2234218e1c5761bed8e8c4f89c1f03691acaaa546847f585ab81"
+        },
+        {
+          "name": "fool_freegame/fool_freegame.json",
+          "bytes": 228712,
+          "sha256": "090f2ad0ce4cc5000f7f48a4244bd07917fac90369ff46983d31e17386c41785"
+        },
+        {
+          "name": "fool_hv_1/fool_hv_1_fool_hv_1.png",
+          "bytes": 2744442,
+          "sha256": "11f717849dfffe4ce6bc0bc5fef48d2c2655fa6c40279cafcdf432bfb7825f0e"
+        },
+        {
+          "name": "fool_hv_1/fool_hv_1_fool_hv_12.png",
+          "bytes": 2744442,
+          "sha256": "11f717849dfffe4ce6bc0bc5fef48d2c2655fa6c40279cafcdf432bfb7825f0e"
+        },
+        {
+          "name": "fool_hv_1/fool_hv_1.atlas",
+          "bytes": 14504,
+          "sha256": "786806dd70229faa46df1ab3bd66489435b1988513cde0a09483443cef2f5b23"
+        },
+        {
+          "name": "fool_hv_1/fool_hv_1.json",
+          "bytes": 48851,
+          "sha256": "5fc8597b7ae84099ec9c69a0cde203653b04d618dee29aa2d75c76520836121e"
+        },
+        {
+          "name": "fool_hv_2/fool_hv_2_Material.png",
+          "bytes": 1032483,
+          "sha256": "96d00f260a8dc8e545832c62f92726f417efba1ad8993fa6f7ead1d7133070d0"
+        },
+        {
+          "name": "fool_hv_2/fool_hv_2.atlas",
+          "bytes": 6947,
+          "sha256": "81adc96457adcc5f23178282ac8f39cfdce46d1cfcdbcbafcb05003e9d51bd3b"
+        },
+        {
+          "name": "fool_hv_2/fool_hv_2.json",
+          "bytes": 120847,
+          "sha256": "4d30ba258bdcd62bc3df275d8b94ec07d0616add51ea8a4eb99bbe1a6327b559"
+        },
+        {
+          "name": "fool_hv_3/fool_hv_3_Material.png",
+          "bytes": 1180063,
+          "sha256": "09cc7b7372bdae82777ce6e93e3d8d6a270708d15e8355719b01c573ac7195e8"
+        },
+        {
+          "name": "fool_hv_3/fool_hv_3.atlas",
+          "bytes": 8432,
+          "sha256": "3400f454e864242bd5f2ae2db4b749553d90133190525577734392c88663e251"
+        },
+        {
+          "name": "fool_hv_3/fool_hv_3.json",
+          "bytes": 176357,
+          "sha256": "dd4f4525c055ce14d7c683305579ab29f2d443267a1fa7a205afa44e65e9b624"
+        },
+        {
+          "name": "fool_hv_4/fool_hv_4_Material.png",
+          "bytes": 979609,
+          "sha256": "3e5e96512a7aa236915a5125c597576728187bfaaa86ab9480abc1b58bc95a07"
+        },
+        {
+          "name": "fool_hv_4/fool_hv_4.atlas",
+          "bytes": 7832,
+          "sha256": "15588195da5b15b48da938484af98ae0541af3b5b0e61450da81ff50011aa60a"
+        },
+        {
+          "name": "fool_hv_4/fool_hv_4.json",
+          "bytes": 107029,
+          "sha256": "db8162dcbc26c763cc0dadf9ade93b40d057af17293327ab09c0f47545ab0728"
+        },
+        {
+          "name": "fool_lv_1/fool_lv_1_Material.png",
+          "bytes": 694550,
+          "sha256": "5bd09867d761a3f90964d8d335feafbab09e35072ab2a344534f8fc84d3dc130"
+        },
+        {
+          "name": "fool_lv_1/fool_lv_1.atlas",
+          "bytes": 5379,
+          "sha256": "9270bb8433b51cea8bf6eea9db519d2b8c9f5d3a4a6cbc1c186331caf7674c6a"
+        },
+        {
+          "name": "fool_lv_1/fool_lv_1.json",
+          "bytes": 40209,
+          "sha256": "7307e089c5910d996ecbaabae42089f5a0be33b40d2a5491da0845669860534d"
+        },
+        {
+          "name": "fool_lv_2/fool_lv_2_Material.png",
+          "bytes": 614310,
+          "sha256": "a2113cf64cdea9c91d8b4423b8353a29dfc2daeb3d10e980492d4ebeccee0ed0"
+        },
+        {
+          "name": "fool_lv_2/fool_lv_2.atlas",
+          "bytes": 5394,
+          "sha256": "c2aa95c4f45830580652f3f0723fec7b3a84b44ed13b98fd0631f4a2932481b7"
+        },
+        {
+          "name": "fool_lv_2/fool_lv_2.json",
+          "bytes": 46036,
+          "sha256": "246cc6d57b6e27c803ed50e88e9e75762b0680add6f7629dcb8493dfe2df715b"
+        },
+        {
+          "name": "fool_lv_3/fool_lv_3_Material.png",
+          "bytes": 658417,
+          "sha256": "808823049b78c8fd143091b58b86026d4a8e8b1122d91ab8cea3420c2106d23e"
+        },
+        {
+          "name": "fool_lv_3/fool_lv_3.atlas",
+          "bytes": 5393,
+          "sha256": "4bf10aa6ad63131349a9fb70a7915fbfb3cbed14b9eda8f4ee24bd34ef0627da"
+        },
+        {
+          "name": "fool_lv_3/fool_lv_3.json",
+          "bytes": 54561,
+          "sha256": "76375044d97328af760b0ef7dcd69a3492c7680c59ab519f66cec200082f8373"
+        },
+        {
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+          "bytes": 2233248,
+          "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808"
+        },
+        {
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+          "bytes": 2233248,
+          "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808"
+        },
+        {
+          "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+          "bytes": 2233248,
+          "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808"
+        },
+        {
+          "name": "fool_pillar_effects/fool_pillar_effects.atlas",
+          "bytes": 10784,
+          "sha256": "05be17beab3eaf4b71d873e4bab2881914fd0d6bdf927c401249545874dbe616"
+        },
+        {
+          "name": "fool_pillar_effects/fool_pillar_effects.json",
+          "bytes": 23199,
+          "sha256": "499efa7f163f2b9194482f20ad40014ee63972bda016d87aa26066f64a2e5a52"
+        }
+      ],
+      "proofHash": "3a6770bf9faa28ef3ff50dc7bbb08bb937270a1fc9587917d4ae0c8711c15325"
+    },
+    "sourceProofPath": "library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json?v=2026-05-14T08-28-48.152Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-14T08:31:36.651Z",
+      "entryId": "fool_banner-2026-05-14T08-28-48-152Z",
+      "title": "fool_banner",
+      "uploadedAt": "2026-05-14T08:28:48.152Z",
+      "sourceProofHash": "3a6770bf9faa28ef3ff50dc7bbb08bb937270a1fc9587917d4ae0c8711c15325",
+      "sourceProofPath": "library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json?v=2026-05-14T08-28-48.152Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/fool_banner-2026-05-14T08-28-48-152Z",
+        "files": [
+          {
+            "name": "fool_banner/fool_banner.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.json",
+            "bytes": 56755,
+            "sha256": "89779173909dccd42ad7fbb073da6ae734ab704433b624567a6f4f0893c5fd20",
+            "github": {
+              "contentSha": "e9ad685e5e483d5b8e28ab8f640fbb7df152b350",
+              "commitSha": "bae24796759088d51660ef21681a6c6e0ec116a4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bae24796759088d51660ef21681a6c6e0ec116a4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.json?token=ACCECWZAKHZFHCAWNJU4TBTKAWEBQ"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.atlas",
+            "bytes": 5115,
+            "sha256": "2bffe8b32d410ae3608664a22d5a93673517ef037d35b345efa5105aea4bd03f",
+            "github": {
+              "contentSha": "c5ce30dcfac78e8c2e2e455e8310f4c73f99d67e",
+              "commitSha": "ef241c3b438a16a53a5745f56248ea3206e5d794",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ef241c3b438a16a53a5745f56248ea3206e5d794",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner.atlas?token=ACCECW6IJKD7NIHLYZN6BVDKAWEBS"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner_fool_banner.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner.png",
+            "bytes": 742270,
+            "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38",
+            "github": {
+              "contentSha": "637fcfb42dce6d82327084a4e0cee1776df6f2bf",
+              "commitSha": "4d43ea3d57fa908c8e79e1966cfeb9df8f780c88",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4d43ea3d57fa908c8e79e1966cfeb9df8f780c88",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner.png?token=ACCECWZOL2HRUVHX5Z3R4NLKAWEBW"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner_fool_banner2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner2.png",
+            "bytes": 742270,
+            "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38",
+            "github": {
+              "contentSha": "637fcfb42dce6d82327084a4e0cee1776df6f2bf",
+              "commitSha": "a6514413e507d250f14fd1f71eee3544bb38a528",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a6514413e507d250f14fd1f71eee3544bb38a528",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner2.png?token=ACCECWYQIPK74PHIOMRZKRTKAWEB2"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner_fool_banner3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner3.png",
+            "bytes": 742270,
+            "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38",
+            "github": {
+              "contentSha": "637fcfb42dce6d82327084a4e0cee1776df6f2bf",
+              "commitSha": "c181e34db84bc551c9999bc488e32e77b3dc2280",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c181e34db84bc551c9999bc488e32e77b3dc2280",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner3.png?token=ACCECW2FTCYPQYNBPI5FSQLKAWEB6"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner_fool_banner4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner4.png",
+            "bytes": 742270,
+            "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38",
+            "github": {
+              "contentSha": "637fcfb42dce6d82327084a4e0cee1776df6f2bf",
+              "commitSha": "b478daadf7ccb42f1d542fae6e84989f0f762627",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b478daadf7ccb42f1d542fae6e84989f0f762627",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner4.png?token=ACCECW3K2ARSVFGHFILVXG3KAWECE"
+            }
+          },
+          {
+            "name": "fool_banner/fool_banner_fool_banner5.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner5.png",
+            "bytes": 742270,
+            "sha256": "7e0578274171bcaec47f39958571e17249d7dedac1b8b6c72fa5122c27b6ba38",
+            "github": {
+              "contentSha": "637fcfb42dce6d82327084a4e0cee1776df6f2bf",
+              "commitSha": "bb420df2419a10ccc5d928ecb62a55437735c96b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bb420df2419a10ccc5d928ecb62a55437735c96b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner/fool_banner_fool_banner5.png?token=ACCECWY62VSOTFSLZRNWUT3KAWECG"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.json",
+            "bytes": 55072,
+            "sha256": "d36c1d3b400b50dc4e9f91f251ae319170d69b8fa67aee6264eadaf3c133678d",
+            "github": {
+              "contentSha": "a1feda5be474ff97067ed3bcce833aaf847a9e85",
+              "commitSha": "6d9749a65429f249c14204614c29a73fecffcea1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6d9749a65429f249c14204614c29a73fecffcea1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.json?token=ACCECW6J442VGRAVQKFPDS3KAWECK"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.atlas",
+            "bytes": 11886,
+            "sha256": "3a35843264b564fec35fb2a626e2d905ccb92f2902a2745ef96a96ae4b252467",
+            "github": {
+              "contentSha": "cf7e97ebe2f800f67893f6407a17e503ae778c7a",
+              "commitSha": "0ea1d54d554ca379b27a4457d7d03e84260bba1c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0ea1d54d554ca379b27a4457d7d03e84260bba1c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame.atlas?token=ACCECW4KSI4I6TCLGD7EPLDKAWECM"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame_fool_basegame.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame.png",
+            "bytes": 191417,
+            "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb",
+            "github": {
+              "contentSha": "d9a9d12e6fd09d906e6211073aa6391750f953d6",
+              "commitSha": "25f267054966d36d676a0314662b023d6589e055",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/25f267054966d36d676a0314662b023d6589e055",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame.png?token=ACCECW2DHMMJXCWOULDW2LTKAWECO"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame_fool_basegame2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame2.png",
+            "bytes": 191417,
+            "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb",
+            "github": {
+              "contentSha": "d9a9d12e6fd09d906e6211073aa6391750f953d6",
+              "commitSha": "29e5519b4d9f7a7d69eaf7e1ead582f417214de2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/29e5519b4d9f7a7d69eaf7e1ead582f417214de2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame2.png?token=ACCECWZFX4KQWEFMSXDDA43KAWECQ"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame_fool_basegame3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame3.png",
+            "bytes": 191417,
+            "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb",
+            "github": {
+              "contentSha": "d9a9d12e6fd09d906e6211073aa6391750f953d6",
+              "commitSha": "9110ca0f962f3b04346c103886fc048303be467d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/9110ca0f962f3b04346c103886fc048303be467d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame3.png?token=ACCECW4KUGYXDJKGVPZI4NLKAWECS"
+            }
+          },
+          {
+            "name": "fool_basegame/fool_basegame_fool_basegame4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame4.png",
+            "bytes": 191417,
+            "sha256": "57692c1baae6923a1672228a2dd08494964d4198822a76bf3454f9423bc69cdb",
+            "github": {
+              "contentSha": "d9a9d12e6fd09d906e6211073aa6391750f953d6",
+              "commitSha": "68cf1d8229ce03baba5925e929b03afc9e737bcb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/68cf1d8229ce03baba5925e929b03afc9e737bcb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_basegame/fool_basegame_fool_basegame4.png?token=ACCECW362UHK7TFDAFWVJQTKAWECW"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.json",
+            "bytes": 533712,
+            "sha256": "94321769951dcb86da7772966afd82a6dbcd411d5adc2b6d38f08939b3a32eb9",
+            "github": {
+              "contentSha": "f0dbaeec010473f38b06e744f0c765eccfa1766d",
+              "commitSha": "439528cfcaa99aa237fc611f20e976a21a214e09",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/439528cfcaa99aa237fc611f20e976a21a214e09",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.json?token=ACCECW7FR43L5X6DVE3PJS3KAWECY"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.atlas",
+            "bytes": 18396,
+            "sha256": "5a4fed11742ef6eab3d247cf298af693544fc09e86e72e27ec86ee35086e7e94",
+            "github": {
+              "contentSha": "217d57f2ee17adcbc2aa963fce70faff8054076d",
+              "commitSha": "bf1466925d78ddb58e3116b52f0a73c14f87f581",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bf1466925d78ddb58e3116b52f0a73c14f87f581",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin.atlas?token=ACCECW3W6Z4Z4ENYYT2RGOTKAWEC2"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "866f130718edeb76661539e2e7e16fa2a6dddc3e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/866f130718edeb76661539e2e7e16fa2a6dddc3e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin.png?token=ACCECW4Q4QHCUB3LFX3R3ZDKAWEC6"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin2.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "555824d290cc52c6f964c2b7653ea83283808e3f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/555824d290cc52c6f964c2b7653ea83283808e3f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin2.png?token=ACCECW3Z4KWFWFA4N5EL5PLKAWEDE"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin3.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "74a928af57eecd4d061c3dc7d55c845603341717",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/74a928af57eecd4d061c3dc7d55c845603341717",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin3.png?token=ACCECW7PUBYQCLN2MVC5OZTKAWEDK"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin4.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "45220fe5f70e6f48869bfd7f63ac9d5be82ac9f8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/45220fe5f70e6f48869bfd7f63ac9d5be82ac9f8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin4.png?token=ACCECWZSJFDX4VNAWH6R7N3KAWEDO"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin5.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin5.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "a6361a5159bdeeb14e44e9edcb468f412d3bd724",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a6361a5159bdeeb14e44e9edcb468f412d3bd724",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin5.png?token=ACCECW4IJF555HXNKWF563DKAWEDQ"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin6.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin6.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "2e5d9832ec76723d19082cafa8993f296270eae8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2e5d9832ec76723d19082cafa8993f296270eae8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin6.png?token=ACCECW2QI4V67IBOJH5G4YDKAWEDW"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin7.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin7.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "98bd9164deb9215d732d5d479e267bdc7e084279",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/98bd9164deb9215d732d5d479e267bdc7e084279",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin7.png?token=ACCECW5ULF3P2OUMFC4BBBLKAWED4"
+            }
+          },
+          {
+            "name": "fool_bigwin/fool_bigwin_fool_bigwin8.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin8.png",
+            "bytes": 1273261,
+            "sha256": "568309b3856862310bfca4edf0b4f3d225386a9398ad3e4a2c9260d5c6af10ab",
+            "github": {
+              "contentSha": "e1b485f0c0692864b542945a007aa84ef4b6cf08",
+              "commitSha": "a27cb75cc4f94f08b35c338416a880a8f568fc98",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a27cb75cc4f94f08b35c338416a880a8f568fc98",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_bigwin/fool_bigwin_fool_bigwin8.png?token=ACCECW7LOBLJM3Y52GF3DR3KAWEEA"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.json",
+            "bytes": 481665,
+            "sha256": "15af32382fac2bb521e86d56b5e365fe02371cf6dd5977bbf45194657f892bc6",
+            "github": {
+              "contentSha": "1b934ff7fe55f7830b47e2307416f7dff66ae48c",
+              "commitSha": "5bcc34742494ff6c436cf8ffb2b21d82cf6f2560",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5bcc34742494ff6c436cf8ffb2b21d82cf6f2560",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.json?token=ACCECW7JTENXHZB2ESEFAYTKAWEEC"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.atlas",
+            "bytes": 38089,
+            "sha256": "629a305452f60821d8f358a3a2084bd44a164bbaba0cb703da74706e231899a1",
+            "github": {
+              "contentSha": "c618819ef3dd32e7f8b668128b7fe150076ce7df",
+              "commitSha": "1ea6fa11f97535b5533cc21b89f217f2946279e8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1ea6fa11f97535b5533cc21b89f217f2946279e8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame.atlas?token=ACCECWYWPFQKZIDN2XB4S2DKAWEEG"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "c0d3e18745ab3f8a57e599c93f634e1d5991c81c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c0d3e18745ab3f8a57e599c93f634e1d5991c81c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame.png?token=ACCECW2E7FAVUYZQTISRF4TKAWEEM"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame2.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "7d15de6688542fabc7905e2753f621c077289dfb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7d15de6688542fabc7905e2753f621c077289dfb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame2.png?token=ACCECW6IDZ772PEG5NDER6DKAWEEQ"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame3.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "f6a27ff3e955bd44dc39202699c2fa2378fa3ae9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f6a27ff3e955bd44dc39202699c2fa2378fa3ae9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame3.png?token=ACCECW4ITLFYSK7SG3LFMILKAWEEW"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame4.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "c482ab8fbd8fb6d90cd0760a9040468fbf48b4d3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c482ab8fbd8fb6d90cd0760a9040468fbf48b4d3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame4.png?token=ACCECW7RVDICWOEKYVVWG7DKAWEE2"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame5.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "efcf469b5c99ba827c441869dc87ee4d550dc315",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/efcf469b5c99ba827c441869dc87ee4d550dc315",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame5.png?token=ACCECWYUMBBAO352GGV6URLKAWEE6"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame6.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "8ee4ad3d8d0d82729f2cd2700bebe7c5ad562193",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8ee4ad3d8d0d82729f2cd2700bebe7c5ad562193",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame6.png?token=ACCECWZ4XTRU5YSANU3ZWNDKAWEFE"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame7.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "869f7fabfc6026e3b14979cf4d98ca429a5f7d5a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/869f7fabfc6026e3b14979cf4d98ca429a5f7d5a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame7.png?token=ACCECWZX2APDMSTBETTLPXDKAWEFK"
+            }
+          },
+          {
+            "name": "fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame8.png",
+            "bytes": 2111479,
+            "sha256": "e8a1bf4de1d2609c52024e237d24ad2a094b747f2ec55500e328153b3f2f0488",
+            "github": {
+              "contentSha": "21e6efb6da160f9d42c7a34ca15989920aa8d3c1",
+              "commitSha": "6aa881fe4d929cf802a8c80f4a343cdbcd861951",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6aa881fe4d929cf802a8c80f4a343cdbcd861951",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_basegame/fool_character_basegame_fool_character_basegame8.png?token=ACCECW6RXLSLBUNMSVPBN5LKAWEFQ"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.json",
+            "bytes": 414734,
+            "sha256": "f3a8d001b9a04753bf541f9a62ec807f3839ecda9c1a41f036974826767ea8d6",
+            "github": {
+              "contentSha": "124fcee79550a2e9f32ed2f1820ddc2c047dd683",
+              "commitSha": "84ff97972de4ca08fa83c4c10d86030a2616c966",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/84ff97972de4ca08fa83c4c10d86030a2616c966",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.json?token=ACCECW74IJ2VS6ESOLJYY3DKAWEFS"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.atlas",
+            "bytes": 17206,
+            "sha256": "67a5a3ff663cac1a72d6216d79ee2057305468321672709485a86f1bb44df11a",
+            "github": {
+              "contentSha": "54b2c7159dc38757e674b3dbbdb66832fedb52c1",
+              "commitSha": "a3f3f78749db4d24dc49c001c41ddc28f5f5a5d9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a3f3f78749db4d24dc49c001c41ddc28f5f5a5d9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame.atlas?token=ACCECW2DIXEFT2WBZMWXTXTKAWEFW"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame.png",
+            "bytes": 8247,
+            "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea",
+            "github": {
+              "contentSha": "0b95c6ee0718707f588ff60de0766f082492ae20",
+              "commitSha": "7c35ef947b46aa3ba8496d0ee14d10eff94aeafc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7c35ef947b46aa3ba8496d0ee14d10eff94aeafc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame.png?token=ACCECW4VETD3WGGO3BQQASTKAWEFY"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame2.png",
+            "bytes": 8247,
+            "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea",
+            "github": {
+              "contentSha": "0b95c6ee0718707f588ff60de0766f082492ae20",
+              "commitSha": "de4a6c411b9d8ae01973d9777caa1b0f984d9fd8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/de4a6c411b9d8ae01973d9777caa1b0f984d9fd8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame2.png?token=ACCECW55EZNGCY4GTNDUWYLKAWEF2"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame3.png",
+            "bytes": 8247,
+            "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea",
+            "github": {
+              "contentSha": "0b95c6ee0718707f588ff60de0766f082492ae20",
+              "commitSha": "f0c6014e739f1d3da3d5f012c4a315816aa1993a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f0c6014e739f1d3da3d5f012c4a315816aa1993a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame3.png?token=ACCECW5G77THDFKOA27EYDTKAWEF4"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame4.png",
+            "bytes": 8247,
+            "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea",
+            "github": {
+              "contentSha": "0b95c6ee0718707f588ff60de0766f082492ae20",
+              "commitSha": "2a3e913be238bc3fb5a2081dd5c292dc8ccd93c3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2a3e913be238bc3fb5a2081dd5c292dc8ccd93c3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame4.png?token=ACCECW4VZAVOACQJJFEZFYTKAWEF6"
+            }
+          },
+          {
+            "name": "fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame5.png",
+            "bytes": 8247,
+            "sha256": "b170dbb1408d0b1285a2386bd1f68df38a68926aef399f8836ec90e5e77bdbea",
+            "github": {
+              "contentSha": "0b95c6ee0718707f588ff60de0766f082492ae20",
+              "commitSha": "74540916a97643ffe401d71c1708ab9982aa9023",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/74540916a97643ffe401d71c1708ab9982aa9023",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_character_freegame/fool_character_freegame_fool_character_freegame5.png?token=ACCECWYVS7D3E7ONXH5ZOYDKAWEGA"
+            }
+          },
+          {
+            "name": "fool_demo_fx/fool_demo_fx.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.json",
+            "bytes": 4778,
+            "sha256": "91fc930686c6c52f8860ae4504acb99d05e56ba26392486d58c9712105dd4c28",
+            "github": {
+              "contentSha": "1a0e84f4d0ae0d516851f3e5746e7ec93b7d93ec",
+              "commitSha": "815b1d6894e76c3e0758d9e4f515fe4603da5352",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/815b1d6894e76c3e0758d9e4f515fe4603da5352",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.json?token=ACCECWZCVOD55FBENF5OHW3KAWEGE"
+            }
+          },
+          {
+            "name": "fool_demo_fx/fool_demo_fx.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.atlas",
+            "bytes": 3119,
+            "sha256": "e903c6f9006d5c270d475b493c4d1b6d3292c8c3a3c44079b5767414ca6b24ac",
+            "github": {
+              "contentSha": "c1904b00b78fc46f747c25887f74c60997ada150",
+              "commitSha": "a519073f8cf21263f5b4cf7f7bd9b4cf712c805e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a519073f8cf21263f5b4cf7f7bd9b4cf712c805e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx.atlas?token=ACCECW4CGOA3FHVRM2TP7ULKAWEGG"
+            }
+          },
+          {
+            "name": "fool_demo_fx/fool_demo_fx_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx_Material.png",
+            "bytes": 1660638,
+            "sha256": "17cc94c0d9d287f2d6a35ad154023020a9fdba0462b282d396767e2d232bb2d0",
+            "github": {
+              "contentSha": "0e8a85cf20ec6ea711a31d436f559a2373faa1f4",
+              "commitSha": "672d89fe8d52c439730092b6462d3d46f74f406f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/672d89fe8d52c439730092b6462d3d46f74f406f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_demo_fx/fool_demo_fx_Material.png?token=ACCECW7E3LXS73AGGCUWWEDKAWEGM"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.json",
+            "bytes": 228712,
+            "sha256": "090f2ad0ce4cc5000f7f48a4244bd07917fac90369ff46983d31e17386c41785",
+            "github": {
+              "contentSha": "ce79bda0ad4b0fd54c85b13924dc0c2a04a0088f",
+              "commitSha": "0ea6c00430b45201d4ed4ff0df07f7e8a4ed57af",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0ea6c00430b45201d4ed4ff0df07f7e8a4ed57af",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.json?token=ACCECWY6BAWONU4DJRDFT7TKAWEGO"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.atlas",
+            "bytes": 15712,
+            "sha256": "537067489deb2234218e1c5761bed8e8c4f89c1f03691acaaa546847f585ab81",
+            "github": {
+              "contentSha": "a24d1595d27735ae6f7087b2a8a80e896d9f11b6",
+              "commitSha": "6f7f074f84360b06bf919d001f7edc73b6ac7444",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6f7f074f84360b06bf919d001f7edc73b6ac7444",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame.atlas?token=ACCECWYYRKMCPTCDGX2AFQDKAWEGQ"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame_fool_freegame.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame.png",
+            "bytes": 2000837,
+            "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297",
+            "github": {
+              "contentSha": "cfce1b8e7d39a087dcbc2caf65bb1f589f24e329",
+              "commitSha": "3b6d745c4da68ba19f30996f01b7d591e7e46f7f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3b6d745c4da68ba19f30996f01b7d591e7e46f7f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame.png?token=ACCECW4YUS74MK7ZYGOSGBTKAWEGU"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame_fool_freegame2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame2.png",
+            "bytes": 2000837,
+            "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297",
+            "github": {
+              "contentSha": "cfce1b8e7d39a087dcbc2caf65bb1f589f24e329",
+              "commitSha": "87fb31c2533894fe59087fadd08337f7641b7382",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/87fb31c2533894fe59087fadd08337f7641b7382",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame2.png?token=ACCECWY2ICVGSNIKNVDWIRDKAWEGY"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame_fool_freegame3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame3.png",
+            "bytes": 2000837,
+            "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297",
+            "github": {
+              "contentSha": "cfce1b8e7d39a087dcbc2caf65bb1f589f24e329",
+              "commitSha": "05ba33ac1268f34bc21094986c7b0e1cacc20133",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/05ba33ac1268f34bc21094986c7b0e1cacc20133",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame3.png?token=ACCECW4GNNVOPUQD2LAXVXLKAWEG6"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame_fool_freegame4.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame4.png",
+            "bytes": 2000837,
+            "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297",
+            "github": {
+              "contentSha": "cfce1b8e7d39a087dcbc2caf65bb1f589f24e329",
+              "commitSha": "eac7c02bb0b688318c0e87c0ebe55ff01d10c23f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/eac7c02bb0b688318c0e87c0ebe55ff01d10c23f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame4.png?token=ACCECW34Q33YAD6IXAVLIZDKAWEHE"
+            }
+          },
+          {
+            "name": "fool_freegame/fool_freegame_fool_freegame5.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame5.png",
+            "bytes": 2000837,
+            "sha256": "b04438a093a05e9cbaee3ebd538c49288435c9c6b55372b8b246ebde38008297",
+            "github": {
+              "contentSha": "cfce1b8e7d39a087dcbc2caf65bb1f589f24e329",
+              "commitSha": "e80cfd26c13dcd8b9df68e10def2b743e840485b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e80cfd26c13dcd8b9df68e10def2b743e840485b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_freegame/fool_freegame_fool_freegame5.png?token=ACCECW5BQYJNEVV3YII3433KAWEHI"
+            }
+          },
+          {
+            "name": "fool_hv_1/fool_hv_1.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.json",
+            "bytes": 48851,
+            "sha256": "5fc8597b7ae84099ec9c69a0cde203653b04d618dee29aa2d75c76520836121e",
+            "github": {
+              "contentSha": "eef24a67ba8aff90afe7c8340d766a3d95221343",
+              "commitSha": "fef0f7f98b3b7de9b8b24d2e18c9f6919cda2367",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fef0f7f98b3b7de9b8b24d2e18c9f6919cda2367",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.json?token=ACCECW5NUDWLFBJDQ3UHSITKAWEHM"
+            }
+          },
+          {
+            "name": "fool_hv_1/fool_hv_1.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.atlas",
+            "bytes": 14504,
+            "sha256": "786806dd70229faa46df1ab3bd66489435b1988513cde0a09483443cef2f5b23",
+            "github": {
+              "contentSha": "9db1508dad10a64af2ec13e8a92af1ffc6b27ef5",
+              "commitSha": "0699a05ab32dc1cc4ca88fbee700e955d5373be6",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0699a05ab32dc1cc4ca88fbee700e955d5373be6",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1.atlas?token=ACCECW2VYSUZWHPT4EYSFSLKAWEHO"
+            }
+          },
+          {
+            "name": "fool_hv_1/fool_hv_1_fool_hv_1.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_1.png",
+            "bytes": 2744442,
+            "sha256": "11f717849dfffe4ce6bc0bc5fef48d2c2655fa6c40279cafcdf432bfb7825f0e",
+            "github": {
+              "contentSha": "fb8b731f9bdcd30c2d35693c93f94e607ac82454",
+              "commitSha": "245cfdb78bf8687664251b46054fb66a28b4202c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/245cfdb78bf8687664251b46054fb66a28b4202c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_1.png?token=ACCECW2JOSRCDUA3SZZWXZ3KAWEHS"
+            }
+          },
+          {
+            "name": "fool_hv_1/fool_hv_1_fool_hv_12.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_12.png",
+            "bytes": 2744442,
+            "sha256": "11f717849dfffe4ce6bc0bc5fef48d2c2655fa6c40279cafcdf432bfb7825f0e",
+            "github": {
+              "contentSha": "fb8b731f9bdcd30c2d35693c93f94e607ac82454",
+              "commitSha": "f948a6de5cd21725946206cb211a5922ab9cce08",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f948a6de5cd21725946206cb211a5922ab9cce08",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_1/fool_hv_1_fool_hv_12.png?token=ACCECW24Q4TSKNZWX5ZDKO3KAWEHY"
+            }
+          },
+          {
+            "name": "fool_hv_2/fool_hv_2.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.json",
+            "bytes": 120847,
+            "sha256": "4d30ba258bdcd62bc3df275d8b94ec07d0616add51ea8a4eb99bbe1a6327b559",
+            "github": {
+              "contentSha": "92a854a2ceae6620dd021bf39d709aa31e159cde",
+              "commitSha": "c1391feda7cc37600643732b7f67aebb53965875",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c1391feda7cc37600643732b7f67aebb53965875",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.json?token=ACCECW6HREOSRYD4JPSXKI3KAWEH4"
+            }
+          },
+          {
+            "name": "fool_hv_2/fool_hv_2.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.atlas",
+            "bytes": 6947,
+            "sha256": "81adc96457adcc5f23178282ac8f39cfdce46d1cfcdbcbafcb05003e9d51bd3b",
+            "github": {
+              "contentSha": "5e235f697383e48d2edf17d020482ce13d5ccb7d",
+              "commitSha": "48a17b07b681989538da547b4f70afaa81b766ea",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/48a17b07b681989538da547b4f70afaa81b766ea",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2.atlas?token=ACCECW4HJ7CZAYPWDJRMZT3KAWEH6"
+            }
+          },
+          {
+            "name": "fool_hv_2/fool_hv_2_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2_Material.png",
+            "bytes": 1032483,
+            "sha256": "96d00f260a8dc8e545832c62f92726f417efba1ad8993fa6f7ead1d7133070d0",
+            "github": {
+              "contentSha": "8dbbd1e57c7dc1f8b0ecf78fabc7c5ffe82c396a",
+              "commitSha": "41445ad5b48435b17b37c07c036609cb44b520cd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/41445ad5b48435b17b37c07c036609cb44b520cd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_2/fool_hv_2_Material.png?token=ACCECW6CGM2UF3LRXGUJZ7DKAWEIA"
+            }
+          },
+          {
+            "name": "fool_hv_3/fool_hv_3.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.json",
+            "bytes": 176357,
+            "sha256": "dd4f4525c055ce14d7c683305579ab29f2d443267a1fa7a205afa44e65e9b624",
+            "github": {
+              "contentSha": "5c9e88f78f74be6c74ac1f173ccdd7310facd6f4",
+              "commitSha": "6fc9937769c0161931b77abb8c1ae6616cc350e8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6fc9937769c0161931b77abb8c1ae6616cc350e8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.json?token=ACCECW3YWDUFNDRW3FKC4DTKAWEIE"
+            }
+          },
+          {
+            "name": "fool_hv_3/fool_hv_3.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.atlas",
+            "bytes": 8432,
+            "sha256": "3400f454e864242bd5f2ae2db4b749553d90133190525577734392c88663e251",
+            "github": {
+              "contentSha": "2888207581ad3a831d8228714d135ddbd4483b66",
+              "commitSha": "5ca53db149d9164aad836b7b2bf2d93dbb44c555",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5ca53db149d9164aad836b7b2bf2d93dbb44c555",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3.atlas?token=ACCECW4TE2R2UHUPESOYHR3KAWEIG"
+            }
+          },
+          {
+            "name": "fool_hv_3/fool_hv_3_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3_Material.png",
+            "bytes": 1180063,
+            "sha256": "09cc7b7372bdae82777ce6e93e3d8d6a270708d15e8355719b01c573ac7195e8",
+            "github": {
+              "contentSha": "1fc63538151c9335092e5535782b6038b49adec6",
+              "commitSha": "60b4349e8b5bf424503486186a2737b8df5daea7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/60b4349e8b5bf424503486186a2737b8df5daea7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_3/fool_hv_3_Material.png?token=ACCECW7RPDR5D4X37MC2TMLKAWEIK"
+            }
+          },
+          {
+            "name": "fool_hv_4/fool_hv_4.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.json",
+            "bytes": 107029,
+            "sha256": "db8162dcbc26c763cc0dadf9ade93b40d057af17293327ab09c0f47545ab0728",
+            "github": {
+              "contentSha": "9c52a6eef005a042456ec3cab7ca91a0893fcdc3",
+              "commitSha": "38f81c01963dc5ea08783380128307355a30748e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/38f81c01963dc5ea08783380128307355a30748e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.json?token=ACCECW7CHGIMMIQMM7D7PHTKAWEIM"
+            }
+          },
+          {
+            "name": "fool_hv_4/fool_hv_4.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.atlas",
+            "bytes": 7832,
+            "sha256": "15588195da5b15b48da938484af98ae0541af3b5b0e61450da81ff50011aa60a",
+            "github": {
+              "contentSha": "0eccc100aef7559e42324ce64a67c36aac3b81a3",
+              "commitSha": "cdb3dd791e89873ac36ecec9955708c6bb05d3be",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cdb3dd791e89873ac36ecec9955708c6bb05d3be",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4.atlas?token=ACCECW77L45O23NHDOE32BDKAWEIO"
+            }
+          },
+          {
+            "name": "fool_hv_4/fool_hv_4_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4_Material.png",
+            "bytes": 979609,
+            "sha256": "3e5e96512a7aa236915a5125c597576728187bfaaa86ab9480abc1b58bc95a07",
+            "github": {
+              "contentSha": "3e6b0ba429f23658720312e82b7b24c25d843646",
+              "commitSha": "e0db53ddb1eff2d72872a24970597222a23b7c23",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e0db53ddb1eff2d72872a24970597222a23b7c23",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_hv_4/fool_hv_4_Material.png?token=ACCECW7MMF3UAVVTVTDQCVLKAWEIS"
+            }
+          },
+          {
+            "name": "fool_lv_1/fool_lv_1.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.json",
+            "bytes": 40209,
+            "sha256": "7307e089c5910d996ecbaabae42089f5a0be33b40d2a5491da0845669860534d",
+            "github": {
+              "contentSha": "e037a8ff3977007baf719c254b6c2936e6a766dc",
+              "commitSha": "c60b6c07b05e7e489fe916bddac15de493660360",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c60b6c07b05e7e489fe916bddac15de493660360",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.json?token=ACCECWYLQRP4H2PWFHWDQALKAWEIU"
+            }
+          },
+          {
+            "name": "fool_lv_1/fool_lv_1.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.atlas",
+            "bytes": 5379,
+            "sha256": "9270bb8433b51cea8bf6eea9db519d2b8c9f5d3a4a6cbc1c186331caf7674c6a",
+            "github": {
+              "contentSha": "3695c5ccfba592988c1101212fa2e74b34b15489",
+              "commitSha": "4d162a9f4eff99a57c9e7961cf9492a726a6d005",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4d162a9f4eff99a57c9e7961cf9492a726a6d005",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1.atlas?token=ACCECW3GK2YG7WR7OL6MCK3KAWEIW"
+            }
+          },
+          {
+            "name": "fool_lv_1/fool_lv_1_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1_Material.png",
+            "bytes": 694550,
+            "sha256": "5bd09867d761a3f90964d8d335feafbab09e35072ab2a344534f8fc84d3dc130",
+            "github": {
+              "contentSha": "d88472ba32d48dd99d68a77958109182b5508eb4",
+              "commitSha": "ccaef156003c401c9305698f2fae83b8af4e4b00",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ccaef156003c401c9305698f2fae83b8af4e4b00",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_1/fool_lv_1_Material.png?token=ACCECWYYP4AIH6HNH7MZO7TKAWEI2"
+            }
+          },
+          {
+            "name": "fool_lv_2/fool_lv_2.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.json",
+            "bytes": 46036,
+            "sha256": "246cc6d57b6e27c803ed50e88e9e75762b0680add6f7629dcb8493dfe2df715b",
+            "github": {
+              "contentSha": "df2430dca4579532a1996ea7404b33700d3e1cb0",
+              "commitSha": "b7c304f451a1f2438ca6c6ff3cba0e2805c416a2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b7c304f451a1f2438ca6c6ff3cba0e2805c416a2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.json?token=ACCECW2PPZGEU6PBUPCPU5DKAWEI4"
+            }
+          },
+          {
+            "name": "fool_lv_2/fool_lv_2.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.atlas",
+            "bytes": 5394,
+            "sha256": "c2aa95c4f45830580652f3f0723fec7b3a84b44ed13b98fd0631f4a2932481b7",
+            "github": {
+              "contentSha": "84e79eda7422550c87005e0d68c665a4b560afbe",
+              "commitSha": "e4ce6de8e86daabac66af18a587c9d619fc012cd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e4ce6de8e86daabac66af18a587c9d619fc012cd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2.atlas?token=ACCECW5LP4CHVW2WULWLWOTKAWEJA"
+            }
+          },
+          {
+            "name": "fool_lv_2/fool_lv_2_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2_Material.png",
+            "bytes": 614310,
+            "sha256": "a2113cf64cdea9c91d8b4423b8353a29dfc2daeb3d10e980492d4ebeccee0ed0",
+            "github": {
+              "contentSha": "c8c6bdaa105ab1a6bfa7e2fc3803678d9ecec872",
+              "commitSha": "18a66f85e015afb641031af55c9333dd3eabe20b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/18a66f85e015afb641031af55c9333dd3eabe20b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_2/fool_lv_2_Material.png?token=ACCECW6ZF6ZD73QHLPMLONLKAWEJE"
+            }
+          },
+          {
+            "name": "fool_lv_3/fool_lv_3.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.json",
+            "bytes": 54561,
+            "sha256": "76375044d97328af760b0ef7dcd69a3492c7680c59ab519f66cec200082f8373",
+            "github": {
+              "contentSha": "22f8fc17d49a1abcb4647b912fd9639b1897417f",
+              "commitSha": "64983c8118dbf970b10cb115f934c433c7077821",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/64983c8118dbf970b10cb115f934c433c7077821",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.json?token=ACCECWY3E36ZXQWDPYFHA2DKAWEJG"
+            }
+          },
+          {
+            "name": "fool_lv_3/fool_lv_3.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.atlas",
+            "bytes": 5393,
+            "sha256": "4bf10aa6ad63131349a9fb70a7915fbfb3cbed14b9eda8f4ee24bd34ef0627da",
+            "github": {
+              "contentSha": "c60e0bbfdb19d1e72cd9852f6548dbf5e2a5005c",
+              "commitSha": "4b8b21703577b2755c3682daa68bda0c89c84c2a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4b8b21703577b2755c3682daa68bda0c89c84c2a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3.atlas?token=ACCECW45VZW2DNJG5JSHCIDKAWEJI"
+            }
+          },
+          {
+            "name": "fool_lv_3/fool_lv_3_Material.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3_Material.png",
+            "bytes": 658417,
+            "sha256": "808823049b78c8fd143091b58b86026d4a8e8b1122d91ab8cea3420c2106d23e",
+            "github": {
+              "contentSha": "f7eecfbce1745ca615093ee38e3421fee3d86cee",
+              "commitSha": "ca58f1ca85247c6a96d6e20aea91b46095bea5cb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ca58f1ca85247c6a96d6e20aea91b46095bea5cb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_lv_3/fool_lv_3_Material.png?token=ACCECW6F33JS4H3ZYHWJ6R3KAWEJO"
+            }
+          },
+          {
+            "name": "fool_pillar_effects/fool_pillar_effects.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.json",
+            "bytes": 23199,
+            "sha256": "499efa7f163f2b9194482f20ad40014ee63972bda016d87aa26066f64a2e5a52",
+            "github": {
+              "contentSha": "3279c254c92fe938fb304b203f9797547cfd73c8",
+              "commitSha": "cbf672fba96bf60f18d6d89c66296f3cfd1ae8e3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cbf672fba96bf60f18d6d89c66296f3cfd1ae8e3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.json?token=ACCECW2OLCEPF4HVOVPYZCLKAWEJQ"
+            }
+          },
+          {
+            "name": "fool_pillar_effects/fool_pillar_effects.atlas",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.atlas",
+            "bytes": 10784,
+            "sha256": "05be17beab3eaf4b71d873e4bab2881914fd0d6bdf927c401249545874dbe616",
+            "github": {
+              "contentSha": "7ab0d4d3c07d22f48b605f77bbf0da53980e1e40",
+              "commitSha": "b537a1910bbbe821962376523568fd0236564ddd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b537a1910bbbe821962376523568fd0236564ddd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects.atlas?token=ACCECW4IAIVAKNUGNRUMDI3KAWEJS"
+            }
+          },
+          {
+            "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png",
+            "bytes": 2233248,
+            "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808",
+            "github": {
+              "contentSha": "449769e72c8d48456b458bb8ddcc36f176f29173",
+              "commitSha": "db5c21386cddaaa094b44c2519862dc70053d535",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/db5c21386cddaaa094b44c2519862dc70053d535",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects.png?token=ACCECW77LZHNSFA4OVRFSC3KAWEJY"
+            }
+          },
+          {
+            "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png",
+            "bytes": 2233248,
+            "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808",
+            "github": {
+              "contentSha": "449769e72c8d48456b458bb8ddcc36f176f29173",
+              "commitSha": "3626d6555296535dfcb35d8d04ce3c9749591855",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3626d6555296535dfcb35d8d04ce3c9749591855",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects2.png?token=ACCECW43QDHJ7YX5BY2TKGDKAWEJ4"
+            }
+          },
+          {
+            "name": "fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png",
+            "bytes": 2233248,
+            "sha256": "0dd5d5d9731ab647502e9390f730afcb3ff64e595bcb8aa361cab688da462808",
+            "github": {
+              "contentSha": "449769e72c8d48456b458bb8ddcc36f176f29173",
+              "commitSha": "8d88f4732f569fb59bf86f578536296b9a26e92a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8d88f4732f569fb59bf86f578536296b9a26e92a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_pillar_effects/fool_pillar_effects_fool_pillar_effects3.png?token=ACCECW5WKKYZURPJLNLV5XLKAWEKC"
+            }
+          },
+          {
+            "name": "fool_banner_in-preview.webm",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webm",
+            "bytes": 4301,
+            "sha256": "9993f939df964792a79115a21a724cc4c72a35721eb6b88a5e152181b061772f",
+            "github": {
+              "contentSha": "8efcba45f7e6cd8f752e111c0caf3ed0ab358cc4",
+              "commitSha": "b6b9eeec044b0509c41b3f6f46f4fe478d85f68e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b6b9eeec044b0509c41b3f6f46f4fe478d85f68e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webm?token=ACCECW3PG6MHWAS4OUW5CU3KAWEKE"
+            }
+          },
+          {
+            "name": "fool_banner_in-preview.webp",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp",
+            "bytes": 2436,
+            "sha256": "7fcacd41d5d5cd3c99758891ba1e535ad8fd14fed7f154117799e28e1d3ed7f9",
+            "github": {
+              "contentSha": "6aef823327c6d97b145cab1989106cb24b6b238a",
+              "commitSha": "526a9f96c4ec00638f4bdb4853b661e34bd2ae80",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/526a9f96c4ec00638f4bdb4853b661e34bd2ae80",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/fool_banner_in-preview.webp?token=ACCECWZJDXZ7KPI6WXK5VV3KAWEKG"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json",
+            "bytes": 16236,
+            "sha256": "df7d6ef73634c4dca5d8f7438b4814c5e6143ee8073d8e38e72afe744eb73242",
+            "github": {
+              "contentSha": "23e456a32a1e0d36180165550675f2b17e16e106",
+              "commitSha": "2215f1b1fad8bccecaf992ab3f9b6b851764a0a9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2215f1b1fad8bccecaf992ab3f9b6b851764a0a9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/fool_banner-2026-05-14T08-28-48-152Z/source-proof.json?token=ACCECW3FSPMK2QQNWMVMOZTKAWEKI"
+            }
+          }
+        ],
+        "anchorPath": "library/fool_banner-2026-05-14T08-28-48-152Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/blockchain-anchor.json",
+        "anchorCommitSha": "5fcd2f0cb6172d924c7f055f6aeecf48a37166cb",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/5fcd2f0cb6172d924c7f055f6aeecf48a37166cb"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "e0cec5904cf77af270e911212f3481e9b3f1b99f9ab35b4e1716da08dcf2ed24",
+      "recommendedAnchorPayload": "sha256:e0cec5904cf77af270e911212f3481e9b3f1b99f9ab35b4e1716da08dcf2ed24",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0xe0cec5904cf77af270e911212f3481e9b3f1b99f9ab35b4e1716da08dcf2ed24",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/fool_banner-2026-05-14T08-28-48-152Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/fool_banner-2026-05-14T08-28-48-152Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "speedline_effect-2026-05-14T08-27-10-956Z",
     "title": "speedline_effect",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
