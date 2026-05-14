@@ -1,5 +1,189 @@
 [
   {
+    "id": "luckyboost-2x-2026-05-14T01-44-27-907Z",
+    "name": "luckyboost@2x",
+    "updatedAt": "2026-05-14T01:45:06.101Z",
+    "animation_asset": {
+      "id": "luckyboost-2x-2026-05-14T01-44-27-907Z",
+      "name": "luckyboost@2x",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "n_expandedwild",
+          "n_expandedwild_idle",
+          "n_multiplier",
+          "n_multiplier_idle",
+          "n_mystery",
+          "n_mystery_idle",
+          "p_n_mystery",
+          "p_n_mystery_idle",
+          "p_s_mystery",
+          "p_s_mystery_idle",
+          "p_u_mystery",
+          "p_u_mystery_idle",
+          "s_expandedwild",
+          "s_expandedwild_idle",
+          "s_multiplier",
+          "s_multiplier_idle",
+          "s_mystery",
+          "s_mystery_idle",
+          "u_expandedwild",
+          "u_expandedwild_idle",
+          "u_multiplier",
+          "u_multiplier_idle",
+          "u_mystery",
+          "u_mystery_idle",
+          "zlocky_text",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-n_expandedwild_idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/luckyboost-2x-2026-05-14T01-44-27-907Z",
+      "manifestPath": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/manifest.json",
+      "files": [
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/luckyboost@2x/luckyboost@2x.json",
+          "name": "luckyboost@2x/luckyboost@2x.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/luckyboost@2x/luckyboost@2x.atlas",
+          "name": "luckyboost@2x/luckyboost@2x.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/luckyboost@2x/luckyboost@2x.webp",
+          "name": "luckyboost@2x/luckyboost@2x.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/n_expandedwild_idle-preview.webm",
+          "name": "n_expandedwild_idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/n_expandedwild_idle-preview.webp",
+          "name": "n_expandedwild_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "luckyboost@2x.json",
+      "atlas": "luckyboost@2x.atlas",
+      "textures": [
+        "luckyboost@2x.webp"
+      ],
+      "animationCount": 25,
+      "animationNames": [
+        "N_expandedwild",
+        "N_expandedwild_idle",
+        "N_multiplier",
+        "N_multiplier_idle",
+        "N_mystery",
+        "N_mystery_idle",
+        "P_N_mystery",
+        "P_N_mystery_idle",
+        "P_S_mystery",
+        "P_S_mystery_idle",
+        "P_U_mystery",
+        "P_U_mystery_idle",
+        "S_expandedwild",
+        "S_expandedwild_idle",
+        "S_multiplier",
+        "S_multiplier_idle",
+        "S_mystery",
+        "S_mystery_idle",
+        "U_expandedwild",
+        "U_expandedwild_idle",
+        "U_multiplier",
+        "U_multiplier_idle",
+        "U_mystery",
+        "U_mystery_idle",
+        "zlocky_text"
+      ],
+      "defaultAnimation": "N_expandedwild_idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ct_wild-2026-05-14T01-40-13-500Z",
     "name": "ct_wild",
     "updatedAt": "2026-05-14T01:40:48.212Z",
