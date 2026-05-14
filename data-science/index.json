@@ -1,5 +1,146 @@
 [
   {
+    "id": "speedline_effect-2026-05-14T08-27-10-956Z",
+    "name": "speedline_effect",
+    "updatedAt": "2026-05-14T08:27:45.110Z",
+    "animation_asset": {
+      "id": "speedline_effect-2026-05-14T08-27-10-956Z",
+      "name": "speedline_effect",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "effect"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect"
+        ],
+        "animation_state": [
+          "speedline_effect"
+        ],
+        "state": [
+          "default-speedline_effect"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/speedline_effect-2026-05-14T08-27-10-956Z",
+      "manifestPath": "library/speedline_effect-2026-05-14T08-27-10-956Z/manifest.json",
+      "files": [
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect/speedline_effect.json",
+          "name": "speedline_effect/speedline_effect.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect/speedline_effect.atlas",
+          "name": "speedline_effect/speedline_effect.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect/speedline_effect_Material.png",
+          "name": "speedline_effect/speedline_effect_Material.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect-preview.webm",
+          "name": "speedline_effect-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect-preview.webp",
+          "name": "speedline_effect-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/speedline_effect-2026-05-14T08-27-10-956Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "speedline_effect.json",
+      "atlas": "speedline_effect.atlas",
+      "textures": [
+        "speedline_effect_Material.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "speedline_effect"
+      ],
+      "defaultAnimation": "speedline_effect",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "effect"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "fool_demo_fx-2026-05-14T08-20-31-261Z",
     "name": "fool_demo_fx",
     "updatedAt": "2026-05-14T08:21:07.699Z",
