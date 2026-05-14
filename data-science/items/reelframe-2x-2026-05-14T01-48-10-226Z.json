@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-14T01:48:10.226Z",
+  "updatedAt": "2026-05-14T01:48:43.366Z",
+  "animation_asset": {
+    "id": "reelframe-2x-2026-05-14T01-48-10-226Z",
+    "name": "reelframe@2x",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "reel"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "box_upgrade",
+        "m_reel",
+        "w_reel"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-box_upgrade"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/reelframe-2x-2026-05-14T01-48-10-226Z",
+    "manifestPath": "library/reelframe-2x-2026-05-14T01-48-10-226Z/manifest.json",
+    "files": [
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/reelframe@2x/reelframe@2x.json",
+        "name": "reelframe@2x/reelframe@2x.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/reelframe@2x/reelframe@2x.atlas",
+        "name": "reelframe@2x/reelframe@2x.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/reelframe@2x/reelframe@2x.webp",
+        "name": "reelframe@2x/reelframe@2x.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/box_upgrade-preview.webm",
+        "name": "box_upgrade-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/box_upgrade-preview.webp",
+        "name": "box_upgrade-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/reelframe-2x-2026-05-14T01-48-10-226Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "reelframe@2x.json",
+    "atlas": "reelframe@2x.atlas",
+    "textures": [
+      "reelframe@2x.webp"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "box_upgrade",
+      "M_reel",
+      "W_reel"
+    ],
+    "defaultAnimation": "box_upgrade",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "reel"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
