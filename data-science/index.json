@@ -1,5 +1,169 @@
 [
   {
+    "id": "610304_pjx_fight-2026-05-15T02-04-45-298Z",
+    "name": "610304_pjx_fight",
+    "updatedAt": "2026-05-15T02:04:59.508Z",
+    "animation_asset": {
+      "id": "610304_pjx_fight-2026-05-15T02-04-45-298Z",
+      "name": "610304_pjx_fight",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "animation_state": [
+          "born",
+          "die",
+          "freeze",
+          "hit",
+          "idle",
+          "skill1",
+          "skill2",
+          "sleep",
+          "unique"
+        ],
+        "state": [
+          "default-born"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z",
+      "manifestPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/manifest.json",
+      "files": [
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx_fight.skel",
+          "name": "610304_pjx_fight/610304_pjx_fight.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.atlas",
+          "name": "610304_pjx_fight/610304_pjx.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.png",
+          "name": "610304_pjx_fight/610304_pjx.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webm",
+          "name": "born-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp",
+          "name": "born-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "610304_pjx_fight.skel",
+      "atlas": "610304_pjx.atlas",
+      "textures": [
+        "610304_pjx.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "born",
+        "die",
+        "freeze",
+        "hit",
+        "idle",
+        "skill1",
+        "skill2",
+        "sleep",
+        "unique"
+      ],
+      "defaultAnimation": "born",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "670312_zsgfq_fight-2026-05-15T02-03-24-311Z",
     "name": "670312_zsgfq_fight",
     "updatedAt": "2026-05-15T02:03:37.793Z",
