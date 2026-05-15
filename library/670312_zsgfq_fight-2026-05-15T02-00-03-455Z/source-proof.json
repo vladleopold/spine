@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "670312_zsgfq_fight-2026-05-15T02-00-03-455Z",
+  "title": "670312_zsgfq_fight",
+  "uploadedAt": "2026-05-15T02:00:03.455Z",
+  "proofPath": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/source-proof.json?v=2026-05-15T02-00-03.455Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_zzibpo_3erhvu",
+    "anonymousFingerprint": "zzibpo",
+    "browserFingerprintSha256": "b1540f448376bc24e1aa5e0c7402d7a368626f63dc8dc2d6249958c0a90e2807",
+    "browserEnvironmentHashSha256": "e9cbf12a934ba454df623f71fa509d3f745c2c175f5589b28bf0409d837204c4",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 14,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1536,
+        "height": 960,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "America/Los_Angeles",
+      "timezoneOffset": 420,
+      "maxTouchPoints": 10,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:719577185a396fab4d82f451a2d34540b45ee95b8c4f5dea3d6f58c4dc3a63a4",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "670312_zsgfq_fight/670312_zsgfq_fight.skel",
+      "bytes": 408164,
+      "sha256": "cc2645edcf5aa684cda0bbc5773c02055d377fe6ace89eb5405df2e3cb97a9b6"
+    },
+    {
+      "name": "670312_zsgfq_fight/670312_zsgfq.atlas",
+      "bytes": 3034,
+      "sha256": "1a042e6a4dd6486bd16924ad975ab911c507fb433638cae6408228dffacb595e"
+    },
+    {
+      "name": "670312_zsgfq_fight/670312_zsgfq.png",
+      "bytes": 1646632,
+      "sha256": "fd5d3508a67943419da8ab7d03f24975b479c98aee0c6592c80fe0e73e7b1ce4"
+    },
+    {
+      "name": "die-preview.webm",
+      "bytes": 943596,
+      "sha256": "3b76e238c6b8e1537cd895097fa69c77e6a018e0d3ea81f8761097055c7629f9"
+    },
+    {
+      "name": "die-preview.webp",
+      "bytes": 81158,
+      "sha256": "b8c9e2d8aa0aa87eaa1806a770d185659c3636fb37d764550be8c414a3992fcd"
+    }
+  ],
+  "proofHash": "719577185a396fab4d82f451a2d34540b45ee95b8c4f5dea3d6f58c4dc3a63a4"
+}
