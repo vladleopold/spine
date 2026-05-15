@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-15T02:00:03.455Z",
+  "updatedAt": "2026-05-15T02:00:19.187Z",
+  "animation_asset": {
+    "id": "670312_zsgfq_fight-2026-05-15T02-00-03-455Z",
+    "name": "670312_zsgfq_fight",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "die",
+        "freeze",
+        "hit",
+        "idle",
+        "skill1",
+        "skill2",
+        "sleep",
+        "unique1",
+        "unique2",
+        "unique3"
+      ],
+      "state": [
+        "default-die"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z",
+    "manifestPath": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/manifest.json",
+    "files": [
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/670312_zsgfq_fight/670312_zsgfq_fight.skel",
+        "name": "670312_zsgfq_fight/670312_zsgfq_fight.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/670312_zsgfq_fight/670312_zsgfq.atlas",
+        "name": "670312_zsgfq_fight/670312_zsgfq.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/670312_zsgfq_fight/670312_zsgfq.png",
+        "name": "670312_zsgfq_fight/670312_zsgfq.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/die-preview.webm",
+        "name": "die-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/die-preview.webp",
+        "name": "die-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/670312_zsgfq_fight-2026-05-15T02-00-03-455Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "670312_zsgfq_fight.skel",
+    "atlas": "670312_zsgfq.atlas",
+    "textures": [
+      "670312_zsgfq.png"
+    ],
+    "animationCount": 10,
+    "animationNames": [
+      "die",
+      "freeze",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "sleep",
+      "unique1",
+      "unique2",
+      "unique3"
+    ],
+    "defaultAnimation": "die",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
