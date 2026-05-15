@@ -1,5 +1,270 @@
 [
   {
+    "id": "610304_pjx_fight-2026-05-15T02-04-45-298Z",
+    "title": "610304_pjx_fight",
+    "publicOwnerId": "u_172vjhs",
+    "ownerAnonId": "anon_zzibpo_3erhvu",
+    "ownerAnonFingerprint": "zzibpo",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-15T02:04:45.298Z",
+    "skeleton": "610304_pjx_fight.skel",
+    "atlas": "610304_pjx.atlas",
+    "textures": [
+      "610304_pjx.png"
+    ],
+    "animations": [
+      "born",
+      "die",
+      "freeze",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "sleep",
+      "unique"
+    ],
+    "defaultAnimation": "born",
+    "files": [
+      "610304_pjx_fight/610304_pjx_fight.skel",
+      "610304_pjx_fight/610304_pjx.atlas",
+      "610304_pjx_fight/610304_pjx.png",
+      "born-preview.webm",
+      "born-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp?v=2026-05-15T02-04-45.298Z",
+    "thumbnailPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp?v=2026-05-15T02-04-45.298Z",
+    "thumbnailPosterPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp",
+    "previewWidth": 1218,
+    "previewHeight": 720,
+    "previewDuration": 3.766666889190674,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webm?v=2026-05-15T02-04-45.298Z",
+    "webmPreviewPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "610304_pjx_fight-2026-05-15T02-04-45-298Z",
+      "title": "610304_pjx_fight",
+      "uploadedAt": "2026-05-15T02:04:45.298Z",
+      "proofPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json?v=2026-05-15T02-04-45.298Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_zzibpo_3erhvu",
+        "anonymousFingerprint": "zzibpo",
+        "browserFingerprintSha256": "b1540f448376bc24e1aa5e0c7402d7a368626f63dc8dc2d6249958c0a90e2807",
+        "browserEnvironmentHashSha256": "0ba4ec973fe390bc7bca8a6824d959d3a238d36a89437aa8e0f09069f4bf9332",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1536,
+            "height": 960,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Los_Angeles",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 10,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:9a0323c8e7f3ecc8b2ab15eb7cdd4d2a716de7327c67d00496b7f1e4235c4844",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "610304_pjx_fight/610304_pjx_fight.skel",
+          "bytes": 195569,
+          "sha256": "e512e0c7650170b720f14db6fb56fe503a6bbe6322583c6f34599f1fa3b28b0d"
+        },
+        {
+          "name": "610304_pjx_fight/610304_pjx.atlas",
+          "bytes": 1518,
+          "sha256": "4296cd1eea3171851c9fbbcaa4f566d84acbe497c49566fc4cd04fe4fe38a6df"
+        },
+        {
+          "name": "610304_pjx_fight/610304_pjx.png",
+          "bytes": 708549,
+          "sha256": "f738d67b28ae45f9619f01a28edafe61fc9b2130246eebf9109c6fb5ac2d5224"
+        },
+        {
+          "name": "born-preview.webm",
+          "bytes": 1367172,
+          "sha256": "372e07e656ada7f105a60a5e8aa8e26fe9b2040a82076ab5b91c9a9a6036ef4c"
+        },
+        {
+          "name": "born-preview.webp",
+          "bytes": 17676,
+          "sha256": "5b6a5c0c590472e25c3ae2c5877d28ffbf198c385358f149ebce170da94aeca3"
+        }
+      ],
+      "proofHash": "9a0323c8e7f3ecc8b2ab15eb7cdd4d2a716de7327c67d00496b7f1e4235c4844"
+    },
+    "sourceProofPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json?v=2026-05-15T02-04-45.298Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-15T02:04:57.289Z",
+      "entryId": "610304_pjx_fight-2026-05-15T02-04-45-298Z",
+      "title": "610304_pjx_fight",
+      "uploadedAt": "2026-05-15T02:04:45.298Z",
+      "sourceProofHash": "9a0323c8e7f3ecc8b2ab15eb7cdd4d2a716de7327c67d00496b7f1e4235c4844",
+      "sourceProofPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json?v=2026-05-15T02-04-45.298Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_zzibpo_3erhvu",
+        "anonymousFingerprint": "zzibpo",
+        "browserFingerprintSha256": "b1540f448376bc24e1aa5e0c7402d7a368626f63dc8dc2d6249958c0a90e2807",
+        "browserEnvironmentHashSha256": "0ba4ec973fe390bc7bca8a6824d959d3a238d36a89437aa8e0f09069f4bf9332",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1536,
+            "height": 960,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Los_Angeles",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 10,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z",
+        "files": [
+          {
+            "name": "610304_pjx_fight/610304_pjx_fight.skel",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx_fight.skel",
+            "bytes": 195569,
+            "sha256": "e512e0c7650170b720f14db6fb56fe503a6bbe6322583c6f34599f1fa3b28b0d",
+            "github": {
+              "contentSha": "264280289e6de79eb89f5ed4a13c5552b75033dc",
+              "commitSha": "ea19aa5c57a669bd63be352fa204375ec77395de",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ea19aa5c57a669bd63be352fa204375ec77395de",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx_fight.skel?token=ACCECW4GV3SLMKWFSO5CWTLKAZ7X4"
+            }
+          },
+          {
+            "name": "610304_pjx_fight/610304_pjx.atlas",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.atlas",
+            "bytes": 1518,
+            "sha256": "4296cd1eea3171851c9fbbcaa4f566d84acbe497c49566fc4cd04fe4fe38a6df",
+            "github": {
+              "contentSha": "3f4aa231d92f9fb43961ca3f1dfbe8d0d7d321ad",
+              "commitSha": "06c3c8b7deb1fe442327c1e60915c1afcf25da1e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/06c3c8b7deb1fe442327c1e60915c1afcf25da1e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.atlas?token=ACCECW536CPVLCJKVIJE6FLKAZ7X6"
+            }
+          },
+          {
+            "name": "610304_pjx_fight/610304_pjx.png",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.png",
+            "bytes": 708549,
+            "sha256": "f738d67b28ae45f9619f01a28edafe61fc9b2130246eebf9109c6fb5ac2d5224",
+            "github": {
+              "contentSha": "4fb17c38c59aa63757cd3605c06d712c49841a5f",
+              "commitSha": "dab08b305301811452a576cccc92de8cef9b735f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/dab08b305301811452a576cccc92de8cef9b735f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/610304_pjx_fight/610304_pjx.png?token=ACCECW4CIL6AHJKDSSMP6W3KAZ7YC"
+            }
+          },
+          {
+            "name": "born-preview.webm",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webm",
+            "bytes": 1367172,
+            "sha256": "372e07e656ada7f105a60a5e8aa8e26fe9b2040a82076ab5b91c9a9a6036ef4c",
+            "github": {
+              "contentSha": "6cd14290e20efd5e9fa0709328f37a2a252831f5",
+              "commitSha": "32bd51d72f1a19f5dbfc8bf8a198a658d57d3d08",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/32bd51d72f1a19f5dbfc8bf8a198a658d57d3d08",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webm?token=ACCECW6RJVPEX65TSLMMNNDKAZ7YG"
+            }
+          },
+          {
+            "name": "born-preview.webp",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp",
+            "bytes": 17676,
+            "sha256": "5b6a5c0c590472e25c3ae2c5877d28ffbf198c385358f149ebce170da94aeca3",
+            "github": {
+              "contentSha": "d604dbc39c626f552aa4fbd46415eef11d0d57c3",
+              "commitSha": "af8fb5c6e44454250d865337f90d3444a21a0910",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/af8fb5c6e44454250d865337f90d3444a21a0910",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/born-preview.webp?token=ACCECW4PVI4XXFXCZGOEWZTKAZ7YI"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json",
+            "bytes": 2752,
+            "sha256": "62a4d2a34bbadde0fe8cf21df56bd6e68e757beccedd574d0182021abdb8f3c3",
+            "github": {
+              "contentSha": "98b06fa7437a0bbf009c35e429d5d503d35c20e8",
+              "commitSha": "47fc29e393d534ce05f4a202b0f3d2756e09a92e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/47fc29e393d534ce05f4a202b0f3d2756e09a92e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/source-proof.json?token=ACCECW52NLQQZZ5LK2MOF23KAZ7YK"
+            }
+          }
+        ],
+        "anchorPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/blockchain-anchor.json",
+        "anchorCommitSha": "3db91c5091d884c405a19e4d87a9ab52806949ef",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/3db91c5091d884c405a19e4d87a9ab52806949ef"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "1fcb4ddc9d0910119ac2fa14c42d48db27cce3bc91a435c4c55c5983461ae2a0",
+      "recommendedAnchorPayload": "sha256:1fcb4ddc9d0910119ac2fa14c42d48db27cce3bc91a435c4c55c5983461ae2a0",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x1fcb4ddc9d0910119ac2fa14c42d48db27cce3bc91a435c4c55c5983461ae2a0",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/610304_pjx_fight-2026-05-15T02-04-45-298Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/610304_pjx_fight-2026-05-15T02-04-45-298Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "anim3-2026-05-14T09-12-59-844Z",
     "title": "anim3",
     "ownerName": "Anonymous",
