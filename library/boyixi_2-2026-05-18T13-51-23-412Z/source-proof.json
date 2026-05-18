@@ -4,9 +4,9 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "boyixi_2-2026-05-18T13-51-23-412Z",
   "title": "boyixi_2",
-  "uploadedAt": "2026-05-18T13:51:23.412Z",
+  "uploadedAt": "2026-05-18T13:51:58.186Z",
   "proofPath": "library/boyixi_2-2026-05-18T13-51-23-412Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T13-51-23-412Z/source-proof.json?v=2026-05-18T13-51-23.412Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T13-51-23-412Z/source-proof.json?v=2026-05-18T13-51-58.186Z",
   "uploader": {
     "mode": "google-account",
     "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
@@ -46,20 +46,10 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:d2e5cd3f450dc6861daede09a9abad4662725306b6f56c3340bad6680da43b3f",
+    "recommendedAnchorPayload": "sha256:03dee2344e34dc5fdd3824fd07adfa9374a9c805c9bbb752742990b9492b9908",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
-    {
-      "name": "attack-preview.webm",
-      "bytes": 56910,
-      "sha256": "0dacd475477b66438329f8dc7748fa07163ab5a9b8590b6ddfadf870512dc18d"
-    },
-    {
-      "name": "attack-preview.webp",
-      "bytes": 74994,
-      "sha256": "6bd5375d25c575f09ed4b8958f0756a0319b0fbaab2963dc0935201875e2d578"
-    },
     {
       "name": "boyixi_2/boyixi_2.atlas",
       "bytes": 8027,
@@ -74,7 +64,17 @@
       "name": "boyixi_2/boyixi_2.skel",
       "bytes": 437760,
       "sha256": "bd007f55097c7e1ed25bb8fbf6940ac342c4cc2b605ec50ef2f1616e8423c1ae"
+    },
+    {
+      "name": "dance-preview.webm",
+      "bytes": 53800,
+      "sha256": "afbc6dc50fda77642aefef625771529f63d96910ca3c8c3272fd178429a6a96f"
+    },
+    {
+      "name": "dance-preview.webp",
+      "bytes": 56978,
+      "sha256": "7bca865517b226b90b3c94a8440b3b85f80f35925d831b9d410f3f6dd98eb1ea"
     }
   ],
-  "proofHash": "d2e5cd3f450dc6861daede09a9abad4662725306b6f56c3340bad6680da43b3f"
+  "proofHash": "03dee2344e34dc5fdd3824fd07adfa9374a9c805c9bbb752742990b9492b9908"
 }
