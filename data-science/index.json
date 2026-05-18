@@ -1,5 +1,189 @@
 [
   {
+    "id": "boyixi_2-2026-05-18T11-27-47-838Z",
+    "name": "boyixi_2",
+    "updatedAt": "2026-05-18T11:28:01.689Z",
+    "animation_asset": {
+      "id": "boyixi_2-2026-05-18T11-27-47-838Z",
+      "name": "boyixi_2",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "attack",
+          "attack_left",
+          "dance",
+          "dead",
+          "motou",
+          "move",
+          "move_left",
+          "normal",
+          "sit",
+          "skill",
+          "sleep",
+          "stand",
+          "stand2",
+          "touch",
+          "tuozhuai",
+          "tuozhuai2",
+          "victory",
+          "walk",
+          "wash",
+          "yun",
+          "idle"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-attack",
+          "win",
+          "lose"
+        ],
+        "action": [
+          "walk",
+          "attack"
+        ],
+        "direction": [
+          "left"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/boyixi_2-2026-05-18T11-27-47-838Z",
+      "manifestPath": "library/boyixi_2-2026-05-18T11-27-47-838Z/manifest.json",
+      "files": [
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/boyixi_2/boyixi_2.skel",
+          "name": "boyixi_2/boyixi_2.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/boyixi_2/boyixi_2.atlas",
+          "name": "boyixi_2/boyixi_2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/boyixi_2/boyixi_2.png",
+          "name": "boyixi_2/boyixi_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/attack-preview.webm",
+          "name": "attack-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/attack-preview.webp",
+          "name": "attack-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/boyixi_2-2026-05-18T11-27-47-838Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "boyixi_2.skel",
+      "atlas": "boyixi_2.atlas",
+      "textures": [
+        "boyixi_2.png"
+      ],
+      "animationCount": 20,
+      "animationNames": [
+        "attack",
+        "attack_left",
+        "dance",
+        "dead",
+        "motou",
+        "move",
+        "move_left",
+        "normal",
+        "sit",
+        "skill",
+        "sleep",
+        "stand",
+        "stand2",
+        "touch",
+        "tuozhuai",
+        "tuozhuai2",
+        "victory",
+        "walk",
+        "wash",
+        "yun"
+      ],
+      "defaultAnimation": "attack",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "boyixi_2-2026-05-18T10-55-35-524Z",
     "name": "boyixi_2",
     "updatedAt": "2026-05-18T10:55:50.563Z",
