@@ -1,5 +1,290 @@
 [
   {
+    "id": "boyixi_2-2026-05-18T10-55-35-524Z",
+    "title": "boyixi_2",
+    "ownerEmail": "vladyslavchaplygin@gmail.com",
+    "ownerName": "Leopold",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
+    "publicOwnerId": "u_yois91",
+    "ownerAnonId": "anon_r5bhfn_158byx9",
+    "ownerAnonFingerprint": "r5bhfn",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-18T10:55:35.524Z",
+    "skeleton": "boyixi_2.skel",
+    "atlas": "boyixi_2.atlas",
+    "textures": [
+      "boyixi_2.png"
+    ],
+    "animations": [
+      "attack",
+      "attack_left",
+      "dance",
+      "dead",
+      "motou",
+      "move",
+      "move_left",
+      "normal",
+      "sit",
+      "skill",
+      "sleep",
+      "stand",
+      "stand2",
+      "touch",
+      "tuozhuai",
+      "tuozhuai2",
+      "victory",
+      "walk",
+      "wash",
+      "yun"
+    ],
+    "defaultAnimation": "attack",
+    "files": [
+      "boyixi_2/boyixi_2.skel",
+      "boyixi_2/boyixi_2.atlas",
+      "boyixi_2/boyixi_2.png",
+      "attack-preview.webm",
+      "attack-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/boyixi_2-2026-05-18T10-55-35-524Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp?v=2026-05-18T10-55-35.524Z",
+    "thumbnailPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp?v=2026-05-18T10-55-35.524Z",
+    "thumbnailPosterPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp",
+    "previewWidth": 1070,
+    "previewHeight": 720,
+    "previewDuration": 1,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webm?v=2026-05-18T10-55-35.524Z",
+    "webmPreviewPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "boyixi_2-2026-05-18T10-55-35-524Z",
+      "title": "boyixi_2",
+      "uploadedAt": "2026-05-18T10:55:35.524Z",
+      "proofPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json?v=2026-05-18T10-55-35.524Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/boyixi_2-2026-05-18T10-55-35-524Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:edb42439cd97fbfaff936aadde24bf4c6025c61f2e79cc69d6ae8d7a475928e5",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "attack-preview.webm",
+          "bytes": 71243,
+          "sha256": "7029f056a4d7f4ebf7bfa887b9f6e9869cf7127d85e3ac014e4a0ceb5b101f2f"
+        },
+        {
+          "name": "attack-preview.webp",
+          "bytes": 79446,
+          "sha256": "211d180c1ff452c52482c36997aff3d3fa6fc0933742bf22f7d8a4e289a3d5f0"
+        },
+        {
+          "name": "boyixi_2/boyixi_2.atlas",
+          "bytes": 8027,
+          "sha256": "40b82a625be133b9e244d1e53ea7ad6631881317f480937de714cf20c54d178e"
+        },
+        {
+          "name": "boyixi_2/boyixi_2.png",
+          "bytes": 305716,
+          "sha256": "3493ed9462ff623288ce45e84c8411d1e68b624507f27fab0ec84db4ba606c17"
+        },
+        {
+          "name": "boyixi_2/boyixi_2.skel",
+          "bytes": 437760,
+          "sha256": "bd007f55097c7e1ed25bb8fbf6940ac342c4cc2b605ec50ef2f1616e8423c1ae"
+        }
+      ],
+      "proofHash": "edb42439cd97fbfaff936aadde24bf4c6025c61f2e79cc69d6ae8d7a475928e5"
+    },
+    "sourceProofPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json?v=2026-05-18T10-55-35.524Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-18T10:55:47.643Z",
+      "entryId": "boyixi_2-2026-05-18T10-55-35-524Z",
+      "title": "boyixi_2",
+      "uploadedAt": "2026-05-18T10:55:35.524Z",
+      "sourceProofHash": "edb42439cd97fbfaff936aadde24bf4c6025c61f2e79cc69d6ae8d7a475928e5",
+      "sourceProofPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json?v=2026-05-18T10-55-35.524Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/boyixi_2-2026-05-18T10-55-35-524Z",
+        "files": [
+          {
+            "name": "boyixi_2/boyixi_2.skel",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.skel",
+            "bytes": 437760,
+            "sha256": "bd007f55097c7e1ed25bb8fbf6940ac342c4cc2b605ec50ef2f1616e8423c1ae",
+            "github": {
+              "contentSha": "4c73ac27e139cd887cc7390c3ed341335bed795d",
+              "commitSha": "413bdc7db34b830ac07d44b8833a68f33c0bfc96",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/413bdc7db34b830ac07d44b8833a68f33c0bfc96",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.skel?token=ACCECW66WOLL3OHO4HQLDTDKBLYGQ"
+            }
+          },
+          {
+            "name": "boyixi_2/boyixi_2.atlas",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.atlas",
+            "bytes": 8027,
+            "sha256": "40b82a625be133b9e244d1e53ea7ad6631881317f480937de714cf20c54d178e",
+            "github": {
+              "contentSha": "8bfa7d9652a57ca88ddbe0566c18087aad6dc36e",
+              "commitSha": "7a5aa5440062b0db253b4d3459d933a1242d69b1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7a5aa5440062b0db253b4d3459d933a1242d69b1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.atlas?token=ACCECW46QU4TQE5U54OJPRDKBLYGS"
+            }
+          },
+          {
+            "name": "boyixi_2/boyixi_2.png",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.png",
+            "bytes": 305716,
+            "sha256": "3493ed9462ff623288ce45e84c8411d1e68b624507f27fab0ec84db4ba606c17",
+            "github": {
+              "contentSha": "1fbd0d333e827fbb4e6ac7f43820c33346311551",
+              "commitSha": "3c821e5ae809a2f16792616381ebe95b9ceb941c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3c821e5ae809a2f16792616381ebe95b9ceb941c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/boyixi_2/boyixi_2.png?token=ACCECWYXGGKPLFF4DW43AD3KBLYGW"
+            }
+          },
+          {
+            "name": "attack-preview.webm",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webm",
+            "bytes": 71243,
+            "sha256": "7029f056a4d7f4ebf7bfa887b9f6e9869cf7127d85e3ac014e4a0ceb5b101f2f",
+            "github": {
+              "contentSha": "bd85dd46d56c8af7c80dc4015a4ad66802772c07",
+              "commitSha": "62f8d167175e189801e2f454c2f202e164587a14",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/62f8d167175e189801e2f454c2f202e164587a14",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webm?token=ACCECW2FEBMAR7CZBKVLG2TKBLYGY"
+            }
+          },
+          {
+            "name": "attack-preview.webp",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp",
+            "bytes": 79446,
+            "sha256": "211d180c1ff452c52482c36997aff3d3fa6fc0933742bf22f7d8a4e289a3d5f0",
+            "github": {
+              "contentSha": "cd47cf14d5e210e925af4ec20d697f419b230823",
+              "commitSha": "f971cab36baf0e9e3f317046a02e2f411dbb56e8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f971cab36baf0e9e3f317046a02e2f411dbb56e8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/attack-preview.webp?token=ACCECWZ4DCWHGXGTCEX54IDKBLYG4"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json",
+            "bytes": 2795,
+            "sha256": "376a21177439a3abac9891120afd4907b87441e85f62dff1db18a88b1b502c51",
+            "github": {
+              "contentSha": "4d335b1adbbeefd432e1d7625682c12f9bbf93b6",
+              "commitSha": "0d23c0ab369ad5f4b7f68de29f712c6e08c45ec0",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0d23c0ab369ad5f4b7f68de29f712c6e08c45ec0",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/boyixi_2-2026-05-18T10-55-35-524Z/source-proof.json?token=ACCECW2GO3O5BGOD3OFOPKLKBLYG6"
+            }
+          }
+        ],
+        "anchorPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/blockchain-anchor.json",
+        "anchorCommitSha": "112550b88df4396c23535a455fc750246078a0d6",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/112550b88df4396c23535a455fc750246078a0d6"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "730c34fcb8ebec7e32c167d499ee5c5774ef20a6eba857b168885c24ffdf006b",
+      "recommendedAnchorPayload": "sha256:730c34fcb8ebec7e32c167d499ee5c5774ef20a6eba857b168885c24ffdf006b",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x730c34fcb8ebec7e32c167d499ee5c5774ef20a6eba857b168885c24ffdf006b",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/boyixi_2-2026-05-18T10-55-35-524Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T10-55-35-524Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "boyixi_2-2026-05-18T10-35-56-276Z",
     "title": "boyixi_2",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
