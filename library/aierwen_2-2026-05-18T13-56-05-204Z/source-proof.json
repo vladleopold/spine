@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "aierwen_2-2026-05-18T13-56-05-204Z",
+  "title": "aierwen_2",
+  "uploadedAt": "2026-05-18T13:56:05.204Z",
+  "proofPath": "library/aierwen_2-2026-05-18T13-56-05-204Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/aierwen_2-2026-05-18T13-56-05-204Z/source-proof.json?v=2026-05-18T13-56-05.204Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/aierwen_2-2026-05-18T13-56-05-204Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:2883cca3cd27a0af621ed4a59616ced755ed314b30b925f17745534f56a91033",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "aierwen_2/aierwen_2.atlas",
+      "bytes": 4152,
+      "sha256": "5d9905dd6dd1849f3f569369c573b56e1772667ee9e9db075efd4ec4b83b4b08"
+    },
+    {
+      "name": "aierwen_2/aierwen_2.png",
+      "bytes": 159324,
+      "sha256": "96c12b0997f68c9ab83b11b4f6f75872a3a85ea9f6c8c210c61fe157b1cadb29"
+    },
+    {
+      "name": "aierwen_2/aierwen_2.skel",
+      "bytes": 125465,
+      "sha256": "5d5491a7c13744bd84a61ea4d75269fac71364c5c05571a5585ab85e25c564d4"
+    },
+    {
+      "name": "attack-preview.webm",
+      "bytes": 56099,
+      "sha256": "a27f7f12ac5abd9627c29a496d84f66a3075c0e5384abd74dac2c464d9221e61"
+    },
+    {
+      "name": "attack-preview.webp",
+      "bytes": 68008,
+      "sha256": "4a12b03b6290b7c694095db51eb30a81c607570026fa23aee532f40f0fd24581"
+    }
+  ],
+  "proofHash": "2883cca3cd27a0af621ed4a59616ced755ed314b30b925f17745534f56a91033"
+}
