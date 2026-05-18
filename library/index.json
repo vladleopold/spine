@@ -1,5 +1,290 @@
 [
   {
+    "id": "badan_2-2026-05-18T13-58-31-422Z",
+    "title": "badan_2",
+    "ownerEmail": "vladyslavchaplygin@gmail.com",
+    "ownerName": "Leopold",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
+    "publicOwnerId": "u_yois91",
+    "ownerAnonId": "anon_r5bhfn_158byx9",
+    "ownerAnonFingerprint": "r5bhfn",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-18T13:58:31.422Z",
+    "skeleton": "badan_2.skel",
+    "atlas": "badan_2.atlas",
+    "textures": [
+      "badan_2.png"
+    ],
+    "animations": [
+      "attack",
+      "attack_left",
+      "dance",
+      "dead",
+      "motou",
+      "move",
+      "move_left",
+      "normal",
+      "sit",
+      "skill",
+      "sleep",
+      "stand",
+      "stand2",
+      "touch",
+      "tuozhuai",
+      "tuozhuai2",
+      "victory",
+      "walk",
+      "wash",
+      "yun"
+    ],
+    "defaultAnimation": "attack",
+    "files": [
+      "badan_2/badan_2.skel",
+      "badan_2/badan_2.atlas",
+      "badan_2/badan_2.png",
+      "attack-preview.webm",
+      "attack-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/badan_2-2026-05-18T13-58-31-422Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp?v=2026-05-18T13-58-31.422Z",
+    "thumbnailPath": "library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp?v=2026-05-18T13-58-31.422Z",
+    "thumbnailPosterPath": "library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp",
+    "previewWidth": 720,
+    "previewHeight": 798,
+    "previewDuration": 1,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webm?v=2026-05-18T13-58-31.422Z",
+    "webmPreviewPath": "library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "badan_2-2026-05-18T13-58-31-422Z",
+      "title": "badan_2",
+      "uploadedAt": "2026-05-18T13:58:31.422Z",
+      "proofPath": "library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json?v=2026-05-18T13-58-31.422Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/badan_2-2026-05-18T13-58-31-422Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:1fd725e34135fc74d501987b8ac33b7afc058ddb7fe527bcdd239d8b379a31b5",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "attack-preview.webm",
+          "bytes": 64656,
+          "sha256": "419b4a4ac55e9ab2c8886ac143f1fb425bdcc2e4a570ad318611b5765956c945"
+        },
+        {
+          "name": "attack-preview.webp",
+          "bytes": 66644,
+          "sha256": "3ea54bf317f70f8ed88c0ae9fb976083c767c96853d8c9757a154e6d8dc3ffeb"
+        },
+        {
+          "name": "badan_2/badan_2.atlas",
+          "bytes": 6601,
+          "sha256": "cfbd0f14b9356a2c7e92e13bb8eeaf5b15e54039cf0a0d141af70eac63ee9485"
+        },
+        {
+          "name": "badan_2/badan_2.png",
+          "bytes": 195500,
+          "sha256": "4e9dbeb98c21cb917465b1eecba03288e0fd68839e7dca6b7fd98ac9a97652da"
+        },
+        {
+          "name": "badan_2/badan_2.skel",
+          "bytes": 154170,
+          "sha256": "41d91bea064239cddc748faeb735eaa56f63171b8e549274a52a028d7302dca3"
+        }
+      ],
+      "proofHash": "1fd725e34135fc74d501987b8ac33b7afc058ddb7fe527bcdd239d8b379a31b5"
+    },
+    "sourceProofPath": "library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json?v=2026-05-18T13-58-31.422Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-18T13:58:43.558Z",
+      "entryId": "badan_2-2026-05-18T13-58-31-422Z",
+      "title": "badan_2",
+      "uploadedAt": "2026-05-18T13:58:31.422Z",
+      "sourceProofHash": "1fd725e34135fc74d501987b8ac33b7afc058ddb7fe527bcdd239d8b379a31b5",
+      "sourceProofPath": "library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json?v=2026-05-18T13-58-31.422Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+        "anonymousAccountId": "anon_r5bhfn_158byx9",
+        "anonymousFingerprint": "r5bhfn",
+        "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+        "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk",
+          "languages": [
+            "uk",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/badan_2-2026-05-18T13-58-31-422Z",
+        "files": [
+          {
+            "name": "badan_2/badan_2.skel",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.skel",
+            "bytes": 154170,
+            "sha256": "41d91bea064239cddc748faeb735eaa56f63171b8e549274a52a028d7302dca3",
+            "github": {
+              "contentSha": "422e4e76d77bd014f186f0e543047b22478487e0",
+              "commitSha": "4db76564f74482fab96e37e58eabba9deb7f2609",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4db76564f74482fab96e37e58eabba9deb7f2609",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.skel?token=ACCECW5VW7CBWQ65H5DHGL3KBMNUO"
+            }
+          },
+          {
+            "name": "badan_2/badan_2.atlas",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.atlas",
+            "bytes": 6601,
+            "sha256": "cfbd0f14b9356a2c7e92e13bb8eeaf5b15e54039cf0a0d141af70eac63ee9485",
+            "github": {
+              "contentSha": "3d7dc97ead12d5761ed5099a1281b7cc6374c3ff",
+              "commitSha": "5bb7f457bbd4b0dce5fa7fe51437f852b6033bc9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5bb7f457bbd4b0dce5fa7fe51437f852b6033bc9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.atlas?token=ACCECW4LEIYMUY2ERUDM4RDKBMNUQ"
+            }
+          },
+          {
+            "name": "badan_2/badan_2.png",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.png",
+            "bytes": 195500,
+            "sha256": "4e9dbeb98c21cb917465b1eecba03288e0fd68839e7dca6b7fd98ac9a97652da",
+            "github": {
+              "contentSha": "30a6d9ce9f079c809cc2af782edecdddc41c99a4",
+              "commitSha": "029cb3352c125c5e3591eab509ecabcc5e889142",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/029cb3352c125c5e3591eab509ecabcc5e889142",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/badan_2/badan_2.png?token=ACCECWYPKUNUHBPWVYABLJDKBMNUU"
+            }
+          },
+          {
+            "name": "attack-preview.webm",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webm",
+            "bytes": 64656,
+            "sha256": "419b4a4ac55e9ab2c8886ac143f1fb425bdcc2e4a570ad318611b5765956c945",
+            "github": {
+              "contentSha": "cd4506258fd9ddd8af866f1cc7be7d25cdf1dfc1",
+              "commitSha": "035141d28fa493b118265ecf69581ea57ad1323c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/035141d28fa493b118265ecf69581ea57ad1323c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webm?token=ACCECWZLYPKMNIUVY7XJPWDKBMNUY"
+            }
+          },
+          {
+            "name": "attack-preview.webp",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp",
+            "bytes": 66644,
+            "sha256": "3ea54bf317f70f8ed88c0ae9fb976083c767c96853d8c9757a154e6d8dc3ffeb",
+            "github": {
+              "contentSha": "b709c6840781f0b4e4594c292ec396093053dc5f",
+              "commitSha": "9ef36dac8d1fb60cd923fe3537e98607455a3214",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/9ef36dac8d1fb60cd923fe3537e98607455a3214",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/attack-preview.webp?token=ACCECW2BST5FW66ELIZ4CUDKBMNU2"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json",
+            "bytes": 2784,
+            "sha256": "aa8963d6353cea5779ccf57d09852b9de83cce5bce3c52bd40e49ca11f38df66",
+            "github": {
+              "contentSha": "d9722444c881b6c3eb5ff6570e5cc6d552df777d",
+              "commitSha": "50d2e3b456b208581fc30ad637c3c989ef4fe73d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/50d2e3b456b208581fc30ad637c3c989ef4fe73d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json?token=ACCECWZGNDJ5PJY6M3SQ4QLKBMNU6"
+            }
+          }
+        ],
+        "anchorPath": "library/badan_2-2026-05-18T13-58-31-422Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/blockchain-anchor.json",
+        "anchorCommitSha": "8cc73b3b7bbc5361179e1d2a03fb8ad27e3e4fb8",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/8cc73b3b7bbc5361179e1d2a03fb8ad27e3e4fb8"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "fbdccfbbb972d99c9a9deae6bfcb08af3b4d23baf1dc5544c27a7463e2b24a32",
+      "recommendedAnchorPayload": "sha256:fbdccfbbb972d99c9a9deae6bfcb08af3b4d23baf1dc5544c27a7463e2b24a32",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0xfbdccfbbb972d99c9a9deae6bfcb08af3b4d23baf1dc5544c27a7463e2b24a32",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/badan_2-2026-05-18T13-58-31-422Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "ajiakesi_g-2026-05-18T13-57-33-350Z",
     "title": "ajiakesi_g",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
