@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-18T13:57:33.350Z",
+  "updatedAt": "2026-05-18T13:57:46.096Z",
+  "animation_asset": {
+    "id": "ajiakesi_g-2026-05-18T13-57-33-350Z",
+    "name": "ajiakesi_g",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "attack",
+        "attack_left",
+        "dance",
+        "dead",
+        "motou",
+        "move",
+        "move_left",
+        "normal",
+        "sit",
+        "skill",
+        "sleep",
+        "stand",
+        "stand2",
+        "touch",
+        "tuozhuai",
+        "tuozhuai2",
+        "victory",
+        "walk",
+        "wash",
+        "yun",
+        "idle"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-attack",
+        "win",
+        "lose"
+      ],
+      "action": [
+        "walk",
+        "attack"
+      ],
+      "direction": [
+        "left"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/ajiakesi_g-2026-05-18T13-57-33-350Z",
+    "manifestPath": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/manifest.json",
+    "files": [
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/ajiakesi_g/ajiakesi_g.skel",
+        "name": "ajiakesi_g/ajiakesi_g.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/ajiakesi_g/ajiakesi_g.atlas",
+        "name": "ajiakesi_g/ajiakesi_g.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/ajiakesi_g/ajiakesi_g.png",
+        "name": "ajiakesi_g/ajiakesi_g.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/attack-preview.webm",
+        "name": "attack-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/attack-preview.webp",
+        "name": "attack-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "ajiakesi_g.skel",
+    "atlas": "ajiakesi_g.atlas",
+    "textures": [
+      "ajiakesi_g.png"
+    ],
+    "animationCount": 20,
+    "animationNames": [
+      "attack",
+      "attack_left",
+      "dance",
+      "dead",
+      "motou",
+      "move",
+      "move_left",
+      "normal",
+      "sit",
+      "skill",
+      "sleep",
+      "stand",
+      "stand2",
+      "touch",
+      "tuozhuai",
+      "tuozhuai2",
+      "victory",
+      "walk",
+      "wash",
+      "yun"
+    ],
+    "defaultAnimation": "attack",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
