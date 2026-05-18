@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ajiakesi_g-2026-05-18T13-57-33-350Z",
+  "title": "ajiakesi_g",
+  "uploadedAt": "2026-05-18T13:57:33.350Z",
+  "proofPath": "library/ajiakesi_g-2026-05-18T13-57-33-350Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ajiakesi_g-2026-05-18T13-57-33-350Z/source-proof.json?v=2026-05-18T13-57-33.350Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ajiakesi_g-2026-05-18T13-57-33-350Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:4b715a970dcd0c68fe4c6d44f96c83a24fbd163dfd62a25514bb668d62064749",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ajiakesi_g/ajiakesi_g.atlas",
+      "bytes": 4825,
+      "sha256": "d4152680a0ecfbd1eaa17f94665991d6744f75ee1fb9786ae3f7a06d7e12d981"
+    },
+    {
+      "name": "ajiakesi_g/ajiakesi_g.png",
+      "bytes": 149995,
+      "sha256": "d061f677c30e2c46847ea9dcf863ff6709399e8afafd266603bf030753412db8"
+    },
+    {
+      "name": "ajiakesi_g/ajiakesi_g.skel",
+      "bytes": 134312,
+      "sha256": "1d9e09e1f5c5a9aeb5600c1907d9ad46a74f345dcfd1d760e1d1f1f653485778"
+    },
+    {
+      "name": "attack-preview.webm",
+      "bytes": 56823,
+      "sha256": "8fa117cb976847192a838e00873cbfd3357b435dd42b362b574f8e91c56fc762"
+    },
+    {
+      "name": "attack-preview.webp",
+      "bytes": 64460,
+      "sha256": "564d87ced28e8b934d155d305e2d4f64a7ab2919c74ff8340c39a776bc474161"
+    }
+  ],
+  "proofHash": "4b715a970dcd0c68fe4c6d44f96c83a24fbd163dfd62a25514bb668d62064749"
+}
