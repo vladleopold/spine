@@ -1,0 +1,79 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "loading-2026-05-20T02-34-29-247Z",
+  "title": "loading",
+  "uploadedAt": "2026-05-20T02:34:29.247Z",
+  "proofPath": "library/loading-2026-05-20T02-34-29-247Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/loading-2026-05-20T02-34-29-247Z/source-proof.json?v=2026-05-20T02-34-29.247Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_rm3gx4_1n72yye",
+    "anonymousFingerprint": "rm3gx4",
+    "browserFingerprintSha256": "42edabde48b46270d88129fcbaf288e8714082614f0d88f92239970f21ec2e1c",
+    "browserEnvironmentHashSha256": "d55237fbfdb8a63262a223ff151277b193532425211493455aa5690f1b12a315",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2048,
+        "height": 1152,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/loading-2026-05-20T02-34-29-247Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e3c90604a46e0aff5b8cfc6d150c6006771fb9f786617a68d7d496b34e408d8f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webm",
+      "bytes": 302197,
+      "sha256": "ad28e79c12bdb408341d9295bc91225bd46c5b4c458a1dab60ca604d47c9e1f0"
+    },
+    {
+      "name": "animation-preview.webp",
+      "bytes": 23932,
+      "sha256": "6713dca76997950669eade38cecb11df613848645c483cfabdef8c03f156432e"
+    },
+    {
+      "name": "loading/loading.atlas",
+      "bytes": 2725,
+      "sha256": "820dce35fef296482918a849821373d6c093b80d9bc9f89b07f47590b8d49ba3"
+    },
+    {
+      "name": "loading/loading.json",
+      "bytes": 15612,
+      "sha256": "eb49f8108cb185a9e3c46cd4b8e68713c3c1764433e2a06f9c4535c144388e3b"
+    },
+    {
+      "name": "loading/loading.png",
+      "bytes": 606451,
+      "sha256": "f360f6a18138aee5a4e7dc8daf8a1642365d48d8252896014d7db825809648f9"
+    }
+  ],
+  "proofHash": "e3c90604a46e0aff5b8cfc6d150c6006771fb9f786617a68d7d496b34e408d8f"
+}
