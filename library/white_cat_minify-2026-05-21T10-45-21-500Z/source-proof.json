@@ -1,0 +1,78 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "white_cat_minify-2026-05-21T10-45-21-500Z",
+  "title": "white_cat_minify",
+  "uploadedAt": "2026-05-21T10:45:21.500Z",
+  "proofPath": "library/white_cat_minify-2026-05-21T10-45-21-500Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/white_cat_minify-2026-05-21T10-45-21-500Z/source-proof.json?v=2026-05-21T10-45-21.500Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1lkiyc8_1h92w90",
+    "anonymousFingerprint": "1lkiyc8",
+    "browserFingerprintSha256": "7eb6533b62ad76192b2a70fce2f8910a13f1b6ffaf5a2ee109c45ace17577ff2",
+    "browserEnvironmentHashSha256": "03da003af215ece4a2730a8af85cb13182c9e962310f6ff1d10792d0c8ded95d",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en",
+      "languages": [
+        "en",
+        "vi",
+        "en-US"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 0.8999999761581421
+      },
+      "timezone": "Asia/Saigon",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/white_cat_minify-2026-05-21T10-45-21-500Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:0d76e89343a816d4986ec7cf4df8c8db7cf0434cd240511f5ee24a5d67b3d6c3",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle_hungry-preview.webm",
+      "bytes": 7437,
+      "sha256": "c276eba5f059196e48a2fc22ff16e72da2aa3d522be1ab0997d409f8f1b50c41"
+    },
+    {
+      "name": "idle_hungry-preview.webp",
+      "bytes": 2662,
+      "sha256": "1544f25e27d62b0a43ded61918fb36c87bbe75ec58b1031f5b2f9ea538f6161f"
+    },
+    {
+      "name": "white_cat_minify/White_Cat_minify.json",
+      "bytes": 1045572,
+      "sha256": "3ffa7ee10e0b0b4ac7da34d5830db0e376a958a319780e65b04a254f8f8ff270"
+    },
+    {
+      "name": "white_cat_minify/White_Cat.atlas",
+      "bytes": 3939,
+      "sha256": "9454d106fa066c365968956f3df1487e26627f5efda77dfa8001a6d112c3a95c"
+    },
+    {
+      "name": "white_cat_minify/White_Cat.png",
+      "bytes": 61342,
+      "sha256": "37d0a9f1fd481aa02e195c1030da9e16fb35ffaa626b6fb044805feafe7f3d61"
+    }
+  ],
+  "proofHash": "0d76e89343a816d4986ec7cf4df8c8db7cf0434cd240511f5ee24a5d67b3d6c3"
+}
