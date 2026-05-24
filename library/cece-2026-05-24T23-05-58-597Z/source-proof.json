@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "cece-2026-05-24T23-05-58-597Z",
+  "title": "cece",
+  "uploadedAt": "2026-05-24T23:05:58.597Z",
+  "proofPath": "library/cece-2026-05-24T23-05-58-597Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/cece-2026-05-24T23-05-58-597Z/source-proof.json?v=2026-05-24T23-05-58.597Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/cece-2026-05-24T23-05-58-597Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:254fcec532103e1eec55929fd4c12106cbf8b872f4194329451abfb1fe6a58c7",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "cece/cece.atlas",
+      "bytes": 778,
+      "sha256": "0191bd693bfda9961f16bb054d90626eb66e63377d1932c5f71bcb571700bdf5"
+    },
+    {
+      "name": "cece/cece.json",
+      "bytes": 118632,
+      "sha256": "e69fd79bd4ce36391b9453e9ed805dbf817351e979a6fa63192fc95722dd058d"
+    },
+    {
+      "name": "cece/cece.png",
+      "bytes": 31026,
+      "sha256": "f1fbc015191f80e04304ba1fe9245a94d87239c195abd3589315f807e4dbf3b8"
+    },
+    {
+      "name": "idle-minigame-preview.webm",
+      "bytes": 353982,
+      "sha256": "67e0f842f639714180d674bcf7ca42266ad1842f10ce39d68d110f9b0ca4a5c6"
+    },
+    {
+      "name": "idle-minigame-preview.webp",
+      "bytes": 136588,
+      "sha256": "d8ceaacfca21ff31186001c56c671569ded6bb3bec318cca9a469a6abd651d3a"
+    }
+  ],
+  "proofHash": "254fcec532103e1eec55929fd4c12106cbf8b872f4194329451abfb1fe6a58c7"
+}
