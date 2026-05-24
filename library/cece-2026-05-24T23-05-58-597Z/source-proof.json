@@ -4,9 +4,9 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "cece-2026-05-24T23-05-58-597Z",
   "title": "cece",
-  "uploadedAt": "2026-05-24T23:14:17.367Z",
+  "uploadedAt": "2026-05-24T23:14:38.625Z",
   "proofPath": "library/cece-2026-05-24T23-05-58-597Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/cece-2026-05-24T23-05-58-597Z/source-proof.json?v=2026-05-24T23-14-17.367Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/cece-2026-05-24T23-05-58-597Z/source-proof.json?v=2026-05-24T23-14-38.625Z",
   "uploader": {
     "mode": "anonymous-browser",
     "anonymousAccountId": "anon_1tasoe_1f29vnl",
@@ -41,20 +41,10 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:83760919b328bb3c920f0a538f84a1c7eaf34c02a7c4b259e6292bd5a2745c1c",
+    "recommendedAnchorPayload": "sha256:8782a7067eb26bb1811a417db4eedeb1328b1cb0c993f452c5a9e0cf0d4ba3e8",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
-    {
-      "name": "blink-preview.webm",
-      "bytes": 175716,
-      "sha256": "aa73b57fcc039b5f04dccc8bb894e51a575da8bbd963f84dfb1d39304c92f93b"
-    },
-    {
-      "name": "blink-preview.webp",
-      "bytes": 130361,
-      "sha256": "69577a9132b057f77d247edfac068cad28a03c52fa70d5b215c23e871b2d88db"
-    },
     {
       "name": "cece/cece.atlas",
       "bytes": 778,
@@ -69,7 +59,17 @@
       "name": "cece/cece.png",
       "bytes": 31018,
       "sha256": "fe7feffd0f13caf5763660812194949ca13cfd398292015f07931fee262daa3b"
+    },
+    {
+      "name": "idle-minigame-preview.webm",
+      "bytes": 345113,
+      "sha256": "77702f222b7e70b61e3c640d56b78678aa0c4346b41e73c3aedb5a8822966d04"
+    },
+    {
+      "name": "idle-minigame-preview.webp",
+      "bytes": 134513,
+      "sha256": "81fc60653cc1b63368b0a6546d5e1485e67f9033ecae092d474197260dbcde41"
     }
   ],
-  "proofHash": "83760919b328bb3c920f0a538f84a1c7eaf34c02a7c4b259e6292bd5a2745c1c"
+  "proofHash": "8782a7067eb26bb1811a417db4eedeb1328b1cb0c993f452c5a9e0cf0d4ba3e8"
 }
