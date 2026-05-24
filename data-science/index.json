@@ -1,5 +1,157 @@
 [
   {
+    "id": "mr_e-2026-05-24T21-47-52-993Z",
+    "name": "mr_e",
+    "updatedAt": "2026-05-24T21:48:02.721Z",
+    "animation_asset": {
+      "id": "mr_e-2026-05-24T21-47-52-993Z",
+      "name": "mr_e",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "blink",
+          "breath",
+          "gallery_1",
+          "gallery_2",
+          "intro_toy",
+          "payoff",
+          "return",
+          "upset"
+        ],
+        "state": [
+          "default-blink"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/mr_e-2026-05-24T21-47-52-993Z",
+      "manifestPath": "library/mr_e-2026-05-24T21-47-52-993Z/manifest.json",
+      "files": [
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/mr_e/Mr_E.json",
+          "name": "mr_e/Mr_E.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/mr_e/Mr_E.atlas",
+          "name": "mr_e/Mr_E.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/mr_e/Mr_E.png",
+          "name": "mr_e/Mr_E.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/blink-preview.webm",
+          "name": "blink-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/blink-preview.webp",
+          "name": "blink-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Mr_E.json",
+      "atlas": "Mr_E.atlas",
+      "textures": [
+        "Mr_E.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "blink",
+        "breath",
+        "gallery_1",
+        "gallery_2",
+        "intro_toy",
+        "payoff",
+        "return",
+        "upset"
+      ],
+      "defaultAnimation": "blink",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ch_zeke_dd-2026-05-24T21-42-49-442Z",
     "name": "ch_zeke_dd",
     "updatedAt": "2026-05-24T21:46:08.049Z",
