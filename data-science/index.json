@@ -2,7 +2,7 @@
   {
     "id": "ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
     "name": "ch_malik_dd_esoteric",
-    "updatedAt": "2026-05-24T21:03:49.715Z",
+    "updatedAt": "2026-05-24T21:22:21.950Z",
     "animation_asset": {
       "id": "ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
       "name": "ch_malik_dd_esoteric",
@@ -39,7 +39,7 @@
           "thinking"
         ],
         "state": [
-          "default-idle"
+          "default-intro"
         ],
         "platform": [
           "web"
@@ -88,14 +88,14 @@
           "format": "png"
         },
         {
-          "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webm",
-          "name": "idle-preview.webm",
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/intro-preview.webm",
+          "name": "intro-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp",
-          "name": "idle-preview.webp",
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/intro-preview.webp",
+          "name": "intro-preview.webp",
           "role": "texture",
           "format": "webp"
         },
@@ -130,7 +130,7 @@
         "PayoffBoardGame",
         "Thinking"
       ],
-      "defaultAnimation": "Idle",
+      "defaultAnimation": "Intro",
       "fileCount": 7,
       "skeletonCount": 3,
       "atlasCount": 1,
