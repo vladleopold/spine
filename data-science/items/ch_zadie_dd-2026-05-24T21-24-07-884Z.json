@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-05-24T21:24:07.884Z",
-  "updatedAt": "2026-05-24T21:24:17.944Z",
+  "updatedAt": "2026-05-24T21:30:25.324Z",
   "animation_asset": {
     "id": "ch_zadie_dd-2026-05-24T21-24-07-884Z",
     "name": "ch_zadie_dd",
@@ -38,7 +38,7 @@
         "loop"
       ],
       "state": [
-        "default-idle"
+        "default-payoff"
       ],
       "platform": [
         "web"
@@ -81,14 +81,14 @@
         "format": "png"
       },
       {
-        "path": "library/ch_zadie_dd-2026-05-24T21-24-07-884Z/idle-preview.webm",
-        "name": "idle-preview.webm",
+        "path": "library/ch_zadie_dd-2026-05-24T21-24-07-884Z/payoff-preview.webm",
+        "name": "payoff-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/ch_zadie_dd-2026-05-24T21-24-07-884Z/idle-preview.webp",
-        "name": "idle-preview.webp",
+        "path": "library/ch_zadie_dd-2026-05-24T21-24-07-884Z/payoff-preview.webp",
+        "name": "payoff-preview.webp",
         "role": "texture",
         "format": "webp"
       },
@@ -118,7 +118,7 @@
       "idle",
       "Payoff"
     ],
-    "defaultAnimation": "idle",
+    "defaultAnimation": "Payoff",
     "fileCount": 7,
     "skeletonCount": 3,
     "atlasCount": 1,
