@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-24T20:56:40.789Z",
+  "updatedAt": "2026-05-24T20:56:51.237Z",
+  "animation_asset": {
+    "id": "molly_for_spine-2026-05-24T20-56-40-789Z",
+    "name": "molly_for_spine",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "blink",
+        "fist_pump",
+        "game_payoff0",
+        "game_payoff1",
+        "game_payoff2",
+        "idle",
+        "idle_phone",
+        "lower_phone",
+        "open_arms",
+        "raise_arms",
+        "raise_hand",
+        "raise_phone",
+        "wave",
+        "wave_smile"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/molly_for_spine-2026-05-24T20-56-40-789Z",
+    "manifestPath": "library/molly_for_spine-2026-05-24T20-56-40-789Z/manifest.json",
+    "files": [
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/molly_for_spine/molly_for_spine.json",
+        "name": "molly_for_spine/molly_for_spine.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/molly_for_spine/molly_for_spine.atlas",
+        "name": "molly_for_spine/molly_for_spine.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/molly_for_spine/molly_for_spine.png",
+        "name": "molly_for_spine/molly_for_spine.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/molly_for_spine-2026-05-24T20-56-40-789Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "molly_for_spine.json",
+    "atlas": "molly_for_spine.atlas",
+    "textures": [
+      "molly_for_spine.png"
+    ],
+    "animationCount": 14,
+    "animationNames": [
+      "blink",
+      "fist_pump",
+      "game_payoff0",
+      "game_payoff1",
+      "game_payoff2",
+      "idle",
+      "idle_phone",
+      "lower_phone",
+      "open_arms",
+      "raise_arms",
+      "raise_hand",
+      "raise_phone",
+      "wave",
+      "wave_smile"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
