@@ -1,5 +1,157 @@
 [
   {
+    "id": "nina_rig_3q-2026-05-24T21-01-03-719Z",
+    "name": "nina_rig_3q",
+    "updatedAt": "2026-05-24T21:01:14.266Z",
+    "animation_asset": {
+      "id": "nina_rig_3q-2026-05-24T21-01-03-719Z",
+      "name": "nina_rig_3q",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "climb_belayon_nina",
+          "hold_guide",
+          "idle",
+          "look_at_molly",
+          "lower_guide",
+          "promo_pose",
+          "raise_guide",
+          "smile",
+          "wave"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/nina_rig_3q-2026-05-24T21-01-03-719Z",
+      "manifestPath": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/manifest.json",
+      "files": [
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/nina_rig_3q/nina_rig_3Q.json",
+          "name": "nina_rig_3q/nina_rig_3Q.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/nina_rig_3q/nina_rig_3Q.atlas",
+          "name": "nina_rig_3q/nina_rig_3Q.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/nina_rig_3q/nina_rig_3Q.png",
+          "name": "nina_rig_3q/nina_rig_3Q.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/nina_rig_3q-2026-05-24T21-01-03-719Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "nina_rig_3Q.json",
+      "atlas": "nina_rig_3Q.atlas",
+      "textures": [
+        "nina_rig_3Q.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "climb_belayon_nina",
+        "hold_guide",
+        "idle",
+        "look_at_molly",
+        "lower_guide",
+        "promo_pose",
+        "raise_guide",
+        "smile",
+        "wave"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "nina_rig_3q-2026-05-24T20-58-45-874Z",
     "name": "nina_rig_3q",
     "updatedAt": "2026-05-24T21:00:47.313Z",
