@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ch_ellie_dd-2026-05-24T22-22-05-772Z",
+  "title": "ch_ellie_dd",
+  "uploadedAt": "2026-05-24T22:22:05.772Z",
+  "proofPath": "library/ch_ellie_dd-2026-05-24T22-22-05-772Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ch_ellie_dd-2026-05-24T22-22-05-772Z/source-proof.json?v=2026-05-24T22-22-05.772Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ch_ellie_dd-2026-05-24T22-22-05-772Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e8d65a76be8dc7c5a60bb85f2d070bdfdbd0f9da0982af53a2bd21fa33fd9973",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ch_ellie_dd/ch_ellie_DD.atlas",
+      "bytes": 2069,
+      "sha256": "dd892adc0894b968d15a824cb3b45fb62911b7505d79ca159284dd698f16cf16"
+    },
+    {
+      "name": "ch_ellie_dd/ch_ellie_DD.json",
+      "bytes": 17949,
+      "sha256": "ab07eb9d767277f154054fe509472cdee8450fa11d2deeec981cc3612b1ce427"
+    },
+    {
+      "name": "ch_ellie_dd/ch_ellie_DD.png",
+      "bytes": 123059,
+      "sha256": "2e45d5832dee35b4c75c3d7a379ec8fd4e10466862935389b52a697a559a8570"
+    },
+    {
+      "name": "idle-preview.webm",
+      "bytes": 647366,
+      "sha256": "813c04bec0818b7409be99d34dd5fa681969dc9bf9acd50bcaa723593e5c1237"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 337921,
+      "sha256": "de12a91befc104ce966d7f09dd797c0a1cc232b1ab956d486a4f34e3d3c58bab"
+    }
+  ],
+  "proofHash": "e8d65a76be8dc7c5a60bb85f2d070bdfdbd0f9da0982af53a2bd21fa33fd9973"
+}
