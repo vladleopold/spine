@@ -1,5 +1,266 @@
 [
   {
+    "id": "nina_rig_3q-2026-05-24T20-58-45-874Z",
+    "title": "nina_rig_3q",
+    "publicOwnerId": "u_2v72ke",
+    "ownerAnonId": "anon_1tasoe_1f29vnl",
+    "ownerAnonFingerprint": "1tasoe",
+    "showOwnerLibrary": false,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-24T20:58:45.874Z",
+    "skeleton": "nina_rig_3Q.json",
+    "atlas": "nina_rig_3Q_large.atlas",
+    "textures": [
+      "nina_rig_3Q_large.png"
+    ],
+    "animations": [
+      "climb_belayon_nina",
+      "hold_guide",
+      "idle",
+      "look_at_molly",
+      "lower_guide",
+      "promo_pose",
+      "raise_guide",
+      "smile",
+      "wave"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "nina_rig_3q/nina_rig_3Q.json",
+      "nina_rig_3q/nina_rig_3Q_large.atlas",
+      "nina_rig_3q/nina_rig_3Q_large.png",
+      "idle-preview.webm",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp?v=2026-05-24T20-58-45.874Z",
+    "thumbnailPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp?v=2026-05-24T20-58-45.874Z",
+    "thumbnailPosterPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp",
+    "previewWidth": 440,
+    "previewHeight": 1280,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webm?v=2026-05-24T20-58-45.874Z",
+    "webmPreviewPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "nina_rig_3q-2026-05-24T20-58-45-874Z",
+      "title": "nina_rig_3q",
+      "uploadedAt": "2026-05-24T20:58:45.874Z",
+      "proofPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json?v=2026-05-24T20-58-45.874Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1tasoe_1f29vnl",
+        "anonymousFingerprint": "1tasoe",
+        "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+        "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "screen": {
+            "width": 810,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:a957dc4653c44bd5431710684d15a30ff8942e19e97cae15d8f28aa974dd0456",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webm",
+          "bytes": 500069,
+          "sha256": "cb56012a1dff4e71d123aebbb4148f2b5256bbd9885295311651034b0808e6f1"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 227816,
+          "sha256": "2d6a17afd6f6c3a8d265c091d21ba989c1cd4be97b9f657287a6d2ab5ee1003f"
+        },
+        {
+          "name": "nina_rig_3q/nina_rig_3Q_large.atlas",
+          "bytes": 5133,
+          "sha256": "d4e5cf2b45a6600ec94f3e5f1c7fff786f72734b6ea9b88930dbb0c4d324e7f9"
+        },
+        {
+          "name": "nina_rig_3q/nina_rig_3Q_large.png",
+          "bytes": 766383,
+          "sha256": "15a0e4d538d173bbd2d622579cf05bc3c2d3f16da31fbda411e69e302040a1fe"
+        },
+        {
+          "name": "nina_rig_3q/nina_rig_3Q.json",
+          "bytes": 63021,
+          "sha256": "554e61f31f87f15850928f3d96a20d0b3d7dd0628e0401469c32cf6193c599ba"
+        }
+      ],
+      "proofHash": "a957dc4653c44bd5431710684d15a30ff8942e19e97cae15d8f28aa974dd0456"
+    },
+    "sourceProofPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json?v=2026-05-24T20-58-45.874Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-24T20:58:54.404Z",
+      "entryId": "nina_rig_3q-2026-05-24T20-58-45-874Z",
+      "title": "nina_rig_3q",
+      "uploadedAt": "2026-05-24T20:58:45.874Z",
+      "sourceProofHash": "a957dc4653c44bd5431710684d15a30ff8942e19e97cae15d8f28aa974dd0456",
+      "sourceProofPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json?v=2026-05-24T20-58-45.874Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1tasoe_1f29vnl",
+        "anonymousFingerprint": "1tasoe",
+        "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+        "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "screen": {
+            "width": 810,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z",
+        "files": [
+          {
+            "name": "nina_rig_3q/nina_rig_3Q.json",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q.json",
+            "bytes": 63021,
+            "sha256": "554e61f31f87f15850928f3d96a20d0b3d7dd0628e0401469c32cf6193c599ba",
+            "github": {
+              "contentSha": "56b5e570c0bb4743ed1de3a6b0a4786260e95cb5",
+              "commitSha": "d417894ad98914cec03151acd36bb9ade8f62ee1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d417894ad98914cec03151acd36bb9ade8f62ee1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q.json?token=ACCECW22DLWFFCZX3UWTFGLKCNTMI"
+            }
+          },
+          {
+            "name": "nina_rig_3q/nina_rig_3Q_large.atlas",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q_large.atlas",
+            "bytes": 5133,
+            "sha256": "d4e5cf2b45a6600ec94f3e5f1c7fff786f72734b6ea9b88930dbb0c4d324e7f9",
+            "github": {
+              "contentSha": "87d7e84d3372a849120022de58f8a76558c063e8",
+              "commitSha": "7744de7042570c497a89f6669c6df88a6e46a83d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7744de7042570c497a89f6669c6df88a6e46a83d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q_large.atlas?token=ACCECW5S4ZAVDXDB7LJFVEDKCNTMK"
+            }
+          },
+          {
+            "name": "nina_rig_3q/nina_rig_3Q_large.png",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q_large.png",
+            "bytes": 766383,
+            "sha256": "15a0e4d538d173bbd2d622579cf05bc3c2d3f16da31fbda411e69e302040a1fe",
+            "github": {
+              "contentSha": "459efcda59666e0c948b93bb2756efdeb2820999",
+              "commitSha": "22e09e204472fa1b51639441c9ba621327c88fb3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/22e09e204472fa1b51639441c9ba621327c88fb3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/nina_rig_3q/nina_rig_3Q_large.png?token=ACCECW6H5A53WFJ2ZJPROMDKCNTMO"
+            }
+          },
+          {
+            "name": "idle-preview.webm",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webm",
+            "bytes": 500069,
+            "sha256": "cb56012a1dff4e71d123aebbb4148f2b5256bbd9885295311651034b0808e6f1",
+            "github": {
+              "contentSha": "af16daf0429a91e5dbee36639d7bd9ea9654b395",
+              "commitSha": "4a7457777ff55c98764c7813e77ffda332b5d93e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4a7457777ff55c98764c7813e77ffda332b5d93e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webm?token=ACCECW6VPKGN6GT47PDI2ETKCNTMQ"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp",
+            "bytes": 227816,
+            "sha256": "2d6a17afd6f6c3a8d265c091d21ba989c1cd4be97b9f657287a6d2ab5ee1003f",
+            "github": {
+              "contentSha": "477689b8a6871c0a92d42cf80ef8d79c6aadc87c",
+              "commitSha": "eae75d45c1daf076b31aa98fa2bbfcac9274796e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/eae75d45c1daf076b31aa98fa2bbfcac9274796e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/idle-preview.webp?token=ACCECW2D474N45U5EIPORFTKCNTMS"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json",
+            "bytes": 2685,
+            "sha256": "0f3a62d89043b957e31c6c1b7dce75388fa6435261e8280ccc641782c912062d",
+            "github": {
+              "contentSha": "a19d9518c894a00478298d239529f59f35f6ac80",
+              "commitSha": "ffa59c3ee2cd93f0426abbed4d22e04629bdcdc2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ffa59c3ee2cd93f0426abbed4d22e04629bdcdc2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json?token=ACCECW7H74D7AVXRZ3KNHZTKCNTMU"
+            }
+          }
+        ],
+        "anchorPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/blockchain-anchor.json",
+        "anchorCommitSha": "bbf9afeae89f025a2ff671c0a51fc11835a0d8c3",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/bbf9afeae89f025a2ff671c0a51fc11835a0d8c3"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "53789a63c2b344e1c6429b6e714d248378b81de7dfd0e12627ea69b991b44d21",
+      "recommendedAnchorPayload": "sha256:53789a63c2b344e1c6429b6e714d248378b81de7dfd0e12627ea69b991b44d21",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x53789a63c2b344e1c6429b6e714d248378b81de7dfd0e12627ea69b991b44d21",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "molly_for_spine-2026-05-24T20-56-40-789Z",
     "title": "molly_for_spine",
     "publicOwnerId": "u_2v72ke",
