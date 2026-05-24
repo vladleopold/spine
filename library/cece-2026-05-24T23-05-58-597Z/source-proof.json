@@ -4,9 +4,9 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "cece-2026-05-24T23-05-58-597Z",
   "title": "cece",
-  "uploadedAt": "2026-05-24T23:10:17.864Z",
+  "uploadedAt": "2026-05-24T23:14:17.367Z",
   "proofPath": "library/cece-2026-05-24T23-05-58-597Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/cece-2026-05-24T23-05-58-597Z/source-proof.json?v=2026-05-24T23-10-17.864Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/cece-2026-05-24T23-05-58-597Z/source-proof.json?v=2026-05-24T23-14-17.367Z",
   "uploader": {
     "mode": "anonymous-browser",
     "anonymousAccountId": "anon_1tasoe_1f29vnl",
@@ -41,10 +41,20 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:4c84b2a53f519abd4062ee18952ba1b8ac236cd14052917aba9e10805161cdd0",
+    "recommendedAnchorPayload": "sha256:83760919b328bb3c920f0a538f84a1c7eaf34c02a7c4b259e6292bd5a2745c1c",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
+    {
+      "name": "blink-preview.webm",
+      "bytes": 175716,
+      "sha256": "aa73b57fcc039b5f04dccc8bb894e51a575da8bbd963f84dfb1d39304c92f93b"
+    },
+    {
+      "name": "blink-preview.webp",
+      "bytes": 130361,
+      "sha256": "69577a9132b057f77d247edfac068cad28a03c52fa70d5b215c23e871b2d88db"
+    },
     {
       "name": "cece/cece.atlas",
       "bytes": 778,
@@ -57,19 +67,9 @@
     },
     {
       "name": "cece/cece.png",
-      "bytes": 31026,
-      "sha256": "f1fbc015191f80e04304ba1fe9245a94d87239c195abd3589315f807e4dbf3b8"
-    },
-    {
-      "name": "idle-minigame-preview.webm",
-      "bytes": 410423,
-      "sha256": "d2c413e833508cc05cb70ddbb8eaa3705424f2d8a130222a3c9a2d0dbc08b44a"
-    },
-    {
-      "name": "idle-minigame-preview.webp",
-      "bytes": 136851,
-      "sha256": "61308cefddcffe7d5871585bfc3b0f280aa93a5fc6f8cf94ed3e1aed723f1c6c"
+      "bytes": 31018,
+      "sha256": "fe7feffd0f13caf5763660812194949ca13cfd398292015f07931fee262daa3b"
     }
   ],
-  "proofHash": "4c84b2a53f519abd4062ee18952ba1b8ac236cd14052917aba9e10805161cdd0"
+  "proofHash": "83760919b328bb3c920f0a538f84a1c7eaf34c02a7c4b259e6292bd5a2745c1c"
 }
