@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ch_zeke_dd-2026-05-24T22-19-02-857Z",
+  "title": "ch_zeke_dd",
+  "uploadedAt": "2026-05-24T22:19:02.857Z",
+  "proofPath": "library/ch_zeke_dd-2026-05-24T22-19-02-857Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ch_zeke_dd-2026-05-24T22-19-02-857Z/source-proof.json?v=2026-05-24T22-19-02.857Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ch_zeke_dd-2026-05-24T22-19-02-857Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9624fd923d71772c2bd34ded3d85dd19a0ba41a9fbd8b8beab7e5439d944cfb9",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ch_zeke_dd/ch_zeke_DD.atlas",
+      "bytes": 1934,
+      "sha256": "47af3e2b8e1af5f724b3161e32f1a270f058c5dfed4d3b5bef9d91a7134eb829"
+    },
+    {
+      "name": "ch_zeke_dd/ch_zeke_DD.json",
+      "bytes": 9392,
+      "sha256": "b77e17d6b658caec8fc927512e6e3740ce39e797c4c897ebb8c62f44829155e8"
+    },
+    {
+      "name": "ch_zeke_dd/ch_zeke_DD.png",
+      "bytes": 91079,
+      "sha256": "3ffcabf5adea103f7faf86aadce434e1d693568b63dd6b3b8d86dcb1016b314b"
+    },
+    {
+      "name": "idle-preview.webm",
+      "bytes": 313714,
+      "sha256": "ee9114fdd214e675ce289d9ed147fc01beba086f5f79a9ac10f92ca8331c7702"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 198317,
+      "sha256": "dd39fd5d9e49ae03cdc665f98d7c29f62e80eaa7a068b1780126f00ab92d9d8a"
+    }
+  ],
+  "proofHash": "9624fd923d71772c2bd34ded3d85dd19a0ba41a9fbd8b8beab7e5439d944cfb9"
+}
