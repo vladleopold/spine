@@ -2,7 +2,7 @@
   {
     "id": "cece-2026-05-24T23-05-58-597Z",
     "name": "cece",
-    "updatedAt": "2026-05-24T23:14:28.074Z",
+    "updatedAt": "2026-05-24T23:14:49.028Z",
     "animation_asset": {
       "id": "cece-2026-05-24T23-05-58-597Z",
       "name": "cece",
@@ -42,7 +42,7 @@
           "loop"
         ],
         "state": [
-          "default-blink"
+          "default-idle-minigame"
         ],
         "platform": [
           "web"
@@ -85,14 +85,14 @@
           "format": "png"
         },
         {
-          "path": "library/cece-2026-05-24T23-05-58-597Z/blink-preview.webm",
-          "name": "blink-preview.webm",
+          "path": "library/cece-2026-05-24T23-05-58-597Z/idle-minigame-preview.webm",
+          "name": "idle-minigame-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/cece-2026-05-24T23-05-58-597Z/blink-preview.webp",
-          "name": "blink-preview.webp",
+          "path": "library/cece-2026-05-24T23-05-58-597Z/idle-minigame-preview.webp",
+          "name": "idle-minigame-preview.webp",
           "role": "texture",
           "format": "webp"
         },
@@ -125,7 +125,7 @@
         "lipflap",
         "none"
       ],
-      "defaultAnimation": "blink",
+      "defaultAnimation": "idle-minigame",
       "fileCount": 7,
       "skeletonCount": 3,
       "atlasCount": 1,
