@@ -1,5 +1,159 @@
 [
   {
+    "id": "ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z",
+    "name": "ch_malik_dd_esoteric",
+    "updatedAt": "2026-05-24T22:24:45.695Z",
+    "animation_asset": {
+      "id": "ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z",
+      "name": "ch_malik_dd_esoteric",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "blink",
+          "idle",
+          "idle_bounceonly",
+          "intro",
+          "intro2",
+          "payoff",
+          "payoffboardgame",
+          "thinking"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z",
+      "manifestPath": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ch_malik_dd_esoteric-2026-05-24T22-24-35-769Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ch_malik_DD_esoteric.json",
+      "atlas": "ch_malik_DD_esoteric.atlas",
+      "textures": [
+        "ch_malik_DD_esoteric.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "Blink",
+        "Idle",
+        "Idle_bounceonly",
+        "Intro",
+        "Intro2",
+        "Payoff",
+        "PayoffBoardGame",
+        "Thinking"
+      ],
+      "defaultAnimation": "Idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ch_ellie_dd-2026-05-24T22-22-05-772Z",
     "name": "ch_ellie_dd",
     "updatedAt": "2026-05-24T22:23:15.054Z",
