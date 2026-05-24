@@ -1,5 +1,152 @@
 [
   {
+    "id": "cece-2026-05-24T23-05-58-597Z",
+    "name": "cece",
+    "updatedAt": "2026-05-24T23:06:09.305Z",
+    "animation_asset": {
+      "id": "cece-2026-05-24T23-05-58-597Z",
+      "name": "cece",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "flourish-wave",
+          "idle-minigame",
+          "idle-overworld",
+          "lipflap",
+          "none",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle-minigame"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/cece-2026-05-24T23-05-58-597Z",
+      "manifestPath": "library/cece-2026-05-24T23-05-58-597Z/manifest.json",
+      "files": [
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/cece/cece.json",
+          "name": "cece/cece.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/cece/cece.atlas",
+          "name": "cece/cece.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/cece/cece.png",
+          "name": "cece/cece.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/idle-minigame-preview.webm",
+          "name": "idle-minigame-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/idle-minigame-preview.webp",
+          "name": "idle-minigame-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/cece-2026-05-24T23-05-58-597Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "cece.json",
+      "atlas": "cece.atlas",
+      "textures": [
+        "cece.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "blink",
+        "flourish-wave",
+        "idle-minigame",
+        "idle-overworld",
+        "lipflap",
+        "none"
+      ],
+      "defaultAnimation": "idle-minigame",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "char_blue-2026-05-24T22-37-22-575Z",
     "name": "char_blue",
     "updatedAt": "2026-05-24T22:37:42.098Z",
