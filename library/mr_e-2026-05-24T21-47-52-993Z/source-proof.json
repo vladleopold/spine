@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "mr_e-2026-05-24T21-47-52-993Z",
+  "title": "mr_e",
+  "uploadedAt": "2026-05-24T21:47:52.993Z",
+  "proofPath": "library/mr_e-2026-05-24T21-47-52-993Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/mr_e-2026-05-24T21-47-52-993Z/source-proof.json?v=2026-05-24T21-47-52.993Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/mr_e-2026-05-24T21-47-52-993Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:cc5db0d3c7b5d4fbeab42bc71219dcb3ca42050a152f7dfffbe1114f6a9232e3",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "blink-preview.webm",
+      "bytes": 324415,
+      "sha256": "f5bdc1138454f5c8ca2fc5d6b1e506dda85ce35ecbec4d43d038be9e68ac1412"
+    },
+    {
+      "name": "blink-preview.webp",
+      "bytes": 261247,
+      "sha256": "78cbd498f46a7e3e7d1cc7eba4ee2a97f573bb1b58de24d38fb47e180016306c"
+    },
+    {
+      "name": "mr_e/Mr_E.atlas",
+      "bytes": 2632,
+      "sha256": "7e86a8662b2642742a413e282f49e155993da552130155454ad91e1c7cebfeea"
+    },
+    {
+      "name": "mr_e/Mr_E.json",
+      "bytes": 39391,
+      "sha256": "b3a83d1a3b0b61bc457f8e2ea5121b51504349d69ce4af4287af9a2fe8f47687"
+    },
+    {
+      "name": "mr_e/Mr_E.png",
+      "bytes": 86815,
+      "sha256": "9ab42bb9938a0d64914c57fa239e094cdec174d5ccb5a5e75be42f20b395c80e"
+    }
+  ],
+  "proofHash": "cc5db0d3c7b5d4fbeab42bc71219dcb3ca42050a152f7dfffbe1114f6a9232e3"
+}
