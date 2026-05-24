@@ -1,5 +1,152 @@
 [
   {
+    "id": "ch_zeke_dd-2026-05-24T21-42-49-442Z",
+    "name": "ch_zeke_dd",
+    "updatedAt": "2026-05-24T21:43:01.343Z",
+    "animation_asset": {
+      "id": "ch_zeke_dd-2026-05-24T21-42-49-442Z",
+      "name": "ch_zeke_dd",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "idle",
+          "payoff"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z",
+      "manifestPath": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/ch_zeke_dd/ch_zeke_DD.json",
+          "name": "ch_zeke_dd/ch_zeke_DD.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/ch_zeke_dd/ch_zeke_DD.atlas",
+          "name": "ch_zeke_dd/ch_zeke_DD.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/ch_zeke_dd/ch_zeke_DD.png",
+          "name": "ch_zeke_dd/ch_zeke_DD.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/ch_zeke_dd/ch_zeke_DD_2.png",
+          "name": "ch_zeke_dd/ch_zeke_DD_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/idle-preview.webm",
+          "name": "idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ch_zeke_dd-2026-05-24T21-42-49-442Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ch_zeke_DD.json",
+      "atlas": "ch_zeke_DD.atlas",
+      "textures": [
+        "ch_zeke_DD.png",
+        "ch_zeke_DD_2.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "blink",
+        "idle",
+        "payoff"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 8,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ch_zadie_dd-2026-05-24T21-24-07-884Z",
     "name": "ch_zadie_dd",
     "updatedAt": "2026-05-24T21:30:25.324Z",
