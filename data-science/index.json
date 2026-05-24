@@ -2,7 +2,7 @@
   {
     "id": "mr_e-2026-05-24T21-47-52-993Z",
     "name": "mr_e",
-    "updatedAt": "2026-05-24T21:48:02.721Z",
+    "updatedAt": "2026-05-24T21:59:39.116Z",
     "animation_asset": {
       "id": "mr_e-2026-05-24T21-47-52-993Z",
       "name": "mr_e",
@@ -37,7 +37,7 @@
           "upset"
         ],
         "state": [
-          "default-blink"
+          "default-breath"
         ],
         "platform": [
           "web"
@@ -86,14 +86,14 @@
           "format": "png"
         },
         {
-          "path": "library/mr_e-2026-05-24T21-47-52-993Z/blink-preview.webm",
-          "name": "blink-preview.webm",
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/breath-preview.webm",
+          "name": "breath-preview.webm",
           "role": "support",
           "format": "webm"
         },
         {
-          "path": "library/mr_e-2026-05-24T21-47-52-993Z/blink-preview.webp",
-          "name": "blink-preview.webp",
+          "path": "library/mr_e-2026-05-24T21-47-52-993Z/breath-preview.webp",
+          "name": "breath-preview.webp",
           "role": "texture",
           "format": "webp"
         },
@@ -128,7 +128,7 @@
         "return",
         "upset"
       ],
-      "defaultAnimation": "blink",
+      "defaultAnimation": "breath",
       "fileCount": 7,
       "skeletonCount": 3,
       "atlasCount": 1,
