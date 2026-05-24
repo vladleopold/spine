@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "molly_for_spine-2026-05-24T20-56-40-789Z",
+  "title": "molly_for_spine",
+  "uploadedAt": "2026-05-24T20:56:40.789Z",
+  "proofPath": "library/molly_for_spine-2026-05-24T20-56-40-789Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/molly_for_spine-2026-05-24T20-56-40-789Z/source-proof.json?v=2026-05-24T20-56-40.789Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/molly_for_spine-2026-05-24T20-56-40-789Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:00de06beae6dac09ee08e9e1112b6905762fb2b2676998615386a7d0d98e3de4",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webm",
+      "bytes": 513622,
+      "sha256": "196a700b8d73730aadee40893b73b61be64476d5da379f4fba0a886b63388c82"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 407734,
+      "sha256": "a9fe741ebd9c719f79ebef2d7866e8109a11d0730fba047a17c4f4fab6ba3208"
+    },
+    {
+      "name": "molly_for_spine/molly_for_spine.atlas",
+      "bytes": 1979,
+      "sha256": "fc85a725290d52e5a7abf414a7a87994a9fe35079bbb49b622f3040a85463ed6"
+    },
+    {
+      "name": "molly_for_spine/molly_for_spine.json",
+      "bytes": 27810,
+      "sha256": "ef0858490959d13d85341e5530223ce762c843bd6edd7b4a691b772679c21fbc"
+    },
+    {
+      "name": "molly_for_spine/molly_for_spine.png",
+      "bytes": 602109,
+      "sha256": "48ae783d6c0793ec62efcabe0e005739a68aae55d11cf62b412260955c2cc35b"
+    }
+  ],
+  "proofHash": "00de06beae6dac09ee08e9e1112b6905762fb2b2676998615386a7d0d98e3de4"
+}
