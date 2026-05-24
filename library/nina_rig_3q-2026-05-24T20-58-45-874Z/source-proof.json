@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "nina_rig_3q-2026-05-24T20-58-45-874Z",
+  "title": "nina_rig_3q",
+  "uploadedAt": "2026-05-24T20:58:45.874Z",
+  "proofPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/nina_rig_3q-2026-05-24T20-58-45-874Z/source-proof.json?v=2026-05-24T20-58-45.874Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1tasoe_1f29vnl",
+    "anonymousFingerprint": "1tasoe",
+    "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+    "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "screen": {
+        "width": 810,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/nina_rig_3q-2026-05-24T20-58-45-874Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a957dc4653c44bd5431710684d15a30ff8942e19e97cae15d8f28aa974dd0456",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webm",
+      "bytes": 500069,
+      "sha256": "cb56012a1dff4e71d123aebbb4148f2b5256bbd9885295311651034b0808e6f1"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 227816,
+      "sha256": "2d6a17afd6f6c3a8d265c091d21ba989c1cd4be97b9f657287a6d2ab5ee1003f"
+    },
+    {
+      "name": "nina_rig_3q/nina_rig_3Q_large.atlas",
+      "bytes": 5133,
+      "sha256": "d4e5cf2b45a6600ec94f3e5f1c7fff786f72734b6ea9b88930dbb0c4d324e7f9"
+    },
+    {
+      "name": "nina_rig_3q/nina_rig_3Q_large.png",
+      "bytes": 766383,
+      "sha256": "15a0e4d538d173bbd2d622579cf05bc3c2d3f16da31fbda411e69e302040a1fe"
+    },
+    {
+      "name": "nina_rig_3q/nina_rig_3Q.json",
+      "bytes": 63021,
+      "sha256": "554e61f31f87f15850928f3d96a20d0b3d7dd0628e0401469c32cf6193c599ba"
+    }
+  ],
+  "proofHash": "a957dc4653c44bd5431710684d15a30ff8942e19e97cae15d8f28aa974dd0456"
+}
