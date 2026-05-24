@@ -1,5 +1,265 @@
 [
   {
+    "id": "ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
+    "title": "ch_malik_dd_esoteric",
+    "publicOwnerId": "u_2v72ke",
+    "ownerAnonId": "anon_1tasoe_1f29vnl",
+    "ownerAnonFingerprint": "1tasoe",
+    "showOwnerLibrary": false,
+    "portfolioMode": false,
+    "uploadedAt": "2026-05-24T21:03:39.082Z",
+    "skeleton": "ch_malik_DD_esoteric.json",
+    "atlas": "ch_malik_DD_esoteric.atlas",
+    "textures": [
+      "ch_malik_DD_esoteric.png"
+    ],
+    "animations": [
+      "Blink",
+      "Idle",
+      "Idle_bounceonly",
+      "Intro",
+      "Intro2",
+      "Payoff",
+      "PayoffBoardGame",
+      "Thinking"
+    ],
+    "defaultAnimation": "Idle",
+    "files": [
+      "ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+      "ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+      "ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+      "idle-preview.webm",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp?v=2026-05-24T21-03-39.082Z",
+    "thumbnailPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp?v=2026-05-24T21-03-39.082Z",
+    "thumbnailPosterPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp",
+    "previewWidth": 720,
+    "previewHeight": 1048,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webm?v=2026-05-24T21-03-39.082Z",
+    "webmPreviewPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
+      "title": "ch_malik_dd_esoteric",
+      "uploadedAt": "2026-05-24T21:03:39.082Z",
+      "proofPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json?v=2026-05-24T21-03-39.082Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1tasoe_1f29vnl",
+        "anonymousFingerprint": "1tasoe",
+        "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+        "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "screen": {
+            "width": 810,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:221ad8195d9c718b1c181b5488a48be754dc90ff2be8502d6e27b16b32c55159",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+          "bytes": 3810,
+          "sha256": "b2892b513111bbb901034c050bc738e14ac0ed7d12720714b2ec86cc4b5dd28a"
+        },
+        {
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+          "bytes": 34396,
+          "sha256": "33c8a99d4026ad0058acf2a36cf73f85e719c54eaa711dfde2be0864a018c395"
+        },
+        {
+          "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+          "bytes": 292001,
+          "sha256": "a41ea0e34159c019e847a0a76b93a54b1b587aca53c7cb3ae159a1a6a56aa8b8"
+        },
+        {
+          "name": "idle-preview.webm",
+          "bytes": 544068,
+          "sha256": "2e8e2286c70ec1c7b0f17c5dc7d1f4e363b54750e0115933cf5c37e5d9765d34"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 291876,
+          "sha256": "b6fff9a335719569d423430fc99ca4acbbf8cc03669ca9ded4aa62f2ad615401"
+        }
+      ],
+      "proofHash": "221ad8195d9c718b1c181b5488a48be754dc90ff2be8502d6e27b16b32c55159"
+    },
+    "sourceProofPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json?v=2026-05-24T21-03-39.082Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-05-24T21:03:47.762Z",
+      "entryId": "ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
+      "title": "ch_malik_dd_esoteric",
+      "uploadedAt": "2026-05-24T21:03:39.082Z",
+      "sourceProofHash": "221ad8195d9c718b1c181b5488a48be754dc90ff2be8502d6e27b16b32c55159",
+      "sourceProofPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json?v=2026-05-24T21-03-39.082Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1tasoe_1f29vnl",
+        "anonymousFingerprint": "1tasoe",
+        "browserFingerprintSha256": "655c00768df196656cc0462b73ac4f8171a8911949262576c8362fd09ecce1fa",
+        "browserEnvironmentHashSha256": "0de6cdd9a4ea37ac1e68b8286eac18f09c6b40b714a7de6c07cadef7c7950829",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "screen": {
+            "width": 810,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z",
+        "files": [
+          {
+            "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.json",
+            "bytes": 34396,
+            "sha256": "33c8a99d4026ad0058acf2a36cf73f85e719c54eaa711dfde2be0864a018c395",
+            "github": {
+              "contentSha": "2f2c89cb65a3fe21def0975acc34e3efa795f997",
+              "commitSha": "5a2d04136fb2225e3ba27af2ea35f6e98dbd831e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5a2d04136fb2225e3ba27af2ea35f6e98dbd831e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.json?token=ACCECWYC4LH2RDZKY6LNST3KCNT6U"
+            }
+          },
+          {
+            "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas",
+            "bytes": 3810,
+            "sha256": "b2892b513111bbb901034c050bc738e14ac0ed7d12720714b2ec86cc4b5dd28a",
+            "github": {
+              "contentSha": "3d1615c618c8095127c3f97cf55d1ca2b4405b66",
+              "commitSha": "d78938d5e3e0d814791d7dc98eff6f0b871b86b2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d78938d5e3e0d814791d7dc98eff6f0b871b86b2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.atlas?token=ACCECWY4TDOUBYO74CZDBKTKCNT6W"
+            }
+          },
+          {
+            "name": "ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.png",
+            "bytes": 292001,
+            "sha256": "a41ea0e34159c019e847a0a76b93a54b1b587aca53c7cb3ae159a1a6a56aa8b8",
+            "github": {
+              "contentSha": "082aae992704a24e84325096d87cfe720d7d2df1",
+              "commitSha": "c96bf70720c5c15d219d3076d47e6639716f2acb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c96bf70720c5c15d219d3076d47e6639716f2acb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/ch_malik_dd_esoteric/ch_malik_DD_esoteric.png?token=ACCECW3ZBNJLEW7R6HZUBHTKCNT6Y"
+            }
+          },
+          {
+            "name": "idle-preview.webm",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webm",
+            "bytes": 544068,
+            "sha256": "2e8e2286c70ec1c7b0f17c5dc7d1f4e363b54750e0115933cf5c37e5d9765d34",
+            "github": {
+              "contentSha": "8b5a9e1cf9b501d227444902cfeb9b718fc4807e",
+              "commitSha": "67d7ef60ba47418fb5f77d5198d32e307d9cdc79",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/67d7ef60ba47418fb5f77d5198d32e307d9cdc79",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webm?token=ACCECW72YL4FXHSCBROYYATKCNT62"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp",
+            "bytes": 291876,
+            "sha256": "b6fff9a335719569d423430fc99ca4acbbf8cc03669ca9ded4aa62f2ad615401",
+            "github": {
+              "contentSha": "a8855a861b83c31ea4649a02fc4004297503ca91",
+              "commitSha": "f04488dad2a1336c7618669e57c3a214994117cc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f04488dad2a1336c7618669e57c3a214994117cc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/idle-preview.webp?token=ACCECW4HCHVQXKHCHOJEZV3KCNT64"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json",
+            "bytes": 2772,
+            "sha256": "f60e48b45d88127971d6a3cb0c342208da0455091665e913d4d015df500e08a5",
+            "github": {
+              "contentSha": "a440ae5d6724e69bb8d79b58c452195c77c3b309",
+              "commitSha": "df78e1d5fa2c9d94c615294d2cb6637b2216225e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/df78e1d5fa2c9d94c615294d2cb6637b2216225e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/source-proof.json?token=ACCECW7GADLJYPTCFHUQYQDKCNT66"
+            }
+          }
+        ],
+        "anchorPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/blockchain-anchor.json",
+        "anchorCommitSha": "b76ae7a5e91e476f140b11e2a87948785b28cc42",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/b76ae7a5e91e476f140b11e2a87948785b28cc42"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "21ddb413df891af3f4ebd6fb0920822640de100502bff007ad888986b25a5663",
+      "recommendedAnchorPayload": "sha256:21ddb413df891af3f4ebd6fb0920822640de100502bff007ad888986b25a5663",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x21ddb413df891af3f4ebd6fb0920822640de100502bff007ad888986b25a5663",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/ch_malik_dd_esoteric-2026-05-24T21-03-39-082Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "nina_rig_3q-2026-05-24T21-01-03-719Z",
     "title": "nina_rig_3q",
     "publicOwnerId": "u_2v72ke",
