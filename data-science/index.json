@@ -1,5 +1,150 @@
 [
   {
+    "id": "anshu-2026-05-26T04-06-22-260Z",
+    "name": "anshu",
+    "updatedAt": "2026-05-26T04:06:43.127Z",
+    "animation_asset": {
+      "id": "anshu-2026-05-26T04-06-22-260Z",
+      "name": "anshu",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/anshu-2026-05-26T04-06-22-260Z",
+      "manifestPath": "library/anshu-2026-05-26T04-06-22-260Z/manifest.json",
+      "files": [
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/anshu/anShu.json",
+          "name": "anshu/anShu.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/anshu/anShu.atlas",
+          "name": "anshu/anShu.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/anshu/anShu.png",
+          "name": "anshu/anShu.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/1-preview.webm",
+          "name": "1-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/1-preview.webp",
+          "name": "1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/anshu-2026-05-26T04-06-22-260Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "anShu.json",
+      "atlas": "anShu.atlas",
+      "textures": [
+        "anShu.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "defaultAnimation": "1",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "cece-2026-05-24T23-05-58-597Z",
     "name": "cece",
     "updatedAt": "2026-05-24T23:14:49.028Z",
