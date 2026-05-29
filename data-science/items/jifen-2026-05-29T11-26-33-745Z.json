@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-29T11:26:33.745Z",
+  "updatedAt": "2026-05-29T11:26:49.538Z",
+  "animation_asset": {
+    "id": "jifen-2026-05-29T11-26-33-745Z",
+    "name": "jifen",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "glow"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "caidai",
+        "glow"
+      ],
+      "state": [
+        "default-caidai"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/jifen-2026-05-29T11-26-33-745Z",
+    "manifestPath": "library/jifen-2026-05-29T11-26-33-745Z/manifest.json",
+    "files": [
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/jifen/JiFen.json",
+        "name": "jifen/JiFen.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/jifen/JiFen.atlas",
+        "name": "jifen/JiFen.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/jifen/JiFen.png",
+        "name": "jifen/JiFen.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/caidai-preview.webm",
+        "name": "caidai-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/caidai-preview.webp",
+        "name": "caidai-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/jifen-2026-05-29T11-26-33-745Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "JiFen.json",
+    "atlas": "JiFen.atlas",
+    "textures": [
+      "JiFen.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "CaiDai",
+      "Glow"
+    ],
+    "defaultAnimation": "CaiDai",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "glow"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
