@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-03T02:54:01.981Z",
+  "updatedAt": "2026-06-03T02:54:17.725Z",
+  "animation_asset": {
+    "id": "big_win-2026-06-03T02-54-01-981Z",
+    "name": "big_win",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "lvl_1_end",
+        "lvl_1_loop",
+        "lvl_1_start",
+        "lvl_2_end",
+        "lvl_2_loop",
+        "lvl_2_start",
+        "lvl_3_end",
+        "lvl_3_loop",
+        "lvl_3_start",
+        "lvl_4_end",
+        "lvl_4_loop",
+        "lvl_4_start",
+        "lvl_5_end",
+        "lvl_5_loop",
+        "lvl_5_start",
+        "lvl_6_end",
+        "lvl_6_loop",
+        "lvl_6_start",
+        "lvl_7_end",
+        "lvl_7_loop",
+        "lvl_7_start",
+        "lvl_8_end",
+        "lvl_8_loop",
+        "lvl_8_start"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-lvl_1_end",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/big_win-2026-06-03T02-54-01-981Z",
+    "manifestPath": "library/big_win-2026-06-03T02-54-01-981Z/manifest.json",
+    "files": [
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/big_win/big_win.json",
+        "name": "big_win/big_win.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/big_win/big_win.atlas",
+        "name": "big_win/big_win.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/big_win/big_win.png",
+        "name": "big_win/big_win.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/big_win/big_win2.png",
+        "name": "big_win/big_win2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/big_win/big_win3.png",
+        "name": "big_win/big_win3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/lvl_1_end-preview.webm",
+        "name": "lvl_1_end-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/lvl_1_end-preview.webp",
+        "name": "lvl_1_end-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/big_win-2026-06-03T02-54-01-981Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "big_win.json",
+    "atlas": "big_win.atlas",
+    "textures": [
+      "big_win.png",
+      "big_win2.png",
+      "big_win3.png"
+    ],
+    "animationCount": 24,
+    "animationNames": [
+      "lvl_1_end",
+      "lvl_1_loop",
+      "lvl_1_start",
+      "lvl_2_end",
+      "lvl_2_loop",
+      "lvl_2_start",
+      "lvl_3_end",
+      "lvl_3_loop",
+      "lvl_3_start",
+      "lvl_4_end",
+      "lvl_4_loop",
+      "lvl_4_start",
+      "lvl_5_end",
+      "lvl_5_loop",
+      "lvl_5_start",
+      "lvl_6_end",
+      "lvl_6_loop",
+      "lvl_6_start",
+      "lvl_7_end",
+      "lvl_7_loop",
+      "lvl_7_start",
+      "lvl_8_end",
+      "lvl_8_loop",
+      "lvl_8_start"
+    ],
+    "defaultAnimation": "lvl_1_end",
+    "fileCount": 9,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 4
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
