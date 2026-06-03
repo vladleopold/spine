@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-03T03:00:24.824Z",
+  "updatedAt": "2026-06-03T03:00:36.031Z",
+  "animation_asset": {
+    "id": "block_panel-2026-06-03T03-00-24-824Z",
+    "name": "block_panel",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "ui",
+    "skeleton_type": "ui",
+    "content_type": "ui",
+    "taxonomy": {
+      "category": "ui",
+      "class": "interface",
+      "type": "panel",
+      "tags": [
+        "panel"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "interface"
+      ],
+      "interaction_type": [
+        "clickable",
+        "state"
+      ],
+      "style": [
+        "game-ui"
+      ],
+      "animation_state": [
+        "end",
+        "start"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-end"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/block_panel-2026-06-03T03-00-24-824Z",
+    "manifestPath": "library/block_panel-2026-06-03T03-00-24-824Z/manifest.json",
+    "files": [
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/block_panel/block_panel.json",
+        "name": "block_panel/block_panel.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/block_panel/block_panel.atlas",
+        "name": "block_panel/block_panel.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/block_panel/block_panel.png",
+        "name": "block_panel/block_panel.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/end-preview.webm",
+        "name": "end-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/end-preview.webp",
+        "name": "end-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/block_panel-2026-06-03T03-00-24-824Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "block_panel.json",
+    "atlas": "block_panel.atlas",
+    "textures": [
+      "block_panel.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "end",
+      "start"
+    ],
+    "defaultAnimation": "end",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "panel"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
