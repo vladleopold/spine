@@ -1,5 +1,141 @@
 [
   {
+    "id": "marketingbruno-final-2026-06-04T08-42-13-098Z",
+    "name": "marketingbruno-final",
+    "updatedAt": "2026-06-04T08:42:27.827Z",
+    "animation_asset": {
+      "id": "marketingbruno-final-2026-06-04T08-42-13-098Z",
+      "name": "marketingbruno-final",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "run"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-run"
+        ],
+        "action": [
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/marketingbruno-final-2026-06-04T08-42-13-098Z",
+      "manifestPath": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/manifest.json",
+      "files": [
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/marketingbruno-final/MarketingBruno-final.json",
+          "name": "marketingbruno-final/MarketingBruno-final.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/marketingbruno-final/MarketingBruno-final.atlas",
+          "name": "marketingbruno-final/MarketingBruno-final.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/marketingbruno-final/MarketingBruno-final.png",
+          "name": "marketingbruno-final/MarketingBruno-final.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/run-preview.webm",
+          "name": "run-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/run-preview.webp",
+          "name": "run-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/marketingbruno-final-2026-06-04T08-42-13-098Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "MarketingBruno-final.json",
+      "atlas": "MarketingBruno-final.atlas",
+      "textures": [
+        "MarketingBruno-final.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "run"
+      ],
+      "defaultAnimation": "run",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "marketingbruno-final-2026-06-04T08-35-15-819Z",
     "name": "marketingbruno-final",
     "updatedAt": "2026-06-04T08:35:30.005Z",
