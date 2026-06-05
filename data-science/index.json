@@ -1,5 +1,219 @@
 [
   {
+    "id": "2d_fx-2026-06-05T15-26-10-970Z",
+    "name": "2d_fx",
+    "updatedAt": "2026-06-05T15:26:25.851Z",
+    "animation_asset": {
+      "id": "2d_fx-2026-06-05T15-26-10-970Z",
+      "name": "2d_fx",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "fx",
+          "impact",
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "one-shot"
+        ],
+        "animation_state": [
+          "backup/goal_net_win_fx",
+          "fx_noready/all_fx",
+          "fx_noready/fx_buttonpower_lightning",
+          "fx_noready/fx_multiplier-test",
+          "fx_ready/fx_bonusball",
+          "fx_ready/fx_bonusball-hit",
+          "fx_ready/fx_goal!",
+          "fx_ready/fx_goalpower_lightning",
+          "fx_ready/fx_grassimpact",
+          "fx_ready/fx_grassimpact_strong",
+          "fx_ready/fx_grassimpact_superbonus",
+          "fx_ready/fx_legkick",
+          "fx_ready/fx_tap",
+          "fx_slots/fx_multiplierfx_1-25x",
+          "fx_slots/fx_multiplierfx_1-25x-nobolt",
+          "fx_slots/fx_multiplierfx_2x",
+          "fx_slots/fx_multiplierfx_2x-nobolt",
+          "fx_slots/fx_multiplierfx_5x",
+          "fx_slots/fx_multiplierfx_5x-nobolt",
+          "fx_slots/fx_multiplierfx_8x",
+          "fx_slots/fx_multiplierfx_8x-nobolt",
+          "fx_slots/fx_multiplierfx_10x",
+          "fx_slots/fx_multiplierfx_10x-nobolt",
+          "fx_slots-pivotzero/fx_multiplierfx_1-25x",
+          "fx_slots-pivotzero/fx_multiplierfx_1-25x-nobolt",
+          "fx_slots-pivotzero/fx_multiplierfx_2x",
+          "fx_slots-pivotzero/fx_multiplierfx_2x-nobolt",
+          "fx_slots-pivotzero/fx_multiplierfx_5x",
+          "fx_slots-pivotzero/fx_multiplierfx_5x-nobolt",
+          "fx_slots-pivotzero/fx_multiplierfx_8x",
+          "fx_slots-pivotzero/fx_multiplierfx_8x-nobolt",
+          "fx_slots-pivotzero/fx_multiplierfx_10x",
+          "fx_slots-pivotzero/fx_multiplierfx_10x-nobolt"
+        ],
+        "state": [
+          "default-backup/goal_net_win_fx",
+          "win"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/2d_fx-2026-06-05T15-26-10-970Z",
+      "manifestPath": "library/2d_fx-2026-06-05T15-26-10-970Z/manifest.json",
+      "files": [
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/2d_fx/2D_FX.json",
+          "name": "2d_fx/2D_FX.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/2d_fx/2D_FX_x0.5.atlas",
+          "name": "2d_fx/2D_FX_x0.5.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/2d_fx/2D_FX_x0.5.png",
+          "name": "2d_fx/2D_FX_x0.5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/backup-goal_net_win_fx-preview.webm",
+          "name": "backup-goal_net_win_fx-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/backup-goal_net_win_fx-preview.webp",
+          "name": "backup-goal_net_win_fx-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/2d_fx-2026-06-05T15-26-10-970Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "2D_FX.json",
+      "atlas": "2D_FX_x0.5.atlas",
+      "textures": [
+        "2D_FX_x0.5.png"
+      ],
+      "animationCount": 33,
+      "animationNames": [
+        "Backup/goal_net_win_FX",
+        "FX_noReady/ALL_fx",
+        "FX_noReady/FX_ButtonPower_lightning",
+        "FX_noReady/FX_Multiplier-test",
+        "FX_ready/FX_BonusBall",
+        "FX_ready/FX_BonusBall-Hit",
+        "FX_ready/FX_Goal!",
+        "FX_ready/FX_GoalPower_lightning",
+        "FX_ready/FX_GrassImpact",
+        "FX_ready/FX_GrassImpact_Strong",
+        "FX_ready/FX_GrassImpact_SuperBonus",
+        "FX_ready/FX_LegKick",
+        "FX_ready/FX_Tap",
+        "FX_Slots/FX_MultiplierFX_1-25x",
+        "FX_Slots/FX_MultiplierFX_1-25x-noBolt",
+        "FX_Slots/FX_MultiplierFX_2x",
+        "FX_Slots/FX_MultiplierFX_2x-noBolt",
+        "FX_Slots/FX_MultiplierFX_5x",
+        "FX_Slots/FX_MultiplierFX_5x-noBolt",
+        "FX_Slots/FX_MultiplierFX_8x",
+        "FX_Slots/FX_MultiplierFX_8x-noBolt",
+        "FX_Slots/FX_MultiplierFX_10x",
+        "FX_Slots/FX_MultiplierFX_10x-noBolt",
+        "FX_Slots-PivotZero/FX_MultiplierFX_1-25x",
+        "FX_Slots-PivotZero/FX_MultiplierFX_1-25x-noBolt",
+        "FX_Slots-PivotZero/FX_MultiplierFX_2x",
+        "FX_Slots-PivotZero/FX_MultiplierFX_2x-noBolt",
+        "FX_Slots-PivotZero/FX_MultiplierFX_5x",
+        "FX_Slots-PivotZero/FX_MultiplierFX_5x-noBolt",
+        "FX_Slots-PivotZero/FX_MultiplierFX_8x",
+        "FX_Slots-PivotZero/FX_MultiplierFX_8x-noBolt",
+        "FX_Slots-PivotZero/FX_MultiplierFX_10x",
+        "FX_Slots-PivotZero/FX_MultiplierFX_10x-noBolt"
+      ],
+      "defaultAnimation": "Backup/goal_net_win_FX",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "fx",
+        "impact",
+        "hit"
+      ],
+      "confidence": 0.75,
+      "needsHumanReview": false
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z",
     "name": "uihitenemy_chocolatedie",
     "updatedAt": "2026-06-05T14:14:55.116Z",
