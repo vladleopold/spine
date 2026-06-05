@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "2d_fx-2026-06-05T15-27-43-384Z",
+  "title": "2d_fx",
+  "uploadedAt": "2026-06-05T15:27:43.384Z",
+  "proofPath": "library/2d_fx-2026-06-05T15-27-43-384Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-27-43-384Z/source-proof.json?v=2026-06-05T15-27-43.384Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1s6lp9y_18l9pzn",
+    "anonymousFingerprint": "1s6lp9y",
+    "browserFingerprintSha256": "df92fba2a7f6c1cdceabb773a3d515ddc2984efc621007c0873bdffd6b3928c6",
+    "browserEnvironmentHashSha256": "6f5fc15d20c6d6a841e584bfd3472411fb29018b3d97e2ef678246a13bdf7e12",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 3008,
+        "height": 1692,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Nicosia",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/2d_fx-2026-06-05T15-27-43-384Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:0bcd741817d9510a3e8d822e630aead2dba55bc66a580cfdba9b4601ab63e0a7",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "2d_fx/2D_FX_x0.5.atlas",
+      "bytes": 7020,
+      "sha256": "5cf8b82fc9b100b803c228d57ee746f5f8e56d8c15e52415fa18d0f229d8ac7e"
+    },
+    {
+      "name": "2d_fx/2D_FX_x0.5.png",
+      "bytes": 1597043,
+      "sha256": "02d4c5ad73b7590129d500fdb78589d06f9a09c7c504a552c3373d37f2d001eb"
+    },
+    {
+      "name": "2d_fx/2D_FX.json",
+      "bytes": 144111,
+      "sha256": "4863671d8a05164c8dfef9916e63029e85801a1aa601d7af74a0d7f4e7e8204c"
+    },
+    {
+      "name": "backup-goal_net_win_fx-preview.webm",
+      "bytes": 30898,
+      "sha256": "b65ddf852b0832f0a6b4884f13b8278bb480cce583ff66aef266b0e0fe7ccf55"
+    },
+    {
+      "name": "backup-goal_net_win_fx-preview.webp",
+      "bytes": 3118,
+      "sha256": "367218373ae6fa9f4d748564629822fb139b541a5f97b2acb0cfafacef359de2"
+    }
+  ],
+  "proofHash": "0bcd741817d9510a3e8d822e630aead2dba55bc66a580cfdba9b4601ab63e0a7"
+}
