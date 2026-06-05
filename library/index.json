@@ -1,5 +1,296 @@
 [
   {
+    "id": "2d_fx-2026-06-05T15-26-49-063Z",
+    "title": "2d_fx",
+    "publicOwnerId": "u_14k0axr",
+    "ownerAnonId": "anon_1adtv47_mcsdtl",
+    "ownerAnonFingerprint": "1adtv47",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-05T15:26:49.063Z",
+    "skeleton": "2D_FX.json",
+    "atlas": "2D_FX_x0.5.atlas",
+    "textures": [
+      "2D_FX_x0.5.png"
+    ],
+    "animations": [
+      "Backup/goal_net_win_FX",
+      "FX_noReady/ALL_fx",
+      "FX_noReady/FX_ButtonPower_lightning",
+      "FX_noReady/FX_Multiplier-test",
+      "FX_ready/FX_BonusBall",
+      "FX_ready/FX_BonusBall-Hit",
+      "FX_ready/FX_Goal!",
+      "FX_ready/FX_GoalPower_lightning",
+      "FX_ready/FX_GrassImpact",
+      "FX_ready/FX_GrassImpact_Strong",
+      "FX_ready/FX_GrassImpact_SuperBonus",
+      "FX_ready/FX_LegKick",
+      "FX_ready/FX_Tap",
+      "FX_Slots/FX_MultiplierFX_1-25x",
+      "FX_Slots/FX_MultiplierFX_1-25x-noBolt",
+      "FX_Slots/FX_MultiplierFX_2x",
+      "FX_Slots/FX_MultiplierFX_2x-noBolt",
+      "FX_Slots/FX_MultiplierFX_5x",
+      "FX_Slots/FX_MultiplierFX_5x-noBolt",
+      "FX_Slots/FX_MultiplierFX_8x",
+      "FX_Slots/FX_MultiplierFX_8x-noBolt",
+      "FX_Slots/FX_MultiplierFX_10x",
+      "FX_Slots/FX_MultiplierFX_10x-noBolt",
+      "FX_Slots-PivotZero/FX_MultiplierFX_1-25x",
+      "FX_Slots-PivotZero/FX_MultiplierFX_1-25x-noBolt",
+      "FX_Slots-PivotZero/FX_MultiplierFX_2x",
+      "FX_Slots-PivotZero/FX_MultiplierFX_2x-noBolt",
+      "FX_Slots-PivotZero/FX_MultiplierFX_5x",
+      "FX_Slots-PivotZero/FX_MultiplierFX_5x-noBolt",
+      "FX_Slots-PivotZero/FX_MultiplierFX_8x",
+      "FX_Slots-PivotZero/FX_MultiplierFX_8x-noBolt",
+      "FX_Slots-PivotZero/FX_MultiplierFX_10x",
+      "FX_Slots-PivotZero/FX_MultiplierFX_10x-noBolt"
+    ],
+    "defaultAnimation": "Backup/goal_net_win_FX",
+    "files": [
+      "2d_fx/2D_FX.json",
+      "2d_fx/2D_FX_x0.5.atlas",
+      "2d_fx/2D_FX_x0.5.png",
+      "backup-goal_net_win_fx-preview.webm",
+      "backup-goal_net_win_fx-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/2d_fx-2026-06-05T15-26-49-063Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp?v=2026-06-05T15-26-49.063Z",
+    "thumbnailPath": "library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp?v=2026-06-05T15-26-49.063Z",
+    "thumbnailPosterPath": "library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp",
+    "previewWidth": 1280,
+    "previewHeight": 742,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webm?v=2026-06-05T15-26-49.063Z",
+    "webmPreviewPath": "library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "2d_fx-2026-06-05T15-26-49-063Z",
+      "title": "2d_fx",
+      "uploadedAt": "2026-06-05T15:26:49.063Z",
+      "proofPath": "library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json?v=2026-06-05T15-26-49.063Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1adtv47_mcsdtl",
+        "anonymousFingerprint": "1adtv47",
+        "browserFingerprintSha256": "5bd4c2d58ad6998d3ea059c1b36eca40c9e73ae94cef3083b67d8c52752d84d5",
+        "browserEnvironmentHashSha256": "2ef0e83cd88bcda9cedf393c2c846bbfe6a60c04b664f76f15c363dd6d7706d5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "pt"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2304,
+            "height": 1296,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/2d_fx-2026-06-05T15-26-49-063Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:c3ad730c5980e0929d652460160c29ea8d59d8ae3d12cd0eaa60abe23cb4163a",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "2d_fx/2D_FX_x0.5.atlas",
+          "bytes": 7020,
+          "sha256": "5cf8b82fc9b100b803c228d57ee746f5f8e56d8c15e52415fa18d0f229d8ac7e"
+        },
+        {
+          "name": "2d_fx/2D_FX_x0.5.png",
+          "bytes": 1597043,
+          "sha256": "02d4c5ad73b7590129d500fdb78589d06f9a09c7c504a552c3373d37f2d001eb"
+        },
+        {
+          "name": "2d_fx/2D_FX.json",
+          "bytes": 144111,
+          "sha256": "4863671d8a05164c8dfef9916e63029e85801a1aa601d7af74a0d7f4e7e8204c"
+        },
+        {
+          "name": "backup-goal_net_win_fx-preview.webm",
+          "bytes": 23262,
+          "sha256": "feba3cbcdd6cc9f0dde7d76e7635cdbc0c4bae19ee3bdd612cf1b3fcb59a6997"
+        },
+        {
+          "name": "backup-goal_net_win_fx-preview.webp",
+          "bytes": 2740,
+          "sha256": "e9dc27ed7a33ef45bb1898afd0ccfbe42b8feace1332a4e8de8f2cc75c19fc7a"
+        }
+      ],
+      "proofHash": "c3ad730c5980e0929d652460160c29ea8d59d8ae3d12cd0eaa60abe23cb4163a"
+    },
+    "sourceProofPath": "library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json?v=2026-06-05T15-26-49.063Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-05T15:27:00.042Z",
+      "entryId": "2d_fx-2026-06-05T15-26-49-063Z",
+      "title": "2d_fx",
+      "uploadedAt": "2026-06-05T15:26:49.063Z",
+      "sourceProofHash": "c3ad730c5980e0929d652460160c29ea8d59d8ae3d12cd0eaa60abe23cb4163a",
+      "sourceProofPath": "library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json?v=2026-06-05T15-26-49.063Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1adtv47_mcsdtl",
+        "anonymousFingerprint": "1adtv47",
+        "browserFingerprintSha256": "5bd4c2d58ad6998d3ea059c1b36eca40c9e73ae94cef3083b67d8c52752d84d5",
+        "browserEnvironmentHashSha256": "2ef0e83cd88bcda9cedf393c2c846bbfe6a60c04b664f76f15c363dd6d7706d5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "pt"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2304,
+            "height": 1296,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/2d_fx-2026-06-05T15-26-49-063Z",
+        "files": [
+          {
+            "name": "2d_fx/2D_FX.json",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX.json",
+            "bytes": 144111,
+            "sha256": "4863671d8a05164c8dfef9916e63029e85801a1aa601d7af74a0d7f4e7e8204c",
+            "github": {
+              "contentSha": "39d74e5780ed7d6f35b72accf3455e934d9f734b",
+              "commitSha": "6d98f663931cc24c07f93cd0a911c4e505a6f13f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6d98f663931cc24c07f93cd0a911c4e505a6f13f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX.json?token=ACCECWZLGKGAH3XQCTVRQGTKELVPQ"
+            }
+          },
+          {
+            "name": "2d_fx/2D_FX_x0.5.atlas",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX_x0.5.atlas",
+            "bytes": 7020,
+            "sha256": "5cf8b82fc9b100b803c228d57ee746f5f8e56d8c15e52415fa18d0f229d8ac7e",
+            "github": {
+              "contentSha": "51338c165827e600fbd07c9ae4de672a1acf0838",
+              "commitSha": "1a59a0293abf3fe8c53d870a3533f4ad60d9a082",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1a59a0293abf3fe8c53d870a3533f4ad60d9a082",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX_x0.5.atlas?token=ACCECW3ER5VQSJJNKFRI56LKELVPS"
+            }
+          },
+          {
+            "name": "2d_fx/2D_FX_x0.5.png",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX_x0.5.png",
+            "bytes": 1597043,
+            "sha256": "02d4c5ad73b7590129d500fdb78589d06f9a09c7c504a552c3373d37f2d001eb",
+            "github": {
+              "contentSha": "11c96b3a85a49f553a3eca370c7ae936e3a5f555",
+              "commitSha": "a832b1c6a4f772678babaf7e0545c8a9f5c2dc54",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a832b1c6a4f772678babaf7e0545c8a9f5c2dc54",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/2d_fx/2D_FX_x0.5.png?token=ACCECW3NONONKAGMEW3ZFI3KELVPW"
+            }
+          },
+          {
+            "name": "backup-goal_net_win_fx-preview.webm",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webm",
+            "bytes": 23262,
+            "sha256": "feba3cbcdd6cc9f0dde7d76e7635cdbc0c4bae19ee3bdd612cf1b3fcb59a6997",
+            "github": {
+              "contentSha": "0ab7592474fdd629777f7489f01e4ca77d6b2f16",
+              "commitSha": "210176a955a248914bac0aa6a96866ce483b4afd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/210176a955a248914bac0aa6a96866ce483b4afd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webm?token=ACCECW3QWEOKCJ4OPWNUYRLKELVP2"
+            }
+          },
+          {
+            "name": "backup-goal_net_win_fx-preview.webp",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp",
+            "bytes": 2740,
+            "sha256": "e9dc27ed7a33ef45bb1898afd0ccfbe42b8feace1332a4e8de8f2cc75c19fc7a",
+            "github": {
+              "contentSha": "f57630ccba88483da094759c6ea5024c068d832a",
+              "commitSha": "653ef76e701b5ddacb7625134bd5d569700b0adc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/653ef76e701b5ddacb7625134bd5d569700b0adc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/backup-goal_net_win_fx-preview.webp?token=ACCECW23UE36MGQWRROSC4DKELVP4"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json",
+            "bytes": 2710,
+            "sha256": "95efee5a9729be6e8ca3d7a7178837a29d4b30825fa0407f562716c09162e86a",
+            "github": {
+              "contentSha": "c0d2b33ab5728f7f38667c35ccef71957d96f795",
+              "commitSha": "3eb3cd2309a9e23bf4c4e264f5315102dec554ca",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3eb3cd2309a9e23bf4c4e264f5315102dec554ca",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/2d_fx-2026-06-05T15-26-49-063Z/source-proof.json?token=ACCECW743RT2O73WKN4B33LKELVP6"
+            }
+          }
+        ],
+        "anchorPath": "library/2d_fx-2026-06-05T15-26-49-063Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/blockchain-anchor.json",
+        "anchorCommitSha": "c2629711b86362835d0f758c5dc727472a391575",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/c2629711b86362835d0f758c5dc727472a391575"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "4de9ecd23387f9c9b37298fe3d8623e7024d061bd9094345ae0ee3ce55b7a0b3",
+      "recommendedAnchorPayload": "sha256:4de9ecd23387f9c9b37298fe3d8623e7024d061bd9094345ae0ee3ce55b7a0b3",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x4de9ecd23387f9c9b37298fe3d8623e7024d061bd9094345ae0ee3ce55b7a0b3",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/2d_fx-2026-06-05T15-26-49-063Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/2d_fx-2026-06-05T15-26-49-063Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "2d_fx-2026-06-05T15-26-10-970Z",
     "title": "2d_fx",
     "publicOwnerId": "u_14k0axr",
