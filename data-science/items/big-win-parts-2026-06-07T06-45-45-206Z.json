@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-07T06:45:45.206Z",
+  "updatedAt": "2026-06-07T06:46:01.650Z",
+  "animation_asset": {
+    "id": "big-win-parts-2026-06-07T06-45-45-206Z",
+    "name": "big-win-parts",
+    "domain": "gamedev",
+    "asset_category": "cinematic",
+    "animation_type": "cinematic",
+    "skeleton_type": "object",
+    "content_type": "cinematic",
+    "taxonomy": {
+      "category": "cinematic",
+      "class": "sequence",
+      "type": "cutscene",
+      "tags": [
+        "intro",
+        "outro"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "storytelling"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "clouds-intro",
+        "clouds-loop",
+        "clouds-outro",
+        "extragold-intro",
+        "extragold-loop",
+        "extragold-outro",
+        "fog-intro",
+        "fog-loop",
+        "fog-outro",
+        "gold-intro",
+        "gold-loop",
+        "gold-outro",
+        "lightning",
+        "middle_cloud-intro",
+        "middle_cloud-loop",
+        "middle_cloud-outro",
+        "mushroom-intro",
+        "mushroom-loop",
+        "mushroom-outro",
+        "rainbow-intro",
+        "rainbow-loop",
+        "rainbow-outro",
+        "scroll-intro",
+        "scroll-loop",
+        "scroll-outro",
+        "text-tier-1-intro",
+        "text-tier-1-loop",
+        "text-tier-1-outro",
+        "text-tier-2-intro",
+        "text-tier-2-loop",
+        "text-tier-2-outro",
+        "text-tier-3-intro",
+        "text-tier-3-loop",
+        "text-tier-3-outro",
+        "text-tier-4-intro",
+        "text-tier-4-loop",
+        "text-tier-4-outro"
+      ],
+      "state": [
+        "default-clouds-intro",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": true,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/big-win-parts-2026-06-07T06-45-45-206Z",
+    "manifestPath": "library/big-win-parts-2026-06-07T06-45-45-206Z/manifest.json",
+    "files": [
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/big-win-parts/big-win-parts.json",
+        "name": "big-win-parts/big-win-parts.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/big-win-parts/big-win-parts.atlas",
+        "name": "big-win-parts/big-win-parts.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/big-win-parts/big-win-parts.webp",
+        "name": "big-win-parts/big-win-parts.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/clouds-intro-preview.webm",
+        "name": "clouds-intro-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/clouds-intro-preview.webp",
+        "name": "clouds-intro-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/big-win-parts-2026-06-07T06-45-45-206Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "big-win-parts.json",
+    "atlas": "big-win-parts.atlas",
+    "textures": [
+      "big-win-parts.webp"
+    ],
+    "animationCount": 37,
+    "animationNames": [
+      "clouds-intro",
+      "clouds-loop",
+      "clouds-outro",
+      "extragold-intro",
+      "extragold-loop",
+      "extragold-outro",
+      "fog-intro",
+      "fog-loop",
+      "fog-outro",
+      "gold-intro",
+      "gold-loop",
+      "gold-outro",
+      "lightning",
+      "Middle_cloud-intro",
+      "Middle_cloud-loop",
+      "Middle_cloud-outro",
+      "mushroom-intro",
+      "mushroom-loop",
+      "mushroom-outro",
+      "rainbow-intro",
+      "rainbow-loop",
+      "rainbow-outro",
+      "scroll-intro",
+      "scroll-loop",
+      "scroll-outro",
+      "text-tier-1-intro",
+      "text-tier-1-loop",
+      "text-tier-1-outro",
+      "text-tier-2-intro",
+      "text-tier-2-loop",
+      "text-tier-2-outro",
+      "text-tier-3-intro",
+      "text-tier-3-loop",
+      "text-tier-3-outro",
+      "text-tier-4-intro",
+      "text-tier-4-loop",
+      "text-tier-4-outro"
+    ],
+    "defaultAnimation": "clouds-intro",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "intro",
+      "outro"
+    ],
+    "confidence": 0.65,
+    "needsHumanReview": false
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
