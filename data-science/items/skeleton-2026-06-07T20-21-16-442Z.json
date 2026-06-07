@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-07T20:21:16.442Z",
+  "updatedAt": "2026-06-07T20:21:32.987Z",
+  "animation_asset": {
+    "id": "skeleton-2026-06-07T20-21-16-442Z",
+    "name": "skeleton",
+    "domain": "gamedev",
+    "asset_category": "character",
+    "animation_type": "character",
+    "skeleton_type": "humanoid",
+    "content_type": "character",
+    "taxonomy": {
+      "category": "character",
+      "class": "humanoid",
+      "type": "character",
+      "tags": [
+        "character"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "avatar"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "animation_state": [
+        "character_idle",
+        "character_idle2",
+        "character_redcard",
+        "character_whistle",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-character_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-06-07T20-21-16-442Z",
+    "manifestPath": "library/skeleton-2026-06-07T20-21-16-442Z/manifest.json",
+    "files": [
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/skeleton/skeleton.json",
+        "name": "skeleton/skeleton.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/skeleton/caracter_furball.atlas",
+        "name": "skeleton/caracter_furball.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/skeleton/caracter_furball.webp",
+        "name": "skeleton/caracter_furball.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/character_idle-preview.webm",
+        "name": "character_idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/character_idle-preview.webp",
+        "name": "character_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-06-07T20-21-16-442Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "skeleton.json",
+    "atlas": "caracter_furball.atlas",
+    "textures": [
+      "caracter_furball.webp"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "character_idle",
+      "character_idle2",
+      "character_redcard",
+      "character_whistle"
+    ],
+    "defaultAnimation": "character_idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "character"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
