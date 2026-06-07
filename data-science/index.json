@@ -1,5 +1,147 @@
 [
   {
+    "id": "reel-board-2026-06-07T21-00-31-481Z",
+    "name": "reel-board",
+    "updatedAt": "2026-06-07T21:00:44.648Z",
+    "animation_asset": {
+      "id": "reel-board-2026-06-07T21-00-31-481Z",
+      "name": "reel-board",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "reel"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "reel_board_anticipation",
+          "reel_board_in",
+          "reel_board_static"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-reel_board_anticipation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/reel-board-2026-06-07T21-00-31-481Z",
+      "manifestPath": "library/reel-board-2026-06-07T21-00-31-481Z/manifest.json",
+      "files": [
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-board.json",
+          "name": "reel-board/reel-board.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.atlas",
+          "name": "reel-board/reel-boardmobile.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.webp",
+          "name": "reel-board/reel-boardmobile.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webm",
+          "name": "reel_board_anticipation-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp",
+          "name": "reel_board_anticipation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/reel-board-2026-06-07T21-00-31-481Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "reel-board.json",
+      "atlas": "reel-boardmobile.atlas",
+      "textures": [
+        "reel-boardmobile.webp"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "reel_board_anticipation",
+        "reel_board_in",
+        "reel_board_static"
+      ],
+      "defaultAnimation": "reel_board_anticipation",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "reel"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "reel-board-2026-06-07T21-00-06-787Z",
     "name": "reel-board",
     "updatedAt": "2026-06-07T21:00:19.968Z",
