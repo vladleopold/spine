@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "reel-board-2026-06-07T21-00-06-787Z",
+  "title": "reel-board",
+  "uploadedAt": "2026-06-07T21:00:06.787Z",
+  "proofPath": "library/reel-board-2026-06-07T21-00-06-787Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-06-787Z/source-proof.json?v=2026-06-07T21-00-06.787Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1lt8r3c_1qeek5q",
+    "anonymousFingerprint": "1lt8r3c",
+    "browserFingerprintSha256": "58eebe294ee4dd4791c2c80745721088727f124e060b4165053ac215eaa46f1d",
+    "browserEnvironmentHashSha256": "2498d1a5757d8c85d5db72e45597cae4b459e9f4bab27ff346b157f576ed2854",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 2,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Bucharest",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/reel-board-2026-06-07T21-00-06-787Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:4b93557eae072b36c89b9858c86c3fe17cde4346e7da74b6f36f9f2c3f0d8150",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "reel_board_anticipation-preview.webm",
+      "bytes": 384987,
+      "sha256": "8d49e298c7444992f474647298ae8fffd7419aad2a6268fa478e0ded4c0c1053"
+    },
+    {
+      "name": "reel_board_anticipation-preview.webp",
+      "bytes": 41966,
+      "sha256": "4dd6921e49b6c4f5b6b304b9e33384119d1342532d5e1015f2329d8dc0cc25e1"
+    },
+    {
+      "name": "reel-board/reel-board.json",
+      "bytes": 31047,
+      "sha256": "b072d6bc83ca51d114e21a71a3a328e6ea0b399be962fe94e241d90540c90bc9"
+    },
+    {
+      "name": "reel-board/reel-boardhd.atlas",
+      "bytes": 276,
+      "sha256": "07e7cc891dd2193071685680f2f9812ad0f20833746cf752b56ffdfa3045b1d4"
+    },
+    {
+      "name": "reel-board/reel-boardhd.webp",
+      "bytes": 258256,
+      "sha256": "7bb0f5fea5ee8da8160beeb4723f6b9a599c2530b0634b9d76ff056a60f7e891"
+    }
+  ],
+  "proofHash": "4b93557eae072b36c89b9858c86c3fe17cde4346e7da74b6f36f9f2c3f0d8150"
+}
