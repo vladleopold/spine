@@ -1,5 +1,262 @@
 [
   {
+    "id": "reel-board-2026-06-07T21-00-31-481Z",
+    "title": "reel-board",
+    "publicOwnerId": "u_875ziv",
+    "ownerAnonId": "anon_1lt8r3c_1qeek5q",
+    "ownerAnonFingerprint": "1lt8r3c",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-07T21:00:31.481Z",
+    "skeleton": "reel-board.json",
+    "atlas": "reel-boardmobile.atlas",
+    "textures": [
+      "reel-boardmobile.webp"
+    ],
+    "animations": [
+      "reel_board_anticipation",
+      "reel_board_in",
+      "reel_board_static"
+    ],
+    "defaultAnimation": "reel_board_anticipation",
+    "files": [
+      "reel-board/reel-board.json",
+      "reel-board/reel-boardmobile.atlas",
+      "reel-board/reel-boardmobile.webp",
+      "reel_board_anticipation-preview.webm",
+      "reel_board_anticipation-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/reel-board-2026-06-07T21-00-31-481Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp?v=2026-06-07T21-00-31.481Z",
+    "thumbnailPath": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp?v=2026-06-07T21-00-31.481Z",
+    "thumbnailPosterPath": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp",
+    "previewWidth": 1280,
+    "previewHeight": 1028,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webm?v=2026-06-07T21-00-31.481Z",
+    "webmPreviewPath": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "reel-board-2026-06-07T21-00-31-481Z",
+      "title": "reel-board",
+      "uploadedAt": "2026-06-07T21:00:31.481Z",
+      "proofPath": "library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json?v=2026-06-07T21-00-31.481Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1lt8r3c_1qeek5q",
+        "anonymousFingerprint": "1lt8r3c",
+        "browserFingerprintSha256": "58eebe294ee4dd4791c2c80745721088727f124e060b4165053ac215eaa46f1d",
+        "browserEnvironmentHashSha256": "2498d1a5757d8c85d5db72e45597cae4b459e9f4bab27ff346b157f576ed2854",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 2,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Bucharest",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/reel-board-2026-06-07T21-00-31-481Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:e14304e67d9619a43c86e96a5f27e5e8ce528e045db671efa8b424177883e915",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "reel_board_anticipation-preview.webm",
+          "bytes": 377001,
+          "sha256": "f7e7094cffcbc6025f7a4ab44d93a706b3fed8b9b833cb791866b98d7f2777a6"
+        },
+        {
+          "name": "reel_board_anticipation-preview.webp",
+          "bytes": 42410,
+          "sha256": "4a33d2be2407bc8874c9da3f8b23dd919d9b5a2525a6da2ffd8c3c6287bdf838"
+        },
+        {
+          "name": "reel-board/reel-board.json",
+          "bytes": 31047,
+          "sha256": "b072d6bc83ca51d114e21a71a3a328e6ea0b399be962fe94e241d90540c90bc9"
+        },
+        {
+          "name": "reel-board/reel-boardmobile.atlas",
+          "bytes": 280,
+          "sha256": "f9be553fcbcf6d72d79c13b745ac2157e57c09c2225310410bd32417a16a67c5"
+        },
+        {
+          "name": "reel-board/reel-boardmobile.webp",
+          "bytes": 258256,
+          "sha256": "7bb0f5fea5ee8da8160beeb4723f6b9a599c2530b0634b9d76ff056a60f7e891"
+        }
+      ],
+      "proofHash": "e14304e67d9619a43c86e96a5f27e5e8ce528e045db671efa8b424177883e915"
+    },
+    "sourceProofPath": "library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json?v=2026-06-07T21-00-31.481Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-07T21:00:42.867Z",
+      "entryId": "reel-board-2026-06-07T21-00-31-481Z",
+      "title": "reel-board",
+      "uploadedAt": "2026-06-07T21:00:31.481Z",
+      "sourceProofHash": "e14304e67d9619a43c86e96a5f27e5e8ce528e045db671efa8b424177883e915",
+      "sourceProofPath": "library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json?v=2026-06-07T21-00-31.481Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1lt8r3c_1qeek5q",
+        "anonymousFingerprint": "1lt8r3c",
+        "browserFingerprintSha256": "58eebe294ee4dd4791c2c80745721088727f124e060b4165053ac215eaa46f1d",
+        "browserEnvironmentHashSha256": "2498d1a5757d8c85d5db72e45597cae4b459e9f4bab27ff346b157f576ed2854",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 2,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Bucharest",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/reel-board-2026-06-07T21-00-31-481Z",
+        "files": [
+          {
+            "name": "reel-board/reel-board.json",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-board.json",
+            "bytes": 31047,
+            "sha256": "b072d6bc83ca51d114e21a71a3a328e6ea0b399be962fe94e241d90540c90bc9",
+            "github": {
+              "contentSha": "5f75e013929272cf0f19be662c1cbcea46874717",
+              "commitSha": "dbc86566b727e4ed5b7ff6e7802ae5a6698b1424",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/dbc86566b727e4ed5b7ff6e7802ae5a6698b1424",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-board.json?token=ACCECW2WUFJMQPADUQO5OQDKEXOC4"
+            }
+          },
+          {
+            "name": "reel-board/reel-boardmobile.atlas",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.atlas",
+            "bytes": 280,
+            "sha256": "f9be553fcbcf6d72d79c13b745ac2157e57c09c2225310410bd32417a16a67c5",
+            "github": {
+              "contentSha": "f428bc7c66062f624df01a34addeb2557c74888e",
+              "commitSha": "36297ab7d044a72f0d670025f94103124f8e7d45",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/36297ab7d044a72f0d670025f94103124f8e7d45",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.atlas?token=ACCECW6JGSOMKYPCYLXUAR3KEXOC6"
+            }
+          },
+          {
+            "name": "reel-board/reel-boardmobile.webp",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.webp",
+            "bytes": 258256,
+            "sha256": "7bb0f5fea5ee8da8160beeb4723f6b9a599c2530b0634b9d76ff056a60f7e891",
+            "github": {
+              "contentSha": "c8c175880eb95ad73c3ffafd81e947749dd4f251",
+              "commitSha": "8b28f25d80a772c12571b7efaf9fc475fb3beb5f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8b28f25d80a772c12571b7efaf9fc475fb3beb5f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/reel-board/reel-boardmobile.webp?token=ACCECW32PUGA5CGZUAS5GU3KEXODC"
+            }
+          },
+          {
+            "name": "reel_board_anticipation-preview.webm",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webm",
+            "bytes": 377001,
+            "sha256": "f7e7094cffcbc6025f7a4ab44d93a706b3fed8b9b833cb791866b98d7f2777a6",
+            "github": {
+              "contentSha": "cd741ff0e07c4dddcb621f5ac576d90c23175d30",
+              "commitSha": "95a2197ab63fd56494eece2eb80c8d8952573d93",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/95a2197ab63fd56494eece2eb80c8d8952573d93",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webm?token=ACCECW7LLBX5TR4AQQVPXK3KEXODI"
+            }
+          },
+          {
+            "name": "reel_board_anticipation-preview.webp",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp",
+            "bytes": 42410,
+            "sha256": "4a33d2be2407bc8874c9da3f8b23dd919d9b5a2525a6da2ffd8c3c6287bdf838",
+            "github": {
+              "contentSha": "cc5134ff4d0edcc2406459680938ea41c8628ec2",
+              "commitSha": "4b4d5a6bd24d7e488841a250054a8b389f6dee64",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4b4d5a6bd24d7e488841a250054a8b389f6dee64",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/reel_board_anticipation-preview.webp?token=ACCECW73KYVYVSKKJJYSBPTKEXODK"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json",
+            "bytes": 2740,
+            "sha256": "71605c1f60ef284015b8debaf221ab90d9b44311900a8a1ad8626d07281cf0fd",
+            "github": {
+              "contentSha": "8e83385ec684707a505e760c9a7461940c7958e0",
+              "commitSha": "2e3c4a3bf090021653ccce191709f949f2906ae9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2e3c4a3bf090021653ccce191709f949f2906ae9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reel-board-2026-06-07T21-00-31-481Z/source-proof.json?token=ACCECW5GRVA5TSTL2ICKXB3KEXODM"
+            }
+          }
+        ],
+        "anchorPath": "library/reel-board-2026-06-07T21-00-31-481Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/blockchain-anchor.json",
+        "anchorCommitSha": "41b9dea8ee15074fbb0fe2329d98c25983fb9177",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/41b9dea8ee15074fbb0fe2329d98c25983fb9177"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "2d8fcb7c4d5da12b49009eb3e391093a42a8a876820bd1319416dea3ca90e124",
+      "recommendedAnchorPayload": "sha256:2d8fcb7c4d5da12b49009eb3e391093a42a8a876820bd1319416dea3ca90e124",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x2d8fcb7c4d5da12b49009eb3e391093a42a8a876820bd1319416dea3ca90e124",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/reel-board-2026-06-07T21-00-31-481Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/reel-board-2026-06-07T21-00-31-481Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "reel-board-2026-06-07T21-00-06-787Z",
     "title": "reel-board",
     "publicOwnerId": "u_875ziv",
