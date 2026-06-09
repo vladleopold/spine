@@ -1,5 +1,228 @@
 [
   {
+    "id": "leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z",
+    "name": "leppy_wof_anim_05_bluesuittweak",
+    "updatedAt": "2026-06-09T14:14:01.484Z",
+    "animation_asset": {
+      "id": "leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z",
+      "name": "leppy_wof_anim_05_bluesuittweak",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "coin"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "leprechaun_coinflip",
+          "leprechaun_wof_idle",
+          "leprechaun_wof_spin",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-leprechaun_wof_idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z",
+      "manifestPath": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/manifest.json",
+      "files": [
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/Leppy_WOF_Anim_05_BlueSuitTweak.json",
+          "name": "leppy_wof_anim_05_bluesuittweak/Leppy_WOF_Anim_05_BlueSuitTweak.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/Leppy_WOF_Anim_05_BlueSuitTweak.atlas",
+          "name": "leppy_wof_anim_05_bluesuittweak/Leppy_WOF_Anim_05_BlueSuitTweak.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_2.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_2.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_3.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_3.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_4.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_4.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_5.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_5.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_6.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_6.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_7.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_7.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_8.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_8.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_9.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_9.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_10.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_10.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_11.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_11.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_12.webp",
+          "name": "leppy_wof_anim_05_bluesuittweak/leppy_wof_anim_05_bluesuittweak_12.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leprechaun_wof_idle-preview.webm",
+          "name": "leprechaun_wof_idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/leprechaun_wof_idle-preview.webp",
+          "name": "leprechaun_wof_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/leppy_wof_anim_05_bluesuittweak-2026-06-09T14-13-18-238Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Leppy_WOF_Anim_05_BlueSuitTweak.json",
+      "atlas": "Leppy_WOF_Anim_05_BlueSuitTweak.atlas",
+      "textures": [
+        "leppy_wof_anim_05_bluesuittweak.webp",
+        "leppy_wof_anim_05_bluesuittweak_2.webp",
+        "leppy_wof_anim_05_bluesuittweak_3.webp",
+        "leppy_wof_anim_05_bluesuittweak_4.webp",
+        "leppy_wof_anim_05_bluesuittweak_5.webp",
+        "leppy_wof_anim_05_bluesuittweak_6.webp",
+        "leppy_wof_anim_05_bluesuittweak_7.webp",
+        "leppy_wof_anim_05_bluesuittweak_8.webp",
+        "leppy_wof_anim_05_bluesuittweak_9.webp",
+        "leppy_wof_anim_05_bluesuittweak_10.webp",
+        "leppy_wof_anim_05_bluesuittweak_11.webp",
+        "leppy_wof_anim_05_bluesuittweak_12.webp"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "Leprechaun_CoinFlip",
+        "Leprechaun_WOF_Idle",
+        "Leprechaun_WOF_Spin"
+      ],
+      "defaultAnimation": "Leprechaun_WOF_Idle",
+      "fileCount": 18,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 13
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "coin"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "rainbow-feature-2026-06-09T13-40-33-220Z",
     "name": "rainbow-feature",
     "updatedAt": "2026-06-09T13:41:09.156Z",
