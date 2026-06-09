@@ -1,5 +1,370 @@
 [
   {
+    "id": "rainbow-feature-2026-06-09T13-40-33-220Z",
+    "title": "rainbow-feature",
+    "publicOwnerId": "u_1omwr8o",
+    "ownerAnonId": "anon_1quh5i1_1ry2579",
+    "ownerAnonFingerprint": "1quh5i1",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-09T13:40:33.220Z",
+    "skeleton": "rainbow-feature.json",
+    "atlas": "rainbow-feature.atlas",
+    "textures": [
+      "rainbow-feature.webp",
+      "rainbow-feature_2.webp",
+      "rainbow-feature_3.webp",
+      "rainbow-feature_4.webp",
+      "rainbow-feature_5.webp",
+      "rainbow-feature_6.webp"
+    ],
+    "animations": [
+      "level-1-loop",
+      "level-1-start",
+      "level-2-loop",
+      "level-2-start",
+      "level-3-loop",
+      "level-3-start",
+      "level-4-loop",
+      "level-4-start",
+      "level-5-loop",
+      "level-5-start",
+      "level-6-loop",
+      "level-6-start",
+      "level-7-loop",
+      "level-7-start",
+      "Rainbow_L2R_Reveal",
+      "Rainbow_Pop"
+    ],
+    "defaultAnimation": "Rainbow_L2R_Reveal",
+    "files": [
+      "rainbow-feature/rainbow-feature.json",
+      "rainbow-feature/rainbow-feature.atlas",
+      "rainbow-feature/rainbow-feature.webp",
+      "rainbow-feature/rainbow-feature_2.webp",
+      "rainbow-feature/rainbow-feature_3.webp",
+      "rainbow-feature/rainbow-feature_4.webp",
+      "rainbow-feature/rainbow-feature_5.webp",
+      "rainbow-feature/rainbow-feature_6.webp",
+      "rainbow_l2r_reveal-preview.webm",
+      "rainbow_l2r_reveal-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp?v=2026-06-09T13-40-33.220Z",
+    "thumbnailPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp?v=2026-06-09T13-40-33.220Z",
+    "thumbnailPosterPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp",
+    "previewWidth": 960,
+    "previewHeight": 720,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webm?v=2026-06-09T13-40-33.220Z",
+    "webmPreviewPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "rainbow-feature-2026-06-09T13-40-33-220Z",
+      "title": "rainbow-feature",
+      "uploadedAt": "2026-06-09T13:40:33.220Z",
+      "proofPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json?v=2026-06-09T13-40-33.220Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1quh5i1_1ry2579",
+        "anonymousFingerprint": "1quh5i1",
+        "browserFingerprintSha256": "439277c01c91747c3c82db29f476202811536b3f018d4659dfa0ebed75464519",
+        "browserEnvironmentHashSha256": "49d3964104648946982a696207a6b724bfe2090b50cbb96c113e710b96f61263",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 2,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Calcutta",
+          "timezoneOffset": -330,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:6f6ee07920f2dff276043a9d5a71a698908168077c112433ca60ba859a2fabad",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "rainbow_l2r_reveal-preview.webm",
+          "bytes": 180114,
+          "sha256": "539043e23bddeb4c2c01e2b381f446f2a26a5e83f9f41809f1c18bec3a77c83a"
+        },
+        {
+          "name": "rainbow_l2r_reveal-preview.webp",
+          "bytes": 4616,
+          "sha256": "92cb52e6c656dff5e5e029bddcf823e85907b846d0c1298a350dc218e5fc2a2f"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature_2.webp",
+          "bytes": 2567246,
+          "sha256": "01f36a8f07c41e6b1aa6c2472edba372302cb2f34cddb0661653066fa1f80226"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature_3.webp",
+          "bytes": 442866,
+          "sha256": "b17c7b1c09d3f704b27109891510e385091e202f41e9b2ab198a2aacf1ace76a"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature_4.webp",
+          "bytes": 2441737,
+          "sha256": "52197dfa2b172b439669c9b9478f9704622070327e396e83c3d83155862eab6e"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature_5.webp",
+          "bytes": 2035013,
+          "sha256": "38bd34f46d6f865bf73d56ed157e7bf0f7da256475085fa04bcf7fb031571920"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature_6.webp",
+          "bytes": 397422,
+          "sha256": "b35ce56d532d3be61d549b483eaf27647203828c8909700e0610b241b5a3a299"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature.atlas",
+          "bytes": 3410,
+          "sha256": "82e4acf6405a129c2bb27c116c9a430a2720be5aeb88ed74c09b1057dfecd820"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature.json",
+          "bytes": 71282,
+          "sha256": "11de716b3bb0a0fd9582ef84d15564f8bad45dfae47ec01f5795c04f1473582a"
+        },
+        {
+          "name": "rainbow-feature/rainbow-feature.webp",
+          "bytes": 2608457,
+          "sha256": "afeb17d6977266c3118fd8eb275ab27818e4505b3b3df1d0edaf6d3fbd5c95a1"
+        }
+      ],
+      "proofHash": "6f6ee07920f2dff276043a9d5a71a698908168077c112433ca60ba859a2fabad"
+    },
+    "sourceProofPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json?v=2026-06-09T13-40-33.220Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-09T13:41:06.401Z",
+      "entryId": "rainbow-feature-2026-06-09T13-40-33-220Z",
+      "title": "rainbow-feature",
+      "uploadedAt": "2026-06-09T13:40:33.220Z",
+      "sourceProofHash": "6f6ee07920f2dff276043a9d5a71a698908168077c112433ca60ba859a2fabad",
+      "sourceProofPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json?v=2026-06-09T13-40-33.220Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1quh5i1_1ry2579",
+        "anonymousFingerprint": "1quh5i1",
+        "browserFingerprintSha256": "439277c01c91747c3c82db29f476202811536b3f018d4659dfa0ebed75464519",
+        "browserEnvironmentHashSha256": "49d3964104648946982a696207a6b724bfe2090b50cbb96c113e710b96f61263",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 2,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Calcutta",
+          "timezoneOffset": -330,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z",
+        "files": [
+          {
+            "name": "rainbow-feature/rainbow-feature.json",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.json",
+            "bytes": 71282,
+            "sha256": "11de716b3bb0a0fd9582ef84d15564f8bad45dfae47ec01f5795c04f1473582a",
+            "github": {
+              "contentSha": "1b36ecea734685704237f0c5485d162f82e138ac",
+              "commitSha": "4393d3f325311e28f4733f49be522ca76c061d24",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4393d3f325311e28f4733f49be522ca76c061d24",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.json?token=ACCECW3A425Q7T6TV4YSBULKFAMBA"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature.atlas",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.atlas",
+            "bytes": 3410,
+            "sha256": "82e4acf6405a129c2bb27c116c9a430a2720be5aeb88ed74c09b1057dfecd820",
+            "github": {
+              "contentSha": "a595f8e0e700536fcdb10ac69b2b0fa13d9ae6f5",
+              "commitSha": "b610b826f6d2231ea4646301317d4edcda53de6f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b610b826f6d2231ea4646301317d4edcda53de6f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.atlas?token=ACCECWZT7DCUJYWFZW4ELTDKFAMBE"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.webp",
+            "bytes": 2608457,
+            "sha256": "afeb17d6977266c3118fd8eb275ab27818e4505b3b3df1d0edaf6d3fbd5c95a1",
+            "github": {
+              "contentSha": "24e4497db11abd615a236b8312f2ed346642d827",
+              "commitSha": "fea4f5a70a267787b17e48ce5738d2f3a2759103",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fea4f5a70a267787b17e48ce5738d2f3a2759103",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature.webp?token=ACCECWYSXM4WUMXJSRMVVTTKFAMBO"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature_2.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_2.webp",
+            "bytes": 2567246,
+            "sha256": "01f36a8f07c41e6b1aa6c2472edba372302cb2f34cddb0661653066fa1f80226",
+            "github": {
+              "contentSha": "5f04e581431d531d093657e7a0cb76fc073de834",
+              "commitSha": "3441fc94d35647a4770841714981f27178911591",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3441fc94d35647a4770841714981f27178911591",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_2.webp?token=ACCECW5BIYQIWVJR7Q2G5IDKFAMBW"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature_3.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_3.webp",
+            "bytes": 442866,
+            "sha256": "b17c7b1c09d3f704b27109891510e385091e202f41e9b2ab198a2aacf1ace76a",
+            "github": {
+              "contentSha": "833fbae67a4aa09ac983637642ec358abb2e30d1",
+              "commitSha": "105abafd23ef9f40d37d55b16f34b033b1db809d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/105abafd23ef9f40d37d55b16f34b033b1db809d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_3.webp?token=ACCECW6734VVDMWMOOSR263KFAMB2"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature_4.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_4.webp",
+            "bytes": 2441737,
+            "sha256": "52197dfa2b172b439669c9b9478f9704622070327e396e83c3d83155862eab6e",
+            "github": {
+              "contentSha": "2288fa7110bd5900c78b6ac5a7caf746aa6cdd94",
+              "commitSha": "21480b86844f94aa84bfbda137759fe6377b3ec1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/21480b86844f94aa84bfbda137759fe6377b3ec1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_4.webp?token=ACCECW2OKBJTKEPEMYXCERDKFAMCE"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature_5.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_5.webp",
+            "bytes": 2035013,
+            "sha256": "38bd34f46d6f865bf73d56ed157e7bf0f7da256475085fa04bcf7fb031571920",
+            "github": {
+              "contentSha": "62865276344b7a52331dc937f3e253df8f098a1a",
+              "commitSha": "91b61741367a1acdd07c86c9ab150a3894d9f2c5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/91b61741367a1acdd07c86c9ab150a3894d9f2c5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_5.webp?token=ACCECW3L3I5MCDV7I2K75LLKFAMCM"
+            }
+          },
+          {
+            "name": "rainbow-feature/rainbow-feature_6.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_6.webp",
+            "bytes": 397422,
+            "sha256": "b35ce56d532d3be61d549b483eaf27647203828c8909700e0610b241b5a3a299",
+            "github": {
+              "contentSha": "3ece5c47566a8a17698a4712d4a969a5e4b0dd16",
+              "commitSha": "75d6258883cb6e52b0df05ec3a88121b503740d3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/75d6258883cb6e52b0df05ec3a88121b503740d3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow-feature/rainbow-feature_6.webp?token=ACCECW45U2UX43I3GITDFY3KFAMCQ"
+            }
+          },
+          {
+            "name": "rainbow_l2r_reveal-preview.webm",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webm",
+            "bytes": 180114,
+            "sha256": "539043e23bddeb4c2c01e2b381f446f2a26a5e83f9f41809f1c18bec3a77c83a",
+            "github": {
+              "contentSha": "c0d1c895857d80faa6c01f6e3f5960a1e38a4cf1",
+              "commitSha": "a279b7fc722181f23a8029e976584dbf386ff03e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a279b7fc722181f23a8029e976584dbf386ff03e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webm?token=ACCECW7UE4PTW4KXI2CWM4TKFAMCU"
+            }
+          },
+          {
+            "name": "rainbow_l2r_reveal-preview.webp",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp",
+            "bytes": 4616,
+            "sha256": "92cb52e6c656dff5e5e029bddcf823e85907b846d0c1298a350dc218e5fc2a2f",
+            "github": {
+              "contentSha": "1d67c196d114f062f6852f88ec19cdcdefc3c2f9",
+              "commitSha": "5dbc1e34aedd8a16c2168c25ff6808a9aca06290",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5dbc1e34aedd8a16c2168c25ff6808a9aca06290",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/rainbow_l2r_reveal-preview.webp?token=ACCECW4TN2QV6VE37D6QKSTKFAMCY"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json",
+            "bytes": 3649,
+            "sha256": "15fb22b55f189356fc961b7b942eb7e51cccab198bac49ffb3914e744c11d060",
+            "github": {
+              "contentSha": "6c149046b1c6d80f6d67acf8f94684c5c0d4966d",
+              "commitSha": "589ad54c049528d186bb250cbebb9669888f5ba4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/589ad54c049528d186bb250cbebb9669888f5ba4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/rainbow-feature-2026-06-09T13-40-33-220Z/source-proof.json?token=ACCECWZ4EPZ25OSGTP2UUULKFAMC2"
+            }
+          }
+        ],
+        "anchorPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/blockchain-anchor.json",
+        "anchorCommitSha": "81032f8d4415f6883d9bb4990f060f4b91a8af3c",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/81032f8d4415f6883d9bb4990f060f4b91a8af3c"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "5640fc6e9e05208290729a98b8db51ab754630983ca85e85fe9c28829950a9b4",
+      "recommendedAnchorPayload": "sha256:5640fc6e9e05208290729a98b8db51ab754630983ca85e85fe9c28829950a9b4",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x5640fc6e9e05208290729a98b8db51ab754630983ca85e85fe9c28829950a9b4",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/rainbow-feature-2026-06-09T13-40-33-220Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/rainbow-feature-2026-06-09T13-40-33-220Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z",
     "title": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc",
     "publicOwnerId": "u_d3102c",
