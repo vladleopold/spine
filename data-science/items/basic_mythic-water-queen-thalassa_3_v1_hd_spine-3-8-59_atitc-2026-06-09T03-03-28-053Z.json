@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-09T03:03:28.053Z",
+  "updatedAt": "2026-06-09T03:03:43.529Z",
+  "animation_asset": {
+    "id": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z",
+    "name": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "attack",
+        "attack_skill",
+        "breathe",
+        "levelup",
+        "prone",
+        "special1",
+        "walk"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-attack"
+      ],
+      "action": [
+        "walk",
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z",
+    "manifestPath": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/manifest.json",
+    "files": [
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.skel",
+        "name": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.atlas",
+        "name": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.png",
+        "name": "basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc/basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/attack-preview.webm",
+        "name": "attack-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/attack-preview.webp",
+        "name": "attack-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.skel",
+    "atlas": "basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.atlas",
+    "textures": [
+      "basic_mythic-water-queen-thalassa_3_v1_HD_spine-3-8-59_atitc.png"
+    ],
+    "animationCount": 7,
+    "animationNames": [
+      "attack",
+      "attack_skill",
+      "breathe",
+      "levelup",
+      "prone",
+      "special1",
+      "walk"
+    ],
+    "defaultAnimation": "attack",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
