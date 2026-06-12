@@ -1,5 +1,151 @@
 [
   {
+    "id": "papper-2026-06-12T19-31-59-270Z",
+    "name": "papper",
+    "updatedAt": "2026-06-12T19:32:13.844Z",
+    "animation_asset": {
+      "id": "papper-2026-06-12T19-31-59-270Z",
+      "name": "papper",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "one-shot"
+        ],
+        "animation_state": [
+          "hit",
+          "landing"
+        ],
+        "state": [
+          "default-hit"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/papper-2026-06-12T19-31-59-270Z",
+      "manifestPath": "library/papper-2026-06-12T19-31-59-270Z/manifest.json",
+      "files": [
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.json",
+          "name": "papper/Papper.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.atlas",
+          "name": "papper/Papper.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.webp",
+          "name": "papper/Papper.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webm",
+          "name": "hit-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp",
+          "name": "hit-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/papper-2026-06-12T19-31-59-270Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Papper.json",
+      "atlas": "Papper.atlas",
+      "textures": [
+        "Papper.webp"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "Hit",
+        "Landing"
+      ],
+      "defaultAnimation": "Hit",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "bag-2026-06-12T19-30-07-441Z",
     "name": "bag",
     "updatedAt": "2026-06-12T19:30:21.170Z",
