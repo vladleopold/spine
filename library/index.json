@@ -1,5 +1,270 @@
 [
   {
+    "id": "carpet-wild-2026-06-12T19-29-02-192Z",
+    "title": "carpet-wild",
+    "publicOwnerId": "u_1cu3tcn",
+    "ownerAnonId": "anon_anuce7_18wlcf",
+    "ownerAnonFingerprint": "anuce7",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-12T19:29:02.192Z",
+    "skeleton": "CARPET-WILD.json",
+    "atlas": "CARPET-WILD.atlas",
+    "textures": [
+      "CARPET-WILD.png"
+    ],
+    "animations": [
+      "HIt",
+      "Idle",
+      "Landing"
+    ],
+    "defaultAnimation": "Idle",
+    "files": [
+      "carpet-wild/CARPET-WILD.json",
+      "carpet-wild/CARPET-WILD.atlas",
+      "carpet-wild/CARPET-WILD.png",
+      "idle-preview.webm",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/carpet-wild-2026-06-12T19-29-02-192Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp?v=2026-06-12T19-29-02.192Z",
+    "thumbnailPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp?v=2026-06-12T19-29-02.192Z",
+    "thumbnailPosterPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp",
+    "previewWidth": 896,
+    "previewHeight": 938,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webm?v=2026-06-12T19-29-02.192Z",
+    "webmPreviewPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "carpet-wild-2026-06-12T19-29-02-192Z",
+      "title": "carpet-wild",
+      "uploadedAt": "2026-06-12T19:29:02.192Z",
+      "proofPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json?v=2026-06-12T19-29-02.192Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/carpet-wild-2026-06-12T19-29-02-192Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:dc3fa9d732285b3328bedd3ce5cbd3daf935af41a9d2e450a844b5363e9b58cc",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "carpet-wild/CARPET-WILD.atlas",
+          "bytes": 452,
+          "sha256": "ad5dd080d0534e822fe217eac6d8636d7c0a3f70e058d0c9358c5971efea6bcd"
+        },
+        {
+          "name": "carpet-wild/CARPET-WILD.json",
+          "bytes": 91670,
+          "sha256": "10ad845ec89b97b2052e3fa66f5ad56156b884698cd1202bdf1ba581c07bcd39"
+        },
+        {
+          "name": "carpet-wild/CARPET-WILD.png",
+          "bytes": 2802861,
+          "sha256": "45a39173986086e13e2c4da4a859235c092381562c1cd15e5946a1ca5d88e1e5"
+        },
+        {
+          "name": "idle-preview.webm",
+          "bytes": 772642,
+          "sha256": "34a5b07622eb5d98cc90f488a248d0f08ebfa46e9f7c78ffe2aa8a6bf1741671"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 331114,
+          "sha256": "4b16d816737edf013ab225392a0f2899656fa79ac80eab73cbfeeccd9e2d3251"
+        }
+      ],
+      "proofHash": "dc3fa9d732285b3328bedd3ce5cbd3daf935af41a9d2e450a844b5363e9b58cc"
+    },
+    "sourceProofPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json?v=2026-06-12T19-29-02.192Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-12T19:29:17.076Z",
+      "entryId": "carpet-wild-2026-06-12T19-29-02-192Z",
+      "title": "carpet-wild",
+      "uploadedAt": "2026-06-12T19:29:02.192Z",
+      "sourceProofHash": "dc3fa9d732285b3328bedd3ce5cbd3daf935af41a9d2e450a844b5363e9b58cc",
+      "sourceProofPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json?v=2026-06-12T19-29-02.192Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/carpet-wild-2026-06-12T19-29-02-192Z",
+        "files": [
+          {
+            "name": "carpet-wild/CARPET-WILD.json",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.json",
+            "bytes": 91670,
+            "sha256": "10ad845ec89b97b2052e3fa66f5ad56156b884698cd1202bdf1ba581c07bcd39",
+            "github": {
+              "contentSha": "91750ec4b7e2d3e3251e9002ce7e753e46e49d88",
+              "commitSha": "e710d6a87f1d47e6228cc807ca78c4f3483bda27",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e710d6a87f1d47e6228cc807ca78c4f3483bda27",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.json?token=ACCECW5RZ4D2ECWB5HXI4E3KFRPD6"
+            }
+          },
+          {
+            "name": "carpet-wild/CARPET-WILD.atlas",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.atlas",
+            "bytes": 452,
+            "sha256": "ad5dd080d0534e822fe217eac6d8636d7c0a3f70e058d0c9358c5971efea6bcd",
+            "github": {
+              "contentSha": "7d83be184b7fb4305b93aa840825dfba8f05e3bd",
+              "commitSha": "a6bcd1864bf6310acad056b1fbd21f23eb8e1ba5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a6bcd1864bf6310acad056b1fbd21f23eb8e1ba5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.atlas?token=ACCECW7HRZHE2VSKUCW64E3KFRPEA"
+            }
+          },
+          {
+            "name": "carpet-wild/CARPET-WILD.png",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.png",
+            "bytes": 2802861,
+            "sha256": "45a39173986086e13e2c4da4a859235c092381562c1cd15e5946a1ca5d88e1e5",
+            "github": {
+              "contentSha": "fc52c29bfa90cbd3e246cc61f91b383dfe7a82f0",
+              "commitSha": "f4436055a5d5d9c5f2bdcb3181b3b7216df68317",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f4436055a5d5d9c5f2bdcb3181b3b7216df68317",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.png?token=ACCECW4JMSSZLAUDQ37POZDKFRPEG"
+            }
+          },
+          {
+            "name": "idle-preview.webm",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webm",
+            "bytes": 772642,
+            "sha256": "34a5b07622eb5d98cc90f488a248d0f08ebfa46e9f7c78ffe2aa8a6bf1741671",
+            "github": {
+              "contentSha": "96ef2837bb4f34cde2f0ed082173c7c8589cf69e",
+              "commitSha": "784c88f17d4b36bbaabdaa06cdc13f4e7dd102f1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/784c88f17d4b36bbaabdaa06cdc13f4e7dd102f1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webm?token=ACCECW6E335BRN7MWOAW7UDKFRPEM"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp",
+            "bytes": 331114,
+            "sha256": "4b16d816737edf013ab225392a0f2899656fa79ac80eab73cbfeeccd9e2d3251",
+            "github": {
+              "contentSha": "3595c72952bcf01cd79ed9ac3d5fbc0b0cdd2024",
+              "commitSha": "45b952cc7246dcdb54eeccf44313ea62b8c66e70",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/45b952cc7246dcdb54eeccf44313ea62b8c66e70",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp?token=ACCECW76IHPBCD2WXMOWPELKFRPEO"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+            "bytes": 2744,
+            "sha256": "587854b90177572f209a20d77eee31ba3b304e5bb01171060eb22608efcaf6b1",
+            "github": {
+              "contentSha": "d94b52ec98d0914fdb8330d0161fc767584e333f",
+              "commitSha": "31e6099e0e6a24112542269e5e1c26c36105d089",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/31e6099e0e6a24112542269e5e1c26c36105d089",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json?token=ACCECW5DH6DOTDZPBOSBPT3KFRPEQ"
+            }
+          }
+        ],
+        "anchorPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/blockchain-anchor.json",
+        "anchorCommitSha": "61645ebccc960a3d3571cc8dcaea2392d3879afa",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/61645ebccc960a3d3571cc8dcaea2392d3879afa"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "6585234b87281e9a30b32166e830f60772da0c1f0e3a662f369bca10cdf625b1",
+      "recommendedAnchorPayload": "sha256:6585234b87281e9a30b32166e830f60772da0c1f0e3a662f369bca10cdf625b1",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x6585234b87281e9a30b32166e830f60772da0c1f0e3a662f369bca10cdf625b1",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "gold_needle-2026-06-09T19-22-05-100Z",
     "title": "gold_needle",
     "publicOwnerId": "u_1cu3tcn",
