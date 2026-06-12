@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "carpet-wild-2026-06-12T19-29-02-192Z",
+  "title": "carpet-wild",
+  "uploadedAt": "2026-06-12T19:29:02.192Z",
+  "proofPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json?v=2026-06-12T19-29-02.192Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/carpet-wild-2026-06-12T19-29-02-192Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:dc3fa9d732285b3328bedd3ce5cbd3daf935af41a9d2e450a844b5363e9b58cc",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "carpet-wild/CARPET-WILD.atlas",
+      "bytes": 452,
+      "sha256": "ad5dd080d0534e822fe217eac6d8636d7c0a3f70e058d0c9358c5971efea6bcd"
+    },
+    {
+      "name": "carpet-wild/CARPET-WILD.json",
+      "bytes": 91670,
+      "sha256": "10ad845ec89b97b2052e3fa66f5ad56156b884698cd1202bdf1ba581c07bcd39"
+    },
+    {
+      "name": "carpet-wild/CARPET-WILD.png",
+      "bytes": 2802861,
+      "sha256": "45a39173986086e13e2c4da4a859235c092381562c1cd15e5946a1ca5d88e1e5"
+    },
+    {
+      "name": "idle-preview.webm",
+      "bytes": 772642,
+      "sha256": "34a5b07622eb5d98cc90f488a248d0f08ebfa46e9f7c78ffe2aa8a6bf1741671"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 331114,
+      "sha256": "4b16d816737edf013ab225392a0f2899656fa79ac80eab73cbfeeccd9e2d3251"
+    }
+  ],
+  "proofHash": "dc3fa9d732285b3328bedd3ce5cbd3daf935af41a9d2e450a844b5363e9b58cc"
+}
