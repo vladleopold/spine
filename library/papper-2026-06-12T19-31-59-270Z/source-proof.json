@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "papper-2026-06-12T19-31-59-270Z",
+  "title": "papper",
+  "uploadedAt": "2026-06-12T19:31:59.270Z",
+  "proofPath": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/source-proof.json?v=2026-06-12T19-31-59.270Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/papper-2026-06-12T19-31-59-270Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d8fd6c9f7ca609d3b781d9e16615d6e9b263cabc31374d360de75c9fe18d7a13",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "hit-preview.webm",
+      "bytes": 577402,
+      "sha256": "8e7e03353f6f4bb4e5d4e54a87e696bc4f0996f82277743617e01ce90d5108b4"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 178348,
+      "sha256": "091e5aa725e2397231b146cb467ed63e4b22c07987015affc2c6d0be01cf652c"
+    },
+    {
+      "name": "papper/Papper.atlas",
+      "bytes": 2086,
+      "sha256": "e7ba0cb6ec28d516ad1b7f7d347b0a9e32545c120b1bc204f3e8937f1d716d05"
+    },
+    {
+      "name": "papper/Papper.json",
+      "bytes": 25317,
+      "sha256": "5d3ddef6ab0bbf8aa0f160754acad1e79d2bdb2901186aa4b5c4d2f20a630977"
+    },
+    {
+      "name": "papper/Papper.webp",
+      "bytes": 2877049,
+      "sha256": "d524ebd66440d96694492c7fc4b4fa3a8f265b1824d8a8ea384af7576432569c"
+    }
+  ],
+  "proofHash": "d8fd6c9f7ca609d3b781d9e16615d6e9b263cabc31374d360de75c9fe18d7a13"
+}
