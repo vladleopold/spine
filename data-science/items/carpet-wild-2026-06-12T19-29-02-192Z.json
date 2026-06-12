@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-12T19:29:02.192Z",
+  "updatedAt": "2026-06-12T19:29:19.072Z",
+  "animation_asset": {
+    "id": "carpet-wild-2026-06-12T19-29-02-192Z",
+    "name": "carpet-wild",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "hit",
+        "idle",
+        "landing"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/carpet-wild-2026-06-12T19-29-02-192Z",
+    "manifestPath": "library/carpet-wild-2026-06-12T19-29-02-192Z/manifest.json",
+    "files": [
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.json",
+        "name": "carpet-wild/CARPET-WILD.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.atlas",
+        "name": "carpet-wild/CARPET-WILD.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/carpet-wild/CARPET-WILD.png",
+        "name": "carpet-wild/CARPET-WILD.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/carpet-wild-2026-06-12T19-29-02-192Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "CARPET-WILD.json",
+    "atlas": "CARPET-WILD.atlas",
+    "textures": [
+      "CARPET-WILD.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "HIt",
+      "Idle",
+      "Landing"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
