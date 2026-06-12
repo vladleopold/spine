@@ -1,5 +1,269 @@
 [
   {
+    "id": "papper-2026-06-12T19-31-59-270Z",
+    "title": "papper",
+    "publicOwnerId": "u_1cu3tcn",
+    "ownerAnonId": "anon_anuce7_18wlcf",
+    "ownerAnonFingerprint": "anuce7",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-12T19:31:59.270Z",
+    "skeleton": "Papper.json",
+    "atlas": "Papper.atlas",
+    "textures": [
+      "Papper.webp"
+    ],
+    "animations": [
+      "Hit",
+      "Landing"
+    ],
+    "defaultAnimation": "Hit",
+    "files": [
+      "papper/Papper.json",
+      "papper/Papper.atlas",
+      "papper/Papper.webp",
+      "hit-preview.webm",
+      "hit-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/papper-2026-06-12T19-31-59-270Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp?v=2026-06-12T19-31-59.270Z",
+    "thumbnailPath": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp?v=2026-06-12T19-31-59.270Z",
+    "thumbnailPosterPath": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp",
+    "previewWidth": 840,
+    "previewHeight": 902,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/hit-preview.webm?v=2026-06-12T19-31-59.270Z",
+    "webmPreviewPath": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "papper-2026-06-12T19-31-59-270Z",
+      "title": "papper",
+      "uploadedAt": "2026-06-12T19:31:59.270Z",
+      "proofPath": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/source-proof.json?v=2026-06-12T19-31-59.270Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/papper-2026-06-12T19-31-59-270Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:d8fd6c9f7ca609d3b781d9e16615d6e9b263cabc31374d360de75c9fe18d7a13",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "hit-preview.webm",
+          "bytes": 577402,
+          "sha256": "8e7e03353f6f4bb4e5d4e54a87e696bc4f0996f82277743617e01ce90d5108b4"
+        },
+        {
+          "name": "hit-preview.webp",
+          "bytes": 178348,
+          "sha256": "091e5aa725e2397231b146cb467ed63e4b22c07987015affc2c6d0be01cf652c"
+        },
+        {
+          "name": "papper/Papper.atlas",
+          "bytes": 2086,
+          "sha256": "e7ba0cb6ec28d516ad1b7f7d347b0a9e32545c120b1bc204f3e8937f1d716d05"
+        },
+        {
+          "name": "papper/Papper.json",
+          "bytes": 25317,
+          "sha256": "5d3ddef6ab0bbf8aa0f160754acad1e79d2bdb2901186aa4b5c4d2f20a630977"
+        },
+        {
+          "name": "papper/Papper.webp",
+          "bytes": 2877049,
+          "sha256": "d524ebd66440d96694492c7fc4b4fa3a8f265b1824d8a8ea384af7576432569c"
+        }
+      ],
+      "proofHash": "d8fd6c9f7ca609d3b781d9e16615d6e9b263cabc31374d360de75c9fe18d7a13"
+    },
+    "sourceProofPath": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/source-proof.json?v=2026-06-12T19-31-59.270Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-12T19:32:11.720Z",
+      "entryId": "papper-2026-06-12T19-31-59-270Z",
+      "title": "papper",
+      "uploadedAt": "2026-06-12T19:31:59.270Z",
+      "sourceProofHash": "d8fd6c9f7ca609d3b781d9e16615d6e9b263cabc31374d360de75c9fe18d7a13",
+      "sourceProofPath": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/source-proof.json?v=2026-06-12T19-31-59.270Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/papper-2026-06-12T19-31-59-270Z",
+        "files": [
+          {
+            "name": "papper/Papper.json",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.json",
+            "bytes": 25317,
+            "sha256": "5d3ddef6ab0bbf8aa0f160754acad1e79d2bdb2901186aa4b5c4d2f20a630977",
+            "github": {
+              "contentSha": "2ace19a9282b96a59fbcbe620760ec28c2378ab6",
+              "commitSha": "d90c7cf10cb4fc2ca31108e61e8013c25edd4752",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d90c7cf10cb4fc2ca31108e61e8013c25edd4752",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/papper/Papper.json?token=ACCECW7KUWEDHB7YWY7ZD7TKFRPO4"
+            }
+          },
+          {
+            "name": "papper/Papper.atlas",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.atlas",
+            "bytes": 2086,
+            "sha256": "e7ba0cb6ec28d516ad1b7f7d347b0a9e32545c120b1bc204f3e8937f1d716d05",
+            "github": {
+              "contentSha": "3883dd9ae4da215c4aa8a9d28ad9e566eb1b7a39",
+              "commitSha": "afd0e707c1f54ec6f4fee6c65eb0b7b06d9d33c3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/afd0e707c1f54ec6f4fee6c65eb0b7b06d9d33c3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/papper/Papper.atlas?token=ACCECW2N6JIR4QSO7FNODX3KFRPO6"
+            }
+          },
+          {
+            "name": "papper/Papper.webp",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/papper/Papper.webp",
+            "bytes": 2877049,
+            "sha256": "d524ebd66440d96694492c7fc4b4fa3a8f265b1824d8a8ea384af7576432569c",
+            "github": {
+              "contentSha": "aaa929a12c7a3591574872089c68837ecf5d0123",
+              "commitSha": "a8285d382c51101041dd6bdd80459d8523be4769",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a8285d382c51101041dd6bdd80459d8523be4769",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/papper/Papper.webp?token=ACCECW3M5H5ZSZIKG2UJRELKFRPPE"
+            }
+          },
+          {
+            "name": "hit-preview.webm",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webm",
+            "bytes": 577402,
+            "sha256": "8e7e03353f6f4bb4e5d4e54a87e696bc4f0996f82277743617e01ce90d5108b4",
+            "github": {
+              "contentSha": "ee28e12dc0ba11d8252cd650a22073d15b8864c6",
+              "commitSha": "b75482a1f9a29cb2a93208042972ecc779b9df25",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b75482a1f9a29cb2a93208042972ecc779b9df25",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/hit-preview.webm?token=ACCECW7RL7DC2QS2JV4K4XTKFRPPK"
+            }
+          },
+          {
+            "name": "hit-preview.webp",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp",
+            "bytes": 178348,
+            "sha256": "091e5aa725e2397231b146cb467ed63e4b22c07987015affc2c6d0be01cf652c",
+            "github": {
+              "contentSha": "2bcda43e1f69fd083deef57fa7597d752edc9fa1",
+              "commitSha": "0f8932964ed5d8235d9ce0bcc085ecfaba3dc405",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0f8932964ed5d8235d9ce0bcc085ecfaba3dc405",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/hit-preview.webp?token=ACCECWYX3JCHFKSGI6U35R3KFRPPM"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/papper-2026-06-12T19-31-59-270Z/source-proof.json",
+            "bytes": 2689,
+            "sha256": "112031e9089433cda7cd449aaa98e45847070dad9ac02aa5b3255af0b5828999",
+            "github": {
+              "contentSha": "8da6cbff283151f178e83879e233f3253d129d7d",
+              "commitSha": "e149e9d911bcf143608a9d92e5e7a8828af18b81",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e149e9d911bcf143608a9d92e5e7a8828af18b81",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/papper-2026-06-12T19-31-59-270Z/source-proof.json?token=ACCECW5KRCRIYMIKQAAZPXDKFRPPO"
+            }
+          }
+        ],
+        "anchorPath": "library/papper-2026-06-12T19-31-59-270Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/blockchain-anchor.json",
+        "anchorCommitSha": "5e33e0e7bc9e0797b6e6039eabeb53eee0315d1f",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/5e33e0e7bc9e0797b6e6039eabeb53eee0315d1f"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "14507490a367d9c5aa57e05db084d163d90bf198b71bedbe435d7acceb455cb2",
+      "recommendedAnchorPayload": "sha256:14507490a367d9c5aa57e05db084d163d90bf198b71bedbe435d7acceb455cb2",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x14507490a367d9c5aa57e05db084d163d90bf198b71bedbe435d7acceb455cb2",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/papper-2026-06-12T19-31-59-270Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/papper-2026-06-12T19-31-59-270Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "bag-2026-06-12T19-30-07-441Z",
     "title": "bag",
     "publicOwnerId": "u_1cu3tcn",
