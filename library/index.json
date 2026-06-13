@@ -1,5 +1,268 @@
 [
   {
+    "id": "scissor-2026-06-13T19-32-22-883Z",
+    "title": "scissor",
+    "publicOwnerId": "u_1cu3tcn",
+    "ownerAnonId": "anon_anuce7_18wlcf",
+    "ownerAnonFingerprint": "anuce7",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-06-13T19:32:22.883Z",
+    "skeleton": "Scissor.json",
+    "atlas": "Scissor.atlas",
+    "textures": [
+      "Scissor.webp"
+    ],
+    "animations": [
+      "Hit"
+    ],
+    "defaultAnimation": "Hit",
+    "files": [
+      "scissor/Scissor.json",
+      "scissor/Scissor.atlas",
+      "scissor/Scissor.webp",
+      "hit-preview.webm",
+      "hit-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/scissor-2026-06-13T19-32-22-883Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp?v=2026-06-13T19-32-22.883Z",
+    "thumbnailPath": "library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp?v=2026-06-13T19-32-22.883Z",
+    "thumbnailPosterPath": "library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp",
+    "previewWidth": 896,
+    "previewHeight": 806,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webm?v=2026-06-13T19-32-22.883Z",
+    "webmPreviewPath": "library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "scissor-2026-06-13T19-32-22-883Z",
+      "title": "scissor",
+      "uploadedAt": "2026-06-13T19:32:22.883Z",
+      "proofPath": "library/scissor-2026-06-13T19-32-22-883Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/source-proof.json?v=2026-06-13T19-32-22.883Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/scissor-2026-06-13T19-32-22-883Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:bd1b407e57b254e4b95de3949d45841b30d721a689aa97cca616f92965da5ce8",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "hit-preview.webm",
+          "bytes": 422977,
+          "sha256": "efdd34506a2b326a425468cc9d4efb1c69e6645f1826e502b4f138705e139720"
+        },
+        {
+          "name": "hit-preview.webp",
+          "bytes": 84734,
+          "sha256": "be57be0f355e7a810d0adafb712558aee922dcd073a3add40cc4a809924cd526"
+        },
+        {
+          "name": "scissor/Scissor.atlas",
+          "bytes": 410,
+          "sha256": "8aefeb8f36c02a72e9b77d7f94a5bce6ff6d1825562d5edf74e8f51e675ae749"
+        },
+        {
+          "name": "scissor/Scissor.json",
+          "bytes": 6349,
+          "sha256": "0c04859961fc3c3014aff70661fa49af160d367828a46c09fb2edf4dbb314fab"
+        },
+        {
+          "name": "scissor/Scissor.webp",
+          "bytes": 2031904,
+          "sha256": "5b86f0a352036d962ed7ae16108b16024c7f4a7602f426e6bc9b680651e6de66"
+        }
+      ],
+      "proofHash": "bd1b407e57b254e4b95de3949d45841b30d721a689aa97cca616f92965da5ce8"
+    },
+    "sourceProofPath": "library/scissor-2026-06-13T19-32-22-883Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/source-proof.json?v=2026-06-13T19-32-22.883Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-06-13T19:32:33.849Z",
+      "entryId": "scissor-2026-06-13T19-32-22-883Z",
+      "title": "scissor",
+      "uploadedAt": "2026-06-13T19:32:22.883Z",
+      "sourceProofHash": "bd1b407e57b254e4b95de3949d45841b30d721a689aa97cca616f92965da5ce8",
+      "sourceProofPath": "library/scissor-2026-06-13T19-32-22-883Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/source-proof.json?v=2026-06-13T19-32-22.883Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_anuce7_18wlcf",
+        "anonymousFingerprint": "anuce7",
+        "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+        "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "en",
+            "et",
+            "sk"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/scissor-2026-06-13T19-32-22-883Z",
+        "files": [
+          {
+            "name": "scissor/Scissor.json",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.json",
+            "bytes": 6349,
+            "sha256": "0c04859961fc3c3014aff70661fa49af160d367828a46c09fb2edf4dbb314fab",
+            "github": {
+              "contentSha": "e976990a8554c48c6d4ccdc3247bd5d47327678a",
+              "commitSha": "d57242f67830256c0ee88fc639763ae941339349",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d57242f67830256c0ee88fc639763ae941339349",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.json?token=ACCECW4UFZZMLGRVQI2JB4LKFWYIM"
+            }
+          },
+          {
+            "name": "scissor/Scissor.atlas",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.atlas",
+            "bytes": 410,
+            "sha256": "8aefeb8f36c02a72e9b77d7f94a5bce6ff6d1825562d5edf74e8f51e675ae749",
+            "github": {
+              "contentSha": "68fd0f2ce09d58464a3d4cfe98364c8056562397",
+              "commitSha": "09fbab40a26c69abe2993abf74c654f6829a6e8f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/09fbab40a26c69abe2993abf74c654f6829a6e8f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.atlas?token=ACCECW4OX5DKBUU3TM7TTCTKFWYIM"
+            }
+          },
+          {
+            "name": "scissor/Scissor.webp",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.webp",
+            "bytes": 2031904,
+            "sha256": "5b86f0a352036d962ed7ae16108b16024c7f4a7602f426e6bc9b680651e6de66",
+            "github": {
+              "contentSha": "15e0efd589987b293dfcc77507f48437d95f0277",
+              "commitSha": "1358e4fc84309c86accff49e6b8077596c2625cc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1358e4fc84309c86accff49e6b8077596c2625cc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/scissor/Scissor.webp?token=ACCECW4HBTPMDSBHH5HZ253KFWYIS"
+            }
+          },
+          {
+            "name": "hit-preview.webm",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webm",
+            "bytes": 422977,
+            "sha256": "efdd34506a2b326a425468cc9d4efb1c69e6645f1826e502b4f138705e139720",
+            "github": {
+              "contentSha": "184510dd289a2e7a2f032d063ce7ee188eaf24be",
+              "commitSha": "f2c8ad9191d331b89754416a22cfd35c162f0e83",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f2c8ad9191d331b89754416a22cfd35c162f0e83",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webm?token=ACCECW7QWWGOCO7POBLGPSTKFWYIW"
+            }
+          },
+          {
+            "name": "hit-preview.webp",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp",
+            "bytes": 84734,
+            "sha256": "be57be0f355e7a810d0adafb712558aee922dcd073a3add40cc4a809924cd526",
+            "github": {
+              "contentSha": "e1fefd60efdceed9f314b2471cadc49b9dd2685a",
+              "commitSha": "31114712387b1a38a9e8f9d266fcb2be10574b3e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/31114712387b1a38a9e8f9d266fcb2be10574b3e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/hit-preview.webp?token=ACCECW3AK4DK4MQFZ52K4JLKFWYIY"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/scissor-2026-06-13T19-32-22-883Z/source-proof.json",
+            "bytes": 2697,
+            "sha256": "25f3041ba20b90b81ce7bc97459e80820eefe1cac2f3251f0aec7302bf5ad724",
+            "github": {
+              "contentSha": "212a1a37cd64c33b72fb31aa14586b3c8f7400df",
+              "commitSha": "c6f730f68756dd77a9ff3c7738f5fe9416666a6c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c6f730f68756dd77a9ff3c7738f5fe9416666a6c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/scissor-2026-06-13T19-32-22-883Z/source-proof.json?token=ACCECW46HMWUK3DEUFT2S7TKFWYI2"
+            }
+          }
+        ],
+        "anchorPath": "library/scissor-2026-06-13T19-32-22-883Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/blockchain-anchor.json",
+        "anchorCommitSha": "567a1294396bfe1fb73d95f405cad3986280f7af",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/567a1294396bfe1fb73d95f405cad3986280f7af"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "2f05ae24b295281b28bebf71dc6a9e21afe5dff6b45f15d32a203f7c2885373b",
+      "recommendedAnchorPayload": "sha256:2f05ae24b295281b28bebf71dc6a9e21afe5dff6b45f15d32a203f7c2885373b",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x2f05ae24b295281b28bebf71dc6a9e21afe5dff6b45f15d32a203f7c2885373b",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/scissor-2026-06-13T19-32-22-883Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-32-22-883Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "scissor-2026-06-13T19-05-17-210Z",
     "title": "scissor",
     "publicOwnerId": "u_1cu3tcn",
