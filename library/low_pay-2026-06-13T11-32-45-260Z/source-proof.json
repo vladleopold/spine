@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "low_pay-2026-06-13T11-32-45-260Z",
+  "title": "low_pay",
+  "uploadedAt": "2026-06-13T11:32:45.260Z",
+  "proofPath": "library/low_pay-2026-06-13T11-32-45-260Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/low_pay-2026-06-13T11-32-45-260Z/source-proof.json?v=2026-06-13T11-32-45.260Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/low_pay-2026-06-13T11-32-45-260Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e5f55ee7355d0ff67f938298a2518bd46cd291c028da5497f45f32d48eec73ee",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "hit-preview.webm",
+      "bytes": 7543,
+      "sha256": "e3a402fec0ac63afb3ee5ee958fb6a2425acff6d875993056760f2bf6a99d32d"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 2866,
+      "sha256": "75627a4279239b843baa1004cb615dd4066f7febee59c0af4d8386c55102b1b6"
+    },
+    {
+      "name": "low_pay/Low_pay.atlas",
+      "bytes": 193,
+      "sha256": "12739ef67fcb8cff74baa71b3c8fe8f4dea021f03516c94d3a753aba4fc61e52"
+    },
+    {
+      "name": "low_pay/Low_pay.json",
+      "bytes": 7852,
+      "sha256": "3084c0d603dc15969543bbb4dee375e367d47fef8a2c90327bd84d6a706aa0a7"
+    },
+    {
+      "name": "low_pay/Low_pay.webp",
+      "bytes": 2592249,
+      "sha256": "9f57fafef696da8acbe889ffae7a1054c19d4418496fda352d0e71847dc0bc48"
+    }
+  ],
+  "proofHash": "e5f55ee7355d0ff67f938298a2518bd46cd291c028da5497f45f32d48eec73ee"
+}
