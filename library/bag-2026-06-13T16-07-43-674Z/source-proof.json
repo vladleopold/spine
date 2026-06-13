@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "bag-2026-06-13T16-07-43-674Z",
+  "title": "bag",
+  "uploadedAt": "2026-06-13T16:07:43.674Z",
+  "proofPath": "library/bag-2026-06-13T16-07-43-674Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bag-2026-06-13T16-07-43-674Z/source-proof.json?v=2026-06-13T16-07-43.674Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/bag-2026-06-13T16-07-43-674Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:70b15bf8e84059cb03ff297f74089438b4c7b3e156e2f1caf1204eb8b79ba2a6",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "bag/Bag.atlas",
+      "bytes": 340,
+      "sha256": "f2c55796131ad526abd8437bab4f78e89ab491be375adddd3b2b70682a7caefa"
+    },
+    {
+      "name": "bag/Bag.json",
+      "bytes": 40725,
+      "sha256": "077376a0fba76786605e69874dcf897e83642942e7558a15a58e95450dd3ec7c"
+    },
+    {
+      "name": "bag/Bag.webp",
+      "bytes": 1074300,
+      "sha256": "c88bc8ec450242e7a4631bd24a8793740f0064a8969d17352a42565ef182aecd"
+    },
+    {
+      "name": "hit-preview.webm",
+      "bytes": 311289,
+      "sha256": "1cd58d259d83ebc7cd8edf51b01aa6a0e0307e8251c0766fa8c1f1ef3eaab46e"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 47432,
+      "sha256": "a73e0f84844ca17684d25cdbf8f22a49ce064899d6ba221b0a5c9699e58c78ae"
+    }
+  ],
+  "proofHash": "70b15bf8e84059cb03ff297f74089438b4c7b3e156e2f1caf1204eb8b79ba2a6"
+}
