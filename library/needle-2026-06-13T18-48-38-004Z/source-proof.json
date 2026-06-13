@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "needle-2026-06-13T18-48-38-004Z",
+  "title": "needle",
+  "uploadedAt": "2026-06-13T18:48:38.004Z",
+  "proofPath": "library/needle-2026-06-13T18-48-38-004Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/needle-2026-06-13T18-48-38-004Z/source-proof.json?v=2026-06-13T18-48-38.004Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/needle-2026-06-13T18-48-38-004Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:23def3614194661af12d22a6c2c659d52b5e0fa44571fb96eca81dee88f0f387",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "hit-preview.webm",
+      "bytes": 381617,
+      "sha256": "e2374ad349b36a97d05e044ca25da3fed6ed4aafafa0c49c2486833ad39a7d63"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 41720,
+      "sha256": "bd156bb5c534311d96fa55ca3c55daf5a9143bae5296e097a48561c43dd67aca"
+    },
+    {
+      "name": "needle/Needle.atlas",
+      "bytes": 887,
+      "sha256": "0df6dc473f75514e6fc507c4dcae29ff0e28201ed41810fdccd784908ec68e3e"
+    },
+    {
+      "name": "needle/Needle.json",
+      "bytes": 23583,
+      "sha256": "a4ace3b1d00c2f3d15f7edc01aeb2f36d63eb7deac60e4c364646b72a8dc1979"
+    },
+    {
+      "name": "needle/Needle.webp",
+      "bytes": 417212,
+      "sha256": "fe5099af8d013b778b3e1aed43acdcac5c8b27d6111297fbc58c2fdc0a54a0ba"
+    }
+  ],
+  "proofHash": "23def3614194661af12d22a6c2c659d52b5e0fa44571fb96eca81dee88f0f387"
+}
