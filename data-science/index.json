@@ -2,7 +2,7 @@
   {
     "id": "bigwin-2026-07-02T03-28-13-379Z",
     "name": "bigwin",
-    "updatedAt": "2026-07-02T03:28:27.678Z",
+    "updatedAt": "2026-07-02T03:47:33.887Z",
     "animation_asset": {
       "id": "bigwin-2026-07-02T03-28-13-379Z",
       "name": "bigwin",
@@ -41,14 +41,15 @@
           "one-shot"
         ],
         "state": [
-          "default-big_win",
+          "default-total_win2",
           "win"
         ],
         "platform": [
           "web"
         ],
         "resolution": [
-          "texture-png"
+          "texture-png",
+          "texture-webp"
         ],
         "rig_type": [
           "spine-json"
@@ -90,6 +91,18 @@
           "format": "png"
         },
         {
+          "path": "library/bigwin-2026-07-02T03-28-13-379Z/total_win2-preview.webm",
+          "name": "total_win2-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/bigwin-2026-07-02T03-28-13-379Z/total_win2-preview.webp",
+          "name": "total_win2-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
           "path": "library/bigwin-2026-07-02T03-28-13-379Z/source-proof.json",
           "name": "source-proof.json",
           "role": "skeleton",
@@ -121,11 +134,11 @@
         "turbo_major_win",
         "win"
       ],
-      "defaultAnimation": "big_win",
-      "fileCount": 5,
+      "defaultAnimation": "total_win2",
+      "fileCount": 7,
       "skeletonCount": 3,
       "atlasCount": 1,
-      "textureCount": 1
+      "textureCount": 2
     },
     "inference": {
       "method": "filename-animation-keyword-rules",
