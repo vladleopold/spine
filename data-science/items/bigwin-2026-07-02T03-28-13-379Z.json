@@ -2,7 +2,7 @@
   "schemaVersion": "spine-link-data-science-v1",
   "taxonomyVersion": "2026-05-02",
   "createdAt": "2026-07-02T03:28:13.379Z",
-  "updatedAt": "2026-07-02T04:13:42.741Z",
+  "updatedAt": "2026-07-02T04:17:50.122Z",
   "animation_asset": {
     "id": "bigwin-2026-07-02T03-28-13-379Z",
     "name": "bigwin",
@@ -41,7 +41,7 @@
         "one-shot"
       ],
       "state": [
-        "default-total_win1",
+        "default-turbo_big_win",
         "win"
       ],
       "platform": [
@@ -91,14 +91,14 @@
         "format": "png"
       },
       {
-        "path": "library/bigwin-2026-07-02T03-28-13-379Z/total_win1-preview.webm",
-        "name": "total_win1-preview.webm",
+        "path": "library/bigwin-2026-07-02T03-28-13-379Z/turbo_big_win-preview.webm",
+        "name": "turbo_big_win-preview.webm",
         "role": "support",
         "format": "webm"
       },
       {
-        "path": "library/bigwin-2026-07-02T03-28-13-379Z/total_win1-preview.webp",
-        "name": "total_win1-preview.webp",
+        "path": "library/bigwin-2026-07-02T03-28-13-379Z/turbo_big_win-preview.webp",
+        "name": "turbo_big_win-preview.webp",
         "role": "texture",
         "format": "webp"
       },
@@ -134,7 +134,7 @@
       "turbo_major_win",
       "win"
     ],
-    "defaultAnimation": "total_win1",
+    "defaultAnimation": "turbo_big_win",
     "fileCount": 7,
     "skeletonCount": 3,
     "atlasCount": 1,
