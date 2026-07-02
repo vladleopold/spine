@@ -1,5 +1,152 @@
 [
   {
+    "id": "low_pay_rune-2026-07-02T15-33-06-444Z",
+    "name": "low_pay_rune",
+    "updatedAt": "2026-07-02T15:33:18.460Z",
+    "animation_asset": {
+      "id": "low_pay_rune-2026-07-02T15-33-06-444Z",
+      "name": "low_pay_rune",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "low pay_idle",
+          "low pay_win",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-low pay_idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/low_pay_rune-2026-07-02T15-33-06-444Z",
+      "manifestPath": "library/low_pay_rune-2026-07-02T15-33-06-444Z/manifest.json",
+      "files": [
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/low_pay_rune/Low_Pay_rune.json",
+          "name": "low_pay_rune/Low_Pay_rune.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/low_pay_rune/Low Pay.atlas",
+          "name": "low_pay_rune/Low Pay.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/low_pay_rune/Low Pay.png",
+          "name": "low_pay_rune/Low Pay.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/low-pay_idle-preview.webm",
+          "name": "low-pay_idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/low-pay_idle-preview.webp",
+          "name": "low-pay_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/low_pay_rune-2026-07-02T15-33-06-444Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Low_Pay_rune.json",
+      "atlas": "Low Pay.atlas",
+      "textures": [
+        "Low Pay.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "Low Pay_Idle",
+        "Low Pay_Win"
+      ],
+      "defaultAnimation": "Low Pay_Idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "elixir_symbol-2026-07-02T15-24-43-309Z",
     "name": "elixir_symbol",
     "updatedAt": "2026-07-02T15:24:57.692Z",
