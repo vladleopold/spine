@@ -27,46 +27,46 @@
       "turbo_major_win",
       "win"
     ],
-    "defaultAnimation": "total_win2",
+    "defaultAnimation": "turbo_grand_win",
     "files": [
       "bigwin/bigwin.json",
       "bigwin/bigwin.atlas",
       "bigwin/bigwin.png",
-      "total_win2-preview.webm",
-      "total_win2-preview.webp",
+      "turbo_grand_win-preview.webm",
+      "turbo_grand_win-preview.webp",
       "source-proof.json",
       "blockchain-anchor.json"
     ],
     "previewPath": "library/bigwin-2026-07-02T07-00-20-289Z",
     "repositoryUrl": "",
-    "thumbnail": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp?v=2026-07-02T07-01-25.332Z",
-    "thumbnailPath": "library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp?v=2026-07-02T07-01-25.332Z",
-    "thumbnailPosterPath": "library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp?v=2026-07-02T07-14-14.693Z",
+    "thumbnailPath": "library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp?v=2026-07-02T07-14-14.693Z",
+    "thumbnailPosterPath": "library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp",
     "previewWidth": 1280,
-    "previewHeight": 1230,
+    "previewHeight": 1142,
     "previewDuration": 1.8,
     "thumbnailType": "image",
-    "webmPreview": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webm?v=2026-07-02T07-01-25.332Z",
-    "webmPreviewPath": "library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webm",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webm?v=2026-07-02T07-14-14.693Z",
+    "webmPreviewPath": "library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webm",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
       "hashAlgorithm": "SHA-256",
       "entryId": "bigwin-2026-07-02T07-00-20-289Z",
       "title": "bigwin",
-      "uploadedAt": "2026-07-02T07:01:25.332Z",
+      "uploadedAt": "2026-07-02T07:14:14.693Z",
       "proofPath": "library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json",
-      "proofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-01-25.332Z",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-14-14.693Z",
       "uploader": {
         "mode": "google-account",
         "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
         "anonymousAccountId": "anon_1l7idal_1prc0gb",
         "anonymousFingerprint": "1l7idal",
-        "browserFingerprintSha256": "6d000144d7ff827307e2ada2262abd7e760fe63fb8e2fcf4710e51eec2b5cdea",
-        "browserEnvironmentHashSha256": "0bd95302c844a68fc6cac012e00df6c78bc98c0a550fd595e03055c433b603c2",
+        "browserFingerprintSha256": "410e92fddb6d5d31d3e93b7c873d76b98194c35f35615bc700974cdd547bea08",
+        "browserEnvironmentHashSha256": "bcb7b0d04b9588825e27e07758461e869c50e23cc2ec9150a75a22db08d4b6f7",
         "browserEnvironment": {
-          "userAgent": "Mozilla/5.0 (Linux; Android 13; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
           "platform": "MacIntel",
           "language": "uk",
           "languages": [
@@ -78,14 +78,14 @@
           "hardwareConcurrency": 4,
           "deviceMemory": 16,
           "screen": {
-            "width": 412,
-            "height": 915,
+            "width": 2560,
+            "height": 1440,
             "colorDepth": 24,
-            "pixelRatio": 3.5
+            "pixelRatio": 2
           },
           "timezone": "Europe/Kiev",
           "timezoneOffset": -180,
-          "maxTouchPoints": 1,
+          "maxTouchPoints": 0,
           "cookieEnabled": true
         }
       },
@@ -97,7 +97,7 @@
       },
       "blockchain": {
         "status": "ready-to-anchor",
-        "recommendedAnchorPayload": "sha256:2375f19d7b3534bbd6235e216f47e2ea13cd4fa8d510402b4b853e9ade010302",
+        "recommendedAnchorPayload": "sha256:9ddc8f410b7f0068e7298732d2750ab58ed8ea14f39ec54eeba7dfeef8c14300",
         "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
       },
       "files": [
@@ -117,39 +117,39 @@
           "sha256": "64f3e8530e705b5261c3757b9f0a8064de9d3d186f715903039c7d2a6d7c6a6d"
         },
         {
-          "name": "total_win2-preview.webm",
-          "bytes": 669970,
-          "sha256": "78b0edf88e9d2afb888250ee4838ebff5b6d7d6acaa91226272fcce65771ae32"
+          "name": "turbo_grand_win-preview.webm",
+          "bytes": 649881,
+          "sha256": "3903c3dfe0b83d95fa74a6801ab197ddb1c3b9143d86eacbff27dccda4e1f2a9"
         },
         {
-          "name": "total_win2-preview.webp",
-          "bytes": 3850,
-          "sha256": "f4803513a3ab8f1476ed63aee8cfe0cd4e4e3cafaae74fea553725403992d40f"
+          "name": "turbo_grand_win-preview.webp",
+          "bytes": 3632,
+          "sha256": "de0246d8e3a2ab8b6f2c8f8e11722f41baee84736068f43ec1f1ae405adcb9a9"
         }
       ],
-      "proofHash": "2375f19d7b3534bbd6235e216f47e2ea13cd4fa8d510402b4b853e9ade010302"
+      "proofHash": "9ddc8f410b7f0068e7298732d2750ab58ed8ea14f39ec54eeba7dfeef8c14300"
     },
     "sourceProofPath": "library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json",
-    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-01-25.332Z",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-14-14.693Z",
     "blockchainAnchor": {
       "type": "SpineLinkGitHubBlockchainAnchor",
       "version": 1,
-      "createdAt": "2026-07-02T07:01:41.470Z",
+      "createdAt": "2026-07-02T07:14:30.116Z",
       "entryId": "bigwin-2026-07-02T07-00-20-289Z",
       "title": "bigwin",
-      "uploadedAt": "2026-07-02T07:01:25.332Z",
-      "sourceProofHash": "2375f19d7b3534bbd6235e216f47e2ea13cd4fa8d510402b4b853e9ade010302",
+      "uploadedAt": "2026-07-02T07:14:14.693Z",
+      "sourceProofHash": "9ddc8f410b7f0068e7298732d2750ab58ed8ea14f39ec54eeba7dfeef8c14300",
       "sourceProofPath": "library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json",
-      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-01-25.332Z",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-14-14.693Z",
       "uploader": {
         "mode": "anonymous-browser",
         "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
         "anonymousAccountId": "anon_1l7idal_1prc0gb",
         "anonymousFingerprint": "1l7idal",
-        "browserFingerprintSha256": "6d000144d7ff827307e2ada2262abd7e760fe63fb8e2fcf4710e51eec2b5cdea",
-        "browserEnvironmentHashSha256": "0bd95302c844a68fc6cac012e00df6c78bc98c0a550fd595e03055c433b603c2",
+        "browserFingerprintSha256": "410e92fddb6d5d31d3e93b7c873d76b98194c35f35615bc700974cdd547bea08",
+        "browserEnvironmentHashSha256": "bcb7b0d04b9588825e27e07758461e869c50e23cc2ec9150a75a22db08d4b6f7",
         "browserEnvironment": {
-          "userAgent": "Mozilla/5.0 (Linux; Android 13; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
           "platform": "MacIntel",
           "language": "uk",
           "languages": [
@@ -161,14 +161,14 @@
           "hardwareConcurrency": 4,
           "deviceMemory": 16,
           "screen": {
-            "width": 412,
-            "height": 915,
+            "width": 2560,
+            "height": 1440,
             "colorDepth": 24,
-            "pixelRatio": 3.5
+            "pixelRatio": 2
           },
           "timezone": "Europe/Kiev",
           "timezoneOffset": -180,
-          "maxTouchPoints": 1,
+          "maxTouchPoints": 0,
           "cookieEnabled": true
         }
       },
@@ -186,9 +186,9 @@
             "sha256": "9aa53517f5fe0add85295c61fd567a101b6b5300b647e188888249607aac44d7",
             "github": {
               "contentSha": "8d8c5fcb856667d11d6c958e0cdcf30e451133f9",
-              "commitSha": "95b0cccd20ae835460d86319596e9893fb686cc9",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/95b0cccd20ae835460d86319596e9893fb686cc9",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.json?token=ACCECW62HDMVLSFBU34VVYDKIYGQU"
+              "commitSha": "7ec540477cede6b5ca08ec608f6fdfec6e852653",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7ec540477cede6b5ca08ec608f6fdfec6e852653",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.json?token=ACCECW4MC4A4LHSG3JCADKDKIYIAW"
             }
           },
           {
@@ -198,9 +198,9 @@
             "sha256": "e884aa066a765d3f3a1421c91ebccc53a37f0acefa92bc172739d4d9eee36512",
             "github": {
               "contentSha": "c409c6def5136e3441ac217c38a19c961d02edf2",
-              "commitSha": "11ccd45b3cf9da12c448ebd1a2a2863effc8dcd4",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/11ccd45b3cf9da12c448ebd1a2a2863effc8dcd4",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.atlas?token=ACCECWYE7EV65LXPHNENX5LKIYGQW"
+              "commitSha": "6f3b50643e19c281a266f185cddfa810b7a6fdc5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6f3b50643e19c281a266f185cddfa810b7a6fdc5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.atlas?token=ACCECW54ZZJEOCKGASSO6PLKIYIAW"
             }
           },
           {
@@ -210,63 +210,63 @@
             "sha256": "64f3e8530e705b5261c3757b9f0a8064de9d3d186f715903039c7d2a6d7c6a6d",
             "github": {
               "contentSha": "08fbc4400d6c25dc2f4f54988da2bae885a78f83",
-              "commitSha": "b374fa657e32bbba5f7ca41b637f8a1efd7731f1",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/b374fa657e32bbba5f7ca41b637f8a1efd7731f1",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.png?token=ACCECW7DL6XMV6FH3OODKNDKIYGQ2"
+              "commitSha": "c17a838195d376bd3cf118b0238df14a739b5f55",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c17a838195d376bd3cf118b0238df14a739b5f55",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/bigwin/bigwin.png?token=ACCECW67HYQYUADNSHDHOILKIYIA4"
             }
           },
           {
-            "name": "total_win2-preview.webm",
-            "path": "library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webm",
-            "bytes": 669970,
-            "sha256": "78b0edf88e9d2afb888250ee4838ebff5b6d7d6acaa91226272fcce65771ae32",
+            "name": "turbo_grand_win-preview.webm",
+            "path": "library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webm",
+            "bytes": 649881,
+            "sha256": "3903c3dfe0b83d95fa74a6801ab197ddb1c3b9143d86eacbff27dccda4e1f2a9",
             "github": {
-              "contentSha": "f5d1b9f80fe371de77023ea618db373166b53efc",
-              "commitSha": "c11e076d717bdc28028642bca0afdc871aae3234",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/c11e076d717bdc28028642bca0afdc871aae3234",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webm?token=ACCECW2IGYC7CP6ROLTBWH3KIYGQ6"
+              "contentSha": "3b519b65f416726cf32f01c0b6f747ef5d2ca7d5",
+              "commitSha": "becc20a8845fdc86006b81fa1d4fd03c29cad5c8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/becc20a8845fdc86006b81fa1d4fd03c29cad5c8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webm?token=ACCECWZ67CVFGLYKTLDXOXTKIYIBA"
             }
           },
           {
-            "name": "total_win2-preview.webp",
-            "path": "library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp",
-            "bytes": 3850,
-            "sha256": "f4803513a3ab8f1476ed63aee8cfe0cd4e4e3cafaae74fea553725403992d40f",
+            "name": "turbo_grand_win-preview.webp",
+            "path": "library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp",
+            "bytes": 3632,
+            "sha256": "de0246d8e3a2ab8b6f2c8f8e11722f41baee84736068f43ec1f1ae405adcb9a9",
             "github": {
-              "contentSha": "e2163c0c44c65eabfd558f9020616ab09f8983fb",
-              "commitSha": "1edc1aae0972f799069c9ceeba930d255d36f456",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/1edc1aae0972f799069c9ceeba930d255d36f456",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/total_win2-preview.webp?token=ACCECW4KXWB53EMSM3U3KJDKIYGRA"
+              "contentSha": "76dc59f02201ae728332c6f912aea42496abc942",
+              "commitSha": "61252bb7d8eb3f0c83a2baae481eec6a75c2ff1a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/61252bb7d8eb3f0c83a2baae481eec6a75c2ff1a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/turbo_grand_win-preview.webp?token=ACCECWZFRAUUWFZVEJENNA3KIYIBC"
             }
           },
           {
             "name": "source-proof.json",
             "path": "library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json",
-            "bytes": 2786,
-            "sha256": "2983902838ea2eb042c65b64fca19846378f7808975d58f0fc20dfd8fa2f7635",
+            "bytes": 2795,
+            "sha256": "a1de60a62a63b3f185da34075f46b16aa8f8420e7a65f57d3d2ee050d1f7856e",
             "github": {
-              "contentSha": "599d0ddc5104b675cc71b24c6881b7b70068e05e",
-              "commitSha": "8aa8032067bfb75900e521f02375740dac0b21fb",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/8aa8032067bfb75900e521f02375740dac0b21fb",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?token=ACCECW55DYYWFWIYQC4PLPTKIYGRC"
+              "contentSha": "693d2e32a53bdea81a0030036a86182be2ffc3c0",
+              "commitSha": "5e46dd30b8d59ed08c262292004b1b33edef8b39",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/5e46dd30b8d59ed08c262292004b1b33edef8b39",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?token=ACCECW2R23ZBTTXZ4JOX2K3KIYIBC"
             }
           }
         ],
         "anchorPath": "library/bigwin-2026-07-02T07-00-20-289Z/blockchain-anchor.json",
         "anchorUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/blockchain-anchor.json",
-        "anchorCommitSha": "73e18149fe58d6fee79b1b447b6a0a497617f6d1",
-        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/73e18149fe58d6fee79b1b447b6a0a497617f6d1"
+        "anchorCommitSha": "bf7f53a0e4bdd53b521760bdc82d3208402db6ac",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/bf7f53a0e4bdd53b521760bdc82d3208402db6ac"
       },
       "legalEvidence": {
         "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
         "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
       },
-      "anchorHash": "cbeda1cf706afa9eae8e15481ce3052bb3f7b8ee487f9e078e64ae43bca9fbd2",
-      "recommendedAnchorPayload": "sha256:cbeda1cf706afa9eae8e15481ce3052bb3f7b8ee487f9e078e64ae43bca9fbd2",
+      "anchorHash": "f4edd695179c23a3d7dd473bb194d3f2d1898483314b84a45e5d248b95847913",
+      "recommendedAnchorPayload": "sha256:f4edd695179c23a3d7dd473bb194d3f2d1898483314b84a45e5d248b95847913",
       "blockchain": {
         "status": "ready-to-anchor",
         "chain": "evm",
-        "transactionData": "0xcbeda1cf706afa9eae8e15481ce3052bb3f7b8ee487f9e078e64ae43bca9fbd2",
+        "transactionData": "0xf4edd695179c23a3d7dd473bb194d3f2d1898483314b84a45e5d248b95847913",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       },
       "anchorPath": "library/bigwin-2026-07-02T07-00-20-289Z/blockchain-anchor.json",
