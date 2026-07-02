@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-02T14:55:08.286Z",
+  "updatedAt": "2026-07-02T14:55:22.910Z",
+  "animation_asset": {
+    "id": "dagon-2026-07-02T14-55-08-286Z",
+    "name": "dagon",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "dagon_idle",
+        "dagon_win",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-dagon_idle",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/dagon-2026-07-02T14-55-08-286Z",
+    "manifestPath": "library/dagon-2026-07-02T14-55-08-286Z/manifest.json",
+    "files": [
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/dagon/Dagon.json",
+        "name": "dagon/Dagon.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/dagon/Dagon.atlas.txt",
+        "name": "dagon/Dagon.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/dagon/Dagon.png",
+        "name": "dagon/Dagon.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/dagon_idle-preview.webm",
+        "name": "dagon_idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/dagon_idle-preview.webp",
+        "name": "dagon_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/dagon-2026-07-02T14-55-08-286Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Dagon.json",
+    "atlas": "Dagon.atlas.txt",
+    "textures": [
+      "Dagon.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "Dagon_Idle",
+      "Dagon_Win"
+    ],
+    "defaultAnimation": "Dagon_Idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
