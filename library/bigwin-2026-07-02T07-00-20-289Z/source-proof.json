@@ -4,9 +4,9 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "bigwin-2026-07-02T07-00-20-289Z",
   "title": "bigwin",
-  "uploadedAt": "2026-07-02T07:00:20.289Z",
+  "uploadedAt": "2026-07-02T07:01:25.332Z",
   "proofPath": "library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-00-20.289Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bigwin-2026-07-02T07-00-20-289Z/source-proof.json?v=2026-07-02T07-01-25.332Z",
   "uploader": {
     "mode": "google-account",
     "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
@@ -46,20 +46,10 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:4e5062d04a03c87ae4de65cfb83feae165e5b0bf99dff31dbd9d3b34e12865fb",
+    "recommendedAnchorPayload": "sha256:2375f19d7b3534bbd6235e216f47e2ea13cd4fa8d510402b4b853e9ade010302",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
-    {
-      "name": "big_win-preview.webm",
-      "bytes": 109879,
-      "sha256": "f848b976c371d9ec847d00e8a8f232a063f6a8d756b5c2d1a25361576653030d"
-    },
-    {
-      "name": "big_win-preview.webp",
-      "bytes": 4372,
-      "sha256": "3591d6137d077168f54ac0c24ed6116c6b3d81a28be45d1b68faa230436039e3"
-    },
     {
       "name": "bigwin/bigwin.atlas",
       "bytes": 9485,
@@ -74,7 +64,17 @@
       "name": "bigwin/bigwin.png",
       "bytes": 2723511,
       "sha256": "64f3e8530e705b5261c3757b9f0a8064de9d3d186f715903039c7d2a6d7c6a6d"
+    },
+    {
+      "name": "total_win2-preview.webm",
+      "bytes": 669970,
+      "sha256": "78b0edf88e9d2afb888250ee4838ebff5b6d7d6acaa91226272fcce65771ae32"
+    },
+    {
+      "name": "total_win2-preview.webp",
+      "bytes": 3850,
+      "sha256": "f4803513a3ab8f1476ed63aee8cfe0cd4e4e3cafaae74fea553725403992d40f"
     }
   ],
-  "proofHash": "4e5062d04a03c87ae4de65cfb83feae165e5b0bf99dff31dbd9d3b34e12865fb"
+  "proofHash": "2375f19d7b3534bbd6235e216f47e2ea13cd4fa8d510402b4b853e9ade010302"
 }
