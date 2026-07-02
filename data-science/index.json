@@ -1,5 +1,151 @@
 [
   {
+    "id": "8000021-2026-07-02T04-43-24-403Z",
+    "name": "8000021",
+    "updatedAt": "2026-07-02T04:43:37.397Z",
+    "animation_asset": {
+      "id": "8000021-2026-07-02T04-43-24-403Z",
+      "name": "8000021",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation1",
+          "animation2",
+          "animation3",
+          "animation4",
+          "animation5",
+          "animation6",
+          "animation7"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/8000021-2026-07-02T04-43-24-403Z",
+      "manifestPath": "library/8000021-2026-07-02T04-43-24-403Z/manifest.json",
+      "files": [
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/8000021/8000021.skel",
+          "name": "8000021/8000021.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/8000021/8000021.atlas",
+          "name": "8000021/8000021.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/8000021/8000021.png",
+          "name": "8000021/8000021.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/animation1-preview.webm",
+          "name": "animation1-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/animation1-preview.webp",
+          "name": "animation1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/8000021-2026-07-02T04-43-24-403Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "8000021.skel",
+      "atlas": "8000021.atlas",
+      "textures": [
+        "8000021.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "animation1",
+        "animation2",
+        "animation3",
+        "animation4",
+        "animation5",
+        "animation6",
+        "animation7"
+      ],
+      "defaultAnimation": "animation1",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "bigwin-2026-07-02T04-19-33-979Z",
     "name": "bigwin",
     "updatedAt": "2026-07-02T04:20:33.644Z",
