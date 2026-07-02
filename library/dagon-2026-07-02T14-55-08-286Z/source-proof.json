@@ -1,0 +1,81 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "dagon-2026-07-02T14-55-08-286Z",
+  "title": "dagon",
+  "uploadedAt": "2026-07-02T14:55:08.286Z",
+  "proofPath": "library/dagon-2026-07-02T14-55-08-286Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/dagon-2026-07-02T14-55-08-286Z/source-proof.json?v=2026-07-02T14-55-08.286Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_8a63t2_10xm92b",
+    "anonymousFingerprint": "8a63t2",
+    "browserFingerprintSha256": "a723dbd1a9d3183d4040c9c0c3ea5dff82c63fc1e95ae3eb69cf70310096f8ff",
+    "browserEnvironmentHashSha256": "47a2e253a89f18b4657ca1d7006fd014d276582007a66478e9b6937f2ff41332",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "ru-RU",
+        "ru",
+        "uk-UA",
+        "uk",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Europe/Berlin",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/dagon-2026-07-02T14-55-08-286Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:95c87b86e9d1795a1896e94da09e24ebf5e2f7480a975f667b716bac84827c0b",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "dagon_idle-preview.webm",
+      "bytes": 435609,
+      "sha256": "324c61fc482f26090163f653455e6810acee899b96dd91ff13e908ab48033df7"
+    },
+    {
+      "name": "dagon_idle-preview.webp",
+      "bytes": 39142,
+      "sha256": "1ee20518039710d2d9944358deef40da5df753c11676ac92c4268b6954d917e5"
+    },
+    {
+      "name": "dagon/Dagon.atlas.txt",
+      "bytes": 1761,
+      "sha256": "6d7110ffaea358dbabd6bc22de9068703575cee7b456ecf019729d86117a8331"
+    },
+    {
+      "name": "dagon/Dagon.json",
+      "bytes": 154715,
+      "sha256": "19e2cc8031b68133b12f55fc7d7536eb0ba2b44c8619ab827dd1e1df39678884"
+    },
+    {
+      "name": "dagon/Dagon.png",
+      "bytes": 1228318,
+      "sha256": "1fabbd6f6d2a67fc2d840d5f1d2c9732e6144db1c88a8115ba0ac40862a29882"
+    }
+  ],
+  "proofHash": "95c87b86e9d1795a1896e94da09e24ebf5e2f7480a975f667b716bac84827c0b"
+}
