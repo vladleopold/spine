@@ -1,5 +1,165 @@
 [
   {
+    "id": "bottle-2026-07-03T04-55-32-652Z",
+    "name": "bottle",
+    "updatedAt": "2026-07-03T04:55:46.335Z",
+    "animation_asset": {
+      "id": "bottle-2026-07-03T04-55-32-652Z",
+      "name": "bottle",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "vfx"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "1_2water",
+          "2_3water",
+          "3_4water",
+          "0_1water",
+          "0_water",
+          "water_vfx",
+          "water_vfx_done",
+          "wave_get_water",
+          "wave_idle",
+          "idle"
+        ],
+        "state": [
+          "default-wave_idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/bottle-2026-07-03T04-55-32-652Z",
+      "manifestPath": "library/bottle-2026-07-03T04-55-32-652Z/manifest.json",
+      "files": [
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.json",
+          "name": "bottle/Bottle.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.atlas",
+          "name": "bottle/Bottle.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.png",
+          "name": "bottle/Bottle.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webm",
+          "name": "wave_idle-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp",
+          "name": "wave_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/bottle-2026-07-03T04-55-32-652Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Bottle.json",
+      "atlas": "Bottle.atlas",
+      "textures": [
+        "Bottle.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "1_2water",
+        "2_3water",
+        "3_4water",
+        "0_1water",
+        "0_water",
+        "water_vfx",
+        "water_vfx_done",
+        "wave_get_water",
+        "wave_idle"
+      ],
+      "defaultAnimation": "wave_idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "vfx"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "low-pay-2026-07-02T15-36-54-451Z",
     "name": "low pay",
     "updatedAt": "2026-07-02T15:37:05.172Z",
