@@ -1,0 +1,82 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "backgroud-2026-07-03T13-58-53-106Z",
+  "title": "backgroud",
+  "uploadedAt": "2026-07-03T13:58:53.106Z",
+  "proofPath": "library/backgroud-2026-07-03T13-58-53-106Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/backgroud-2026-07-03T13-58-53-106Z/source-proof.json?v=2026-07-03T13-58-53.106Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "30a7f3ad1130700f27bbd540ff677fda1b462748682c89a11bbb8b20a9e1cdef",
+    "anonymousAccountId": "anon_8a63t2_10xm92b",
+    "anonymousFingerprint": "8a63t2",
+    "browserFingerprintSha256": "a723dbd1a9d3183d4040c9c0c3ea5dff82c63fc1e95ae3eb69cf70310096f8ff",
+    "browserEnvironmentHashSha256": "47a2e253a89f18b4657ca1d7006fd014d276582007a66478e9b6937f2ff41332",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "ru-RU",
+        "ru",
+        "uk-UA",
+        "uk",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Europe/Berlin",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/backgroud-2026-07-03T13-58-53-106Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e7a3911b9b02960c58c12415e02bec50bb028dcc0eb21021b7f4bbf22d72c5a8",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "backgroud-preview.webm",
+      "bytes": 340442,
+      "sha256": "6085affd27ec5cf4388112b3d5fb3d6b677ea7c99dedcb2a4a162d4ddfcce95f"
+    },
+    {
+      "name": "backgroud-preview.webp",
+      "bytes": 23402,
+      "sha256": "bebe2d1c39d0d0b1f652f55dc75c66f67e29920c47d30c3cba8635bf14feeb36"
+    },
+    {
+      "name": "backgroud/Backgroud.atlas.txt",
+      "bytes": 366,
+      "sha256": "773417b78377990e949c25e2239ec9fe30acbe136ebd26f926c48b695cbc502d"
+    },
+    {
+      "name": "backgroud/Backgroud.json",
+      "bytes": 684631,
+      "sha256": "12002f5ace23cfedf1c1591f0e157f27c5c11f4cb848412966c3ec6ac58c511b"
+    },
+    {
+      "name": "backgroud/Backgroud.png",
+      "bytes": 2453011,
+      "sha256": "3b922f21d3005d8fea5d81267239919bcb85a5d325e24be55013adf9366ce686"
+    }
+  ],
+  "proofHash": "e7a3911b9b02960c58c12415e02bec50bb028dcc0eb21021b7f4bbf22d72c5a8"
+}
