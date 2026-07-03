@@ -1,5 +1,268 @@
 [
   {
+    "id": "bottle-2026-07-03T04-55-32-652Z",
+    "title": "bottle",
+    "publicOwnerId": "u_1t2vfl7",
+    "ownerAnonId": "anon_1dm7ftn_bub7q",
+    "ownerAnonFingerprint": "1dm7ftn",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-03T04:55:32.652Z",
+    "skeleton": "Bottle.json",
+    "atlas": "Bottle.atlas",
+    "textures": [
+      "Bottle.png"
+    ],
+    "animations": [
+      "1_2water",
+      "2_3water",
+      "3_4water",
+      "0_1water",
+      "0_water",
+      "water_vfx",
+      "water_vfx_done",
+      "wave_get_water",
+      "wave_idle"
+    ],
+    "defaultAnimation": "wave_idle",
+    "files": [
+      "bottle/Bottle.json",
+      "bottle/Bottle.atlas",
+      "bottle/Bottle.png",
+      "wave_idle-preview.webm",
+      "wave_idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/bottle-2026-07-03T04-55-32-652Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp?v=2026-07-03T04-55-32.652Z",
+    "thumbnailPath": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp?v=2026-07-03T04-55-32.652Z",
+    "thumbnailPosterPath": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp",
+    "previewWidth": 416,
+    "previewHeight": 1280,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webm?v=2026-07-03T04-55-32.652Z",
+    "webmPreviewPath": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "bottle-2026-07-03T04-55-32-652Z",
+      "title": "bottle",
+      "uploadedAt": "2026-07-03T04:55:32.652Z",
+      "proofPath": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/source-proof.json?v=2026-07-03T04-55-32.652Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1dm7ftn_bub7q",
+        "anonymousFingerprint": "1dm7ftn",
+        "browserFingerprintSha256": "54f4a9973750a6adae34d6eb7d18aaa4d607de7e6b86818ad448a2fc7aa2cab9",
+        "browserEnvironmentHashSha256": "d890dad8592af3d53b539b8b886c1d2a5ed9a549562aa1cff5d6ac31af60270a",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 7,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Saigon",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/bottle-2026-07-03T04-55-32-652Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:fded35abf19747b71efb0cb421cdfb9f3306032cace3551124daaaef66f08635",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "bottle/Bottle.atlas",
+          "bytes": 1746,
+          "sha256": "d3fdd719ffb9ef55cb56b1f92f35544c58040ec99eb469b829e3d2e9fd70a145"
+        },
+        {
+          "name": "bottle/Bottle.json",
+          "bytes": 30497,
+          "sha256": "72a5a7855fa9c60ff39a59a30f1d2df0beb6a00776a864189b6e260abb0931e1"
+        },
+        {
+          "name": "bottle/Bottle.png",
+          "bytes": 258554,
+          "sha256": "c48dedb8a555a30a0d2f429722e512a932dba287990a83b1cf6706564c3ca889"
+        },
+        {
+          "name": "wave_idle-preview.webm",
+          "bytes": 29178,
+          "sha256": "613faae45778859ba18827808b67e2639cee011f24339ad3cd50f5ef4b77652a"
+        },
+        {
+          "name": "wave_idle-preview.webp",
+          "bytes": 21554,
+          "sha256": "c11c25058e43056b7e05a99772b15945da8e885cf4652ebeed9c6141168e2c39"
+        }
+      ],
+      "proofHash": "fded35abf19747b71efb0cb421cdfb9f3306032cace3551124daaaef66f08635"
+    },
+    "sourceProofPath": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/source-proof.json?v=2026-07-03T04-55-32.652Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-03T04:55:44.185Z",
+      "entryId": "bottle-2026-07-03T04-55-32-652Z",
+      "title": "bottle",
+      "uploadedAt": "2026-07-03T04:55:32.652Z",
+      "sourceProofHash": "fded35abf19747b71efb0cb421cdfb9f3306032cace3551124daaaef66f08635",
+      "sourceProofPath": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/source-proof.json?v=2026-07-03T04-55-32.652Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1dm7ftn_bub7q",
+        "anonymousFingerprint": "1dm7ftn",
+        "browserFingerprintSha256": "54f4a9973750a6adae34d6eb7d18aaa4d607de7e6b86818ad448a2fc7aa2cab9",
+        "browserEnvironmentHashSha256": "d890dad8592af3d53b539b8b886c1d2a5ed9a549562aa1cff5d6ac31af60270a",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 7,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Saigon",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/bottle-2026-07-03T04-55-32-652Z",
+        "files": [
+          {
+            "name": "bottle/Bottle.json",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.json",
+            "bytes": 30497,
+            "sha256": "72a5a7855fa9c60ff39a59a30f1d2df0beb6a00776a864189b6e260abb0931e1",
+            "github": {
+              "contentSha": "75b3aa3ca5becf1f2ed21950e73b08941fea059b",
+              "commitSha": "b0bec5d48a9f8daf728ebfb1d362682f99afa817",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b0bec5d48a9f8daf728ebfb1d362682f99afa817",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.json?token=ACCECWZCMNXMRRTCXAASOVLKI5AQK"
+            }
+          },
+          {
+            "name": "bottle/Bottle.atlas",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.atlas",
+            "bytes": 1746,
+            "sha256": "d3fdd719ffb9ef55cb56b1f92f35544c58040ec99eb469b829e3d2e9fd70a145",
+            "github": {
+              "contentSha": "77972e171da2a000d4c345e2b2cf20f2cbf16c35",
+              "commitSha": "b4133490794dcb84028971b82b327c09a1145722",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b4133490794dcb84028971b82b327c09a1145722",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.atlas?token=ACCECW2MBQ5YLTHBEOIL46LKI5AQM"
+            }
+          },
+          {
+            "name": "bottle/Bottle.png",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.png",
+            "bytes": 258554,
+            "sha256": "c48dedb8a555a30a0d2f429722e512a932dba287990a83b1cf6706564c3ca889",
+            "github": {
+              "contentSha": "af6cddd3f6c47ef542cb119d2c2d99e8a74bab14",
+              "commitSha": "a14bd1a0cbfdd0811bea8fecd8b8028c1b756f5b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a14bd1a0cbfdd0811bea8fecd8b8028c1b756f5b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/bottle/Bottle.png?token=ACCECW33O2CVTEME4OS5DW3KI5AQQ"
+            }
+          },
+          {
+            "name": "wave_idle-preview.webm",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webm",
+            "bytes": 29178,
+            "sha256": "613faae45778859ba18827808b67e2639cee011f24339ad3cd50f5ef4b77652a",
+            "github": {
+              "contentSha": "c8e2e74cf836e6f0ecee2bc545845d76c3d1facb",
+              "commitSha": "fabcc730f62da3f15276213c77d75b0258e15604",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fabcc730f62da3f15276213c77d75b0258e15604",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webm?token=ACCECW5BZBOJJBB6ALUZCG3KI5AQS"
+            }
+          },
+          {
+            "name": "wave_idle-preview.webp",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp",
+            "bytes": 21554,
+            "sha256": "c11c25058e43056b7e05a99772b15945da8e885cf4652ebeed9c6141168e2c39",
+            "github": {
+              "contentSha": "ca7f7983bd115c2b75f6e43c6a77a39b4f01854c",
+              "commitSha": "a00c5d3d5ac13232374e33b53bc314c5175b121c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a00c5d3d5ac13232374e33b53bc314c5175b121c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp?token=ACCECW3HU46AHEYLVUNJFUDKI5AQU"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+            "bytes": 2648,
+            "sha256": "f6c3488eecd53a9e68528b7d86c3bea5d070cd9b179db5cbfa045a795167a2ae",
+            "github": {
+              "contentSha": "099d04ce7eef228afd3afedabe952ce4055b1eb2",
+              "commitSha": "bfc93d44f3c767b46f85b50d9784bbfc1ce9b1cd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bfc93d44f3c767b46f85b50d9784bbfc1ce9b1cd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bottle-2026-07-03T04-55-32-652Z/source-proof.json?token=ACCECWZVIWK47DG2B5YWC33KI5AQW"
+            }
+          }
+        ],
+        "anchorPath": "library/bottle-2026-07-03T04-55-32-652Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/blockchain-anchor.json",
+        "anchorCommitSha": "6fa1e663b015604329abee590659f77bc5eef56a",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/6fa1e663b015604329abee590659f77bc5eef56a"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "21aae252b062477548f2a0704dd9d5408fc7c83f515c6f1fb410bd27c86cc6f5",
+      "recommendedAnchorPayload": "sha256:21aae252b062477548f2a0704dd9d5408fc7c83f515c6f1fb410bd27c86cc6f5",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x21aae252b062477548f2a0704dd9d5408fc7c83f515c6f1fb410bd27c86cc6f5",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/bottle-2026-07-03T04-55-32-652Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "skeleton-2026-07-02T13-52-18-678Z",
     "title": "skeleton",
     "publicOwnerId": "u_10q7a9c",
