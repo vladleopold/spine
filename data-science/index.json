@@ -1,5 +1,138 @@
 [
   {
+    "id": "backgroud-2026-07-03T13-58-53-106Z",
+    "name": "backgroud",
+    "updatedAt": "2026-07-03T13:59:05.662Z",
+    "animation_asset": {
+      "id": "backgroud-2026-07-03T13-58-53-106Z",
+      "name": "backgroud",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "backgroud"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-backgroud"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/backgroud-2026-07-03T13-58-53-106Z",
+      "manifestPath": "library/backgroud-2026-07-03T13-58-53-106Z/manifest.json",
+      "files": [
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/backgroud/Backgroud.json",
+          "name": "backgroud/Backgroud.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/backgroud/Backgroud.atlas.txt",
+          "name": "backgroud/Backgroud.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/backgroud/Backgroud.png",
+          "name": "backgroud/Backgroud.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/backgroud-preview.webm",
+          "name": "backgroud-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/backgroud-preview.webp",
+          "name": "backgroud-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/backgroud-2026-07-03T13-58-53-106Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Backgroud.json",
+      "atlas": "Backgroud.atlas.txt",
+      "textures": [
+        "Backgroud.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "Backgroud"
+      ],
+      "defaultAnimation": "Backgroud",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "bottle-2026-07-03T04-55-32-652Z",
     "name": "bottle",
     "updatedAt": "2026-07-03T04:55:46.335Z",
