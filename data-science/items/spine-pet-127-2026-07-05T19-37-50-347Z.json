@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-05T19:37:50.347Z",
+  "updatedAt": "2026-07-05T19:38:03.240Z",
+  "animation_asset": {
+    "id": "spine-pet-127-2026-07-05T19-37-50-347Z",
+    "name": "spine-pet-127",
+    "domain": "gamedev",
+    "asset_category": "pet",
+    "animation_type": "pet",
+    "skeleton_type": "creature",
+    "content_type": "pet",
+    "taxonomy": {
+      "category": "character",
+      "class": "companion",
+      "type": "pet",
+      "tags": [
+        "pet"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "companion"
+      ],
+      "animation_state": [
+        "attack",
+        "idle",
+        "walk"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "walk",
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/spine-pet-127-2026-07-05T19-37-50-347Z",
+    "manifestPath": "library/spine-pet-127-2026-07-05T19-37-50-347Z/manifest.json",
+    "files": [
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/spine-pet-127/spine-pet-127.json",
+        "name": "spine-pet-127/spine-pet-127.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/spine-pet-127/spine-pet-127.atlas",
+        "name": "spine-pet-127/spine-pet-127.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/spine-pet-127/spine-pet-127.png",
+        "name": "spine-pet-127/spine-pet-127.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/spine-pet-127-2026-07-05T19-37-50-347Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "spine-pet-127.json",
+    "atlas": "spine-pet-127.atlas",
+    "textures": [
+      "spine-pet-127.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "attack",
+      "idle",
+      "walk"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "pet"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
