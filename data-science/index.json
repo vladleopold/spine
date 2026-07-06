@@ -1,5 +1,125 @@
 [
   {
+    "id": "ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z",
+    "name": "ncorp_fairy_long_leg",
+    "updatedAt": "2026-07-06T21:33:44.131Z",
+    "animation_asset": {
+      "id": "ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z",
+      "name": "ncorp_fairy_long_leg",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z",
+      "manifestPath": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ncorp_fairy_long_leg.json",
+      "atlas": "ncorp_fairy_long_leg.atlas",
+      "textures": [
+        "ncorp_fairy_long_leg.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 5,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 1
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
     "name": "ncorp_fairy_long_leg",
     "updatedAt": "2026-07-06T21:31:29.209Z",
