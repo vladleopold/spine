@@ -1,5 +1,262 @@
 [
   {
+    "id": "ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
+    "title": "ncorp_fairy_long_leg",
+    "publicOwnerId": "u_g7ev2z",
+    "ownerAnonId": "anon_9e531g_1u3grdz",
+    "ownerAnonFingerprint": "9e531g",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-06T21:31:18.578Z",
+    "skeleton": "ncorp_fairy_long_leg.json",
+    "atlas": "ncorp_fairy_long_leg.atlas",
+    "textures": [
+      "ncorp_fairy_long_leg.png"
+    ],
+    "animations": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "files": [
+      "ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+      "ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+      "ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+      "animation-preview.webm",
+      "animation-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp?v=2026-07-06T21-31-18.578Z",
+    "thumbnailPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp?v=2026-07-06T21-31-18.578Z",
+    "thumbnailPosterPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp",
+    "previewWidth": 650,
+    "previewHeight": 1280,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webm?v=2026-07-06T21-31-18.578Z",
+    "webmPreviewPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
+      "title": "ncorp_fairy_long_leg",
+      "uploadedAt": "2026-07-06T21:31:18.578Z",
+      "proofPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json?v=2026-07-06T21-31-18.578Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_9e531g_1u3grdz",
+        "anonymousFingerprint": "9e531g",
+        "browserFingerprintSha256": "91259241a39bc1a1c765e29928dc43563fd9fd4a0202435cb18c88d7de431c11",
+        "browserEnvironmentHashSha256": "4e62bceb9d0763919ca22487d97a689a1eafd647ebd8105bc56f833dbec4419b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:3d25470ebf7e43fe3461a87f68a5ebb07d2c89624722342d1f2637517f7ae691",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "animation-preview.webm",
+          "bytes": 395678,
+          "sha256": "8650dcee467afc7ae9b0689a98e332ece686f55a9bb15b5a5f3fee504ce2dc48"
+        },
+        {
+          "name": "animation-preview.webp",
+          "bytes": 59470,
+          "sha256": "ae048a7a7034ce0d990107921283ac7c251b0e8fba099322c8cc7a2068f88303"
+        },
+        {
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+          "bytes": 632,
+          "sha256": "048c8be3621fd349ecf4c9d37b6696923284d0af26ed70e1431c96ff045d77f0"
+        },
+        {
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+          "bytes": 18904,
+          "sha256": "eb452d348f38396927dd0df9edf601cd361be7a78f5cd712b82352b2e5e190b0"
+        },
+        {
+          "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+          "bytes": 778822,
+          "sha256": "3e9c008b8d601eb927ab57a8dfd7fc5fcc6030fcb53f91fd47f2f81063cf957b"
+        }
+      ],
+      "proofHash": "3d25470ebf7e43fe3461a87f68a5ebb07d2c89624722342d1f2637517f7ae691"
+    },
+    "sourceProofPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json?v=2026-07-06T21-31-18.578Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-06T21:31:27.278Z",
+      "entryId": "ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
+      "title": "ncorp_fairy_long_leg",
+      "uploadedAt": "2026-07-06T21:31:18.578Z",
+      "sourceProofHash": "3d25470ebf7e43fe3461a87f68a5ebb07d2c89624722342d1f2637517f7ae691",
+      "sourceProofPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json?v=2026-07-06T21-31-18.578Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_9e531g_1u3grdz",
+        "anonymousFingerprint": "9e531g",
+        "browserFingerprintSha256": "91259241a39bc1a1c765e29928dc43563fd9fd4a0202435cb18c88d7de431c11",
+        "browserEnvironmentHashSha256": "4e62bceb9d0763919ca22487d97a689a1eafd647ebd8105bc56f833dbec4419b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 32,
+            "pixelRatio": 1
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z",
+        "files": [
+          {
+            "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+            "bytes": 18904,
+            "sha256": "eb452d348f38396927dd0df9edf601cd361be7a78f5cd712b82352b2e5e190b0",
+            "github": {
+              "contentSha": "d9087c90cc16bab53abcd0eb24c145beb9138227",
+              "commitSha": "06c448071892205dfe150e607c18a3d4ed261a1a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/06c448071892205dfe150e607c18a3d4ed261a1a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.json?token=ACCECW4EOTPPGKNQ5LAFKGLKJQPOK"
+            }
+          },
+          {
+            "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+            "bytes": 632,
+            "sha256": "048c8be3621fd349ecf4c9d37b6696923284d0af26ed70e1431c96ff045d77f0",
+            "github": {
+              "contentSha": "49c1291583d183e81eef21b6d460a1b6ca127a49",
+              "commitSha": "1d642f3bc91981c15076fb813fbca6087d464f29",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1d642f3bc91981c15076fb813fbca6087d464f29",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas?token=ACCECW5RU6VQO3B3BIEZDUDKJQPOK"
+            }
+          },
+          {
+            "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+            "bytes": 778822,
+            "sha256": "3e9c008b8d601eb927ab57a8dfd7fc5fcc6030fcb53f91fd47f2f81063cf957b",
+            "github": {
+              "contentSha": "3f15dc27a24754e3a4eb924c34d34117f835f5f0",
+              "commitSha": "75eb374e1fa2ac3f59fb5be826fcc4b64326164a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/75eb374e1fa2ac3f59fb5be826fcc4b64326164a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/ncorp_fairy_long_leg/ncorp_fairy_long_leg.png?token=ACCECWY6D5EXQPWO3Z7PNSDKJQPOQ"
+            }
+          },
+          {
+            "name": "animation-preview.webm",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webm",
+            "bytes": 395678,
+            "sha256": "8650dcee467afc7ae9b0689a98e332ece686f55a9bb15b5a5f3fee504ce2dc48",
+            "github": {
+              "contentSha": "c4c5f9875dee060acd553b2b3bd2d46277202dde",
+              "commitSha": "210377e080aececed12980b93c32f51099fa937c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/210377e080aececed12980b93c32f51099fa937c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webm?token=ACCECW32BPYHAL3HEN3WF2TKJQPOS"
+            }
+          },
+          {
+            "name": "animation-preview.webp",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp",
+            "bytes": 59470,
+            "sha256": "ae048a7a7034ce0d990107921283ac7c251b0e8fba099322c8cc7a2068f88303",
+            "github": {
+              "contentSha": "339eb1bbca27c01b8dcb3bdc33b2a77d6aaa060d",
+              "commitSha": "23644bbf3216945bf0e0b1043f5f0fad97f3adff",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/23644bbf3216945bf0e0b1043f5f0fad97f3adff",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/animation-preview.webp?token=ACCECWYMYE2MX6L5NTYBHOLKJQPOU"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json",
+            "bytes": 2813,
+            "sha256": "45b6cd22a32d98ed8734daad96fba6ac73782e197a8af477211ca8894b0cf698",
+            "github": {
+              "contentSha": "123393ad2aa0844e33f91f8402e566b740735d3e",
+              "commitSha": "a75f9c7755d8762bf8a1b24b5759a731066cd6fa",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a75f9c7755d8762bf8a1b24b5759a731066cd6fa",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/source-proof.json?token=ACCECWZEPNJA2SG2AYV5U4DKJQPOW"
+            }
+          }
+        ],
+        "anchorPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/blockchain-anchor.json",
+        "anchorCommitSha": "e5b6c48015ffedca67bb73976b5468e331ba138d",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/e5b6c48015ffedca67bb73976b5468e331ba138d"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "34dabaa44c9094e1d394a1727c8ee9339e13b593230e08cfa7b3fee5a3aebe34",
+      "recommendedAnchorPayload": "sha256:34dabaa44c9094e1d394a1727c8ee9339e13b593230e08cfa7b3fee5a3aebe34",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x34dabaa44c9094e1d394a1727c8ee9339e13b593230e08cfa7b3fee5a3aebe34",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-31-18-578Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "spine-pet-127-2026-07-05T19-37-50-347Z",
     "title": "spine-pet-127",
     "publicOwnerId": "u_1e14on7",
