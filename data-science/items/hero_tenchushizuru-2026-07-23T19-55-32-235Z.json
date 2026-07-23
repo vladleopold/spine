@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-23T19:55:32.235Z",
+  "updatedAt": "2026-07-23T19:55:48.820Z",
+  "animation_asset": {
+    "id": "hero_tenchushizuru-2026-07-23T19-55-32-235Z",
+    "name": "hero_tenchushizuru",
+    "domain": "gamedev",
+    "asset_category": "character",
+    "animation_type": "character",
+    "skeleton_type": "humanoid",
+    "content_type": "character",
+    "taxonomy": {
+      "category": "character",
+      "class": "humanoid",
+      "type": "character",
+      "tags": [
+        "hero"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "avatar"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel",
+        "spine-json"
+      ],
+      "animation_state": [
+        "appear_01",
+        "appear_02",
+        "attack_01",
+        "die_01",
+        "freeze_01",
+        "idle_01",
+        "idleshow_01",
+        "shake_01",
+        "skill_01",
+        "stun_01",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-appear_01"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z",
+    "manifestPath": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/manifest.json",
+    "files": [
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/hero_tenchushizuru/hero_tenchushizuru.skel",
+        "name": "hero_tenchushizuru/hero_tenchushizuru.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/hero_tenchushizuru/hero_tenchushizuru.atlas",
+        "name": "hero_tenchushizuru/hero_tenchushizuru.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/hero_tenchushizuru/hero_tenchushizuru.png",
+        "name": "hero_tenchushizuru/hero_tenchushizuru.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/appear_01-preview.webm",
+        "name": "appear_01-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/appear_01-preview.webp",
+        "name": "appear_01-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/hero_tenchushizuru-2026-07-23T19-55-32-235Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "hero_tenchushizuru.skel",
+    "atlas": "hero_tenchushizuru.atlas",
+    "textures": [
+      "hero_tenchushizuru.png"
+    ],
+    "animationCount": 10,
+    "animationNames": [
+      "appear_01",
+      "appear_02",
+      "attack_01",
+      "die_01",
+      "freeze_01",
+      "idle_01",
+      "idleshow_01",
+      "shake_01",
+      "skill_01",
+      "stun_01"
+    ],
+    "defaultAnimation": "appear_01",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hero"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
