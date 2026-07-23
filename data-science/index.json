@@ -1,5 +1,177 @@
 [
   {
+    "id": "hero_newmachaab-2026-07-23T19-31-49-018Z",
+    "name": "hero_newmachaab",
+    "updatedAt": "2026-07-23T19:32:06.226Z",
+    "animation_asset": {
+      "id": "hero_newmachaab-2026-07-23T19-31-49-018Z",
+      "name": "hero_newmachaab",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "hero"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "animation_state": [
+          "appear_01",
+          "appear_02",
+          "attack_01",
+          "die_01",
+          "freeze_01",
+          "idle_01",
+          "idleshow_01",
+          "shake_01",
+          "skill_01",
+          "stun_01",
+          "txm",
+          "txss",
+          "txwq",
+          "txx",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-appear_01"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/hero_newmachaab-2026-07-23T19-31-49-018Z",
+      "manifestPath": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/manifest.json",
+      "files": [
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/hero_newmachaab/hero_newmachaab.skel",
+          "name": "hero_newmachaab/hero_newmachaab.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/hero_newmachaab/hero_newmachaab.atlas",
+          "name": "hero_newmachaab/hero_newmachaab.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/hero_newmachaab/hero_newmachaab.png",
+          "name": "hero_newmachaab/hero_newmachaab.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/appear_01-preview.webm",
+          "name": "appear_01-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/appear_01-preview.webp",
+          "name": "appear_01-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/hero_newmachaab-2026-07-23T19-31-49-018Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "hero_newmachaab.skel",
+      "atlas": "hero_newmachaab.atlas",
+      "textures": [
+        "hero_newmachaab.png"
+      ],
+      "animationCount": 14,
+      "animationNames": [
+        "appear_01",
+        "appear_02",
+        "attack_01",
+        "die_01",
+        "freeze_01",
+        "idle_01",
+        "idleshow_01",
+        "shake_01",
+        "skill_01",
+        "stun_01",
+        "txm",
+        "txss",
+        "txwq",
+        "txx"
+      ],
+      "defaultAnimation": "appear_01",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hero"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "hero_gar_aeon1-2026-07-23T19-27-06-029Z",
     "name": "hero_gar_aeon1",
     "updatedAt": "2026-07-23T19:27:26.424Z",
