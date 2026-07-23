@@ -1,5 +1,279 @@
 [
   {
+    "id": "hero_blaze_felix-2026-07-23T19-37-08-744Z",
+    "title": "hero_blaze_felix",
+    "publicOwnerId": "u_1i1sxrp",
+    "ownerAnonId": "anon_1ntlxtv_1heptqj",
+    "ownerAnonFingerprint": "1ntlxtv",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-23T19:37:08.744Z",
+    "skeleton": "hero_blaze_felix.skel",
+    "atlas": "hero_blaze_felix.atlas",
+    "textures": [
+      "hero_blaze_felix.png"
+    ],
+    "animations": [
+      "appear_01",
+      "appear_02",
+      "attack_01",
+      "die_01",
+      "freeze_01",
+      "idle_01",
+      "idleshow_01",
+      "shake_01",
+      "skill_01",
+      "stun_01"
+    ],
+    "defaultAnimation": "appear_01",
+    "files": [
+      "hero_blaze_felix/hero_blaze_felix.skel",
+      "hero_blaze_felix/hero_blaze_felix.atlas",
+      "hero_blaze_felix/hero_blaze_felix.png",
+      "appear_01-preview.webm",
+      "appear_01-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp?v=2026-07-23T19-37-08.744Z",
+    "thumbnailPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp?v=2026-07-23T19-37-08.744Z",
+    "thumbnailPosterPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp",
+    "previewWidth": 720,
+    "previewHeight": 898,
+    "previewDuration": 0.6666666865348816,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webm?v=2026-07-23T19-37-08.744Z",
+    "webmPreviewPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "hero_blaze_felix-2026-07-23T19-37-08-744Z",
+      "title": "hero_blaze_felix",
+      "uploadedAt": "2026-07-23T19:37:08.744Z",
+      "proofPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json?v=2026-07-23T19-37-08.744Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ntlxtv_1heptqj",
+        "anonymousFingerprint": "1ntlxtv",
+        "browserFingerprintSha256": "ed76dcd3c26dbe8824582e1fae88e14252d6c08eb5ed64bb256abdb7ea6d9803",
+        "browserEnvironmentHashSha256": "23051a6d7230421fed5c73ec91188805850bf7418eee933640b0db0482e972a3",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-IQ",
+          "languages": [
+            "en-IQ",
+            "ar-IQ",
+            "ar",
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 424,
+            "height": 942,
+            "colorDepth": 24,
+            "pixelRatio": 2.549999952316284
+          },
+          "timezone": "Asia/Baghdad",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:aa5cf92d6f105d098dbe98caa948e655a00f7f1ac49a6de562ffb618aea53b1b",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "appear_01-preview.webm",
+          "bytes": 33624,
+          "sha256": "726a96d6241e8008d409ccec6bf012848299ce10113d60797f4a01a7850c5454"
+        },
+        {
+          "name": "appear_01-preview.webp",
+          "bytes": 45428,
+          "sha256": "9c4817a58645307e7f195ada7954d3c572cd6b16cb8efcca4229e21616f0b8f9"
+        },
+        {
+          "name": "hero_blaze_felix/hero_blaze_felix.atlas",
+          "bytes": 5127,
+          "sha256": "91bad6885c7f792d04ce88146853c5bdcebb28085efd3e1ef36b6a5a03fb5a8b"
+        },
+        {
+          "name": "hero_blaze_felix/hero_blaze_felix.png",
+          "bytes": 849638,
+          "sha256": "8df7d26e19bc0271b62afac7c1c00902c205d77e75815e67f57e79ab61ad5cf0"
+        },
+        {
+          "name": "hero_blaze_felix/hero_blaze_felix.skel",
+          "bytes": 229375,
+          "sha256": "a8c6b752b07f921146f5b34bcef47020e19541eda252bf4964a8ba0031be82e9"
+        }
+      ],
+      "proofHash": "aa5cf92d6f105d098dbe98caa948e655a00f7f1ac49a6de562ffb618aea53b1b"
+    },
+    "sourceProofPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json?v=2026-07-23T19-37-08.744Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-23T19:37:21.723Z",
+      "entryId": "hero_blaze_felix-2026-07-23T19-37-08-744Z",
+      "title": "hero_blaze_felix",
+      "uploadedAt": "2026-07-23T19:37:08.744Z",
+      "sourceProofHash": "aa5cf92d6f105d098dbe98caa948e655a00f7f1ac49a6de562ffb618aea53b1b",
+      "sourceProofPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json?v=2026-07-23T19-37-08.744Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ntlxtv_1heptqj",
+        "anonymousFingerprint": "1ntlxtv",
+        "browserFingerprintSha256": "ed76dcd3c26dbe8824582e1fae88e14252d6c08eb5ed64bb256abdb7ea6d9803",
+        "browserEnvironmentHashSha256": "23051a6d7230421fed5c73ec91188805850bf7418eee933640b0db0482e972a3",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-IQ",
+          "languages": [
+            "en-IQ",
+            "ar-IQ",
+            "ar",
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 424,
+            "height": 942,
+            "colorDepth": 24,
+            "pixelRatio": 2.549999952316284
+          },
+          "timezone": "Asia/Baghdad",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z",
+        "files": [
+          {
+            "name": "hero_blaze_felix/hero_blaze_felix.skel",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.skel",
+            "bytes": 229375,
+            "sha256": "a8c6b752b07f921146f5b34bcef47020e19541eda252bf4964a8ba0031be82e9",
+            "github": {
+              "contentSha": "5fdae8a7e009bcce9285c23cac3c119671daaa2e",
+              "commitSha": "204a49e03faffab58f0e296a6b7bbd4483509546",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/204a49e03faffab58f0e296a6b7bbd4483509546",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.skel?token=ACCECW4BZJ5O65VLGFAUAE3KMJW2I"
+            }
+          },
+          {
+            "name": "hero_blaze_felix/hero_blaze_felix.atlas",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.atlas",
+            "bytes": 5127,
+            "sha256": "91bad6885c7f792d04ce88146853c5bdcebb28085efd3e1ef36b6a5a03fb5a8b",
+            "github": {
+              "contentSha": "32e066a1b88e3eeefd729d0e7e376ef1dcb35806",
+              "commitSha": "6b4bfedb477e1843940d4cc17a8a4336d5864173",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6b4bfedb477e1843940d4cc17a8a4336d5864173",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.atlas?token=ACCECW3ZJJTNOIBC5WJIMETKMJW2K"
+            }
+          },
+          {
+            "name": "hero_blaze_felix/hero_blaze_felix.png",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.png",
+            "bytes": 849638,
+            "sha256": "8df7d26e19bc0271b62afac7c1c00902c205d77e75815e67f57e79ab61ad5cf0",
+            "github": {
+              "contentSha": "2e6689cab2004fce24c9bc1e22a89b3669a88820",
+              "commitSha": "cb48ce5d2566cef8b0264794306a2516ff644454",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cb48ce5d2566cef8b0264794306a2516ff644454",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/hero_blaze_felix/hero_blaze_felix.png?token=ACCECW4G6YCRLGJVLG45XDLKMJW2S"
+            }
+          },
+          {
+            "name": "appear_01-preview.webm",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webm",
+            "bytes": 33624,
+            "sha256": "726a96d6241e8008d409ccec6bf012848299ce10113d60797f4a01a7850c5454",
+            "github": {
+              "contentSha": "3d445a71edc431b5d8cddd5077c24ff9e4eebdec",
+              "commitSha": "a7cdf8b5db967c8fb37f8c7ed6761723043c5dca",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a7cdf8b5db967c8fb37f8c7ed6761723043c5dca",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webm?token=ACCECW4YE3NG6GNQLXDBJN3KMJW2U"
+            }
+          },
+          {
+            "name": "appear_01-preview.webp",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp",
+            "bytes": 45428,
+            "sha256": "9c4817a58645307e7f195ada7954d3c572cd6b16cb8efcca4229e21616f0b8f9",
+            "github": {
+              "contentSha": "3e378d512f4e89bb441556abec54d9cfa3ec4507",
+              "commitSha": "7afba32b71a37391772c741d0f9b2f25bb40f18e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7afba32b71a37391772c741d0f9b2f25bb40f18e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/appear_01-preview.webp?token=ACCECWZ5PBI57T6OMNQNTCLKMJW2Y"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json",
+            "bytes": 2853,
+            "sha256": "e89ac4108939b2ad4dba3e6e4c45223a52a718a04f14532db71b49e6908dd52d",
+            "github": {
+              "contentSha": "15be59ee562cf1ae0df60d721c34797900ec5e81",
+              "commitSha": "f272007071b64d4c7ac036aea036f62a78c802ff",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f272007071b64d4c7ac036aea036f62a78c802ff",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/source-proof.json?token=ACCECW5D2KMOGVKB3O2K3IDKMJW22"
+            }
+          }
+        ],
+        "anchorPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/blockchain-anchor.json",
+        "anchorCommitSha": "13aba2d4d46963bc259d557d493c4889378464fd",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/13aba2d4d46963bc259d557d493c4889378464fd"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "6def401312a227b2781e09ef9bf3fb9f4b3a594c6c3a9f86e15a77f5b84dcc0f",
+      "recommendedAnchorPayload": "sha256:6def401312a227b2781e09ef9bf3fb9f4b3a594c6c3a9f86e15a77f5b84dcc0f",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x6def401312a227b2781e09ef9bf3fb9f4b3a594c6c3a9f86e15a77f5b84dcc0f",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/hero_blaze_felix-2026-07-23T19-37-08-744Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/hero_blaze_felix-2026-07-23T19-37-08-744Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "hero_newmachaab-2026-07-23T19-31-49-018Z",
     "title": "hero_newmachaab",
     "publicOwnerId": "u_1i1sxrp",
