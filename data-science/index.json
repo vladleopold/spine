@@ -1,5 +1,169 @@
 [
   {
+    "id": "hero_theodor_2-2026-07-23T21-48-52-132Z",
+    "name": "hero_theodor_2",
+    "updatedAt": "2026-07-23T21:49:20.490Z",
+    "animation_asset": {
+      "id": "hero_theodor_2-2026-07-23T21-48-52-132Z",
+      "name": "hero_theodor_2",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "hero"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "animation_state": [
+          "appear_01",
+          "appear_02",
+          "attack_01",
+          "die_01",
+          "freeze_01",
+          "idle_01",
+          "idleshow_01",
+          "shake_01",
+          "skill_01",
+          "stun_01",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-appear_01"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/hero_theodor_2-2026-07-23T21-48-52-132Z",
+      "manifestPath": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/manifest.json",
+      "files": [
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/hero_theodor_2/hero_theodor_2.skel",
+          "name": "hero_theodor_2/hero_theodor_2.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/hero_theodor_2/hero_theodor_2.atlas",
+          "name": "hero_theodor_2/hero_theodor_2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/hero_theodor_2/hero_theodor_2.png",
+          "name": "hero_theodor_2/hero_theodor_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/appear_01-preview.webm",
+          "name": "appear_01-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/appear_01-preview.webp",
+          "name": "appear_01-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/hero_theodor_2-2026-07-23T21-48-52-132Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "hero_theodor_2.skel",
+      "atlas": "hero_theodor_2.atlas",
+      "textures": [
+        "hero_theodor_2.png"
+      ],
+      "animationCount": 10,
+      "animationNames": [
+        "appear_01",
+        "appear_02",
+        "attack_01",
+        "die_01",
+        "freeze_01",
+        "idle_01",
+        "idleshow_01",
+        "shake_01",
+        "skill_01",
+        "stun_01"
+      ],
+      "defaultAnimation": "appear_01",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hero"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "hero_rosamia_1-2026-07-23T20-03-38-799Z",
     "name": "hero_rosamia_1",
     "updatedAt": "2026-07-23T20:03:54.924Z",
