@@ -1,5 +1,167 @@
 [
   {
+    "id": "char-v01-2026-07-23T14-28-50-846Z",
+    "name": "char-v01",
+    "updatedAt": "2026-07-23T14:29:03.255Z",
+    "animation_asset": {
+      "id": "char-v01-2026-07-23T14-28-50-846Z",
+      "name": "char-v01",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "char"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "animation_state": [
+          "idle_01",
+          "idle_02_arrows",
+          "idle_03_blink",
+          "walk_dead",
+          "walk_end",
+          "walk_loop",
+          "walk_start",
+          "win",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle_01",
+          "win",
+          "lose"
+        ],
+        "action": [
+          "walk"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/char-v01-2026-07-23T14-28-50-846Z",
+      "manifestPath": "library/char-v01-2026-07-23T14-28-50-846Z/manifest.json",
+      "files": [
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/char-v01/char-v01.skel",
+          "name": "char-v01/char-v01.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/char-v01/char-v01.atlas",
+          "name": "char-v01/char-v01.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/char-v01/char-v01.png",
+          "name": "char-v01/char-v01.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/idle_01-preview.webm",
+          "name": "idle_01-preview.webm",
+          "role": "support",
+          "format": "webm"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/idle_01-preview.webp",
+          "name": "idle_01-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/char-v01-2026-07-23T14-28-50-846Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "char-v01.skel",
+      "atlas": "char-v01.atlas",
+      "textures": [
+        "char-v01.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "idle_01",
+        "idle_02_arrows",
+        "idle_03_blink",
+        "walk_dead",
+        "walk_end",
+        "walk_loop",
+        "walk_start",
+        "win"
+      ],
+      "defaultAnimation": "idle_01",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "char"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "dynamite-2026-07-23T10-18-53-634Z",
     "name": "dynamite",
     "updatedAt": "2026-07-23T10:19:07.920Z",
