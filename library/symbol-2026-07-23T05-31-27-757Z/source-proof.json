@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "symbol-2026-07-23T05-31-27-757Z",
+  "title": "symbol",
+  "uploadedAt": "2026-07-23T05:31:27.757Z",
+  "proofPath": "library/symbol-2026-07-23T05-31-27-757Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/symbol-2026-07-23T05-31-27-757Z/source-proof.json?v=2026-07-23T05-31-27.757Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_zcn1c8_11nzqxe",
+    "anonymousFingerprint": "zcn1c8",
+    "browserFingerprintSha256": "f748d1b41e208cefb28cb09f514c9334cc3c7af460c6527e76855ce0932deaf3",
+    "browserEnvironmentHashSha256": "dc04464f422f8612196e17fe8ed6b24e5a57b2357fc50ee886dfa110592b74e0",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "languages": [
+        "en-GB"
+      ],
+      "hardwareConcurrency": 8,
+      "screen": {
+        "width": 1512,
+        "height": 982,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Tashkent",
+      "timezoneOffset": -300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/symbol-2026-07-23T05-31-27-757Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:6400f80036cea5e8b93dc2a98896e8f447fd12006cc83ed33d784c1bfa187e8d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "sym_a_idle-preview.webm",
+      "bytes": 506162,
+      "sha256": "e92c251a5cc2aec79a2fbba64fbe6df69b97e0096f14bd933a7fbc479df2929f"
+    },
+    {
+      "name": "sym_a_idle-preview.webp",
+      "bytes": 660670,
+      "sha256": "c294b12e89b416830a9e0f2fb7750943f32bff49f69a56a4121015b396e4957f"
+    },
+    {
+      "name": "symbol/symbol.atlas",
+      "bytes": 235,
+      "sha256": "584896837b28e875fedf6040e4c4e9494b92dba8f7ade9ae1a08699ff20f80f8"
+    },
+    {
+      "name": "symbol/symbol.json",
+      "bytes": 5167,
+      "sha256": "4a32a48c04b795f56a2bfd89136a160c774955ee0e2013bf14dcf6fb7156a5ed"
+    },
+    {
+      "name": "symbol/symbol.png",
+      "bytes": 160613,
+      "sha256": "54c574ee0ca011fdd754309021221c14fe74c72a4ea4e62281806bbeff714778"
+    }
+  ],
+  "proofHash": "6400f80036cea5e8b93dc2a98896e8f447fd12006cc83ed33d784c1bfa187e8d"
+}
