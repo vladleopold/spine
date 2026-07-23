@@ -1,5 +1,240 @@
 [
   {
+    "id": "hero_gar_aeon1-2026-07-23T19-47-44-392Z",
+    "title": "hero_gar_aeon1",
+    "publicOwnerId": "u_1i1sxrp",
+    "ownerAnonId": "anon_1ntlxtv_1heptqj",
+    "ownerAnonFingerprint": "1ntlxtv",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-23T19:47:44.392Z",
+    "skeleton": "hero_gar_aeon1.skel",
+    "atlas": "hero_gar_aeon1.atlas",
+    "textures": [
+      "hero_gar_aeon1.png"
+    ],
+    "animations": [
+      "appear_01",
+      "appear_02",
+      "attack_01",
+      "attack_02",
+      "die_01",
+      "die_02",
+      "freeze_01",
+      "freeze_02",
+      "idle_01",
+      "idle_02",
+      "idleshow_01",
+      "shake_01",
+      "shake_02",
+      "skill_01",
+      "skill_02",
+      "stun_01",
+      "stun_02"
+    ],
+    "defaultAnimation": "appear_01",
+    "files": [
+      "hero_gar_aeon1/hero_gar_aeon1.skel",
+      "hero_gar_aeon1/hero_gar_aeon1.atlas",
+      "hero_gar_aeon1/hero_gar_aeon1.png",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z",
+    "repositoryUrl": "",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "hero_gar_aeon1-2026-07-23T19-47-44-392Z",
+      "title": "hero_gar_aeon1",
+      "uploadedAt": "2026-07-23T19:47:44.392Z",
+      "proofPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json?v=2026-07-23T19-47-44.392Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ntlxtv_1heptqj",
+        "anonymousFingerprint": "1ntlxtv",
+        "browserFingerprintSha256": "ed76dcd3c26dbe8824582e1fae88e14252d6c08eb5ed64bb256abdb7ea6d9803",
+        "browserEnvironmentHashSha256": "23051a6d7230421fed5c73ec91188805850bf7418eee933640b0db0482e972a3",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-IQ",
+          "languages": [
+            "en-IQ",
+            "ar-IQ",
+            "ar",
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 424,
+            "height": 942,
+            "colorDepth": 24,
+            "pixelRatio": 2.549999952316284
+          },
+          "timezone": "Asia/Baghdad",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:d94e63e76ad67e81c8939f0283a8b910838461cbd104db9f18bccdac95cdeb9c",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "hero_gar_aeon1/hero_gar_aeon1.atlas",
+          "bytes": 5559,
+          "sha256": "68e10643275de13360b88fc64bd4595a1694084d2435fc8a3a52dfc2dc3c870a"
+        },
+        {
+          "name": "hero_gar_aeon1/hero_gar_aeon1.png",
+          "bytes": 1066772,
+          "sha256": "146336e1c9257d3a78bee7809c0a80e31895e9829472557ee69eb198687e42be"
+        },
+        {
+          "name": "hero_gar_aeon1/hero_gar_aeon1.skel",
+          "bytes": 720248,
+          "sha256": "e12ae6f9b1f047e879d24868dcdb6ccc3eb02deefbb572e3881fd58cb37487a5"
+        }
+      ],
+      "proofHash": "d94e63e76ad67e81c8939f0283a8b910838461cbd104db9f18bccdac95cdeb9c"
+    },
+    "sourceProofPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json?v=2026-07-23T19-47-44.392Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-23T19:47:55.524Z",
+      "entryId": "hero_gar_aeon1-2026-07-23T19-47-44-392Z",
+      "title": "hero_gar_aeon1",
+      "uploadedAt": "2026-07-23T19:47:44.392Z",
+      "sourceProofHash": "d94e63e76ad67e81c8939f0283a8b910838461cbd104db9f18bccdac95cdeb9c",
+      "sourceProofPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json?v=2026-07-23T19-47-44.392Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ntlxtv_1heptqj",
+        "anonymousFingerprint": "1ntlxtv",
+        "browserFingerprintSha256": "ed76dcd3c26dbe8824582e1fae88e14252d6c08eb5ed64bb256abdb7ea6d9803",
+        "browserEnvironmentHashSha256": "23051a6d7230421fed5c73ec91188805850bf7418eee933640b0db0482e972a3",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-IQ",
+          "languages": [
+            "en-IQ",
+            "ar-IQ",
+            "ar",
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 424,
+            "height": 942,
+            "colorDepth": 24,
+            "pixelRatio": 2.549999952316284
+          },
+          "timezone": "Asia/Baghdad",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z",
+        "files": [
+          {
+            "name": "hero_gar_aeon1/hero_gar_aeon1.skel",
+            "path": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.skel",
+            "bytes": 720248,
+            "sha256": "e12ae6f9b1f047e879d24868dcdb6ccc3eb02deefbb572e3881fd58cb37487a5",
+            "github": {
+              "contentSha": "1186a8da007da0e913880b7da70bbef0e2f3d548",
+              "commitSha": "c7431407cb72930e688b665e4f99b9571fe15fc2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c7431407cb72930e688b665e4f99b9571fe15fc2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.skel?token=ACCECW6XOZ5P4PNL5LS5LC3KMJYB6"
+            }
+          },
+          {
+            "name": "hero_gar_aeon1/hero_gar_aeon1.atlas",
+            "path": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.atlas",
+            "bytes": 5559,
+            "sha256": "68e10643275de13360b88fc64bd4595a1694084d2435fc8a3a52dfc2dc3c870a",
+            "github": {
+              "contentSha": "b9e25d9483fa21c01750ac05402e6e032a8e5613",
+              "commitSha": "2115061bca6c8bdeade6cbdc43e55d37e0b59ae1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2115061bca6c8bdeade6cbdc43e55d37e0b59ae1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.atlas?token=ACCECW4J6UJUDS5QGQZTIDDKMJYCA"
+            }
+          },
+          {
+            "name": "hero_gar_aeon1/hero_gar_aeon1.png",
+            "path": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.png",
+            "bytes": 1066772,
+            "sha256": "146336e1c9257d3a78bee7809c0a80e31895e9829472557ee69eb198687e42be",
+            "github": {
+              "contentSha": "ef9a03ca88a9c835786fd714deffd291617735bb",
+              "commitSha": "26abfde7e1742cc7306da38dd8b569454f17cb38",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/26abfde7e1742cc7306da38dd8b569454f17cb38",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/hero_gar_aeon1/hero_gar_aeon1.png?token=ACCECW4XVE4LGBWMQIZ3SFLKMJYCK"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json",
+            "bytes": 2516,
+            "sha256": "2e7b21265c1469100b8adf2010565fae69c4c73794ca0da93a21d4148df889d3",
+            "github": {
+              "contentSha": "b1e475c5ea033cc7d91786b6e6d6e6d9775f49b4",
+              "commitSha": "d61a2e60b3eb5a3291d14910936d3eb7f94f05f3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d61a2e60b3eb5a3291d14910936d3eb7f94f05f3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/source-proof.json?token=ACCECWZXHJ3ENGRSAOMZZN3KMJYCM"
+            }
+          }
+        ],
+        "anchorPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/blockchain-anchor.json",
+        "anchorCommitSha": "10800266a65e82825b7881aec7ee39dd1d1b850c",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/10800266a65e82825b7881aec7ee39dd1d1b850c"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "aeda1f3d5f0dfa8f345f4e3a26515bb6e283bbb383d4dc7411e5e5ef3b6722b7",
+      "recommendedAnchorPayload": "sha256:aeda1f3d5f0dfa8f345f4e3a26515bb6e283bbb383d4dc7411e5e5ef3b6722b7",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0xaeda1f3d5f0dfa8f345f4e3a26515bb6e283bbb383d4dc7411e5e5ef3b6722b7",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-47-44-392Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "hero_taylor-2026-07-23T19-45-40-344Z",
     "title": "hero_taylor",
     "publicOwnerId": "u_1i1sxrp",
