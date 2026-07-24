@@ -1,5 +1,340 @@
 [
   {
+    "id": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+    "title": "basegame_bg_desktop",
+    "publicOwnerId": "u_1swco9n",
+    "ownerAnonId": "anon_w5h8en_cxmafx",
+    "ownerAnonFingerprint": "w5h8en",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-24T04:47:37.286Z",
+    "skeleton": "basegame_bg_desktop.json",
+    "atlas": "basegame_bg_desktop.atlas",
+    "textures": [
+      "basegame_bg_desktop.png",
+      "basegame_bg_desktop_2.png",
+      "basegame_bg_desktop_3.png",
+      "basegame_bg_desktop_4.png",
+      "basegame_bg_desktop_5.png"
+    ],
+    "animations": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "files": [
+      "basegame_bg_desktop/basegame_bg_desktop.json",
+      "basegame_bg_desktop/basegame_bg_desktop.atlas",
+      "basegame_bg_desktop/basegame_bg_desktop.png",
+      "basegame_bg_desktop/basegame_bg_desktop_2.png",
+      "basegame_bg_desktop/basegame_bg_desktop_3.png",
+      "basegame_bg_desktop/basegame_bg_desktop_4.png",
+      "basegame_bg_desktop/basegame_bg_desktop_5.png",
+      "animation-preview.webm",
+      "animation-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp?v=2026-07-24T04-47-37.286Z",
+    "thumbnailPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp?v=2026-07-24T04-47-37.286Z",
+    "thumbnailPosterPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp",
+    "previewWidth": 1250,
+    "previewHeight": 720,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webm?v=2026-07-24T04-47-37.286Z",
+    "webmPreviewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+      "title": "basegame_bg_desktop",
+      "uploadedAt": "2026-07-24T04:47:37.286Z",
+      "proofPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json?v=2026-07-24T04-47-37.286Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_w5h8en_cxmafx",
+        "anonymousFingerprint": "w5h8en",
+        "browserFingerprintSha256": "74aa9de5ea8d0d2c3927144759e2dc832a8dd6bc395c4af9cc78bd6e23639a37",
+        "browserEnvironmentHashSha256": "bd32fb079fb63a066eacda986b7df85514319bc4d1d4d8090fe4dc7cc0615d4d",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Asia/Calcutta",
+          "timezoneOffset": -330,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:344ce7ed6ff6d545a0ae301890dd4eb4ee3af62d4bc4dac0697b61f282023c05",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "animation-preview.webm",
+          "bytes": 398995,
+          "sha256": "25ac54f4f9025ad866124331cccbe499fec6919005655f32fa6b8a0b4fbcf649"
+        },
+        {
+          "name": "animation-preview.webp",
+          "bytes": 36162,
+          "sha256": "57374e1551a43685d104ed689c86febd9b9c7ba9066563a4902bbe3ef132108b"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop_2.png",
+          "bytes": 2376172,
+          "sha256": "0cb803fd82322cf5c5a9a08f41e7a89301292a88e9adfa0bbf99b35da49eae2a"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop_3.png",
+          "bytes": 1036621,
+          "sha256": "8e33b82629e7d3bc63f07a2c6bbd3da879ac62792a278bcc34ce2351b2c4782f"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop_4.png",
+          "bytes": 619598,
+          "sha256": "4a40f7d7dc24637f7b48d4beb775f86e471a90f799424b33b470bfb4cd596739"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop_5.png",
+          "bytes": 1042987,
+          "sha256": "3dd59b6fd84670cb91f69082b2403add37b5f501ca181d3170e44aca3ba57dd8"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop.atlas",
+          "bytes": 3056,
+          "sha256": "f810a3d092556321a4da3273bdbb5a90cd249c9645d79476e160581e79e0dc55"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop.json",
+          "bytes": 47363,
+          "sha256": "0c7de6f142ce6972cdceb072f3e97e18823774ffa524d8e8c307a936b17884b5"
+        },
+        {
+          "name": "basegame_bg_desktop/basegame_bg_desktop.png",
+          "bytes": 2046980,
+          "sha256": "911663f790cc145172074cd02de03c985ff81ececed6e8601b56869ed5f18d9c"
+        }
+      ],
+      "proofHash": "344ce7ed6ff6d545a0ae301890dd4eb4ee3af62d4bc4dac0697b61f282023c05"
+    },
+    "sourceProofPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json?v=2026-07-24T04-47-37.286Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-24T04:48:25.522Z",
+      "entryId": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+      "title": "basegame_bg_desktop",
+      "uploadedAt": "2026-07-24T04:47:37.286Z",
+      "sourceProofHash": "344ce7ed6ff6d545a0ae301890dd4eb4ee3af62d4bc4dac0697b61f282023c05",
+      "sourceProofPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json?v=2026-07-24T04-47-37.286Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_w5h8en_cxmafx",
+        "anonymousFingerprint": "w5h8en",
+        "browserFingerprintSha256": "74aa9de5ea8d0d2c3927144759e2dc832a8dd6bc395c4af9cc78bd6e23639a37",
+        "browserEnvironmentHashSha256": "bd32fb079fb63a066eacda986b7df85514319bc4d1d4d8090fe4dc7cc0615d4d",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Asia/Calcutta",
+          "timezoneOffset": -330,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+        "files": [
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop.json",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.json",
+            "bytes": 47363,
+            "sha256": "0c7de6f142ce6972cdceb072f3e97e18823774ffa524d8e8c307a936b17884b5",
+            "github": {
+              "contentSha": "383e03f9e679b7699f88bd4d446e62ed58c66797",
+              "commitSha": "6b1bd9ed8f23e925cc5578c249c49e573aa67dc8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6b1bd9ed8f23e925cc5578c249c49e573aa67dc8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.json?token=ACCECW6A4HP7O74QNFMNALDKMLXME"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop.atlas",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.atlas",
+            "bytes": 3056,
+            "sha256": "f810a3d092556321a4da3273bdbb5a90cd249c9645d79476e160581e79e0dc55",
+            "github": {
+              "contentSha": "70fa0b0e23842be71d700a66551c9e8d87011097",
+              "commitSha": "f450511ba7bd670196cc65121c9fd53ad8599985",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f450511ba7bd670196cc65121c9fd53ad8599985",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.atlas?token=ACCECWYHLUO5QRJR46AYIN3KMLXMG"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop.png",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.png",
+            "bytes": 2046980,
+            "sha256": "911663f790cc145172074cd02de03c985ff81ececed6e8601b56869ed5f18d9c",
+            "github": {
+              "contentSha": "870184e9697733ebbc84ba6c22917999186a2b6f",
+              "commitSha": "86c8ab5a7762e1b4ae252164c808ff037604f5d4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/86c8ab5a7762e1b4ae252164c808ff037604f5d4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.png?token=ACCECWYZ7GV2TSL6ATQE4I3KMLXMM"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop_2.png",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_2.png",
+            "bytes": 2376172,
+            "sha256": "0cb803fd82322cf5c5a9a08f41e7a89301292a88e9adfa0bbf99b35da49eae2a",
+            "github": {
+              "contentSha": "9cea72a7f2bb8f2faca8360d37f9d4d6a2a53fb7",
+              "commitSha": "969b3e2327329db0e350064b0b77e05dd459c360",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/969b3e2327329db0e350064b0b77e05dd459c360",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_2.png?token=ACCECW2JVMDOW7GIZFBLRL3KMLXMS"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop_3.png",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_3.png",
+            "bytes": 1036621,
+            "sha256": "8e33b82629e7d3bc63f07a2c6bbd3da879ac62792a278bcc34ce2351b2c4782f",
+            "github": {
+              "contentSha": "c0f5af39fe4e79d901050e1fcd9ee7b41839ecf7",
+              "commitSha": "4b5b12f9b3ee8d38f364f715081a689204772c2d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4b5b12f9b3ee8d38f364f715081a689204772c2d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_3.png?token=ACCECW5IXG3OTCBBIUGV5E3KMLXMY"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop_4.png",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_4.png",
+            "bytes": 619598,
+            "sha256": "4a40f7d7dc24637f7b48d4beb775f86e471a90f799424b33b470bfb4cd596739",
+            "github": {
+              "contentSha": "6f8cea4aa13df1161ba31ac3bd421f63383b6929",
+              "commitSha": "cacb1750a70121d984985650314784f64302e38b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cacb1750a70121d984985650314784f64302e38b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_4.png?token=ACCECWYPL2CGQBSKBTYILU3KMLXM4"
+            }
+          },
+          {
+            "name": "basegame_bg_desktop/basegame_bg_desktop_5.png",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_5.png",
+            "bytes": 1042987,
+            "sha256": "3dd59b6fd84670cb91f69082b2403add37b5f501ca181d3170e44aca3ba57dd8",
+            "github": {
+              "contentSha": "988d26cc808cffdf81f509f2593f5fa10cbbb620",
+              "commitSha": "77c68342a6118e97a09802dc1891ea07b29062be",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/77c68342a6118e97a09802dc1891ea07b29062be",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_5.png?token=ACCECW47LMOO4U6EQFHW2R3KMLXNA"
+            }
+          },
+          {
+            "name": "animation-preview.webm",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webm",
+            "bytes": 398995,
+            "sha256": "25ac54f4f9025ad866124331cccbe499fec6919005655f32fa6b8a0b4fbcf649",
+            "github": {
+              "contentSha": "057a5fbc72c857b3ad825a78c3a6d49a8d77e178",
+              "commitSha": "3edfc1a46ebcfc4d5d91b5d9085d824ea1e70ddf",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3edfc1a46ebcfc4d5d91b5d9085d824ea1e70ddf",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webm?token=ACCECWY6TGZKLMUMIFDZRT3KMLXNE"
+            }
+          },
+          {
+            "name": "animation-preview.webp",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp",
+            "bytes": 36162,
+            "sha256": "57374e1551a43685d104ed689c86febd9b9c7ba9066563a4902bbe3ef132108b",
+            "github": {
+              "contentSha": "dbe827b8ab69b2a21b5be9bdb0ad4017bbb3103c",
+              "commitSha": "a0905b86ed7bc4abbe903dd44b272b16e1c3934d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a0905b86ed7bc4abbe903dd44b272b16e1c3934d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp?token=ACCECWZXMPIORMSGQS5FZWTKMLXNI"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+            "bytes": 3551,
+            "sha256": "e991346d46343c721dadd58d7a1065717880809cff7950577dc148e0d8edc865",
+            "github": {
+              "contentSha": "d29f80530e5d38ee9607dfcf6db02d8f463a5da1",
+              "commitSha": "7cc2a9319433e27055531e14871262ad6c4f1b4e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7cc2a9319433e27055531e14871262ad6c4f1b4e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json?token=ACCECW6UCIKKLZA4VYHYYA3KMLXNK"
+            }
+          }
+        ],
+        "anchorPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/blockchain-anchor.json",
+        "anchorCommitSha": "2231d0cdba5bf37b176551166c483c2d17b89653",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/2231d0cdba5bf37b176551166c483c2d17b89653"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "95ec1aa02eaf4d6f990ca92b1ba8ce19a7f4c670281394c1efae273a1511d778",
+      "recommendedAnchorPayload": "sha256:95ec1aa02eaf4d6f990ca92b1ba8ce19a7f4c670281394c1efae273a1511d778",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x95ec1aa02eaf4d6f990ca92b1ba8ce19a7f4c670281394c1efae273a1511d778",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "hero_theodor_2-2026-07-23T21-50-47-766Z",
     "title": "hero_theodor_2",
     "publicOwnerId": "u_9p11c6",
