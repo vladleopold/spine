@@ -1,5 +1,265 @@
 [
   {
+    "id": "cauldron_coals-2026-07-24T13-15-35-773Z",
+    "title": "cauldron_coals",
+    "publicOwnerId": "u_17o316n",
+    "ownerAnonId": "anon_lp3mqw_114scdp",
+    "ownerAnonFingerprint": "lp3mqw",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-07-24T13:15:35.773Z",
+    "skeleton": "cauldron_coals.json",
+    "atlas": "cauldron_coals.atlas.txt",
+    "textures": [
+      "cauldron_coals.png"
+    ],
+    "animations": [
+      "idle_cauldron_coals",
+      "impact_cauldron"
+    ],
+    "defaultAnimation": "idle_cauldron_coals",
+    "files": [
+      "cauldron_coals/cauldron_coals.json",
+      "cauldron_coals/cauldron_coals.atlas.txt",
+      "cauldron_coals/cauldron_coals.png",
+      "idle_cauldron_coals-preview.webm",
+      "idle_cauldron_coals-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp?v=2026-07-24T13-15-35.773Z",
+    "thumbnailPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp?v=2026-07-24T13-15-35.773Z",
+    "thumbnailPosterPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp",
+    "previewWidth": 1280,
+    "previewHeight": 884,
+    "previewDuration": 1.8,
+    "thumbnailType": "image",
+    "webmPreview": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webm?v=2026-07-24T13-15-35.773Z",
+    "webmPreviewPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webm",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "cauldron_coals-2026-07-24T13-15-35-773Z",
+      "title": "cauldron_coals",
+      "uploadedAt": "2026-07-24T13:15:35.773Z",
+      "proofPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json?v=2026-07-24T13-15-35.773Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_lp3mqw_114scdp",
+        "anonymousFingerprint": "lp3mqw",
+        "browserFingerprintSha256": "ab04e200fb0405c993b95a5bae6dca33880ed065685c1435d49ff0fb6a1980a6",
+        "browserEnvironmentHashSha256": "be1d6952511c4ece0e5e62fbe414c52629b19b6603910620bbb9e22b0402c073",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "id"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Jakarta",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:af3e8ab43959eb52618e36d290ed643b3b7f083d582eebcc31fd02d7fb990c87",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "cauldron_coals/cauldron_coals.atlas.txt",
+          "bytes": 2118,
+          "sha256": "db57d6894b7791681f1792bdf6b7be6011c99581cd471dc43c7e449a2494a394"
+        },
+        {
+          "name": "cauldron_coals/cauldron_coals.json",
+          "bytes": 15870,
+          "sha256": "3fab4ce146f82aec2e01f82b7a6098e7739bb90a6dfcf84a8373606d8fb4aefa"
+        },
+        {
+          "name": "cauldron_coals/cauldron_coals.png",
+          "bytes": 367106,
+          "sha256": "006bc04446cef89e4d6991d40ac044440da39386f9fcc799383fc974fb98e36a"
+        },
+        {
+          "name": "idle_cauldron_coals-preview.webm",
+          "bytes": 482935,
+          "sha256": "d7c500ee049138d5b8a53fea6397a3264823759254a414f0d2c23e07e9dad6f2"
+        },
+        {
+          "name": "idle_cauldron_coals-preview.webp",
+          "bytes": 60790,
+          "sha256": "e283e5b00de0809abbca0755cd8ee6a0b30126c3c8d56a804fd227abbdcff550"
+        }
+      ],
+      "proofHash": "af3e8ab43959eb52618e36d290ed643b3b7f083d582eebcc31fd02d7fb990c87"
+    },
+    "sourceProofPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json?v=2026-07-24T13-15-35.773Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-07-24T13:15:49.186Z",
+      "entryId": "cauldron_coals-2026-07-24T13-15-35-773Z",
+      "title": "cauldron_coals",
+      "uploadedAt": "2026-07-24T13:15:35.773Z",
+      "sourceProofHash": "af3e8ab43959eb52618e36d290ed643b3b7f083d582eebcc31fd02d7fb990c87",
+      "sourceProofPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json?v=2026-07-24T13-15-35.773Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_lp3mqw_114scdp",
+        "anonymousFingerprint": "lp3mqw",
+        "browserFingerprintSha256": "ab04e200fb0405c993b95a5bae6dca33880ed065685c1435d49ff0fb6a1980a6",
+        "browserEnvironmentHashSha256": "be1d6952511c4ece0e5e62fbe414c52629b19b6603910620bbb9e22b0402c073",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "id"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Jakarta",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z",
+        "files": [
+          {
+            "name": "cauldron_coals/cauldron_coals.json",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.json",
+            "bytes": 15870,
+            "sha256": "3fab4ce146f82aec2e01f82b7a6098e7739bb90a6dfcf84a8373606d8fb4aefa",
+            "github": {
+              "contentSha": "ced77fe91fbd39b74840261c2b28d5049f8f425d",
+              "commitSha": "185757e696df6f7ae3a4d3a6ff24e8594daed990",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/185757e696df6f7ae3a4d3a6ff24e8594daed990",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.json?token=ACCECW2PGNIXSZ2MVNMJ4TTKMNS3Q"
+            }
+          },
+          {
+            "name": "cauldron_coals/cauldron_coals.atlas.txt",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.atlas.txt",
+            "bytes": 2118,
+            "sha256": "db57d6894b7791681f1792bdf6b7be6011c99581cd471dc43c7e449a2494a394",
+            "github": {
+              "contentSha": "0148d1a306cb91b7447ef096a9e2bb15cc24bd90",
+              "commitSha": "2ca296a7307e1f8703f24834161f81802ba92ca5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2ca296a7307e1f8703f24834161f81802ba92ca5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.atlas.txt?token=ACCECWYX4YG46Y57UFPTVYLKMNS3S"
+            }
+          },
+          {
+            "name": "cauldron_coals/cauldron_coals.png",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.png",
+            "bytes": 367106,
+            "sha256": "006bc04446cef89e4d6991d40ac044440da39386f9fcc799383fc974fb98e36a",
+            "github": {
+              "contentSha": "28c081c4beb1fb2d6e7e2953d01ad3b3127494f3",
+              "commitSha": "ef04ae38be89fae72e994a432c37ca218b86d05a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ef04ae38be89fae72e994a432c37ca218b86d05a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.png?token=ACCECW3ZSR7GMS6YJNQSQC3KMNS3Y"
+            }
+          },
+          {
+            "name": "idle_cauldron_coals-preview.webm",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webm",
+            "bytes": 482935,
+            "sha256": "d7c500ee049138d5b8a53fea6397a3264823759254a414f0d2c23e07e9dad6f2",
+            "github": {
+              "contentSha": "4a5f614ae3723b858ca24b12cf553f36a7d9f835",
+              "commitSha": "be10053166abd96128de92b93da942f720769ab9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/be10053166abd96128de92b93da942f720769ab9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webm?token=ACCECW3OWLGMCKVHMNC7LRLKMNS34"
+            }
+          },
+          {
+            "name": "idle_cauldron_coals-preview.webp",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp",
+            "bytes": 60790,
+            "sha256": "e283e5b00de0809abbca0755cd8ee6a0b30126c3c8d56a804fd227abbdcff550",
+            "github": {
+              "contentSha": "b51c259589cb8fc0c00759c33e47e6adda335e67",
+              "commitSha": "51d34da0dad47e60838299d4cb9bcf2403ed1ad5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/51d34da0dad47e60838299d4cb9bcf2403ed1ad5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp?token=ACCECWZCNKBHNSR3G5MTG7TKMNS36"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json",
+            "bytes": 2783,
+            "sha256": "7adf7ba90f82c75b1262e4ca959cfce3bb4701f317d56b921bc892c933aa29be",
+            "github": {
+              "contentSha": "1a25abbbd9c85ab685ea14283cd6663e42eb9085",
+              "commitSha": "4b148244ddef8648bc6f0aeaff4c01cae0d741bc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4b148244ddef8648bc6f0aeaff4c01cae0d741bc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json?token=ACCECW5EXRTIFO733GRVSUDKMNS4A"
+            }
+          }
+        ],
+        "anchorPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/blockchain-anchor.json",
+        "anchorCommitSha": "747c38b6445b581f5e509f1288beea42a199af29",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/747c38b6445b581f5e509f1288beea42a199af29"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "24f59651fcbfab3ca3c40ba35240ebde4ed56d4861e123dc8a84cb5f088a06f5",
+      "recommendedAnchorPayload": "sha256:24f59651fcbfab3ca3c40ba35240ebde4ed56d4861e123dc8a84cb5f088a06f5",
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "chain": "evm",
+        "transactionData": "0x24f59651fcbfab3ca3c40ba35240ebde4ed56d4861e123dc8a84cb5f088a06f5",
+        "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
+      },
+      "anchorPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/cauldron_coals-2026-07-24T13-15-35-773Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
     "title": "basegame_bg_desktop",
     "publicOwnerId": "u_1swco9n",
