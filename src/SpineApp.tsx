@@ -3125,9 +3125,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
   };
 
   const resetPlayer = useCallback(() => {
-    if (typeof playerRef.current?.dispose === 'function') {
-      playerRef.current.dispose();
-    }
+    playerRef.current?.dispose?.();
     playerRef.current = null;
     baseViewportRef.current = null;
     playerCanvasSizeRef.current = { width: 1, height: 1 };
@@ -3395,11 +3393,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
     return () => {
       isCancelled = true;
       disposers.forEach((dispose) => dispose());
-      mountedPlayers.forEach((player) => {
-        if (typeof player.dispose === 'function') {
-          player.dispose();
-        }
-      });
+      mountedPlayers.forEach((player) => player.dispose?.());
     };
   }, [extraSpineSets]);
 

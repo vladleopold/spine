@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spine Portfolio - Portfolio Spine Sharing Page</title>
+    <meta
+      name="description"
+      content="Create a spine portfolio with Spine-Link and share your portfolio spine page with friends, clients, and game teams."
+    />
+    <meta
+      name="keywords"
+      content="spine portfolio, portfolio spine, share spine portfolio, spine library portfolio, spine link"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1" />
+    <link rel="canonical" href="https://spine-link.vercel.app/spine-portfolio-link.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://spine-link.vercel.app/spine-portfolio-link.html" />
+    <meta property="og:title" content="Spine Portfolio - Portfolio Spine Sharing Page" />
+    <meta property="og:description" content="Generate and share a portfolio link for your Spine animation gallery." />
+    <meta property="og:site_name" content="Spine Portfolio" />
+    <meta property="og:image" content="https://spine-link.vercel.app/spine-link-video-thumbnail.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a spine portfolio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A spine portfolio is a public page for your Spine animation gallery that you can share with friends, clients, or recruiters."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I create a portfolio spine page?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Upload your Spine files in Spine-Link, save previews to your portfolio mode, then copy and share your public portfolio URL."
+            }
+          }
+        ]
+      }
+    </script>
+    <link rel="stylesheet" href="/page-transitions.css" />
+    <script src="/page-transitions.js" defer></script>
+    <style>
+      :root { color: #f7fbff; background: #050607; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      body { margin: 0; min-width: 320px; background: #050607; }
+      main { max-width: 980px; margin: 0 auto; padding: 54px 20px 72px; }
+      a { color: #8cc7ff; }
+      .brand { color: #ff6a28; font-size: 13px; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; }
+      h1 { margin: 16px 0 18px; font-size: clamp(38px, 7vw, 76px); line-height: 0.95; }
+      p, li { color: rgba(231, 237, 244, 0.84); font-size: 18px; line-height: 1.7; }
+      .cta { display: inline-flex; margin: 12px 12px 0 0; padding: 13px 18px; border: 1px solid rgba(140, 199, 255, 0.7); border-radius: 8px; background: rgba(140, 199, 255, 0.12); color: #fff; font-weight: 800; text-decoration: none; }
+      .static-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0 0 24px;
+        color: #f7fbff;
+        font-size: clamp(25px, 4.8vw, 46px);
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        line-height: 0.78;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .static-logo-mark {
+        display: inline-grid;
+        gap: 3px;
+        width: 13px;
+        margin: 0 -3px 0 -4px;
+      }
+
+      .static-logo-mark i {
+        display: block;
+        width: 13px;
+        height: 6px;
+        border-radius: 999px;
+        background: #ff5a1f;
+      }
+
+      .static-logo-mark i:nth-child(2) {
+        width: 12px;
+        transform: translateX(2px);
+      }
+
+      .static-logo-mark i:nth-child(3) {
+        width: 10px;
+        transform: translateX(4px);
+      }
+
+      .static-logo-link {
+        margin-left: -2px;
+        color: #ff6a28;
+        font-size: 0.74em;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+      }
+
+      @media (max-width: 560px) {
+        .static-logo {
+          gap: 5px;
+          margin-bottom: 20px;
+          font-size: clamp(22px, 8.4vw, 34px);
+          letter-spacing: 0.15em;
+        }
+
+        .static-logo-mark {
+          gap: 2px;
+          width: 10px;
+        }
+
+        .static-logo-mark i {
+          width: 10px;
+          height: 4px;
+        }
+
+        .static-logo-mark i:nth-child(2) {
+          width: 9px;
+        }
+
+        .static-logo-mark i:nth-child(3) {
+          width: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="static-logo" href="/" aria-label="Spine-Link home"><span>s</span><span>p</span><span class="static-logo-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>n</span><span>e</span><span class="static-logo-link">link</span></a>
+      <div class="brand">Portfolio link</div>
+      <h1>Create your Spine portfolio</h1>
+      <p>
+        Use Spine-Link to create a public portfolio spine page and share your animations with anyone. This page is built for
+        searches like <strong>spine portfolio</strong> and <strong>portfolio spine</strong>.
+      </p>
+      <a class="cta" href="/">Create portfolio link</a>
+      <a class="cta" href="/share-spine-animation-link.html">How to share link</a>
+      <ul>
+        <li>Upload Spine JSON/SKEL + atlas + textures.</li>
+        <li>Save best previews into your portfolio.</li>
+        <li>Copy the public URL and share instantly.</li>
+      </ul>
+    </main>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "spinepreview",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -12,11 +12,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@esotericsoftware/spine-player": "^4.2.113",
+    "@esotericsoftware/spine-player": "^4.3.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "gifenc": "^1.0.3",
+    "ethers": "^6.16.0",
     "jszip": "^3.10.1",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
@@ -25,6 +25,7 @@
     "vite": "^8.0.10"
   },
   "devDependencies": {
+    "esbuild": "^0.28.1",
     "playwright": "^1.59.1"
   }
 }

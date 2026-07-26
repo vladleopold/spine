@@ -8,12 +8,13 @@
       name="description"
       content="Use Spine-Link as a Spine preview online tool for JSON, SKEL, atlas, PNG, JPG, and WEBP files. Preview Spine animations in a browser and share permanent links."
     />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1" />
     <link rel="canonical" href="https://spine-link.vercel.app/spine-preview-online.html" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://spine-link.vercel.app/spine-preview-online.html" />
     <meta property="og:title" content="Spine Preview Online - Spine-Link Browser Viewer" />
     <meta property="og:description" content="Preview Spine animations online from JSON/SKEL, atlas, and texture files." />
+    <meta property="og:site_name" content="Spine Portfolio" />
     <meta property="og:image" content="https://spine-link.vercel.app/spine-link-video-thumbnail.png" />
     <script type="application/ld+json">
       {
@@ -27,8 +28,7 @@
           "name": "Spine-Link",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "Any",
-          "url": "https://spine-link.vercel.app/",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "url": "https://spine-link.vercel.app/"
         }
       }
     </script>
@@ -76,6 +76,8 @@
         ]
       }
     </script>
+    <link rel="stylesheet" href="/page-transitions.css" />
+    <script src="/page-transitions.js" defer></script>
     <style>
       :root {
         color: #f7fbff;
@@ -144,10 +146,85 @@
         color: #dff1ff;
         font-weight: 700;
       }
+      .static-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0 0 24px;
+        color: #f7fbff;
+        font-size: clamp(25px, 4.8vw, 46px);
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        line-height: 0.78;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .static-logo-mark {
+        display: inline-grid;
+        gap: 3px;
+        width: 13px;
+        margin: 0 -3px 0 -4px;
+      }
+
+      .static-logo-mark i {
+        display: block;
+        width: 13px;
+        height: 6px;
+        border-radius: 999px;
+        background: #ff5a1f;
+      }
+
+      .static-logo-mark i:nth-child(2) {
+        width: 12px;
+        transform: translateX(2px);
+      }
+
+      .static-logo-mark i:nth-child(3) {
+        width: 10px;
+        transform: translateX(4px);
+      }
+
+      .static-logo-link {
+        margin-left: -2px;
+        color: #ff6a28;
+        font-size: 0.74em;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+      }
+
+      @media (max-width: 560px) {
+        .static-logo {
+          gap: 5px;
+          margin-bottom: 20px;
+          font-size: clamp(22px, 8.4vw, 34px);
+          letter-spacing: 0.15em;
+        }
+
+        .static-logo-mark {
+          gap: 2px;
+          width: 10px;
+        }
+
+        .static-logo-mark i {
+          width: 10px;
+          height: 4px;
+        }
+
+        .static-logo-mark i:nth-child(2) {
+          width: 9px;
+        }
+
+        .static-logo-mark i:nth-child(3) {
+          width: 8px;
+        }
+      }
     </style>
   </head>
   <body>
     <main>
+      <a class="static-logo" href="/" aria-label="Spine-Link home"><span>s</span><span>p</span><span class="static-logo-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>n</span><span>e</span><span class="static-logo-link">link</span></a>
       <div class="brand">Spine-Link</div>
       <h1>Spine preview online</h1>
       <p>
