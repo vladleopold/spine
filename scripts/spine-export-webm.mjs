@@ -132,8 +132,8 @@ const playerCssUrl = isLegacy
   ? `${args.origin}/vendor-spine-player-${versionMajor}.${runtimeMinor}.css`
   : 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css';
 
-const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : (isLegacy ? 'jsonUrl' : 'skeleton');
-const atlasKey = isLegacy ? 'atlasUrl' : 'atlas';
+const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'jsonUrl';
+const atlasKey = 'atlasUrl';
 
 const setSegments = [uploadPath, firstSet.name];
 
@@ -145,6 +145,10 @@ function rawUrl(filename) {
 const skeletonRawUrl = rawUrl(skeletonFile);
 const atlasRawUrl = rawUrl(atlasFile);
 const textureRawUrls = textureFiles.map(f => rawUrl(f));
+const rawDataURIs = {};
+textureFiles.forEach((f, i) => {
+  rawDataURIs[f] = textureRawUrls[i];
+});
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
@@ -214,7 +218,7 @@ const initScript = `
   } else {
     config.${skeletonKey} = ${JSON.stringify(skeletonRawUrl)};
     config.${atlasKey} = ${JSON.stringify(atlasRawUrl)};
-    config.textures = ${JSON.stringify(textureRawUrls)};
+    config.rawDataURIs = ${JSON.stringify(rawDataURIs)};
     config.success = function(player) {
       if (player.canvas) {
         player.canvas.width = 1920;
@@ -357,7 +361,13 @@ try {
   await page.evaluate(initScript);
 
   // Wait for player to be created and resources to start loading
-  await page.waitForFunction(() => window.__ready === true, { timeout: 60000, polling: 200 });
+  await page.waitForFunction(() => window.__ready === true || window.__captureError !== null, { timeout: 60000, polling: 200 });
+
+  const captureError = await page.evaluate(() => window.__captureError || null);
+  if (captureError) {
+    console.error(`SpinePlayer failed to initialize: ${captureError}`);
+    process.exit(1);
+  }
 
   // Wait for actual animation to be ready (track exists or fallback after player loads)
   await page.waitForFunction(() => {
