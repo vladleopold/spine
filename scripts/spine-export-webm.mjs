@@ -162,6 +162,7 @@ console.error(`Files: ${[skeletonFile, atlasFile, ...textureFiles].join(', ')}`)
 const captureHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
+<base href="http://127.0.0.1/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
