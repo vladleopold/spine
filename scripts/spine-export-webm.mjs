@@ -218,7 +218,6 @@ const initScript = `
   } else {
     config.${skeletonKey} = ${JSON.stringify(skeletonRawUrl)};
     config.${atlasKey} = ${JSON.stringify(atlasRawUrl)};
-    config.rawDataURIs = ${JSON.stringify(rawDataURIs)};
     config.success = function(player) {
       if (player.canvas) {
         player.canvas.width = 1920;
@@ -365,9 +364,14 @@ try {
           const response = await fetch(apiUrl);
           if (response.ok) {
             const buffer = await response.arrayBuffer();
+            let cType = 'application/octet-stream';
+            if (apiUrl.endsWith('.png')) cType = 'image/png';
+            else if (apiUrl.endsWith('.json')) cType = 'application/json';
+            else if (apiUrl.endsWith('.atlas') || apiUrl.endsWith('.txt')) cType = 'text/plain';
+            
             await route.fulfill({
               status: 200,
-              contentType: 'image/png',
+              contentType: cType,
               body: Buffer.from(buffer)
             });
             return;
