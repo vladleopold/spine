@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "143301s-2026-07-27T09-55-32-856Z",
+  "title": "143301s",
+  "uploadedAt": "2026-07-27T09:55:32.856Z",
+  "proofPath": "library/143301s-2026-07-27T09-55-32-856Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/143301s-2026-07-27T09-55-32-856Z/source-proof.json?v=2026-07-27T09-55-32.856Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/143301s-2026-07-27T09-55-32-856Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:34e0b9bf0c718bddfb069fdf69df31d5446c75c1d8466caa58b2f792e4c336d2",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "143301s/143301s.atlas",
+      "bytes": 79,
+      "sha256": "3816689bb9fe0e109cb67c167873031a06a168411fa4bb3ba5fe41daee848d4b"
+    },
+    {
+      "name": "143301s/143301s.json",
+      "bytes": 824,
+      "sha256": "76b85d4fb91a5fd11cc3c1b184b8946cfaa892e9179717cb2b6692c0df8269ea"
+    },
+    {
+      "name": "143301s/143301s.png",
+      "bytes": 1028860,
+      "sha256": "a07a4c4d3072ff4682b2862d9a3f4d62bcfbd0837e895366b1e8cb39c4141684"
+    },
+    {
+      "name": "angry-preview.webp",
+      "bytes": 696,
+      "sha256": "fd2a0dfc5791892fa7482438d373aa4c4a928777ebe549fba8dbfedd1b7625eb"
+    }
+  ],
+  "proofHash": "34e0b9bf0c718bddfb069fdf69df31d5446c75c1d8466caa58b2f792e4c336d2"
+}
