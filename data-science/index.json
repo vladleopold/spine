@@ -1,5 +1,146 @@
 [
   {
+    "id": "n10019-2026-07-27T09-35-24-052Z",
+    "name": "n10019",
+    "updatedAt": "2026-07-27T09:35:32.831Z",
+    "animation_asset": {
+      "id": "n10019-2026-07-27T09-35-24-052Z",
+      "name": "n10019",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "damagein",
+          "damageloop",
+          "idlingloop",
+          "sequencein",
+          "victoryin",
+          "victoryloop"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-damagein",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/n10019-2026-07-27T09-35-24-052Z",
+      "manifestPath": "library/n10019-2026-07-27T09-35-24-052Z/manifest.json",
+      "files": [
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/n10019/n10019.json",
+          "name": "n10019/n10019.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/n10019/n10019.atlas",
+          "name": "n10019/n10019.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/n10019/n10019.png",
+          "name": "n10019/n10019.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/damagein-preview.webp",
+          "name": "damagein-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/n10019-2026-07-27T09-35-24-052Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "n10019.json",
+      "atlas": "n10019.atlas",
+      "textures": [
+        "n10019.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "DamageIn",
+        "DamageLoop",
+        "IdlingLoop",
+        "SequenceIn",
+        "VictoryIn",
+        "VictoryLoop"
+      ],
+      "defaultAnimation": "DamageIn",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "n10013-2026-07-27T09-34-59-482Z",
     "name": "n10013",
     "updatedAt": "2026-07-27T09:35:07.387Z",
