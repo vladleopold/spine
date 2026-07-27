@@ -5,7 +5,7 @@ const defaultBasePath = 'library';
 import { createHash } from 'node:crypto';
 import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-science.js';
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
-import { appendAssetVersion, assetVersionForEntry } from '../lib/asset-version.js';
+import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
 
 function cleanRepoPath(value = '') {
   return String(value).trim().replace(/^\/+|\/+$/g, '').replace(/\/+/g, '/');
@@ -309,8 +309,10 @@ function publicLibraryEntry(origin, entry) {
     appendAssetVersion(safeHttpAsset(next.thumbnailPoster), version) ||
     generatedThumbnailUrl(origin, entry) ||
     derivedMediaFromFiles(origin, entry, ['.webp', '.png', '.jpg', '.jpeg']);
+  // Use webmGeneratedAt as cache-buster for webm so CDN serves the latest generated preview
+  const webmVersion = assetVersionForWebm(entry);
   next.webmPreview = /\.webm(?:[?#].*)?$/i.test(String(next.webmPreview || ''))
-    ? appendAssetVersion(safeHttpAsset(next.webmPreview), version)
+    ? appendAssetVersion(safeHttpAsset(next.webmPreview), webmVersion)
     : '';
   next.webmPreview = next.webmPreview || derivedMediaFromFiles(origin, entry, ['.webm']) || generatedPreviewWebmUrl(origin, entry);
   return next;
