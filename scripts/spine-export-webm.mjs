@@ -324,7 +324,6 @@ try {
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },
     reducedMotion: 'no-preference',
-    recordVideo: { dir: tempDir },
   });
   const page = await context.newPage();
   page.setDefaultTimeout(120000);
@@ -487,64 +486,43 @@ try {
 
   console.error(`Animation ready, duration=${animDuration}s (browser=${browserAnimDuration}s, server=${args.animDuration}s), canvas=${canvasWidth}x${canvasHeight}`);
 
-  // Chunk mode: if chunkIndex >= 0, wait to the end of this chunk window
-  // Total recording = chunkStart + chunkDuration (Playwright records from context open)
-  // We want exactly 1 cycle = animDuration seconds
-  let captureDuration;
-  if (args.chunkIndex >= 0) {
-    const chunkStart = args.chunkIndex * args.chunkDuration;
-    captureDuration = chunkStart + Math.min(args.chunkDuration, animDuration - chunkStart);
-    console.error(`Chunk mode: index=${args.chunkIndex}, start=${chunkStart}s, window=${captureDuration}s`);
-  } else {
-    // Normal mode: exactly 1 cycle (animDuration seconds), no extra second
-    captureDuration = animDuration;
+  // Normal mode: exactly 1 cycle
+  const captureDuration = animDuration > 0 ? animDuration : 3;
+
+  console.error(`Starting frame capture: ${captureDuration}s at 30fps`);
+
+  const FPS = 30;
+  const totalFrames = Math.ceil(captureDuration * FPS);
+  const frameInterval = 1000 / FPS;
+  const framesDir = path.join(tempDir, 'frames');
+  fs.mkdirSync(framesDir, { recursive: true });
+
+  for (let i = 0; i < totalFrames; i++) {
+    const framePath = path.join(framesDir, `frame_${String(i).padStart(5, '0')}.png`);
+    await page.screenshot({ path: framePath, type: 'png' });
+    // Wait for next frame
+    if (i < totalFrames - 1) {
+      await new Promise(resolve => setTimeout(resolve, frameInterval));
+    }
   }
 
-  // Minimum 1s to avoid empty recordings
-  if (captureDuration < 1) captureDuration = 1;
+  console.error(`Captured ${totalFrames} frames, encoding with ffmpeg...`);
 
-  await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
-
-  await context.close();
-
-  const videoFiles = fs.readdirSync(tempDir).filter(f => f.endsWith('.webm'));
-  if (videoFiles.length === 0) {
-    console.error('No video file produced by Playwright');
-    process.exit(1);
-  }
-
-  const videoPath = path.join(tempDir, videoFiles[0]);
-  const videoSize = fs.statSync(videoPath).size;
-  console.error(`Playwright recording: ${videoPath} (${videoSize} bytes)`);
-
-  if (videoSize < 100) {
-    console.error('Recorded video is too small, possibly empty');
-    process.exit(1);
-  }
-
+  const { execFileSync } = await import('child_process');
   const outputPath = args.output || `${args.uploadId}-${targetAnimation}-preview.webm`;
   fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
 
-  // Playwright records from page open (including ~2min loading). Trim to last animDuration seconds.
-  // Use ffmpeg: -sseof trims from end of file
-  const { execFileSync } = await import('child_process');
-  const rawVideoPath = videoPath + '.raw.webm';
-  fs.renameSync(videoPath, rawVideoPath);
-  try {
-    execFileSync('ffmpeg', [
-      '-y',
-      '-sseof', `-${captureDuration}`,
-      '-i', rawVideoPath,
-      '-c', 'copy',
-      outputPath
-    ], { stdio: ['ignore', 'pipe', 'pipe'] });
-    console.error(`Trimmed video to last ${captureDuration}s using ffmpeg`);
-  } catch (ffmpegErr) {
-    // ffmpeg failed — fall back to raw copy
-    console.error(`ffmpeg trim failed: ${ffmpegErr.message}, using raw copy`);
-    fs.copyFileSync(rawVideoPath, outputPath);
-  }
-  try { fs.unlinkSync(rawVideoPath); } catch { }
+  execFileSync('ffmpeg', [
+    '-y',
+    '-framerate', String(FPS),
+    '-i', path.join(framesDir, 'frame_%05d.png'),
+    '-c:v', 'libvpx-vp9',
+    '-b:v', '2M',
+    '-pix_fmt', 'yuva420p',
+    outputPath
+  ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+  await context.close();
 
   const webmBuffer = fs.readFileSync(outputPath);
   const meta = {
@@ -561,7 +539,6 @@ try {
   fs.writeFileSync(outputPath + '.json', JSON.stringify(meta, null, 2));
 
   console.error(`WebM saved: ${outputPath} (${webmBuffer.length} bytes, ${canvasWidth}x${canvasHeight})`);
-
   console.log(JSON.stringify({ ...meta, ok: true, path: outputPath }));
 
   try { fs.rmSync(tempDir, { recursive: true }); } catch { }
