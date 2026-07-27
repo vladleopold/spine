@@ -295,12 +295,10 @@ try {
 
   await page.setContent(captureHtml, { timeout: 60000 });
 
-  // Intercept texture requests and serve via API endpoint (CORS enabled)
-  const texturePrefix = `${args.origin}/textures/`;
-  const apiPrefix = `${args.origin}/api/github-asset?path=`;
-  await page.route(texturePrefix + '*', async route => {
+  // Intercept ALL texture/image requests and serve via API endpoint (CORS enabled)
+  await page.route('**/textures/**', async route => {
     const url = route.request().url();
-    const texturePath = url.replace(texturePrefix, '');
+    const texturePath = url.replace(`${args.origin}/textures/`, '');
     const apiUrl = `${args.origin}/api/github-asset?path=${texturePath}`;
     await route.fulfill({ url: apiUrl });
   });
