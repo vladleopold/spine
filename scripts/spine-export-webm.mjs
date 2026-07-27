@@ -188,6 +188,7 @@ const initScript = `
   var config = {
     animation: ${JSON.stringify(targetAnimation)},
     showLoading: false,
+    transitionTime: 0,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
     alpha: true,
@@ -335,6 +336,41 @@ try {
     process.exit(1);
   }
   const playerScriptContent = await playerScriptResponse.text();
+
+  // Inject Virtual Time polyfill to guarantee exact 30fps without speedups
+  await page.addInitScript(`
+    window.__virtualTime = 1000;
+    const origDateNow = Date.now;
+    const origPerfNow = performance.now.bind(performance);
+    
+    Date.now = () => Math.floor(window.__virtualTime);
+    performance.now = () => window.__virtualTime;
+    
+    const rafCallbacks = new Set();
+    window.requestAnimationFrame = (cb) => {
+      const id = origPerfNow();
+      rafCallbacks.add({ id, cb });
+      return id;
+    };
+    window.cancelAnimationFrame = (id) => {
+      for (const item of rafCallbacks) {
+        if (item.id === id) {
+          rafCallbacks.delete(item);
+          break;
+        }
+      }
+    };
+    
+    window.__stepFrame = (deltaMs) => {
+      window.__virtualTime += deltaMs;
+      const callbacks = Array.from(rafCallbacks);
+      rafCallbacks.clear();
+      for (const item of callbacks) {
+        try { item.cb(window.__virtualTime); } catch(e) {}
+      }
+    };
+  `);
+
   await page.addScriptTag({ content: playerScriptContent });
 
   await page.evaluate(initScript);
@@ -423,9 +459,14 @@ try {
   for (let i = 0; i < totalFrames; i++) {
     const framePath = path.join(framesDir, `frame_${String(i).padStart(5, '0')}.png`);
     await page.screenshot({ path: framePath, type: 'png' });
-    // Wait for next frame
+    
+    // Advance virtual time by exact frame interval instead of real-time waiting
     if (i < totalFrames - 1) {
-      await new Promise(resolve => setTimeout(resolve, frameInterval));
+      await page.evaluate((ms) => {
+        if (window.__stepFrame) window.__stepFrame(ms);
+      }, frameInterval);
+      // Give browser a moment to process RAF callbacks
+      await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 0)));
     }
   }
 
