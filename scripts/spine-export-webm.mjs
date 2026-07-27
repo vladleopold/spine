@@ -131,8 +131,9 @@ const atlasKey = isLegacy ? 'atlasUrl' : 'atlas';
 
 const setSegments = [uploadPath, firstSet.name];
 
+// Use Vercel API endpoints which have proper CORS headers
 function rawUrl(filename) {
-  return `https://raw.githubusercontent.com/${args.owner}/${args.repo}/${args.branch}/${setSegments.join('/')}/${encodeURIComponent(filename)}`;
+  return `${args.origin}/api/github-asset?path=${encodeURIComponent(setSegments.join('/') + '/' + filename)}`;
 }
 
 const skeletonRawUrl = rawUrl(skeletonFile);
@@ -304,7 +305,21 @@ try {
 
   await page.evaluate(initScript);
 
-  await page.waitForFunction(() => window.__ready === true, { timeout: 120000, polling: 200 });
+  // Wait for player to be created and resources to start loading
+  await page.waitForFunction(() => window.__ready === true, { timeout: 60000, polling: 200 });
+
+  // Wait for actual animation to be ready (track exists and has duration)
+  await page.waitForFunction(() => {
+    if (!window.__ready) return false;
+    try {
+      const player = document.querySelector('spine-player') || window.spinePlayer;
+      if (!player) return false;
+      const track = player.animationState?.getCurrent(0);
+      return track && track.animation && typeof track.animation.duration === 'number' && track.animation.duration > 0;
+    } catch {
+      return false;
+    }
+  }, { timeout: 60000, polling: 500 });
 
   const error = await page.evaluate(() => window.__captureError || null);
   if (error) {
