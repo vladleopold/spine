@@ -327,8 +327,6 @@ try {
       }
     }
   });
-
-   const playerScriptResponse = await fetch(playerJsUrl);
    if (!playerScriptResponse.ok) {
     console.error(`Failed to fetch spine-player script: ${playerScriptResponse.status} ${playerScriptResponse.statusText}`);
     process.exit(1);
