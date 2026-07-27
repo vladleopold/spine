@@ -524,7 +524,27 @@ try {
 
   const outputPath = args.output || `${args.uploadId}-${targetAnimation}-preview.webm`;
   fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
-  fs.copyFileSync(videoPath, outputPath);
+
+  // Playwright records from page open (including ~2min loading). Trim to last animDuration seconds.
+  // Use ffmpeg: -sseof trims from end of file
+  const { execFileSync } = await import('child_process');
+  const rawVideoPath = videoPath + '.raw.webm';
+  fs.renameSync(videoPath, rawVideoPath);
+  try {
+    execFileSync('ffmpeg', [
+      '-y',
+      '-sseof', `-${captureDuration}`,
+      '-i', rawVideoPath,
+      '-c', 'copy',
+      outputPath
+    ], { stdio: ['ignore', 'pipe', 'pipe'] });
+    console.error(`Trimmed video to last ${captureDuration}s using ffmpeg`);
+  } catch (ffmpegErr) {
+    // ffmpeg failed — fall back to raw copy
+    console.error(`ffmpeg trim failed: ${ffmpegErr.message}, using raw copy`);
+    fs.copyFileSync(rawVideoPath, outputPath);
+  }
+  try { fs.unlinkSync(rawVideoPath); } catch { }
 
   const webmBuffer = fs.readFileSync(outputPath);
   const meta = {
