@@ -74,25 +74,30 @@ jobs:
           uploadId="${{ github.event.client_payload.uploadId }}"
           animation="${{ github.event.client_payload.animation }}"
           uploadPath="library/${uploadId}"
-          setName="$(ls -1 ${uploadPath} | head -1)"
+          # Find the first directory inside uploadPath
+          setName=$(find "$uploadPath" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
           skeletonPath=""
-          for f in "${uploadPath}/${setName}"/*.json; do
-            skeletonPath="$f"
-            break
-          done
+          if [ -n "$setName" ]; then
+            for f in "${uploadPath}/${setName}"/*.json; do
+              if [ -f "$f" ]; then
+                skeletonPath="$f"
+                break
+              fi
+            done
+          fi
           echo "Skeleton path: $skeletonPath"
           echo "Animation: $animation"
 
           if [ -z "$skeletonPath" ] || [ ! -f "$skeletonPath" ]; then
-            echo "Skeleton JSON not found, using fallback duration 3s"
-            echo "anim_duration=3" >> $GITHUB_OUTPUT
+            echo "Skeleton JSON not found, using fallback duration 0 to let browser calculate"
+            echo "anim_duration=0" >> $GITHUB_OUTPUT
           else
             duration=$(node -e "
               const fs = require('fs');
               const animName = '$animation';
               const data = JSON.parse(fs.readFileSync('$skeletonPath', 'utf8'));
               const anim = data.animations && data.animations[animName];
-              if (!anim) { console.log(3); process.exit(0); }
+              if (!anim) { console.log(0); process.exit(0); }
               let max = 0;
               const traverse = (obj) => {
                 if (Array.isArray(obj)) {
@@ -102,8 +107,8 @@ jobs:
                 }
               };
               traverse(anim);
-              console.log(max > 0 ? max.toFixed(4) : 3);
-            " 2>/dev/null || echo "3")
+              console.log(max > 0 ? max.toFixed(4) : 0);
+            " 2>/dev/null || echo "0")
             echo "Computed duration: ${duration}s"
             echo "anim_duration=${duration}" >> $GITHUB_OUTPUT
           fi
