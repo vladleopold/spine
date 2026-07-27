@@ -13510,7 +13510,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/fool_hv_1-2026-05-14T06-47-54-433Z/fool_hv_1-preview.webp?v=2026-05-14T06:47:54.433Z",
     "thumbnailPosterPath": "library/fool_hv_1-2026-05-14T06-47-54-433Z/fool_hv_1-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "failed",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -13744,7 +13744,9 @@
         "transactionData": "0xb1b1d44f0737337ea20110fcc31c867d560bdb59dc68fe674b1760131715e2db",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "invalid": true,
+    "error": "No valid animations (empty timelines removed)"
   },
   {
     "id": "fool_hv_1-2026-05-14T07-53-51-169Z",
