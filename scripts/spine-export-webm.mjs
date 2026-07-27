@@ -215,6 +215,24 @@ const initScript = `
     config.${skeletonKey} = ${JSON.stringify(skeletonRawUrl)};
     config.${atlasKey} = ${JSON.stringify(atlasRawUrl)};
     config.textures = ${JSON.stringify(textureRawUrls)};
+    config.success = function(player) {
+      if (player.canvas) {
+        player.canvas.width = 1920;
+        player.canvas.height = 1080;
+      }
+      window.__ready = true;
+      window.__canvasWidth = player.canvas ? player.canvas.width : 0;
+      window.__canvasHeight = player.canvas ? player.canvas.height : 0;
+      try {
+        var track = player.animationState ? player.animationState.getCurrent(0) : null;
+        if (track && track.animation && typeof track.animation.duration === 'number') {
+          window.__animDuration = track.animation.duration;
+        }
+      } catch (e) {}
+    };
+    config.error = function(player, msg) {
+      window.__captureError = 'Player error: ' + (msg || 'unknown');
+    };
   }
 
   if (spine.AtlasAttachmentLoader && !window.__spinePatched) {
@@ -255,13 +273,7 @@ const initScript = `
   }
 
   if (!isLegacy) {
-    if (player.canvas) {
-      player.canvas.width = 1920;
-      player.canvas.height = 1080;
-    }
-    window.__ready = true;
-    window.__canvasWidth = player.canvas ? player.canvas.width : 0;
-    window.__canvasHeight = player.canvas ? player.canvas.height : 0;
+    // Canvas sizing is now handled in the success callback
   }
 })();
 `;
