@@ -242,6 +242,7 @@ const initScript = `
   var player;
   try {
     player = new spine.SpinePlayer('player', config);
+    window.__spinePlayer = player;
   } catch (e) {
     window.__captureError = 'Player creation failed: ' + e.message;
     return;
@@ -255,13 +256,6 @@ const initScript = `
     window.__ready = true;
     window.__canvasWidth = player.canvas ? player.canvas.width : 0;
     window.__canvasHeight = player.canvas ? player.canvas.height : 0;
-
-    try {
-      var track = player.animationState ? player.animationState.getCurrent(0) : null;
-      if (track && track.animation && typeof track.animation.duration === 'number') {
-        window.__animDuration = track.animation.duration;
-      }
-    } catch (e) {}
   }
 })();
 `;
@@ -347,18 +341,27 @@ try {
   // Wait for player to be created and resources to start loading
   await page.waitForFunction(() => window.__ready === true, { timeout: 60000, polling: 200 });
 
-  // Wait for actual animation to be ready (track exists and has duration)
+  // Wait for actual animation to be ready (track exists or fallback after player loads)
   await page.waitForFunction(() => {
     if (!window.__ready) return false;
     try {
-      const player = document.querySelector('spine-player') || window.spinePlayer;
+      const player = window.__spinePlayer;
       if (!player) return false;
-      const track = player.animationState?.getCurrent(0);
-      return track && track.animation && typeof track.animation.duration === 'number' && track.animation.duration > 0;
-    } catch {
+      const track = player.animationState ? player.animationState.getCurrent(0) : null;
+      if (track && track.animation && typeof track.animation.duration === 'number' && track.animation.duration > 0) {
+        window.__animDuration = track.animation.duration;
+        return true;
+      }
+      if (player.loaded || player.paused !== undefined) {
+        return true;
+      }
       return false;
+    } catch {
+      return true;
     }
-  }, { timeout: 60000, polling: 500 });
+  }, { timeout: 30000, polling: 500 }).catch(() => {
+    console.error('Timed out waiting for specific track animation, proceeding with fallback duration');
+  });
 
   const error = await page.evaluate(() => window.__captureError || null);
   if (error) {
