@@ -170,7 +170,6 @@ const captureHtml = `<!DOCTYPE html>
 html, body { width: 100%; height: 100%; background: #000000; overflow: hidden; }
 #player { width: 1920px; height: 1080px; }
 .spine-player-controls { display: none !important; }
-.spine-player-loading { display: none !important; }
 </style>
 </head>
 <body>
@@ -340,7 +339,7 @@ try {
 
   // Inject Virtual Time polyfill to guarantee exact 30fps without speedups
   await page.addInitScript(`
-    window.__freezeTime = false;
+    window.__freezeTime = true;
     window.__virtualTime = 1000;
     const origDateNow = Date.now;
     const origPerfNow = performance.now.bind(performance);
@@ -381,107 +380,70 @@ try {
 
   await page.evaluate(initScript);
 
-  // Wait for player to be created and resources to start loading
-  await page.waitForFunction(() => window.__ready === true || window.__captureError !== null, { timeout: 60000, polling: 200 });
-
-  const captureError = await page.evaluate(() => window.__captureError || null);
-  if (captureError) {
-    console.error(`SpinePlayer failed to initialize: ${captureError}`);
-    process.exit(1);
-  }
-
-  // Wait for actual animation to be ready (track exists or fallback after player loads)
-  await page.waitForFunction(() => {
-    if (!window.__ready) return false;
-    try {
-      const player = window.__spinePlayer;
-      if (!player) return false;
-      
-      const track = player.animationState ? player.animationState.getCurrent(0) : null;
-      if (track && track.animation) {
-        if (typeof track.animation.duration === 'number' && track.animation.duration > 0) {
-          window.__animDuration = track.animation.duration;
-          return true;
-        }
-      }
-      
-      // Also try to find it in the skeleton data directly if track isn't playing yet
-      if (player.skeleton && player.skeleton.data && player.skeleton.data.animations) {
-        const targetAnimName = player.config ? player.config.animation : null;
-        if (targetAnimName) {
-          const anim = player.skeleton.data.animations.find(a => a.name === targetAnimName);
-          if (anim) {
-             const dur = anim.duration !== undefined ? anim.duration : (anim.frames ? anim.frames[anim.frames.length - 1] : 0);
-             if (dur > 0) {
-               window.__animDuration = dur;
-               return true;
-             }
-          }
-        }
-      }
-      
-      // As a last resort, if player is loaded, get the first animation's duration
-      if (player.loaded && player.skeleton && player.skeleton.data && player.skeleton.data.animations.length > 0) {
-        const anim = player.skeleton.data.animations[0];
-        const dur = anim.duration !== undefined ? anim.duration : 2.0; // fallback 2s
-        window.__animDuration = dur > 0 ? dur : 2.0;
-        return true;
-      }
-      
-      return false; // keep polling until duration is found or timeout occurs
-    } catch (e) {
-      return false;
-    }
-  }, { timeout: 30000, polling: 500 }).catch(() => {
-    console.error('Timed out waiting for specific track animation, proceeding with fallback duration');
-  });
-
-  const error = await page.evaluate(() => window.__captureError || null);
-  if (error) {
-    console.error(`Capture failed: ${error}`);
-    process.exit(1);
-  }
-
   const browserAnimDuration = await page.evaluate(() => window.__animDuration || 0);
   const canvasWidth = await page.evaluate(() => window.__canvasWidth || 1920);
   const canvasHeight = await page.evaluate(() => window.__canvasHeight || 1080);
-
-  // Use server-side computed duration (from skeleton JSON) as priority; fallback to browser-detected
   const animDuration = args.animDuration > 0 ? args.animDuration : (browserAnimDuration > 0 ? browserAnimDuration : 3);
 
-  console.error(`Animation ready, duration=${animDuration}s (browser=${browserAnimDuration}s, server=${args.animDuration}s), canvas=${canvasWidth}x${canvasHeight}`);
-
-  // Normal mode: exactly 1 cycle
-  const captureDuration = animDuration > 0 ? animDuration : 3;
-
-  console.error(`Starting frame capture: ${captureDuration}s at 30fps`);
-
   const FPS = 30;
-  const totalFrames = Math.ceil(captureDuration * FPS);
   const frameInterval = 1000 / FPS;
   const framesDir = path.join(tempDir, 'frames');
   fs.mkdirSync(framesDir, { recursive: true });
 
-  await page.evaluate(() => {
-    window.__freezeTime = true;
-    window.__virtualTime = performance.now();
-  });
+  console.error(`Waiting for SpinePlayer to be ready...`);
+  await page.waitForFunction(() => window.__ready === true, { timeout: 60000, polling: 200 });
+  
+  // Give it a tiny bit of real time in case WebGL needs to push the first frame after ready
+  await new Promise(r => setTimeout(r, 500));
 
-  for (let i = 0; i < totalFrames; i++) {
+  let targetFrames = Math.ceil(animDuration * FPS);
+  if (targetFrames <= 0) targetFrames = 30 * 3; // fallback 3 seconds
+
+  console.error(`Starting frame capture: exactly ${targetFrames} frames at 30fps for ${animDuration}s duration`);
+
+  let framesCaptured = 0;
+  let recentBuffers = [];
+
+  for (let i = 0; i < targetFrames; i++) {
     const framePath = path.join(framesDir, `frame_${String(i).padStart(5, '0')}.png`);
-    await page.screenshot({ path: framePath, type: 'png' });
     
-    // Advance virtual time by exact frame interval instead of real-time waiting
-    if (i < totalFrames - 1) {
-      await page.evaluate((ms) => {
-        if (window.__stepFrame) window.__stepFrame(ms);
-      }, frameInterval);
-      // Give browser a moment to process RAF callbacks
-      await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 0)));
+    const buffer = await page.screenshot({ path: framePath, type: 'png' });
+    framesCaptured++;
+
+    recentBuffers.push(buffer);
+    if (recentBuffers.length > 3) {
+      recentBuffers.shift();
     }
+
+    if (recentBuffers.length === 3) {
+      // If the animation doesn't loop and stays static, we can break early, but 
+      // usually we want exactly animDuration frames to ensure consistent speed.
+      // We'll only break if we are past the animDuration and it's static.
+      if (recentBuffers[0].equals(recentBuffers[1]) && recentBuffers[1].equals(recentBuffers[2])) {
+         if (i >= targetFrames - 1) {
+            break;
+         }
+      }
+    }
+
+    const captureError = await page.evaluate(() => window.__captureError || null);
+    if (captureError) {
+      console.error(`SpinePlayer error during capture: ${captureError}`);
+      process.exit(1);
+    }
+
+    // Advance virtual time by exact frame interval
+    await page.evaluate((ms) => {
+      if (window.__stepFrame) window.__stepFrame(ms);
+    }, frameInterval);
+    
+    // Give browser a moment to process RAF callbacks
+    await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 0)));
   }
 
-  console.error(`Captured ${totalFrames} frames, encoding with ffmpeg...`);
+  const captureDuration = framesCaptured / FPS;
+
+  console.error(`Captured ${framesCaptured} frames (${captureDuration}s), encoding with ffmpeg...`);
 
   const { execFileSync } = await import('child_process');
   const outputPath = args.output || `${args.uploadId}-${targetAnimation}-preview.webm`;
