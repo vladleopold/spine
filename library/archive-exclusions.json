@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-14T22:53:51.014Z",
+  "updatedAt": "2026-07-27T09:59:33.365Z",
   "updatedBy": "vladyslavchaplygin@gmail.com",
   "rules": [
     {
@@ -707,6 +707,13 @@
       "type": "regex",
       "field": "id",
       "pattern": "^fool_banner-2026-05-14T08-28-48-152Z$",
+      "flags": "i"
+    },
+    {
+      "enabled": true,
+      "type": "regex",
+      "field": "id",
+      "pattern": "^s300018-2026-07-27T09-31-53-113Z$",
       "flags": "i"
     }
   ]
