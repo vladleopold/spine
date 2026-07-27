@@ -352,12 +352,20 @@ try {
         window.__animDuration = track.animation.duration;
         return true;
       }
-      if (player.loaded || player.paused !== undefined) {
-        return true;
+      // Also try to find it in the skeleton data directly if track isn't playing yet
+      if (player.skeleton && player.skeleton.data && player.skeleton.data.animations) {
+        const targetAnimName = player.config ? player.config.animation : null;
+        if (targetAnimName) {
+          const anim = player.skeleton.data.animations.find(a => a.name === targetAnimName);
+          if (anim && typeof anim.duration === 'number' && anim.duration > 0) {
+            window.__animDuration = anim.duration;
+            return true;
+          }
+        }
       }
-      return false;
+      return false; // keep polling until duration is found or timeout occurs
     } catch {
-      return true;
+      return false;
     }
   }, { timeout: 30000, polling: 500 }).catch(() => {
     console.error('Timed out waiting for specific track animation, proceeding with fallback duration');
