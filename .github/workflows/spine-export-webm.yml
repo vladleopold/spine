@@ -10,20 +10,25 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install Playwright with Chromium
         run: |
+          echo "=== INSTALLING PLAYWRIGHT ==="
           npm init -y
           npm install playwright@1.59.1
           npx playwright install chromium
+          echo "=== PLAYWRIGHT INSTALLED ==="
 
       - name: Install system dependencies
         run: |
+          echo "=== INSTALLING SYSTEM DEPS ==="
           sudo apt-get update
           sudo apt-get install -y \
             libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
@@ -32,10 +37,50 @@ jobs:
             libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
             libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
             libwayland-egl1
+          echo "=== SYSTEM DEPS INSTALLED ==="
+
+      - name: Debug - Check files exist
+        run: |
+          echo "=== CHECKING FILES ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          uploadPath="library/${uploadId}"
+          setName="$(ls -1 ${uploadPath} | head -1)"
+          echo "Upload ID: $uploadId"
+          echo "Animation: $animation"
+          echo "Upload Path: $uploadPath"
+          echo "Set Name: $setName"
+          if [ -d "${uploadPath}/${setName}" ]; then
+            echo "Set directory exists"
+            ls -la "${uploadPath}/${setName}/"
+          else
+            echo "ERROR: Set directory not found"
+          fi
+          echo "=== INDEX.JSON ==="
+          if [ -f "library/index.json" ]; then
+            echo "index.json exists"
+            head -c 500 library/index.json
+          else
+            echo "ERROR: index.json not found"
+          fi
 
       - name: Export WebM preview
         id: export
         run: |
+          echo "=== STARTING EXPORT ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          origin="${{ github.event.client_payload.origin }}"
+          owner="${{ github.event.client_payload.owner }}"
+          repo="${{ github.event.client_payload.repo }}"
+          branch="${{ github.event.client_payload.branch }}"
+          
+          echo "Upload ID: $uploadId"
+          echo "Animation: $animation"
+          echo "Origin: $origin"
+          echo "Owner: $owner"
+          echo "Repo: $repo"
+          
           node scripts/spine-export-webm.mjs \
             --upload-id="${{ github.event.client_payload.uploadId }}" \
             --animation="${{ github.event.client_payload.animation }}" \
@@ -45,8 +90,22 @@ jobs:
             --branch="${{ github.event.client_payload.branch }}" \
             --repo-path="${{ github.workspace }}" \
             --output="${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
+          echo "=== EXPORT COMPLETED ==="
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Debug - Check output file
+        if: always()
+        run: |
+          echo "=== CHECKING OUTPUT ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          if [ -f "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm" ]; then
+            echo "WebM file exists"
+            ls -lh "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
+          else
+            echo "ERROR: WebM file not found"
+            ls -la "${{ github.workspace }}/"
+          fi
 
       - name: Upload webm to GitHub
         id: upload
@@ -59,8 +118,14 @@ jobs:
             const previewPath = `${basePath}/${uploadId}/preview.webm`;
             const webmPath = `${{ github.workspace }}/${uploadId}-preview.webm`;
 
+            console.log("=== UPLOADING WEBM ===");
+            console.log("Upload ID:", uploadId);
+            console.log("Preview path:", previewPath);
+            console.log("WebM path:", webmPath);
+
             const content = fs.readFileSync(webmPath, 'base64');
             const stats = fs.statSync(webmPath);
+            console.log("WebM size:", stats.size, "bytes");
 
             const branch = '${{ github.event.client_payload.branch }}' || 'main';
 
@@ -79,6 +144,8 @@ jobs:
             }
 
             const existingSha = await getSha(previewPath);
+            console.log("Existing SHA:", existingSha);
+
             const result = await github.rest.repos.createOrUpdateFileContents({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -101,6 +168,10 @@ jobs:
             const webmUrl = '${{ steps.upload.outputs.webm_url }}';
             const basePath = 'library';
             const indexPath = `${basePath}/index.json`;
+
+            console.log("=== UPDATING INDEX ===");
+            console.log("Upload ID:", uploadId);
+            console.log("WebM URL:", webmUrl);
 
             const branch = '${{ github.event.client_payload.branch }}' || 'main';
 
@@ -125,25 +196,31 @@ jobs:
               return indexEntry ? indexEntry.sha : null;
             }
 
+            console.log("Getting index SHA...");
             const indexSha = await getIndexSha();
+            console.log("Index SHA:", indexSha);
             if (!indexSha) {
               console.log('index.json not found in tree');
               return;
             }
 
+            console.log("Fetching blob content...");
             const content = await getBlobContent(indexSha);
             const entries = JSON.parse(content);
-            const entryIndex = entries.findIndex(e => e.id === uploadId);
+            console.log("Total entries:", entries.length);
+
+            const entryIndex = entries.findIndex(e => e.id === '${{ github.event.client_payload.uploadId }}');
+            console.log("Entry index:", entryIndex);
 
             if (entryIndex === -1) {
-              console.log(`Entry ${uploadId} not found in index, skipping update`);
+              console.log(`Entry not found in index, skipping update`);
               return;
             }
 
             entries[entryIndex] = {
               ...entries[entryIndex],
               webmPreview: '${{ steps.upload.outputs.webm_url }}',
-              webmPreviewPath: `library/${uploadId}/preview.webm`,
+              webmPreviewPath: `library/${{ github.event.client_payload.uploadId }}/preview.webm`,
               webmStatus: 'ready',
               webmGeneratedAt: new Date().toISOString(),
             };
@@ -155,6 +232,8 @@ jobs:
               content: newContent,
               encoding: 'base64',
             });
+
+            console.log("Created new blob:", newBlob.sha);
 
             const { data: oldTree } = await github.rest.git.getTree({
               owner: context.repo.owner,
@@ -177,6 +256,8 @@ jobs:
               ],
             });
 
+            console.log("Created new tree:", newTree.sha);
+
             const newCommit = await github.rest.git.createCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -184,6 +265,8 @@ jobs:
               tree: newTree.sha,
               parents: [branch],
             });
+
+            console.log("Created commit:", newCommit.sha);
 
             await github.rest.git.updateRef({
               owner: context.repo.owner,
