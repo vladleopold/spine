@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "200003-2026-07-27T09-50-33-835Z",
+  "title": "200003",
+  "uploadedAt": "2026-07-27T09:50:33.835Z",
+  "proofPath": "library/200003-2026-07-27T09-50-33-835Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/200003-2026-07-27T09-50-33-835Z/source-proof.json?v=2026-07-27T09-50-33.835Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/200003-2026-07-27T09-50-33-835Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:303ee8f3685c0367248335c0d76c2786f1267b92f0cd8b77cd69885a0d10fc90",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "200003/200003.atlas",
+      "bytes": 7548,
+      "sha256": "1e554b5099ac0049f8f67e4e9a1b868497bb339478a9c66c23887f2e6cd43f89"
+    },
+    {
+      "name": "200003/200003.json",
+      "bytes": 889402,
+      "sha256": "0cc9093821622d996a98e8f9f06252c8b6b4bcd88a753a2e0c719a18b0f78c06"
+    },
+    {
+      "name": "200003/200003.png",
+      "bytes": 1176612,
+      "sha256": "eb6df4bca14882f788a6ba8346dc96336ae1e6d94ecd671e96709e4a53ee192e"
+    },
+    {
+      "name": "animation_1_loop-preview.webp",
+      "bytes": 696,
+      "sha256": "fd2a0dfc5791892fa7482438d373aa4c4a928777ebe549fba8dbfedd1b7625eb"
+    }
+  ],
+  "proofHash": "303ee8f3685c0367248335c0d76c2786f1267b92f0cd8b77cd69885a0d10fc90"
+}
