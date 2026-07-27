@@ -347,24 +347,40 @@ try {
     try {
       const player = window.__spinePlayer;
       if (!player) return false;
+      
       const track = player.animationState ? player.animationState.getCurrent(0) : null;
-      if (track && track.animation && typeof track.animation.duration === 'number' && track.animation.duration > 0) {
-        window.__animDuration = track.animation.duration;
-        return true;
+      if (track && track.animation) {
+        if (typeof track.animation.duration === 'number' && track.animation.duration > 0) {
+          window.__animDuration = track.animation.duration;
+          return true;
+        }
       }
+      
       // Also try to find it in the skeleton data directly if track isn't playing yet
       if (player.skeleton && player.skeleton.data && player.skeleton.data.animations) {
         const targetAnimName = player.config ? player.config.animation : null;
         if (targetAnimName) {
           const anim = player.skeleton.data.animations.find(a => a.name === targetAnimName);
-          if (anim && typeof anim.duration === 'number' && anim.duration > 0) {
-            window.__animDuration = anim.duration;
-            return true;
+          if (anim) {
+             const dur = anim.duration !== undefined ? anim.duration : (anim.frames ? anim.frames[anim.frames.length - 1] : 0);
+             if (dur > 0) {
+               window.__animDuration = dur;
+               return true;
+             }
           }
         }
       }
+      
+      // As a last resort, if player is loaded, get the first animation's duration
+      if (player.loaded && player.skeleton && player.skeleton.data && player.skeleton.data.animations.length > 0) {
+        const anim = player.skeleton.data.animations[0];
+        const dur = anim.duration !== undefined ? anim.duration : 2.0; // fallback 2s
+        window.__animDuration = dur > 0 ? dur : 2.0;
+        return true;
+      }
+      
       return false; // keep polling until duration is found or timeout occurs
-    } catch {
+    } catch (e) {
       return false;
     }
   }, { timeout: 30000, polling: 500 }).catch(() => {
