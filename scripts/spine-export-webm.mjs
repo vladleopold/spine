@@ -132,8 +132,8 @@ const playerCssUrl = isLegacy
   ? `${args.origin}/vendor-spine-player-${versionMajor}.${runtimeMinor}.css`
   : 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css';
 
-const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'jsonUrl';
-const atlasKey = 'atlasUrl';
+const skeletonKey = isLegacy ? 'jsonUrl' : 'skeleton';
+const atlasKey = isLegacy ? 'atlasUrl' : 'atlas';
 
 const setSegments = [uploadPath, firstSet.name];
 
@@ -325,9 +325,26 @@ try {
     const match = url.match(/\/api\/(s[0-9a-zA-Z_-]+)\.png/);
     if (match) {
       const texturePath = match[1] + '.png';
-      const apiUrl = `${args.origin}/api/github-asset?path=${texturePath}`;
+      // We must fetch the actual path from the library, not the root
+      const fullPath = setSegments.join('/') + '/' + texturePath;
+      const apiUrl = `${args.origin}/api/github-asset?path=${fullPath}`;
       console.error(`Intercepting s*.png: ${url} -> ${apiUrl}`);
-      await route.fulfill({ url: apiUrl });
+      try {
+        const response = await fetch(apiUrl);
+        if (response.ok) {
+          const buffer = await response.arrayBuffer();
+          await route.fulfill({
+            status: 200,
+            contentType: 'image/png',
+            body: Buffer.from(buffer)
+          });
+          return;
+        }
+      } catch (e) {
+        console.error(`Failed to fetch texture: ${e.message}`);
+      }
+      await route.continue();
+      return;
     }
   });
 
@@ -344,7 +361,19 @@ try {
       if (pathMatch) {
         const apiUrl = `${args.origin}/api/github-asset?path=library/${pathMatch[1]}`;
         console.error(`Intercepting atlas: ${url} -> ${apiUrl}`);
-        await route.fulfill({ url: apiUrl });
+        try {
+          const response = await fetch(apiUrl);
+          if (response.ok) {
+            const buffer = await response.arrayBuffer();
+            await route.fulfill({
+              status: 200,
+              contentType: 'image/png',
+              body: Buffer.from(buffer)
+            });
+            return;
+          }
+        } catch (e) {}
+        await route.continue();
         return;
       }
     }
