@@ -303,6 +303,39 @@ try {
     await route.fulfill({ url: apiUrl });
   });
 
+  // Also intercept API calls to /api/s300019.png and similar - rewrite to proper API endpoint
+  await page.route('**/api/s*.png', async route => {
+    const url = route.request().url();
+    const match = url.match(/\/api\/(s[0-9a-zA-Z_-]+)\.png/);
+    if (match) {
+      const texturePath = match[1] + '.png';
+      const apiUrl = `${args.origin}/api/github-asset?path=${texturePath}`;
+      console.error(`Intercepting s*.png: ${url} -> ${apiUrl}`);
+      await route.fulfill({ url: apiUrl });
+    }
+  });
+
+  // Intercept atlas loading and fix texture paths in atlas
+  await page.route('**/*.atlas', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/github-asset?path=') && url.includes('.atlas')) {
+      // Already going through API, let it through
+      return;
+    }
+    if (url.endsWith('.atlas') || url.includes('.atlas?')) {
+      // Redirect atlas requests through API
+      const pathMatch = url.match(/([^\/]+\.atlas)/);
+      if (pathMatch) {
+        const apiUrl = `${args.origin}/api/github-asset?path=library/${pathMatch[1]}`;
+        console.error(`Intercepting atlas: ${url} -> ${apiUrl}`);
+        await route.fulfill({ url: apiUrl });
+        return;
+      }
+    }
+  });
+
+  const playerScriptResponse = await fetch(playerJsUrl);
+
   const playerScriptResponse = await fetch(playerJsUrl);
   if (!playerScriptResponse.ok) {
     console.error(`Failed to fetch spine-player script: ${playerScriptResponse.status} ${playerScriptResponse.statusText}`);
