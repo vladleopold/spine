@@ -137,18 +137,39 @@ const atlasKey = isLegacy ? 'atlasUrl' : 'atlas';
 
 const setSegments = [uploadPath, firstSet.name];
 
-// Use Vercel API endpoints which have proper CORS headers
+// Read files from disk and encode as data URIs for rawDataURIs
+function fileToDataUri(filePath, mimeType) {
+  const buf = fs.readFileSync(filePath);
+  return `data:${mimeType};base64,${buf.toString('base64')}`;
+}
+
+function mimeFor(filename) {
+  const ext = path.extname(filename).toLowerCase();
+  if (ext === '.png') return 'image/png';
+  if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
+  if (ext === '.webp') return 'image/webp';
+  if (ext === '.json') return 'application/json';
+  if (ext === '.atlas') return 'text/plain';
+  if (ext === '.skel') return 'application/octet-stream';
+  return 'application/octet-stream';
+}
+
+// Build rawDataURIs with all file data embedded as data: URIs
+const rawDataURIs = {};
+const allSetFiles = [skeletonFile, atlasFile, ...textureFiles];
+for (const f of allSetFiles) {
+  const filePath = path.join(firstSet.path, f);
+  const dataUri = fileToDataUri(filePath, mimeFor(f));
+  rawDataURIs[f] = dataUri;
+  rawDataURIs[path.basename(f)] = dataUri;
+}
+
+// Also use rawUrl for fallback (if rawDataURIs not supported by this player version)
 function rawUrl(filename) {
   return `${args.origin}/api/github-asset?path=${encodeURIComponent(setSegments.join('/') + '/' + filename)}`;
 }
-
 const skeletonRawUrl = rawUrl(skeletonFile);
 const atlasRawUrl = rawUrl(atlasFile);
-const textureRawUrls = textureFiles.map(f => rawUrl(f));
-const rawDataURIs = {};
-textureFiles.forEach((f, i) => {
-  rawDataURIs[f] = textureRawUrls[i];
-});
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
@@ -158,6 +179,8 @@ console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
 console.error(`Atlas: ${atlasFile}`);
 console.error(`Animation: ${targetAnimation}`);
 console.error(`Is default: ${isDefault}`);
+console.error(`rawDataURIs keys: ${Object.keys(rawDataURIs).join(', ')}`);
+
 
 const captureHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -192,11 +215,12 @@ const initScript = `
     preserveDrawingBuffer: true,
     alpha: true,
     backgroundColor: '#000000',
+    rawDataURIs: ${JSON.stringify(rawDataURIs)},
   };
 
   if (isLegacy) {
-    config.${skeletonKey} = ${JSON.stringify(skeletonRawUrl)};
-    config.${atlasKey} = ${JSON.stringify(atlasRawUrl)};
+    config.${skeletonKey} = ${JSON.stringify(skeletonFile)};
+    config.${atlasKey} = ${JSON.stringify(atlasFile)};
     config.success = function(widget) {
       if (widget.canvas) {
         widget.canvas.width = 1920;
@@ -216,8 +240,8 @@ const initScript = `
       window.__captureError = 'Player error: ' + (msg || 'unknown');
     };
   } else {
-    config.${skeletonKey} = ${JSON.stringify(skeletonRawUrl)};
-    config.${atlasKey} = ${JSON.stringify(atlasRawUrl)};
+    config.${skeletonKey} = ${JSON.stringify(skeletonFile)};
+    config.${atlasKey} = ${JSON.stringify(atlasFile)};
     config.success = function(player) {
       if (player.canvas) {
         player.canvas.width = 1920;
