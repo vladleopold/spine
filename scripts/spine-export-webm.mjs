@@ -17,6 +17,9 @@ const args = {
   repo: 'spine',
   branch: 'main',
   githubToken: '',
+  animDuration: 0,      // server-side pre-computed animation duration in seconds
+  chunkDuration: 30,   // max seconds per chunk
+  chunkIndex: -1,       // -1 = no chunking, 0/1/2... = which chunk
 };
 
 for (let i = 2; i < process.argv.length; i++) {
@@ -31,6 +34,9 @@ for (let i = 2; i < process.argv.length; i++) {
   else if (arg.startsWith('--owner=')) args.owner = arg.split('=')[1];
   else if (arg.startsWith('--repo=')) args.repo = arg.split('=')[1];
   else if (arg.startsWith('--github-token=')) args.githubToken = arg.split('=')[1];
+  else if (arg.startsWith('--anim-duration=')) args.animDuration = parseFloat(arg.split('=')[1]) || 0;
+  else if (arg.startsWith('--chunk-duration=')) args.chunkDuration = parseFloat(arg.split('=')[1]) || 30;
+  else if (arg.startsWith('--chunk-index=')) args.chunkIndex = parseInt(arg.split('=')[1], 10);
 }
 
 if (!args.uploadId) {
@@ -393,18 +399,31 @@ try {
     process.exit(1);
   }
 
-  const animDuration = await page.evaluate(() => window.__animDuration || 0);
+  const browserAnimDuration = await page.evaluate(() => window.__animDuration || 0);
   const canvasWidth = await page.evaluate(() => window.__canvasWidth || 1920);
   const canvasHeight = await page.evaluate(() => window.__canvasHeight || 1080);
 
-  console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
+  // Use server-side computed duration (from skeleton JSON) as priority; fallback to browser-detected
+  const animDuration = args.animDuration > 0 ? args.animDuration : (browserAnimDuration > 0 ? browserAnimDuration : 3);
 
-  let captureDuration = animDuration > 0 ? animDuration + 1 : 1;
-  // Temporary fix for animations where we still can't reliably detect duration (e.g. nested timeline structures or stepped curves)
-  // Ensure we at least capture a loop
-  if (captureDuration < 3) {
-      captureDuration = 3;
+  console.error(`Animation ready, duration=${animDuration}s (browser=${browserAnimDuration}s, server=${args.animDuration}s), canvas=${canvasWidth}x${canvasHeight}`);
+
+  // Chunk mode: if chunkIndex >= 0, wait to the end of this chunk window
+  // Total recording = chunkStart + chunkDuration (Playwright records from context open)
+  // We want exactly 1 cycle = animDuration seconds
+  let captureDuration;
+  if (args.chunkIndex >= 0) {
+    const chunkStart = args.chunkIndex * args.chunkDuration;
+    captureDuration = chunkStart + Math.min(args.chunkDuration, animDuration - chunkStart);
+    console.error(`Chunk mode: index=${args.chunkIndex}, start=${chunkStart}s, window=${captureDuration}s`);
+  } else {
+    // Normal mode: exactly 1 cycle (animDuration seconds), no extra second
+    captureDuration = animDuration;
   }
+
+  // Minimum 1s to avoid empty recordings
+  if (captureDuration < 1) captureDuration = 1;
+
   await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
 
   await context.close();
@@ -433,6 +452,7 @@ try {
     animation: targetAnimation,
     animationDuration: animDuration,
     capturedDuration: captureDuration,
+    chunkIndex: args.chunkIndex,
     width: canvasWidth,
     height: canvasHeight,
     bytes: webmBuffer.length,
