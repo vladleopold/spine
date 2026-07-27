@@ -399,7 +399,12 @@ try {
 
   console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
 
-  const captureDuration = animDuration > 0 ? animDuration + 1 : 1;
+  let captureDuration = animDuration > 0 ? animDuration + 1 : 1;
+  // Temporary fix for animations where we still can't reliably detect duration (e.g. nested timeline structures or stepped curves)
+  // Ensure we at least capture a loop
+  if (captureDuration < 3) {
+      captureDuration = 3;
+  }
   await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
 
   await context.close();
