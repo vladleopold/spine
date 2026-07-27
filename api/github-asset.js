@@ -334,7 +334,7 @@ async function sendGitHubRangeAsset(request, response, { path, assetVersion, dat
 function sendAssetBuffer(request, response, { path, assetVersion, buffer, etag }) {
   const isVideo = isVideoPath(path);
   const rangeHeader = request.headers.range;
-  const shouldServeRange = isVideo && rangeHeader && buffer.length > directRangeProxyMinBytes;
+  const shouldServeRange = isVideo && rangeHeader;
   const earlyResponse = setAssetResponseHeaders(request, response, { path, assetVersion, etag });
   if (earlyResponse) return earlyResponse;
   if (isVideo) response.setHeader('Accept-Ranges', shouldServeRange ? 'bytes' : 'none');
