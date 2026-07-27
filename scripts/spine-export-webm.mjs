@@ -295,6 +295,16 @@ try {
 
   await page.setContent(captureHtml, { timeout: 60000 });
 
+  // Intercept texture requests and serve via API endpoint (CORS enabled)
+  const texturePrefix = `${args.origin}/textures/`;
+  const apiPrefix = `${args.origin}/api/github-asset?path=`;
+  await page.route(texturePrefix + '*', async route => {
+    const url = route.request().url();
+    const texturePath = url.replace(texturePrefix, '');
+    const apiUrl = `${args.origin}/api/github-asset?path=${texturePath}`;
+    await route.fulfill({ url: apiUrl });
+  });
+
   const playerScriptResponse = await fetch(playerJsUrl);
   if (!playerScriptResponse.ok) {
     console.error(`Failed to fetch spine-player script: ${playerScriptResponse.status} ${playerScriptResponse.statusText}`);
