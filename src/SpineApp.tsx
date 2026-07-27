@@ -289,6 +289,7 @@ type LibraryEntry = {
   webmChunkCount?: number;
   webmIsChunked?: boolean;
   webmAnimDuration?: number;
+  webmGeneratedAt?: string;
 };
 
 type EntryMetric = {
@@ -1783,6 +1784,9 @@ function assetUrlForRepoPath(path: string, version = "") {
 }
 
 function assetVersionForLibraryEntry(entry: LibraryEntry, fallback = "") {
+  if (fallback === "webm" && entry.webmGeneratedAt) {
+    return cleanAssetVersion(entry.webmGeneratedAt);
+  }
   return cleanAssetVersion(
     entry.sourceProof?.proofHash ||
       entry.blockchainAnchor?.sourceProofHash ||
