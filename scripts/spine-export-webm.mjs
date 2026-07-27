@@ -339,20 +339,25 @@ try {
 
   // Inject Virtual Time polyfill to guarantee exact 30fps without speedups
   await page.addInitScript(`
+    window.__freezeTime = false;
     window.__virtualTime = 1000;
     const origDateNow = Date.now;
     const origPerfNow = performance.now.bind(performance);
+    const origRaf = window.requestAnimationFrame;
+    const origCancelRaf = window.cancelAnimationFrame;
     
-    Date.now = () => Math.floor(window.__virtualTime);
-    performance.now = () => window.__virtualTime;
+    Date.now = () => window.__freezeTime ? Math.floor(window.__virtualTime) : origDateNow();
+    performance.now = () => window.__freezeTime ? window.__virtualTime : origPerfNow();
     
     const rafCallbacks = new Set();
     window.requestAnimationFrame = (cb) => {
+      if (!window.__freezeTime) return origRaf(cb);
       const id = origPerfNow();
       rafCallbacks.add({ id, cb });
       return id;
     };
     window.cancelAnimationFrame = (id) => {
+      if (!window.__freezeTime) return origCancelRaf(id);
       for (const item of rafCallbacks) {
         if (item.id === id) {
           rafCallbacks.delete(item);
@@ -455,6 +460,11 @@ try {
   const frameInterval = 1000 / FPS;
   const framesDir = path.join(tempDir, 'frames');
   fs.mkdirSync(framesDir, { recursive: true });
+
+  await page.evaluate(() => {
+    window.__freezeTime = true;
+    window.__virtualTime = performance.now();
+  });
 
   for (let i = 0; i < totalFrames; i++) {
     const framePath = path.join(framesDir, `frame_${String(i).padStart(5, '0')}.png`);
