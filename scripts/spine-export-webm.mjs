@@ -137,39 +137,16 @@ const atlasKey = isLegacy ? 'atlasUrl' : 'atlas';
 
 const setSegments = [uploadPath, firstSet.name];
 
-// Read files from disk and encode as data URIs for rawDataURIs
-function fileToDataUri(filePath, mimeType) {
-  const buf = fs.readFileSync(filePath);
-  return `data:${mimeType};base64,${buf.toString('base64')}`;
-}
-
 function mimeFor(filename) {
   const ext = path.extname(filename).toLowerCase();
   if (ext === '.png') return 'image/png';
   if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
   if (ext === '.webp') return 'image/webp';
   if (ext === '.json') return 'application/json';
-  if (ext === '.atlas') return 'text/plain';
   if (ext === '.skel') return 'application/octet-stream';
+  if (ext === '.atlas') return 'text/plain';
   return 'application/octet-stream';
 }
-
-// Build rawDataURIs with all file data embedded as data: URIs
-const rawDataURIs = {};
-const allSetFiles = [skeletonFile, atlasFile, ...textureFiles];
-for (const f of allSetFiles) {
-  const filePath = path.join(firstSet.path, f);
-  const dataUri = fileToDataUri(filePath, mimeFor(f));
-  rawDataURIs[f] = dataUri;
-  rawDataURIs[path.basename(f)] = dataUri;
-}
-
-// Also use rawUrl for fallback (if rawDataURIs not supported by this player version)
-function rawUrl(filename) {
-  return `${args.origin}/api/github-asset?path=${encodeURIComponent(setSegments.join('/') + '/' + filename)}`;
-}
-const skeletonRawUrl = rawUrl(skeletonFile);
-const atlasRawUrl = rawUrl(atlasFile);
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
@@ -179,7 +156,7 @@ console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
 console.error(`Atlas: ${atlasFile}`);
 console.error(`Animation: ${targetAnimation}`);
 console.error(`Is default: ${isDefault}`);
-console.error(`rawDataURIs keys: ${Object.keys(rawDataURIs).join(', ')}`);
+console.error(`Files: ${[skeletonFile, atlasFile, ...textureFiles].join(', ')}`);
 
 
 const captureHtml = `<!DOCTYPE html>
@@ -215,7 +192,6 @@ const initScript = `
     preserveDrawingBuffer: true,
     alpha: true,
     backgroundColor: '#000000',
-    rawDataURIs: ${JSON.stringify(rawDataURIs)},
   };
 
   if (isLegacy) {
@@ -333,77 +309,24 @@ try {
 
   await page.setContent(captureHtml, { timeout: 60000 });
 
-  // Intercept ALL texture/image requests and serve via API endpoint (CORS enabled)
-  await page.route('**/textures/**', async route => {
-    const url = route.request().url();
-    const texturePath = url.replace(`${args.origin}/textures/`, '');
-    const apiUrl = `${args.origin}/api/github-asset?path=${texturePath}`;
-    await route.fulfill({ url: apiUrl });
-  });
+  // Intercept ALL requests from SpinePlayer and serve files directly from disk (fast, no base64, no HTTP)
+  const spineFiles = new Map();
+  for (const f of [skeletonFile, atlasFile, ...textureFiles]) {
+    spineFiles.set(f.toLowerCase(), path.join(firstSet.path, f));
+    spineFiles.set(path.basename(f).toLowerCase(), path.join(firstSet.path, f));
+  }
 
-  // Also intercept API calls to /api/s300019.png and similar - rewrite to proper API endpoint
-  await page.route('**/api/s*.png', async route => {
+  await page.route('**', async route => {
     const url = route.request().url();
-    const match = url.match(/\/api\/(s[0-9a-zA-Z_-]+)\.png/);
-    if (match) {
-      const texturePath = match[1] + '.png';
-      // We must fetch the actual path from the library, not the root
-      const fullPath = setSegments.join('/') + '/' + texturePath;
-      const apiUrl = `${args.origin}/api/github-asset?path=${fullPath}`;
-      console.error(`Intercepting s*.png: ${url} -> ${apiUrl}`);
-      try {
-        const response = await fetch(apiUrl);
-        if (response.ok) {
-          const buffer = await response.arrayBuffer();
-          await route.fulfill({
-            status: 200,
-            contentType: 'image/png',
-            body: Buffer.from(buffer)
-          });
-          return;
-        }
-      } catch (e) {
-        console.error(`Failed to fetch texture: ${e.message}`);
-      }
-      await route.continue();
+    const urlBasename = url.split('/').pop().split('?')[0].toLowerCase();
+    if (spineFiles.has(urlBasename)) {
+      const diskPath = spineFiles.get(urlBasename);
+      console.error(`Serving from disk: ${urlBasename} -> ${diskPath}`);
+      const body = fs.readFileSync(diskPath);
+      await route.fulfill({ status: 200, contentType: mimeFor(urlBasename), body });
       return;
     }
-  });
-
-  // Intercept atlas loading and fix texture paths in atlas
-  await page.route('**/*.atlas', async route => {
-    const url = route.request().url();
-    if (url.includes('/api/github-asset?path=') && url.includes('.atlas')) {
-      // Already going through API, let it through
-      return;
-    }
-    if (url.endsWith('.atlas') || url.includes('.atlas?')) {
-      // Redirect atlas requests through API
-      const pathMatch = url.match(/([^\/]+\.atlas)/);
-      if (pathMatch) {
-        const apiUrl = `${args.origin}/api/github-asset?path=library/${pathMatch[1]}`;
-        console.error(`Intercepting atlas: ${url} -> ${apiUrl}`);
-        try {
-          const response = await fetch(apiUrl);
-          if (response.ok) {
-            const buffer = await response.arrayBuffer();
-            let cType = 'application/octet-stream';
-            if (apiUrl.endsWith('.png')) cType = 'image/png';
-            else if (apiUrl.endsWith('.json')) cType = 'application/json';
-            else if (apiUrl.endsWith('.atlas') || apiUrl.endsWith('.txt')) cType = 'text/plain';
-            
-            await route.fulfill({
-              status: 200,
-              contentType: cType,
-              body: Buffer.from(buffer)
-            });
-            return;
-          }
-        } catch (e) {}
-        await route.continue();
-        return;
-      }
-    }
+    await route.continue();
   });
 
   const playerScriptResponse = await fetch(playerJsUrl);
