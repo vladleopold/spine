@@ -284,6 +284,11 @@ type LibraryEntry = {
   sourceProofUrl?: string;
   blockchainAnchor?: BlockchainAnchor;
   webmStatus?: string;
+  webmChunksJson?: string;
+  webmChunks?: string[];
+  webmChunkCount?: number;
+  webmIsChunked?: boolean;
+  webmAnimDuration?: number;
 };
 
 type EntryMetric = {
@@ -479,6 +484,46 @@ function videoPreviewAspectRatioStyle(entry?: Pick<LibraryEntry, "previewWidth" 
   const height = Number(entry?.previewHeight || 0);
   if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return undefined;
   return { "--video-preview-ratio": `${Math.round(width)} / ${Math.round(height)}` } as React.CSSProperties;
+}
+
+function ChunkedVideo({ src, chunks, ...props }: React.VideoHTMLAttributes<HTMLVideoElement> & { chunks?: string[] }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (!chunks || chunks.length <= 1 || !videoRef.current || !window.MediaSource) return;
+    
+    let isCancelled = false;
+    const ms = new MediaSource();
+    videoRef.current.src = URL.createObjectURL(ms);
+    
+    ms.addEventListener('sourceopen', async () => {
+      try {
+        const sb = ms.addSourceBuffer('video/webm; codecs="vp8"'); // Use generic webm mime type
+        for (const chunkUrl of chunks) {
+          if (isCancelled) break;
+          const buf = await fetch(chunkUrl).then(r => r.arrayBuffer());
+          if (isCancelled) break;
+          await new Promise<void>(resolve => {
+            sb.addEventListener('updateend', () => resolve(), { once: true });
+            sb.appendBuffer(buf);
+          });
+        }
+        if (!isCancelled && ms.readyState === 'open') {
+          ms.endOfStream();
+        }
+      } catch (err) {
+        console.error("ChunkedVideo error:", err);
+      }
+    });
+    
+    return () => {
+      isCancelled = true;
+    };
+  }, [chunks]);
+
+  const fallbackSrc = !chunks || chunks.length <= 1 ? src : undefined;
+  
+  return <video ref={videoRef} src={fallbackSrc} {...props} />;
 }
 
 function applySeoVideoPreviewAspect(video: HTMLVideoElement) {
@@ -4775,9 +4820,10 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                       aria-label={`Open ${entry.title}`}
                     >
                       {entry.webmPreview ? (
-                        <video
+                        <ChunkedVideo
                           className="home-feed-video"
                           src={entry.webmPreview}
+                          chunks={(entry as any).webmChunks}
                           poster={poster || undefined}
                           muted
                           playsInline
@@ -5075,9 +5121,10 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
               <div className="preview-card seo-video-card is-visible" id="seo-video-card">
                 <div className="section-title">Video preview</div>
                 <div className="seo-video-frame" style={videoPreviewAspectRatioStyle(currentLibraryEntry)}>
-                  <video
+                  <ChunkedVideo
                     className="seo-video-preview"
                     src={currentLibraryEntry?.webmPreview || undefined}
+                    chunks={currentLibraryEntry?.webmChunks}
                     poster={selectedPreviewImage}
                     muted
                     loop
@@ -5602,9 +5649,10 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                     )}
                     <div className="library-card-link" role="link" aria-label={`Edit ${entry.title || entry.id}`}>
                     <div className="library-card-visual">
-                      <video
+                      <ChunkedVideo
                         className="library-card-webm"
                         src={webmPreviewUrl || undefined}
+                        chunks={entry.webmChunks}
                         poster={thumbnailForCard || undefined}
                         muted
                         playsInline
