@@ -41017,7 +41017,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/skeleton-2026-05-12T20-24-24-003Z/2_idle_big-preview.webp?v=2026-05-12T20:24:24.003Z",
     "thumbnailPosterPath": "library/skeleton-2026-05-12T20-24-24-003Z/2_idle_big-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -41240,7 +41240,9 @@
         "transactionData": "0x44b2b07a44aeecdd95c684b1f1b3333b1100812d766ce4e2c09b34b96d9ec1c3",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nTransform constraint not found: epic_eye_l",
+    "webmGeneratedAt": "2026-07-28T22:29:10.785Z"
   },
   {
     "id": "rainbow-feature-2026-05-12T15-19-07-391Z",
