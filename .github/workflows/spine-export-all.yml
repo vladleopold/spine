@@ -196,13 +196,106 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add library/
-          if ! git diff-index --quiet HEAD --; then
+          
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $i/$MAX_RETRIES..."
+            
+            # 1. Pull latest state from remote first
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # 2. Re-run the artifact processing script on top of fresh state
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+              
+              const origin = 'https://spine-link.vercel.app';
+              const basePath = 'library';
+              const indexPath = path.join(basePath, 'index.json');
+              const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+              
+              const artifactsDir = 'downloaded-artifacts';
+              if (!fs.existsSync(artifactsDir)) { console.log('No artifacts dir'); process.exit(0); }
+              
+              const dirs = fs.readdirSync(artifactsDir);
+              for (const dir of dirs) {
+                const match = dir.match(/^export-(.+)$/);
+                if (!match) continue;
+                const uploadId = match[1];
+                const sourceDir = path.join(artifactsDir, dir);
+                const targetDir = path.join(basePath, uploadId);
+                
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                
+                const files = fs.readdirSync(sourceDir);
+                const uploadedUrls = {};
+                let videoMeta = {};
+                let isError = false;
+                
+                for (const file of files) {
+                  if (file === 'meta.json') {
+                    try { videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8')); if (videoMeta.error) isError = true; } catch(e) {}
+                    continue;
+                  }
+                  const cleanFileName = file.replace(uploadId + '-', '');
+                  const targetPath = path.join(targetDir, cleanFileName);
+                  fs.copyFileSync(path.join(sourceDir, file), targetPath);
+                  const relativeTarget = \`\${basePath}/\${uploadId}/\${cleanFileName}\`;
+                  if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = \`\${origin}/assets/\${relativeTarget}\`;
+                }
+                
+                const entryIndex = indexData.findIndex(e => e.id === uploadId);
+                if (entryIndex !== -1) {
+                  delete indexData[entryIndex].webmChunksJson;
+                  delete indexData[entryIndex].webmChunks;
+                  delete indexData[entryIndex].webmChunkCount;
+                  delete indexData[entryIndex].webmIsChunked;
+                  indexData[entryIndex] = {
+                    ...indexData[entryIndex],
+                    ...uploadedUrls,
+                    webmPreviewPath: isError ? undefined : \`\${basePath}/\${uploadId}/preview.webm\`,
+                    webmStatus: isError ? 'error' : 'ready',
+                    webmError: isError ? videoMeta.error : undefined,
+                    webmGeneratedAt: new Date().toISOString(),
+                    ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                    ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                    ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                    ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                    ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                  };
+                }
+              }
+              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+              console.log('index.json updated.');
+            "
+            
+            # 3. Stage changes
+            git add library/
+            
+            if git diff-index --quiet HEAD --; then
+              echo "No changes to commit."
+              exit 0
+            fi
+            
+            # 4. Commit
             git commit -m "Auto-export: generate previews and update index"
             
-            # Pull with rebase in case something was pushed manually during the jobs
-            git pull --rebase origin main
-            git push origin main
-          else
-            echo "No changes to commit."
-          fi
+            # 5. Push — if rejected, loop back and retry with fresh HEAD
+            if git push origin main; then
+              echo "Successfully pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Will retry with fresh HEAD..."
+              sleep $((RANDOM % 5 + 2))
+            fi
+          done
+          
+          echo "Failed to push after $MAX_RETRIES attempts."
+          exit 1
+
