@@ -233,12 +233,10 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
 
   var player;
   var config = {
-    skelUrl: skeletonKey === 'skelUrl' ? skeletonRawUrl : undefined,
-    skeleton: skeletonKey === 'skeleton' ? skeletonRawUrl : undefined,
-    atlasUrl: atlasKey === 'atlasUrl' ? atlasRawUrl : undefined,
-    atlas: atlasKey === 'atlas' ? atlasRawUrl : undefined,
-    textures: textureRawUrls,
-    animation: targetAnimation,
+    ${skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `skeleton: '${skeletonRawUrl}'`},
+    atlas: '${atlasRawUrl}',
+    textures: ${JSON.stringify(textureRawUrls)},
+    animation: '${targetAnimation}',
     showLoading: false,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
