@@ -33,8 +33,6 @@ jobs:
       fail-fast: false
       matrix:
         uploadId: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,138 +54,155 @@ jobs:
             --upload-id="${{ matrix.uploadId }}" \
             --repo-path="${{ github.workspace }}" \
             --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload media and update index atomically
-        id: upload_and_update
+      - name: Prepare Artifacts
+        run: |
+          mkdir -p "artifact_${{ matrix.uploadId }}"
+          
+          # Move generated files to artifact dir if they exist
+          for ext in "webm" "webp"; do
+            for suffix in "" "-medium" "-low"; do
+              f="${{ matrix.uploadId }}-preview${suffix}.${ext}"
+              if [ -f "$f" ]; then
+                mv "$f" "artifact_${{ matrix.uploadId }}/"
+              fi
+            done
+          done
+          
+          # Move videoMeta json if it exists
+          if [ -f "${{ matrix.uploadId }}-preview.webm.json" ]; then
+            mv "${{ matrix.uploadId }}-preview.webm.json" "artifact_${{ matrix.uploadId }}/meta.json"
+          else
+            echo "{}" > "artifact_${{ matrix.uploadId }}/meta.json"
+          fi
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-${{ matrix.uploadId }}
+          path: artifact_${{ matrix.uploadId }}/*
+          retention-days: 1
+          overwrite: true
+
+  commit-all:
+    needs: [export]
+    runs-on: ubuntu-latest
+    if: always()
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+          pattern: export-*
+          merge-multiple: false
+          
+      - name: Process artifacts and update index
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const uploadId = '${{ matrix.uploadId }}';
-            const basePath = 'library';
-            const branch = 'main';
+            const path = require('path');
+            
             const origin = 'https://spine-link.vercel.app';
-            const workspace = '${{ github.workspace }}';
+            const basePath = 'library';
             const indexPath = `${basePath}/index.json`;
-            const metaPath = `${workspace}/${uploadId}-preview.webm.json`;
-
-            const filesToUpload = [
-              { source: `${workspace}/${uploadId}-preview.webm`, target: `${basePath}/${uploadId}/preview.webm`, key: 'webmPreview' },
-              { source: `${workspace}/${uploadId}-preview-medium.webm`, target: `${basePath}/${uploadId}/preview-medium.webm`, key: 'webmPreviewMedium' },
-              { source: `${workspace}/${uploadId}-preview-low.webm`, target: `${basePath}/${uploadId}/preview-low.webm`, key: 'webmPreviewLow' },
-              { source: `${workspace}/${uploadId}-preview.webp`, target: `${basePath}/${uploadId}/preview.webp`, key: 'webpPoster' },
-              { source: `${workspace}/${uploadId}-preview-medium.webp`, target: `${basePath}/${uploadId}/preview-medium.webp`, key: 'webpPosterMedium' },
-              { source: `${workspace}/${uploadId}-preview-low.webp`, target: `${basePath}/${uploadId}/preview-low.webp`, key: 'webpPosterLow' }
-            ];
-
-            // 1. Create blobs for all media files up-front (no race condition — blobs are content-addressed)
-            const newBlobs = [];
-            const uploadedUrls = {};
-            for (const file of filesToUpload) {
-              if (fs.existsSync(file.source)) {
-                console.log(`Creating blob for ${file.target}...`);
-                const content = fs.readFileSync(file.source, 'base64');
-                const { data: blob } = await github.rest.git.createBlob({
-                  owner: context.repo.owner, repo: context.repo.repo, content, encoding: 'base64',
-                });
-                newBlobs.push({ path: file.target, mode: '100644', type: 'blob', sha: blob.sha });
-                uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
+            const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+            
+            const artifactsDir = 'downloaded-artifacts';
+            if (!fs.existsSync(artifactsDir)) {
+              console.log("No artifacts found.");
+              return;
+            }
+            
+            const dirs = fs.readdirSync(artifactsDir);
+            for (const dir of dirs) {
+              const match = dir.match(/^export-(.+)$/);
+              if (!match) continue;
+              const uploadId = match[1];
+              const sourceDir = path.join(artifactsDir, dir);
+              const targetDir = path.join(basePath, uploadId);
+              
+              if (!fs.existsSync(targetDir)) {
+                fs.mkdirSync(targetDir, { recursive: true });
+              }
+              
+              // Move files
+              const files = fs.readdirSync(sourceDir);
+              const uploadedUrls = {};
+              let videoMeta = {};
+              let isError = false;
+              
+              for (const file of files) {
+                if (file === 'meta.json') {
+                  try {
+                    videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8'));
+                    if (videoMeta.error) isError = true;
+                  } catch(e) {}
+                  continue;
+                }
+                
+                const cleanFileName = file.replace(uploadId + '-', '');
+                const targetPath = path.join(targetDir, cleanFileName);
+                fs.copyFileSync(path.join(sourceDir, file), targetPath);
+                
+                const relativeTarget = `${basePath}/${uploadId}/${cleanFileName}`;
+                
+                if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = `${origin}/assets/${relativeTarget}`;
+              }
+              
+              // Update index
+              const entryIndex = indexData.findIndex(e => e.id === uploadId);
+              if (entryIndex !== -1) {
+                delete indexData[entryIndex].webmChunksJson;
+                delete indexData[entryIndex].webmChunks;
+                delete indexData[entryIndex].webmChunkCount;
+                delete indexData[entryIndex].webmIsChunked;
+                
+                indexData[entryIndex] = {
+                  ...indexData[entryIndex],
+                  ...uploadedUrls,
+                  webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
+                  webmStatus: isError ? 'error' : 'ready',
+                  webmError: isError ? videoMeta.error : undefined,
+                  webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                };
               }
             }
+            
+            fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+            console.log("Updated index.json successfully");
 
-            // 2. Read metadata if exists
-            let videoMeta = {};
-            if (fs.existsSync(metaPath)) {
-              try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
-            }
-
-            async function getBlobContent(sha) {
-              const { data: blob } = await github.rest.git.getBlob({
-                owner: context.repo.owner, repo: context.repo.repo, file_sha: sha,
-              });
-              return Buffer.from(blob.content, 'base64').toString('utf8');
-            }
-
-            // 3. Atomic retry loop: read latest HEAD → build tree → fast-forward push
-            // KEY: force:false so parallel jobs serialise naturally. On 409/422 we back off and retry with fresh HEAD.
-            const MAX_RETRIES = 30;
-            for (let i = 1; i <= MAX_RETRIES; i++) {
-              try {
-                // Always fetch the very latest ref before building the commit
-                const { data: refData } = await github.rest.git.getRef({
-                  owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
-                });
-                const latestSha = refData.object.sha;
-
-                const { data: oldTree } = await github.rest.git.getTree({
-                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: latestSha, recursive: '1',
-                });
-                const indexEntry = oldTree.tree.find(t => t.path === indexPath);
-                if (!indexEntry) { console.log('index.json not found in tree'); return; }
-
-                // Update index.json
-                const content = await getBlobContent(indexEntry.sha);
-                const entries = JSON.parse(content);
-                const entryIndex = entries.findIndex(e => e.id === uploadId);
-                if (entryIndex !== -1) {
-                  delete entries[entryIndex].webmChunksJson;
-                  delete entries[entryIndex].webmChunks;
-                  delete entries[entryIndex].webmChunkCount;
-                  delete entries[entryIndex].webmIsChunked;
-
-                  const isError = !!videoMeta.error;
-                  entries[entryIndex] = {
-                    ...entries[entryIndex],
-                    ...uploadedUrls,
-                    webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
-                    webmStatus: isError ? 'error' : 'ready',
-                    webmError: isError ? videoMeta.error : undefined,
-                    webmGeneratedAt: new Date().toISOString(),
-                    ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
-                    ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
-                    ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
-                    ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
-                    ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
-                  };
-                }
-
-                const newIndexContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
-                const { data: indexBlob } = await github.rest.git.createBlob({
-                  owner: context.repo.owner, repo: context.repo.repo, content: newIndexContent, encoding: 'base64',
-                });
-
-                const { data: newTree } = await github.rest.git.createTree({
-                  owner: context.repo.owner, repo: context.repo.repo, base_tree: latestSha,
-                  tree: [...newBlobs, { path: indexPath, mode: '100644', type: 'blob', sha: indexBlob.sha }],
-                });
-
-                const { data: newCommit } = await github.rest.git.createCommit({
-                  owner: context.repo.owner, repo: context.repo.repo,
-                  message: `Add media & update index for ${uploadId}`,
-                  tree: newTree.sha, parents: [latestSha],
-                });
-
-                // NO force:true — fast-forward only. Parallel jobs that lose the race retry with fresh HEAD.
-                await github.rest.git.updateRef({
-                  owner: context.repo.owner, repo: context.repo.repo,
-                  ref: `heads/${branch}`, sha: newCommit.sha, force: false,
-                });
-
-                console.log(`Successfully committed media + index for ${uploadId} on try ${i}`);
-                break;
-              } catch (error) {
-                const isConflict = error.status === 409 || error.status === 422 ||
-                  (error.message && (error.message.includes('not a fast forward') || error.message.includes('Update is not a fast forward') || error.message.includes('is at')));
-                if (isConflict) {
-                  console.log(`Conflict on try ${i}/${MAX_RETRIES}, backing off...`);
-                  if (i === MAX_RETRIES) throw error;
-                  // Exponential backoff with jitter (caps at 30s)
-                  const delay = Math.min(1000 * Math.pow(1.5, i), 30000) + Math.floor(Math.random() * 3000);
-                  await new Promise(resolve => setTimeout(resolve, delay));
-                } else {
-                  throw error;
-                }
-              }
-            }
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add library/
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "Auto-export: generate previews and update index"
+            
+            # Pull with rebase in case something was pushed manually during the jobs
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
