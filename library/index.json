@@ -2991,7 +2991,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/s300009-2026-07-27T09-46-07-505Z/animation_1_loop-preview.webp?v=2026-07-27T09-46-07.505Z",
     "thumbnailPosterPath": "library/s300009-2026-07-27T09-46-07-505Z/animation_1_loop-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -3191,13 +3191,13 @@
       "anchorUrl": "https://spine-link.vercel.app/assets/library/s300009-2026-07-27T09-46-07-505Z/blockchain-anchor.json"
     },
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/s300009-2026-07-27T09-46-07-505Z/preview.webm",
-    "webmPreviewPath": "library/s300009-2026-07-27T09-46-07-505Z/preview.webm",
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T22:08:47.790Z",
+    "webmGeneratedAt": "2026-07-28T22:12:10.110Z",
     "previewWidth": 1920,
     "previewHeight": 1790,
     "skeletonWidth": 2228,
-    "skeletonHeight": 1399
+    "skeletonHeight": 1399,
+    "webmError": "Player creation failed: Error: Unable to render skeleton.\nCannot read properties of null (reading 'indexOf')"
   },
   {
     "id": "s300002-2026-07-27T09-45-18-530Z",
@@ -6630,7 +6630,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/n10013-2026-07-27T09-34-59-482Z/preview.webm",
     "webmPreviewPath": "library/n10013-2026-07-27T09-34-59-482Z/preview.webm",
     "webmAnimDuration": 1.3333,
-    "webmGeneratedAt": "2026-07-28T22:03:49.285Z",
+    "webmGeneratedAt": "2026-07-28T22:12:05.312Z",
     "previewWidth": 1380,
     "previewHeight": 1398,
     "skeletonWidth": 1078,
@@ -8430,7 +8430,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/preview.webm",
     "webmPreviewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/preview.webm",
     "webmAnimDuration": 0,
-    "webmGeneratedAt": "2026-07-28T22:12:08.486Z",
+    "webmGeneratedAt": "2026-07-28T21:50:07.329Z",
     "previewWidth": 1638,
     "previewHeight": 922,
     "skeletonWidth": 1280,
@@ -10127,7 +10127,7 @@
       }
     },
     "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
-    "webmGeneratedAt": "2026-07-28T22:12:04.354Z"
+    "webmGeneratedAt": "2026-07-28T22:06:44.586Z"
   },
   {
     "id": "hero_newmachaab-2026-07-23T19-31-49-018Z",
