@@ -21237,7 +21237,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/attack-preview.webp?v=2026-06-09T03:03:28.053Z",
     "thumbnailPosterPath": "library/basic_mythic-water-queen-thalassa_3_v1_hd_spine-3-8-59_atitc-2026-06-09T03-03-28-053Z/attack-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -21446,7 +21446,9 @@
         "transactionData": "0x03f3e9867143d2a74995d2deb30849d63e11d5e268459cb44b6152bad9582c80",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nboneData cannot be null.",
+    "webmGeneratedAt": "2026-07-28T22:22:20.628Z"
   },
   {
     "id": "carpet-wild-2026-06-08T19-19-41-521Z",
