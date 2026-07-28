@@ -362,12 +362,18 @@ try {
   });
   await page.setContent(captureHtml, { waitUntil: 'networkidle', timeout: 60000 });
 
-  await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+  let error = null;
+  try {
+    await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+    error = await page.evaluate(() => window.__captureError || null);
+  } catch (e) {
+    error = e.message;
+  }
 
-  const error = await page.evaluate(() => window.__captureError || null);
   if (error) {
     console.error(`Capture failed: ${error}`);
-    process.exit(1);
+    fs.writeFileSync(outPaths.metadata, JSON.stringify({ error: error }, null, 2));
+    process.exit(0);
   }
 
   const animDuration = await page.evaluate(() => window.__animDuration || 0);

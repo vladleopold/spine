@@ -163,11 +163,13 @@ jobs:
                 delete entries[entryIndex].webmChunkCount;
                 delete entries[entryIndex].webmIsChunked;
 
+                const isError = !!videoMeta.error;
                 entries[entryIndex] = {
                   ...entries[entryIndex],
                   ...uploadedUrls,
-                  webmPreviewPath: `${basePath}/${uploadId}/preview.webm`,
-                  webmStatus: 'ready',
+                  webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
+                  webmStatus: isError ? 'error' : 'ready',
+                  webmError: isError ? videoMeta.error : undefined,
                   webmGeneratedAt: new Date().toISOString(),
                   ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
                   ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
