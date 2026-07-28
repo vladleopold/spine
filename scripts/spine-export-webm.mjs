@@ -380,24 +380,36 @@ try {
 
   await page.evaluate(initScript);
 
-  const browserAnimDuration = await page.evaluate(() => window.__animDuration || 0);
-  const canvasWidth = await page.evaluate(() => window.__canvasWidth || 1920);
-  const canvasHeight = await page.evaluate(() => window.__canvasHeight || 1080);
-  const animDuration = args.animDuration > 0 ? args.animDuration : (browserAnimDuration > 0 ? browserAnimDuration : 3);
-
-  const FPS = 30;
-  const frameInterval = 1000 / FPS;
-  const framesDir = path.join(tempDir, 'frames');
-  fs.mkdirSync(framesDir, { recursive: true });
-
   console.error(`Waiting for SpinePlayer to be ready...`);
   await page.waitForFunction(() => window.__ready === true, { timeout: 60000, polling: 200 });
   
   // Give it a tiny bit of real time in case WebGL needs to push the first frame after ready
   await new Promise(r => setTimeout(r, 500));
 
+  const browserAnimDuration = await page.evaluate(() => {
+    try {
+      var p = window.__spinePlayer;
+      var track = p && p.animationState ? p.animationState.getCurrent(0) : null;
+      if (track && track.animation && typeof track.animation.duration === 'number') {
+        return track.animation.duration;
+      }
+    } catch(e) {}
+    return window.__animDuration || 0;
+  });
+  const canvasWidth = await page.evaluate(() => window.__canvasWidth || 1920);
+  const canvasHeight = await page.evaluate(() => window.__canvasHeight || 1080);
+
+  const animDuration = browserAnimDuration > 0
+    ? browserAnimDuration
+    : (args.animDuration > 0 ? args.animDuration : 1);
+
+  const FPS = 30;
+  const frameInterval = 1000 / FPS;
+  const framesDir = path.join(tempDir, 'frames');
+  fs.mkdirSync(framesDir, { recursive: true });
+
   let targetFrames = Math.ceil(animDuration * FPS);
-  if (targetFrames <= 0) targetFrames = 30 * 3; // fallback 3 seconds
+  if (targetFrames <= 0) targetFrames = 30; // fallback 1 second
 
   console.error(`Starting frame capture: exactly ${targetFrames} frames at 30fps for ${animDuration}s duration`);
 
