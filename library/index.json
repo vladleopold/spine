@@ -1715,7 +1715,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/200003-2026-07-27T09-50-33-835Z/preview.webm",
     "webmPreviewPath": "library/200003-2026-07-27T09-50-33-835Z/preview.webm",
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T21:37:05.170Z",
+    "webmGeneratedAt": "2026-07-28T21:56:54.793Z",
     "previewWidth": 1920,
     "previewHeight": 1784,
     "skeletonWidth": 2222,
@@ -2703,7 +2703,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/s300019-2026-07-27T09-47-48-083Z/preview.webm",
     "webmPreviewPath": "library/s300019-2026-07-27T09-47-48-083Z/preview.webm",
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T21:56:51.685Z",
+    "webmGeneratedAt": "2026-07-28T21:38:54.551Z",
     "previewWidth": 1920,
     "previewHeight": 1848,
     "skeletonWidth": 2229.4,
@@ -8938,7 +8938,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/hero_rosamia_1-2026-07-23T20-03-38-799Z/appear_01-preview.webp?v=2026-07-23T20:03:38.799Z",
     "thumbnailPosterPath": "library/hero_rosamia_1-2026-07-23T20-03-38-799Z/appear_01-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9157,7 +9157,9 @@
         "transactionData": "0xbbf2a4318445ad4d7740d99a5f59bd419a0c71fdae9cea527c7217911f19fb6d",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
+    "webmGeneratedAt": "2026-07-28T21:56:50.249Z"
   },
   {
     "id": "hero_tenchushizuru-2026-07-23T19-55-32-235Z",
