@@ -1225,7 +1225,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/s200005-2026-07-27T09-53-48-947Z/preview.webm",
     "webmPreviewPath": "library/s200005-2026-07-27T09-53-48-947Z/preview.webm",
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T21:45:15.749Z",
+    "webmGeneratedAt": "2026-07-28T22:07:33.752Z",
     "previewWidth": 1920,
     "previewHeight": 1792,
     "skeletonWidth": 2226,
@@ -5405,7 +5405,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/s200004-2026-07-27T09-41-04-484Z/preview.webm",
     "webmPreviewPath": "library/s200004-2026-07-27T09-41-04-484Z/preview.webm",
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T22:07:38.818Z",
+    "webmGeneratedAt": "2026-07-28T21:38:30.260Z",
     "previewWidth": 1920,
     "previewHeight": 1782,
     "skeletonWidth": 2224,
@@ -5650,7 +5650,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/s200002-2026-07-27T09-40-50-612Z/preview.webm",
     "webmPreviewPath": "library/s200002-2026-07-27T09-40-50-612Z/preview.webm",
     "webmAnimDuration": 0,
-    "webmGeneratedAt": "2026-07-28T21:51:33.966Z",
+    "webmGeneratedAt": "2026-07-28T22:07:37.593Z",
     "previewWidth": 1920,
     "previewHeight": 1786,
     "skeletonWidth": 2226,
@@ -6878,7 +6878,7 @@
     "webmPreview": "https://vladleopold.github.io/spine/assets/library/n10009-2026-07-27T09-33-20-407Z/preview.webm",
     "webmPreviewPath": "library/n10009-2026-07-27T09-33-20-407Z/preview.webm",
     "webmAnimDuration": 1.3333,
-    "webmGeneratedAt": "2026-07-28T22:07:42.290Z",
+    "webmGeneratedAt": "2026-07-28T22:05:21.973Z",
     "previewWidth": 574,
     "previewHeight": 646,
     "skeletonWidth": 448.62,
@@ -7408,7 +7408,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/caiwenjicg01-2026-07-26T09-25-02-675Z/ty_cc-preview.webp?v=2026-07-26T09:25:02.675Z",
     "thumbnailPosterPath": "library/caiwenjicg01-2026-07-26T09-25-02-675Z/ty_cc-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -7604,15 +7604,9 @@
       }
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library/caiwenjicg01-2026-07-26T09-25-02-675Z/preview.webm",
-    "webmPreviewPath": "library/caiwenjicg01-2026-07-26T09-25-02-675Z/preview.webm",
-    "webmChunksJson": "https://spine-link.vercel.app/assets/library/caiwenjicg01-2026-07-26T09-25-02-675Z/preview_chunks.json",
-    "webmChunks": [
-      "https://spine-link.vercel.app/assets/library/caiwenjicg01-2026-07-26T09-25-02-675Z/preview_chunk_0.webm"
-    ],
-    "webmChunkCount": 1,
-    "webmIsChunked": false,
     "webmAnimDuration": 2,
-    "webmGeneratedAt": "2026-07-28T13:22:10.635Z"
+    "webmGeneratedAt": "2026-07-28T22:07:42.260Z",
+    "webmError": "Player creation failed: Error: Please specify the URL of the skeleton JSON or .skel file."
   },
   {
     "id": "1036_1-2026-07-24T21-06-04-535Z",
@@ -9163,7 +9157,7 @@
       }
     },
     "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
-    "webmGeneratedAt": "2026-07-28T22:07:31.388Z"
+    "webmGeneratedAt": "2026-07-28T22:05:03.509Z"
   },
   {
     "id": "hero_tenchushizuru-2026-07-23T19-55-32-235Z",
@@ -13046,7 +13040,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp?v=2026-07-03T04:55:32.652Z",
     "thumbnailPosterPath": "library/bottle-2026-07-03T04-55-32-652Z/wave_idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "error",
+    "webmStatus": "ready",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -13257,9 +13251,15 @@
       }
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/preview.webm",
+    "webmPreviewPath": "library/bottle-2026-07-03T04-55-32-652Z/preview.webm",
+    "webmChunksJson": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/preview_chunks.json",
+    "webmChunks": [
+      "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/preview_chunk_0.webm"
+    ],
+    "webmChunkCount": 1,
+    "webmIsChunked": false,
     "webmAnimDuration": 0.6667,
-    "webmGeneratedAt": "2026-07-28T22:07:35.977Z",
-    "webmError": "Player creation failed: Error: Please specify the URL of the skeleton JSON or .skel file."
+    "webmGeneratedAt": "2026-07-28T13:28:52.751Z"
   },
   {
     "id": "skeleton-2026-07-02T13-52-18-678Z",
