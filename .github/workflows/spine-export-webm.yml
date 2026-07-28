@@ -190,12 +190,22 @@ jobs:
               return Buffer.from(blob.content, 'base64').toString('utf8');
             }
 
-            // 3. Retry loop for updating index and committing tree
-            const MAX_RETRIES = 15;
+            // 3. Retry loop for updating index and committing tree (atomic via Git Data API)
+            // KEY: No force:true on updateRef - this is a normal fast-forward push.
+            // If another parallel job pushed first, we get a 409/422 "not a fast forward" error,
+            // catch it, wait a random backoff, then re-read the latest tree and retry.
+            // This serializes 160 parallel matrix jobs without data loss.
+            const MAX_RETRIES = 30;
             for (let i = 1; i <= MAX_RETRIES; i++) {
               try {
+                // Always re-read the latest tree on every attempt to get fresh HEAD
+                const { data: refData } = await github.rest.git.getRef({
+                  owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
+                });
+                const latestSha = refData.object.sha;
+
                 const { data: oldTree } = await github.rest.git.getTree({
-                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: branch, recursive: '1',
+                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: latestSha, recursive: '1',
                 });
                 const indexEntry = oldTree.tree.find(t => t.path === indexPath);
                 if (!indexEntry) {
@@ -243,31 +253,34 @@ jobs:
 
                 // Create a single tree and commit with everything
                 const { data: newTree } = await github.rest.git.createTree({
-                  owner: context.repo.owner, repo: context.repo.repo, base_tree: oldTree.sha, tree: treeEntries,
-                });
-
-                const { data: refData } = await github.rest.git.getRef({
-                  owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
+                  owner: context.repo.owner, repo: context.repo.repo, base_tree: latestSha, tree: treeEntries,
                 });
 
                 const { data: newCommit } = await github.rest.git.createCommit({
-                  owner: context.repo.owner, repo: context.repo.repo, message: `Add media & update index for ${uploadId}`,
-                  tree: newTree.sha, parents: [refData.object.sha],
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  message: `Add media & update index for ${uploadId}`,
+                  tree: newTree.sha, parents: [latestSha],
                 });
 
+                // NO force:true here — this is a fast-forward push only.
+                // If another job won the race, this throws 409/422 and we retry.
                 await github.rest.git.updateRef({
                   owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
-                  sha: newCommit.sha, force: true, // Retry on conflict
+                  sha: newCommit.sha, force: false,
                 });
                 
                 console.log(`Successfully updated media and index for ${uploadId} on try ${i}`);
                 break; // Success!
               } catch (error) {
-                if (error.status === 409 || error.status === 422 || (error.message && error.message.includes('not a fast forward'))) {
-                  console.log(`Conflict updating repository (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
+                const isConflict = error.status === 409 || error.status === 422 ||
+                  (error.message && (error.message.includes('not a fast forward') || error.message.includes('Update is not a fast forward')));
+                if (isConflict) {
+                  console.log(`Conflict on try ${i}/${MAX_RETRIES}, backing off and retrying...`);
                   if (i === MAX_RETRIES) throw error;
-                  const waitTime = Math.floor(Math.random() * 5000) + 2000;
-                  await new Promise(resolve => setTimeout(resolve, waitTime));
+                  // Exponential backoff with jitter: base 1s * 2^attempt + 0-3s random jitter
+                  const expDelay = Math.min(1000 * Math.pow(1.5, i), 30000);
+                  const jitter = Math.floor(Math.random() * 3000);
+                  await new Promise(resolve => setTimeout(resolve, expDelay + jitter));
                 } else {
                   throw error;
                 }
