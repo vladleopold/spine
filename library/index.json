@@ -10412,7 +10412,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/hero_gar_aeon1-2026-07-23T19-27-06-029Z/appear_01-preview.webp?v=2026-07-23T19:27:06.029Z",
     "thumbnailPosterPath": "library/hero_gar_aeon1-2026-07-23T19-27-06-029Z/appear_01-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "error",
+    "webmStatus": "ready",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -10631,9 +10631,7 @@
         "transactionData": "0xbdfb23df3b49bf1a971b0d31534d62f4c3b57d5372da9f92cdaf11b085b79381",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    },
-    "webmError": "Player creation failed: Error: Could not load skeleton data.\nBone name must not be null.",
-    "webmGeneratedAt": "2026-07-28T21:58:38.332Z"
+    }
   },
   {
     "id": "hero_gar_aeon1-2026-07-23T19-21-48-496Z",
@@ -14084,7 +14082,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/8000021-2026-07-02T04-43-24-403Z/animation1-preview.webp?v=2026-07-02T04:43:24.403Z",
     "thumbnailPosterPath": "library/8000021-2026-07-02T04-43-24-403Z/animation1-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -14293,7 +14291,9 @@
         "transactionData": "0x6d823ba7fefcb0d9baf760fc6173f105ca525a91bd0944ba4e7fe8e8a46962ca",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nBone name must not be null.",
+    "webmGeneratedAt": "2026-07-28T21:58:40.459Z"
   },
   {
     "id": "scissor-2026-06-13T19-32-22-883Z",
