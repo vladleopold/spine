@@ -286,7 +286,7 @@ const tempDir = path.join('/tmp', `spine-export-${Date.now()}`);
 fs.mkdirSync(tempDir, { recursive: true });
 
 const browser = await chromium.launch({
-  headless: true,
+  headless: true, channel: 'chrome',
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',

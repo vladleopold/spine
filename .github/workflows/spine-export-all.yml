@@ -125,7 +125,8 @@ jobs:
       - name: Export WebM preview
         id: export
         run: |
-          node scripts/spine-export-webm.mjs \
+          set +e
+          timeout 300 node scripts/spine-export-webm.mjs \
             --upload-id="${{ matrix.uploadId }}" \
             --animation="${{ matrix.animation }}" \
             --origin="https://spine-link.vercel.app" \
@@ -135,6 +136,28 @@ jobs:
             --repo-path="${{ github.workspace }}" \
             --anim-duration="${{ steps.duration.outputs.anim_duration }}" \
             --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
+          
+          EXIT_CODE=$?
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "::warning::Export failed or timed out after 5 minutes (exit code $EXIT_CODE). Retrying once..."
+            timeout 300 node scripts/spine-export-webm.mjs \
+              --upload-id="${{ matrix.uploadId }}" \
+              --animation="${{ matrix.animation }}" \
+              --origin="https://spine-link.vercel.app" \
+              --owner="vladleopold" \
+              --repo="spine" \
+              --branch="main" \
+              --repo-path="${{ github.workspace }}" \
+              --anim-duration="${{ steps.duration.outputs.anim_duration }}" \
+              --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
+              
+            RETRY_CODE=$?
+            if [ $RETRY_CODE -ne 0 ]; then
+              echo "::error::Retry also failed."
+              exit $RETRY_CODE
+            fi
+          fi
+          set -e
 
       - name: Split into chunks if needed
         id: chunks
