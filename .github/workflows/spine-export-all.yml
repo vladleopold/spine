@@ -1,0 +1,73 @@
+name: Spine Export All (Global Trigger)
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Export mode: all (re-export all animations) or missing (only pending)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - missing
+  repository_dispatch:
+    types: [spine-export-all]
+
+jobs:
+  batch-export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright with Chromium
+        run: |
+          echo "=== INSTALLING PLAYWRIGHT ==="
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium
+          echo "=== PLAYWRIGHT INSTALLED ==="
+
+      - name: Install system dependencies & ffmpeg
+        run: |
+          echo "=== INSTALLING SYSTEM DEPS & FFMPEG ==="
+          sudo apt-get update
+          sudo apt-get install -y \
+            ffmpeg \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
+            libwayland-egl1
+          echo "=== SYSTEM DEPS INSTALLED ==="
+
+      - name: Run Global WebM Batch Export
+        run: |
+          echo "=== STARTING GLOBAL BATCH EXPORT ==="
+          mode="${{ inputs.mode || 'all' }}"
+          echo "Mode: $mode"
+          node scripts/batch-export-all.mjs --mode="$mode"
+          echo "=== GLOBAL BATCH EXPORT COMPLETED ==="
+
+      - name: Commit and push generated WebM files
+        run: |
+          echo "=== COMMITTING AND PUSHING GENERATED WEBM FILES ==="
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add library/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-generated WebM previews for all animations (Global Trigger)"
+            git push origin main
+          fi
+          echo "=== COMPLETED PUSH ==="
