@@ -207,18 +207,28 @@ jobs:
               try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
             }
 
+            // Use Git Data API (blob) to read and write index.json because it exceeds 1MB limit
+            async function getBlobContent(sha) {
+              const { data: blob } = await github.rest.git.getBlob({
+                owner: context.repo.owner, repo: context.repo.repo, file_sha: sha,
+              });
+              return Buffer.from(blob.content, 'base64').toString('utf8');
+            }
+
             // Retry logic to handle Git race conditions
             const MAX_RETRIES = 15;
             for (let i = 1; i <= MAX_RETRIES; i++) {
               try {
-                const { data: indexData } = await github.rest.repos.getContent({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  path: indexPath,
-                  ref: branch,
+                const { data: tree } = await github.rest.git.getTree({
+                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: branch, recursive: '1',
                 });
+                const indexEntry = tree.tree.find(t => t.path === indexPath);
+                if (!indexEntry) {
+                  console.log('index.json not found in tree');
+                  return;
+                }
 
-                const content = Buffer.from(indexData.content, 'base64').toString('utf8');
+                const content = await getBlobContent(indexEntry.sha);
                 const entries = JSON.parse(content);
                 const entryIndex = entries.findIndex(e => e.id === uploadId);
 
@@ -247,21 +257,38 @@ jobs:
                 };
 
                 const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
+                const { data: newBlob } = await github.rest.git.createBlob({
+                  owner: context.repo.owner, repo: context.repo.repo, content: newContent, encoding: 'base64',
+                });
 
-                await github.rest.repos.createOrUpdateFileContents({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  path: indexPath,
-                  message: `Update media preview URLs for ${uploadId}`,
-                  content: newContent,
-                  sha: indexData.sha,
-                  branch,
+                const { data: oldTree } = await github.rest.git.getTree({
+                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: branch, recursive: '1',
+                });
+
+                const { data: newTree } = await github.rest.git.createTree({
+                  owner: context.repo.owner, repo: context.repo.repo, base_tree: oldTree.sha,
+                  tree: [{ path: indexPath, mode: '100644', type: 'blob', sha: newBlob.sha }],
+                });
+
+                const { data: refData } = await github.rest.git.getRef({
+                  owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
+                });
+
+                const { data: newCommit } = await github.rest.git.createCommit({
+                  owner: context.repo.owner, repo: context.repo.repo, message: `Update media preview URLs for ${uploadId}`,
+                  tree: newTree.sha, parents: [refData.object.sha],
+                });
+
+                await github.rest.git.updateRef({
+                  owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
+                  sha: newCommit.sha, force: true, // we use force because we are retrying on conflicts
                 });
                 
                 console.log(`Successfully updated index for ${uploadId} on try ${i}`);
                 break; // Success!
               } catch (error) {
-                if (error.status === 409 || error.status === 422) {
+                // If it's a conflict updating the ref
+                if (error.status === 409 || error.status === 422 || error.message.includes('Update is not a fast forward')) {
                   console.log(`Conflict updating index (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
                   if (i === MAX_RETRIES) throw error;
                   const waitTime = Math.floor(Math.random() * 4000) + 2000;
