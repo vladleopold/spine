@@ -1,122 +1,177 @@
-#!/usr/bin/env node
-/**
- * fix-skel-null-strings.mjs
- *
- * Patches Spine 3.8 binary .skel files that have a null "images path" string.
- * The Spine 3.8 binary format encodes strings as varint(charCount+1):
- *   0x00 → null  (INVALID - causes "String in string table must not be null")
- *   0x01 → ""    (empty string - valid)
- *
- * Header layout (Spine 3.8, big-endian floats):
- *   [hash string] [version string] [x:f32] [y:f32] [w:f32] [h:f32] [imagesPath string] [audioPath string]
- *
- * This script replaces 0x00 → 0x01 for imagesPath and audioPath in the header.
- */
+import fs from 'fs';
+import path from 'path';
 
-import fs from 'node:fs';
-import path from 'node:path';
-
-const LIBRARY_DIR = process.argv[2] || 'library';
-const DRY_RUN = process.argv.includes('--dry-run');
-
-let fixed = 0, skipped = 0, errors = 0;
-
-function readVarint(buf, pos) {
-  let b = buf[pos++]; let result = b & 0x7F;
-  if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 7;
-    if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 14;
-      if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 21;
-        if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 28; } } } }
-  return { value: result, pos };
+class SpineBinaryCursor {
+  constructor(bytes) {
+    this.bytes = bytes;
+    this.index = 0;
+  }
+  readByte() { return this.bytes[this.index++] ?? 0; }
+  skip(length) { this.index += length; }
+  readInt(optimizePositive) {
+    let byte = this.readByte();
+    let result = byte & 0x7f;
+    if ((byte & 0x80) !== 0) {
+      byte = this.readByte(); result |= (byte & 0x7f) << 7;
+      if ((byte & 0x80) !== 0) {
+        byte = this.readByte(); result |= (byte & 0x7f) << 14;
+        if ((byte & 0x80) !== 0) {
+          byte = this.readByte(); result |= (byte & 0x7f) << 21;
+          if ((byte & 0x80) !== 0) {
+            byte = this.readByte(); result |= (byte & 0x7f) << 28;
+          }
+        }
+      }
+    }
+    return optimizePositive ? result : (result >>> 1) ^ -(result & 1);
+  }
+  readStringMeta() {
+    const start = this.index;
+    const byteCount = this.readInt(true);
+    const contentStart = this.index;
+    if (byteCount === 0) return { start, end: this.index, value: null };
+    if (byteCount === 1) return { start, end: this.index, value: "" };
+    this.skip(byteCount - 1);
+    return {
+      start, end: this.index,
+      value: new TextDecoder().decode(this.bytes.slice(contentStart, this.index)),
+    };
+  }
 }
 
-function skipString(buf, pos) {
-  const r = readVarint(buf, pos);
-  const lenByte = r.value;
-  pos = r.pos;
-  const charCount = lenByte - 1;
-  if (charCount <= 0) return pos; // null or empty - no bytes follow
-  return pos + charCount;
+function encodeSpineBinaryString(value) {
+  const textBytes = new TextEncoder().encode(value);
+  const byteCount = textBytes.length + 1;
+  const lengthBytes = [];
+  let remaining = byteCount;
+  while (true) {
+    let byte = remaining & 0x7f;
+    remaining >>>= 7;
+    if (remaining) byte |= 0x80;
+    lengthBytes.push(byte);
+    if (!remaining) break;
+  }
+  return new Uint8Array([...lengthBytes, ...textBytes]);
 }
 
-function getStringLenBytePos(buf, pos) {
-  // Returns the position of the varint length byte for the string
-  return pos;
+function replaceByteRanges(bytes, replacements) {
+  if (!replacements.length) return bytes;
+  const sorted = [...replacements].sort((a, b) => a.start - b.start);
+  const nextLength = sorted.reduce((length, replacement) => length - (replacement.end - replacement.start) + replacement.bytes.length, bytes.length);
+  const nextBytes = new Uint8Array(nextLength);
+  let sourceIndex = 0, targetIndex = 0;
+  for (const replacement of sorted) {
+    nextBytes.set(bytes.slice(sourceIndex, replacement.start), targetIndex);
+    targetIndex += replacement.start - sourceIndex;
+    nextBytes.set(replacement.bytes, targetIndex);
+    targetIndex += replacement.bytes.length;
+    sourceIndex = replacement.end;
+  }
+  nextBytes.set(bytes.slice(sourceIndex), targetIndex);
+  return nextBytes;
 }
 
-function fixSkelFile(filePath) {
+function sanitizedSkelBuffer(buffer, version = "") {
+  const bytes = new Uint8Array(buffer);
+  let isPatched = false;
+  
+  if (/^3\./.test(version)) {
+    const patchCursor = new SpineBinaryCursor(new Uint8Array(bytes));
+    try {
+      patchCursor.readStringMeta(); 
+      patchCursor.readStringMeta(); 
+      patchCursor.skip(16);         
+      const imagesPathPos = patchCursor.index;
+      if (bytes[imagesPathPos] === 0x00) { bytes[imagesPathPos] = 0x01; isPatched = true; }
+      patchCursor.readStringMeta(); 
+      const audioPathPos = patchCursor.index;
+      if (bytes[audioPathPos] === 0x00) { bytes[audioPathPos] = 0x01; isPatched = true; }
+    } catch {}
+  }
+
+  const cursor = new SpineBinaryCursor(bytes);
+  const replacements = [];
   try {
-    const buf = fs.readFileSync(filePath);
-
-    // Read version string to confirm it's Spine 3.x
-    let pos = 0;
-    // Skip hash string
-    pos = skipString(buf, pos);
-    // Read version
-    const verR = readVarint(buf, pos);
-    const verLen = verR.value - 1;
-    const verPos = verR.pos;
-    if (verLen < 0) { skipped++; return; }
-    const version = buf.toString('utf8', verPos, verPos + verLen);
-    pos = verPos + verLen;
-
-    if (!version.startsWith('3.')) {
-      // Not Spine 3.x - skip (4.x has a different header layout)
-      skipped++;
-      return;
-    }
-
-    // Skip x, y, w, h floats (4 * 4 = 16 bytes)
-    pos += 16;
-
-    // Now we're at imagesPath string
-    const imagesPathPos = pos;
-    const imagesPathByte = buf[imagesPathPos];
-
-    // audioPath is right after imagesPath
-    const afterImagesPos = skipString(buf, imagesPathPos);
-    const audioPathPos = afterImagesPos;
-    const audioPathByte = buf[audioPathPos];
-
-    const needsFix = imagesPathByte === 0x00 || audioPathByte === 0x00;
-
-    if (!needsFix) {
-      skipped++;
-      return;
-    }
-
-    console.log(`[FIX] ${filePath} (v${version})`);
-    console.log(`  imagesPath byte at ${imagesPathPos}: 0x${imagesPathByte.toString(16).padStart(2,'0')} ${imagesPathByte === 0x00 ? '→ 0x01 (null→empty)' : '(ok)'}`);
-    console.log(`  audioPath byte at ${audioPathPos}: 0x${audioPathByte.toString(16).padStart(2,'0')} ${audioPathByte === 0x00 ? '→ 0x01 (null→empty)' : '(ok)'}`);
-
-    if (!DRY_RUN) {
-      const patched = Buffer.from(buf);
-      if (imagesPathByte === 0x00) patched[imagesPathPos] = 0x01;
-      if (audioPathByte === 0x00) patched[audioPathPos] = 0x01;
-      fs.writeFileSync(filePath, patched);
-      console.log(`  ✓ Patched.`);
+    if (/^3\./.test(version)) {
+      cursor.readStringMeta(); cursor.readStringMeta();
     } else {
-      console.log(`  (dry-run, not written)`);
+      cursor.skip(8); cursor.readStringMeta(); cursor.skip(4);
     }
-    fixed++;
-  } catch (e) {
-    console.error(`[ERROR] ${filePath}: ${e.message}`);
-    errors++;
-  }
+    cursor.skip(16);
+    const nonessential = cursor.readByte() !== 0;
+    if (nonessential) {
+      cursor.skip(4); cursor.readStringMeta(); cursor.readStringMeta();
+    }
+    const stringCount = cursor.readInt(true);
+    for (let index = 0; index < stringCount; index += 1) cursor.readStringMeta();
+    const boneCount = cursor.readInt(true);
+    for (let index = 0; index < boneCount; index += 1) {
+      const name = cursor.readStringMeta();
+      if (!name.value) {
+        replacements.push({
+          start: name.start, end: name.end,
+          bytes: encodeSpineBinaryString(`__placeholder_bone_${index}`),
+        });
+        isPatched = true;
+      }
+      if (index > 0) cursor.readInt(true);
+      cursor.skip(32); cursor.readInt(true); cursor.skip(1);
+      if (nonessential) cursor.skip(4);
+    }
+  } catch {}
+  
+  return { buffer: Buffer.from(replaceByteRanges(bytes, replacements)), isPatched };
 }
 
-function walkLibrary(dir) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
+function spineBinaryVersionFromBuffer(buffer) {
+  const bytes = new Uint8Array(buffer);
+  const legacyCursor = new SpineBinaryCursor(bytes);
+  try {
+    legacyCursor.readStringMeta();
+    const version = legacyCursor.readStringMeta().value || "";
+    if (/^\d+\.\d+(?:\.|$)/.test(version)) return version;
+  } catch {}
+  const cursor = new SpineBinaryCursor(bytes);
+  try {
+    cursor.skip(8);
+    return cursor.readStringMeta().value || "";
+  } catch { return ""; }
+}
+
+const libDir = process.argv[2];
+const isDryRun = process.argv.includes('--dry-run');
+
+if (!libDir || !fs.existsSync(libDir)) {
+  console.error("Usage: node fix-skel-null-strings.mjs <directory> [--dry-run]");
+  process.exit(1);
+}
+
+let fixed = 0; let skipped = 0; let errors = 0;
+console.log(`Scanning ${libDir}... ${isDryRun ? '(DRY RUN)' : ''}`);
+
+function scan(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      walkLibrary(fullPath);
-    } else if (entry.name.endsWith('.skel')) {
-      fixSkelFile(fullPath);
+    if (entry.isDirectory()) scan(fullPath);
+    else if (entry.name.toLowerCase().endsWith('.skel')) {
+      try {
+        const buf = fs.readFileSync(fullPath);
+        const version = spineBinaryVersionFromBuffer(buf);
+        const { buffer: newBuf, isPatched } = sanitizedSkelBuffer(buf, version);
+        
+        if (isPatched) {
+          console.log(`[FIX] ${fullPath} (v${version})`);
+          if (!isDryRun) fs.writeFileSync(fullPath, newBuf);
+          fixed++;
+        } else {
+          skipped++;
+        }
+      } catch (e) {
+        console.error(`[ERROR] ${fullPath}: ${e.message}`);
+        errors++;
+      }
     }
   }
 }
-
-console.log(`Scanning ${LIBRARY_DIR}...${DRY_RUN ? ' (DRY RUN)' : ''}`);
-walkLibrary(LIBRARY_DIR);
+scan(libDir);
 console.log(`\nDone. Fixed: ${fixed}, Skipped: ${skipped}, Errors: ${errors}`);
