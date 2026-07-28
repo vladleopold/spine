@@ -35654,7 +35654,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/aierwen_2-2026-05-18T13-56-05-204Z/attack-preview.webp?v=2026-05-18T13:57:03.040Z",
     "thumbnailPosterPath": "library/aierwen_2-2026-05-18T13-56-05-204Z/attack-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -35871,7 +35871,9 @@
         "transactionData": "0xd457125c4f8b4c69c598202962bec1844008fc53f03ab2c2aba28917734abc5a",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
+    "webmGeneratedAt": "2026-07-28T22:25:48.687Z"
   },
   {
     "id": "aerfuleiduo_2-2026-05-18T13-54-48-240Z",
