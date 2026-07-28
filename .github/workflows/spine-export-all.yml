@@ -1,0 +1,184 @@
+name: Spine Export All (Matrix)
+
+on:
+  workflow_dispatch:
+    inputs:
+      filter_id:
+        description: 'Optional ID to filter (leave blank for all)'
+        required: false
+        default: ''
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          if [ -n "${{ github.event.inputs.filter_id }}" ]; then
+            echo "matrix=[\"${{ github.event.inputs.filter_id }}\"]" >> $GITHUB_OUTPUT
+          else
+            MATRIX_JSON=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('library/index.json', 'utf8')); console.log(JSON.stringify(data.map(d => d.id).filter(Boolean)));")
+            echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+          fi
+
+  export:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        uploadId: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright with Chromium
+        run: |
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium
+
+      - name: Run Export Script
+        run: |
+          node scripts/spine-export-webm.mjs \
+            --id="${{ matrix.uploadId }}" \
+            --repo-path="${{ github.workspace }}" \
+            --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload media to GitHub
+        id: upload
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const uploadId = '${{ matrix.uploadId }}';
+            const basePath = 'library';
+            const branch = 'main';
+            const origin = 'https://world.spine.chat';
+            const workspace = '${{ github.workspace }}';
+            
+            const filesToUpload = [
+              { source: `${workspace}/${uploadId}-preview.webm`, target: `${basePath}/${uploadId}/preview.webm`, key: 'webmPreview' },
+              { source: `${workspace}/${uploadId}-preview-medium.webm`, target: `${basePath}/${uploadId}/preview-medium.webm`, key: 'webmPreviewMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webm`, target: `${basePath}/${uploadId}/preview-low.webm`, key: 'webmPreviewLow' },
+              { source: `${workspace}/${uploadId}-preview.webp`, target: `${basePath}/${uploadId}/preview.webp`, key: 'webpPoster' },
+              { source: `${workspace}/${uploadId}-preview-medium.webp`, target: `${basePath}/${uploadId}/preview-medium.webp`, key: 'webpPosterMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webp`, target: `${basePath}/${uploadId}/preview-low.webp`, key: 'webpPosterLow' }
+            ];
+
+            async function getSha(path) {
+              try {
+                const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path, ref: branch });
+                return data.sha;
+              } catch { return null; }
+            }
+
+            const uploadedUrls = {};
+            for (const file of filesToUpload) {
+              if (!fs.existsSync(file.source)) continue;
+              const content = fs.readFileSync(file.source, 'base64');
+              const existingSha = await getSha(file.target);
+              
+              await github.rest.repos.createOrUpdateFileContents({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: file.target,
+                message: `Add ${file.key} media for ${uploadId}`,
+                content,
+                branch,
+                ...(existingSha ? { sha: existingSha } : {}),
+              });
+              uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
+            }
+            core.setOutput('uploaded_urls', JSON.stringify(uploadedUrls));
+
+      - name: Update index entry with Retry Logic
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const uploadId = '${{ matrix.uploadId }}';
+            const uploadedUrls = JSON.parse('${{ steps.upload.outputs.uploaded_urls }}' || '{}');
+            const basePath = 'library';
+            const indexPath = `${basePath}/index.json`;
+            const branch = 'main';
+
+            const fs = require('fs');
+            const metaPath = `${{ github.workspace }}/${uploadId}-preview.webm.json`;
+            let videoMeta = {};
+            if (fs.existsSync(metaPath)) {
+              try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
+            }
+
+            // Retry logic to handle Git race conditions
+            const MAX_RETRIES = 15;
+            for (let i = 1; i <= MAX_RETRIES; i++) {
+              try {
+                const { data: indexData } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: indexPath,
+                  ref: branch,
+                });
+
+                const content = Buffer.from(indexData.content, 'base64').toString('utf8');
+                const entries = JSON.parse(content);
+                const entryIndex = entries.findIndex(e => e.id === uploadId);
+
+                if (entryIndex === -1) {
+                  console.log(`Entry ${uploadId} not found in index, skipping update`);
+                  return;
+                }
+
+                entries[entryIndex] = {
+                  ...entries[entryIndex],
+                  ...uploadedUrls,
+                  webmPreviewPath: `${basePath}/${uploadId}/preview.webm`,
+                  webmStatus: 'ready',
+                  webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                };
+
+                const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
+
+                await github.rest.repos.createOrUpdateFileContents({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: indexPath,
+                  message: `Update media preview URLs for ${uploadId}`,
+                  content: newContent,
+                  sha: indexData.sha,
+                  branch,
+                });
+                
+                console.log(`Successfully updated index for ${uploadId} on try ${i}`);
+                break; // Success!
+              } catch (error) {
+                if (error.status === 409 || error.status === 422) {
+                  console.log(`Conflict updating index (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
+                  if (i === MAX_RETRIES) throw error;
+                  // Wait random time between 2 and 6 seconds to prevent thundering herd
+                  const waitTime = Math.floor(Math.random() * 4000) + 2000;
+                  await new Promise(resolve => setTimeout(resolve, waitTime));
+                } else {
+                  throw error;
+                }
+              }
+            }
