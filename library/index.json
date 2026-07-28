@@ -36901,7 +36901,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect-preview.webp?v=2026-05-14T08:27:10.956Z",
     "thumbnailPosterPath": "library/speedline_effect-2026-05-14T08-27-10-956Z/speedline_effect-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -37118,7 +37118,9 @@
         "transactionData": "0x10864fe2d5ceb791910d69de156396b1d4bc28fe18c0de6e79f42f431891510d",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Please specify the URL of the skeleton JSON file.",
+    "webmGeneratedAt": "2026-07-28T22:26:08.736Z"
   },
   {
     "id": "fool_demo_fx-2026-05-14T08-20-31-261Z",
