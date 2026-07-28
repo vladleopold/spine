@@ -1,14 +1,10 @@
 name: Spine Export All (Global Matrix Trigger)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       mode:
-        description:
-  push:
-    branches: [main] 'Export mode: all (re-export all animations) or missing (only pending)'
+        description: 'Export mode: all (re-export all animations) or missing (only pending)'
         required: true
         default: 'all'
         type: choice
@@ -20,9 +16,7 @@ on:
 
 jobs:
   generate-matrix:
-    runs-on:
-  push:
-    branches: [main] ubuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -44,9 +38,7 @@ jobs:
             const matrix = filtered.map(e => ({
               uploadId: e.id,
               title: e.title || e.id,
-              animation:
-  push:
-    branches: [main] e.defaultAnimation || (Array.isArray(e.animations) ? e.animations[0] : '')
+              animation: e.defaultAnimation || (Array.isArray(e.animations) ? e.animations[0] : '')
             })).filter(e => e.animation);
             console.log('Total jobs in matrix:', matrix.length);
             const jsonString = JSON.stringify(matrix);
@@ -55,9 +47,7 @@ jobs:
 
   export-job:
     needs: generate-matrix
-    runs-on:
-  push:
-    branches: [main] ubuntu-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     strategy:
@@ -73,9 +63,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version:
-  push:
-    branches: [main] 22
+          node-version: 22
 
       - name: Install Playwright with Chromium
         run: |
@@ -229,9 +217,7 @@ jobs:
             const chunksJson = {
               uploadId,
               animation,
-              animationDuration:
-  push:
-    branches: [main] animDuration,
+              animationDuration: animDuration,
               isChunked: chunkFiles.length > 1,
               chunkCount: chunkFiles.length,
               chunks: chunkMeta,
@@ -277,15 +263,11 @@ jobs:
                   ...entries[entryIndex],
                   webmPreview: previewUrl,
                   webmPreviewPath: `library/${uploadId}/preview.webm`,
-                  webmChunksJson:
-  push:
-    branches: [main] `${origin}/assets/${basePath}/${uploadId}/preview_chunks.json`,
+                  webmChunksJson: `${origin}/assets/${basePath}/${uploadId}/preview_chunks.json`,
                   webmChunks: chunkUrls,
                   webmChunkCount: chunkFiles.length,
                   webmIsChunked: chunkFiles.length > 1,
-                  webmAnimDuration:
-  push:
-    branches: [main] animDuration,
+                  webmAnimDuration: animDuration,
                   webmStatus: 'ready',
                   webmGeneratedAt: new Date().toISOString(),
                 };
