@@ -337,10 +337,15 @@ try {
   }
   const playerScriptContent = await playerScriptResponse.text();
 
-  // Inject Virtual Time polyfill to guarantee exact 30fps without speedups
-  await page.addInitScript(`
-    window.__freezeTime = true;
-    window.__virtualTime = 1000;
+  // Inject Virtual Time polyfill BEFORE spine-player loads.
+  // CRITICAL: page.evaluate() is used instead of page.addInitScript() because
+  // addInitScript only runs on FUTURE navigations. Since setContent() already
+  // loaded the page, addInitScript would NEVER execute, leaving the animation
+  // running on real wall-clock time (root cause of 3x speed / looping bug).
+  // Start UNFROZEN so SpinePlayer can load assets using real requestAnimationFrame.
+  await page.evaluate(() => {
+    window.__freezeTime = false;
+    window.__virtualTime = 0;
     const origDateNow = Date.now;
     const origPerfNow = performance.now.bind(performance);
     const origRaf = window.requestAnimationFrame;
@@ -374,7 +379,7 @@ try {
         try { item.cb(window.__virtualTime); } catch(e) {}
       }
     };
-  `);
+  });
 
   await page.addScriptTag({ content: playerScriptContent });
 
@@ -410,6 +415,40 @@ try {
 
   let targetFrames = Math.ceil(animDuration * FPS);
   if (targetFrames <= 0) targetFrames = 30; // fallback 1 second
+
+  // FREEZE time: switch from real time to virtual time for precise frame-by-frame capture.
+  // Capture current real performance.now() as the virtual time base (while __freezeTime is still false).
+  console.error(`Freezing time and resetting animation for precise capture...`);
+  await page.evaluate(() => {
+    window.__virtualTime = performance.now(); // real time, since __freezeTime is still false
+    window.__freezeTime = true;
+  });
+
+  // Wait for any last pending native requestAnimationFrame from the unfrozen phase to fire.
+  // Once it fires, the SpinePlayer's loop re-registers through our frozen override.
+  await new Promise(r => setTimeout(r, 200));
+
+  // Reset animation to frame 0 for a clean, single-cycle capture (no looping).
+  await page.evaluate((animName) => {
+    var p = window.__spinePlayer;
+    if (p && p.animationState) {
+      p.animationState.clearTracks();
+      p.animationState.setAnimation(0, animName, false); // loop=false: play exactly once
+      p.animationState.update(0);
+      p.animationState.apply(p.skeleton);
+      if (p.skeleton && p.skeleton.updateWorldTransform) {
+        if (typeof spine !== 'undefined' && spine.Physics && spine.Physics.update !== undefined) {
+          p.skeleton.updateWorldTransform(spine.Physics.update);
+        } else {
+          p.skeleton.updateWorldTransform();
+        }
+      }
+    }
+  }, targetAnimation);
+
+  // Render the initial state (frame 0) with a zero-time step
+  await page.evaluate(() => { if (window.__stepFrame) window.__stepFrame(0); });
+  await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 0)));
 
   console.error(`Starting frame capture: exactly ${targetFrames} frames at 30fps for ${animDuration}s duration`);
 
