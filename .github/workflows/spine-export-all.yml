@@ -1,18 +1,12 @@
-name: Spine Export All (Global Matrix Trigger)
+name: Spine Export All (Matrix)
 
 on:
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Export mode: all (re-export all animations) or missing (only pending)'
-        required: true
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - missing
-  repository_dispatch:
-    types: [spine-export-all]
+      filter_id:
+        description: 'Optional ID to filter (leave blank for all)'
+        required: false
+        default: ''
 
 jobs:
   generate-matrix:
@@ -22,40 +16,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Generate animation matrix
+      - name: Generate matrix
         id: set-matrix
         run: |
-          mode="${{ inputs.mode || github.event.client_payload.mode || 'all' }}"
-          echo "Generating matrix for mode: $mode"
-          node -e "
-            const fs = require('fs');
-            const entries = JSON.parse(fs.readFileSync('library/index.json', 'utf8'));
-            let filtered = entries;
-            if ('$mode' === 'missing') {
-              filtered = entries.filter(e => !e.webmPreview || e.webmStatus !== 'ready');
-            }
-            const matrix = filtered.map(e => ({
-              uploadId: e.id,
-              title: e.title || e.id,
-              animation: e.defaultAnimation || (Array.isArray(e.animations) ? e.animations[0] : '')
-            })).filter(e => e.animation);
-            console.log('Total jobs in matrix:', matrix.length);
-            const jsonString = JSON.stringify(matrix);
-            fs.writeFileSync(process.env.GITHUB_OUTPUT, 'matrix=' + jsonString + '\n', { flag: 'a' });
-          "
+          if [ -n "${{ github.event.inputs.filter_id }}" ]; then
+            echo "matrix=[\"${{ github.event.inputs.filter_id }}\"]" >> $GITHUB_OUTPUT
+          else
+            MATRIX_JSON=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('library/index.json', 'utf8')); console.log(JSON.stringify(data.map(d => d.id).filter(Boolean)));")
+            echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+          fi
 
-  export-job:
+  export:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     strategy:
       fail-fast: false
-      max-parallel: 4
       matrix:
-        include: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    name: Export ${{ matrix.title }} (${{ matrix.uploadId }})
+        uploadId: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,279 +50,135 @@ jobs:
           npm install playwright@1.59.1
           npx playwright install chromium
 
-      - name: Install system dependencies & ffmpeg
+      - name: Run Export Script
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            ffmpeg \
-            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
-            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
-            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
-            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
-            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
-            libwayland-egl1
-
-      - name: Compute animation duration from skeleton JSON
-        id: duration
-        run: |
-          uploadId="${{ matrix.uploadId }}"
-          animation="${{ matrix.animation }}"
-          uploadPath="library/${uploadId}"
-          setName=$(find "$uploadPath" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
-          skeletonPath=""
-          if [ -n "$setName" ]; then
-            for f in "${uploadPath}/${setName}"/*.json; do
-              if [ -f "$f" ]; then
-                skeletonPath="$f"
-                break
-              fi
-            done
-          fi
-          if [ -z "$skeletonPath" ] || [ ! -f "$skeletonPath" ]; then
-            echo "anim_duration=0" >> $GITHUB_OUTPUT
-          else
-            duration=$(node -e "
-              const fs = require('fs');
-              const animName = '$animation';
-              const data = JSON.parse(fs.readFileSync('$skeletonPath', 'utf8'));
-              const anim = data.animations && data.animations[animName];
-              if (!anim) { console.log(0); process.exit(0); }
-              let max = 0;
-              const traverse = (obj) => {
-                if (Array.isArray(obj)) {
-                  obj.forEach(item => { if (item && typeof item.time === 'number' && item.time > max) max = item.time; });
-                } else if (obj && typeof obj === 'object') {
-                  Object.values(obj).forEach(traverse);
-                }
-              };
-              traverse(anim);
-              console.log(max > 0 ? max.toFixed(4) : 0);
-            " 2>/dev/null || echo "0")
-            echo "anim_duration=${duration}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Export WebM preview
-        id: export
-        run: |
-          set +e
-          timeout 300 node scripts/spine-export-webm.mjs \
-            --upload-id="${{ matrix.uploadId }}" \
-            --animation="${{ matrix.animation }}" \
-            --origin="https://spine-link.vercel.app" \
-            --owner="vladleopold" \
-            --repo="spine" \
-            --branch="main" \
+          node scripts/spine-export-webm.mjs \
+            --id="${{ matrix.uploadId }}" \
             --repo-path="${{ github.workspace }}" \
-            --anim-duration="${{ steps.duration.outputs.anim_duration }}" \
             --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
-          
-          EXIT_CODE=$?
-          if [ $EXIT_CODE -ne 0 ]; then
-            echo "::warning::Export failed or timed out after 5 minutes (exit code $EXIT_CODE). Retrying once..."
-            timeout 300 node scripts/spine-export-webm.mjs \
-              --upload-id="${{ matrix.uploadId }}" \
-              --animation="${{ matrix.animation }}" \
-              --origin="https://spine-link.vercel.app" \
-              --owner="vladleopold" \
-              --repo="spine" \
-              --branch="main" \
-              --repo-path="${{ github.workspace }}" \
-              --anim-duration="${{ steps.duration.outputs.anim_duration }}" \
-              --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
-              
-            RETRY_CODE=$?
-            if [ $RETRY_CODE -ne 0 ]; then
-              echo "::error::Retry also failed."
-              exit $RETRY_CODE
-            fi
-          fi
-          set -e
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Split into chunks if needed
-        id: chunks
-        run: |
-          uploadId="${{ matrix.uploadId }}"
-          previewFile="${{ github.workspace }}/${uploadId}-preview.webm"
-          MAX_BYTES=45000000
-          CHUNK_DIR="${{ github.workspace }}/chunks"
-          mkdir -p "$CHUNK_DIR"
-          fileSize=$(stat -c%s "$previewFile")
-          if [ "$fileSize" -le "$MAX_BYTES" ]; then
-            cp "$previewFile" "$CHUNK_DIR/preview_chunk_0.webm"
-          else
-            animDuration="${{ steps.duration.outputs.anim_duration }}"
-            chunkDur=$(node -e "const d=$animDuration, s=$fileSize, m=$MAX_BYTES; console.log(Math.floor(d * m / s))")
-            if [ "$chunkDur" -lt 5 ]; then chunkDur=5; fi
-            ffmpeg -i "$previewFile" -c copy -f segment -segment_time "$chunkDur" -reset_timestamps 1 "$CHUNK_DIR/preview_chunk_%d.webm" -y
-          fi
-          echo "chunks_dir=$CHUNK_DIR" >> $GITHUB_OUTPUT
-
-      - name: Upload chunks & Update index
+      - name: Upload media to GitHub
+        id: upload
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
             const uploadId = '${{ matrix.uploadId }}';
             const basePath = 'library';
-            const origin = 'https://spine-link.vercel.app';
             const branch = 'main';
-            const chunksDir = '${{ steps.chunks.outputs.chunks_dir }}';
-            const animDuration = parseFloat('${{ steps.duration.outputs.anim_duration }}') || 0;
-            const animation = '${{ matrix.animation }}';
+            const origin = 'https://world.spine.chat';
+            const workspace = '${{ github.workspace }}';
+            
+            const filesToUpload = [
+              { source: `${workspace}/${uploadId}-preview.webm`, target: `${basePath}/${uploadId}/preview.webm`, key: 'webmPreview' },
+              { source: `${workspace}/${uploadId}-preview-medium.webm`, target: `${basePath}/${uploadId}/preview-medium.webm`, key: 'webmPreviewMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webm`, target: `${basePath}/${uploadId}/preview-low.webm`, key: 'webmPreviewLow' },
+              { source: `${workspace}/${uploadId}-preview.webp`, target: `${basePath}/${uploadId}/preview.webp`, key: 'webpPoster' },
+              { source: `${workspace}/${uploadId}-preview-medium.webp`, target: `${basePath}/${uploadId}/preview-medium.webp`, key: 'webpPosterMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webp`, target: `${basePath}/${uploadId}/preview-low.webp`, key: 'webpPosterLow' }
+            ];
 
-            async function getSha(filePath) {
+            async function getSha(path) {
               try {
-                const { data } = await github.rest.repos.getContent({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  path: filePath,
-                  ref: branch,
-                });
+                const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path, ref: branch });
                 return data.sha;
-              } catch {
-                return null;
-              }
+              } catch { return null; }
             }
 
-            async function uploadFile(localPath, repoPath, message) {
-              const content = fs.readFileSync(localPath, 'base64');
-              const existingSha = await getSha(repoPath);
+            const uploadedUrls = {};
+            for (const file of filesToUpload) {
+              if (!fs.existsSync(file.source)) continue;
+              const content = fs.readFileSync(file.source, 'base64');
+              const existingSha = await getSha(file.target);
+              
               await github.rest.repos.createOrUpdateFileContents({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                path: repoPath,
-                message,
+                path: file.target,
+                message: `Add ${file.key} media for ${uploadId}`,
                 content,
                 branch,
                 ...(existingSha ? { sha: existingSha } : {}),
               });
-              return `${origin}/assets/${repoPath}`;
+              uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
+            }
+            core.setOutput('uploaded_urls', JSON.stringify(uploadedUrls));
+
+      - name: Update index entry with Retry Logic
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const uploadId = '${{ matrix.uploadId }}';
+            const uploadedUrls = JSON.parse('${{ steps.upload.outputs.uploaded_urls }}' || '{}');
+            const basePath = 'library';
+            const indexPath = `${basePath}/index.json`;
+            const branch = 'main';
+
+            const fs = require('fs');
+            const metaPath = `${{ github.workspace }}/${uploadId}-preview.webm.json`;
+            let videoMeta = {};
+            if (fs.existsSync(metaPath)) {
+              try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
             }
 
-            const chunkFiles = fs.readdirSync(chunksDir)
-              .filter(f => f.match(/^preview_chunk_\d+\.webm$/))
-              .sort((a, b) => parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]));
+            // Retry logic to handle Git race conditions
+            const MAX_RETRIES = 15;
+            for (let i = 1; i <= MAX_RETRIES; i++) {
+              try {
+                const { data: indexData } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: indexPath,
+                  ref: branch,
+                });
 
-            const chunkUrls = [];
-            const chunkMeta = [];
+                const content = Buffer.from(indexData.content, 'base64').toString('utf8');
+                const entries = JSON.parse(content);
+                const entryIndex = entries.findIndex(e => e.id === uploadId);
 
-            for (const file of chunkFiles) {
-              const localPath = path.join(chunksDir, file);
-              const repoPath = `${basePath}/${uploadId}/${file}`;
-              const url = await uploadFile(localPath, repoPath, `Add ${file} for ${uploadId}`);
-              const size = fs.statSync(localPath).size;
-              chunkUrls.push(url);
-              chunkMeta.push({ file, url, size });
-            }
+                if (entryIndex === -1) {
+                  console.log(`Entry ${uploadId} not found in index, skipping update`);
+                  return;
+                }
 
-            const chunksJson = {
-              uploadId,
-              animation,
-              animationDuration: animDuration,
-              isChunked: chunkFiles.length > 1,
-              chunkCount: chunkFiles.length,
-              chunks: chunkMeta,
-              previewUrl: chunkUrls[0],
-              generatedAt: new Date().toISOString(),
-            };
-            const chunksJsonLocal = path.join(chunksDir, 'preview_chunks.json');
-            fs.writeFileSync(chunksJsonLocal, JSON.stringify(chunksJson, null, 2));
-            const chunksJsonRepoPath = `${basePath}/${uploadId}/preview_chunks.json`;
-            await uploadFile(chunksJsonLocal, chunksJsonRepoPath, `Add preview_chunks.json for ${uploadId}`);
-
-            const previewRepoPath = `${basePath}/${uploadId}/preview.webm`;
-            const previewUrl = await uploadFile(path.join(chunksDir, chunkFiles[0]), previewRepoPath, `Add preview.webm for ${uploadId}`);
-
-            async function getBlobContent(sha) {
-              const { data: blob } = await github.rest.git.getBlob({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                file_sha: sha,
-              });
-              return Buffer.from(blob.content, 'base64').toString('utf8');
-            }
-
-            async function getIndexSha() {
-              const { data: tree } = await github.rest.git.getTree({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                tree_sha: branch,
-                recursive: '1',
-              });
-              const indexEntry = tree.tree.find(t => t.path === 'library/index.json');
-              return indexEntry ? indexEntry.sha : null;
-            }
-
-            const indexSha = await getIndexSha();
-            if (indexSha) {
-              const content = await getBlobContent(indexSha);
-              const entries = JSON.parse(content);
-              const entryIndex = entries.findIndex(e => e.id === uploadId);
-
-              if (entryIndex !== -1) {
                 entries[entryIndex] = {
                   ...entries[entryIndex],
-                  webmPreview: previewUrl,
-                  webmPreviewPath: `library/${uploadId}/preview.webm`,
-                  webmChunksJson: `${origin}/assets/${basePath}/${uploadId}/preview_chunks.json`,
-                  webmChunks: chunkUrls,
-                  webmChunkCount: chunkFiles.length,
-                  webmIsChunked: chunkFiles.length > 1,
-                  webmAnimDuration: animDuration,
+                  ...uploadedUrls,
+                  webmPreviewPath: `${basePath}/${uploadId}/preview.webm`,
                   webmStatus: 'ready',
                   webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
                 };
 
                 const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
-                const { data: newBlob } = await github.rest.git.createBlob({
+
+                await github.rest.repos.createOrUpdateFileContents({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
+                  path: indexPath,
+                  message: `Update media preview URLs for ${uploadId}`,
                   content: newContent,
-                  encoding: 'base64',
+                  sha: indexData.sha,
+                  branch,
                 });
-
-                const { data: oldTree } = await github.rest.git.getTree({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  tree_sha: branch,
-                  recursive: '1',
-                });
-
-                const { data: newTree } = await github.rest.git.createTree({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  base_tree: oldTree.sha,
-                  tree: [
-                    {
-                      path: 'library/index.json',
-                      mode: '100644',
-                      type: 'blob',
-                      sha: newBlob.sha,
-                    },
-                  ],
-                });
-
-                const { data: refData } = await github.rest.git.getRef({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  ref: `heads/${branch}`,
-                });
-
-                const { data: newCommit } = await github.rest.git.createCommit({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  message: `Update WebM preview for ${uploadId}`,
-                  tree: newTree.sha,
-                  parents: [refData.object.sha],
-                });
-
-                await github.rest.git.updateRef({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  ref: `heads/${branch}`,
-                  sha: newCommit.sha,
-                  force: true,
-                });
+                
+                console.log(`Successfully updated index for ${uploadId} on try ${i}`);
+                break; // Success!
+              } catch (error) {
+                if (error.status === 409 || error.status === 422) {
+                  console.log(`Conflict updating index (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
+                  if (i === MAX_RETRIES) throw error;
+                  // Wait random time between 2 and 6 seconds to prevent thundering herd
+                  const waitTime = Math.floor(Math.random() * 4000) + 2000;
+                  await new Promise(resolve => setTimeout(resolve, waitTime));
+                } else {
+                  throw error;
+                }
               }
             }
