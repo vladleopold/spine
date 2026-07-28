@@ -68,7 +68,7 @@ jobs:
             const uploadId = '${{ matrix.uploadId }}';
             const basePath = 'library';
             const branch = 'main';
-            const origin = 'https://vladleopold.github.io/spine';
+            const origin = 'https://spine-link.vercel.app';
             const workspace = '${{ github.workspace }}';
             const indexPath = `${basePath}/index.json`;
             const metaPath = `${workspace}/${uploadId}-preview.webm.json`;
