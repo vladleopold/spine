@@ -34724,7 +34724,7 @@
     "thumbnailPoster": "",
     "thumbnailPosterPath": "",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -34907,7 +34907,9 @@
         "transactionData": "0x89f98b4aa15e952bb7ab73f8b979ff4503c9f9c6aed8afde40e5fe37294a0100",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nOffset is outside the bounds of the DataView",
+    "webmGeneratedAt": "2026-07-28T22:26:01.450Z"
   },
   {
     "id": "boerzhanuo_3-2026-05-18T13-59-54-619Z",
