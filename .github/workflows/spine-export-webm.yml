@@ -1,0 +1,427 @@
+name: Spine Export WebM
+
+on:
+  repository_dispatch:
+    types: [spine-export-webm]
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright with Chromium
+        run: |
+          echo "=== INSTALLING PLAYWRIGHT ==="
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium
+          echo "=== PLAYWRIGHT INSTALLED ==="
+
+      - name: Install system dependencies
+        run: |
+          echo "=== INSTALLING SYSTEM DEPS ==="
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
+            libwayland-egl1
+          echo "=== SYSTEM DEPS INSTALLED ==="
+
+      - name: Debug - Check files exist
+        run: |
+          echo "=== CHECKING FILES ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          uploadPath="library/${uploadId}"
+          setName=$(find "${uploadPath}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
+          echo "Upload ID: $uploadId"
+          echo "Animation: $animation"
+          echo "Upload Path: $uploadPath"
+          echo "Set Name: $setName"
+          if [ -d "${uploadPath}/${setName}" ]; then
+            echo "Set directory exists"
+            ls -la "${uploadPath}/${setName}/"
+          else
+            echo "ERROR: Set directory not found"
+          fi
+          echo "=== INDEX.JSON ==="
+          if [ -f "library/index.json" ]; then
+            echo "index.json exists"
+            head -c 500 library/index.json
+          else
+            echo "ERROR: index.json not found"
+          fi
+
+      - name: Install ffmpeg
+        run: sudo apt-get install -y ffmpeg
+
+      - name: Compute animation duration from skeleton JSON
+        id: duration
+        run: |
+          echo "=== COMPUTING ANIMATION DURATION ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          uploadPath="library/${uploadId}"
+          # Find the first directory inside uploadPath
+          setName=$(find "$uploadPath" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
+          skeletonPath=""
+          if [ -n "$setName" ]; then
+            for f in "${uploadPath}/${setName}"/*.json; do
+              if [ -f "$f" ]; then
+                skeletonPath="$f"
+                break
+              fi
+            done
+          fi
+          echo "Skeleton path: $skeletonPath"
+          echo "Animation: $animation"
+
+          if [ -z "$skeletonPath" ] || [ ! -f "$skeletonPath" ]; then
+            echo "Skeleton JSON not found, using fallback duration 0 to let browser calculate"
+            echo "anim_duration=0" >> $GITHUB_OUTPUT
+          else
+            duration=$(node -e "
+              const fs = require('fs');
+              const animName = '$animation';
+              const data = JSON.parse(fs.readFileSync('$skeletonPath', 'utf8'));
+              const anim = data.animations && data.animations[animName];
+              if (!anim) { console.log(0); process.exit(0); }
+              let max = 0;
+              const traverse = (obj) => {
+                if (Array.isArray(obj)) {
+                  obj.forEach(item => { if (item && typeof item.time === 'number' && item.time > max) max = item.time; });
+                } else if (obj && typeof obj === 'object') {
+                  Object.values(obj).forEach(traverse);
+                }
+              };
+              traverse(anim);
+              console.log(max > 0 ? max.toFixed(4) : 0);
+            " 2>/dev/null || echo "0")
+            echo "Computed duration: ${duration}s"
+            echo "anim_duration=${duration}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Export WebM preview
+        id: export
+        run: |
+          echo "=== STARTING EXPORT ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          animDuration="${{ steps.duration.outputs.anim_duration }}"
+          
+          echo "Upload ID: $uploadId"
+          echo "Animation: $animation"
+          echo "Animation duration: ${animDuration}s"
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="${{ github.event.client_payload.uploadId }}" \
+            --animation="${{ github.event.client_payload.animation }}" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --anim-duration="${animDuration}" \
+            --output="${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
+          echo "=== EXPORT COMPLETED ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Split into chunks if needed
+        id: chunks
+        run: |
+          echo "=== CHECKING FILE SIZE FOR CHUNKING ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          previewFile="${{ github.workspace }}/${uploadId}-preview.webm"
+          MAX_BYTES=45000000   # 45MB limit (GitHub API allows ~50MB)
+          CHUNK_DIR="${{ github.workspace }}/chunks"
+          mkdir -p "$CHUNK_DIR"
+
+          fileSize=$(stat -c%s "$previewFile")
+          echo "File size: ${fileSize} bytes"
+
+          if [ "$fileSize" -le "$MAX_BYTES" ]; then
+            echo "Single file mode (no chunking needed)"
+            cp "$previewFile" "$CHUNK_DIR/preview_chunk_0.webm"
+            echo "chunk_count=1" >> $GITHUB_OUTPUT
+            echo "is_chunked=false" >> $GITHUB_OUTPUT
+          else
+            echo "File too large, splitting into chunks with ffmpeg..."
+            animDuration="${{ steps.duration.outputs.anim_duration }}"
+            # Estimate chunk duration based on file size to target ~45MB per chunk
+            chunkDur=$(node -e "const d=$animDuration, s=$fileSize, m=$MAX_BYTES; console.log(Math.floor(d * m / s))")
+            if [ "$chunkDur" -lt 5 ]; then chunkDur=5; fi
+            echo "Chunk duration: ${chunkDur}s"
+
+            ffmpeg -i "$previewFile" -c copy -f segment -segment_time "$chunkDur" \
+              -reset_timestamps 1 "$CHUNK_DIR/preview_chunk_%d.webm" -y
+            
+            chunkCount=$(ls "$CHUNK_DIR"/preview_chunk_*.webm | wc -l)
+            echo "chunk_count=${chunkCount}" >> $GITHUB_OUTPUT
+            echo "is_chunked=true" >> $GITHUB_OUTPUT
+          fi
+          echo "chunks_dir=$CHUNK_DIR" >> $GITHUB_OUTPUT
+          ls -lh "$CHUNK_DIR/"
+
+
+      - name: Debug - Check output file
+        if: always()
+        run: |
+          echo "=== CHECKING OUTPUT ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          if [ -f "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm" ]; then
+            echo "WebM file exists"
+            ls -lh "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
+          else
+            echo "ERROR: WebM file not found"
+            ls -la "${{ github.workspace }}/"
+          fi
+
+      - name: Upload chunks to GitHub
+        id: upload
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const uploadId = '${{ github.event.client_payload.uploadId }}';
+            const basePath = 'library';
+            const origin = '${{ github.event.client_payload.origin }}';
+            const branch = '${{ github.event.client_payload.branch }}' || 'main';
+            const chunksDir = '${{ steps.chunks.outputs.chunks_dir }}';
+            const animDuration = parseFloat('${{ steps.duration.outputs.anim_duration }}') || 0;
+            const animation = '${{ github.event.client_payload.animation }}';
+
+            console.log("=== UPLOADING CHUNKS ===");
+            console.log("Upload ID:", uploadId);
+            console.log("Chunks dir:", chunksDir);
+
+            async function getSha(filePath) {
+              try {
+                const { data } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: filePath,
+                  ref: branch,
+                });
+                return data.sha;
+              } catch {
+                return null;
+              }
+            }
+
+            async function uploadFile(localPath, repoPath, message) {
+              const content = fs.readFileSync(localPath, 'base64');
+              const stats = fs.statSync(localPath);
+              console.log(`Uploading ${repoPath} (${stats.size} bytes)`);
+              const existingSha = await getSha(repoPath);
+              await github.rest.repos.createOrUpdateFileContents({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: repoPath,
+                message,
+                content,
+                branch,
+                ...(existingSha ? { sha: existingSha } : {}),
+              });
+              return `${origin}/assets/${repoPath}`;
+            }
+
+            // Upload all chunks
+            const chunkFiles = fs.readdirSync(chunksDir)
+              .filter(f => f.match(/^preview_chunk_\d+\.webm$/))
+              .sort((a, b) => {
+                const na = parseInt(a.match(/(\d+)/)[1], 10);
+                const nb = parseInt(b.match(/(\d+)/)[1], 10);
+                return na - nb;
+              });
+
+            console.log("Chunk files:", chunkFiles);
+            const chunkUrls = [];
+            const chunkMeta = [];
+
+            for (const file of chunkFiles) {
+              const localPath = path.join(chunksDir, file);
+              const repoPath = `${basePath}/${uploadId}/${file}`;
+              const url = await uploadFile(localPath, repoPath, `Add ${file} for ${uploadId}`);
+              const size = fs.statSync(localPath).size;
+              chunkUrls.push(url);
+              chunkMeta.push({ file, url, size });
+              console.log(`Uploaded: ${url}`);
+            }
+
+            // Write and upload preview_chunks.json
+            const chunksJson = {
+              uploadId,
+              animation,
+              animationDuration: animDuration,
+              isChunked: chunkFiles.length > 1,
+              chunkCount: chunkFiles.length,
+              chunks: chunkMeta,
+              // Backwards compat: point preview.webm to first chunk URL
+              previewUrl: chunkUrls[0],
+              generatedAt: new Date().toISOString(),
+            };
+            const chunksJsonLocal = path.join(chunksDir, 'preview_chunks.json');
+            fs.writeFileSync(chunksJsonLocal, JSON.stringify(chunksJson, null, 2));
+            const chunksJsonRepoPath = `${basePath}/${uploadId}/preview_chunks.json`;
+            const chunksJsonUrl = await uploadFile(chunksJsonLocal, chunksJsonRepoPath, `Add preview_chunks.json for ${uploadId}`);
+            console.log("preview_chunks.json uploaded:", chunksJsonUrl);
+
+            // Also upload/overwrite preview.webm with chunk_0 for backwards compat
+            const previewRepoPath = `${basePath}/${uploadId}/preview.webm`;
+            const previewUrl = await uploadFile(path.join(chunksDir, chunkFiles[0]), previewRepoPath, `Add preview.webm for ${uploadId}`);
+            console.log("preview.webm uploaded:", previewUrl);
+
+            core.setOutput('webm_url', previewUrl);
+            core.setOutput('chunks_json_url', chunksJsonUrl);
+            core.setOutput('chunk_count', chunkFiles.length.toString());
+            core.setOutput('chunk_urls', JSON.stringify(chunkUrls));
+
+
+      - name: Update index entry with webmPreview
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const uploadId = '${{ github.event.client_payload.uploadId }}';
+            const webmUrl = '${{ steps.upload.outputs.webm_url }}';
+            const basePath = 'library';
+            const indexPath = `${basePath}/index.json`;
+
+            console.log("=== UPDATING INDEX ===");
+            console.log("Upload ID:", uploadId);
+            console.log("WebM URL:", webmUrl);
+
+            const branch = '${{ github.event.client_payload.branch }}' || 'main';
+
+            // Use Git Data API (blob) to read index.json because it exceeds 1MB limit
+            async function getBlobContent(sha) {
+              const { data: blob } = await github.rest.git.getBlob({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                file_sha: sha,
+              });
+              return Buffer.from(blob.content, 'base64').toString('utf8');
+            }
+
+            async function getIndexSha() {
+              const { data: tree } = await github.rest.git.getTree({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tree_sha: branch,
+                recursive: '1',
+              });
+              const indexEntry = tree.tree.find(t => t.path === 'library/index.json');
+              return indexEntry ? indexEntry.sha : null;
+            }
+
+            console.log("Getting index SHA...");
+            const indexSha = await getIndexSha();
+            console.log("Index SHA:", indexSha);
+            if (!indexSha) {
+              console.log('index.json not found in tree');
+              return;
+            }
+
+            console.log("Fetching blob content...");
+            const content = await getBlobContent(indexSha);
+            const entries = JSON.parse(content);
+            console.log("Total entries:", entries.length);
+
+            const entryIndex = entries.findIndex(e => e.id === '${{ github.event.client_payload.uploadId }}');
+            console.log("Entry index:", entryIndex);
+
+            if (entryIndex === -1) {
+              console.log(`Entry not found in index, skipping update`);
+              return;
+            }
+
+            const chunkUrls = JSON.parse('${{ steps.upload.outputs.chunk_urls }}' || '[]');
+            const chunkCount = parseInt('${{ steps.upload.outputs.chunk_count }}' || '1', 10);
+            const chunksJsonUrl = '${{ steps.upload.outputs.chunks_json_url }}';
+            const animDuration = parseFloat('${{ steps.duration.outputs.anim_duration }}') || 0;
+
+            entries[entryIndex] = {
+              ...entries[entryIndex],
+              webmPreview: '${{ steps.upload.outputs.webm_url }}',
+              webmPreviewPath: `library/${{ github.event.client_payload.uploadId }}/preview.webm`,
+              webmChunksJson: chunksJsonUrl,
+              webmChunks: chunkUrls,
+              webmChunkCount: chunkCount,
+              webmIsChunked: chunkCount > 1,
+              webmAnimDuration: animDuration,
+              webmStatus: 'ready',
+              webmGeneratedAt: new Date().toISOString(),
+            };
+
+            const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
+            const { data: newBlob } = await github.rest.git.createBlob({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              content: newContent,
+              encoding: 'base64',
+            });
+
+            console.log("Created new blob:", newBlob.sha);
+
+            const { data: oldTree } = await github.rest.git.getTree({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tree_sha: branch,
+              recursive: '1',
+            });
+
+            const { data: newTree } = await github.rest.git.createTree({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base_tree: oldTree.sha,
+              tree: [
+                {
+                  path: 'library/index.json',
+                  mode: '100644',
+                  type: 'blob',
+                  sha: newBlob.sha,
+                },
+              ],
+            });
+
+            console.log("Created new tree:", newTree.sha);
+
+            const { data: refData } = await github.rest.git.getRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `heads/${branch}`,
+            });
+            const parentSha = refData.object.sha;
+
+            const { data: newCommit } = await github.rest.git.createCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              message: `Update WebM preview for ${uploadId}`,
+              tree: newTree.sha,
+              parents: [parentSha],
+            });
+
+            console.log("Created commit:", newCommit.sha);
+
+            await github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `heads/${branch}`,
+              sha: newCommit.sha,
+              force: true,
+            });
+
+            console.log(`Updated index entry ${uploadId} with webmPreview`);
