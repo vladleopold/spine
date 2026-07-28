@@ -152,12 +152,13 @@ jobs:
           
           MAX_RETRIES=20
           for i in $(seq 1 $MAX_RETRIES); do
-            echo "Attempt $i..."
+            echo "Attempt $i/$MAX_RETRIES..."
             
-            # 1. Pull latest
-            git pull --rebase origin main || { git rebase --abort; echo "Pull failed, retrying..."; sleep $((RANDOM % 4 + 1)); continue; }
+            # 1. Always fetch fresh state first — no rebase conflicts possible
+            git fetch origin main
+            git reset --hard origin/main
             
-            # 2. Move media files if not already moved
+            # 2. Copy media files on top of fresh state
             mkdir -p "${basePath}/${uploadId}"
             for ext in "webm" "webp"; do
               for suffix in "" "-medium" "-low"; do
@@ -168,7 +169,7 @@ jobs:
               done
             done
             
-            # 3. Modify index.json
+            # 3. Update index.json on top of fresh state
             node -e "
               const fs = require('fs');
               const uploadId = '$uploadId';
@@ -224,23 +225,25 @@ jobs:
               fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
             "
             
-            # 4. Commit and Push
+            # 4. Stage and commit
             git add library/
-            if ! git diff-index --quiet HEAD --; then
-              git commit -m "Auto-export media for ${uploadId}"
-              if git push origin main; then
-                echo "Successfully committed and pushed!"
-                exit 0
-              else
-                echo "Push failed. Resetting commit and retrying..."
-                git reset --hard HEAD~1
-                sleep $((RANDOM % 5 + 2))
-              fi
-            else
+            if git diff-index --quiet HEAD --; then
               echo "No changes to commit (perhaps already processed?)"
               exit 0
+            fi
+            
+            git commit -m "Auto-export media for ${uploadId}"
+            
+            # 5. Push — if rejected, loop back with fresh HEAD
+            if git push origin main; then
+              echo "Successfully committed and pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Retrying with fresh HEAD..."
+              sleep $((RANDOM % 5 + 2))
             fi
           done
           
           echo "Failed to push after $MAX_RETRIES attempts."
           exit 1
+
