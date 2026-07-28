@@ -582,16 +582,19 @@ try {
 
   const bitrates = { high: '1200k', medium: '350k', low: '150k' };
   
+  const finalWidth = canvasWidth & ~1;
+  const finalHeight = canvasHeight & ~1;
+
   // Calculate scaled dimensions (keeping aspect ratio, ensuring even numbers)
   function calcScale(maxWidth) {
-    if (videoWidth <= maxWidth) return `${videoWidth}x${videoHeight}`;
-    const scale = maxWidth / videoWidth;
+    if (finalWidth <= maxWidth) return `${finalWidth}x${finalHeight}`;
+    const scale = maxWidth / finalWidth;
     let newWidth = maxWidth;
-    let newHeight = Math.round(videoHeight * scale);
+    let newHeight = Math.round(finalHeight * scale);
     return `${newWidth & ~1}x${newHeight & ~1}`;
   }
   
-  const dimHigh = `${videoWidth}x${videoHeight}`;
+  const dimHigh = `${finalWidth}x${finalHeight}`;
   const dimMedium = calcScale(1080);
   const dimLow = calcScale(360);
 
@@ -632,8 +635,8 @@ try {
     animation: targetAnimation,
     animationDuration: animDuration,
     capturedDuration: captureDuration,
-    width: videoWidth,
-    height: videoHeight,
+    width: finalWidth,
+    height: finalHeight,
     skeletonWidth: rawSkelWidth,
     skeletonHeight: rawSkelHeight,
     bytes: finalWebmBuffer.length,
