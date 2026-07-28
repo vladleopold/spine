@@ -9655,7 +9655,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/hero_taylor-2026-07-23T19-45-40-344Z/appear_01-preview.webp?v=2026-07-23T19:45:40.344Z",
     "thumbnailPosterPath": "library/hero_taylor-2026-07-23T19-45-40-344Z/appear_01-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9874,7 +9874,9 @@
         "transactionData": "0x3735f9d2af16a0f3ea9e16747f6e4ea3cbe344ef5623de57af80e3ce8f865b19",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nBone name must not be null.",
+    "webmGeneratedAt": "2026-07-28T22:08:43.095Z"
   },
   {
     "id": "hero_blaze_felix-2026-07-23T19-37-08-744Z",
