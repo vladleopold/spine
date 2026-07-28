@@ -341,7 +341,7 @@ console.error(`Entry: ${args.uploadId}`);
 console.error(`Set: ${firstSet.name}`);
 console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
 console.error(`Skeleton bounds: ${rawSkelWidth}x${rawSkelHeight}`);
-console.error(`Video dimensions: ${videoWidth}x${videoHeight} (from bounds + ${PAD_RATIO * 100}% padding)`);
+console.error(`Video dimensions: ${videoWidth}x${videoHeight}`);
 console.error(`Atlas: ${atlasFile}`);
 console.error(`Animation: ${targetAnimation}`);
 console.error(`Is default: ${isDefault}`);
@@ -365,6 +365,8 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
 (function() {
   window.__captureError = null;
   window.__animDuration = 0;
+  window.__animWidth = 0;
+  window.__animHeight = 0;
   window.__ready = false;
 
   var player;
@@ -381,44 +383,47 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
     viewport: { padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' },
     success: function (p) {
       player = p;
-      window.__ready = true;
-      window.__canvasWidth = player.canvas ? player.canvas.width : 0;
-      window.__canvasHeight = player.canvas ? player.canvas.height : 0;
-      
       try {
+        if (player.skeleton && player.skeleton.data) {
+          window.__animWidth = player.skeleton.data.width || 0;
+          window.__animHeight = player.skeleton.data.height || 0;
+        }
         var track = player.animationState ? player.animationState.getCurrent(0) : null;
         if (track && track.animation && typeof track.animation.duration === 'number') {
           window.__animDuration = track.animation.duration;
         }
       } catch (e) {}
-
-      // Force 30 FPS playback by overriding requestAnimationFrame for the player?
-      // Not strictly necessary if we capture at 30fps and record for exact duration,
-      // but let's record using MediaRecorder.
-      if (player.canvas) {
-        try {
-          var stream = player.canvas.captureStream(30);
-          var recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
-          var chunks = [];
-          recorder.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
-          recorder.onstop = function() {
-            var blob = new Blob(chunks, { type: 'video/webm' });
-            var reader = new FileReader();
-            reader.onload = function() { window.__videoData = reader.result; };
-            reader.readAsDataURL(blob);
-          };
-          recorder.start();
-          
-          window.__stopRecording = function() {
-            if (recorder.state === 'recording') recorder.stop();
-          };
-        } catch(err) {
-           window.__captureError = 'MediaRecorder failed: ' + err.message;
-        }
-      }
+      window.__ready = true;
     },
     error: function (p, err) {
       window.__captureError = 'Player creation failed: ' + err;
+    }
+  };
+
+  // Start recording ONLY AFTER viewport is resized by Playwright
+  window.__startRecording = function() {
+    if (!player || !player.canvas) {
+       window.__captureError = 'No canvas available to record';
+       return;
+    }
+    try {
+      var stream = player.canvas.captureStream(30);
+      var recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+      var chunks = [];
+      recorder.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
+      recorder.onstop = function() {
+        var blob = new Blob(chunks, { type: 'video/webm' });
+        var reader = new FileReader();
+        reader.onload = function() { window.__videoData = reader.result; };
+        reader.readAsDataURL(blob);
+      };
+      recorder.start();
+      
+      window.__stopRecording = function() {
+        if (recorder.state === 'recording') recorder.stop();
+      };
+    } catch(err) {
+       window.__captureError = 'MediaRecorder failed: ' + err.message;
     }
   };
 
@@ -451,13 +456,13 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
   }
 
   try {
-    if (typeof spine.SpinePlayer === 'function') {
-      new spine.SpinePlayer('player', config);
-    } else {
+    new spine.SpinePlayer("player", config);
+  } catch(e) {
+    if (e.message && e.message.includes('not a function')) {
       window.__captureError = 'spine.SpinePlayer is not a function';
+    } else {
+      window.__captureError = 'Player creation failed: ' + (e.message || e);
     }
-  } catch (e) {
-    window.__captureError = 'Player creation failed: ' + (e.message || e);
   }
 })();
 </script>
@@ -518,8 +523,8 @@ try {
   try {
     await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
     error = await page.evaluate(() => window.__captureError || null);
-  } catch (e) {
-    error = e.message;
+  } catch (err) {
+    error = err.message;
   }
 
   if (error) {
@@ -529,8 +534,26 @@ try {
   }
 
   const animDuration = await page.evaluate(() => window.__animDuration || 0);
-  const canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
-  const canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
+  let canvasWidth = await page.evaluate(() => window.__animWidth || 0);
+  let canvasHeight = await page.evaluate(() => window.__animHeight || 0);
+  
+  if (canvasWidth > 0 && canvasHeight > 0) {
+    // Resize viewport to match exact animation size to prevent padding/stretching
+    const newW = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(canvasWidth))) & ~1);
+    const newH = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(canvasHeight))) & ~1);
+    await page.setViewportSize({ width: newW, height: newH });
+    canvasWidth = newW;
+    canvasHeight = newH;
+  } else {
+    canvasWidth = videoWidth;
+    canvasHeight = videoHeight;
+  }
+  
+  // Wait a moment for SpinePlayer to resize itself to the new viewport
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // Now start recording
+  await page.evaluate(() => window.__startRecording());
 
   console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
 
