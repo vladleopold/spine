@@ -53,7 +53,7 @@ jobs:
       - name: Run Export Script
         run: |
           node scripts/spine-export-webm.mjs \
-            --id="${{ matrix.uploadId }}" \
+            --upload-id="${{ matrix.uploadId }}" \
             --repo-path="${{ github.workspace }}" \
             --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
         env:
