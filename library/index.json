@@ -9442,7 +9442,7 @@
     "thumbnailPoster": "",
     "thumbnailPosterPath": "",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9627,7 +9627,9 @@
         "transactionData": "0xaeda1f3d5f0dfa8f345f4e3a26515bb6e283bbb383d4dc7411e5e5ef3b6722b7",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nBone name must not be null.",
+    "webmGeneratedAt": "2026-07-28T21:58:56.999Z"
   },
   {
     "id": "hero_taylor-2026-07-23T19-45-40-344Z",
