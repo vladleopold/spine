@@ -36154,7 +36154,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/boyixi_2-2026-05-18T13-51-23-412Z/attack-preview.webp?v=2026-05-18T13:51:58.186Z",
     "thumbnailPosterPath": "library/boyixi_2-2026-05-18T13-51-23-412Z/attack-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -36371,7 +36371,9 @@
         "transactionData": "0xfed79e307ccc65a8a9aa9e1d34a074136e2503941b40b1b137bb2e881c3c5f70",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       }
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nOffset is outside the bounds of the DataView",
+    "webmGeneratedAt": "2026-07-28T22:25:18.258Z"
   },
   {
     "id": "skeleton-2026-05-15T08-51-28-862Z",
