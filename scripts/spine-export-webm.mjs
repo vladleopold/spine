@@ -317,13 +317,10 @@ function sanitizedSkelBuffer(buffer, version = "") {
       cursor.skip(32); cursor.readInt(true); cursor.skip(1);
       if (nonessential) cursor.skip(4);
     }
-    // If parsing completes without errors, apply the replacements
-    return Buffer.from(replaceByteRanges(bytes, replacements));
   } catch {
-    // If parsing failed halfway, the replacements array might contain garbage from misaligned reads.
-    // Do not apply them. The imagesPath/audioPath were already patched in-place above.
     return Buffer.from(bytes);
   }
+  return Buffer.from(replaceByteRanges(bytes, replacements));
 }
 // --- end Spine binary patcher ---
 

@@ -118,12 +118,9 @@ function sanitizedSkelBuffer(buffer, version = "") {
       cursor.skip(32); cursor.readInt(true); cursor.skip(1);
       if (nonessential) cursor.skip(4);
     }
-    // If parsing completes without errors, apply the replacements
-    return { buffer: Buffer.from(replaceByteRanges(bytes, replacements)), isPatched };
-  } catch {
-    // If parsing failed halfway, the replacements array might contain garbage from misaligned reads.
-    return { buffer: Buffer.from(bytes), isPatched };
-  }
+  } catch {}
+  
+  return { buffer: Buffer.from(replaceByteRanges(bytes, replacements)), isPatched };
 }
 
 function spineBinaryVersionFromBuffer(buffer) {
