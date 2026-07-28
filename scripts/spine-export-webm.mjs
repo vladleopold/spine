@@ -197,7 +197,51 @@ const textureRawUrls = textureFiles.map(f => rawUrl(f));
 
 const atlasLocalPath = path.join(firstSet.path, atlasFile);
 let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
-atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
+atlasContent = atlasContent.replace(/^\.\.[\\/\\]textures[\\/\\]/gm, '');
+
+// --- Patch null imagesPath/audioPath in Spine 3.8 binary .skel files ---
+// Spine 3.8 header: [hash str][version str][x f32][y f32][w f32][h f32][imagesPath str][audioPath str]
+// 0x00 = null string → causes "String in string table must not be null" in the player.
+// Fix: replace 0x00 → 0x01 (empty string) for imagesPath and audioPath.
+if (isLegacy && skeletonFile.toLowerCase().endsWith('.skel')) {
+  try {
+    const skelBuf = fs.readFileSync(skeletonFilePath);
+
+    function readVarintLen(buf, pos) {
+      let b = buf[pos++]; let result = b & 0x7F;
+      if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 7;
+        if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 14;
+          if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 21;
+            if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 28; } } } }
+      return { value: result, pos };
+    }
+
+    function skipStr(buf, pos) {
+      const r = readVarintLen(buf, pos);
+      const charCount = r.value - 1;
+      return charCount > 0 ? r.pos + charCount : r.pos;
+    }
+
+    let pos = 0;
+    pos = skipStr(skelBuf, pos); // skip hash
+    pos = skipStr(skelBuf, pos); // skip version
+    pos += 16;                    // skip x, y, w, h floats
+
+    let patched = false;
+    if (skelBuf[pos] === 0x00) { skelBuf[pos] = 0x01; patched = true; }
+    pos = skipStr(skelBuf, pos); // skip imagesPath
+    if (skelBuf[pos] === 0x00) { skelBuf[pos] = 0x01; patched = true; }
+
+    if (patched) {
+      fs.writeFileSync(skeletonFilePath, skelBuf);
+      console.error(`[patch] Fixed null string in ${skeletonFile}`);
+    }
+  } catch (e) {
+    console.error(`[patch] Could not patch skel file: ${e.message}`);
+  }
+}
+// --- end skel null-string patch ---
+
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
