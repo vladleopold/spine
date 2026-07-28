@@ -199,48 +199,130 @@ const atlasLocalPath = path.join(firstSet.path, atlasFile);
 let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\\/\\]textures[\\/\\]/gm, '');
 
-// --- Patch null imagesPath/audioPath in Spine 3.8 binary .skel files ---
-// Spine 3.8 header: [hash str][version str][x f32][y f32][w f32][h f32][imagesPath str][audioPath str]
-// 0x00 = null string → causes "String in string table must not be null" in the player.
-// Fix: replace 0x00 → 0x01 (empty string) for imagesPath and audioPath.
-if (isLegacy && skeletonFile.toLowerCase().endsWith('.skel')) {
-  try {
-    const skelBuf = fs.readFileSync(skeletonFilePath);
-
-    function readVarintLen(buf, pos) {
-      let b = buf[pos++]; let result = b & 0x7F;
-      if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 7;
-        if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 14;
-          if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 21;
-            if (b & 0x80) { b = buf[pos++]; result |= (b & 0x7F) << 28; } } } }
-      return { value: result, pos };
+// --- Spine binary patcher ---
+class SpineBinaryCursor {
+  constructor(bytes) {
+    this.bytes = bytes;
+    this.index = 0;
+  }
+  readByte() { return this.bytes[this.index++] ?? 0; }
+  skip(length) { this.index += length; }
+  readInt(optimizePositive) {
+    let byte = this.readByte();
+    let result = byte & 0x7f;
+    if ((byte & 0x80) !== 0) {
+      byte = this.readByte(); result |= (byte & 0x7f) << 7;
+      if ((byte & 0x80) !== 0) {
+        byte = this.readByte(); result |= (byte & 0x7f) << 14;
+        if ((byte & 0x80) !== 0) {
+          byte = this.readByte(); result |= (byte & 0x7f) << 21;
+          if ((byte & 0x80) !== 0) {
+            byte = this.readByte(); result |= (byte & 0x7f) << 28;
+          }
+        }
+      }
     }
-
-    function skipStr(buf, pos) {
-      const r = readVarintLen(buf, pos);
-      const charCount = r.value - 1;
-      return charCount > 0 ? r.pos + charCount : r.pos;
-    }
-
-    let pos = 0;
-    pos = skipStr(skelBuf, pos); // skip hash
-    pos = skipStr(skelBuf, pos); // skip version
-    pos += 16;                    // skip x, y, w, h floats
-
-    let patched = false;
-    if (skelBuf[pos] === 0x00) { skelBuf[pos] = 0x01; patched = true; }
-    pos = skipStr(skelBuf, pos); // skip imagesPath
-    if (skelBuf[pos] === 0x00) { skelBuf[pos] = 0x01; patched = true; }
-
-    if (patched) {
-      fs.writeFileSync(skeletonFilePath, skelBuf);
-      console.error(`[patch] Fixed null string in ${skeletonFile}`);
-    }
-  } catch (e) {
-    console.error(`[patch] Could not patch skel file: ${e.message}`);
+    return optimizePositive ? result : (result >>> 1) ^ -(result & 1);
+  }
+  readStringMeta() {
+    const start = this.index;
+    const byteCount = this.readInt(true);
+    const contentStart = this.index;
+    if (byteCount === 0) return { start, end: this.index, value: null };
+    if (byteCount === 1) return { start, end: this.index, value: "" };
+    this.skip(byteCount - 1);
+    return {
+      start, end: this.index,
+      value: new TextDecoder().decode(this.bytes.slice(contentStart, this.index)),
+    };
   }
 }
-// --- end skel null-string patch ---
+
+function encodeSpineBinaryString(value) {
+  const textBytes = new TextEncoder().encode(value);
+  const byteCount = textBytes.length + 1;
+  const lengthBytes = [];
+  let remaining = byteCount;
+  while (true) {
+    let byte = remaining & 0x7f;
+    remaining >>>= 7;
+    if (remaining) byte |= 0x80;
+    lengthBytes.push(byte);
+    if (!remaining) break;
+  }
+  return new Uint8Array([...lengthBytes, ...textBytes]);
+}
+
+function replaceByteRanges(bytes, replacements) {
+  if (!replacements.length) return bytes;
+  const sorted = [...replacements].sort((a, b) => a.start - b.start);
+  const nextLength = sorted.reduce((length, replacement) => length - (replacement.end - replacement.start) + replacement.bytes.length, bytes.length);
+  const nextBytes = new Uint8Array(nextLength);
+  let sourceIndex = 0, targetIndex = 0;
+  for (const replacement of sorted) {
+    nextBytes.set(bytes.slice(sourceIndex, replacement.start), targetIndex);
+    targetIndex += replacement.start - sourceIndex;
+    nextBytes.set(replacement.bytes, targetIndex);
+    targetIndex += replacement.bytes.length;
+    sourceIndex = replacement.end;
+  }
+  nextBytes.set(bytes.slice(sourceIndex), targetIndex);
+  return nextBytes;
+}
+
+function sanitizedSkelBuffer(buffer, version = "") {
+  const bytes = new Uint8Array(buffer);
+  
+  if (/^3\./.test(version)) {
+    const patchCursor = new SpineBinaryCursor(new Uint8Array(bytes));
+    try {
+      patchCursor.readStringMeta(); // skip hash
+      patchCursor.readStringMeta(); // skip version
+      patchCursor.skip(16);         // skip x, y, w, h floats
+      const imagesPathPos = patchCursor.index;
+      if (bytes[imagesPathPos] === 0x00) bytes[imagesPathPos] = 0x01;
+      patchCursor.readStringMeta(); // skip imagesPath
+      const audioPathPos = patchCursor.index;
+      if (bytes[audioPathPos] === 0x00) bytes[audioPathPos] = 0x01;
+    } catch {}
+  }
+
+  const cursor = new SpineBinaryCursor(bytes);
+  const replacements = [];
+  try {
+    if (/^3\./.test(version)) {
+      cursor.readStringMeta(); cursor.readStringMeta();
+    } else {
+      cursor.skip(8); cursor.readStringMeta(); cursor.skip(4);
+    }
+    cursor.skip(16);
+    const nonessential = cursor.readByte() !== 0;
+    if (nonessential) {
+      cursor.skip(4); cursor.readStringMeta(); cursor.readStringMeta();
+    }
+
+    const stringCount = cursor.readInt(true);
+    for (let index = 0; index < stringCount; index += 1) cursor.readStringMeta();
+
+    const boneCount = cursor.readInt(true);
+    for (let index = 0; index < boneCount; index += 1) {
+      const name = cursor.readStringMeta();
+      if (!name.value) {
+        replacements.push({
+          start: name.start, end: name.end,
+          bytes: encodeSpineBinaryString(`__placeholder_bone_${index}`),
+        });
+      }
+      if (index > 0) cursor.readInt(true);
+      cursor.skip(32); cursor.readInt(true); cursor.skip(1);
+      if (nonessential) cursor.skip(4);
+    }
+  } catch {
+    return Buffer.from(bytes);
+  }
+  return Buffer.from(replaceByteRanges(bytes, replacements));
+}
+// --- end Spine binary patcher ---
 
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
@@ -404,6 +486,22 @@ try {
       body: atlasContent,
     });
   });
+
+  await page.route(skeletonRawUrl, async route => {
+    let body;
+    if (skeletonFile.toLowerCase().endsWith('.skel')) {
+      const rawBuffer = fs.readFileSync(skeletonFilePath);
+      body = sanitizedSkelBuffer(rawBuffer, skeletonVersion);
+    } else {
+      body = fs.readFileSync(skeletonFilePath, 'utf8');
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: skeletonFile.toLowerCase().endsWith('.skel') ? 'application/octet-stream' : 'application/json',
+      body: body,
+    });
+  });
+
   await page.setContent(captureHtml, { waitUntil: 'networkidle', timeout: 60000 });
 
   let error = null;
@@ -416,7 +514,7 @@ try {
 
   if (error) {
     console.error(`Capture failed: ${error}`);
-    fs.writeFileSync(outPaths.metadata, JSON.stringify({ error: error }, null, 2));
+    fs.writeFileSync(args.output + '.json', JSON.stringify({ error: error }, null, 2));
     process.exit(0);
   }
 
