@@ -58,16 +58,22 @@ function replaceByteRanges(bytes, replacements) {
   if (!replacements.length) return bytes;
   const sorted = [...replacements].sort((a, b) => a.start - b.start);
   const nextLength = sorted.reduce((length, replacement) => length - (replacement.end - replacement.start) + replacement.bytes.length, bytes.length);
+  if (nextLength < 0) return bytes;
   const nextBytes = new Uint8Array(nextLength);
   let sourceIndex = 0, targetIndex = 0;
   for (const replacement of sorted) {
-    nextBytes.set(bytes.slice(sourceIndex, replacement.start), targetIndex);
-    targetIndex += replacement.start - sourceIndex;
+    const prefix = bytes.slice(sourceIndex, replacement.start);
+    if (targetIndex + prefix.length > nextLength) return bytes;
+    nextBytes.set(prefix, targetIndex);
+    targetIndex += prefix.length;
+    if (targetIndex + replacement.bytes.length > nextLength) return bytes;
     nextBytes.set(replacement.bytes, targetIndex);
     targetIndex += replacement.bytes.length;
     sourceIndex = replacement.end;
   }
-  nextBytes.set(bytes.slice(sourceIndex), targetIndex);
+  const tail = bytes.slice(sourceIndex);
+  if (targetIndex + tail.length > nextLength) return bytes;
+  nextBytes.set(tail, targetIndex);
   return nextBytes;
 }
 
@@ -118,9 +124,12 @@ function sanitizedSkelBuffer(buffer, version = "") {
       cursor.skip(32); cursor.readInt(true); cursor.skip(1);
       if (nonessential) cursor.skip(4);
     }
-  } catch {}
-  
-  return { buffer: Buffer.from(replaceByteRanges(bytes, replacements)), isPatched };
+    // All parsing succeeded — apply replacements inside try so any crash falls back gracefully
+    return { buffer: Buffer.from(replaceByteRanges(bytes, replacements)), isPatched };
+  } catch {
+    // Parsing or replacement failed — return original (imagesPath/audioPath already fixed in-place)
+    return { buffer: Buffer.from(bytes), isPatched };
+  }
 }
 
 function spineBinaryVersionFromBuffer(buffer) {

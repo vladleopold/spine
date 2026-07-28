@@ -256,17 +256,24 @@ function encodeSpineBinaryString(value) {
 function replaceByteRanges(bytes, replacements) {
   if (!replacements.length) return bytes;
   const sorted = [...replacements].sort((a, b) => a.start - b.start);
+  // Defensive: recalculate exact output length
   const nextLength = sorted.reduce((length, replacement) => length - (replacement.end - replacement.start) + replacement.bytes.length, bytes.length);
+  if (nextLength < 0) return bytes; // sanity guard
   const nextBytes = new Uint8Array(nextLength);
   let sourceIndex = 0, targetIndex = 0;
   for (const replacement of sorted) {
-    nextBytes.set(bytes.slice(sourceIndex, replacement.start), targetIndex);
-    targetIndex += replacement.start - sourceIndex;
+    const prefix = bytes.slice(sourceIndex, replacement.start);
+    if (targetIndex + prefix.length > nextLength) return bytes; // bounds guard
+    nextBytes.set(prefix, targetIndex);
+    targetIndex += prefix.length;
+    if (targetIndex + replacement.bytes.length > nextLength) return bytes; // bounds guard
     nextBytes.set(replacement.bytes, targetIndex);
     targetIndex += replacement.bytes.length;
     sourceIndex = replacement.end;
   }
-  nextBytes.set(bytes.slice(sourceIndex), targetIndex);
+  const tail = bytes.slice(sourceIndex);
+  if (targetIndex + tail.length > nextLength) return bytes; // bounds guard
+  nextBytes.set(tail, targetIndex);
   return nextBytes;
 }
 
@@ -317,10 +324,13 @@ function sanitizedSkelBuffer(buffer, version = "") {
       cursor.skip(32); cursor.readInt(true); cursor.skip(1);
       if (nonessential) cursor.skip(4);
     }
+    // All parsing succeeded — apply replacements inside try so any crash is caught
+    return Buffer.from(replaceByteRanges(bytes, replacements));
   } catch {
+    // Parsing failed or replaceByteRanges crashed — return original bytes unmodified
+    // (imagesPath/audioPath were already patched in-place above, so they're still fixed)
     return Buffer.from(bytes);
   }
-  return Buffer.from(replaceByteRanges(bytes, replacements));
 }
 // --- end Spine binary patcher ---
 
