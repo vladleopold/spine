@@ -1,5 +1,152 @@
 [
   {
+    "id": "w140102_spine-2026-07-28T23-56-36-372Z",
+    "name": "w140102_spine",
+    "updatedAt": "2026-07-28T23:56:50.004Z",
+    "animation_asset": {
+      "id": "w140102_spine-2026-07-28T23-56-36-372Z",
+      "name": "w140102_spine",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "idle",
+          "idle_hg"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/w140102_spine-2026-07-28T23-56-36-372Z",
+      "manifestPath": "library/w140102_spine-2026-07-28T23-56-36-372Z/manifest.json",
+      "files": [
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/w140102_spine/W140102_SPINE.skel",
+          "name": "w140102_spine/W140102_SPINE.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/w140102_spine/W140102_SPINE.atlas",
+          "name": "w140102_spine/W140102_SPINE.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/w140102_spine/W140102_SPINE.png",
+          "name": "w140102_spine/W140102_SPINE.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/w140102_spine/W140102_SPINE2.png",
+          "name": "w140102_spine/W140102_SPINE2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/w140102_spine/W140102_SPINE3.png",
+          "name": "w140102_spine/W140102_SPINE3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/w140102_spine-2026-07-28T23-56-36-372Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "W140102_SPINE.skel",
+      "atlas": "W140102_SPINE.atlas",
+      "textures": [
+        "W140102_SPINE.png",
+        "W140102_SPINE2.png",
+        "W140102_SPINE3.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "idle",
+        "idle_hg"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 8,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 4
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "w140102_sd_spine-2026-07-28T23-24-26-001Z",
     "name": "w140102_sd_spine",
     "updatedAt": "2026-07-28T23:24:32.695Z",
