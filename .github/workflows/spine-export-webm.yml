@@ -139,289 +139,135 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Split into chunks if needed
-        id: chunks
-        run: |
-          echo "=== CHECKING FILE SIZE FOR CHUNKING ==="
-          uploadId="${{ github.event.client_payload.uploadId }}"
-          previewFile="${{ github.workspace }}/${uploadId}-preview.webm"
-          MAX_BYTES=45000000   # 45MB limit (GitHub API allows ~50MB)
-          CHUNK_DIR="${{ github.workspace }}/chunks"
-          mkdir -p "$CHUNK_DIR"
-
-          fileSize=$(stat -c%s "$previewFile")
-          echo "File size: ${fileSize} bytes"
-
-          if [ "$fileSize" -le "$MAX_BYTES" ]; then
-            echo "Single file mode (no chunking needed)"
-            cp "$previewFile" "$CHUNK_DIR/preview_chunk_0.webm"
-            echo "chunk_count=1" >> $GITHUB_OUTPUT
-            echo "is_chunked=false" >> $GITHUB_OUTPUT
-          else
-            echo "File too large, splitting into chunks with ffmpeg..."
-            animDuration="${{ steps.duration.outputs.anim_duration }}"
-            # Estimate chunk duration based on file size to target ~45MB per chunk
-            chunkDur=$(node -e "const d=$animDuration, s=$fileSize, m=$MAX_BYTES; console.log(Math.floor(d * m / s))")
-            if [ "$chunkDur" -lt 5 ]; then chunkDur=5; fi
-            echo "Chunk duration: ${chunkDur}s"
-
-            ffmpeg -i "$previewFile" -c copy -f segment -segment_time "$chunkDur" \
-              -reset_timestamps 1 "$CHUNK_DIR/preview_chunk_%d.webm" -y
-            
-            chunkCount=$(ls "$CHUNK_DIR"/preview_chunk_*.webm | wc -l)
-            echo "chunk_count=${chunkCount}" >> $GITHUB_OUTPUT
-            echo "is_chunked=true" >> $GITHUB_OUTPUT
-          fi
-          echo "chunks_dir=$CHUNK_DIR" >> $GITHUB_OUTPUT
-          ls -lh "$CHUNK_DIR/"
-
-
-      - name: Debug - Check output file
-        if: always()
-        run: |
-          echo "=== CHECKING OUTPUT ==="
-          uploadId="${{ github.event.client_payload.uploadId }}"
-          if [ -f "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm" ]; then
-            echo "WebM file exists"
-            ls -lh "${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
-          else
-            echo "ERROR: WebM file not found"
-            ls -la "${{ github.workspace }}/"
-          fi
-
-      - name: Upload chunks to GitHub
+      - name: Upload media to GitHub
         id: upload
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
             const uploadId = '${{ github.event.client_payload.uploadId }}';
             const basePath = 'library';
-            const origin = '${{ github.event.client_payload.origin }}';
             const branch = '${{ github.event.client_payload.branch }}' || 'main';
-            const chunksDir = '${{ steps.chunks.outputs.chunks_dir }}';
-            const animDuration = parseFloat('${{ steps.duration.outputs.anim_duration }}') || 0;
-            const animation = '${{ github.event.client_payload.animation }}';
+            const origin = '${{ github.event.client_payload.origin }}';
+            const workspace = '${{ github.workspace }}';
+            
+            const filesToUpload = [
+              { source: `${workspace}/${uploadId}-preview.webm`, target: `${basePath}/${uploadId}/preview.webm`, key: 'webmPreview' },
+              { source: `${workspace}/${uploadId}-preview-medium.webm`, target: `${basePath}/${uploadId}/preview-medium.webm`, key: 'webmPreviewMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webm`, target: `${basePath}/${uploadId}/preview-low.webm`, key: 'webmPreviewLow' },
+              { source: `${workspace}/${uploadId}-preview.webp`, target: `${basePath}/${uploadId}/preview.webp`, key: 'webpPoster' },
+              { source: `${workspace}/${uploadId}-preview-medium.webp`, target: `${basePath}/${uploadId}/preview-medium.webp`, key: 'webpPosterMedium' },
+              { source: `${workspace}/${uploadId}-preview-low.webp`, target: `${basePath}/${uploadId}/preview-low.webp`, key: 'webpPosterLow' }
+            ];
 
-            console.log("=== UPLOADING CHUNKS ===");
-            console.log("Upload ID:", uploadId);
-            console.log("Chunks dir:", chunksDir);
-
-            async function getSha(filePath) {
+            async function getSha(path) {
               try {
-                const { data } = await github.rest.repos.getContent({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  path: filePath,
-                  ref: branch,
-                });
+                const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path, ref: branch });
                 return data.sha;
-              } catch {
-                return null;
-              }
+              } catch { return null; }
             }
 
-            async function uploadFile(localPath, repoPath, message) {
-              const content = fs.readFileSync(localPath, 'base64');
-              const stats = fs.statSync(localPath);
-              console.log(`Uploading ${repoPath} (${stats.size} bytes)`);
-              const existingSha = await getSha(repoPath);
+            const uploadedUrls = {};
+            for (const file of filesToUpload) {
+              if (!fs.existsSync(file.source)) {
+                console.log(`Skipping missing file: ${file.source}`);
+                continue;
+              }
+              console.log(`Uploading ${file.target}...`);
+              const content = fs.readFileSync(file.source, 'base64');
+              const existingSha = await getSha(file.target);
+              
               await github.rest.repos.createOrUpdateFileContents({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                path: repoPath,
-                message,
+                path: file.target,
+                message: `Add ${file.key} media for ${uploadId}`,
                 content,
                 branch,
                 ...(existingSha ? { sha: existingSha } : {}),
               });
-              return `${origin}/assets/${repoPath}`;
+              uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
             }
+            core.setOutput('uploaded_urls', JSON.stringify(uploadedUrls));
 
-            // Upload all chunks
-            const chunkFiles = fs.readdirSync(chunksDir)
-              .filter(f => f.match(/^preview_chunk_\d+\.webm$/))
-              .sort((a, b) => {
-                const na = parseInt(a.match(/(\d+)/)[1], 10);
-                const nb = parseInt(b.match(/(\d+)/)[1], 10);
-                return na - nb;
-              });
-
-            console.log("Chunk files:", chunkFiles);
-            const chunkUrls = [];
-            const chunkMeta = [];
-
-            for (const file of chunkFiles) {
-              const localPath = path.join(chunksDir, file);
-              const repoPath = `${basePath}/${uploadId}/${file}`;
-              const url = await uploadFile(localPath, repoPath, `Add ${file} for ${uploadId}`);
-              const size = fs.statSync(localPath).size;
-              chunkUrls.push(url);
-              chunkMeta.push({ file, url, size });
-              console.log(`Uploaded: ${url}`);
-            }
-
-            // Write and upload preview_chunks.json
-            const chunksJson = {
-              uploadId,
-              animation,
-              animationDuration: animDuration,
-              isChunked: chunkFiles.length > 1,
-              chunkCount: chunkFiles.length,
-              chunks: chunkMeta,
-              // Backwards compat: point preview.webm to first chunk URL
-              previewUrl: chunkUrls[0],
-              generatedAt: new Date().toISOString(),
-            };
-            const chunksJsonLocal = path.join(chunksDir, 'preview_chunks.json');
-            fs.writeFileSync(chunksJsonLocal, JSON.stringify(chunksJson, null, 2));
-            const chunksJsonRepoPath = `${basePath}/${uploadId}/preview_chunks.json`;
-            const chunksJsonUrl = await uploadFile(chunksJsonLocal, chunksJsonRepoPath, `Add preview_chunks.json for ${uploadId}`);
-            console.log("preview_chunks.json uploaded:", chunksJsonUrl);
-
-            // Also upload/overwrite preview.webm with chunk_0 for backwards compat
-            const previewRepoPath = `${basePath}/${uploadId}/preview.webm`;
-            const previewUrl = await uploadFile(path.join(chunksDir, chunkFiles[0]), previewRepoPath, `Add preview.webm for ${uploadId}`);
-            console.log("preview.webm uploaded:", previewUrl);
-
-            core.setOutput('webm_url', previewUrl);
-            core.setOutput('chunks_json_url', chunksJsonUrl);
-            core.setOutput('chunk_count', chunkFiles.length.toString());
-            core.setOutput('chunk_urls', JSON.stringify(chunkUrls));
-
-
-      - name: Update index entry with webmPreview
+      - name: Update index entry with Retry Logic
         uses: actions/github-script@v7
         with:
           script: |
             const uploadId = '${{ github.event.client_payload.uploadId }}';
-            const webmUrl = '${{ steps.upload.outputs.webm_url }}';
+            const uploadedUrls = JSON.parse('${{ steps.upload.outputs.uploaded_urls }}' || '{}');
             const basePath = 'library';
             const indexPath = `${basePath}/index.json`;
-
-            console.log("=== UPDATING INDEX ===");
-            console.log("Upload ID:", uploadId);
-            console.log("WebM URL:", webmUrl);
-
             const branch = '${{ github.event.client_payload.branch }}' || 'main';
 
-            // Use Git Data API (blob) to read index.json because it exceeds 1MB limit
-            async function getBlobContent(sha) {
-              const { data: blob } = await github.rest.git.getBlob({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                file_sha: sha,
-              });
-              return Buffer.from(blob.content, 'base64').toString('utf8');
+            const fs = require('fs');
+            const metaPath = `${{ github.workspace }}/${uploadId}-preview.webm.json`;
+            let videoMeta = {};
+            if (fs.existsSync(metaPath)) {
+              try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
             }
 
-            async function getIndexSha() {
-              const { data: tree } = await github.rest.git.getTree({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                tree_sha: branch,
-                recursive: '1',
-              });
-              const indexEntry = tree.tree.find(t => t.path === 'library/index.json');
-              return indexEntry ? indexEntry.sha : null;
+            // Retry logic to handle Git race conditions
+            const MAX_RETRIES = 15;
+            for (let i = 1; i <= MAX_RETRIES; i++) {
+              try {
+                const { data: indexData } = await github.rest.repos.getContent({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: indexPath,
+                  ref: branch,
+                });
+
+                const content = Buffer.from(indexData.content, 'base64').toString('utf8');
+                const entries = JSON.parse(content);
+                const entryIndex = entries.findIndex(e => e.id === uploadId);
+
+                if (entryIndex === -1) {
+                  console.log(`Entry ${uploadId} not found in index, skipping update`);
+                  return;
+                }
+
+                // Clean up old chunk properties if they exist
+                delete entries[entryIndex].webmChunksJson;
+                delete entries[entryIndex].webmChunks;
+                delete entries[entryIndex].webmChunkCount;
+                delete entries[entryIndex].webmIsChunked;
+
+                entries[entryIndex] = {
+                  ...entries[entryIndex],
+                  ...uploadedUrls,
+                  webmPreviewPath: `${basePath}/${uploadId}/preview.webm`,
+                  webmStatus: 'ready',
+                  webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                };
+
+                const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
+
+                await github.rest.repos.createOrUpdateFileContents({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: indexPath,
+                  message: `Update media preview URLs for ${uploadId}`,
+                  content: newContent,
+                  sha: indexData.sha,
+                  branch,
+                });
+                
+                console.log(`Successfully updated index for ${uploadId} on try ${i}`);
+                break; // Success!
+              } catch (error) {
+                if (error.status === 409 || error.status === 422) {
+                  console.log(`Conflict updating index (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
+                  if (i === MAX_RETRIES) throw error;
+                  const waitTime = Math.floor(Math.random() * 4000) + 2000;
+                  await new Promise(resolve => setTimeout(resolve, waitTime));
+                } else {
+                  throw error;
+                }
+              }
             }
-
-            console.log("Getting index SHA...");
-            const indexSha = await getIndexSha();
-            console.log("Index SHA:", indexSha);
-            if (!indexSha) {
-              console.log('index.json not found in tree');
-              return;
-            }
-
-            console.log("Fetching blob content...");
-            const content = await getBlobContent(indexSha);
-            const entries = JSON.parse(content);
-            console.log("Total entries:", entries.length);
-
-            const entryIndex = entries.findIndex(e => e.id === '${{ github.event.client_payload.uploadId }}');
-            console.log("Entry index:", entryIndex);
-
-            if (entryIndex === -1) {
-              console.log(`Entry not found in index, skipping update`);
-              return;
-            }
-
-            const chunkUrls = JSON.parse('${{ steps.upload.outputs.chunk_urls }}' || '[]');
-            const chunkCount = parseInt('${{ steps.upload.outputs.chunk_count }}' || '1', 10);
-            const chunksJsonUrl = '${{ steps.upload.outputs.chunks_json_url }}';
-            const animDuration = parseFloat('${{ steps.duration.outputs.anim_duration }}') || 0;
-
-            entries[entryIndex] = {
-              ...entries[entryIndex],
-              webmPreview: '${{ steps.upload.outputs.webm_url }}',
-              webmPreviewPath: `library/${{ github.event.client_payload.uploadId }}/preview.webm`,
-              webmChunksJson: chunksJsonUrl,
-              webmChunks: chunkUrls,
-              webmChunkCount: chunkCount,
-              webmIsChunked: chunkCount > 1,
-              webmAnimDuration: animDuration,
-              webmStatus: 'ready',
-              webmGeneratedAt: new Date().toISOString(),
-            };
-
-            const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
-            const { data: newBlob } = await github.rest.git.createBlob({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              content: newContent,
-              encoding: 'base64',
-            });
-
-            console.log("Created new blob:", newBlob.sha);
-
-            const { data: oldTree } = await github.rest.git.getTree({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tree_sha: branch,
-              recursive: '1',
-            });
-
-            const { data: newTree } = await github.rest.git.createTree({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              base_tree: oldTree.sha,
-              tree: [
-                {
-                  path: 'library/index.json',
-                  mode: '100644',
-                  type: 'blob',
-                  sha: newBlob.sha,
-                },
-              ],
-            });
-
-            console.log("Created new tree:", newTree.sha);
-
-            const { data: refData } = await github.rest.git.getRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `heads/${branch}`,
-            });
-            const parentSha = refData.object.sha;
-
-            const { data: newCommit } = await github.rest.git.createCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              message: `Update WebM preview for ${uploadId}`,
-              tree: newTree.sha,
-              parents: [parentSha],
-            });
-
-            console.log("Created commit:", newCommit.sha);
-
-            await github.rest.git.updateRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `heads/${branch}`,
-              sha: newCommit.sha,
-              force: true,
-            });
-
-            console.log(`Updated index entry ${uploadId} with webmPreview`);
