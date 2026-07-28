@@ -139,8 +139,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload media to GitHub
-        id: upload
+      - name: Upload media and update index atomically
+        id: upload_and_update
         uses: actions/github-script@v7
         with:
           script: |
@@ -150,6 +150,8 @@ jobs:
             const branch = '${{ github.event.client_payload.branch }}' || 'main';
             const origin = '${{ github.event.client_payload.origin }}';
             const workspace = '${{ github.workspace }}';
+            const indexPath = `${basePath}/index.json`;
+            const metaPath = `${workspace}/${uploadId}-preview.webm.json`;
             
             const filesToUpload = [
               { source: `${workspace}/${uploadId}-preview.webm`, target: `${basePath}/${uploadId}/preview.webm`, key: 'webmPreview' },
@@ -160,54 +162,27 @@ jobs:
               { source: `${workspace}/${uploadId}-preview-low.webp`, target: `${basePath}/${uploadId}/preview-low.webp`, key: 'webpPosterLow' }
             ];
 
-            async function getSha(path) {
-              try {
-                const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path, ref: branch });
-                return data.sha;
-              } catch { return null; }
-            }
-
+            // 1. Create blobs for media files in advance
+            const newBlobs = [];
             const uploadedUrls = {};
             for (const file of filesToUpload) {
-              if (!fs.existsSync(file.source)) {
-                console.log(`Skipping missing file: ${file.source}`);
-                continue;
+              if (fs.existsSync(file.source)) {
+                console.log(`Creating blob for ${file.target}...`);
+                const content = fs.readFileSync(file.source, 'base64');
+                const { data: blob } = await github.rest.git.createBlob({
+                  owner: context.repo.owner, repo: context.repo.repo, content, encoding: 'base64',
+                });
+                newBlobs.push({ path: file.target, mode: '100644', type: 'blob', sha: blob.sha });
+                uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
               }
-              console.log(`Uploading ${file.target}...`);
-              const content = fs.readFileSync(file.source, 'base64');
-              const existingSha = await getSha(file.target);
-              
-              await github.rest.repos.createOrUpdateFileContents({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                path: file.target,
-                message: `Add ${file.key} media for ${uploadId}`,
-                content,
-                branch,
-                ...(existingSha ? { sha: existingSha } : {}),
-              });
-              uploadedUrls[file.key] = `${origin}/assets/${file.target}`;
             }
-            core.setOutput('uploaded_urls', JSON.stringify(uploadedUrls));
 
-      - name: Update index entry with Retry Logic
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const uploadId = '${{ github.event.client_payload.uploadId }}';
-            const uploadedUrls = JSON.parse('${{ steps.upload.outputs.uploaded_urls }}' || '{}');
-            const basePath = 'library';
-            const indexPath = `${basePath}/index.json`;
-            const branch = '${{ github.event.client_payload.branch }}' || 'main';
-
-            const fs = require('fs');
-            const metaPath = `${{ github.workspace }}/${uploadId}-preview.webm.json`;
+            // 2. Read metadata if exists
             let videoMeta = {};
             if (fs.existsSync(metaPath)) {
               try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (err) {}
             }
 
-            // Use Git Data API (blob) to read and write index.json because it exceeds 1MB limit
             async function getBlobContent(sha) {
               const { data: blob } = await github.rest.git.getBlob({
                 owner: context.repo.owner, repo: context.repo.repo, file_sha: sha,
@@ -215,61 +190,60 @@ jobs:
               return Buffer.from(blob.content, 'base64').toString('utf8');
             }
 
-            // Retry logic to handle Git race conditions
+            // 3. Retry loop for updating index and committing tree
             const MAX_RETRIES = 15;
             for (let i = 1; i <= MAX_RETRIES; i++) {
               try {
-                const { data: tree } = await github.rest.git.getTree({
+                const { data: oldTree } = await github.rest.git.getTree({
                   owner: context.repo.owner, repo: context.repo.repo, tree_sha: branch, recursive: '1',
                 });
-                const indexEntry = tree.tree.find(t => t.path === indexPath);
+                const indexEntry = oldTree.tree.find(t => t.path === indexPath);
                 if (!indexEntry) {
                   console.log('index.json not found in tree');
                   return;
                 }
 
+                // Update index.json content
                 const content = await getBlobContent(indexEntry.sha);
                 const entries = JSON.parse(content);
                 const entryIndex = entries.findIndex(e => e.id === uploadId);
 
-                if (entryIndex === -1) {
-                  console.log(`Entry ${uploadId} not found in index, skipping update`);
-                  return;
+                if (entryIndex !== -1) {
+                  delete entries[entryIndex].webmChunksJson;
+                  delete entries[entryIndex].webmChunks;
+                  delete entries[entryIndex].webmChunkCount;
+                  delete entries[entryIndex].webmIsChunked;
+
+                  const isError = !!videoMeta.error;
+                  entries[entryIndex] = {
+                    ...entries[entryIndex],
+                    ...uploadedUrls,
+                    webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
+                    webmStatus: isError ? 'error' : 'ready',
+                    webmError: isError ? videoMeta.error : undefined,
+                    webmGeneratedAt: new Date().toISOString(),
+                    ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                    ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                    ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                    ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                    ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                  };
                 }
 
-                // Clean up old chunk properties if they exist
-                delete entries[entryIndex].webmChunksJson;
-                delete entries[entryIndex].webmChunks;
-                delete entries[entryIndex].webmChunkCount;
-                delete entries[entryIndex].webmIsChunked;
-
-                const isError = !!videoMeta.error;
-                entries[entryIndex] = {
-                  ...entries[entryIndex],
-                  ...uploadedUrls,
-                  webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
-                  webmStatus: isError ? 'error' : 'ready',
-                  webmError: isError ? videoMeta.error : undefined,
-                  webmGeneratedAt: new Date().toISOString(),
-                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
-                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
-                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
-                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
-                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
-                };
-
-                const newContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
-                const { data: newBlob } = await github.rest.git.createBlob({
-                  owner: context.repo.owner, repo: context.repo.repo, content: newContent, encoding: 'base64',
+                // Create blob for updated index.json
+                const newIndexContent = Buffer.from(JSON.stringify(entries, null, 2)).toString('base64');
+                const { data: indexBlob } = await github.rest.git.createBlob({
+                  owner: context.repo.owner, repo: context.repo.repo, content: newIndexContent, encoding: 'base64',
                 });
 
-                const { data: oldTree } = await github.rest.git.getTree({
-                  owner: context.repo.owner, repo: context.repo.repo, tree_sha: branch, recursive: '1',
-                });
+                const treeEntries = [
+                  ...newBlobs,
+                  { path: indexPath, mode: '100644', type: 'blob', sha: indexBlob.sha }
+                ];
 
+                // Create a single tree and commit with everything
                 const { data: newTree } = await github.rest.git.createTree({
-                  owner: context.repo.owner, repo: context.repo.repo, base_tree: oldTree.sha,
-                  tree: [{ path: indexPath, mode: '100644', type: 'blob', sha: newBlob.sha }],
+                  owner: context.repo.owner, repo: context.repo.repo, base_tree: oldTree.sha, tree: treeEntries,
                 });
 
                 const { data: refData } = await github.rest.git.getRef({
@@ -277,23 +251,22 @@ jobs:
                 });
 
                 const { data: newCommit } = await github.rest.git.createCommit({
-                  owner: context.repo.owner, repo: context.repo.repo, message: `Update media preview URLs for ${uploadId}`,
+                  owner: context.repo.owner, repo: context.repo.repo, message: `Add media & update index for ${uploadId}`,
                   tree: newTree.sha, parents: [refData.object.sha],
                 });
 
                 await github.rest.git.updateRef({
                   owner: context.repo.owner, repo: context.repo.repo, ref: `heads/${branch}`,
-                  sha: newCommit.sha, force: true, // we use force because we are retrying on conflicts
+                  sha: newCommit.sha, force: true, // Retry on conflict
                 });
                 
-                console.log(`Successfully updated index for ${uploadId} on try ${i}`);
+                console.log(`Successfully updated media and index for ${uploadId} on try ${i}`);
                 break; // Success!
               } catch (error) {
-                // If it's a conflict updating the ref
-                if (error.status === 409 || error.status === 422 || error.message.includes('Update is not a fast forward')) {
-                  console.log(`Conflict updating index (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
+                if (error.status === 409 || error.status === 422 || (error.message && error.message.includes('not a fast forward'))) {
+                  console.log(`Conflict updating repository (try ${i}/${MAX_RETRIES}). Retrying in a moment...`);
                   if (i === MAX_RETRIES) throw error;
-                  const waitTime = Math.floor(Math.random() * 4000) + 2000;
+                  const waitTime = Math.floor(Math.random() * 5000) + 2000;
                   await new Promise(resolve => setTimeout(resolve, waitTime));
                 } else {
                   throw error;
