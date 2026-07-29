@@ -947,8 +947,29 @@ function sanitizeSkeletonData(json: unknown): unknown {
   return sanitizeSkeletonJson(json);
 }
 
+const validSlotTimelineTypes = new Set(["attachment", "rgba", "rgb", "alpha", "rgba2", "rgb2", "color", "twoColor", "drawOrder", "event", "sequence", "flipx", "flipy"]);
+
 function sanitizeSkeletonJson(json: unknown): unknown {
   if (!json || typeof json !== "object") return json;
+  const obj = json as Record<string, unknown>;
+  if (obj.animations && typeof obj.animations === "object") {
+    for (const animName of Object.keys(obj.animations as Record<string, unknown>)) {
+      const anim = (obj.animations as Record<string, unknown>)[animName];
+      if (!anim || typeof anim !== "object") continue;
+      const animObj = anim as Record<string, unknown>;
+      if (animObj.slots && typeof animObj.slots === "object") {
+        for (const slotName of Object.keys(animObj.slots as Record<string, unknown>)) {
+          const slotTimelines = (animObj.slots as Record<string, unknown>)[slotName];
+          if (!slotTimelines || typeof slotTimelines !== "object") continue;
+          for (const timelineName of Object.keys(slotTimelines as Record<string, unknown>)) {
+            if (!validSlotTimelineTypes.has(timelineName)) {
+              delete (slotTimelines as Record<string, unknown>)[timelineName];
+            }
+          }
+        }
+      }
+    }
+  }
   const skins = (json as Record<string, unknown>).skins as Record<string, unknown>[] | undefined;
   if (!skins) return json;
   const attachments = skins.flatMap((skin) => Object.values(skin || {})) || [];
