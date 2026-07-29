@@ -1,0 +1,425 @@
+name: Spine Export Full (All Animations · Parallel)
+
+# Triggered automatically by spine-export-webm.yml after the first preview is published
+on:
+  repository_dispatch:
+    types: [spine-export-full]
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 1 — Read index.json and produce the animation matrix
+# ═══════════════════════════════════════════════════════════════════════════
+jobs:
+  generate-matrix:
+    name: 📋 Build animation matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix:    ${{ steps.set-matrix.outputs.matrix }}
+      has-items: ${{ steps.set-matrix.outputs.has_items }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read animations from index.json
+        id: set-matrix
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          echo "=== Reading animations for: $UPLOAD_ID ==="
+
+          RESULT=$(node -e "
+            const fs = require('fs');
+            const index = JSON.parse(fs.readFileSync('library/index.json', 'utf8'));
+            const entry = index.find(e => e.id === '$UPLOAD_ID');
+            if (!entry || !Array.isArray(entry.animations) || entry.animations.length === 0) {
+              console.log(JSON.stringify({ matrix: [], has_items: false }));
+            } else {
+              console.log(JSON.stringify({ matrix: entry.animations, has_items: true }));
+            }
+          ")
+
+          MATRIX=$(echo "$RESULT" | node -e "process.stdin.setEncoding('utf8');let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const r=JSON.parse(d);process.stdout.write(JSON.stringify(r.matrix));});")
+          HAS_ITEMS=$(echo "$RESULT" | node -e "process.stdin.setEncoding('utf8');let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const r=JSON.parse(d);process.stdout.write(String(r.has_items));});")
+
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
+          echo "has_items=${HAS_ITEMS}" >> $GITHUB_OUTPUT
+          echo "=== Matrix: $MATRIX  |  has_items: $HAS_ITEMS ==="
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 2a — Export OPAQUE WebM + WebP + MP4  (one job per animation)
+# ═══════════════════════════════════════════════════════════════════════════
+  export-opaque:
+    name: 🎬 Opaque · ${{ matrix.animation }}
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.has-items == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        animation: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium --with-deps
+
+      - name: Install system dependencies (GPU + media)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 ffmpeg
+
+      - name: Export WebM preview (opaque · 3 qualities)
+        id: export-webm
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="${{ matrix.animation }}"
+          SAFE=$(echo "$ANIM" | sed 's/[^a-zA-Z0-9_-]/_/g')
+          echo "=== Exporting opaque WebM: $ANIM ($SAFE) ==="
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$UPLOAD_ID" \
+            --animation="$ANIM" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --output="${{ github.workspace }}/${UPLOAD_ID}-anim-${SAFE}-preview.webm"
+
+          echo "safe_name=${SAFE}" >> $GITHUB_OUTPUT
+          echo "=== Opaque WebM done ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert WebM → MP4 (H.264 · 3 qualities)
+        id: convert-mp4
+        if: always() && steps.export-webm.outcome == 'success'
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          SAFE="${{ steps.export-webm.outputs.safe_name }}"
+          echo "=== Converting to MP4: $SAFE ==="
+
+          for suffix in "" "-medium" "-low"; do
+            SRC="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.webm"
+            DST="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.mp4"
+            if [ -f "$SRC" ]; then
+              ffmpeg -y -i "$SRC" \
+                -c:v libx264 -preset fast -crf 23 \
+                -movflags +faststart -pix_fmt yuv420p \
+                "$DST" && echo "MP4 ready: $DST" || echo "MP4 failed for $SRC (non-critical)"
+            fi
+          done
+
+      - name: Collect opaque artifacts
+        id: collect-opaque
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="${{ matrix.animation }}"
+          SAFE="${{ steps.export-webm.outputs.safe_name }}"
+          DIR="artifact_opaque_${UPLOAD_ID}_${SAFE}"
+          mkdir -p "$DIR"
+
+          # WebM files
+          for suffix in "" "-medium" "-low"; do
+            for ext in "webm" "webp" "mp4"; do
+              SRC="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.${ext}"
+              [ -f "$SRC" ] && mv "$SRC" "$DIR/"
+            done
+          done
+
+          # Meta JSON
+          META="${UPLOAD_ID}-anim-${SAFE}-preview.webm.json"
+          [ -f "$META" ] && mv "$META" "$DIR/meta.json" || echo '{}' > "$DIR/meta.json"
+
+          # Animation name mapping
+          echo "$ANIM" > "$DIR/anim-name.txt"
+          echo "$SAFE" > "$DIR/safe-name.txt"
+          echo "type=opaque" > "$DIR/export-type.txt"
+
+          ls -lah "$DIR/"
+
+      - name: Upload opaque artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-opaque-${{ github.event.client_payload.uploadId }}-${{ steps.export-webm.outputs.safe_name }}
+          path: artifact_opaque_${{ github.event.client_payload.uploadId }}_${{ steps.export-webm.outputs.safe_name }}/*
+          retention-days: 1
+          overwrite: true
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 2b — Export ALPHA (transparent) WebM  (one job per animation)
+#             Runs IN PARALLEL with export-opaque — no dependencies between them
+# ═══════════════════════════════════════════════════════════════════════════
+  export-alpha:
+    name: 🌀 Alpha · ${{ matrix.animation }}
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.has-items == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        animation: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium --with-deps
+
+      - name: Install system dependencies (GPU + media)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 ffmpeg
+
+      - name: Export transparent WebM (alpha VP9 · 3 qualities)
+        id: export-alpha
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="${{ matrix.animation }}"
+          SAFE=$(echo "$ANIM" | sed 's/[^a-zA-Z0-9_-]/_/g')
+          echo "=== Exporting alpha WebM: $ANIM ($SAFE) ==="
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$UPLOAD_ID" \
+            --animation="$ANIM" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --alpha \
+            --output="${{ github.workspace }}/${UPLOAD_ID}-anim-${SAFE}-alpha.webm" \
+            && echo "Alpha export succeeded" \
+            || echo "Alpha export failed (non-critical, continuing)"
+
+          echo "safe_name=${SAFE}" >> $GITHUB_OUTPUT
+          echo "=== Alpha WebM done ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Collect alpha artifacts
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="${{ matrix.animation }}"
+          SAFE="${{ steps.export-alpha.outputs.safe_name }}"
+          DIR="artifact_alpha_${UPLOAD_ID}_${SAFE}"
+          mkdir -p "$DIR"
+
+          for suffix in "" "-medium" "-low"; do
+            SRC="${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.webm"
+            [ -f "$SRC" ] && mv "$SRC" "$DIR/" || echo "No alpha file: $SRC"
+          done
+
+          echo "$ANIM" > "$DIR/anim-name.txt"
+          echo "$SAFE" > "$DIR/safe-name.txt"
+          echo "type=alpha" > "$DIR/export-type.txt"
+
+          ls -lah "$DIR/"
+
+      - name: Upload alpha artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-alpha-${{ github.event.client_payload.uploadId }}-${{ steps.export-alpha.outputs.safe_name }}
+          path: artifact_alpha_${{ github.event.client_payload.uploadId }}_${{ steps.export-alpha.outputs.safe_name }}/*
+          retention-days: 1
+          overwrite: true
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 3 — Atomic commit: gather ALL artifacts → copy files → update index
+#            Runs after BOTH export-opaque AND export-alpha complete
+# ═══════════════════════════════════════════════════════════════════════════
+  commit-all:
+    name: 💾 Commit all to repository
+    needs: [export-opaque, export-alpha]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download opaque artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts/opaque
+          pattern: full-opaque-${{ github.event.client_payload.uploadId }}-*
+          merge-multiple: false
+
+      - name: Download alpha artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts/alpha
+          pattern: full-alpha-${{ github.event.client_payload.uploadId }}-*
+          merge-multiple: false
+
+      - name: Commit and push atomically (fetch-reset-apply loop)
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ORIGIN="${{ github.event.client_payload.origin }}"
+          BASE_PATH="library"
+          INDEX_PATH="${BASE_PATH}/index.json"
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "=== Attempt $i/$MAX_RETRIES ==="
+
+            # 1. Always start from fresh remote HEAD to avoid conflicts
+            git fetch origin main
+            git reset --hard origin/main
+
+            # 2. Process all downloaded artifacts and update index.json
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+
+              const uploadId = '$UPLOAD_ID';
+              const origin = '$ORIGIN';
+              const basePath = '$BASE_PATH';
+              const indexPath = '$INDEX_PATH';
+
+              const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+              const entryIndex = indexData.findIndex(e => e.id === uploadId);
+              if (entryIndex === -1) {
+                console.log('Entry not found, nothing to do.');
+                process.exit(0);
+              }
+
+              const allAnimPreviews = indexData[entryIndex].allAnimationPreviews || {};
+
+              // Process all artifact types
+              for (const type of ['opaque', 'alpha']) {
+                const artifactsDir = path.join('downloaded-artifacts', type);
+                if (!fs.existsSync(artifactsDir)) continue;
+
+                const dirs = fs.readdirSync(artifactsDir);
+                for (const dir of dirs) {
+                  const sourceDir = path.join(artifactsDir, dir);
+                  if (!fs.statSync(sourceDir).isDirectory()) continue;
+
+                  const animNameFile = path.join(sourceDir, 'anim-name.txt');
+                  const safeNameFile = path.join(sourceDir, 'safe-name.txt');
+                  if (!fs.existsSync(animNameFile) || !fs.existsSync(safeNameFile)) continue;
+
+                  const animName = fs.readFileSync(animNameFile, 'utf8').trim();
+                  const safeName = fs.readFileSync(safeNameFile, 'utf8').trim();
+                  const animTargetDir = path.join(basePath, uploadId, 'animations', safeName);
+                  fs.mkdirSync(animTargetDir, { recursive: true });
+
+                  if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
+
+                  const files = fs.readdirSync(sourceDir);
+                  for (const file of files) {
+                    if (['anim-name.txt', 'safe-name.txt', 'export-type.txt', 'meta.json'].includes(file)) continue;
+                    const src = path.join(sourceDir, file);
+                    const dst = path.join(animTargetDir, file);
+                    fs.copyFileSync(src, dst);
+
+                    const url = origin + '/assets/' + basePath + '/' + uploadId + '/animations/' + safeName + '/' + file;
+                    const prefix = uploadId + '-anim-' + safeName + '-';
+
+                    // Opaque WebM
+                    if (file === prefix + 'preview.webm')          allAnimPreviews[animName].webmPreview = url;
+                    else if (file === prefix + 'preview-medium.webm') allAnimPreviews[animName].webmPreviewMedium = url;
+                    else if (file === prefix + 'preview-low.webm')    allAnimPreviews[animName].webmPreviewLow = url;
+                    // WebP poster
+                    else if (file === prefix + 'preview.webp')        allAnimPreviews[animName].webpPoster = url;
+                    else if (file === prefix + 'preview-medium.webp') allAnimPreviews[animName].webpPosterMedium = url;
+                    else if (file === prefix + 'preview-low.webp')    allAnimPreviews[animName].webpPosterLow = url;
+                    // MP4
+                    else if (file === prefix + 'preview.mp4')         allAnimPreviews[animName].mp4Preview = url;
+                    else if (file === prefix + 'preview-medium.mp4')  allAnimPreviews[animName].mp4PreviewMedium = url;
+                    else if (file === prefix + 'preview-low.mp4')     allAnimPreviews[animName].mp4PreviewLow = url;
+                    // Alpha WebM (transparent VP9)
+                    else if (file === prefix + 'alpha.webm')          allAnimPreviews[animName].webmAlpha = url;
+                    else if (file === prefix + 'alpha-medium.webm')   allAnimPreviews[animName].webmAlphaMedium = url;
+                    else if (file === prefix + 'alpha-low.webm')      allAnimPreviews[animName].webmAlphaLow = url;
+                  }
+                }
+              }
+
+              indexData[entryIndex] = {
+                ...indexData[entryIndex],
+                allAnimationPreviews: allAnimPreviews,
+                fullExportStatus: 'ready',
+                fullExportGeneratedAt: new Date().toISOString(),
+              };
+
+              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+              console.log('index.json updated with all animation previews.');
+              console.log('Animations exported:', Object.keys(allAnimPreviews).join(', '));
+            "
+
+            # 3. Stage everything
+            git add library/
+            if git diff-index --quiet HEAD --; then
+              echo "No changes to commit — all animations already up to date."
+              exit 0
+            fi
+
+            # 4. Commit
+            git commit -m "Full export: all animations + alpha for ${UPLOAD_ID}"
+
+            # 5. Push — retry if rejected by another concurrent push
+            if git push origin main; then
+              echo "Successfully pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Retrying with fresh HEAD..."
+              sleep $((RANDOM % 6 + 2))
+            fi
+          done
+
+          echo "ERROR: Failed to push after $MAX_RETRIES attempts."
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Full Export Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Upload ID | ${{ github.event.client_payload.uploadId }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Opaque jobs | ${{ needs.export-opaque.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Alpha jobs  | ${{ needs.export-alpha.result }} |" >> $GITHUB_STEP_SUMMARY

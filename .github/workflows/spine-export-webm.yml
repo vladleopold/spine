@@ -158,16 +158,19 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             
-            # 2. Copy media files on top of fresh state
-            mkdir -p "${basePath}/${uploadId}"
-            for ext in "webm" "webp"; do
-              for suffix in "" "-medium" "-low"; do
-                f="${uploadId}-preview${suffix}.${ext}"
-                if [ -f "$f" ]; then
-                  cp "$f" "${basePath}/${uploadId}/"
-                fi
-              done
+          # 2. Copy media files on top of fresh state
+          mkdir -p "${basePath}/${uploadId}"
+          for ext in "webm" "webp"; do
+            for suffix in "" "-medium" "-low"; do
+              # Script outputs: {uploadId}-preview{suffix}.webm
+              f="${uploadId}-preview${suffix}.${ext}"
+              if [ -f "$f" ]; then
+                # Rename to: preview{suffix}.webm (inside uploadId dir)
+                cp "$f" "${basePath}/${uploadId}/preview${suffix}.${ext}"
+                echo "Copied: $f -> ${basePath}/${uploadId}/preview${suffix}.${ext}"
+              fi
             done
+          done
             
             # 3. Update index.json on top of fresh state
             node -e "
@@ -247,3 +250,22 @@ jobs:
           echo "Failed to push after $MAX_RETRIES attempts."
           exit 1
 
+      - name: Trigger full animation export (background)
+        if: success()
+        run: |
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
+            -d "{
+              \"event_type\": \"spine-export-full\",
+              \"client_payload\": {
+                \"uploadId\": \"${{ github.event.client_payload.uploadId }}\",
+                \"origin\": \"${{ github.event.client_payload.origin }}\",
+                \"owner\": \"${{ github.event.client_payload.owner }}\",
+                \"repo\": \"${{ github.event.client_payload.repo }}\",
+                \"branch\": \"${{ github.event.client_payload.branch }}\"
+              }
+            }"
+          echo "Dispatched spine-export-full for ${{ github.event.client_payload.uploadId }}"
