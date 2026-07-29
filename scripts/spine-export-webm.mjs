@@ -724,11 +724,11 @@ try {
 
     // WebP Generation (extract first frame)
     // High Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimHigh} -c:v libwebp "${outPaths.webpHigh}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimHigh} -c:v libwebp -q:v 90 "${outPaths.webpHigh}"`, { stdio: 'inherit' });
     // Medium Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimMedium} -c:v libwebp "${outPaths.webpMedium}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimMedium} -c:v libwebp -q:v 85 "${outPaths.webpMedium}"`, { stdio: 'inherit' });
     // Low Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimLow} -c:v libwebp "${outPaths.webpLow}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimLow} -c:v libwebp -q:v 80 "${outPaths.webpLow}"`, { stdio: 'inherit' });
 
     console.error(`FFmpeg processing complete. Generated 3x WebM and 3x WebP.`);
   } catch (err) {
@@ -766,6 +766,8 @@ try {
   fs.writeFileSync(outPaths.webmHigh + '.json', JSON.stringify(meta, null, 2));
 
   console.error(`Final High WebM size: ${meta.files.webmHigh} bytes`);
+  console.error(`Final High WebP size: ${meta.files.webpHigh} bytes`);
+  console.error(`Video dimensions: ${finalWidth}x${finalHeight}`);
   console.log(JSON.stringify({ ...meta, ok: true, path: outputPath }));
 
   try { fs.rmSync(tempDir, { recursive: true }); } catch { }
