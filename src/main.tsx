@@ -1,3 +1,4 @@
+import React from "react";
 const root = document.getElementById("root");
 export {};
 let isAppLoading = false;
@@ -169,6 +170,96 @@ function startBootParticles() {
   stopBootParticles = null;
 }
 
+const GOOGLE_CLIENT_ID = "452954491878-ebeqoeg5h7pr968uev0qbmtpsadg5mj3.apps.googleusercontent.com";
+const ADMIN_EMAILS = new Set(["vladyslavchaplygin@gmail.com", "leopolds2010@gmail.com"]);
+const SESSION_KEY = "spine-link-google-session";
+
+type StoredSession = { user: { email: string; name?: string; picture?: string }; accessToken: string; expiresAt: number };
+
+function readSession(): StoredSession | null {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw) as StoredSession;
+    if (s.expiresAt && s.expiresAt > Date.now()) return s;
+    localStorage.removeItem(SESSION_KEY);
+  } catch {}
+  return null;
+}
+
+function AdminPanelWrapper({ AdminPanel }: { AdminPanel: React.ComponentType<any> }) {
+  const [user, setUser] = React.useState<{ email: string; name?: string; picture?: string } | null>(null);
+  const [token, setToken] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
+  const tokenClientRef = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    const s = readSession();
+    if (s?.user?.email && ADMIN_EMAILS.has(s.user.email.toLowerCase())) {
+      setUser(s.user);
+      setToken(s.accessToken);
+    }
+    setLoading(false);
+  }, []);
+
+  const handleGoogleLogin = React.useCallback(() => {
+    if (tokenClientRef.current) {
+      tokenClientRef.current.requestAccessToken();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.onload = () => {
+      tokenClientRef.current = (window as any).google?.accounts?.oauth2?.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: "openid email profile",
+        callback: async (response: any) => {
+          if (response.error || !response.access_token) return;
+          try {
+            const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+              headers: { Authorization: `Bearer ${response.access_token}` },
+            });
+            const payload = await res.json();
+            if (!payload.email_verified || !payload.email) return;
+            const u = { email: payload.email, name: payload.name, picture: payload.picture };
+            setUser(u);
+            setToken(response.access_token);
+            localStorage.setItem(SESSION_KEY, JSON.stringify({
+              user: u, accessToken: response.access_token, expiresAt: Date.now() + (response.expires_in || 3600) * 1000,
+            }));
+          } catch {}
+        },
+      });
+      tokenClientRef.current?.requestAccessToken();
+    };
+    document.head.appendChild(script);
+  }, []);
+
+  const handleSignOut = React.useCallback(() => {
+    setUser(null);
+    setToken("");
+    localStorage.removeItem(SESSION_KEY);
+    try { (window as any).google?.accounts?.id?.disableAutoSelect(); } catch {}
+  }, []);
+
+  if (loading) return <div style={{ padding: 40, color: "#888" }}>Loading...</div>;
+  if (!user || !ADMIN_EMAILS.has(user.email.toLowerCase())) {
+    return (
+      <div className="admin-login-screen">
+        <h1>Administrator Access</h1>
+        <p>Sign in with an authorized Google account to access the admin panel.</p>
+        <button className="admin-btn admin-btn-primary" onClick={handleGoogleLogin}>
+          Sign in with Google
+        </button>
+        <div style={{ marginTop: 16 }}>
+          <a className="admin-btn admin-btn-ghost" href="/">← Back to site</a>
+        </div>
+      </div>
+    );
+  }
+  return <AdminPanel googleUser={user} accessToken={token} onSignOut={handleSignOut} />;
+}
+
 async function mountApp(initialFiles: File[] = [], options: { openLibrary?: boolean; login?: boolean; upload?: boolean } = {}) {
   if (!root || isAppLoading || isAppMounted) return;
   isAppLoading = true;
@@ -205,19 +296,35 @@ const bootSearchParams = new URLSearchParams(window.location.search);
 const shouldOpenLogin = bootSearchParams.get("login") === "google";
 const shouldOpenPortfolio = bootSearchParams.has("portfolio") || bootSearchParams.has("library");
 const shouldOpenUpload = bootSearchParams.get("upload") === "work";
+const shouldOpenAdmin = bootSearchParams.has("admin");
 
-renderBootShell();
-
-if (bootSearchParams.has("edit") || shouldOpenLogin || shouldOpenPortfolio || shouldOpenUpload) {
-  void mountApp([], { login: shouldOpenLogin, openLibrary: shouldOpenPortfolio, upload: shouldOpenUpload });
+if (shouldOpenAdmin) {
+  void (async () => {
+    const [{ createElement }, { createRoot }, { default: AdminPanel }] = await Promise.all([
+      import("react"),
+      import("react-dom/client"),
+      import("./AdminPanel"),
+    ]);
+    const rootEl = document.getElementById("root");
+    if (rootEl) {
+      rootEl.innerHTML = "";
+      createRoot(rootEl).render(createElement(AdminPanelWrapper, { AdminPanel }));
+    }
+  })();
 } else {
-  const mountHomepageApp = () => {
-    void mountApp();
-  };
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(mountHomepageApp, { timeout: 1200 });
+  renderBootShell();
+
+  if (bootSearchParams.has("edit") || shouldOpenLogin || shouldOpenPortfolio || shouldOpenUpload) {
+    void mountApp([], { login: shouldOpenLogin, openLibrary: shouldOpenPortfolio, upload: shouldOpenUpload });
   } else {
-    globalThis.setTimeout(mountHomepageApp, 250);
+    const mountHomepageApp = () => {
+      void mountApp();
+    };
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(mountHomepageApp, { timeout: 1200 });
+    } else {
+      globalThis.setTimeout(mountHomepageApp, 250);
+    }
   }
 }
 
