@@ -1,7 +1,22 @@
 User-agent: *
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://spine-link.vercel.app/sitemap.xml
 Sitemap: https://spine-link.vercel.app/sitemap.txt
+Sitemap: https://spine-link.vercel.app/sitemap-portfolios.xml
+Sitemap: https://spine-link.vercel.app/sitemap-archive.xml
 Sitemap: https://spine-link.vercel.app/sitemap-video.xml
+Sitemap: https://spine-link.vercel.app/sitemap-images.xml
 Sitemap: https://spine-link.vercel.app/sitemap-index.xml
