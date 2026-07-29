@@ -171,7 +171,6 @@ function startBootParticles() {
 }
 
 const GOOGLE_CLIENT_ID = "452954491878-ebeqoeg5h7pr968uev0qbmtpsadg5mj3.apps.googleusercontent.com";
-const ADMIN_EMAILS = new Set(["vladyslavchaplygin@gmail.com", "leopolds2010@gmail.com"]);
 const SESSION_KEY = "spine-link-google-session";
 
 type StoredSession = { user: { email: string; name?: string; picture?: string }; accessToken: string; expiresAt: number };
@@ -189,17 +188,23 @@ function readSession(): StoredSession | null {
 
 function AdminPanelWrapper({ AdminPanel }: { AdminPanel: React.ComponentType<any> }) {
   const [user, setUser] = React.useState<{ email: string; name?: string; picture?: string } | null>(null);
-  const [token, setToken] = React.useState("");
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState("");
   const tokenClientRef = React.useRef<any>(null);
 
   React.useEffect(() => {
-    const s = readSession();
-    if (s?.user?.email && ADMIN_EMAILS.has(s.user.email.toLowerCase())) {
-      setUser(s.user);
-      setToken(s.accessToken);
-    }
-    setLoading(false);
+    // First check if we have a valid server session
+    fetch("/api/github-upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ action: "admin-session-check" }),
+    }).then(r => r.json()).then(data => {
+      if (data.ok && data.email) {
+        setUser({ email: data.email });
+      }
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   const handleGoogleLogin = React.useCallback(() => {
@@ -214,20 +219,25 @@ function AdminPanelWrapper({ AdminPanel }: { AdminPanel: React.ComponentType<any
         client_id: GOOGLE_CLIENT_ID,
         scope: "openid email profile",
         callback: async (response: any) => {
-          if (response.error || !response.access_token) return;
+          if (response.error || !response.access_token) { setError("Sign-in failed"); return; }
           try {
-            const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-              headers: { Authorization: `Bearer ${response.access_token}` },
+            // Exchange Google token for server session (httpOnly cookie)
+            const res = await fetch("/api/github-upload", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "same-origin",
+              body: JSON.stringify({ action: "admin-login", googleAccessToken: response.access_token }),
             });
-            const payload = await res.json();
-            if (!payload.email_verified || !payload.email) return;
-            const u = { email: payload.email, name: payload.name, picture: payload.picture };
-            setUser(u);
-            setToken(response.access_token);
-            localStorage.setItem(SESSION_KEY, JSON.stringify({
-              user: u, accessToken: response.access_token, expiresAt: Date.now() + (response.expires_in || 3600) * 1000,
-            }));
-          } catch {}
+            const data = await res.json();
+            if (data.ok && data.email) {
+              setUser({ email: data.email });
+              setError("");
+              // Clear any old localStorage session
+              localStorage.removeItem(SESSION_KEY);
+            } else {
+              setError(data.error || "Not authorized");
+            }
+          } catch { setError("Connection error"); }
         },
       });
       tokenClientRef.current?.requestAccessToken();
@@ -236,18 +246,24 @@ function AdminPanelWrapper({ AdminPanel }: { AdminPanel: React.ComponentType<any
   }, []);
 
   const handleSignOut = React.useCallback(() => {
+    fetch("/api/github-upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ action: "admin-logout" }),
+    }).catch(() => {});
     setUser(null);
-    setToken("");
     localStorage.removeItem(SESSION_KEY);
     try { (window as any).google?.accounts?.id?.disableAutoSelect(); } catch {}
   }, []);
 
   if (loading) return <div style={{ padding: 40, color: "#888" }}>Loading...</div>;
-  if (!user || !ADMIN_EMAILS.has(user.email.toLowerCase())) {
+  if (!user) {
     return (
       <div className="admin-login-screen">
         <h1>Administrator Access</h1>
         <p>Sign in with an authorized Google account to access the admin panel.</p>
+        {error && <p style={{ color: "#e74c3c", marginBottom: 16 }}>{error}</p>}
         <button className="admin-btn admin-btn-primary" onClick={handleGoogleLogin}>
           Sign in with Google
         </button>
@@ -257,7 +273,7 @@ function AdminPanelWrapper({ AdminPanel }: { AdminPanel: React.ComponentType<any
       </div>
     );
   }
-  return <AdminPanel googleUser={user} accessToken={token} onSignOut={handleSignOut} />;
+  return <AdminPanel googleUser={user} onSignOut={handleSignOut} />;
 }
 
 async function mountApp(initialFiles: File[] = [], options: { openLibrary?: boolean; login?: boolean; upload?: boolean } = {}) {

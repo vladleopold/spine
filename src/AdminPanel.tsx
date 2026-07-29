@@ -38,11 +38,10 @@ type ExclusionRule = {
 
 type AdminPanelProps = {
   googleUser: { email: string; name?: string; picture?: string } | null;
-  accessToken: string;
   onSignOut: () => void;
 };
 
-function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
+function AdminPanel({ googleUser, onSignOut }: AdminPanelProps) {
   const [settings, setSettings] = useState<AdminSettings>({});
   const [entries, setEntries] = useState<IndexEntry[]>([]);
   const [users, setUsers] = useState<UserEntry[]>([]);
@@ -61,11 +60,13 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
       const res = await fetch("/api/github-upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, accessToken, ...extra }),
+        credentials: "same-origin",
+        body: JSON.stringify({ action, ...extra }),
       });
+      if (res.status === 429) { showMsg("err", "Rate limit exceeded. Wait and try again."); return { ok: false }; }
       return res.json();
     },
-    [accessToken]
+    []
   );
 
   const showMsg = (type: "ok" | "err", text: string) => {
@@ -633,10 +634,11 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
                 <button className="admin-btn admin-btn-primary" onClick={async () => {
                   setLoading("cdn");
                   try {
-      const res = await fetch("/api/github-upload", {
+                    const res = await fetch("/api/github-upload", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ action: "admin-rebuild-cache", accessToken }),
+                      credentials: "same-origin",
+                      body: JSON.stringify({ action: "admin-rebuild-cache" }),
                     });
                     showMsg("ok", "Redeploy to invalidate CDN: run `npx vercel --prod`");
                   } catch { showMsg("err", "Failed"); }

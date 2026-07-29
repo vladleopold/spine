@@ -7,6 +7,66 @@ import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-s
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
 
+// ═══════════════ SECURITY: Rate Limiter ═══════════════
+const rateLimitMap = new Map();
+function checkRateLimit(key, maxRequests = 30, windowMs = 60000) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key);
+  if (!entry || now - entry.start > windowMs) {
+    rateLimitMap.set(key, { start: now, count: 1 });
+    return true;
+  }
+  entry.count++;
+  if (entry.count > maxRequests) return false;
+  return true;
+}
+
+// ═══════════════ SECURITY: Audit Log ═══════════════
+const auditLog = [];
+function auditLogAction(action, email, details = {}) {
+  const entry = { ts: new Date().toISOString(), action, email, ...details };
+  auditLog.push(entry);
+  if (auditLog.length > 500) auditLog.shift();
+  console.log(`[AUDIT] ${entry.ts} ${action} by ${email} ${JSON.stringify(details)}`);
+}
+
+// ═══════════════ SECURITY: Input Sanitization ═══════════════
+const SAFE_ID_REGEX = /^[a-zA-Z0-9._-]{1,220}$/;
+const SAFE_FILTER_REGEX = /^[a-zA-Z0-9_-]{0,100}$/;
+function sanitizeId(value) { return String(value || '').trim().slice(0, 220); }
+function sanitizeFilterId(value) { return String(value || '').trim().replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100); }
+function sanitizeText(value, maxLen = 400) { return String(value || '').trim().slice(0, maxLen); }
+
+// ═══════════════ SECURITY: Session Token (httpOnly cookie) ═══════════════
+const sessionTokenMap = new Map();
+function createSessionToken(email, googlePayload) {
+  const token = createHash('sha256').update(`${email}:${Date.now()}:${Math.random()}`).digest('hex');
+  const expiresAt = Date.now() + 3600 * 1000;
+  sessionTokenMap.set(token, { email, expiresAt, googlePayload });
+  if (sessionTokenMap.size > 100) {
+    const oldest = sessionTokenMap.keys().next().value;
+    sessionTokenMap.delete(oldest);
+  }
+  return { token, expiresAt };
+}
+function validateSessionToken(token) {
+  const session = sessionTokenMap.get(token);
+  if (!session) return null;
+  if (session.expiresAt <= Date.now()) { sessionTokenMap.delete(token); return null; }
+  return session;
+}
+function parseCookies(cookieHeader) {
+  const cookies = {};
+  String(cookieHeader || '').split(';').forEach(pair => {
+    const [k, v] = pair.trim().split('=');
+    if (k) cookies[k] = decodeURIComponent(v || '');
+  });
+  return cookies;
+}
+function setCookieHeader(token, maxAge = 3600) {
+  return `spine-admin-session=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${maxAge}`;
+}
+
 function cleanRepoPath(value = '') {
   return String(value).trim().replace(/^\/+|\/+$/g, '').replace(/\/+/g, '/');
 }
@@ -377,6 +437,17 @@ function unauthorized(message, statusCode = 401) {
 function forbidden(message = 'Forbidden') { return unauthorized(message, 403); }
 function badRequest(message = 'Bad request') { return unauthorized(message, 400); }
 function notFound(message = 'Not found') { return unauthorized(message, 404); }
+function tooManyRequests(message = 'Too many requests') { return unauthorized(message, 429); }
+
+async function verifyGoogleTokenRaw(accessToken) {
+  const clientId = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || '';
+  const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${encodeURIComponent(accessToken)}`);
+  if (!response.ok) throw unauthorized('Invalid Google token');
+  const payload = await response.json();
+  if (String(payload.aud || '') !== String(clientId)) throw unauthorized('Token audience mismatch');
+  if (payload.email_verified !== 'true' && payload.email_verified !== true) throw unauthorized('Email not verified');
+  return { email: String(payload.email || ''), name: String(payload.name || ''), picture: String(payload.picture || '') };
+}
 
 async function verifyGoogleToken(request, body) {
   const clientId = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || '';
@@ -1271,8 +1342,45 @@ export default async function handler(request, response) {
 
     // ═══════════════ ADMIN ACTIONS ═══════════════
 
-    if (action === 'admin-get-settings') {
+    if (action === 'admin-login') {
+      const { googleAccessToken } = body || {};
+      if (!googleAccessToken) throw badRequest('Missing googleAccessToken');
+      let googlePayload;
+      try { googlePayload = await verifyGoogleTokenRaw(googleAccessToken); } catch { throw unauthorized('Invalid Google token'); }
+      if (!googlePayload?.email) throw unauthorized('No email in token');
       if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const { token, expiresAt } = createSessionToken(googlePayload.email, googlePayload);
+      auditLogAction('admin-login', googlePayload.email);
+      const maxAge = Math.floor((expiresAt - Date.now()) / 1000);
+      response.setHeader('Set-Cookie', setCookieHeader(token, maxAge));
+      return response.status(200).json({ ok: true, email: googlePayload.email, expiresAt });
+    }
+
+    if (action === 'admin-session-check') {
+      const cookies = parseCookies(request.headers.cookie);
+      const session = validateSessionToken(cookies['spine-admin-session']);
+      if (!session) throw unauthorized('Session expired');
+      return response.status(200).json({ ok: true, email: session.email });
+    }
+
+    if (action === 'admin-logout') {
+      const cookies = parseCookies(request.headers.cookie);
+      const token = cookies['spine-admin-session'];
+      if (token) sessionTokenMap.delete(token);
+      response.setHeader('Set-Cookie', 'spine-admin-session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0');
+      return response.status(200).json({ ok: true });
+    }
+
+    // All admin actions below require session cookie
+    const cookies = parseCookies(request.headers.cookie);
+    const session = validateSessionToken(cookies['spine-admin-session']);
+    if (!session) throw unauthorized('Session expired — sign in again');
+    const adminEmail = session.email;
+    const clientIp = String(request.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+
+    if (action === 'admin-get-settings') {
+      if (!checkRateLimit(`admin:${adminEmail}:get-settings`, 10)) throw tooManyRequests();
+      auditLogAction('admin-get-settings', adminEmail, { ip: clientIp });
       const settingsPath = joinRepoPath(settings.basePath, 'site-settings.json');
       const current = await getGitHubContent(settings, settingsPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : {};
@@ -1280,9 +1388,10 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-save-settings') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:save-settings`, 5)) throw tooManyRequests();
       const newSettings = body?.settings;
       if (!newSettings || typeof newSettings !== 'object') throw badRequest('Invalid settings');
+      auditLogAction('admin-save-settings', adminEmail, { ip: clientIp });
       const settingsPath = joinRepoPath(settings.basePath, 'site-settings.json');
       const current = await getGitHubContent(settings, settingsPath);
       await putGitHubContent(settings, settingsPath, textToBase64(JSON.stringify(newSettings, null, 2)), 'Admin: update site settings', current?.sha, origin);
@@ -1290,7 +1399,8 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-get-index') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:get-index`, 10)) throw tooManyRequests();
+      auditLogAction('admin-get-index', adminEmail, { ip: clientIp });
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const current = await getGitHubContent(settings, indexPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
@@ -1303,7 +1413,8 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-get-users') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:get-users`, 10)) throw tooManyRequests();
+      auditLogAction('admin-get-users', adminEmail, { ip: clientIp });
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const current = await getGitHubContent(settings, indexPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
@@ -1317,9 +1428,10 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-delete-entry') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
-      const entryId = body?.entryId;
+      if (!checkRateLimit(`admin:${adminEmail}:delete-entry`, 10, 60000)) throw tooManyRequests();
+      const entryId = sanitizeId(body?.entryId);
       if (!entryId) throw badRequest('Missing entryId');
+      auditLogAction('admin-delete-entry', adminEmail, { ip: clientIp, entryId });
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const current = await getGitHubContent(settings, indexPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
@@ -1330,9 +1442,10 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-toggle-visibility') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
-      const entryId = body?.entryId;
+      if (!checkRateLimit(`admin:${adminEmail}:toggle-vis`, 20)) throw tooManyRequests();
+      const entryId = sanitizeId(body?.entryId);
       if (!entryId) throw badRequest('Missing entryId');
+      auditLogAction('admin-toggle-visibility', adminEmail, { ip: clientIp, entryId });
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const current = await getGitHubContent(settings, indexPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
@@ -1347,12 +1460,13 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-trigger-workflow') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
-      const workflow = body?.workflow;
-      const filter_id = body?.filter_id || '';
+      if (!checkRateLimit(`admin:${adminEmail}:trigger-wf`, 5, 300000)) throw tooManyRequests();
+      const workflow = sanitizeText(body?.workflow, 50);
+      const filter_id = sanitizeFilterId(body?.filter_id || '');
       if (!workflow) throw badRequest('Missing workflow');
       const allowed = ['spine-export-all.yml', 'spine-export-webm.yml'];
       if (!allowed.includes(workflow)) throw badRequest('Workflow not allowed');
+      auditLogAction('admin-trigger-workflow', adminEmail, { ip: clientIp, workflow, filter_id });
       const dispatchRes = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/dispatches`, {
         method: 'POST',
         headers: { ...githubHeaders(settings.token), 'Content-Type': 'application/json' },
@@ -1362,7 +1476,8 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-get-exclusions') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:get-excl`, 10)) throw tooManyRequests();
+      auditLogAction('admin-get-exclusions', adminEmail, { ip: clientIp });
       const exclPath = joinRepoPath(settings.basePath, 'archive-exclusions.json');
       const current = await getGitHubContent(settings, exclPath);
       const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : { rules: [] };
@@ -1370,9 +1485,10 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-save-exclusions') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:save-excl`, 5)) throw tooManyRequests();
       const exclusions = body?.exclusions;
       if (!exclusions || typeof exclusions !== 'object') throw badRequest('Invalid exclusions');
+      auditLogAction('admin-save-exclusions', adminEmail, { ip: clientIp });
       const exclPath = joinRepoPath(settings.basePath, 'archive-exclusions.json');
       const current = await getGitHubContent(settings, exclPath);
       await putGitHubContent(settings, exclPath, textToBase64(JSON.stringify(exclusions, null, 2)), 'Admin: update archive exclusions', current?.sha, origin);
@@ -1380,8 +1496,14 @@ export default async function handler(request, response) {
     }
 
     if (action === 'admin-rebuild-cache') {
-      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      if (!checkRateLimit(`admin:${adminEmail}:rebuild`, 5)) throw tooManyRequests();
+      auditLogAction('admin-rebuild-cache', adminEmail, { ip: clientIp });
       return response.status(200).json({ ok: true, message: 'Cache rebuild triggered' });
+    }
+
+    if (action === 'admin-get-audit-log') {
+      if (!checkRateLimit(`admin:${adminEmail}:audit`, 10)) throw tooManyRequests();
+      return response.status(200).json({ ok: true, log: auditLog.slice(-100) });
     }
 
     // ═══════════════ END ADMIN ACTIONS ═══════════════
