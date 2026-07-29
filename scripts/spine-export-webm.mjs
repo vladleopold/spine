@@ -17,6 +17,8 @@ const args = {
   repo: 'spine',
   branch: 'main',
   githubToken: '',
+  animDuration: 0,
+  alpha: false,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
@@ -31,6 +33,9 @@ for (let i = 2; i < process.argv.length; i++) {
   else if (arg.startsWith('--owner=')) args.owner = arg.split('=')[1];
   else if (arg.startsWith('--repo=')) args.repo = arg.split('=')[1];
   else if (arg.startsWith('--github-token=')) args.githubToken = arg.split('=')[1];
+  else if (arg.startsWith('--branch=')) args.branch = arg.split('=')[1];
+  else if (arg.startsWith('--anim-duration=')) args.animDuration = parseFloat(arg.split('=')[1]) || 0;
+  else if (arg === '--alpha') args.alpha = true;
 }
 
 if (!args.uploadId) {
@@ -359,7 +364,7 @@ const captureHtml = `<!DOCTYPE html>
 <link rel="stylesheet" href="${playerCssUrl}">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
+html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent' : '#050607'}; overflow: hidden; }
 #player { width: 100%; height: 100%; }
 </style>
 </head>
@@ -384,20 +389,50 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
     alpha: true,
-    backgroundColor: '#050607',
+    backgroundColor: '${args.alpha ? '#00000000' : '#050607'}',
     viewport: { padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' },
+    resize: function () {
+      try {
+        if (player && player.skeleton) {
+          player.animationState.apply(player.skeleton);
+          player.skeleton.updateWorldTransform();
+          var bounds = new spine.SkeletonBounds();
+          bounds.update(player.skeleton, true);
+          if (bounds.size.x > 0 && bounds.size.y > 0) {
+            window.__animWidth = bounds.size.x;
+            window.__animHeight = bounds.size.y;
+          }
+        }
+      } catch (e) {}
+    },
     success: function (p) {
       player = p;
       try {
-        if (player.skeleton && player.skeleton.data) {
-          window.__animWidth = player.skeleton.data.width || 0;
-          window.__animHeight = player.skeleton.data.height || 0;
+        // Measure ACTUAL animation bounds, not editor skeleton size
+        if (player.skeleton) {
+          // Apply current animation to get bounds
+          player.animationState.apply(player.skeleton);
+          player.skeleton.updateWorldTransform();
+          
+          var bounds = new spine.SkeletonBounds();
+          bounds.update(player.skeleton, true);
+          
+          if (bounds.size.x > 0 && bounds.size.y > 0) {
+            window.__animWidth = bounds.size.x;
+            window.__animHeight = bounds.size.y;
+          } else {
+            // Fallback to skeleton data bounds
+            window.__animWidth = player.skeleton.data.width || 0;
+            window.__animHeight = player.skeleton.data.height || 0;
+          }
         }
         var track = player.animationState ? player.animationState.getCurrent(0) : null;
         if (track && track.animation && typeof track.animation.duration === 'number') {
           window.__animDuration = track.animation.duration;
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error('Bounds measurement failed:', e);
+      }
       window.__ready = true;
     },
     error: function (p, err) {
@@ -542,6 +577,29 @@ try {
   let canvasWidth = await page.evaluate(() => window.__animWidth || 0);
   let canvasHeight = await page.evaluate(() => window.__animHeight || 0);
   
+  // Wait for first frame to render, then re-measure bounds
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  // Re-measure bounds after first frame renders
+  const measuredBounds = await page.evaluate(() => {
+    if (!player || !player.skeleton) return null;
+    try {
+      player.animationState.apply(player.skeleton);
+      player.skeleton.updateWorldTransform();
+      var bounds = new spine.SkeletonBounds();
+      bounds.update(player.skeleton, true);
+      return { width: bounds.size.x, height: bounds.size.y };
+    } catch(e) {
+      return null;
+    }
+  });
+  
+  if (measuredBounds && measuredBounds.width > 0 && measuredBounds.height > 0) {
+    canvasWidth = measuredBounds.width;
+    canvasHeight = measuredBounds.height;
+    console.error(`Measured animation bounds: ${canvasWidth}x${canvasHeight}`);
+  }
+  
   if (canvasWidth > 0 && canvasHeight > 0) {
     // Calculate final dimensions
     const newW = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(canvasWidth))) & ~1);
@@ -655,12 +713,14 @@ try {
     console.error(`Running ffmpeg to generate multiple qualities...`);
     
     // WebM Generation
+    const pixFmt = args.alpha ? 'yuva420p' : 'yuv420p';
+    const alphaExtra = args.alpha ? '-auto-alt-ref 0' : '';
     // High Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimHigh} -c:v libvpx-vp9 -b:v ${bitrates.high} -pix_fmt yuv420p "${outPaths.webmHigh}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimHigh} -c:v libvpx-vp9 -b:v ${bitrates.high} -pix_fmt ${pixFmt} ${alphaExtra} "${outPaths.webmHigh}"`, { stdio: 'inherit' });
     // Medium Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimMedium} -c:v libvpx-vp9 -b:v ${bitrates.medium} -pix_fmt yuv420p "${outPaths.webmMedium}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimMedium} -c:v libvpx-vp9 -b:v ${bitrates.medium} -pix_fmt ${pixFmt} ${alphaExtra} "${outPaths.webmMedium}"`, { stdio: 'inherit' });
     // Low Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimLow} -c:v libvpx-vp9 -b:v ${bitrates.low} -pix_fmt yuv420p "${outPaths.webmLow}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimLow} -c:v libvpx-vp9 -b:v ${bitrates.low} -pix_fmt ${pixFmt} ${alphaExtra} "${outPaths.webmLow}"`, { stdio: 'inherit' });
 
     // WebP Generation (extract first frame)
     // High Quality WebP
