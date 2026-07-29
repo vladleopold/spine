@@ -285,12 +285,16 @@ function sanitizedSkelBuffer(buffer, version = "") {
     try {
       patchCursor.readStringMeta(); // skip hash
       patchCursor.readStringMeta(); // skip version
-      patchCursor.skip(16);         // skip x, y, w, h floats
-      const imagesPathPos = patchCursor.index;
-      if (bytes[imagesPathPos] === 0x00) bytes[imagesPathPos] = 0x01;
-      patchCursor.readStringMeta(); // skip imagesPath
-      const audioPathPos = patchCursor.index;
-      if (bytes[audioPathPos] === 0x00) bytes[audioPathPos] = 0x01;
+      patchCursor.skip(8);          // skip w, h floats (Spine 3.8)
+      const nonessential = patchCursor.readByte() !== 0;
+      if (nonessential) {
+        patchCursor.skip(4);        // skip fps
+        const imagesPathPos = patchCursor.index;
+        if (bytes[imagesPathPos] === 0x00) bytes[imagesPathPos] = 0x01;
+        patchCursor.readStringMeta(); // skip imagesPath
+        const audioPathPos = patchCursor.index;
+        if (bytes[audioPathPos] === 0x00) bytes[audioPathPos] = 0x01;
+      }
     } catch {}
   }
 
@@ -299,10 +303,11 @@ function sanitizedSkelBuffer(buffer, version = "") {
   try {
     if (/^3\./.test(version)) {
       cursor.readStringMeta(); cursor.readStringMeta();
+      cursor.skip(8);
     } else {
       cursor.skip(8); cursor.readStringMeta(); cursor.skip(4);
+      cursor.skip(16);
     }
-    cursor.skip(16);
     const nonessential = cursor.readByte() !== 0;
     if (nonessential) {
       cursor.skip(4); cursor.readStringMeta(); cursor.readStringMeta();
