@@ -1049,6 +1049,20 @@ export default async function handler(request, response) {
     if (action === 'update-index') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       if (!entry) return response.status(400).json({ error: 'Invalid index payload' });
+
+      const files = Array.isArray(entry.files) ? [...entry.files] : [];
+      const skelName = basename(entry.skeleton || '');
+      const skelStem = skelName.replace(/\.(json|skel)$/i, '');
+      const fixedFiles = files.filter((f) => f !== skelStem && f !== `${skelStem}/`);
+      for (const ext of ['json', 'skel']) {
+        const ref = `${skelStem}/${skelStem}.${ext}`;
+        if (!fixedFiles.some((f) => f === ref) && fixedFiles.some((f) => f.endsWith(`.${ext}`))) {
+          const idx = fixedFiles.findIndex((f) => f.endsWith(`.${ext}`));
+          if (idx >= 0) fixedFiles[idx] = ref;
+        }
+      }
+      entry.files = fixedFiles;
+
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const currentIndex = await getGitHubContent(settings, indexPath);
       const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
