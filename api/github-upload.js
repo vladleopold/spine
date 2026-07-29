@@ -374,6 +374,10 @@ function unauthorized(message, statusCode = 401) {
   return error;
 }
 
+function forbidden(message = 'Forbidden') { return unauthorized(message, 403); }
+function badRequest(message = 'Bad request') { return unauthorized(message, 400); }
+function notFound(message = 'Not found') { return unauthorized(message, 404); }
+
 async function verifyGoogleToken(request, body) {
   const clientId = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || '';
   const authHeader = request.headers.authorization || request.headers.Authorization || '';
@@ -1264,6 +1268,123 @@ export default async function handler(request, response) {
       }).sort(compareLibraryEntries);
       return response.status(200).json({ ok: true, entries: publicLibraryEntries(origin, entries), merged: changed });
     }
+
+    // ═══════════════ ADMIN ACTIONS ═══════════════
+
+    if (action === 'admin-get-settings') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const settingsPath = joinRepoPath(settings.basePath, 'site-settings.json');
+      const current = await getGitHubContent(settings, settingsPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : {};
+      return response.status(200).json({ ok: true, settings: data });
+    }
+
+    if (action === 'admin-save-settings') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const newSettings = body?.settings;
+      if (!newSettings || typeof newSettings !== 'object') throw badRequest('Invalid settings');
+      const settingsPath = joinRepoPath(settings.basePath, 'site-settings.json');
+      const current = await getGitHubContent(settings, settingsPath);
+      await putGitHubContent(settings, settingsPath, textToBase64(JSON.stringify(newSettings, null, 2)), 'Admin: update site settings', current?.sha, origin);
+      return response.status(200).json({ ok: true });
+    }
+
+    if (action === 'admin-get-index') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const current = await getGitHubContent(settings, indexPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
+      const entries = Array.isArray(data) ? data.map(e => ({
+        id: e.id, title: e.title, ownerEmail: e.ownerEmail, ownerName: e.ownerName,
+        hiddenFromPublicLibrary: e.hiddenFromPublicLibrary, uploadedAt: e.uploadedAt,
+        animations: Array.isArray(e.animations) ? e.animations.length : 0, pageMode: e.pageMode,
+      })) : [];
+      return response.status(200).json({ ok: true, entries, total: entries.length });
+    }
+
+    if (action === 'admin-get-users') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const current = await getGitHubContent(settings, indexPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
+      const userMap = new Map();
+      for (const e of (Array.isArray(data) ? data : [])) {
+        const key = e.ownerEmail || e.ownerAnonId || 'unknown';
+        if (!userMap.has(key)) userMap.set(key, { email: e.ownerEmail || '', name: e.ownerName || '', anonId: e.ownerAnonId || '', entries: 0 });
+        userMap.get(key).entries++;
+      }
+      return response.status(200).json({ ok: true, users: Array.from(userMap.values()), total: userMap.size });
+    }
+
+    if (action === 'admin-delete-entry') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const entryId = body?.entryId;
+      if (!entryId) throw badRequest('Missing entryId');
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const current = await getGitHubContent(settings, indexPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
+      const filtered = (Array.isArray(data) ? data : []).filter(e => e.id !== entryId);
+      if (filtered.length === data.length) throw notFound('Entry not found');
+      await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(filtered, null, 2)), `Admin: delete entry ${entryId}`, current?.sha, origin);
+      return response.status(200).json({ ok: true, remaining: filtered.length });
+    }
+
+    if (action === 'admin-toggle-visibility') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const entryId = body?.entryId;
+      if (!entryId) throw badRequest('Missing entryId');
+      const indexPath = joinRepoPath(settings.basePath, 'index.json');
+      const current = await getGitHubContent(settings, indexPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : [];
+      let found = false;
+      const updated = (Array.isArray(data) ? data : []).map(e => {
+        if (e.id === entryId) { found = true; return { ...e, hiddenFromPublicLibrary: !e.hiddenFromPublicLibrary }; }
+        return e;
+      });
+      if (!found) throw notFound('Entry not found');
+      await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(updated, null, 2)), `Admin: toggle visibility ${entryId}`, current?.sha, origin);
+      return response.status(200).json({ ok: true });
+    }
+
+    if (action === 'admin-trigger-workflow') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const workflow = body?.workflow;
+      const filter_id = body?.filter_id || '';
+      if (!workflow) throw badRequest('Missing workflow');
+      const allowed = ['spine-export-all.yml', 'spine-export-webm.yml'];
+      if (!allowed.includes(workflow)) throw badRequest('Workflow not allowed');
+      const dispatchRes = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/dispatches`, {
+        method: 'POST',
+        headers: { ...githubHeaders(settings.token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_type: 'admin-dispatch', client_payload: { workflow, filter_id } }),
+      });
+      return response.status(200).json({ ok: dispatchRes.ok });
+    }
+
+    if (action === 'admin-get-exclusions') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const exclPath = joinRepoPath(settings.basePath, 'archive-exclusions.json');
+      const current = await getGitHubContent(settings, exclPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : { rules: [] };
+      return response.status(200).json({ ok: true, exclusions: data });
+    }
+
+    if (action === 'admin-save-exclusions') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      const exclusions = body?.exclusions;
+      if (!exclusions || typeof exclusions !== 'object') throw badRequest('Invalid exclusions');
+      const exclPath = joinRepoPath(settings.basePath, 'archive-exclusions.json');
+      const current = await getGitHubContent(settings, exclPath);
+      await putGitHubContent(settings, exclPath, textToBase64(JSON.stringify(exclusions, null, 2)), 'Admin: update archive exclusions', current?.sha, origin);
+      return response.status(200).json({ ok: true });
+    }
+
+    if (action === 'admin-rebuild-cache') {
+      if (!isArchiveAdmin(googlePayload)) throw forbidden('Not an administrator');
+      return response.status(200).json({ ok: true, message: 'Cache rebuild triggered' });
+    }
+
+    // ═══════════════ END ADMIN ACTIONS ═══════════════
 
     if (!settings.owner || !settings.repo || !uploadPath || !entry || !previewHtml || files.length < 3) {
       return response.status(400).json({ error: 'Invalid upload payload' });

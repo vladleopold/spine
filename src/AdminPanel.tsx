@@ -58,7 +58,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
 
   const apiCall = useCallback(
     async (action: string, extra: Record<string, unknown> = {}) => {
-      const res = await fetch("/api/admin-action", {
+      const res = await fetch("/api/github-upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action, accessToken, ...extra }),
@@ -76,7 +76,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const loadSettings = useCallback(async () => {
     setLoading("settings");
     try {
-      const data = await apiCall("get-settings");
+      const data = await apiCall("admin-get-settings");
       if (data.ok) setSettings(data.settings || {});
     } catch { showMsg("err", "Failed to load settings"); }
     setLoading("");
@@ -85,7 +85,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const loadIndex = useCallback(async () => {
     setLoading("index");
     try {
-      const data = await apiCall("get-index");
+      const data = await apiCall("admin-get-index");
       if (data.ok) setEntries(data.entries || []);
     } catch { showMsg("err", "Failed to load index"); }
     setLoading("");
@@ -94,7 +94,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const loadUsers = useCallback(async () => {
     setLoading("users");
     try {
-      const data = await apiCall("get-users");
+      const data = await apiCall("admin-get-users");
       if (data.ok) setUsers(data.users || []);
     } catch { showMsg("err", "Failed to load users"); }
     setLoading("");
@@ -103,7 +103,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const loadExclusions = useCallback(async () => {
     setLoading("exclusions");
     try {
-      const data = await apiCall("get-exclusions");
+      const data = await apiCall("admin-get-exclusions");
       if (data.ok) setExclusions(data.exclusions || { rules: [] });
     } catch { showMsg("err", "Failed to load exclusions"); }
     setLoading("");
@@ -119,7 +119,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const saveSettings = async () => {
     setLoading("save-settings");
     try {
-      const data = await apiCall("save-settings", { settings });
+      const data = await apiCall("admin-save-settings", { settings });
       showMsg(data.ok ? "ok" : "err", data.ok ? "Settings saved" : "Failed to save");
     } catch { showMsg("err", "Failed to save settings"); }
     setLoading("");
@@ -129,7 +129,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
     setLoading("workflow");
     setWorkflowStatus(`Dispatching ${workflow}...`);
     try {
-      const data = await apiCall("trigger-workflow", { workflow, filter_id: workflowFilterId });
+      const data = await apiCall("admin-trigger-workflow", { workflow, filter_id: workflowFilterId });
       showMsg(data.ok ? "ok" : "err", data.ok ? `${workflow} dispatched` : "Dispatch failed");
       setWorkflowStatus(data.ok ? `${workflow} dispatched successfully` : "Dispatch failed");
     } catch { showMsg("err", "Dispatch failed"); setWorkflowStatus("Dispatch failed"); }
@@ -140,7 +140,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
     if (!confirm(`Delete ${id}?`)) return;
     setLoading("delete-" + id);
     try {
-      const data = await apiCall("delete-entry", { entryId: id });
+      const data = await apiCall("admin-delete-entry", { entryId: id });
       if (data.ok) { setEntries(prev => prev.filter(e => e.id !== id)); showMsg("ok", "Deleted"); }
       else showMsg("err", data.error || "Failed");
     } catch { showMsg("err", "Delete failed"); }
@@ -150,7 +150,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const toggleVisibility = async (id: string) => {
     setLoading("vis-" + id);
     try {
-      const data = await apiCall("toggle-entry-visibility", { entryId: id });
+      const data = await apiCall("admin-toggle-visibility", { entryId: id });
       if (data.ok) setEntries(prev => prev.map(e => e.id === id ? { ...e, hiddenFromPublicLibrary: !e.hiddenFromPublicLibrary } : e));
       showMsg("ok", "Toggled");
     } catch { showMsg("err", "Failed"); }
@@ -160,7 +160,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const saveExclusions = async () => {
     setLoading("save-excl");
     try {
-      const data = await apiCall("save-exclusions", { exclusions });
+      const data = await apiCall("admin-save-exclusions", { exclusions });
       showMsg(data.ok ? "ok" : "err", data.ok ? "Exclusions saved" : "Failed");
     } catch { showMsg("err", "Failed"); }
     setLoading("");
@@ -186,7 +186,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
   const bulkDelete = async () => {
     if (!confirm(`Delete ${selectedEntries.size} selected entries?`)) return;
     for (const id of selectedEntries) {
-      await apiCall("delete-entry", { entryId: id });
+      await apiCall("admin-delete-entry", { entryId: id });
     }
     setEntries(prev => prev.filter(e => !selectedEntries.has(e.id)));
     setSelectedEntries(new Set());
@@ -195,7 +195,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
 
   const bulkToggleVisibility = async () => {
     for (const id of selectedEntries) {
-      await apiCall("toggle-entry-visibility", { entryId: id });
+      await apiCall("admin-toggle-visibility", { entryId: id });
     }
     setEntries(prev => prev.map(e => selectedEntries.has(e.id) ? { ...e, hiddenFromPublicLibrary: !e.hiddenFromPublicLibrary } : e));
     setSelectedEntries(new Set());
@@ -619,7 +619,7 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
                 <p>Force rebuild of the in-memory GitHub content cache on all Vercel instances.</p>
                 <button className="admin-btn admin-btn-primary" onClick={async () => {
                   setLoading("rebuild");
-                  try { await apiCall("rebuild-cache"); showMsg("ok", "Cache rebuild triggered"); }
+                  try { await apiCall("admin-rebuild-cache"); showMsg("ok", "Cache rebuild triggered"); }
                   catch { showMsg("err", "Failed"); }
                   setLoading("");
                 }}>
@@ -633,10 +633,10 @@ function AdminPanel({ googleUser, accessToken, onSignOut }: AdminPanelProps) {
                 <button className="admin-btn admin-btn-primary" onClick={async () => {
                   setLoading("cdn");
                   try {
-                    const res = await fetch("/api/admin-action", {
+      const res = await fetch("/api/github-upload", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ action: "rebuild-cache", accessToken }),
+                      body: JSON.stringify({ action: "admin-rebuild-cache", accessToken }),
                     });
                     showMsg("ok", "Redeploy to invalidate CDN: run `npx vercel --prod`");
                   } catch { showMsg("err", "Failed"); }
