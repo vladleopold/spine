@@ -1802,6 +1802,10 @@ function safeLibraryAssetUrl(value = "") {
   return /^https:\/\/[^\s"'<>]+$/i.test(url) && !/^data:/i.test(url) ? url : "";
 }
 
+function normalizeAssetDomain(url: string) {
+  return url.replace(/https:\/\/vladleopold\.github\.io\/spine/gi, window.location.origin);
+}
+
 function derivedLibraryAssetUrl(entry: LibraryEntry, extensions: string[]) {
   const previewPath = cleanRepoPath(entry.previewPath || "");
   const files = Array.isArray(entry.files) ? entry.files : [];
@@ -4798,7 +4802,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
               <div className="home-feed-track">
                 {homeFeedLoop.map((entry, index) => {
                   const metric = entryMetrics[entry.id] ?? entry.metrics ?? emptyEntryMetric();
-                  const poster = entry.thumbnailPoster || entry.thumbnail || "";
+                  const poster = normalizeAssetDomain(entry.thumbnailPoster || entry.thumbnail || "");
                   const likedEntry = Boolean(metric.liked);
                   const previewWidth = Number(entry.previewWidth || 0);
                   const previewHeight = Number(entry.previewHeight || 0);
@@ -4826,7 +4830,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                       {entry.webmPreview ? (
                         <ChunkedVideo
                           className="home-feed-video"
-                          src={entry.webmPreview}
+                          src={normalizeAssetDomain(entry.webmPreview)}
                           chunks={(entry as any).webmChunks}
                           poster={poster || undefined}
                           muted
@@ -5127,7 +5131,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                 <div className="seo-video-frame" style={videoPreviewAspectRatioStyle(currentLibraryEntry)}>
                   <ChunkedVideo
                     className="seo-video-preview"
-                    src={currentLibraryEntry?.webmPreview || undefined}
+                    src={normalizeAssetDomain(currentLibraryEntry?.webmPreview || "") || undefined}
                     chunks={currentLibraryEntry?.webmChunks}
                     poster={selectedPreviewImage}
                     muted
@@ -5592,11 +5596,11 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                 const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
                 const webmPreviewUrl = isWebmPreview(entry.webmPreview || "")
-                  ? withAssetVersion(entry.webmPreview || "", assetVersionForLibraryEntry(entry, "webm"))
+                  ? withAssetVersion(normalizeAssetDomain(entry.webmPreview || ""), assetVersionForLibraryEntry(entry, "webm"))
                   : derivedLibraryAssetUrl(entry, [".webm"]) || generatedWebmUrlForEntry(entry);
-                const safeThumbnail = withAssetVersion(safeLibraryAssetUrl(entry.thumbnail || ""), assetVersionForLibraryEntry(entry, "thumbnail"));
+                const safeThumbnail = withAssetVersion(safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnail || "")), assetVersionForLibraryEntry(entry, "thumbnail"));
                 const safePoster =
-                  withAssetVersion(safeLibraryAssetUrl(entry.thumbnailPoster || ""), assetVersionForLibraryEntry(entry, "poster")) ||
+                  withAssetVersion(safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnailPoster || "")), assetVersionForLibraryEntry(entry, "poster")) ||
                   generatedPosterUrlForEntry(entry) ||
                   derivedLibraryAssetUrl(entry, [".webp", ".png", ".jpg", ".jpeg"]);
                 const isGifThumbnail = entry.thumbnailType === "gif" || /^data:image\/gif;base64,/i.test(entry.thumbnail || "");
