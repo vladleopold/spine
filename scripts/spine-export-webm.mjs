@@ -533,15 +533,39 @@ try {
     process.exit(0);
   }
 
-  const animDuration = await page.evaluate(() => window.__animDuration || 0);
+  let animDuration = await page.evaluate(() => window.__animDuration || 0);
   let canvasWidth = await page.evaluate(() => window.__animWidth || 0);
   let canvasHeight = await page.evaluate(() => window.__animHeight || 0);
   
   if (canvasWidth > 0 && canvasHeight > 0) {
-    // Resize viewport to match exact animation size to prevent padding/stretching
+    // Calculate final dimensions
     const newW = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(canvasWidth))) & ~1);
     const newH = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(canvasHeight))) & ~1);
-    await page.setViewportSize({ width: newW, height: newH });
+    
+    // If the browser was initialized with wrong dimensions, we must resize AND recreate the player.
+    // Resizing live crashes Spine 3.8, so we reload the page fresh.
+    if (newW !== videoWidth || newH !== videoHeight) {
+      console.error(`Viewport mismatch. Resizing from ${videoWidth}x${videoHeight} to ${newW}x${newH} and reloading player...`);
+      await page.setViewportSize({ width: newW, height: newH });
+      
+      // Reload player completely fresh to avoid WebGL resize bugs
+      await page.setContent(captureHtml, { waitUntil: 'networkidle', timeout: 60000 });
+      try {
+        await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+        error = await page.evaluate(() => window.__captureError || null);
+      } catch (err) {
+        error = err.message;
+      }
+      
+      if (error) {
+        console.error(`Capture failed after reload: ${error}`);
+        fs.writeFileSync(args.output + '.json', JSON.stringify({ error: error }, null, 2));
+        process.exit(0);
+      }
+      
+      // Re-read duration just in case
+      animDuration = await page.evaluate(() => window.__animDuration || 0);
+    }
     canvasWidth = newW;
     canvasHeight = newH;
   } else {
@@ -549,7 +573,7 @@ try {
     canvasHeight = videoHeight;
   }
   
-  // Wait a moment for SpinePlayer to resize itself to the new viewport
+  // Wait a moment for rendering to settle
   await new Promise(resolve => setTimeout(resolve, 500));
 
   // Now start recording
