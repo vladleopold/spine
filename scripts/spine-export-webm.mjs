@@ -724,11 +724,11 @@ try {
 
     // WebP Generation (extract first frame)
     // High Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimHigh} -c:v libwebp -q:v 90 "${outPaths.webpHigh}"`, { stdio: 'inherit' });
-    // Medium Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimMedium} -c:v libwebp -q:v 85 "${outPaths.webpMedium}"`, { stdio: 'inherit' });
-    // Low Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimLow} -c:v libwebp -q:v 80 "${outPaths.webpLow}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimHigh} -c:v libwebp -q:v 50 "${outPaths.webpHigh}"`, { stdio: 'inherit' });
+    // Medium Quality WebP  
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimMedium} -c:v libwebp -q:v 30 "${outPaths.webpMedium}"`, { stdio: 'inherit' });
+    // Low Quality WebP (fast load for progressive display)
+    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimLow} -c:v libwebp -q:v 15 "${outPaths.webpLow}"`, { stdio: 'inherit' });
 
     console.error(`FFmpeg processing complete. Generated 3x WebM and 3x WebP.`);
   } catch (err) {
