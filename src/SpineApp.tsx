@@ -5697,7 +5697,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                   : derivedLibraryAssetUrl(entry, [".webm"]) || generatedWebmUrlForEntry(entry);
                 const safeThumbnail = withAssetVersion(safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnail || "")), assetVersionForLibraryEntry(entry, "thumbnail"));
                 const safePoster =
-                  withAssetVersion(safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnailPoster || "")), assetVersionForLibraryEntry(entry, "poster")) ||
+                  safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnailPoster || "")) ||
                   generatedPosterUrlForEntry(entry) ||
                   derivedLibraryAssetUrl(entry, [".webp", ".png", ".jpg", ".jpeg"]);
                 const isGifThumbnail = entry.thumbnailType === "gif" || /^data:image\/gif;base64,/i.test(entry.thumbnail || "");
