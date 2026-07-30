@@ -487,6 +487,90 @@ function videoPreviewAspectRatioStyle(entry?: Pick<LibraryEntry, "previewWidth" 
   return { "--video-preview-ratio": `${Math.round(width)} / ${Math.round(height)}` } as React.CSSProperties;
 }
 
+function ProgressiveMedia({
+  posterSrc,
+  videoSrc,
+  chunks,
+  className,
+  loop: loopProp,
+  controls: controlsProp,
+  onLoadedMetadata: onLoadedMetadataProp,
+  ...props
+}: {
+  posterSrc?: string;
+  videoSrc?: string;
+  chunks?: string[];
+  className?: string;
+  loop?: boolean;
+  controls?: boolean;
+  onLoadedMetadata?: React.VideoHTMLAttributes<HTMLVideoElement>["onLoadedMetadata"];
+} & Omit<React.HTMLAttributes<HTMLDivElement>, "onLoadedMetadata">) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const cancelRef = useRef<(() => void) | null>(null);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoStarted, setVideoStarted] = useState(false);
+
+  useEffect(() => {
+    if (!videoSrc || !videoReady || !videoRef.current) return;
+    const v = videoRef.current;
+    v.play().catch(() => {});
+  }, [videoReady, videoSrc]);
+
+  const startVideoLoad = useCallback(() => {
+    if (videoStarted || !videoSrc) return;
+    setVideoStarted(true);
+    if (videoRef.current && chunks && chunks.length > 1 && window.MediaSource) {
+      const v = videoRef.current;
+      const ms = new MediaSource();
+      v.src = URL.createObjectURL(ms);
+      let cancelled = false;
+      ms.addEventListener("sourceopen", async () => {
+        try {
+          const sb = ms.addSourceBuffer('video/webm; codecs="vp8"');
+          for (const chunkUrl of chunks) {
+            if (cancelled) break;
+            const buf = await fetch(chunkUrl).then((r) => r.arrayBuffer());
+            if (cancelled) break;
+            await new Promise<void>((resolve) => {
+              sb.addEventListener("updateend", () => resolve(), { once: true });
+              sb.appendBuffer(buf);
+            });
+          }
+          if (!cancelled && ms.readyState === "open") ms.endOfStream();
+        } catch (err) {
+          console.error("ProgressiveMedia chunked error:", err);
+        }
+      });
+      cancelRef.current = () => { cancelled = true; };
+    } else if (videoRef.current) {
+      videoRef.current.src = videoSrc;
+    }
+  }, [videoSrc, videoStarted, chunks]);
+
+  useEffect(() => {
+    return () => {
+      cancelRef.current?.();
+    };
+  }, []);
+
+  return (
+    <div className={className} style={{ position: "relative", width: "100%", height: "100%" }} {...props}>
+      {posterSrc && <img src={posterSrc} alt="" loading="lazy" decoding="async" onLoad={startVideoLoad} style={{ width: "100%", height: "100%", objectFit: "contain", position: "absolute", inset: 0, opacity: videoReady ? 0 : 1, transition: "opacity .3s", zIndex: videoReady ? 0 : 1 }} />}
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        loop={loopProp}
+        controls={controlsProp}
+        preload={videoStarted ? "auto" : "none"}
+        onCanPlayThrough={() => setVideoReady(true)}
+        onLoadedMetadata={onLoadedMetadataProp}
+        style={{ width: "100%", height: "100%", objectFit: "contain", position: "absolute", inset: 0, opacity: videoReady ? 1 : 0, zIndex: videoReady ? 1 : 0 }}
+      />
+    </div>
+  );
+}
+
 function ChunkedVideo({ src, chunks, ...props }: React.VideoHTMLAttributes<HTMLVideoElement> & { chunks?: string[] }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   
@@ -4849,15 +4933,11 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                       aria-label={`Open ${entry.title}`}
                     >
                       {entry.webmPreview ? (
-                        <ChunkedVideo
+                        <ProgressiveMedia
                           className="home-feed-video"
-                          src={normalizeAssetDomain(entry.webmPreview)}
+                          videoSrc={normalizeAssetDomain(entry.webmPreview)}
+                          posterSrc={poster || undefined}
                           chunks={(entry as any).webmChunks}
-                          poster={poster || undefined}
-                          muted
-                          playsInline
-                          preload="metadata"
-                          autoPlay
                           aria-hidden="true"
                         />
                       ) : poster ? (
@@ -5150,18 +5230,14 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
               <div className="preview-card seo-video-card is-visible" id="seo-video-card">
                 <div className="section-title">Video preview</div>
                 <div className="seo-video-frame" style={videoPreviewAspectRatioStyle(currentLibraryEntry)}>
-                  <ChunkedVideo
+                  <ProgressiveMedia
                     className="seo-video-preview"
-                    src={normalizeAssetDomain(currentLibraryEntry?.webmPreview || "") || undefined}
+                    videoSrc={normalizeAssetDomain(currentLibraryEntry?.webmPreview || "") || undefined}
+                    posterSrc={selectedPreviewImage}
                     chunks={currentLibraryEntry?.webmChunks}
-                    poster={selectedPreviewImage}
-                    muted
                     loop
-                    playsInline
-                    preload="metadata"
-                    autoPlay
                     controls
-                    onLoadedMetadata={(event) => applySeoVideoPreviewAspect(event.currentTarget)}
+                    onLoadedMetadata={(event) => applySeoVideoPreviewAspect(event.currentTarget as unknown as HTMLVideoElement)}
                   />
                 </div>
               </div>
@@ -5678,17 +5754,13 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                     )}
                     <div className="library-card-link" role="link" aria-label={`Edit ${entry.title || entry.id}`}>
                     <div className="library-card-visual">
-                      <ChunkedVideo
+                      <ProgressiveMedia
                         className="library-card-webm"
-                        src={webmPreviewUrl || undefined}
+                        videoSrc={webmPreviewUrl || undefined}
+                        posterSrc={thumbnailForCard || undefined}
                         chunks={entry.webmChunks}
-                        poster={thumbnailForCard || undefined}
-                        muted
-                        playsInline
-                        preload="metadata"
-                        autoPlay
                         aria-hidden="true"
-                        onLoadedMetadata={(event) => applyLibraryCardVideoAspect(event.currentTarget)}
+                        onLoadedMetadata={(event) => applyLibraryCardVideoAspect(event.currentTarget as unknown as HTMLVideoElement)}
                       />
                       <Layers size={24} />
                       <span>{entry.animations?.length ?? 0}</span>
