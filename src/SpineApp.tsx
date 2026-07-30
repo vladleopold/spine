@@ -4932,16 +4932,14 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                       style={cardStyle}
                       aria-label={`Open ${entry.title}`}
                     >
-                      {entry.webmPreview ? (
+                      {poster ? (
                         <ProgressiveMedia
                           className="home-feed-video"
-                          videoSrc={normalizeAssetDomain(entry.webmPreview)}
-                          posterSrc={poster || undefined}
+                          videoSrc={entry.webmPreview ? normalizeAssetDomain(entry.webmPreview) : undefined}
+                          posterSrc={poster}
                           chunks={(entry as any).webmChunks}
                           aria-hidden="true"
                         />
-                      ) : poster ? (
-                        <img src={poster} alt="" loading="lazy" decoding="async" />
                       ) : (
                         <span className="home-feed-fallback">{entry.animations ?? 0}</span>
                       )}
