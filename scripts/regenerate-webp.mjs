@@ -72,15 +72,23 @@ for (const entry of entries) {
     extractFrame(dimMedium, path.join(dir, "preview-medium.webp"), 30);
     extractFrame(dimLow, path.join(dir, "preview-low.webp"), 15);
 
-    const newSizes = [];
-    for (const s of ["", "-medium", "-low"]) {
-      const p = path.join(dir, `preview${s}.webp`);
-      newSizes.push(fs.existsSync(p) ? fs.statSync(p).size : 0);
+    const thumbFiles = fs.readdirSync(dir).filter(
+      (f) => f.endsWith("-preview.webp") && !["preview.webp", "preview-medium.webp", "preview-low.webp"].includes(f)
+    );
+    for (const thumbFile of thumbFiles) {
+      extractFrame(dimHigh, path.join(dir, thumbFile), 50);
     }
 
-    if (newSizes.some((s) => s > 500)) {
+    const allWebp = [];
+    for (const f of fs.readdirSync(dir)) {
+      if (f.endsWith(".webp")) {
+        allWebp.push(fs.statSync(path.join(dir, f)).size);
+      }
+    }
+
+    if (allWebp.some((s) => s > 500)) {
       fixed++;
-      console.error(`  Fixed ${entry.id} → ${newSizes.join(", ")}`);
+      console.error(`  Fixed ${entry.id} → ${allWebp.join(", ")}`);
     } else {
       failed++;
       console.error(`  Still empty after extraction: ${entry.id}`);
