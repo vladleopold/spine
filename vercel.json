@@ -399,19 +399,19 @@
     },
     {
       "source": "/sitemap-index.xml",
-      "destination": "/api/sitemap-index"
+      "destination": "/api/sitemap?kind=index"
     },
     {
       "source": "/sitemap.txt",
-      "destination": "/api/sitemap-text"
+      "destination": "/api/sitemap"
     },
     {
       "source": "/sitemap-video.xml",
-      "destination": "/api/sitemap-video"
+      "destination": "/api/sitemap?kind=video"
     },
     {
       "source": "/sitemap-portfolios.xml",
-      "destination": "/api/sitemap-portfolios"
+      "destination": "/api/sitemap?kind=portfolios"
     },
     {
       "source": "/sitemap-archive.xml",
@@ -443,11 +443,11 @@
     },
     {
       "source": "/assets/library/:id/generated-preview.webp",
-      "destination": "/api/github-generated-thumbnail?id=:id"
+      "destination": "/api/github-generated?type=thumbnail&id=:id"
     },
     {
       "source": "/assets/library/:id/generated-preview.webm",
-      "destination": "/api/github-generated-preview-webm?id=:id"
+      "destination": "/api/github-generated?type=webm&id=:id"
     },
     {
       "source": "/assets/:path(.*)",

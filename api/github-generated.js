@@ -10,20 +10,8 @@ function cleanRepoPath(value = '') {
   return String(value).trim().replace(/^\/+|\/+$/g, '').replace(/\/+/g, '/');
 }
 
-function base64ToText(base64) {
-  return Buffer.from(String(base64).replace(/\s/g, ''), 'base64').toString('utf8');
-}
-
 function base64ToBuffer(base64) {
   return Buffer.from(String(base64).replace(/\s/g, ''), 'base64');
-}
-
-function githubHeaders(token) {
-  return {
-    Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
 }
 
 async function githubText(settings, path) {
@@ -36,11 +24,20 @@ export default async function handler(request, response) {
     return response.status(405).send('Method not allowed');
   }
 
+  const type = String(request.query?.type || request.url?.includes('preview-webm') ? 'webm' : 'thumbnail').trim();
+  const id = String(request.query?.id || '').trim();
+
+  if (type === 'webm') {
+    setCacheHeaders(response, cacheProfiles.mediaBrowser, cacheProfiles.mediaCdn);
+    return response.redirect(307, '/spine-link.webm');
+  }
+
+  if (!id || !/^[a-z0-9][a-z0-9._-]{0,160}$/i.test(id)) {
+    return response.status(400).send('Invalid thumbnail id');
+  }
+
   const token = process.env.GITHUB_TOKEN;
   if (!token) return response.status(500).send('GITHUB_TOKEN is not configured');
-
-  const id = String(request.query?.id || '').trim();
-  if (!/^[a-z0-9][a-z0-9._-]{0,160}$/i.test(id)) return response.status(400).send('Invalid thumbnail id');
 
   const settings = {
     owner: process.env.GITHUB_OWNER || defaultOwner,
@@ -62,9 +59,7 @@ export default async function handler(request, response) {
     response.setHeader('Content-Type', 'image/webp');
     response.setHeader('Content-Length', String(thumbnail.length));
     setCacheHeaders(response, cacheProfiles.immutable, cacheProfiles.immutableCdn);
-    if (request.method === 'HEAD') {
-      return response.status(200).end();
-    }
+    if (request.method === 'HEAD') return response.status(200).end();
     return response.status(200).send(thumbnail);
   } catch (error) {
     return response.status(500).send(error instanceof Error ? error.message : 'Generated thumbnail failed');

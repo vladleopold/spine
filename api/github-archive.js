@@ -452,14 +452,14 @@ function mediaHtml(entry, { origin = '', posterClass = '', eagerVideo = false, a
   const thumbnail = isGifThumbnail ? poster : entryImageAsset(entry?.thumbnail || '', entry, 'thumbnail');
   const alt = altText || escapeHtml(entry?.title || entry?.id || 'Spine animation preview');
   const fp = fetchpriority ? ` fetchpriority="${escapeHtml(fetchpriority)}"` : '';
-  const loading = fetchpriority === 'high' ? '' : ' loading="lazy"';
+  const posterAttr = poster || thumbnail ? ` poster="${escapeHtml(poster || thumbnail)}"` : '';
   if (video) {
     const videoSource = eagerVideo ? ` src="${escapeHtml(video)}" controls` : ` data-video-src="${escapeHtml(video)}"`;
     const preload = eagerVideo ? 'metadata' : 'none';
-    return `<video class="${posterClass}"${poster || thumbnail ? ` poster="${escapeHtml(poster || thumbnail)}"` : ''}${videoSource} muted playsinline preload="${preload}" autoplay aria-label="${alt}"${fp}></video>`;
+    return `<video class="${posterClass}"${posterAttr}${videoSource} muted playsinline preload="${preload}" autoplay aria-label="${alt}"${fp}></video>`;
   }
   if (thumbnail) {
-    return `<img class="${posterClass}" src="${escapeHtml(thumbnail)}" alt="${alt}"${loading} decoding="async"${fp} />`;
+    return `<video class="${posterClass}"${posterAttr} muted playsinline preload="none" autoplay aria-label="${alt}"${fp}></video>`;
   }
   return `<div class="media-fallback" aria-label="${alt}">${Array.isArray(entry?.animations) ? entry.animations.length : 0}</div>`;
 }
