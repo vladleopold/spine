@@ -47,6 +47,7 @@ jobs:
               sleep $((RANDOM % 5 + 2))
               git fetch origin main
               git reset --hard origin/main
+              node scripts/regenerate-webp.mjs
               git add library/
               git commit -m "Regenerate WebP posters from WebM videos"
             done
