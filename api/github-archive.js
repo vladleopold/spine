@@ -458,10 +458,7 @@ function mediaHtml(entry, { origin = '', posterClass = '', eagerVideo = false, a
     const preload = eagerVideo ? 'metadata' : 'none';
     return `<video class="${posterClass}"${posterAttr}${videoSource} muted playsinline preload="${preload}" autoplay aria-label="${alt}"${fp}></video>`;
   }
-  if (thumbnail) {
-    return `<video class="${posterClass}"${posterAttr} muted playsinline preload="none" autoplay aria-label="${alt}"${fp}></video>`;
-  }
-  return `<div class="media-fallback" aria-label="${alt}">${Array.isArray(entry?.animations) ? entry.animations.length : 0}</div>`;
+  return `<video class="${posterClass}"${posterAttr} muted playsinline preload="none" autoplay aria-label="${alt}"${fp} data-media-v2></video>`;
 }
 
 function baseStyles() {
