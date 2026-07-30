@@ -4677,10 +4677,10 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
           previewPath: uploadPath,
           repositoryUrl: existingEntry?.repositoryUrl || "",
           ...(note ? { note } : {}),
-          ...(thumbnailPosterPath ? { thumbnail: assetUrlForRepoPath(thumbnailPosterPath, uploadedAt), thumbnailPath: thumbnailPosterPath } : {}),
+          ...(thumbnailPosterPath ? { thumbnail: assetUrlForRepoPath(thumbnailPosterPath), thumbnailPath: thumbnailPosterPath } : {}),
           ...(thumbnailPosterPath
             ? {
-                thumbnailPoster: assetUrlForRepoPath(thumbnailPosterPath, uploadedAt),
+                thumbnailPoster: assetUrlForRepoPath(thumbnailPosterPath),
                 thumbnailPosterPath,
                 cardSize: selectedCardSize === "auto" ? undefined : selectedCardSize,
               }
