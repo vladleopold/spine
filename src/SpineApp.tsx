@@ -5695,7 +5695,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                 const webmPreviewUrl = isWebmPreview(entry.webmPreview || "")
                   ? withAssetVersion(normalizeAssetDomain(entry.webmPreview || ""), assetVersionForLibraryEntry(entry, "webm"))
                   : derivedLibraryAssetUrl(entry, [".webm"]) || generatedWebmUrlForEntry(entry);
-                const safeThumbnail = withAssetVersion(safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnail || "")), assetVersionForLibraryEntry(entry, "thumbnail"));
+                const safeThumbnail = safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnail || ""));
                 const safePoster =
                   safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnailPoster || "")) ||
                   generatedPosterUrlForEntry(entry) ||

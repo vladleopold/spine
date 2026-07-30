@@ -44,7 +44,7 @@ function safeVideo(value = '') {
 }
 
 function entryImageAsset(value = '', entry = {}, fallback = '') {
-  return appendAssetVersion(safeImage(value), assetVersionForEntry(entry, fallback));
+  return safeImage(value);
 }
 
 function entryVideoAsset(value = '', entry = {}, fallback = '') {
