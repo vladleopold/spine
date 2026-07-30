@@ -1,6 +1,6 @@
 import { metricCountsForId, parseMetricsJson } from '../lib/spine-metrics.js';
 import { cacheProfiles, setCacheHeaders } from '../lib/cache-headers.js';
-import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
+import { appendAssetVersion, assetVersionForEntry } from '../lib/asset-version.js';
 import { cachedGithubText } from '../lib/github-content-cache.js';
 
 const defaultOwner = 'vladleopold';
@@ -49,7 +49,7 @@ function entryImageAsset(value = '', entry = {}, fallback = '') {
 
 function entryVideoAsset(value = '', entry = {}, fallback = '') {
   // Use webmGeneratedAt as cache-buster for video so CDN serves the latest generated preview
-  return appendAssetVersion(safeVideo(value), assetVersionForWebm(entry));
+  return safeVideo(value);
 }
 
 function safeAsset(value = '') {

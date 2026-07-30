@@ -5691,7 +5691,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                 const editUrl = new URL(`/?edit=${encodeURIComponent(entry.id)}`, window.location.origin).toString();
                 const uploadedDate = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
                 const webmPreviewUrl = isWebmPreview(entry.webmPreview || "")
-                  ? withAssetVersion(normalizeAssetDomain(entry.webmPreview || ""), assetVersionForLibraryEntry(entry, "webm"))
+                  ? normalizeAssetDomain(entry.webmPreview || "")
                   : derivedLibraryAssetUrl(entry, [".webm"]) || generatedWebmUrlForEntry(entry);
                 const safeThumbnail = safeLibraryAssetUrl(normalizeAssetDomain(entry.thumbnail || ""));
                 const safePoster =
