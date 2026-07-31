@@ -1,5 +1,139 @@
 [
   {
+    "id": "sheep_big-2026-07-31T20-54-17-990Z",
+    "name": "sheep_big",
+    "updatedAt": "2026-07-31T20:54:26.586Z",
+    "animation_asset": {
+      "id": "sheep_big-2026-07-31T20-54-17-990Z",
+      "name": "sheep_big",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "loader",
+      "skeleton_type": "ui",
+      "content_type": "loader",
+      "taxonomy": {
+        "category": "ui",
+        "class": "feedback",
+        "type": "loader",
+        "tags": [
+          "loading"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "loading-feedback"
+        ],
+        "loop_type": [
+          "loop"
+        ],
+        "animation_state": [
+          "loading",
+          "loading2"
+        ],
+        "state": [
+          "default-loading"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/sheep_big-2026-07-31T20-54-17-990Z",
+      "manifestPath": "library/sheep_big-2026-07-31T20-54-17-990Z/manifest.json",
+      "files": [
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/sheep_big/sheep_big.json",
+          "name": "sheep_big/sheep_big.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/sheep_big/sheep_big.atlas",
+          "name": "sheep_big/sheep_big.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/sheep_big/sheep_big.png",
+          "name": "sheep_big/sheep_big.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/loading-preview.webp",
+          "name": "loading-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sheep_big-2026-07-31T20-54-17-990Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "sheep_big.json",
+      "atlas": "sheep_big.atlas",
+      "textures": [
+        "sheep_big.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "loading",
+        "loading2"
+      ],
+      "defaultAnimation": "loading",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "loading"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "w140101_spine-2026-07-29T00-26-09-087Z",
     "name": "w140101_spine",
     "updatedAt": "2026-07-29T00:26:20.776Z",
