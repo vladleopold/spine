@@ -1078,7 +1078,7 @@ export default async function handler(request, response) {
         portfolioMode: Boolean(entry?.portfolioMode),
         ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' }),
       };
-      const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
+      const nextEntries = [...currentEntries, nextEntry];
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
       const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
       const isNewUpload = !existingEntry || existingEntry.webmStatus !== 'ready';
@@ -1556,7 +1556,7 @@ export default async function handler(request, response) {
       portfolioMode: Boolean(entry?.portfolioMode),
       ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' }),
     };
-    const nextEntries = [nextEntry, ...currentEntries.filter((currentEntry) => currentEntry.id !== nextEntry.id)];
+    const nextEntries = [...currentEntries, nextEntry];
 
     await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
     const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
