@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "sheep_big-2026-07-31T20-54-17-990Z",
+  "title": "sheep_big",
+  "uploadedAt": "2026-07-31T20:54:17.990Z",
+  "proofPath": "library/sheep_big-2026-07-31T20-54-17-990Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/sheep_big-2026-07-31T20-54-17-990Z/source-proof.json?v=2026-07-31T20-54-17.990Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1gt27f2_obuxyv",
+    "anonymousFingerprint": "1gt27f2",
+    "browserFingerprintSha256": "c1439f0ad233c6521be494a50bac0967652c3530e745be4c51f47dd0f5e03c5b",
+    "browserEnvironmentHashSha256": "c42282d35d3e24c3aee737d132abafc7fc0f7612759c1b58c663d468ef9bf604",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Moscow",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/sheep_big-2026-07-31T20-54-17-990Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:1fd82afa1289ca3907d6d581c3365ad5649ee1b22f39afeb3171612324af8c20",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "loading-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "sheep_big/sheep_big.atlas",
+      "bytes": 733,
+      "sha256": "659b9861a7cfd6174085ff8817af247a35459d1045c95cf05fa89b76fa100a01"
+    },
+    {
+      "name": "sheep_big/sheep_big.json",
+      "bytes": 48754,
+      "sha256": "dab07e2e0d48980fb26e8d3085bf1ad7650cab934565fda7ef55cd5f573e0edb"
+    },
+    {
+      "name": "sheep_big/sheep_big.png",
+      "bytes": 455153,
+      "sha256": "dc8166c7a6b933a46281bebd874e2d0d6961390681a86e9b427eb6169eca654b"
+    }
+  ],
+  "proofHash": "1fd82afa1289ca3907d6d581c3365ad5649ee1b22f39afeb3171612324af8c20"
+}
