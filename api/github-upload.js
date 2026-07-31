@@ -499,7 +499,7 @@ function normalizeAnonymousAccount(body) {
   const account = body?.anonymousAccount && typeof body.anonymousAccount === 'object' ? body.anonymousAccount : {};
   const id = String(account.id || body?.anonymousAccountId || '').trim();
   const fingerprint = String(account.fingerprint || body?.anonymousFingerprint || '').trim();
-  if (!id || !/^anon_[a-z0-9_-]{12,96}$/i.test(id)) return null;
+  if (!id || !/^anon_[a-z0-9_-]{3,96}$/i.test(id)) return null;
   return { id, fingerprint };
 }
 
