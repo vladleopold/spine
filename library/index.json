@@ -23,21 +23,21 @@
       "up2",
       "up3"
     ],
-    "defaultAnimation": "1",
+    "defaultAnimation": "up3",
     "files": [
       "catch/catch.json",
       "catch/catch.atlas",
       "catch/catch.png",
-      "1-preview.webp",
+      "up3-preview.webp",
       "source-proof.json",
       "blockchain-anchor.json"
     ],
     "previewPath": "library/catch-2026-08-01T00-31-42-839Z",
     "repositoryUrl": "",
-    "thumbnail": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/1-preview.webp?v=2026-08-01T00-31-42.839Z",
-    "thumbnailPath": "library/catch-2026-08-01T00-31-42-839Z/1-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/1-preview.webp?v=2026-08-01T00-31-42.839Z",
-    "thumbnailPosterPath": "library/catch-2026-08-01T00-31-42-839Z/1-preview.webp",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp?v=2026-08-01T00-32-06.112Z",
+    "thumbnailPath": "library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp?v=2026-08-01T00-32-06.112Z",
+    "thumbnailPosterPath": "library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp",
     "thumbnailType": "image",
     "webmStatus": "pending",
     "sourceProof": {
@@ -46,9 +46,9 @@
       "hashAlgorithm": "SHA-256",
       "entryId": "catch-2026-08-01T00-31-42-839Z",
       "title": "catch",
-      "uploadedAt": "2026-08-01T00:31:42.839Z",
+      "uploadedAt": "2026-08-01T00:32:06.112Z",
       "proofPath": "library/catch-2026-08-01T00-31-42-839Z/source-proof.json",
-      "proofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-31-42.839Z",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-32-06.112Z",
       "uploader": {
         "mode": "google-account",
         "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
@@ -88,15 +88,10 @@
       },
       "blockchain": {
         "status": "ready-to-anchor",
-        "recommendedAnchorPayload": "sha256:041780042f1b61a3911d2f83a09d945e22a37a81b5aee8cf2495d3fda6fba798",
+        "recommendedAnchorPayload": "sha256:ee0b04b8a6008de924cf3e41cd5740e9eef3ebd1807087160524a1e544eb514a",
         "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
       },
       "files": [
-        {
-          "name": "1-preview.webp",
-          "bytes": 694,
-          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
-        },
         {
           "name": "catch/catch.atlas",
           "bytes": 445,
@@ -111,22 +106,27 @@
           "name": "catch/catch.png",
           "bytes": 17490,
           "sha256": "26bfce124d965fe341a8f7f0cfe93205fa611f9dbaf385c95c1ac32479791a59"
+        },
+        {
+          "name": "up3-preview.webp",
+          "bytes": 708,
+          "sha256": "b3930a051665ede43823fe8d78bdb423f924e8f7f8453993b9b63ffa93749cce"
         }
       ],
-      "proofHash": "041780042f1b61a3911d2f83a09d945e22a37a81b5aee8cf2495d3fda6fba798"
+      "proofHash": "ee0b04b8a6008de924cf3e41cd5740e9eef3ebd1807087160524a1e544eb514a"
     },
     "sourceProofPath": "library/catch-2026-08-01T00-31-42-839Z/source-proof.json",
-    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-31-42.839Z",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-32-06.112Z",
     "blockchainAnchor": {
       "type": "SpineLinkGitHubBlockchainAnchor",
       "version": 1,
-      "createdAt": "2026-08-01T00:31:47.684Z",
+      "createdAt": "2026-08-01T00:32:11.164Z",
       "entryId": "catch-2026-08-01T00-31-42-839Z",
       "title": "catch",
-      "uploadedAt": "2026-08-01T00:31:42.839Z",
-      "sourceProofHash": "041780042f1b61a3911d2f83a09d945e22a37a81b5aee8cf2495d3fda6fba798",
+      "uploadedAt": "2026-08-01T00:32:06.112Z",
+      "sourceProofHash": "ee0b04b8a6008de924cf3e41cd5740e9eef3ebd1807087160524a1e544eb514a",
       "sourceProofPath": "library/catch-2026-08-01T00-31-42-839Z/source-proof.json",
-      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-31-42.839Z",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-32-06.112Z",
       "uploader": {
         "mode": "anonymous-browser",
         "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
@@ -172,8 +172,8 @@
             "sha256": "8bff611b7a676621cc79aa1ef5fc36b4cc62085c750bc7cc4afcc338d6a3339a",
             "github": {
               "contentSha": "0d8d561ee0b96bd9e8d290c82bf4aa541272a912",
-              "commitSha": "fac3ac1bad03fc8a0b9f3dc9ef205bb72696edb3",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/fac3ac1bad03fc8a0b9f3dc9ef205bb72696edb3",
+              "commitSha": "7c77108761c757ec512b8862025314ca37b2eff6",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7c77108761c757ec512b8862025314ca37b2eff6",
               "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/catch/catch.json"
             }
           },
@@ -184,8 +184,8 @@
             "sha256": "cdc4ce883db1f984804f5a89430434ea29b94823dd775e3593d31a6dfd6d693f",
             "github": {
               "contentSha": "63d84fc21d51dc6f7066b53e9f35c496b45b942d",
-              "commitSha": "4914b82bfcd034302836c8dc0d7d237041bbe719",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/4914b82bfcd034302836c8dc0d7d237041bbe719",
+              "commitSha": "30caa2f29a713b206c5bf25e3e69026305916e2c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/30caa2f29a713b206c5bf25e3e69026305916e2c",
               "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/catch/catch.atlas"
             }
           },
@@ -196,51 +196,51 @@
             "sha256": "26bfce124d965fe341a8f7f0cfe93205fa611f9dbaf385c95c1ac32479791a59",
             "github": {
               "contentSha": "d261848285e4ff75166344992300e662416bf214",
-              "commitSha": "004b37969089f4fbcef9ada40993a794dcb1ae13",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/004b37969089f4fbcef9ada40993a794dcb1ae13",
+              "commitSha": "23e44a43de595ab1b133f2f58ff005710869401c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/23e44a43de595ab1b133f2f58ff005710869401c",
               "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/catch/catch.png"
             }
           },
           {
-            "name": "1-preview.webp",
-            "path": "library/catch-2026-08-01T00-31-42-839Z/1-preview.webp",
-            "bytes": 694,
-            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "name": "up3-preview.webp",
+            "path": "library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp",
+            "bytes": 708,
+            "sha256": "b3930a051665ede43823fe8d78bdb423f924e8f7f8453993b9b63ffa93749cce",
             "github": {
-              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
-              "commitSha": "a6ae222eae08d2233cab5e3d09c6e85f5dff53bb",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/a6ae222eae08d2233cab5e3d09c6e85f5dff53bb",
-              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/1-preview.webp"
+              "contentSha": "b7819f201a15886671d9880816e8237d583ac153",
+              "commitSha": "ca8e7198a34507eefe4073419ac52129cc3f3db6",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ca8e7198a34507eefe4073419ac52129cc3f3db6",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/up3-preview.webp"
             }
           },
           {
             "name": "source-proof.json",
             "path": "library/catch-2026-08-01T00-31-42-839Z/source-proof.json",
-            "bytes": 2599,
-            "sha256": "fa03ae383195ba72d9736062ef37bd94fdb389a69804f9fc2a1ba3c0d8fc5131",
+            "bytes": 2601,
+            "sha256": "832e2f77aa6168707c39a4152c06f1dc2d2a1719d934812475d9628a83fb106c",
             "github": {
-              "contentSha": "11b67e43de1484715b3279a23d5b0331c5ecb036",
-              "commitSha": "5ff013dfd3a95ec367875afbd70cd2f36be77c9e",
-              "commitUrl": "https://github.com/vladleopold/spine/commit/5ff013dfd3a95ec367875afbd70cd2f36be77c9e",
+              "contentSha": "aa7694aaa97d7067d7dccbb2ba8069f1ab55f118",
+              "commitSha": "3fd05d87e8137c42407d663fa36c8cde46e880f7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3fd05d87e8137c42407d663fa36c8cde46e880f7",
               "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/catch-2026-08-01T00-31-42-839Z/source-proof.json"
             }
           }
         ],
         "anchorPath": "library/catch-2026-08-01T00-31-42-839Z/blockchain-anchor.json",
         "anchorUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/blockchain-anchor.json",
-        "anchorCommitSha": "bd952edabfb48c1e411c4f2dee18d3e4db0c7aee",
-        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/bd952edabfb48c1e411c4f2dee18d3e4db0c7aee"
+        "anchorCommitSha": "1141d7b4e7fb9da6acd30609d233c7392e499c94",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/1141d7b4e7fb9da6acd30609d233c7392e499c94"
       },
       "legalEvidence": {
         "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
         "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
       },
-      "anchorHash": "55fa34db422b7deeffc44860b1107736f67bbb821b7faa2ffcd7d400627842d9",
-      "recommendedAnchorPayload": "sha256:55fa34db422b7deeffc44860b1107736f67bbb821b7faa2ffcd7d400627842d9",
+      "anchorHash": "bd7aacbf49a1b6001cdd1cbf6370c884eb38f695910dcab5a4193adf0ece638f",
+      "recommendedAnchorPayload": "sha256:bd7aacbf49a1b6001cdd1cbf6370c884eb38f695910dcab5a4193adf0ece638f",
       "blockchain": {
         "status": "ready-to-anchor",
         "chain": "evm",
-        "transactionData": "0x55fa34db422b7deeffc44860b1107736f67bbb821b7faa2ffcd7d400627842d9",
+        "transactionData": "0xbd7aacbf49a1b6001cdd1cbf6370c884eb38f695910dcab5a4193adf0ece638f",
         "message": "Set BLOCKCHAIN_RPC_URL and BLOCKCHAIN_PRIVATE_KEY in the server environment to write this proof hash to an EVM blockchain transaction."
       },
       "anchorPath": "library/catch-2026-08-01T00-31-42-839Z/blockchain-anchor.json",
