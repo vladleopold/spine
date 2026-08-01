@@ -4,9 +4,9 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "catch-2026-08-01T06-41-05-552Z",
   "title": "catch",
-  "uploadedAt": "2026-08-01T06:41:05.552Z",
+  "uploadedAt": "2026-08-01T06:44:17.927Z",
   "proofPath": "library/catch-2026-08-01T06-41-05-552Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T06-41-05-552Z/source-proof.json?v=2026-08-01T06-41-05.552Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T06-41-05-552Z/source-proof.json?v=2026-08-01T06-44-17.927Z",
   "uploader": {
     "mode": "google-account",
     "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
@@ -46,15 +46,10 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:d14e924e177de71f329057622e3c68158bae0b9f2ae064b0d08f0feedf5b6209",
+    "recommendedAnchorPayload": "sha256:4cb006cb7d4bce63f8b39b9761144d87ed6102607bf36763e870c3759b33b884",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
-    {
-      "name": "1-preview.webp",
-      "bytes": 694,
-      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
-    },
     {
       "name": "catch/catch.atlas",
       "bytes": 445,
@@ -69,7 +64,12 @@
       "name": "catch/catch.png",
       "bytes": 17490,
       "sha256": "26bfce124d965fe341a8f7f0cfe93205fa611f9dbaf385c95c1ac32479791a59"
+    },
+    {
+      "name": "up3-preview.webp",
+      "bytes": 862,
+      "sha256": "22d9a7e6369a261688362738444a986b5f6d91f1635d02db8833f87f34ad3fab"
     }
   ],
-  "proofHash": "d14e924e177de71f329057622e3c68158bae0b9f2ae064b0d08f0feedf5b6209"
+  "proofHash": "4cb006cb7d4bce63f8b39b9761144d87ed6102607bf36763e870c3759b33b884"
 }
