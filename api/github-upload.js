@@ -711,7 +711,31 @@ async function getGitHubContent(settings, path) {
   if (response.status === 404) return null;
   if (!response.ok) throw new Error(`Storage did not return ${path}: ${response.status}`);
 
-  return response.json();
+  const data = await response.json();
+  // GitHub Contents API omits the body for files larger than 1MB
+  // (returns encoding "none" with an empty content string). Fetch the blob
+  // by its SHA so large index.json files are not silently read as empty.
+  if (data?.encoding !== 'base64' || !data?.content) {
+    if (data?.sha) {
+      const blobResponse = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/git/blobs/${data.sha}`, {
+        headers: githubHeaders(settings.token),
+      });
+      if (blobResponse.ok) {
+        const blob = await blobResponse.json();
+        if (blob?.encoding === 'base64' && blob?.content) {
+          return { ...data, encoding: 'base64', content: blob.content };
+        }
+      }
+    }
+    if (typeof data?.download_url === 'string' && data.download_url) {
+      const rawResponse = await fetch(data.download_url, { headers: githubHeaders(settings.token) });
+      if (rawResponse.ok) {
+        const rawText = await rawResponse.text();
+        return { ...data, encoding: 'base64', content: textToBase64(rawText) };
+      }
+    }
+  }
+  return data;
 }
 
 async function putGitHubContent(settings, path, contentBase64, message, sha, origin = '') {
