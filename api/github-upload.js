@@ -1356,6 +1356,36 @@ export default async function handler(request, response) {
       return response.status(200).json({ ok: true, entries: publicLibraryEntries(origin, entries), merged: changed });
     }
 
+    // ═══════════════ PUBLIC ADMIN SETTINGS (frontend only) ═══════════════
+    
+    if (action === 'get-admin-settings') {
+      const settingsPath = joinRepoPath(settings.basePath, 'admin-settings.json');
+      const current = await getGitHubContent(settings, settingsPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : {};
+      return response.status(200).json({ 
+        blockchainEnabled: data.blockchainEnabled !== false, 
+        addMoreWorkEnabled: data.addMoreWorkEnabled !== false 
+      });
+    }
+
+    if (action === 'set-admin-settings') {
+      if (!googlePayload?.email) throw unauthorized('Sign in with Google to change settings');
+      if (!isArchiveAdmin(googlePayload)) throw unauthorized('Only administrators can change settings', 403);
+      const blockchainEnabled = typeof body?.blockchainEnabled === 'boolean' ? body.blockchainEnabled : undefined;
+      const addMoreWorkEnabled = typeof body?.addMoreWorkEnabled === 'boolean' ? body.addMoreWorkEnabled : undefined;
+      if (blockchainEnabled === undefined && addMoreWorkEnabled === undefined) throw badRequest('No settings to update');
+      
+      const settingsPath = joinRepoPath(settings.basePath, 'admin-settings.json');
+      const current = await getGitHubContent(settings, settingsPath);
+      const data = current?.content && current.encoding === 'base64' ? JSON.parse(base64ToText(current.content)) : {};
+      
+      if (blockchainEnabled !== undefined) data.blockchainEnabled = blockchainEnabled;
+      if (addMoreWorkEnabled !== undefined) data.addMoreWorkEnabled = addMoreWorkEnabled;
+      
+      await putGitHubContent(settings, settingsPath, textToBase64(JSON.stringify(data, null, 2)), `Admin: update settings`, current?.sha, origin);
+      return response.status(200).json({ ok: true, blockchainEnabled: data.blockchainEnabled, addMoreWorkEnabled: data.addMoreWorkEnabled });
+    }
+
     // ═══════════════ ADMIN ACTIONS ═══════════════
 
     if (action === 'admin-login') {
