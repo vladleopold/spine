@@ -32,7 +32,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/born_1001_01-2026-08-03T12-43-17-294Z/animation-preview.webp?v=2026-08-03T12-43-17.294Z",
     "thumbnailPosterPath": "library/born_1001_01-2026-08-03T12-43-17-294Z/animation-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -236,7 +236,9 @@
       },
       "anchorPath": "library/born_1001_01-2026-08-03T12-43-17-294Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/born_1001_01-2026-08-03T12-43-17-294Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Please specify the URL of the skeleton JSON or .skel file.",
+    "webmGeneratedAt": "2026-08-03T12:44:45.161Z"
   },
   {
     "id": "canon_hit-2026-08-01T09-33-06-133Z",
