@@ -1,5 +1,253 @@
 [
   {
+    "id": "hearts-2026-08-04T09-38-53-174Z",
+    "title": "hearts",
+    "publicOwnerId": "u_2vbeik",
+    "ownerAnonId": "anon_38qwes_oe7qt4",
+    "ownerAnonFingerprint": "38qwes",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-04T09:38:53.174Z",
+    "skeleton": "hearts.json",
+    "atlas": "hearts.atlas",
+    "textures": [
+      "hearts.png"
+    ],
+    "animations": [
+      "life_2/appear",
+      "life_3/appear",
+      "life_1/appear",
+      "life_1/idle",
+      "life_2/idle",
+      "life_3/idle",
+      "life_2/remove",
+      "life_3/remove",
+      "life_1/remove",
+      "life_1/static",
+      "life_2/static",
+      "life_3/static"
+    ],
+    "defaultAnimation": "life_1/idle",
+    "files": [
+      "hearts/hearts.json",
+      "hearts/hearts.atlas",
+      "hearts/hearts.png",
+      "life_1-idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/hearts-2026-08-04T09-38-53-174Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp?v=2026-08-04T09-38-53.174Z",
+    "thumbnailPath": "library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp?v=2026-08-04T09-38-53.174Z",
+    "thumbnailPosterPath": "library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "hearts-2026-08-04T09-38-53-174Z",
+      "title": "hearts",
+      "uploadedAt": "2026-08-04T09:38:53.174Z",
+      "proofPath": "library/hearts-2026-08-04T09-38-53-174Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/source-proof.json?v=2026-08-04T09-38-53.174Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_38qwes_oe7qt4",
+        "anonymousFingerprint": "38qwes",
+        "browserFingerprintSha256": "117cfe61b8f60234782421803a6ea9f3bdb1673a2d4d6a43535558da01cd8c08",
+        "browserEnvironmentHashSha256": "a58d686c2e8111f3decd57965fdff50f80df01da1a20c4028bc69efb4a90c89b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "es"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Madrid",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/hearts-2026-08-04T09-38-53-174Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:d8d84c9f59ba288b8da42f89dba950c6da5981448d37d960d3e9406e407ca6c6",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "hearts/hearts.atlas",
+          "bytes": 901,
+          "sha256": "9f1949b6686f66aea540012fa5ba5c2f80bb6876df5cdec4028ad0d3ee06bc1b"
+        },
+        {
+          "name": "hearts/hearts.json",
+          "bytes": 24941,
+          "sha256": "72e330de538804335d42af67a056dc963c9bc1b7eea401e808dfb3e249f12a11"
+        },
+        {
+          "name": "hearts/hearts.png",
+          "bytes": 119498,
+          "sha256": "d05df4bcd11cc02d39da9f317da2f8245fdff9642545654cbf32ff0922d2b4d1"
+        },
+        {
+          "name": "life_1-idle-preview.webp",
+          "bytes": 694,
+          "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+        }
+      ],
+      "proofHash": "d8d84c9f59ba288b8da42f89dba950c6da5981448d37d960d3e9406e407ca6c6"
+    },
+    "sourceProofPath": "library/hearts-2026-08-04T09-38-53-174Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/source-proof.json?v=2026-08-04T09-38-53.174Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-04T09:38:59.742Z",
+      "entryId": "hearts-2026-08-04T09-38-53-174Z",
+      "title": "hearts",
+      "uploadedAt": "2026-08-04T09:38:53.174Z",
+      "sourceProofHash": "d8d84c9f59ba288b8da42f89dba950c6da5981448d37d960d3e9406e407ca6c6",
+      "sourceProofPath": "library/hearts-2026-08-04T09-38-53-174Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/source-proof.json?v=2026-08-04T09-38-53.174Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_38qwes_oe7qt4",
+        "anonymousFingerprint": "38qwes",
+        "browserFingerprintSha256": "117cfe61b8f60234782421803a6ea9f3bdb1673a2d4d6a43535558da01cd8c08",
+        "browserEnvironmentHashSha256": "a58d686c2e8111f3decd57965fdff50f80df01da1a20c4028bc69efb4a90c89b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "es"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2560,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Madrid",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/hearts-2026-08-04T09-38-53-174Z",
+        "files": [
+          {
+            "name": "hearts/hearts.json",
+            "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.json",
+            "bytes": 24941,
+            "sha256": "72e330de538804335d42af67a056dc963c9bc1b7eea401e808dfb3e249f12a11",
+            "github": {
+              "contentSha": "9405274d7d3611bc621c8895d7f79fe681c1914c",
+              "commitSha": "93fcb8f06978cb19e7231ed4815667f200818f8e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/93fcb8f06978cb19e7231ed4815667f200818f8e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.json"
+            }
+          },
+          {
+            "name": "hearts/hearts.atlas",
+            "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.atlas",
+            "bytes": 901,
+            "sha256": "9f1949b6686f66aea540012fa5ba5c2f80bb6876df5cdec4028ad0d3ee06bc1b",
+            "github": {
+              "contentSha": "ae0b172c818b7e89a115a0dd2e61fbb259f2303e",
+              "commitSha": "6d4a48e49c26943b439c9645b4438c23b22c9490",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6d4a48e49c26943b439c9645b4438c23b22c9490",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.atlas"
+            }
+          },
+          {
+            "name": "hearts/hearts.png",
+            "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.png",
+            "bytes": 119498,
+            "sha256": "d05df4bcd11cc02d39da9f317da2f8245fdff9642545654cbf32ff0922d2b4d1",
+            "github": {
+              "contentSha": "0f6c9f0fedf43571608a631c680bf035afc3ca54",
+              "commitSha": "f11ada6c6ae94af782f014c96aee8a80c0d13ef4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f11ada6c6ae94af782f014c96aee8a80c0d13ef4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.png"
+            }
+          },
+          {
+            "name": "life_1-idle-preview.webp",
+            "path": "library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp",
+            "bytes": 694,
+            "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407",
+            "github": {
+              "contentSha": "c63d1d2931e92e7e3d71c948586dadfa4e72a64c",
+              "commitSha": "d166443957129470225e6b93baf44adb9e5eef06",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d166443957129470225e6b93baf44adb9e5eef06",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/hearts-2026-08-04T09-38-53-174Z/source-proof.json",
+            "bytes": 2519,
+            "sha256": "ad8e6ddf3b86cb8cacdd699f5e2d634092eab9023fa051f05718d2a29a20469d",
+            "github": {
+              "contentSha": "3b2f92c19b3532cbb80eccaa60fb750c92fbeec1",
+              "commitSha": "1928e74d73d619cf8b7cd82c7385bf7c09615a7b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1928e74d73d619cf8b7cd82c7385bf7c09615a7b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/hearts-2026-08-04T09-38-53-174Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/hearts-2026-08-04T09-38-53-174Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/blockchain-anchor.json",
+        "anchorCommitSha": "854d590bae67bcd68b9d072b586ffabca2ffcdb6",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/854d590bae67bcd68b9d072b586ffabca2ffcdb6"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "8e306504d49f12b7fbd1854d813044e6a468ace69d92c05cc9df85119fb67315",
+      "recommendedAnchorPayload": "sha256:8e306504d49f12b7fbd1854d813044e6a468ace69d92c05cc9df85119fb67315",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x8e306504d49f12b7fbd1854d813044e6a468ace69d92c05cc9df85119fb67315",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/hearts-2026-08-04T09-38-53-174Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/hearts-2026-08-04T09-38-53-174Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "skeleton-2026-08-04T08-20-23-061Z",
     "title": "skeleton",
     "publicOwnerId": "u_jjogxo",
