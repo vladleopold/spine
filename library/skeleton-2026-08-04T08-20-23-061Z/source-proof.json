@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "skeleton-2026-08-04T08-20-23-061Z",
+  "title": "skeleton",
+  "uploadedAt": "2026-08-04T08:20:23.061Z",
+  "proofPath": "library/skeleton-2026-08-04T08-20-23-061Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-04T08-20-23-061Z/source-proof.json?v=2026-08-04T08-20-23.061Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ihaxts_1js6gww",
+    "anonymousFingerprint": "1ihaxts",
+    "browserFingerprintSha256": "c1d503e5175c1b561428ed13919be44a44a74ff5e3642be3e8d2372c700ea58f",
+    "browserEnvironmentHashSha256": "51f2aa72ba98f0bb5287a734c6bc402f7a403f89468b903f67809ff38e15f94f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "fr"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 3360,
+        "height": 1890,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "America/Chicago",
+      "timezoneOffset": 300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-08-04T08-20-23-061Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d31ba600b545fe6d44051dce85f801d1c07ac566e29bdae71041d7d37ac5eb77",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "skeleton/Maine_BG_03.atlas",
+      "bytes": 122,
+      "sha256": "67364839069c441d40a347e83b8ae11512af92422bbc8b2539f8dc43f6fa1d54"
+    },
+    {
+      "name": "skeleton/Maine_BG_03.png",
+      "bytes": 13941,
+      "sha256": "2b7d36f3c8cd99cc72a664a010f422d33b553e809ae837387fe5e69e2047de04"
+    },
+    {
+      "name": "skeleton/skeleton.json",
+      "bytes": 103568,
+      "sha256": "1bbb0e4f26f576b909d0c0fdaa06ba394171c0bde4ba06685b033f4eb45e439f"
+    }
+  ],
+  "proofHash": "d31ba600b545fe6d44051dce85f801d1c07ac566e29bdae71041d7d37ac5eb77"
+}
