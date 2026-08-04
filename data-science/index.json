@@ -1,5 +1,181 @@
 [
   {
+    "id": "character-2026-08-04T20-31-46-693Z",
+    "name": "character",
+    "updatedAt": "2026-08-04T20:32:05.929Z",
+    "animation_asset": {
+      "id": "character-2026-08-04T20-31-46-693Z",
+      "name": "character",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "character"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "animation_state": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "base"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-0"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/character-2026-08-04T20-31-46-693Z",
+      "manifestPath": "library/character-2026-08-04T20-31-46-693Z/manifest.json",
+      "files": [
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/character/character.skel",
+          "name": "character/character.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/character/character.atlas",
+          "name": "character/character.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/character/Albert.png",
+          "name": "character/Albert.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/0-preview.webp",
+          "name": "0-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/character-2026-08-04T20-31-46-693Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "character.skel",
+      "atlas": "character.atlas",
+      "textures": [
+        "Albert.png"
+      ],
+      "animationCount": 23,
+      "animationNames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "base"
+      ],
+      "defaultAnimation": "0",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "character"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character-2026-08-04T20-28-43-068Z",
     "name": "character",
     "updatedAt": "2026-08-04T20:29:03.164Z",
