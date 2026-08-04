@@ -1,5 +1,138 @@
 [
   {
+    "id": "skeleton-2026-08-04T08-20-23-061Z",
+    "name": "skeleton",
+    "updatedAt": "2026-08-04T08:20:33.485Z",
+    "animation_asset": {
+      "id": "skeleton-2026-08-04T08-20-23-061Z",
+      "name": "skeleton",
+      "domain": "gamedev",
+      "asset_category": "background",
+      "animation_type": "background",
+      "skeleton_type": "background",
+      "content_type": "background",
+      "taxonomy": {
+        "category": "environment",
+        "class": "background",
+        "type": "animated-background",
+        "tags": [
+          "bg"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "scene-background"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/skeleton-2026-08-04T08-20-23-061Z",
+      "manifestPath": "library/skeleton-2026-08-04T08-20-23-061Z/manifest.json",
+      "files": [
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/skeleton/skeleton.json",
+          "name": "skeleton/skeleton.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/skeleton/Maine_BG_03.atlas",
+          "name": "skeleton/Maine_BG_03.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/skeleton/Maine_BG_03.png",
+          "name": "skeleton/Maine_BG_03.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/skeleton-2026-08-04T08-20-23-061Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "skeleton.json",
+      "atlas": "Maine_BG_03.atlas",
+      "textures": [
+        "Maine_BG_03.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "bg"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "born_1001_01-2026-08-03T12-43-17-294Z",
     "name": "born_1001_01",
     "updatedAt": "2026-08-03T12:43:29.436Z",
