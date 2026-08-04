@@ -1,5 +1,158 @@
 [
   {
+    "id": "hearts-2026-08-04T09-38-53-174Z",
+    "name": "hearts",
+    "updatedAt": "2026-08-04T09:39:02.547Z",
+    "animation_asset": {
+      "id": "hearts-2026-08-04T09-38-53-174Z",
+      "name": "hearts",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "life_2/appear",
+          "life_3/appear",
+          "life_1/appear",
+          "life_1/idle",
+          "life_2/idle",
+          "life_3/idle",
+          "life_2/remove",
+          "life_3/remove",
+          "life_1/remove",
+          "life_1/static",
+          "life_2/static",
+          "life_3/static",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-life_1/idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/hearts-2026-08-04T09-38-53-174Z",
+      "manifestPath": "library/hearts-2026-08-04T09-38-53-174Z/manifest.json",
+      "files": [
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.json",
+          "name": "hearts/hearts.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.atlas",
+          "name": "hearts/hearts.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/hearts/hearts.png",
+          "name": "hearts/hearts.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/life_1-idle-preview.webp",
+          "name": "life_1-idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/hearts-2026-08-04T09-38-53-174Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "hearts.json",
+      "atlas": "hearts.atlas",
+      "textures": [
+        "hearts.png"
+      ],
+      "animationCount": 12,
+      "animationNames": [
+        "life_2/appear",
+        "life_3/appear",
+        "life_1/appear",
+        "life_1/idle",
+        "life_2/idle",
+        "life_3/idle",
+        "life_2/remove",
+        "life_3/remove",
+        "life_1/remove",
+        "life_1/static",
+        "life_2/static",
+        "life_3/static"
+      ],
+      "defaultAnimation": "life_1/idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "skeleton-2026-08-04T08-20-23-061Z",
     "name": "skeleton",
     "updatedAt": "2026-08-04T08:20:33.485Z",
