@@ -32,7 +32,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-04T21-43-38-920Z/standby-preview.webp?v=2026-08-04T21-43-38.920Z",
     "thumbnailPosterPath": "library/skeleton-2026-08-04T21-43-38-920Z/standby-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -232,7 +232,9 @@
       },
       "anchorPath": "library/skeleton-2026-08-04T21-43-38-920Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-04T21-43-38-920Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nBone name must not be null.",
+    "webmGeneratedAt": "2026-08-05T01:45:30.548Z"
   },
   {
     "id": "character-2026-08-04T20-37-20-908Z",
