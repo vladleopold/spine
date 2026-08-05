@@ -1,5 +1,147 @@
 [
   {
+    "id": "c132301-2026-08-05T04-16-12-660Z",
+    "name": "c132301",
+    "updatedAt": "2026-08-05T04:16:23.795Z",
+    "animation_asset": {
+      "id": "c132301-2026-08-05T04-16-12-660Z",
+      "name": "c132301",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation_1_loop",
+          "animation_2_in",
+          "animation_2_loop",
+          "animation_3_loop",
+          "animation_4_in",
+          "animation_4_loop",
+          "animation_5_loop"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-animation_1_loop"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/c132301-2026-08-05T04-16-12-660Z",
+      "manifestPath": "library/c132301-2026-08-05T04-16-12-660Z/manifest.json",
+      "files": [
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/c132301/c132301.json",
+          "name": "c132301/c132301.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/c132301/c132301.atlas",
+          "name": "c132301/c132301.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/c132301/c132301.png",
+          "name": "c132301/c132301.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/animation_1_loop-preview.webp",
+          "name": "animation_1_loop-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/c132301-2026-08-05T04-16-12-660Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "c132301.json",
+      "atlas": "c132301.atlas",
+      "textures": [
+        "c132301.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "Animation_1_Loop",
+        "Animation_2_In",
+        "Animation_2_Loop",
+        "Animation_3_Loop",
+        "Animation_4_In",
+        "Animation_4_Loop",
+        "Animation_5_Loop"
+      ],
+      "defaultAnimation": "Animation_1_Loop",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "skeleton-2026-08-04T21-43-38-920Z",
     "name": "skeleton",
     "updatedAt": "2026-08-05T01:43:59.424Z",
