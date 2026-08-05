@@ -1,5 +1,161 @@
 [
   {
+    "id": "ch0095_spr-2026-08-05T12-11-06-536Z",
+    "name": "ch0095_spr",
+    "updatedAt": "2026-08-05T12:11:18.172Z",
+    "animation_asset": {
+      "id": "ch0095_spr-2026-08-05T12-11-06-536Z",
+      "name": "ch0095_spr",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "00",
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "99",
+          "eye_close_01",
+          "idle_01",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-00"
+        ],
+        "interaction_type": [
+          "open-close"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z",
+      "manifestPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/ch0095_spr/CH0095_spr.skel",
+          "name": "ch0095_spr/CH0095_spr.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/ch0095_spr/CH0095_spr.atlas",
+          "name": "ch0095_spr/CH0095_spr.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/ch0095_spr/CH0095_spr.png",
+          "name": "ch0095_spr/CH0095_spr.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/00-preview.webp",
+          "name": "00-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ch0095_spr-2026-08-05T12-11-06-536Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "CH0095_spr.skel",
+      "atlas": "CH0095_spr.atlas",
+      "textures": [
+        "CH0095_spr.png"
+      ],
+      "animationCount": 11,
+      "animationNames": [
+        "00",
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "99",
+        "Eye_Close_01",
+        "Idle_01"
+      ],
+      "defaultAnimation": "00",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
     "name": "mage_senior_sprite",
     "updatedAt": "2026-08-05T09:21:07.603Z",
