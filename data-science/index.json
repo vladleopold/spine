@@ -1,5 +1,139 @@
 [
   {
+    "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
+    "name": "mage_senior_sprite",
+    "updatedAt": "2026-08-05T09:21:07.603Z",
+    "animation_asset": {
+      "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
+      "name": "mage_senior_sprite",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "1"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z",
+      "manifestPath": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/manifest.json",
+      "files": [
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.json",
+          "name": "mage_senior_sprite/Mage_Senior_Sprite.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.atlas",
+          "name": "mage_senior_sprite/Mage_Senior_Sprite.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.png",
+          "name": "mage_senior_sprite/Mage_Senior_Sprite.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite_2.png",
+          "name": "mage_senior_sprite/Mage_Senior_Sprite_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/1-preview.webp",
+          "name": "1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Mage_Senior_Sprite.json",
+      "atlas": "Mage_Senior_Sprite.atlas",
+      "textures": [
+        "Mage_Senior_Sprite.png",
+        "Mage_Senior_Sprite_2.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "1"
+      ],
+      "defaultAnimation": "1",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "113301-2026-08-05T05-42-45-229Z",
     "name": "113301",
     "updatedAt": "2026-08-05T05:42:57.689Z",
@@ -124,140 +258,6 @@
       "skeletonCount": 3,
       "atlasCount": 1,
       "textureCount": 2
-    },
-    "inference": {
-      "method": "filename-animation-keyword-rules",
-      "matchedKeywords": [],
-      "confidence": 0.35,
-      "needsHumanReview": true
-    },
-    "privacy": {
-      "public": false,
-      "ownerScoped": false,
-      "ownerFieldsRemoved": true,
-      "exposeInSitemap": false,
-      "exposeInProfile": false,
-      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
-    }
-  },
-  {
-    "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
-    "name": "mage_senior_sprite",
-    "updatedAt": "2026-08-05T05:40:41.494Z",
-    "animation_asset": {
-      "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
-      "name": "mage_senior_sprite",
-      "domain": "gamedev",
-      "asset_category": "object",
-      "animation_type": "object",
-      "skeleton_type": "object",
-      "content_type": "object",
-      "taxonomy": {
-        "category": "object",
-        "class": "game-object",
-        "type": "prop"
-      },
-      "tags": {
-        "gameplay_role": [
-          "game-object"
-        ],
-        "rig_type": [
-          "skeletal-2d",
-          "spine-json"
-        ],
-        "quality_level": [
-          "unreviewed",
-          "auto-tagged"
-        ],
-        "animation_state": [
-          "1"
-        ],
-        "loop_type": [],
-        "state": [
-          "default-1"
-        ],
-        "platform": [
-          "web"
-        ],
-        "resolution": [
-          "texture-png",
-          "texture-webp"
-        ],
-        "material": [
-          "atlas-mapped"
-        ],
-        "procedural": false,
-        "modular": false,
-        "runtime_capable": true
-      }
-    },
-    "source": {
-      "storage": "github",
-      "repository": "vladleopold/spine",
-      "branch": "main",
-      "previewPath": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z",
-      "manifestPath": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/manifest.json",
-      "files": [
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.json",
-          "name": "mage_senior_sprite/Mage_Senior_Sprite.json",
-          "role": "skeleton",
-          "format": "json"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.atlas",
-          "name": "mage_senior_sprite/Mage_Senior_Sprite.atlas",
-          "role": "atlas",
-          "format": "atlas"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite.png",
-          "name": "mage_senior_sprite/Mage_Senior_Sprite.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/mage_senior_sprite/Mage_Senior_Sprite_2.png",
-          "name": "mage_senior_sprite/Mage_Senior_Sprite_2.png",
-          "role": "texture",
-          "format": "png"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/1-preview.webp",
-          "name": "1-preview.webp",
-          "role": "texture",
-          "format": "webp"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/source-proof.json",
-          "name": "source-proof.json",
-          "role": "skeleton",
-          "format": "json"
-        },
-        {
-          "path": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/blockchain-anchor.json",
-          "name": "blockchain-anchor.json",
-          "role": "skeleton",
-          "format": "json"
-        }
-      ]
-    },
-    "spine_spec": {
-      "skeleton": "Mage_Senior_Sprite.json",
-      "atlas": "Mage_Senior_Sprite.atlas",
-      "textures": [
-        "Mage_Senior_Sprite.png",
-        "Mage_Senior_Sprite_2.png"
-      ],
-      "animationCount": 1,
-      "animationNames": [
-        "1"
-      ],
-      "defaultAnimation": "1",
-      "fileCount": 7,
-      "skeletonCount": 3,
-      "atlasCount": 1,
-      "textureCount": 3
     },
     "inference": {
       "method": "filename-animation-keyword-rules",
