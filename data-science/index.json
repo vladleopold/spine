@@ -1,5 +1,141 @@
 [
   {
+    "id": "147301-2026-08-05T04-31-06-674Z",
+    "name": "147301",
+    "updatedAt": "2026-08-05T04:31:16.257Z",
+    "animation_asset": {
+      "id": "147301-2026-08-05T04-31-06-674Z",
+      "name": "147301",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "damagein",
+          "damageloop",
+          "idlingloop",
+          "sequencein"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-damagein"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/147301-2026-08-05T04-31-06-674Z",
+      "manifestPath": "library/147301-2026-08-05T04-31-06-674Z/manifest.json",
+      "files": [
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/147301/147301.json",
+          "name": "147301/147301.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/147301/147301.atlas",
+          "name": "147301/147301.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/147301/147301.png",
+          "name": "147301/147301.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/damagein-preview.webp",
+          "name": "damagein-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/147301-2026-08-05T04-31-06-674Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "147301.json",
+      "atlas": "147301.atlas",
+      "textures": [
+        "147301.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "DamageIn",
+        "DamageLoop",
+        "IdlingLoop",
+        "SequenceIn"
+      ],
+      "defaultAnimation": "DamageIn",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "113301-2026-08-05T04-29-55-451Z",
     "name": "113301",
     "updatedAt": "2026-08-05T04:30:05.610Z",
