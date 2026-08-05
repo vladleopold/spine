@@ -1,5 +1,148 @@
 [
   {
+    "id": "113001c-2026-08-05T04-16-47-254Z",
+    "name": "113001c",
+    "updatedAt": "2026-08-05T04:16:56.009Z",
+    "animation_asset": {
+      "id": "113001c-2026-08-05T04-16-47-254Z",
+      "name": "113001c",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "angry",
+          "confused",
+          "custom",
+          "delighted",
+          "normal",
+          "sad",
+          "scared",
+          "shy",
+          "surprised"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-angry"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/113001c-2026-08-05T04-16-47-254Z",
+      "manifestPath": "library/113001c-2026-08-05T04-16-47-254Z/manifest.json",
+      "files": [
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/113001c/113001c.json",
+          "name": "113001c/113001c.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/113001c/113001c.atlas",
+          "name": "113001c/113001c.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/113001c/113001c.png",
+          "name": "113001c/113001c.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/angry-preview.webp",
+          "name": "angry-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/113001c-2026-08-05T04-16-47-254Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "113001c.json",
+      "atlas": "113001c.atlas",
+      "textures": [
+        "113001c.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "Angry",
+        "Confused",
+        "Custom",
+        "Delighted",
+        "Normal",
+        "Sad",
+        "Scared",
+        "Shy",
+        "Surprised"
+      ],
+      "defaultAnimation": "Angry",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "c132301-2026-08-05T04-16-12-660Z",
     "name": "c132301",
     "updatedAt": "2026-08-05T04:16:23.795Z",
