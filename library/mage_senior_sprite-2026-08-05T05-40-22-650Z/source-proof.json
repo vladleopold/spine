@@ -4,33 +4,35 @@
   "hashAlgorithm": "SHA-256",
   "entryId": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
   "title": "mage_senior_sprite",
-  "uploadedAt": "2026-08-05T05:40:22.650Z",
+  "uploadedAt": "2026-08-05T09:20:55.228Z",
   "proofPath": "library/mage_senior_sprite-2026-08-05T05-40-22-650Z/source-proof.json",
-  "proofUrl": "https://spine-link.vercel.app/assets/library/mage_senior_sprite-2026-08-05T05-40-22-650Z/source-proof.json?v=2026-08-05T05-40-22.650Z",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/mage_senior_sprite-2026-08-05T05-40-22-650Z/source-proof.json?v=2026-08-05T09-20-55.228Z",
   "uploader": {
     "mode": "anonymous-browser",
-    "anonymousAccountId": "anon_l9zrvd_110p9wx",
-    "anonymousFingerprint": "l9zrvd",
-    "browserFingerprintSha256": "a727f0bd903e437bbf7f38129ae5c79e18e9848bad32c443ccb8171c32970a8c",
-    "browserEnvironmentHashSha256": "ad896f7594998b9beab08c55d1cba3cc5fd88410b543120b1a92533a062e3189",
+    "anonymousAccountId": "anon_1h8qnuf_k70f6y",
+    "anonymousFingerprint": "1h8qnuf",
+    "browserFingerprintSha256": "a6718daf7f33ce24e688363f5c7e74416be9a4ec3c2f5d09be49b833b0ea4dde",
+    "browserEnvironmentHashSha256": "1fb2f5bfe462618989e8ef392d67669f02a04c3f81c1fc2e8f7e30b1b2d0b928",
     "browserEnvironment": {
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
       "platform": "Win32",
-      "language": "en-US",
+      "language": "it-IT",
       "languages": [
+        "it-IT",
+        "it",
         "en-US",
         "en"
       ],
-      "hardwareConcurrency": 8,
-      "deviceMemory": 16,
+      "hardwareConcurrency": 24,
+      "deviceMemory": 32,
       "screen": {
-        "width": 2752,
-        "height": 1152,
+        "width": 1920,
+        "height": 1080,
         "colorDepth": 24,
-        "pixelRatio": 1.25
+        "pixelRatio": 1
       },
-      "timezone": "Asia/Ulaanbaatar",
-      "timezoneOffset": -480,
+      "timezone": "Europe/Rome",
+      "timezoneOffset": -120,
       "maxTouchPoints": 0,
       "cookieEnabled": true
     }
@@ -43,19 +45,19 @@
   },
   "blockchain": {
     "status": "ready-to-anchor",
-    "recommendedAnchorPayload": "sha256:e52edde4edf5b8664405f2b8dc018c86d33f024cfcdb6883feae9f95b1d6e754",
+    "recommendedAnchorPayload": "sha256:ebe78cbc5c26a733558f56047479e2d847add1449af1b7dc8238a2578b41f2b6",
     "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
   },
   "files": [
     {
       "name": "1-preview.webp",
-      "bytes": 694,
-      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+      "bytes": 3152,
+      "sha256": "5f54e8dfb62d1eb9cb962f6f6524b5ae1f844e7e8705068ee959aa22edf9786d"
     },
     {
       "name": "mage_senior_sprite/Mage_Senior_Sprite_2.png",
-      "bytes": 892511,
-      "sha256": "6b23af6e80ee60c56a905e4a9d229e68f53a6b3bd7617b472fc35b4195a67aff"
+      "bytes": 891166,
+      "sha256": "1dd5decacf9eeb1573faeeb7d9ed34d807b4bb2c6e17720aa680daf673b19029"
     },
     {
       "name": "mage_senior_sprite/Mage_Senior_Sprite.atlas",
@@ -69,9 +71,9 @@
     },
     {
       "name": "mage_senior_sprite/Mage_Senior_Sprite.png",
-      "bytes": 674244,
-      "sha256": "454081b17cdaf51d790b21616251c9250b90784f075da07a2896ec8f1140595e"
+      "bytes": 674167,
+      "sha256": "791f6c34bfceb5cc780117ff8878eb7c3c3e84ab86d666004e71b3c8390bcbb8"
     }
   ],
-  "proofHash": "e52edde4edf5b8664405f2b8dc018c86d33f024cfcdb6883feae9f95b1d6e754"
+  "proofHash": "ebe78cbc5c26a733558f56047479e2d847add1449af1b7dc8238a2578b41f2b6"
 }
