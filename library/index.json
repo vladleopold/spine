@@ -42,7 +42,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/ch0095_spr-2026-08-05T12-11-06-536Z/00-preview.webp?v=2026-08-05T12-11-06.536Z",
     "thumbnailPosterPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z/00-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -246,7 +246,9 @@
       },
       "anchorPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/ch0095_spr-2026-08-05T12-11-06-536Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Animation does not exist in skeleton: 00",
+    "webmGeneratedAt": "2026-08-05T12:13:39.611Z"
   },
   {
     "id": "mage_senior_sprite-2026-08-05T05-40-22-650Z",
