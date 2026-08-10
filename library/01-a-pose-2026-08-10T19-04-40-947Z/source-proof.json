@@ -1,0 +1,78 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "01-a-pose-2026-08-10T19-04-40-947Z",
+  "title": "01 a pose",
+  "uploadedAt": "2026-08-10T19:04:40.947Z",
+  "proofPath": "library/01-a-pose-2026-08-10T19-04-40-947Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/01-a-pose-2026-08-10T19-04-40-947Z/source-proof.json?v=2026-08-10T19-04-40.947Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1mbtzf_cvbiua",
+    "anonymousFingerprint": "1mbtzf",
+    "browserFingerprintSha256": "15755d6b20a0c893f54a627bd3faa7dbec854886d38aebb5a9000bae5b91ec48",
+    "browserEnvironmentHashSha256": "faa9db4503208efe65c952a89b7ba681a7c46b593c0492531335a46f2d6a6168",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "bn",
+        "ms",
+        "ja",
+        "es",
+        "cs",
+        "tr"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Dhaka",
+      "timezoneOffset": -360,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/01-a-pose-2026-08-10T19-04-40-947Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e938f5c70a2feb70442159b419405a464f2916308a84b936b3f2a0ac7424bd95",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "01 a pose/01 A Pose.atlas",
+      "bytes": 2935,
+      "sha256": "85f8b501527f9ffb89d843bcc1c4cd1bf265586dae63c561b4c76a33ae3ca7a9"
+    },
+    {
+      "name": "01 a pose/01 A Pose.json",
+      "bytes": 140231,
+      "sha256": "4d9e175e451809d6c39c45d9ebb01ef23d57ddee265be1992b24c21ee5e5b389"
+    },
+    {
+      "name": "01 a pose/01 A Pose.webp",
+      "bytes": 699774,
+      "sha256": "4bcd7b91ee899772e0bc7fb99645bb8da5fb47ac7824289631db7afe754e177e"
+    },
+    {
+      "name": "wave-preview.webp",
+      "bytes": 1356,
+      "sha256": "857901f93b8182993d57ad45efba76e0120db83d5dda46de33c6d76838332951"
+    }
+  ],
+  "proofHash": "e938f5c70a2feb70442159b419405a464f2916308a84b936b3f2a0ac7424bd95"
+}
