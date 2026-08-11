@@ -332,7 +332,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/p2_master1200-v4-2026-08-11T21-01-04-325Z/01_idle-preview.webp?v=2026-08-11T21-01-04.325Z",
     "thumbnailPosterPath": "library/p2_master1200-v4-2026-08-11T21-01-04-325Z/01_idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -581,7 +581,9 @@
       },
       "anchorPath": "library/p2_master1200-v4-2026-08-11T21-01-04-325Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v4-2026-08-11T21-01-04-325Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Please specify the URL of the skeleton JSON or .skel file.",
+    "webmGeneratedAt": "2026-08-11T21:03:00.115Z"
   },
   {
     "id": "01-a-pose-2026-08-10T19-04-40-947Z",
