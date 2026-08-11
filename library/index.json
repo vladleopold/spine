@@ -1,5 +1,278 @@
 [
   {
+    "id": "p2_master1200-v6-2026-08-11T21-02-59-869Z",
+    "title": "p2_master1200 v6",
+    "publicOwnerId": "u_366ou2",
+    "ownerAnonId": "anon_d561s3_1njpquf",
+    "ownerAnonFingerprint": "d561s3",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-11T21:02:59.869Z",
+    "skeleton": "p2_master1200 V6.json",
+    "atlas": "p2_master1200 V6.atlas",
+    "textures": [
+      "p2_master1200 V6.png",
+      "p2_master1200 V62.png",
+      "p2_master1200 V63.png"
+    ],
+    "animations": [
+      "01_idle",
+      "02_transition",
+      "03_finish"
+    ],
+    "defaultAnimation": "01_idle",
+    "files": [
+      "p2_master1200 v6/p2_master1200 V6.json",
+      "p2_master1200 v6/p2_master1200 V6.atlas",
+      "p2_master1200 v6/p2_master1200 V6.png",
+      "p2_master1200 v6/p2_master1200 V62.png",
+      "p2_master1200 v6/p2_master1200 V63.png",
+      "01_idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp?v=2026-08-11T21-02-59.869Z",
+    "thumbnailPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp?v=2026-08-11T21-02-59.869Z",
+    "thumbnailPosterPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "p2_master1200-v6-2026-08-11T21-02-59-869Z",
+      "title": "p2_master1200 v6",
+      "uploadedAt": "2026-08-11T21:02:59.869Z",
+      "proofPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json?v=2026-08-11T21-02-59.869Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_d561s3_1njpquf",
+        "anonymousFingerprint": "d561s3",
+        "browserFingerprintSha256": "1f9a4bd9d8822b90dfaf5ef17d89dcf7fbbf33d4defabaacc0487d779c10bb4a",
+        "browserEnvironmentHashSha256": "5bfbc116d7637e4e2876cc35ccaa3692e5f294b2bf47702c89bb487aec391ec5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "es-ES",
+          "languages": [
+            "es-ES"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Caracas",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:4a0623eebc936e9e9eb405395e8e76c4a913c8d723c946212fbb5283afe15f46",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "01_idle-preview.webp",
+          "bytes": 1572,
+          "sha256": "169d15285a451df351c1d53fbd058cc3978768315a545616273e2d832a97ba43"
+        },
+        {
+          "name": "p2_master1200 v6/p2_master1200 V6.atlas",
+          "bytes": 3569,
+          "sha256": "212830ecdc5b96ae71d5386d41195a89cf1819f8866028d824f85313583fbbc9"
+        },
+        {
+          "name": "p2_master1200 v6/p2_master1200 V6.json",
+          "bytes": 236895,
+          "sha256": "21ee7699fc8cd7043361084aded8dee050ddc44eb4c865fffe1746f717649265"
+        },
+        {
+          "name": "p2_master1200 v6/p2_master1200 V6.png",
+          "bytes": 1582647,
+          "sha256": "707653f71168918400d61e35996b6a7e19934ef3c007ad510eab35be7c0409c7"
+        },
+        {
+          "name": "p2_master1200 v6/p2_master1200 V62.png",
+          "bytes": 1595209,
+          "sha256": "f9e30278c06b87915a536d000b1f484fd3bdd3bb743ff425d5c7cdee9b2eb8d4"
+        },
+        {
+          "name": "p2_master1200 v6/p2_master1200 V63.png",
+          "bytes": 67032,
+          "sha256": "65d5854ac8484ed1c3292bed718b5e48e8fac33abe35df4eca9c61f75b47473b"
+        }
+      ],
+      "proofHash": "4a0623eebc936e9e9eb405395e8e76c4a913c8d723c946212fbb5283afe15f46"
+    },
+    "sourceProofPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json?v=2026-08-11T21-02-59.869Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-11T21:03:16.611Z",
+      "entryId": "p2_master1200-v6-2026-08-11T21-02-59-869Z",
+      "title": "p2_master1200 v6",
+      "uploadedAt": "2026-08-11T21:02:59.869Z",
+      "sourceProofHash": "4a0623eebc936e9e9eb405395e8e76c4a913c8d723c946212fbb5283afe15f46",
+      "sourceProofPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json?v=2026-08-11T21-02-59.869Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_d561s3_1njpquf",
+        "anonymousFingerprint": "d561s3",
+        "browserFingerprintSha256": "1f9a4bd9d8822b90dfaf5ef17d89dcf7fbbf33d4defabaacc0487d779c10bb4a",
+        "browserEnvironmentHashSha256": "5bfbc116d7637e4e2876cc35ccaa3692e5f294b2bf47702c89bb487aec391ec5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "es-ES",
+          "languages": [
+            "es-ES"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1680,
+            "height": 1050,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Caracas",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z",
+        "files": [
+          {
+            "name": "p2_master1200 v6/p2_master1200 V6.json",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.json",
+            "bytes": 236895,
+            "sha256": "21ee7699fc8cd7043361084aded8dee050ddc44eb4c865fffe1746f717649265",
+            "github": {
+              "contentSha": "05e6f32dfc8d404df8a910015e04e027361324f6",
+              "commitSha": "014e815ea1d62e423c3553f48d3910ec0c2ae625",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/014e815ea1d62e423c3553f48d3910ec0c2ae625",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200%20v6/p2_master1200%20V6.json"
+            }
+          },
+          {
+            "name": "p2_master1200 v6/p2_master1200 V6.atlas",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.atlas",
+            "bytes": 3569,
+            "sha256": "212830ecdc5b96ae71d5386d41195a89cf1819f8866028d824f85313583fbbc9",
+            "github": {
+              "contentSha": "df2af2ed2aab68df62878f640bfc0cea00b3495e",
+              "commitSha": "710a8fb6be4125fba8948b223693d2dd949bef37",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/710a8fb6be4125fba8948b223693d2dd949bef37",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200%20v6/p2_master1200%20V6.atlas"
+            }
+          },
+          {
+            "name": "p2_master1200 v6/p2_master1200 V6.png",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.png",
+            "bytes": 1582647,
+            "sha256": "707653f71168918400d61e35996b6a7e19934ef3c007ad510eab35be7c0409c7",
+            "github": {
+              "contentSha": "e28c8d444cc34a642b7bf896e553f4a6b3f15460",
+              "commitSha": "284563e8ac5b990576930124dca045a9f1b5f31b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/284563e8ac5b990576930124dca045a9f1b5f31b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200%20v6/p2_master1200%20V6.png"
+            }
+          },
+          {
+            "name": "p2_master1200 v6/p2_master1200 V62.png",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V62.png",
+            "bytes": 1595209,
+            "sha256": "f9e30278c06b87915a536d000b1f484fd3bdd3bb743ff425d5c7cdee9b2eb8d4",
+            "github": {
+              "contentSha": "188f9c4843b4b69e603181199a077dd0566cae31",
+              "commitSha": "b3112cae593d8972fb6efb3304d8346e2c1dd7c3",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b3112cae593d8972fb6efb3304d8346e2c1dd7c3",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200%20v6/p2_master1200%20V62.png"
+            }
+          },
+          {
+            "name": "p2_master1200 v6/p2_master1200 V63.png",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V63.png",
+            "bytes": 67032,
+            "sha256": "65d5854ac8484ed1c3292bed718b5e48e8fac33abe35df4eca9c61f75b47473b",
+            "github": {
+              "contentSha": "e47133abb62e01e1f9a971c3ed553050432bf6fd",
+              "commitSha": "9523029f93fb7950169fa9f106bf954d7cd18c23",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/9523029f93fb7950169fa9f106bf954d7cd18c23",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200%20v6/p2_master1200%20V63.png"
+            }
+          },
+          {
+            "name": "01_idle-preview.webp",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp",
+            "bytes": 1572,
+            "sha256": "169d15285a451df351c1d53fbd058cc3978768315a545616273e2d832a97ba43",
+            "github": {
+              "contentSha": "ac833185dd0861e358d7da02dc53f87163da74cf",
+              "commitSha": "45d5524df022623ab6e0be06174adfd13e92d2e0",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/45d5524df022623ab6e0be06174adfd13e92d2e0",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json",
+            "bytes": 2943,
+            "sha256": "6a6b04433b85aa6c7d96b02f17690ebf2013e18cb2fca8e612d860da600701ed",
+            "github": {
+              "contentSha": "c50a4db22c2e76517d8a51a16d2aad89d8cc653e",
+              "commitSha": "c7533ba8cca638d69838a1363c19be0e1ebf6f12",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c7533ba8cca638d69838a1363c19be0e1ebf6f12",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/blockchain-anchor.json",
+        "anchorCommitSha": "342d74a1490d00fdf767838f4c6017322bfbc56f",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/342d74a1490d00fdf767838f4c6017322bfbc56f"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "9b293c54c9c4a46d4c999a4958acc2fa1bef63408a7bedffa51ec542e78e5c7c",
+      "recommendedAnchorPayload": "sha256:9b293c54c9c4a46d4c999a4958acc2fa1bef63408a7bedffa51ec542e78e5c7c",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x9b293c54c9c4a46d4c999a4958acc2fa1bef63408a7bedffa51ec542e78e5c7c",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v6-2026-08-11T21-02-59-869Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "p2_master1200-v5-2026-08-11T21-02-27-769Z",
     "title": "p2_master1200 v5",
     "publicOwnerId": "u_366ou2",
