@@ -1,5 +1,250 @@
 [
   {
+    "id": "reels-background-2026-08-13T06-21-29-121Z",
+    "title": "reels-background",
+    "publicOwnerId": "u_17y9ac2",
+    "ownerAnonId": "anon_xjkvz8_hucwd9",
+    "ownerAnonFingerprint": "xjkvz8",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-13T06:21:29.121Z",
+    "skeleton": "reels-background.json",
+    "atlas": "reels-background.atlas",
+    "textures": [
+      "reels-background.webp"
+    ],
+    "animations": [
+      "base-game",
+      "base-game-fast",
+      "button-no",
+      "button-yes",
+      "clouds"
+    ],
+    "defaultAnimation": "base-game",
+    "files": [
+      "reels-background/reels-background.json",
+      "reels-background/reels-background.atlas",
+      "reels-background/reels-background.webp",
+      "base-game-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/reels-background-2026-08-13T06-21-29-121Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp?v=2026-08-13T06-21-29.121Z",
+    "thumbnailPath": "library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp?v=2026-08-13T06-21-29.121Z",
+    "thumbnailPosterPath": "library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "reels-background-2026-08-13T06-21-29-121Z",
+      "title": "reels-background",
+      "uploadedAt": "2026-08-13T06:21:29.121Z",
+      "proofPath": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json?v=2026-08-13T06-21-29.121Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_xjkvz8_hucwd9",
+        "anonymousFingerprint": "xjkvz8",
+        "browserFingerprintSha256": "5d15b95b9d52f96a84f82423cfa9faa7b5f7a0d833b825e846ff705531d99ea1",
+        "browserEnvironmentHashSha256": "17832b6f07a66fcfa435b34acacc7838fa4252a5416be0766bb911959196bb3b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Linux x86_64",
+          "language": "be-BY",
+          "languages": [
+            "be-BY",
+            "be",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Vilnius",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/reels-background-2026-08-13T06-21-29-121Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:181fda9ce00ad4627c601ec268858a2da16fad2302fb0d0593e16233413694ad",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "base-game-preview.webp",
+          "bytes": 698,
+          "sha256": "5a0045edb060dfaee73a98be42d5b0493e5dbb60255d933171d26c719826a562"
+        },
+        {
+          "name": "reels-background/reels-background.atlas",
+          "bytes": 626,
+          "sha256": "e4c299c928d3a547318cd247be1105f98657ca2af27ddc2b0018c9f2e0bbfc6b"
+        },
+        {
+          "name": "reels-background/reels-background.json",
+          "bytes": 37508,
+          "sha256": "8026b2030388ab0f22b53b9af74a9bc9eb2b823a2daf4baac49033549bcf72b0"
+        },
+        {
+          "name": "reels-background/reels-background.webp",
+          "bytes": 825105,
+          "sha256": "cf7a827ace0eddb1ccfa954126eae7bc929afc0c98a82e185f100f3cd7b78d03"
+        }
+      ],
+      "proofHash": "181fda9ce00ad4627c601ec268858a2da16fad2302fb0d0593e16233413694ad"
+    },
+    "sourceProofPath": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json?v=2026-08-13T06-21-29.121Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-13T06:21:35.086Z",
+      "entryId": "reels-background-2026-08-13T06-21-29-121Z",
+      "title": "reels-background",
+      "uploadedAt": "2026-08-13T06:21:29.121Z",
+      "sourceProofHash": "181fda9ce00ad4627c601ec268858a2da16fad2302fb0d0593e16233413694ad",
+      "sourceProofPath": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json?v=2026-08-13T06-21-29.121Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_xjkvz8_hucwd9",
+        "anonymousFingerprint": "xjkvz8",
+        "browserFingerprintSha256": "5d15b95b9d52f96a84f82423cfa9faa7b5f7a0d833b825e846ff705531d99ea1",
+        "browserEnvironmentHashSha256": "17832b6f07a66fcfa435b34acacc7838fa4252a5416be0766bb911959196bb3b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "platform": "Linux x86_64",
+          "language": "be-BY",
+          "languages": [
+            "be-BY",
+            "be",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Vilnius",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/reels-background-2026-08-13T06-21-29-121Z",
+        "files": [
+          {
+            "name": "reels-background/reels-background.json",
+            "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.json",
+            "bytes": 37508,
+            "sha256": "8026b2030388ab0f22b53b9af74a9bc9eb2b823a2daf4baac49033549bcf72b0",
+            "github": {
+              "contentSha": "a37390f6bb5194a26df5997580df579e915f4c2d",
+              "commitSha": "00a9d3c26b3707d6a1e1b9aa7680328c6e213369",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/00a9d3c26b3707d6a1e1b9aa7680328c6e213369",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.json"
+            }
+          },
+          {
+            "name": "reels-background/reels-background.atlas",
+            "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.atlas",
+            "bytes": 626,
+            "sha256": "e4c299c928d3a547318cd247be1105f98657ca2af27ddc2b0018c9f2e0bbfc6b",
+            "github": {
+              "contentSha": "f244745000c710d8b297ccbecbf70975a15db11d",
+              "commitSha": "76b6d408c5f660568e2d91a5e5bdd31b0e38cde1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/76b6d408c5f660568e2d91a5e5bdd31b0e38cde1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.atlas"
+            }
+          },
+          {
+            "name": "reels-background/reels-background.webp",
+            "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.webp",
+            "bytes": 825105,
+            "sha256": "cf7a827ace0eddb1ccfa954126eae7bc929afc0c98a82e185f100f3cd7b78d03",
+            "github": {
+              "contentSha": "a39f72755cb36bc1307576b5a2ec3a88989a2fc9",
+              "commitSha": "47762ab82eabcdd4690bc5dc84349fafba6332bb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/47762ab82eabcdd4690bc5dc84349fafba6332bb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.webp"
+            }
+          },
+          {
+            "name": "base-game-preview.webp",
+            "path": "library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp",
+            "bytes": 698,
+            "sha256": "5a0045edb060dfaee73a98be42d5b0493e5dbb60255d933171d26c719826a562",
+            "github": {
+              "contentSha": "50f3bf1cda57847276cc481442aa9cf8a3b797f6",
+              "commitSha": "7b1df370557e494c3baf5ba6ec88ab3aacbda5d5",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7b1df370557e494c3baf5ba6ec88ab3aacbda5d5",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+            "bytes": 2649,
+            "sha256": "9c9e1e030f29f6e962ba244633749d381d2f048610da316148178fe13346a5fa",
+            "github": {
+              "contentSha": "96cce7f7d70082baf43d76bc7c7aae23d7bafbf9",
+              "commitSha": "81e2eadae7908cf86ddef3163dfd7a60c9f62340",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/81e2eadae7908cf86ddef3163dfd7a60c9f62340",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/reels-background-2026-08-13T06-21-29-121Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/blockchain-anchor.json",
+        "anchorCommitSha": "de54d132503ce627adb4d23d33eda7080e36c5b7",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/de54d132503ce627adb4d23d33eda7080e36c5b7"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "ed1337db096176bd61bcc90b707120cedbd65cb808973a6cf0fca7fa6bf7df9c",
+      "recommendedAnchorPayload": "sha256:ed1337db096176bd61bcc90b707120cedbd65cb808973a6cf0fca7fa6bf7df9c",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xed1337db096176bd61bcc90b707120cedbd65cb808973a6cf0fca7fa6bf7df9c",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/reels-background-2026-08-13T06-21-29-121Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "p2_master1200-v6-2026-08-11T21-02-59-869Z",
     "title": "p2_master1200 v6",
     "publicOwnerId": "u_366ou2",
