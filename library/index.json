@@ -1,5 +1,244 @@
 [
   {
+    "id": "luckygems_loading-2026-08-13T08-01-29-872Z",
+    "title": "luckygems_loading",
+    "publicOwnerId": "u_1s0iz46",
+    "ownerAnonId": "anon_bvkuc7_73mtn",
+    "ownerAnonFingerprint": "bvkuc7",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-13T08:01:29.872Z",
+    "skeleton": "LuckyGems_Loading.skel",
+    "atlas": "LuckyGems_Loading.atlas",
+    "textures": [
+      "LuckyGems_Loading.png"
+    ],
+    "animations": [
+      "Page_01"
+    ],
+    "defaultAnimation": "Page_01",
+    "files": [
+      "luckygems_loading/LuckyGems_Loading.skel",
+      "luckygems_loading/LuckyGems_Loading.atlas",
+      "luckygems_loading/LuckyGems_Loading.png",
+      "page_01-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp?v=2026-08-13T08-01-29.872Z",
+    "thumbnailPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp?v=2026-08-13T08-01-29.872Z",
+    "thumbnailPosterPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "luckygems_loading-2026-08-13T08-01-29-872Z",
+      "title": "luckygems_loading",
+      "uploadedAt": "2026-08-13T08:01:29.872Z",
+      "proofPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json?v=2026-08-13T08-01-29.872Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_bvkuc7_73mtn",
+        "anonymousFingerprint": "bvkuc7",
+        "browserFingerprintSha256": "951a905c562e1f222a32ab5e48fd1b13d1ec40650ac855c9a7a711227a2b16a5",
+        "browserEnvironmentHashSha256": "bc7824a54f63cef38f23b14cdbdf9891f269b8c6601ca904f401a8bb3a6aaabf",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:aba0a43c3686df22a6dd7bf26e49c0d6e2dbf265ac06aa9dc28100f9e9e034cb",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "luckygems_loading/LuckyGems_Loading.atlas",
+          "bytes": 5302,
+          "sha256": "eabd4ae7fe2acf998af13569821e4bf6c62149770729a82d387e65f3f7126502"
+        },
+        {
+          "name": "luckygems_loading/LuckyGems_Loading.png",
+          "bytes": 208095,
+          "sha256": "d83153a372a2eb7c3e20216dafa395923f084dab0266a7fadd789589988cba97"
+        },
+        {
+          "name": "luckygems_loading/LuckyGems_Loading.skel",
+          "bytes": 31378,
+          "sha256": "213e6dd823ac0832181bea1b387083ac12f9dfc118e74b95a5c8a7b602ad1ba0"
+        },
+        {
+          "name": "page_01-preview.webp",
+          "bytes": 1544,
+          "sha256": "44711ea07f87591230b85224202ec241013606196083e8f1f54026048596e9c8"
+        }
+      ],
+      "proofHash": "aba0a43c3686df22a6dd7bf26e49c0d6e2dbf265ac06aa9dc28100f9e9e034cb"
+    },
+    "sourceProofPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json?v=2026-08-13T08-01-29.872Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-13T08:01:38.757Z",
+      "entryId": "luckygems_loading-2026-08-13T08-01-29-872Z",
+      "title": "luckygems_loading",
+      "uploadedAt": "2026-08-13T08:01:29.872Z",
+      "sourceProofHash": "aba0a43c3686df22a6dd7bf26e49c0d6e2dbf265ac06aa9dc28100f9e9e034cb",
+      "sourceProofPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json?v=2026-08-13T08-01-29.872Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_bvkuc7_73mtn",
+        "anonymousFingerprint": "bvkuc7",
+        "browserFingerprintSha256": "951a905c562e1f222a32ab5e48fd1b13d1ec40650ac855c9a7a711227a2b16a5",
+        "browserEnvironmentHashSha256": "bc7824a54f63cef38f23b14cdbdf9891f269b8c6601ca904f401a8bb3a6aaabf",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z",
+        "files": [
+          {
+            "name": "luckygems_loading/LuckyGems_Loading.skel",
+            "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.skel",
+            "bytes": 31378,
+            "sha256": "213e6dd823ac0832181bea1b387083ac12f9dfc118e74b95a5c8a7b602ad1ba0",
+            "github": {
+              "contentSha": "2f87d658c9c1ff2704332ebce5279078d524647d",
+              "commitSha": "12ae26eb31a32417f238efeae76dc216d22c9c8c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/12ae26eb31a32417f238efeae76dc216d22c9c8c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.skel"
+            }
+          },
+          {
+            "name": "luckygems_loading/LuckyGems_Loading.atlas",
+            "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.atlas",
+            "bytes": 5302,
+            "sha256": "eabd4ae7fe2acf998af13569821e4bf6c62149770729a82d387e65f3f7126502",
+            "github": {
+              "contentSha": "5477dacc2699a1ad15d53aa631816e37de9d7bc3",
+              "commitSha": "8548432730abd56e4d6255a58426c6475d3756d4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8548432730abd56e4d6255a58426c6475d3756d4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.atlas"
+            }
+          },
+          {
+            "name": "luckygems_loading/LuckyGems_Loading.png",
+            "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.png",
+            "bytes": 208095,
+            "sha256": "d83153a372a2eb7c3e20216dafa395923f084dab0266a7fadd789589988cba97",
+            "github": {
+              "contentSha": "692be98a5847ca8ab59af052c013b5a767e98c7b",
+              "commitSha": "43ee32987c5767ffefdf73733053ab3afa2d44f0",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/43ee32987c5767ffefdf73733053ab3afa2d44f0",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.png"
+            }
+          },
+          {
+            "name": "page_01-preview.webp",
+            "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp",
+            "bytes": 1544,
+            "sha256": "44711ea07f87591230b85224202ec241013606196083e8f1f54026048596e9c8",
+            "github": {
+              "contentSha": "cfd39565ee142a1577203026f3653bd8bf295fcc",
+              "commitSha": "cc1d91d96d1e771e01918eef9519f717b18f3566",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cc1d91d96d1e771e01918eef9519f717b18f3566",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+            "bytes": 2653,
+            "sha256": "f08d756ac52b9554a3cfd7ce14047f518bb2ffd37ee409ea3490f5d7eaad560f",
+            "github": {
+              "contentSha": "cbd67bacbfb6c6cd9eac230bf9f84de3e8f58188",
+              "commitSha": "13a3a152d8bc446702e700561aef99028625f2e8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/13a3a152d8bc446702e700561aef99028625f2e8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/blockchain-anchor.json",
+        "anchorCommitSha": "bd86a9bba51a29a5aa37637bcf7af13e958e2d78",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/bd86a9bba51a29a5aa37637bcf7af13e958e2d78"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "f472a68458a973ced0a57a21a4fa8e607e952717c446792ac6c7c6bb09ded8f9",
+      "recommendedAnchorPayload": "sha256:f472a68458a973ced0a57a21a4fa8e607e952717c446792ac6c7c6bb09ded8f9",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xf472a68458a973ced0a57a21a4fa8e607e952717c446792ac6c7c6bb09ded8f9",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "reels-background-2026-08-13T06-21-29-121Z",
     "title": "reels-background",
     "publicOwnerId": "u_17y9ac2",
