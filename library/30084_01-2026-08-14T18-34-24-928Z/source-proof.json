@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "30084_01-2026-08-14T18-34-24-928Z",
+  "title": "30084_01",
+  "uploadedAt": "2026-08-14T18:34:24.928Z",
+  "proofPath": "library/30084_01-2026-08-14T18-34-24-928Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/30084_01-2026-08-14T18-34-24-928Z/source-proof.json?v=2026-08-14T18-34-24.928Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_ssrve2_fcnrnx",
+    "anonymousFingerprint": "ssrve2",
+    "browserFingerprintSha256": "2cb973f17d5542772a00c385540d9a0679fe36973e10af40146a564091fd2f90",
+    "browserEnvironmentHashSha256": "a6ea994a8ec3e94d829144ef681c4f6e8d7069706314f61c1e9a76fdf0ec0c28",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 7,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/30084_01-2026-08-14T18-34-24-928Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:4317934b4dc936223452e8b0c05270ea3f5757f90f20260a007b0b0a8d659f3e",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "30084_01/30084_01.atlas",
+      "bytes": 15273,
+      "sha256": "098dbe5b92cc542ef52673a71a08c0ef78a478b91a64ddbeadd07b663f346042"
+    },
+    {
+      "name": "30084_01/30084_01.json",
+      "bytes": 1411059,
+      "sha256": "aec30771f1af19a0f8e47f50d9c02f27e13fee92fb074c8beb7438f819753166"
+    },
+    {
+      "name": "30084_01/30084_01.png",
+      "bytes": 362946,
+      "sha256": "432db43be646e3546f13951733a9b1a57e39d3b61b06575d060281058da56561"
+    },
+    {
+      "name": "stop-preview.webp",
+      "bytes": 1410,
+      "sha256": "81f088129d31c24df090a5bf480466df601c67d80855954c5ab7928b5c8ce35d"
+    }
+  ],
+  "proofHash": "4317934b4dc936223452e8b0c05270ea3f5757f90f20260a007b0b0a8d659f3e"
+}
