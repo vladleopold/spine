@@ -1,5 +1,138 @@
 [
   {
+    "id": "spine-2026-08-14T18-11-43-456Z",
+    "name": "spine",
+    "updatedAt": "2026-08-14T18:11:33.387Z",
+    "animation_asset": {
+      "id": "spine-2026-08-14T18-11-43-456Z",
+      "name": "spine",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "01",
+          "02",
+          "03",
+          "04"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-01"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/spine-2026-08-14T18-11-43-456Z",
+      "manifestPath": "library/spine-2026-08-14T18-11-43-456Z/manifest.json",
+      "files": [
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/spine/spine.json",
+          "name": "spine/spine.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/spine/spine.atlas",
+          "name": "spine/spine.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/spine/SprDR6HD2.png",
+          "name": "spine/SprDR6HD2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/01-preview.webp",
+          "name": "01-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/spine-2026-08-14T18-11-43-456Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "spine.json",
+      "atlas": "spine.atlas",
+      "textures": [
+        "SprDR6HD2.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "01",
+        "02",
+        "03",
+        "04"
+      ],
+      "defaultAnimation": "01",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "izumi_swimsuit_home-2026-08-14T09-22-49-783Z",
     "name": "izumi_swimsuit_home",
     "updatedAt": "2026-08-14T09:23:04.301Z",
