@@ -69,7 +69,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/dev_lookend_01_m-preview.webp?v=2026-08-14T09-22-49.783Z",
     "thumbnailPosterPath": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/dev_lookend_01_m-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -284,7 +284,9 @@
       },
       "anchorPath": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
+    "webmGeneratedAt": "2026-08-14T09:25:06.454Z"
   },
   {
     "id": "intro-2026-08-14T08-35-52-799Z",
