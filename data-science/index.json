@@ -1,5 +1,142 @@
 [
   {
+    "id": "nextgen-2026-08-15T18-48-39-854Z",
+    "name": "nextgen",
+    "updatedAt": "2026-08-15T18:48:52.792Z",
+    "animation_asset": {
+      "id": "nextgen-2026-08-15T18-48-39-854Z",
+      "name": "nextgen",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "show",
+          "idle",
+          "end"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "interaction_type": [
+          "open-close"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/nextgen-2026-08-15T18-48-39-854Z",
+      "manifestPath": "library/nextgen-2026-08-15T18-48-39-854Z/manifest.json",
+      "files": [
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.json",
+          "name": "nextgen/nextgen.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.atlas",
+          "name": "nextgen/nextgen.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen_atlas.png",
+          "name": "nextgen/nextgen_atlas.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/nextgen-2026-08-15T18-48-39-854Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "nextgen.json",
+      "atlas": "nextgen.atlas",
+      "textures": [
+        "nextgen_atlas.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "show",
+        "idle",
+        "end"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "30084_01-2026-08-14T18-34-24-928Z",
     "name": "30084_01",
     "updatedAt": "2026-08-14T18:34:35.085Z",
