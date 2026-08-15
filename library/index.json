@@ -1,5 +1,246 @@
 [
   {
+    "id": "nextgen-2026-08-15T18-48-39-854Z",
+    "title": "nextgen",
+    "publicOwnerId": "u_1xxj9fi",
+    "ownerAnonId": "anon_6ygmc6_19wrnio",
+    "ownerAnonFingerprint": "6ygmc6",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-15T18:48:39.854Z",
+    "skeleton": "nextgen.json",
+    "atlas": "nextgen.atlas",
+    "textures": [
+      "nextgen_atlas.png"
+    ],
+    "animations": [
+      "show",
+      "idle",
+      "end"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "nextgen/nextgen.json",
+      "nextgen/nextgen.atlas",
+      "nextgen/nextgen_atlas.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/nextgen-2026-08-15T18-48-39-854Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp?v=2026-08-15T18-48-39.854Z",
+    "thumbnailPath": "library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp?v=2026-08-15T18-48-39.854Z",
+    "thumbnailPosterPath": "library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "nextgen-2026-08-15T18-48-39-854Z",
+      "title": "nextgen",
+      "uploadedAt": "2026-08-15T18:48:39.854Z",
+      "proofPath": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json?v=2026-08-15T18-48-39.854Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6ygmc6_19wrnio",
+        "anonymousFingerprint": "6ygmc6",
+        "browserFingerprintSha256": "c21c4792842474a4784a30fc6c6d5500e1f0c398abf0158f8a304159e73a193f",
+        "browserEnvironmentHashSha256": "7fc9113be6710a89ed8289c606cc885482ea60190d957d87af53ddb33f39ed13",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 10,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/nextgen-2026-08-15T18-48-39-854Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:42a171ef520f97a9fe92ed633b62aa984a94c34908f660a68b96947f21a2485a",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 694,
+          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+        },
+        {
+          "name": "nextgen/nextgen_atlas.png",
+          "bytes": 935672,
+          "sha256": "904c0fe2056eadb2eb62b3eccb8858356b19283169b30e109032c2c9a77ced50"
+        },
+        {
+          "name": "nextgen/nextgen.atlas",
+          "bytes": 144,
+          "sha256": "ce7c1043aae37401c6ee69abde6d2e66c72edd1182ce1e01ddfd7a3de4b289ae"
+        },
+        {
+          "name": "nextgen/nextgen.json",
+          "bytes": 1346,
+          "sha256": "ffc1c67d70f69759641d9bc50299792f49e1a595116c1e6059d73244a32c598f"
+        }
+      ],
+      "proofHash": "42a171ef520f97a9fe92ed633b62aa984a94c34908f660a68b96947f21a2485a"
+    },
+    "sourceProofPath": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json?v=2026-08-15T18-48-39.854Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-15T18:48:49.977Z",
+      "entryId": "nextgen-2026-08-15T18-48-39-854Z",
+      "title": "nextgen",
+      "uploadedAt": "2026-08-15T18:48:39.854Z",
+      "sourceProofHash": "42a171ef520f97a9fe92ed633b62aa984a94c34908f660a68b96947f21a2485a",
+      "sourceProofPath": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json?v=2026-08-15T18-48-39.854Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6ygmc6_19wrnio",
+        "anonymousFingerprint": "6ygmc6",
+        "browserFingerprintSha256": "c21c4792842474a4784a30fc6c6d5500e1f0c398abf0158f8a304159e73a193f",
+        "browserEnvironmentHashSha256": "7fc9113be6710a89ed8289c606cc885482ea60190d957d87af53ddb33f39ed13",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 10,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/nextgen-2026-08-15T18-48-39-854Z",
+        "files": [
+          {
+            "name": "nextgen/nextgen.json",
+            "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.json",
+            "bytes": 1346,
+            "sha256": "ffc1c67d70f69759641d9bc50299792f49e1a595116c1e6059d73244a32c598f",
+            "github": {
+              "contentSha": "4a77d0b1fefbf09a8797f34222b49ec25fe288dd",
+              "commitSha": "38fd1ef22a368aefff4ce39b2d72036f65e455d7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/38fd1ef22a368aefff4ce39b2d72036f65e455d7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.json"
+            }
+          },
+          {
+            "name": "nextgen/nextgen.atlas",
+            "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.atlas",
+            "bytes": 144,
+            "sha256": "ce7c1043aae37401c6ee69abde6d2e66c72edd1182ce1e01ddfd7a3de4b289ae",
+            "github": {
+              "contentSha": "5d5024929ada1626a48b450a4bb507c2dcfdac0a",
+              "commitSha": "f0cda1ed59def9942664d31b81f05d900aada361",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f0cda1ed59def9942664d31b81f05d900aada361",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen.atlas"
+            }
+          },
+          {
+            "name": "nextgen/nextgen_atlas.png",
+            "path": "library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen_atlas.png",
+            "bytes": 935672,
+            "sha256": "904c0fe2056eadb2eb62b3eccb8858356b19283169b30e109032c2c9a77ced50",
+            "github": {
+              "contentSha": "32ff8ec3b93990b4e15177b8970b2744c87e07e5",
+              "commitSha": "093bb16dae6fda7e2c5500884141061c71928c66",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/093bb16dae6fda7e2c5500884141061c71928c66",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nextgen-2026-08-15T18-48-39-854Z/nextgen/nextgen_atlas.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp",
+            "bytes": 694,
+            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "github": {
+              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
+              "commitSha": "92ffbff7b24b7ab71b13c03ef90da90dcf06475c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/92ffbff7b24b7ab71b13c03ef90da90dcf06475c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nextgen-2026-08-15T18-48-39-854Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+            "bytes": 2545,
+            "sha256": "bf3101ed49dab3037eb27f33a2241ac2ddaece11e624834f842b25a6b83e5384",
+            "github": {
+              "contentSha": "ae524b55c656b6e9cc7c88a50c67bf8cfee21e96",
+              "commitSha": "2fe06874779858457d66bb53e53fd506b990649f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2fe06874779858457d66bb53e53fd506b990649f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/nextgen-2026-08-15T18-48-39-854Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/blockchain-anchor.json",
+        "anchorCommitSha": "92574c77e31a5f3bebfac42b4fb1a0b41523c1cf",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/92574c77e31a5f3bebfac42b4fb1a0b41523c1cf"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "c8efcf0b84e3e2ee17c2ac2629044dc11cbf525f70eeb79b5e1540b5d6333ebb",
+      "recommendedAnchorPayload": "sha256:c8efcf0b84e3e2ee17c2ac2629044dc11cbf525f70eeb79b5e1540b5d6333ebb",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xc8efcf0b84e3e2ee17c2ac2629044dc11cbf525f70eeb79b5e1540b5d6333ebb",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/nextgen-2026-08-15T18-48-39-854Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "30084_01-2026-08-14T18-34-24-928Z",
     "title": "30084_01",
     "publicOwnerId": "u_vtcclz",
