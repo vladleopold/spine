@@ -1,5 +1,269 @@
 [
   {
+    "id": "centaur-2026-08-16T00-50-52-323Z",
+    "title": "centaur",
+    "publicOwnerId": "u_x17vc7",
+    "ownerAnonId": "anon_1p1wjwm_1o5hb8b",
+    "ownerAnonFingerprint": "1p1wjwm",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-16T00:50:52.323Z",
+    "skeleton": "Centaur.skel",
+    "atlas": "Centaur.atlas",
+    "textures": [
+      "Centaur.png",
+      "Centaur_2.png"
+    ],
+    "animations": [
+      "Attack",
+      "Boob Loop",
+      "Erect",
+      "Erect Wobbly",
+      "Facial Expressions",
+      "Flaccid",
+      "Hit",
+      "Idle",
+      "Semi Erect"
+    ],
+    "defaultAnimation": "Attack",
+    "files": [
+      "centaur/Centaur.skel",
+      "centaur/Centaur.atlas",
+      "centaur/Centaur.png",
+      "centaur/Centaur_2.png",
+      "attack-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/centaur-2026-08-16T00-50-52-323Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp?v=2026-08-16T00-50-52.323Z",
+    "thumbnailPath": "library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp?v=2026-08-16T00-50-52.323Z",
+    "thumbnailPosterPath": "library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "centaur-2026-08-16T00-50-52-323Z",
+      "title": "centaur",
+      "uploadedAt": "2026-08-16T00:50:52.323Z",
+      "proofPath": "library/centaur-2026-08-16T00-50-52-323Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/source-proof.json?v=2026-08-16T00-50-52.323Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1p1wjwm_1o5hb8b",
+        "anonymousFingerprint": "1p1wjwm",
+        "browserFingerprintSha256": "98deb86ddb1c14dbdbf41c5ec8c91179dacbb9ffe1ef7849295423b91172d47d",
+        "browserEnvironmentHashSha256": "cb4de231ae78829cb337297f6412b77ec8d498006e27ba21ed7c344af58caf09",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": -60,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/centaur-2026-08-16T00-50-52-323Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:27468272f068b4fb017b820a8a262ef283319e9365b1129a5f4899caaf8f1e62",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "attack-preview.webp",
+          "bytes": 694,
+          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+        },
+        {
+          "name": "centaur/Centaur_2.png",
+          "bytes": 1026933,
+          "sha256": "9ed7e662c97c0897bf40c04a853f24fff34c28a711b5f99637fc782f7d737c2f"
+        },
+        {
+          "name": "centaur/Centaur.atlas",
+          "bytes": 4335,
+          "sha256": "f9bea49c7bf7c55242fa72bf98993dd8614bcb372b8177707be0d1d818dae75c"
+        },
+        {
+          "name": "centaur/Centaur.png",
+          "bytes": 1908137,
+          "sha256": "7b1f46afde2df1f10ab92286da01bff5d1fc36dbd956261aa380ba6d60afa8dc"
+        },
+        {
+          "name": "centaur/Centaur.skel",
+          "bytes": 170584,
+          "sha256": "f0b4ae1a9d2c38e3cd2a395f53f32180465c4c35f5ef6b5c8a4087d4e7415961"
+        }
+      ],
+      "proofHash": "27468272f068b4fb017b820a8a262ef283319e9365b1129a5f4899caaf8f1e62"
+    },
+    "sourceProofPath": "library/centaur-2026-08-16T00-50-52-323Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/source-proof.json?v=2026-08-16T00-50-52.323Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-16T00:51:00.289Z",
+      "entryId": "centaur-2026-08-16T00-50-52-323Z",
+      "title": "centaur",
+      "uploadedAt": "2026-08-16T00:50:52.323Z",
+      "sourceProofHash": "27468272f068b4fb017b820a8a262ef283319e9365b1129a5f4899caaf8f1e62",
+      "sourceProofPath": "library/centaur-2026-08-16T00-50-52-323Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/source-proof.json?v=2026-08-16T00-50-52.323Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1p1wjwm_1o5hb8b",
+        "anonymousFingerprint": "1p1wjwm",
+        "browserFingerprintSha256": "98deb86ddb1c14dbdbf41c5ec8c91179dacbb9ffe1ef7849295423b91172d47d",
+        "browserEnvironmentHashSha256": "cb4de231ae78829cb337297f6412b77ec8d498006e27ba21ed7c344af58caf09",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": -60,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/centaur-2026-08-16T00-50-52-323Z",
+        "files": [
+          {
+            "name": "centaur/Centaur.skel",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.skel",
+            "bytes": 170584,
+            "sha256": "f0b4ae1a9d2c38e3cd2a395f53f32180465c4c35f5ef6b5c8a4087d4e7415961",
+            "github": {
+              "contentSha": "5416cdfe39cc3199e75ec0785cb304da4b0a4f6b",
+              "commitSha": "deda74ffad04f522fb056369cd6f8cc63db09812",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/deda74ffad04f522fb056369cd6f8cc63db09812",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.skel"
+            }
+          },
+          {
+            "name": "centaur/Centaur.atlas",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.atlas",
+            "bytes": 4335,
+            "sha256": "f9bea49c7bf7c55242fa72bf98993dd8614bcb372b8177707be0d1d818dae75c",
+            "github": {
+              "contentSha": "265126de2b773a2a046c67ca1047751b54053d55",
+              "commitSha": "95c45998326a593ba7c51de9512c4752f0520bcd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/95c45998326a593ba7c51de9512c4752f0520bcd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.atlas"
+            }
+          },
+          {
+            "name": "centaur/Centaur.png",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.png",
+            "bytes": 1908137,
+            "sha256": "7b1f46afde2df1f10ab92286da01bff5d1fc36dbd956261aa380ba6d60afa8dc",
+            "github": {
+              "contentSha": "445045622e9d4456a831e34c75c4944c062cbcc6",
+              "commitSha": "a83df2ad1ced162922bf7914e01b90830726bb0c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a83df2ad1ced162922bf7914e01b90830726bb0c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur.png"
+            }
+          },
+          {
+            "name": "centaur/Centaur_2.png",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur_2.png",
+            "bytes": 1026933,
+            "sha256": "9ed7e662c97c0897bf40c04a853f24fff34c28a711b5f99637fc782f7d737c2f",
+            "github": {
+              "contentSha": "7c85ef888a6e07ca5facc35c7438e405e4747389",
+              "commitSha": "8c9ad8bf90b785ce0caf9549bc2c68dda9e8c3de",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8c9ad8bf90b785ce0caf9549bc2c68dda9e8c3de",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/centaur/Centaur_2.png"
+            }
+          },
+          {
+            "name": "attack-preview.webp",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp",
+            "bytes": 694,
+            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "github": {
+              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
+              "commitSha": "70fb93b42b356deb820e2ca0469104d8545b8add",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/70fb93b42b356deb820e2ca0469104d8545b8add",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/attack-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/centaur-2026-08-16T00-50-52-323Z/source-proof.json",
+            "bytes": 2686,
+            "sha256": "16aae078be102b960514261d2259462703888891503f505708d1f92737b9ad9e",
+            "github": {
+              "contentSha": "b0a2135d4aab550795bc00cbec99e213807f61b9",
+              "commitSha": "9ef1d4fb8b8b26e341c69be498ef2e6f0ee710e9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/9ef1d4fb8b8b26e341c69be498ef2e6f0ee710e9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/centaur-2026-08-16T00-50-52-323Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/centaur-2026-08-16T00-50-52-323Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/blockchain-anchor.json",
+        "anchorCommitSha": "d1df7e45d26b9114e988c38cffa68d19019c5799",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/d1df7e45d26b9114e988c38cffa68d19019c5799"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "3c5f5d1a0b683e72002b7a0d2b959d9120178424b145571b7bc32e5e2a201ebf",
+      "recommendedAnchorPayload": "sha256:3c5f5d1a0b683e72002b7a0d2b959d9120178424b145571b7bc32e5e2a201ebf",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x3c5f5d1a0b683e72002b7a0d2b959d9120178424b145571b7bc32e5e2a201ebf",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/centaur-2026-08-16T00-50-52-323Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "jester-2026-08-16T00-42-43-328Z",
     "title": "jester",
     "publicOwnerId": "u_x17vc7",
