@@ -1,5 +1,144 @@
 [
   {
+    "id": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z",
+    "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423",
+    "updatedAt": "2026-08-16T13:04:10.952Z",
+    "animation_asset": {
+      "id": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z",
+      "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "loop",
+          "loop2"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-loop"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z",
+      "manifestPath": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/manifest.json",
+      "files": [
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/b9f15dc48713c0a0e2e5df7574412309_992165617813880423/b9f15dc48713c0a0e2e5df7574412309_992165617813880423.json",
+          "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423/b9f15dc48713c0a0e2e5df7574412309_992165617813880423.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/b9f15dc48713c0a0e2e5df7574412309_992165617813880423/b557dd4f56e1315739b699973752bfc2_7120538666490999035.atlas",
+          "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423/b557dd4f56e1315739b699973752bfc2_7120538666490999035.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/b9f15dc48713c0a0e2e5df7574412309_992165617813880423/UISpine_Remielle.png",
+          "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423/UISpine_Remielle.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/b9f15dc48713c0a0e2e5df7574412309_992165617813880423/UISpine_Remielle_2.png",
+          "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423/UISpine_Remielle_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/loop-preview.webp",
+          "name": "loop-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-03-57-564Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423.json",
+      "atlas": "b557dd4f56e1315739b699973752bfc2_7120538666490999035.atlas",
+      "textures": [
+        "UISpine_Remielle.png",
+        "UISpine_Remielle_2.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "loop",
+        "loop2"
+      ],
+      "defaultAnimation": "loop",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "timon_sceleton-2026-08-16T08-29-17-581Z",
     "name": "timon_sceleton",
     "updatedAt": "2026-08-16T08:29:32.288Z",
