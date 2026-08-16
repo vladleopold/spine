@@ -1,5 +1,252 @@
 [
   {
+    "id": "timon_sceleton-2026-08-16T08-29-17-581Z",
+    "title": "timon_sceleton",
+    "publicOwnerId": "u_6d2ir2",
+    "ownerAnonId": "anon_qx0914_1r3ysm7",
+    "ownerAnonFingerprint": "qx0914",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-16T08:29:17.581Z",
+    "skeleton": "Timon_sceleton.skel",
+    "atlas": "Timon_sceleton.atlas",
+    "textures": [
+      "Timon_sceleton.webp"
+    ],
+    "animations": [
+      "Idle",
+      "Jump heart",
+      "static_tmp"
+    ],
+    "defaultAnimation": "Idle",
+    "files": [
+      "timon_sceleton/Timon_sceleton.skel",
+      "timon_sceleton/Timon_sceleton.atlas",
+      "timon_sceleton/Timon_sceleton.webp",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp?v=2026-08-16T08-29-17.581Z",
+    "thumbnailPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp?v=2026-08-16T08-29-17.581Z",
+    "thumbnailPosterPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "timon_sceleton-2026-08-16T08-29-17-581Z",
+      "title": "timon_sceleton",
+      "uploadedAt": "2026-08-16T08:29:17.581Z",
+      "proofPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json?v=2026-08-16T08-29-17.581Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_qx0914_1r3ysm7",
+        "anonymousFingerprint": "qx0914",
+        "browserFingerprintSha256": "afd33ab4fac5e1f1042992c18db3ebf2f223f130d545527d09122469cb677181",
+        "browserEnvironmentHashSha256": "c8e1cae8b2aba86ceaf59e44b4370c44d2e1ad9d2ef79ba610a18f68350cbc03",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "he-IL",
+            "he",
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 24,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2195,
+            "height": 1235,
+            "colorDepth": 24,
+            "pixelRatio": 1.75
+          },
+          "timezone": "Asia/Jerusalem",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:6de2efcac3e78f997c481d4103824965b0182385b0435269469796ba6cbf62fb",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 694,
+          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+        },
+        {
+          "name": "timon_sceleton/Timon_sceleton.atlas",
+          "bytes": 1564,
+          "sha256": "89250adc8379d90affa7b596cc4b342e4aecdbb7c8e87a1b58923c1cbb51e6e3"
+        },
+        {
+          "name": "timon_sceleton/Timon_sceleton.skel",
+          "bytes": 61055,
+          "sha256": "6cbb0e2e3571551e98400725fce81050acbcdf88ab3df83814f0317cb7f1098b"
+        },
+        {
+          "name": "timon_sceleton/Timon_sceleton.webp",
+          "bytes": 797752,
+          "sha256": "09b73b172e5bcee3bac72375b724d6ac10ee593d333145233e0dae90754cbfb0"
+        }
+      ],
+      "proofHash": "6de2efcac3e78f997c481d4103824965b0182385b0435269469796ba6cbf62fb"
+    },
+    "sourceProofPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json?v=2026-08-16T08-29-17.581Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-16T08:29:29.334Z",
+      "entryId": "timon_sceleton-2026-08-16T08-29-17-581Z",
+      "title": "timon_sceleton",
+      "uploadedAt": "2026-08-16T08:29:17.581Z",
+      "sourceProofHash": "6de2efcac3e78f997c481d4103824965b0182385b0435269469796ba6cbf62fb",
+      "sourceProofPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json?v=2026-08-16T08-29-17.581Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_qx0914_1r3ysm7",
+        "anonymousFingerprint": "qx0914",
+        "browserFingerprintSha256": "afd33ab4fac5e1f1042992c18db3ebf2f223f130d545527d09122469cb677181",
+        "browserEnvironmentHashSha256": "c8e1cae8b2aba86ceaf59e44b4370c44d2e1ad9d2ef79ba610a18f68350cbc03",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "he-IL",
+            "he",
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 24,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2195,
+            "height": 1235,
+            "colorDepth": 24,
+            "pixelRatio": 1.75
+          },
+          "timezone": "Asia/Jerusalem",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z",
+        "files": [
+          {
+            "name": "timon_sceleton/Timon_sceleton.skel",
+            "path": "library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.skel",
+            "bytes": 61055,
+            "sha256": "6cbb0e2e3571551e98400725fce81050acbcdf88ab3df83814f0317cb7f1098b",
+            "github": {
+              "contentSha": "8e9318353ccf6580205b04dce141bf51b6493fb8",
+              "commitSha": "05beaa31218b1f326581037ca6130f244c7646b6",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/05beaa31218b1f326581037ca6130f244c7646b6",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.skel"
+            }
+          },
+          {
+            "name": "timon_sceleton/Timon_sceleton.atlas",
+            "path": "library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.atlas",
+            "bytes": 1564,
+            "sha256": "89250adc8379d90affa7b596cc4b342e4aecdbb7c8e87a1b58923c1cbb51e6e3",
+            "github": {
+              "contentSha": "a15a9cdd69de26b14103c795e96a3a863c6bcec3",
+              "commitSha": "bf13cb82794269ca2735c40ce9bbb1f1005bccc7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bf13cb82794269ca2735c40ce9bbb1f1005bccc7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.atlas"
+            }
+          },
+          {
+            "name": "timon_sceleton/Timon_sceleton.webp",
+            "path": "library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.webp",
+            "bytes": 797752,
+            "sha256": "09b73b172e5bcee3bac72375b724d6ac10ee593d333145233e0dae90754cbfb0",
+            "github": {
+              "contentSha": "5865ef27cf3110d1ade15127b470cfd523c1497a",
+              "commitSha": "e4c757673b96be3d28c07a00084dffd7c8cc8270",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e4c757673b96be3d28c07a00084dffd7c8cc8270",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/timon_sceleton-2026-08-16T08-29-17-581Z/timon_sceleton/Timon_sceleton.webp"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp",
+            "bytes": 694,
+            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "github": {
+              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
+              "commitSha": "6255f87f1632d084bc6c80b824d887dfd6e5d230",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6255f87f1632d084bc6c80b824d887dfd6e5d230",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json",
+            "bytes": 2664,
+            "sha256": "371fbb76d4508487c299547d28b3387817b5e57b423d8c43dbe49cdcfbcc6e74",
+            "github": {
+              "contentSha": "0b1534a7b5b656f3bfc5df010df4a08fac67c94e",
+              "commitSha": "1eb8988c6bd4720adedb784d73909cb9a8b83499",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1eb8988c6bd4720adedb784d73909cb9a8b83499",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json",
+        "anchorCommitSha": "26354c3c500cf37f75e2bc1b5c0698dfb1597b3b",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/26354c3c500cf37f75e2bc1b5c0698dfb1597b3b"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "8136c966c9c557282ace3c114c9dbc895325f2c6ff076b1f22eec23341d697d3",
+      "recommendedAnchorPayload": "sha256:8136c966c9c557282ace3c114c9dbc895325f2c6ff076b1f22eec23341d697d3",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x8136c966c9c557282ace3c114c9dbc895325f2c6ff076b1f22eec23341d697d3",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "centaur-2026-08-16T00-52-34-139Z",
     "title": "centaur",
     "publicOwnerId": "u_x17vc7",
