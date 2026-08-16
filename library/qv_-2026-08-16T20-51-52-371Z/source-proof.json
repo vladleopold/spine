@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "qv_-2026-08-16T20-51-52-371Z",
+  "title": "qv_カベ付き",
+  "uploadedAt": "2026-08-16T20:51:52.371Z",
+  "proofPath": "library/qv_-2026-08-16T20-51-52-371Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/qv_-2026-08-16T20-51-52-371Z/source-proof.json?v=2026-08-16T20-51-52.371Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1steyqp_jnpryw",
+    "anonymousFingerprint": "1steyqp",
+    "browserFingerprintSha256": "434ae4a826a05095172683216cff7b0d6e01e9cad6aeaad313d3135d6806b87f",
+    "browserEnvironmentHashSha256": "de7c91cf5265c68b72ff59295bd0646719264ae0312b464992838c31ce3eb5d4",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en",
+        "zh-CN"
+      ],
+      "hardwareConcurrency": 24,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1596,
+        "height": 898,
+        "colorDepth": 24,
+        "pixelRatio": 1.6050000190734863
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 2,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/qv_-2026-08-16T20-51-52-371Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:67aec5cd364b05ae78975d4e511b5fa8494e3d1d9432c5eeac91470a4d4fd74e",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "000-preview.webp",
+      "bytes": 1898,
+      "sha256": "f76712fd09aad99353e4cf07f2eca87f20191331bdf7163c64a3e465c1668f9f"
+    },
+    {
+      "name": "qv_カベ付き/QV_カベ付き.atlas",
+      "bytes": 25030,
+      "sha256": "5829b8408901a358d0dcf7113af4d714e02f95b3416eaa56e3454d0a5c86b905"
+    },
+    {
+      "name": "qv_カベ付き/QV_カベ付き.json",
+      "bytes": 1278933,
+      "sha256": "338e7baf32c5d61eb6aa1f2ff634156ff793b07afe237d03041cc5cb780ddf22"
+    },
+    {
+      "name": "qv_カベ付き/QV_カベ付き.png",
+      "bytes": 1021833,
+      "sha256": "2727e6ada90efd729e3ea7beb1fa9b707d0d5f630e2af3fe02df0e02f7f916e2"
+    }
+  ],
+  "proofHash": "67aec5cd364b05ae78975d4e511b5fa8494e3d1d9432c5eeac91470a4d4fd74e"
+}
