@@ -1,5 +1,170 @@
 [
   {
+    "id": "centaur-2026-08-16T00-52-34-139Z",
+    "name": "centaur",
+    "updatedAt": "2026-08-16T00:52:45.180Z",
+    "animation_asset": {
+      "id": "centaur-2026-08-16T00-52-34-139Z",
+      "name": "centaur",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "animation_state": [
+          "attack",
+          "boob loop",
+          "erect",
+          "erect wobbly",
+          "facial expressions",
+          "flaccid",
+          "hit",
+          "idle",
+          "semi erect"
+        ],
+        "state": [
+          "default-attack"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/centaur-2026-08-16T00-52-34-139Z",
+      "manifestPath": "library/centaur-2026-08-16T00-52-34-139Z/manifest.json",
+      "files": [
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/centaur/Centaur.skel",
+          "name": "centaur/Centaur.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/centaur/Centaur.atlas",
+          "name": "centaur/Centaur.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/centaur/Centaur.png",
+          "name": "centaur/Centaur.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/centaur/Centaur_2.png",
+          "name": "centaur/Centaur_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/attack-preview.webp",
+          "name": "attack-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/centaur-2026-08-16T00-52-34-139Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Centaur.skel",
+      "atlas": "Centaur.atlas",
+      "textures": [
+        "Centaur.png",
+        "Centaur_2.png"
+      ],
+      "animationCount": 9,
+      "animationNames": [
+        "Attack",
+        "Boob Loop",
+        "Erect",
+        "Erect Wobbly",
+        "Facial Expressions",
+        "Flaccid",
+        "Hit",
+        "Idle",
+        "Semi Erect"
+      ],
+      "defaultAnimation": "Attack",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "centaur-2026-08-16T00-51-56-640Z",
     "name": "centaur",
     "updatedAt": "2026-08-16T00:52:07.403Z",
