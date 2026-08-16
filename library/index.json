@@ -34,7 +34,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp?v=2026-08-16T08-29-17.581Z",
     "thumbnailPosterPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -244,7 +244,9 @@
       },
       "anchorPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "page.waitForFunction: Timeout 30000ms exceeded.",
+    "webmGeneratedAt": "2026-08-16T08:31:39.365Z"
   },
   {
     "id": "centaur-2026-08-16T00-52-34-139Z",
