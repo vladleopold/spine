@@ -1,5 +1,230 @@
 [
   {
+    "id": "qv_-2026-08-16T20-51-52-371Z",
+    "name": "qv_カベ付き",
+    "updatedAt": "2026-08-16T20:52:05.071Z",
+    "animation_asset": {
+      "id": "qv_-2026-08-16T20-51-52-371Z",
+      "name": "qv_カベ付き",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "000",
+          "【ほほ】女_赤み_振向用",
+          "【ほほ】赤み",
+          "【口】女_閉じ",
+          "【口】女_閉じ_立ちバック振向用",
+          "【口】女_開け",
+          "【口】女_開け2",
+          "【口】女_開け2_立ちバック振向用",
+          "【口】女_開け_立ちバック振向用",
+          "【口】女_食いしばり",
+          "【口】女_食いしばり_立ちバック振向用",
+          "【合成】おじ_ちんこ",
+          "【合成】汗",
+          "【愛撫】横から_バイブ射精",
+          "【愛撫】横から_バイブ射精後待機",
+          "【愛撫】横から_バイブ弱",
+          "【愛撫】横から_バイブ強",
+          "【愛撫】横から_バイブ待機",
+          "【愛撫】横から_女_肘付く",
+          "【愛撫】横から_女_胸つぶれ",
+          "【愛撫】横から_待機",
+          "【愛撫】横から_手マン射精",
+          "【愛撫】横から_手マン射精後待機",
+          "【愛撫】横から_手マン弱",
+          "【愛撫】横から_手マン強",
+          "【愛撫】横から_胸揉み弱",
+          "【愛撫】横から_胸揉み強",
+          "【目】女_通常",
+          "【目】女_閉じ",
+          "【目】女_閉じ_立ちバック振向用",
+          "【目】女_開け_立ちバック振向用",
+          "【眉】女_困り",
+          "【眉】女_困り_立ちバック振向用",
+          "【眉】女_通常",
+          "【眉】女_通常_立ちバック振向用",
+          "【立ちバック】ピストン弱",
+          "【立ちバック】ピストン弱_振向",
+          "【立ちバック】ピストン強",
+          "【立ちバック】ピストン強_振向",
+          "【立ちバック】射精",
+          "【立ちバック】射精_振向",
+          "【立ちバック】射精後待機",
+          "【立ちバック】射精後待機_振向",
+          "【立ちバック】待機",
+          "【立ちバック】待機_振向",
+          "【立ちバック】胸揉み弱",
+          "【立ちバック】胸揉み強",
+          "【青年】口_お",
+          "カチューシャoff",
+          "男_服off"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-000"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/qv_-2026-08-16T20-51-52-371Z",
+      "manifestPath": "library/qv_-2026-08-16T20-51-52-371Z/manifest.json",
+      "files": [
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/qv_カベ付き/QV_カベ付き.json",
+          "name": "qv_カベ付き/QV_カベ付き.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/qv_カベ付き/QV_カベ付き.atlas",
+          "name": "qv_カベ付き/QV_カベ付き.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/qv_カベ付き/QV_カベ付き.png",
+          "name": "qv_カベ付き/QV_カベ付き.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/000-preview.webp",
+          "name": "000-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/qv_-2026-08-16T20-51-52-371Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "QV_カベ付き.json",
+      "atlas": "QV_カベ付き.atlas",
+      "textures": [
+        "QV_カベ付き.png"
+      ],
+      "animationCount": 50,
+      "animationNames": [
+        "000",
+        "【ほほ】女_赤み_振向用",
+        "【ほほ】赤み",
+        "【口】女_閉じ",
+        "【口】女_閉じ_立ちバック振向用",
+        "【口】女_開け",
+        "【口】女_開け2",
+        "【口】女_開け2_立ちバック振向用",
+        "【口】女_開け_立ちバック振向用",
+        "【口】女_食いしばり",
+        "【口】女_食いしばり_立ちバック振向用",
+        "【合成】おじ_ちんこ",
+        "【合成】汗",
+        "【愛撫】横から_バイブ射精",
+        "【愛撫】横から_バイブ射精後待機",
+        "【愛撫】横から_バイブ弱",
+        "【愛撫】横から_バイブ強",
+        "【愛撫】横から_バイブ待機",
+        "【愛撫】横から_女_肘付く",
+        "【愛撫】横から_女_胸つぶれ",
+        "【愛撫】横から_待機",
+        "【愛撫】横から_手マン射精",
+        "【愛撫】横から_手マン射精後待機",
+        "【愛撫】横から_手マン弱",
+        "【愛撫】横から_手マン強",
+        "【愛撫】横から_胸揉み弱",
+        "【愛撫】横から_胸揉み強",
+        "【目】女_通常",
+        "【目】女_閉じ",
+        "【目】女_閉じ_立ちバック振向用",
+        "【目】女_開け_立ちバック振向用",
+        "【眉】女_困り",
+        "【眉】女_困り_立ちバック振向用",
+        "【眉】女_通常",
+        "【眉】女_通常_立ちバック振向用",
+        "【立ちバック】ピストン弱",
+        "【立ちバック】ピストン弱_振向",
+        "【立ちバック】ピストン強",
+        "【立ちバック】ピストン強_振向",
+        "【立ちバック】射精",
+        "【立ちバック】射精_振向",
+        "【立ちバック】射精後待機",
+        "【立ちバック】射精後待機_振向",
+        "【立ちバック】待機",
+        "【立ちバック】待機_振向",
+        "【立ちバック】胸揉み弱",
+        "【立ちバック】胸揉み強",
+        "【青年】口_お",
+        "カチューシャOFF",
+        "男_服OFF"
+      ],
+      "defaultAnimation": "000",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423-2026-08-16T13-19-16-323Z",
     "name": "b9f15dc48713c0a0e2e5df7574412309_992165617813880423",
     "updatedAt": "2026-08-16T13:19:30.069Z",
