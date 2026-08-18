@@ -384,7 +384,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp?v=2026-08-18T23-41-18.759Z",
     "thumbnailPosterPath": "library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "error",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -588,7 +588,9 @@
       },
       "anchorPath": "library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json"
-    }
+    },
+    "webmError": "Player creation failed: Error: Could not load skeleton data.\nString in string table must not be null.",
+    "webmGeneratedAt": "2026-08-18T23:43:10.719Z"
   },
   {
     "id": "cookie0632-2026-08-18T23-40-12-950Z",
