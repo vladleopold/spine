@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-18T23:42:39.438Z",
+  "updatedAt": "2026-08-18T23:42:51.511Z",
+  "animation_asset": {
+    "id": "cookie0605s01-2026-08-18T23-42-39-438Z",
+    "name": "cookie0605s01",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "fx"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "axe",
+        "battle_idle",
+        "battle_idle_back",
+        "call_user",
+        "die",
+        "drop",
+        "eat",
+        "fx_f_mix",
+        "fx_q_mix",
+        "fx_qb_mix",
+        "greeting",
+        "greeting_back",
+        "hammer",
+        "hang",
+        "idle",
+        "idle_back",
+        "inactive",
+        "inactive_back",
+        "joy",
+        "jump2_back",
+        "jump_back",
+        "lose",
+        "personal1",
+        "personal2",
+        "pickax",
+        "pickup",
+        "pot",
+        "run",
+        "run_back",
+        "see_user",
+        "see_user_in",
+        "shadow_mix",
+        "sit",
+        "sit_back",
+        "sit_back_over",
+        "sit_floor",
+        "sit_floor_back",
+        "sit_talk",
+        "sit_talk_back",
+        "skill1",
+        "skill1_back",
+        "skill2",
+        "skill2_back",
+        "skill3",
+        "skill3_back",
+        "skill3_end",
+        "skill3_end_back",
+        "skill3_loop",
+        "skill3_loop_back",
+        "slide_back",
+        "smile",
+        "sprinkle",
+        "standard",
+        "surprise",
+        "talk",
+        "talk_back",
+        "touch",
+        "walk",
+        "walk_back",
+        "wash"
+      ],
+      "state": [
+        "default-axe",
+        "lose"
+      ],
+      "action": [
+        "walk",
+        "run"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/cookie0605s01-2026-08-18T23-42-39-438Z",
+    "manifestPath": "library/cookie0605s01-2026-08-18T23-42-39-438Z/manifest.json",
+    "files": [
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/cookie0605s01/cookie0605s01.skel",
+        "name": "cookie0605s01/cookie0605s01.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/cookie0605s01/cookie0605s01.atlas",
+        "name": "cookie0605s01/cookie0605s01.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/cookie0605s01/cookie0605s01.png",
+        "name": "cookie0605s01/cookie0605s01.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/axe-preview.webp",
+        "name": "axe-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cookie0605s01-2026-08-18T23-42-39-438Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cookie0605s01.skel",
+    "atlas": "cookie0605s01.atlas",
+    "textures": [
+      "cookie0605s01.png"
+    ],
+    "animationCount": 60,
+    "animationNames": [
+      "axe",
+      "battle_idle",
+      "battle_idle_back",
+      "call_user",
+      "die",
+      "drop",
+      "eat",
+      "fx_f_mix",
+      "fx_q_mix",
+      "fx_qb_mix",
+      "greeting",
+      "greeting_back",
+      "hammer",
+      "hang",
+      "idle",
+      "idle_back",
+      "inactive",
+      "inactive_back",
+      "joy",
+      "jump2_back",
+      "jump_back",
+      "lose",
+      "personal1",
+      "personal2",
+      "pickax",
+      "pickup",
+      "pot",
+      "run",
+      "run_back",
+      "see_user",
+      "see_user_in",
+      "shadow_mix",
+      "sit",
+      "sit_back",
+      "sit_back_over",
+      "sit_floor",
+      "sit_floor_back",
+      "sit_talk",
+      "sit_talk_back",
+      "skill1",
+      "skill1_back",
+      "skill2",
+      "skill2_back",
+      "skill3",
+      "skill3_back",
+      "skill3_end",
+      "skill3_end_back",
+      "skill3_loop",
+      "skill3_loop_back",
+      "slide_back",
+      "smile",
+      "sprinkle",
+      "standard",
+      "surprise",
+      "talk",
+      "talk_back",
+      "touch",
+      "walk",
+      "walk_back",
+      "wash"
+    ],
+    "defaultAnimation": "axe",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "fx"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
