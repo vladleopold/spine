@@ -1,5 +1,256 @@
 [
   {
+    "id": "cookie0632-2026-08-18T23-41-18-759Z",
+    "name": "cookie0632",
+    "updatedAt": "2026-08-18T23:41:29.580Z",
+    "animation_asset": {
+      "id": "cookie0632-2026-08-18T23-41-18-759Z",
+      "name": "cookie0632",
+      "domain": "gamedev",
+      "asset_category": "architecture",
+      "animation_type": "environment",
+      "skeleton_type": "architecture",
+      "content_type": "architecture",
+      "taxonomy": {
+        "category": "environment",
+        "class": "architecture",
+        "type": "set-piece",
+        "tags": [
+          "floor"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "environment"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "axe",
+          "battle_idle",
+          "battle_idle_back",
+          "blink",
+          "call_user",
+          "cut_idle",
+          "cut_idle_back",
+          "cut_run",
+          "die",
+          "drop",
+          "eat",
+          "greeting",
+          "greeting_back",
+          "hammer",
+          "hang",
+          "idle",
+          "idle_back",
+          "inactive",
+          "inactive_back",
+          "joy",
+          "jump2_back",
+          "jump_back",
+          "lose",
+          "personal1",
+          "personal2",
+          "pickax",
+          "pickup",
+          "pot",
+          "run",
+          "run_back",
+          "see_user",
+          "see_user_in",
+          "shadow_mix",
+          "sit",
+          "sit_back",
+          "sit_back_over",
+          "sit_floor",
+          "sit_floor_back",
+          "sit_talk",
+          "sit_talk_back",
+          "skill1",
+          "skill1_back",
+          "skill2",
+          "skill2_back",
+          "slide_back",
+          "smile",
+          "sprinkle",
+          "standard",
+          "surprise",
+          "talk",
+          "talk_back",
+          "touch",
+          "walk",
+          "walk_back",
+          "wash"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-axe",
+          "lose"
+        ],
+        "action": [
+          "walk",
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/cookie0632-2026-08-18T23-41-18-759Z",
+      "manifestPath": "library/cookie0632-2026-08-18T23-41-18-759Z/manifest.json",
+      "files": [
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.skel",
+          "name": "cookie0632/cookie0632.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.atlas",
+          "name": "cookie0632/cookie0632.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.png",
+          "name": "cookie0632/cookie0632.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp",
+          "name": "axe-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "cookie0632.skel",
+      "atlas": "cookie0632.atlas",
+      "textures": [
+        "cookie0632.png"
+      ],
+      "animationCount": 55,
+      "animationNames": [
+        "axe",
+        "battle_idle",
+        "battle_idle_back",
+        "blink",
+        "call_user",
+        "cut_idle",
+        "cut_idle_back",
+        "cut_run",
+        "die",
+        "drop",
+        "eat",
+        "greeting",
+        "greeting_back",
+        "hammer",
+        "hang",
+        "idle",
+        "idle_back",
+        "inactive",
+        "inactive_back",
+        "joy",
+        "jump2_back",
+        "jump_back",
+        "lose",
+        "personal1",
+        "personal2",
+        "pickax",
+        "pickup",
+        "pot",
+        "run",
+        "run_back",
+        "see_user",
+        "see_user_in",
+        "shadow_mix",
+        "sit",
+        "sit_back",
+        "sit_back_over",
+        "sit_floor",
+        "sit_floor_back",
+        "sit_talk",
+        "sit_talk_back",
+        "skill1",
+        "skill1_back",
+        "skill2",
+        "skill2_back",
+        "slide_back",
+        "smile",
+        "sprinkle",
+        "standard",
+        "surprise",
+        "talk",
+        "talk_back",
+        "touch",
+        "walk",
+        "walk_back",
+        "wash"
+      ],
+      "defaultAnimation": "axe",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "floor"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "cookie0632-2026-08-18T23-40-12-950Z",
     "name": "cookie0632",
     "updatedAt": "2026-08-18T23:40:27.091Z",
