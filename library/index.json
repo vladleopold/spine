@@ -1,5 +1,298 @@
 [
   {
+    "id": "cookie0632-2026-08-18T23-41-18-759Z",
+    "title": "cookie0632",
+    "publicOwnerId": "u_90doa2",
+    "ownerAnonId": "anon_e6g2a7_kvsjqd",
+    "ownerAnonFingerprint": "e6g2a7",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-18T23:41:18.759Z",
+    "skeleton": "cookie0632.skel",
+    "atlas": "cookie0632.atlas",
+    "textures": [
+      "cookie0632.png"
+    ],
+    "animations": [
+      "axe",
+      "battle_idle",
+      "battle_idle_back",
+      "blink",
+      "call_user",
+      "cut_idle",
+      "cut_idle_back",
+      "cut_run",
+      "die",
+      "drop",
+      "eat",
+      "greeting",
+      "greeting_back",
+      "hammer",
+      "hang",
+      "idle",
+      "idle_back",
+      "inactive",
+      "inactive_back",
+      "joy",
+      "jump2_back",
+      "jump_back",
+      "lose",
+      "personal1",
+      "personal2",
+      "pickax",
+      "pickup",
+      "pot",
+      "run",
+      "run_back",
+      "see_user",
+      "see_user_in",
+      "shadow_mix",
+      "sit",
+      "sit_back",
+      "sit_back_over",
+      "sit_floor",
+      "sit_floor_back",
+      "sit_talk",
+      "sit_talk_back",
+      "skill1",
+      "skill1_back",
+      "skill2",
+      "skill2_back",
+      "slide_back",
+      "smile",
+      "sprinkle",
+      "standard",
+      "surprise",
+      "talk",
+      "talk_back",
+      "touch",
+      "walk",
+      "walk_back",
+      "wash"
+    ],
+    "defaultAnimation": "axe",
+    "files": [
+      "cookie0632/cookie0632.skel",
+      "cookie0632/cookie0632.atlas",
+      "cookie0632/cookie0632.png",
+      "axe-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/cookie0632-2026-08-18T23-41-18-759Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp?v=2026-08-18T23-41-18.759Z",
+    "thumbnailPath": "library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp?v=2026-08-18T23-41-18.759Z",
+    "thumbnailPosterPath": "library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "cookie0632-2026-08-18T23-41-18-759Z",
+      "title": "cookie0632",
+      "uploadedAt": "2026-08-18T23:41:18.759Z",
+      "proofPath": "library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json?v=2026-08-18T23-41-18.759Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_e6g2a7_kvsjqd",
+        "anonymousFingerprint": "e6g2a7",
+        "browserFingerprintSha256": "2b4989376316995724692c143cd2d3938bc99a7fd7476850a0ca9375575572fa",
+        "browserEnvironmentHashSha256": "f345134283ad613b45bc0abc18c71ba818676ce4cf37801b5f191c35427f79f9",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "pt-BR",
+          "languages": [
+            "pt-BR",
+            "pt",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 393,
+            "height": 873,
+            "colorDepth": 24,
+            "pixelRatio": 2.75
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/cookie0632-2026-08-18T23-41-18-759Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:3a2dfda6819e44a8d041e70ac16e1438ecc9853a7c8769f943329492b35f90e2",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "axe-preview.webp",
+          "bytes": 2262,
+          "sha256": "3e9f583b6e0d462a5b29e8af8220a554203f21e8943b3c41f931bd014ff9a49b"
+        },
+        {
+          "name": "cookie0632/cookie0632.atlas",
+          "bytes": 15119,
+          "sha256": "71c82430e6055b6b04fc298c647e76b3a208196f89e42ce56f7dec6c5efc9735"
+        },
+        {
+          "name": "cookie0632/cookie0632.png",
+          "bytes": 553338,
+          "sha256": "d8b4fc4a80dc63c7d7ab3fe9718c3832e2b62aa4abaa6cd14804f445d6fa2f83"
+        },
+        {
+          "name": "cookie0632/cookie0632.skel",
+          "bytes": 842347,
+          "sha256": "5e4a01d75cab1d982d1b3ad28aed4f1fc738d5ee81d84fd35152e3b1be6c80d1"
+        }
+      ],
+      "proofHash": "3a2dfda6819e44a8d041e70ac16e1438ecc9853a7c8769f943329492b35f90e2"
+    },
+    "sourceProofPath": "library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json?v=2026-08-18T23-41-18.759Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-18T23:41:26.680Z",
+      "entryId": "cookie0632-2026-08-18T23-41-18-759Z",
+      "title": "cookie0632",
+      "uploadedAt": "2026-08-18T23:41:18.759Z",
+      "sourceProofHash": "3a2dfda6819e44a8d041e70ac16e1438ecc9853a7c8769f943329492b35f90e2",
+      "sourceProofPath": "library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json?v=2026-08-18T23-41-18.759Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_e6g2a7_kvsjqd",
+        "anonymousFingerprint": "e6g2a7",
+        "browserFingerprintSha256": "2b4989376316995724692c143cd2d3938bc99a7fd7476850a0ca9375575572fa",
+        "browserEnvironmentHashSha256": "f345134283ad613b45bc0abc18c71ba818676ce4cf37801b5f191c35427f79f9",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "pt-BR",
+          "languages": [
+            "pt-BR",
+            "pt",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 393,
+            "height": 873,
+            "colorDepth": 24,
+            "pixelRatio": 2.75
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/cookie0632-2026-08-18T23-41-18-759Z",
+        "files": [
+          {
+            "name": "cookie0632/cookie0632.skel",
+            "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.skel",
+            "bytes": 842347,
+            "sha256": "5e4a01d75cab1d982d1b3ad28aed4f1fc738d5ee81d84fd35152e3b1be6c80d1",
+            "github": {
+              "contentSha": "1f73964e4cd2077c4517c2995d6ce6a9025a7910",
+              "commitSha": "7e5ea473a7ec918360438933b12ab88986c15276",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7e5ea473a7ec918360438933b12ab88986c15276",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.skel"
+            }
+          },
+          {
+            "name": "cookie0632/cookie0632.atlas",
+            "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.atlas",
+            "bytes": 15119,
+            "sha256": "71c82430e6055b6b04fc298c647e76b3a208196f89e42ce56f7dec6c5efc9735",
+            "github": {
+              "contentSha": "daabff7423a41ce1b55ac9475577c0e1a6fb83d3",
+              "commitSha": "ab37cf5ec36c3b47fe2275b2b5204d35f5b21213",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ab37cf5ec36c3b47fe2275b2b5204d35f5b21213",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.atlas"
+            }
+          },
+          {
+            "name": "cookie0632/cookie0632.png",
+            "path": "library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.png",
+            "bytes": 553338,
+            "sha256": "d8b4fc4a80dc63c7d7ab3fe9718c3832e2b62aa4abaa6cd14804f445d6fa2f83",
+            "github": {
+              "contentSha": "6365476c1ac61ab7936e52f138ca9278db39f413",
+              "commitSha": "78c2d2933275139c1d8469983eeb2f1c12e3a562",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/78c2d2933275139c1d8469983eeb2f1c12e3a562",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cookie0632-2026-08-18T23-41-18-759Z/cookie0632/cookie0632.png"
+            }
+          },
+          {
+            "name": "axe-preview.webp",
+            "path": "library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp",
+            "bytes": 2262,
+            "sha256": "3e9f583b6e0d462a5b29e8af8220a554203f21e8943b3c41f931bd014ff9a49b",
+            "github": {
+              "contentSha": "c9ac55d00059b003eebee9a7cb82059423609e41",
+              "commitSha": "e9ab0f67b8f9d09a5719c261eb9542b860f43995",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e9ab0f67b8f9d09a5719c261eb9542b860f43995",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cookie0632-2026-08-18T23-41-18-759Z/axe-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json",
+            "bytes": 2577,
+            "sha256": "ce9930855c203950b36b71a9c4280a71b990412670839d9b02731a3194b4c03e",
+            "github": {
+              "contentSha": "29888c9d2d0666fa171ee62c81a19bd652e64b63",
+              "commitSha": "6fe72a8e3bc71b4215f8fbc0d7f435e2aa8de5e9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6fe72a8e3bc71b4215f8fbc0d7f435e2aa8de5e9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/cookie0632-2026-08-18T23-41-18-759Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json",
+        "anchorCommitSha": "f577b8c8c6200abd110ff81c60fb42c9ea34ace2",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/f577b8c8c6200abd110ff81c60fb42c9ea34ace2"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "71a26bb07d4704275c7c6f6fd73540e610a769153440e38eabae1b9b268be097",
+      "recommendedAnchorPayload": "sha256:71a26bb07d4704275c7c6f6fd73540e610a769153440e38eabae1b9b268be097",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x71a26bb07d4704275c7c6f6fd73540e610a769153440e38eabae1b9b268be097",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/cookie0632-2026-08-18T23-41-18-759Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "cookie0632-2026-08-18T23-40-12-950Z",
     "title": "cookie0632",
     "publicOwnerId": "u_90doa2",
