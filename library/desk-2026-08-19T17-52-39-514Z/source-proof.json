@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "desk-2026-08-19T17-52-39-514Z",
+  "title": "desk",
+  "uploadedAt": "2026-08-19T17:52:39.514Z",
+  "proofPath": "library/desk-2026-08-19T17-52-39-514Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/desk-2026-08-19T17-52-39-514Z/source-proof.json?v=2026-08-19T17-52-39.514Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_xptfq2_imec2m",
+    "anonymousFingerprint": "xptfq2",
+    "browserFingerprintSha256": "d4f4bcf2c0316ed9a162f2cc8aac827bc8275b6bef39f96e71df7a8a1fae74b3",
+    "browserEnvironmentHashSha256": "11f10602c5fa4db86074ea7b45f024dbbb3ee17306aafd83dc4bc8491c034fab",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr-TR",
+      "languages": [
+        "tr-TR",
+        "tr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1.100000023841858
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/desk-2026-08-19T17-52-39-514Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ce0c331d0863bd296051404bfe8fe09df1164fa2109547f7b6057203fd6ee651",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 694,
+      "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+    },
+    {
+      "name": "desk/Desk.atlas",
+      "bytes": 310,
+      "sha256": "dd31a71fd750f3deca2fc575273fbfb5ccece1001baeee419b02dda31be7dbaf"
+    },
+    {
+      "name": "desk/Desk.json",
+      "bytes": 1694,
+      "sha256": "c5bc7f6096268b360d52457fe7e5dcabc3f58fbfdde768ed536e571130a72354"
+    },
+    {
+      "name": "desk/Desk.png",
+      "bytes": 2596940,
+      "sha256": "288bed995472e809231237eb57dc210aee7d99f6d23111d672538b5e8db87781"
+    }
+  ],
+  "proofHash": "ce0c331d0863bd296051404bfe8fe09df1164fa2109547f7b6057203fd6ee651"
+}
