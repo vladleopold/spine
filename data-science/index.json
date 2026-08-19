@@ -1,5 +1,132 @@
 [
   {
+    "id": "fungal-warren_merged-2026-08-19T21-00-19-110Z",
+    "name": "fungal warren_merged",
+    "updatedAt": "2026-08-19T21:00:33.612Z",
+    "animation_asset": {
+      "id": "fungal-warren_merged-2026-08-19T21-00-19-110Z",
+      "name": "fungal warren_merged",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z",
+      "manifestPath": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/manifest.json",
+      "files": [
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/fungal warren_merged/Fungal Warren_merged.json",
+          "name": "fungal warren_merged/Fungal Warren_merged.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/fungal warren_merged/Fungal Warren_merged.atlas",
+          "name": "fungal warren_merged/Fungal Warren_merged.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/fungal warren_merged/Fungal Warren_merged.png",
+          "name": "fungal warren_merged/Fungal Warren_merged.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/fungal-warren_merged-2026-08-19T21-00-19-110Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Fungal Warren_merged.json",
+      "atlas": "Fungal Warren_merged.atlas",
+      "textures": [
+        "Fungal Warren_merged.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "desk-2026-08-19T17-52-39-514Z",
     "name": "desk",
     "updatedAt": "2026-08-19T17:52:53.263Z",
