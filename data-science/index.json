@@ -1,5 +1,132 @@
 [
   {
+    "id": "ciliegia-2026-08-19T08-44-23-910Z",
+    "name": "ciliegia",
+    "updatedAt": "2026-08-19T08:44:29.234Z",
+    "animation_asset": {
+      "id": "ciliegia-2026-08-19T08-44-23-910Z",
+      "name": "ciliegia",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/ciliegia-2026-08-19T08-44-23-910Z",
+      "manifestPath": "library/ciliegia-2026-08-19T08-44-23-910Z/manifest.json",
+      "files": [
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/ciliegia/ciliegia.json",
+          "name": "ciliegia/ciliegia.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/ciliegia/ciliegia.atlas",
+          "name": "ciliegia/ciliegia.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/ciliegia/ciliegia.png",
+          "name": "ciliegia/ciliegia.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/ciliegia-2026-08-19T08-44-23-910Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "ciliegia.json",
+      "atlas": "ciliegia.atlas",
+      "textures": [
+        "ciliegia.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "cookie0605s01-2026-08-19T02-52-43-259Z",
     "name": "cookie0605s01",
     "updatedAt": "2026-08-19T02:52:55.837Z",
