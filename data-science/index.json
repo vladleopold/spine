@@ -1,5 +1,206 @@
 [
   {
+    "id": "0_human-2026-08-20T22-47-30-152Z",
+    "name": "0_human",
+    "updatedAt": "2026-08-20T22:47:48.299Z",
+    "animation_asset": {
+      "id": "0_human-2026-08-20T22-47-30-152Z",
+      "name": "0_human",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "human"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "6a",
+          "6a_d",
+          "6a_loop",
+          "6a_loop_d",
+          "7_d",
+          "8_d",
+          "9a",
+          "9a_d",
+          "9a_loop",
+          "9a_loop_d",
+          "9_d",
+          "10_d",
+          "animation"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-0"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/0_human-2026-08-20T22-47-30-152Z",
+      "manifestPath": "library/0_human-2026-08-20T22-47-30-152Z/manifest.json",
+      "files": [
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human.json",
+          "name": "0_human/0_human.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human.atlas",
+          "name": "0_human/0_human.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human.png",
+          "name": "0_human/0_human.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human_2.png",
+          "name": "0_human/0_human_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human_3.png",
+          "name": "0_human/0_human_3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0_human/0_human_4.png",
+          "name": "0_human/0_human_4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/0-preview.webp",
+          "name": "0-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/0_human-2026-08-20T22-47-30-152Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "0_human.json",
+      "atlas": "0_human.atlas",
+      "textures": [
+        "0_human.png",
+        "0_human_2.png",
+        "0_human_3.png",
+        "0_human_4.png"
+      ],
+      "animationCount": 24,
+      "animationNames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "6a",
+        "6a_d",
+        "6a_loop",
+        "6a_loop_d",
+        "7_d",
+        "8_d",
+        "9a",
+        "9a_d",
+        "9a_loop",
+        "9a_loop_d",
+        "9_d",
+        "10_d",
+        "animation"
+      ],
+      "defaultAnimation": "0",
+      "fileCount": 9,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 5
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "human"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "aphrodite-2-2026-08-20T13-57-01-952Z",
     "name": "aphrodite 2",
     "updatedAt": "2026-08-20T13:57:14.611Z",
