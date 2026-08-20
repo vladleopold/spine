@@ -1,5 +1,155 @@
 [
   {
+    "id": "spine-2026-08-20T23-02-46-835Z",
+    "name": "カットイン",
+    "updatedAt": "2026-08-20T23:03:07.271Z",
+    "animation_asset": {
+      "id": "spine-2026-08-20T23-02-46-835Z",
+      "name": "カットイン",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "1",
+          "2"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-1"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/spine-2026-08-20T23-02-46-835Z",
+      "manifestPath": "library/spine-2026-08-20T23-02-46-835Z/manifest.json",
+      "files": [
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン.json",
+          "name": "カットイン/カットイン.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン.atlas",
+          "name": "カットイン/カットイン.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン.png",
+          "name": "カットイン/カットイン.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン_2.png",
+          "name": "カットイン/カットイン_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン_3.png",
+          "name": "カットイン/カットイン_3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/カットイン/カットイン_4.png",
+          "name": "カットイン/カットイン_4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/1-preview.webp",
+          "name": "1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/spine-2026-08-20T23-02-46-835Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "カットイン.json",
+      "atlas": "カットイン.atlas",
+      "textures": [
+        "カットイン.png",
+        "カットイン_2.png",
+        "カットイン_3.png",
+        "カットイン_4.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "1",
+        "2"
+      ],
+      "defaultAnimation": "1",
+      "fileCount": 9,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 5
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "0_human-2026-08-20T23-02-04-250Z",
     "name": "0_human",
     "updatedAt": "2026-08-20T23:02:24.503Z",
