@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-21T10:22:08.729Z",
+  "updatedAt": "2026-08-21T10:22:22.761Z",
+  "animation_asset": {
+    "id": "sitting_puppy-2026-08-21T10-22-08-729Z",
+    "name": "sitting_puppy",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "angry",
+        "ball_play1",
+        "ball_play1f",
+        "ball_play2",
+        "ball_play3",
+        "eat",
+        "eat_bone_pedigree",
+        "eat_idle",
+        "hair_dryer_apply",
+        "happy",
+        "idle",
+        "idle_eb",
+        "ignore",
+        "laugh",
+        "random",
+        "random_2",
+        "sad",
+        "seahorse_idle",
+        "seahorse_play",
+        "slide",
+        "slide_play",
+        "soap_shampoo_apply",
+        "swing_idle",
+        "swing_play",
+        "towel_apply"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/sitting_puppy-2026-08-21T10-22-08-729Z",
+    "manifestPath": "library/sitting_puppy-2026-08-21T10-22-08-729Z/manifest.json",
+    "files": [
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/sitting_puppy/sitting_puppy.json",
+        "name": "sitting_puppy/sitting_puppy.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/sitting_puppy/sitting_puppy.atlas",
+        "name": "sitting_puppy/sitting_puppy.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/sitting_puppy/sitting_puppy.png",
+        "name": "sitting_puppy/sitting_puppy.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sitting_puppy-2026-08-21T10-22-08-729Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "sitting_puppy.json",
+    "atlas": "sitting_puppy.atlas",
+    "textures": [
+      "sitting_puppy.png"
+    ],
+    "animationCount": 25,
+    "animationNames": [
+      "Angry",
+      "Ball_Play1",
+      "Ball_Play1f",
+      "Ball_Play2",
+      "Ball_Play3",
+      "Eat",
+      "Eat_Bone_Pedigree",
+      "Eat_Idle",
+      "Hair_Dryer_Apply",
+      "Happy",
+      "Idle",
+      "Idle_EB",
+      "Ignore",
+      "Laugh",
+      "Random",
+      "Random_2",
+      "Sad",
+      "Seahorse_Idle",
+      "Seahorse_Play",
+      "Slide",
+      "Slide_Play",
+      "Soap_Shampoo_Apply",
+      "Swing_Idle",
+      "Swing_Play",
+      "Towel_Apply"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
