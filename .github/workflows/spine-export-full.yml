@@ -381,10 +381,11 @@ jobs:
                 }
               }
 
+              const hasExports = Object.keys(allAnimPreviews).length > 0;
               indexData[entryIndex] = {
                 ...indexData[entryIndex],
                 allAnimationPreviews: allAnimPreviews,
-                fullExportStatus: 'ready',
+                fullExportStatus: hasExports ? 'ready' : 'failed',
                 fullExportGeneratedAt: new Date().toISOString(),
               };
 

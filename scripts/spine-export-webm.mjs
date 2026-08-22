@@ -108,9 +108,35 @@ function detectSkeletonVersion(filePath) {
     }
     if (ext === '.skel') {
       const buffer = fs.readFileSync(filePath);
-      const versionEnd = buffer.indexOf(0);
-      if (versionEnd > 0) return buffer.toString('utf8', 0, versionEnd).trim();
-      return buffer.toString('utf8', 0, Math.min(buffer.length, 80)).split('\0')[0].trim();
+      const bytes = new Uint8Array(buffer);
+      let idx = 0;
+      function readInt() {
+        let byte = bytes[idx++];
+        let result = byte & 0x7f;
+        if ((byte & 0x80) !== 0) {
+          byte = bytes[idx++]; result |= (byte & 0x7f) << 7;
+          if ((byte & 0x80) !== 0) {
+            byte = bytes[idx++]; result |= (byte & 0x7f) << 14;
+            if ((byte & 0x80) !== 0) {
+              byte = bytes[idx++]; result |= (byte & 0x7f) << 21;
+              if ((byte & 0x80) !== 0) {
+                byte = bytes[idx++]; result |= (byte & 0x7f) << 28;
+              }
+            }
+          }
+        }
+        return result;
+      }
+      function readString() {
+        const byteCount = readInt();
+        if (byteCount <= 1) return '';
+        const start = idx;
+        idx += byteCount - 1;
+        return new TextDecoder().decode(bytes.slice(start, idx));
+      }
+      readString();
+      const version = readString();
+      return version.trim() || '4.0';
     }
   } catch { }
   return '4.0';
@@ -319,7 +345,16 @@ function sanitizedSkelBuffer(buffer, version = "") {
     }
 
     const stringCount = cursor.readInt(true);
-    for (let index = 0; index < stringCount; index += 1) cursor.readStringMeta();
+    for (let index = 0; index < stringCount; index += 1) {
+      const stringStart = cursor.index;
+      const stringMeta = cursor.readStringMeta();
+      if (stringMeta.value === null) {
+        replacements.push({
+          start: stringStart, end: stringMeta.end,
+          bytes: encodeSpineBinaryString(''),
+        });
+      }
+    }
 
     const boneCount = cursor.readInt(true);
     for (let index = 0; index < boneCount; index += 1) {
@@ -381,8 +416,8 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
 
   var player;
   var config = {
-    ${skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `skeleton: '${skeletonRawUrl}'`},
-    atlas: '${atlasRawUrl}',
+    ${isLegacy ? (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `jsonUrl: '${skeletonRawUrl}'`) : (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `skeleton: '${skeletonRawUrl}'`)},
+    ${isLegacy ? `atlasUrl: '${atlasRawUrl}'` : `atlas: '${atlasRawUrl}'`},
     textures: ${JSON.stringify(textureRawUrls)},
     animation: '${targetAnimation}',
     showLoading: false,
@@ -556,6 +591,19 @@ try {
       body: body,
     });
   });
+  for (const texFile of textureFiles) {
+    const texUrl = rawUrl(texFile);
+    const texPath = path.join(firstSet.path, texFile);
+    const texExt = path.extname(texFile).toLowerCase();
+    const texContentType = texExt === '.png' ? 'image/png' : texExt === '.webp' ? 'image/webp' : texExt === '.jpg' || texExt === '.jpeg' ? 'image/jpeg' : 'application/octet-stream';
+    await page.route(texUrl, async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: texContentType,
+        body: fs.readFileSync(texPath),
+      });
+    });
+  }
 
   await page.setContent(captureHtml, { waitUntil: 'networkidle', timeout: 60000 });
 
@@ -570,7 +618,7 @@ try {
   if (error) {
     console.error(`Capture failed: ${error}`);
     fs.writeFileSync(args.output + '.json', JSON.stringify({ error: error }, null, 2));
-    process.exit(0);
+    process.exit(1);
   }
 
   let animDuration = await page.evaluate(() => window.__animDuration || 0);
@@ -623,7 +671,7 @@ try {
       if (error) {
         console.error(`Capture failed after reload: ${error}`);
         fs.writeFileSync(args.output + '.json', JSON.stringify({ error: error }, null, 2));
-        process.exit(0);
+        process.exit(1);
       }
       
       // Re-read duration just in case
