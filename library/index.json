@@ -1,5 +1,249 @@
 [
   {
+    "id": "anubis-2026-08-22T21-05-44-546Z",
+    "title": "anubis",
+    "publicOwnerId": "u_tc758m",
+    "ownerAnonId": "anon_qlezd4_1mv1amh",
+    "ownerAnonFingerprint": "qlezd4",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-22T21:05:44.546Z",
+    "skeleton": "Anubis.json",
+    "atlas": "Anubis.atlas",
+    "textures": [
+      "Anubis.png"
+    ],
+    "animations": [
+      "idle",
+      "win"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "anubis/Anubis.json",
+      "anubis/Anubis.atlas",
+      "anubis/Anubis.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/anubis-2026-08-22T21-05-44-546Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp?v=2026-08-22T21-05-44.546Z",
+    "thumbnailPath": "library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp?v=2026-08-22T21-05-44.546Z",
+    "thumbnailPosterPath": "library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "anubis-2026-08-22T21-05-44-546Z",
+      "title": "anubis",
+      "uploadedAt": "2026-08-22T21:05:44.546Z",
+      "proofPath": "library/anubis-2026-08-22T21-05-44-546Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/source-proof.json?v=2026-08-22T21-05-44.546Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_qlezd4_1mv1amh",
+        "anonymousFingerprint": "qlezd4",
+        "browserFingerprintSha256": "1b707f0998ab4aab4d00563b0f620ae339e3af218c5f93217be1e6780bf41e58",
+        "browserEnvironmentHashSha256": "80d147f0c07f9f138d82e640befb6b9183dad0b3939ce7953c3ec6bd0385d8a5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "ru-RU",
+          "languages": [
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en",
+            "tr",
+            "uk"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Warsaw",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/anubis-2026-08-22T21-05-44-546Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:f9a160aae309e4681e5ddaca455c729ae248d1c0260d57035086d173b9e7c333",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "anubis/Anubis.atlas",
+          "bytes": 3150,
+          "sha256": "d232d1086a9acf4d6a813add39896684d045714fc0ece3e25d830a022f8369ab"
+        },
+        {
+          "name": "anubis/Anubis.json",
+          "bytes": 188704,
+          "sha256": "8cb02122dbf9ea760c84f7dd284594fa3fc3c699a9bed5e334e7c267041ea81b"
+        },
+        {
+          "name": "anubis/Anubis.png",
+          "bytes": 1221950,
+          "sha256": "a6c8a6817632d5bc96635731328060326690c333cb6a009690592b3e9109dee8"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 694,
+          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+        }
+      ],
+      "proofHash": "f9a160aae309e4681e5ddaca455c729ae248d1c0260d57035086d173b9e7c333"
+    },
+    "sourceProofPath": "library/anubis-2026-08-22T21-05-44-546Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/source-proof.json?v=2026-08-22T21-05-44.546Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-22T21:05:54.363Z",
+      "entryId": "anubis-2026-08-22T21-05-44-546Z",
+      "title": "anubis",
+      "uploadedAt": "2026-08-22T21:05:44.546Z",
+      "sourceProofHash": "f9a160aae309e4681e5ddaca455c729ae248d1c0260d57035086d173b9e7c333",
+      "sourceProofPath": "library/anubis-2026-08-22T21-05-44-546Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/source-proof.json?v=2026-08-22T21-05-44.546Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_qlezd4_1mv1amh",
+        "anonymousFingerprint": "qlezd4",
+        "browserFingerprintSha256": "1b707f0998ab4aab4d00563b0f620ae339e3af218c5f93217be1e6780bf41e58",
+        "browserEnvironmentHashSha256": "80d147f0c07f9f138d82e640befb6b9183dad0b3939ce7953c3ec6bd0385d8a5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "ru-RU",
+          "languages": [
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en",
+            "tr",
+            "uk"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Warsaw",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/anubis-2026-08-22T21-05-44-546Z",
+        "files": [
+          {
+            "name": "anubis/Anubis.json",
+            "path": "library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.json",
+            "bytes": 188704,
+            "sha256": "8cb02122dbf9ea760c84f7dd284594fa3fc3c699a9bed5e334e7c267041ea81b",
+            "github": {
+              "contentSha": "12debec5d90d59eb6831e88b832dd7ea1791f7c3",
+              "commitSha": "cb57ec2fd9c000a9e5e2257d2969f0f7095f0d7c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cb57ec2fd9c000a9e5e2257d2969f0f7095f0d7c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.json"
+            }
+          },
+          {
+            "name": "anubis/Anubis.atlas",
+            "path": "library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.atlas",
+            "bytes": 3150,
+            "sha256": "d232d1086a9acf4d6a813add39896684d045714fc0ece3e25d830a022f8369ab",
+            "github": {
+              "contentSha": "0e6d534447fa34137f864d7c8298434a7be66ab8",
+              "commitSha": "c1de89f2ea1b5a100ff0d4f5411b919e9b573e9f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c1de89f2ea1b5a100ff0d4f5411b919e9b573e9f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.atlas"
+            }
+          },
+          {
+            "name": "anubis/Anubis.png",
+            "path": "library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.png",
+            "bytes": 1221950,
+            "sha256": "a6c8a6817632d5bc96635731328060326690c333cb6a009690592b3e9109dee8",
+            "github": {
+              "contentSha": "8cdf664249f066ff77a5264bc5d613cf468a6c91",
+              "commitSha": "096a04d97d9dbd9073d168002a1418dda118bebe",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/096a04d97d9dbd9073d168002a1418dda118bebe",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/anubis-2026-08-22T21-05-44-546Z/anubis/Anubis.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp",
+            "bytes": 694,
+            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "github": {
+              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
+              "commitSha": "bb293adf2e4dbb1bf3f622aa8219e66ad8ab44ec",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bb293adf2e4dbb1bf3f622aa8219e66ad8ab44ec",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/anubis-2026-08-22T21-05-44-546Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/anubis-2026-08-22T21-05-44-546Z/source-proof.json",
+            "bytes": 2562,
+            "sha256": "222ee115e468bda1876f75014021c465dc90ff6404f0ad94af6a8bff330a57b5",
+            "github": {
+              "contentSha": "e6a9125b2a258b1261eca2d70bba1a57fa1a21e6",
+              "commitSha": "690ff6386ec19aee6a30ea704e5ec3ec76552034",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/690ff6386ec19aee6a30ea704e5ec3ec76552034",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/anubis-2026-08-22T21-05-44-546Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/anubis-2026-08-22T21-05-44-546Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/blockchain-anchor.json",
+        "anchorCommitSha": "cfd40ab541fb4b95ca579f593e26d2a7073e7c40",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/cfd40ab541fb4b95ca579f593e26d2a7073e7c40"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "fb8f9f9e4cac54629154086919a30d39d77178de377ad6838ed07fb3f4db215c",
+      "recommendedAnchorPayload": "sha256:fb8f9f9e4cac54629154086919a30d39d77178de377ad6838ed07fb3f4db215c",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xfb8f9f9e4cac54629154086919a30d39d77178de377ad6838ed07fb3f4db215c",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/anubis-2026-08-22T21-05-44-546Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "anubis-2026-08-22T16-23-55-871Z",
     "title": "anubis",
     "publicOwnerId": "u_tc758m",
