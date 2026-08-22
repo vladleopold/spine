@@ -1,5 +1,160 @@
 [
   {
+    "id": "cb10701_2-2026-08-22T03-13-16-437Z",
+    "name": "cb10701_2",
+    "updatedAt": "2026-08-22T03:13:46.147Z",
+    "animation_asset": {
+      "id": "cb10701_2-2026-08-22T03-13-16-437Z",
+      "name": "cb10701_2",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "animation_state": [
+          "avg_hit",
+          "avg_idle",
+          "hit",
+          "idle"
+        ],
+        "state": [
+          "default-avg_hit"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/cb10701_2-2026-08-22T03-13-16-437Z",
+      "manifestPath": "library/cb10701_2-2026-08-22T03-13-16-437Z/manifest.json",
+      "files": [
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/cb10701_2/cb10701_2.skel",
+          "name": "cb10701_2/cb10701_2.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/cb10701_2/cb10701_2.atlas",
+          "name": "cb10701_2/cb10701_2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/cb10701_2/cb10701_2.png",
+          "name": "cb10701_2/cb10701_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/cb10701_2/cb10701_22.png",
+          "name": "cb10701_2/cb10701_22.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/avg_hit-preview.webp",
+          "name": "avg_hit-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/cb10701_2-2026-08-22T03-13-16-437Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "cb10701_2.skel",
+      "atlas": "cb10701_2.atlas",
+      "textures": [
+        "cb10701_2.png",
+        "cb10701_22.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "AVG_Hit",
+        "AVG_Idle",
+        "Hit",
+        "Idle"
+      ],
+      "defaultAnimation": "AVG_Hit",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "anubis-2026-08-21T15-13-43-791Z",
     "name": "anubis",
     "updatedAt": "2026-08-21T15:13:56.301Z",
