@@ -1,1 +1,1 @@
-# Spine-Link - это приложение
+# Spine-Link
