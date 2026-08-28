@@ -982,7 +982,7 @@ h1 {
   gap: 14px;
   width: max-content;
   min-width: 100%;
-  padding: 20px 0;
+  padding: 12px 0;
   animation: homeFeedMarquee 247s linear infinite;
   will-change: transform;
 }
@@ -991,7 +991,7 @@ h1 {
   position: relative;
   display: block;
   flex: 0 0 clamp(280px, var(--home-feed-card-width, 38vw), 860px);
-  height: clamp(310px, 30vw, 460px);
+  height: clamp(210px, 24vw, 360px);
   aspect-ratio: var(--home-feed-ratio, 16 / 9);
   overflow: hidden;
   isolation: isolate;

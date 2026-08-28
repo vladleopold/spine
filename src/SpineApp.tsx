@@ -494,6 +494,7 @@ function ProgressiveMedia({
   className,
   loop: loopProp,
   controls: controlsProp,
+  autoPlay: autoPlayProp,
   onLoadedMetadata: onLoadedMetadataProp,
   ...props
 }: {
@@ -503,6 +504,7 @@ function ProgressiveMedia({
   className?: string;
   loop?: boolean;
   controls?: boolean;
+  autoPlay?: boolean;
   onLoadedMetadata?: React.VideoHTMLAttributes<HTMLVideoElement>["onLoadedMetadata"];
 } & Omit<React.HTMLAttributes<HTMLDivElement>, "onLoadedMetadata">) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -513,8 +515,10 @@ function ProgressiveMedia({
   useEffect(() => {
     if (!videoSrc || !videoReady || !videoRef.current) return;
     const v = videoRef.current;
-    v.play().catch(() => {});
-  }, [videoReady, videoSrc]);
+    if (autoPlayProp) {
+      v.play().catch(() => {});
+    }
+  }, [videoReady, videoSrc, autoPlayProp]);
 
   const startVideoLoad = useCallback(() => {
     if (videoStarted || !videoSrc) return;
@@ -562,6 +566,7 @@ function ProgressiveMedia({
         playsInline
         loop={loopProp}
         controls={controlsProp}
+        autoPlay={autoPlayProp}
         preload={videoStarted ? "auto" : "none"}
         onCanPlayThrough={() => setVideoReady(true)}
         onLoadedMetadata={onLoadedMetadataProp}
@@ -4939,6 +4944,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                           posterSrc={poster}
                           chunks={(entry as any).webmChunks}
                           aria-hidden="true"
+                          autoPlay
                         />
                       ) : (
                         <span className="home-feed-fallback">{entry.animations ?? 0}</span>
@@ -5235,6 +5241,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                     chunks={currentLibraryEntry?.webmChunks}
                     loop
                     controls
+                    autoPlay
                     onLoadedMetadata={(event) => applySeoVideoPreviewAspect(event.currentTarget as unknown as HTMLVideoElement)}
                   />
                 </div>
@@ -5758,6 +5765,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
                         posterSrc={thumbnailForCard || undefined}
                         chunks={entry.webmChunks}
                         aria-hidden="true"
+                        autoPlay
                         onLoadedMetadata={(event) => applyLibraryCardVideoAspect(event.currentTarget as unknown as HTMLVideoElement)}
                       />
                       <Layers size={24} />
