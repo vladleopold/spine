@@ -992,7 +992,7 @@ function archiveHtml({ origin, entries, exclusions, metrics }) {
         if (!source) return;
         if (!video.getAttribute("src")) video.setAttribute("src", source);
         video.muted = true;
-        video.loop = false;
+        video.loop = true;
         video.playsInline = true;
         try { video.currentTime = 0; } catch {}
         video.play().catch(() => {});
@@ -1002,107 +1002,115 @@ function archiveHtml({ origin, entries, exclusions, metrics }) {
         video.onended = null;
         try { video.currentTime = 0; } catch {}
       }
-      function installChaoticArchivePlayback() {
-        const visibleVideos = new Set();
-        const manualVideos = new WeakSet();
+      function getArchiveActiveLimit() {
+        return window.matchMedia("(max-width: 1024px), (pointer: coarse)").matches ? 1 : 2;
+      }
+      function installArchiveViewportAutoplay() {
+        const visibleTiles = new Set();
+        const manualTiles = new WeakSet();
         const hoverTimers = new WeakMap();
-        let chaosTimer = 0;
-        function clearHoverTimer(video) {
-          const timer = hoverTimers.get(video);
+        function clearHoverTimer(tile) {
+          const timer = hoverTimers.get(tile);
           if (timer) window.clearTimeout(timer);
-          hoverTimers.delete(video);
+          hoverTimers.delete(tile);
         }
-        function startHoverLoop(video) {
-          manualVideos.add(video);
-          clearHoverTimer(video);
+        function startHoverLoop(tile) {
+          manualTiles.add(tile);
+          clearHoverTimer(tile);
+          const video = tile.querySelector("video");
+          if (!video) return;
           video.onended = () => {
             const timer = window.setTimeout(() => {
-              if (!manualVideos.has(video)) return;
+              if (!manualTiles.has(tile)) return;
               try { video.currentTime = 0; } catch {}
               playArchiveVideo(video);
             }, 1000);
-            hoverTimers.set(video, timer);
+            hoverTimers.set(tile, timer);
           };
           playArchiveVideo(video);
         }
-        function stopHoverLoop(video) {
-          manualVideos.delete(video);
-          clearHoverTimer(video);
-          stopArchiveVideo(video);
+        function stopHoverLoop(tile) {
+          manualTiles.delete(tile);
+          clearHoverTimer(tile);
+          const video = tile.querySelector("video");
+          if (video) stopArchiveVideo(video);
         }
-        function scheduleChaos() {
-          window.clearTimeout(chaosTimer);
-          chaosTimer = window.setTimeout(runChaos, 800 + Math.random() * 2000);
-        }
-        function randomSample(items, count) {
-          return items
-            .map((item) => ({ item, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .slice(0, count)
-            .map((entry) => entry.item);
-        }
-        function runChaos() {
-          const videos = Array.from(visibleVideos).filter((video) => video.isConnected && (video.dataset.videoSrc || video.getAttribute("src")));
-          if (!videos.length) {
-            scheduleChaos();
-            return;
-          }
-          const activeLimit = Math.min(4, Math.max(2, Math.ceil(videos.length * 0.35)));
-          randomSample(videos.filter((video) => !video.paused && !manualVideos.has(video)), videos.length).slice(activeLimit).forEach(stopArchiveVideo);
-          randomSample(videos.filter((video) => video.paused && !manualVideos.has(video)), activeLimit).forEach((video) => {
-            if (Math.random() < 0.92) {
-              playArchiveVideo(video);
-              window.setTimeout(() => {
-                if (!manualVideos.has(video) && visibleVideos.has(video) && Math.random() < 0.7) stopArchiveVideo(video);
-              }, 1200 + Math.random() * 3000);
+        function updateAutoplay() {
+          const tiles = Array.from(visibleTiles).filter((tile) => tile.isConnected);
+          if (!tiles.length) return;
+          const activeLimit = Math.min(getArchiveActiveLimit(), tiles.length);
+          const activeTiles = new Set();
+          tiles.forEach((tile) => {
+            const video = tile.querySelector("video");
+            if (!video || !(video.dataset.videoSrc || video.getAttribute("src"))) return;
+            if (manualTiles.has(tile) || (tile.matches(":hover") || tile.matches(":focus-within"))) {
+              activeTiles.add(tile);
             }
           });
-          videos.forEach((video) => {
-            if (!manualVideos.has(video) && !video.paused && Math.random() < 0.4) stopArchiveVideo(video);
+          const remaining = activeLimit - activeTiles.size;
+          if (remaining > 0) {
+            const candidates = tiles.filter((tile) => !activeTiles.has(tile) && !manualTiles.has(tile));
+            for (const tile of candidates.slice(0, remaining)) {
+              activeTiles.add(tile);
+            }
+          }
+          tiles.forEach((tile) => {
+            const video = tile.querySelector("video");
+            if (!video) return;
+            const shouldPlay = activeTiles.has(tile) && !video.paused;
+            const shouldPause = !activeTiles.has(tile) && !video.paused;
+            if (shouldPause) stopArchiveVideo(video);
+            else if (shouldPlay && video.paused) playArchiveVideo(video);
           });
-          scheduleChaos();
         }
         document.querySelectorAll(".tile").forEach((tile) => {
           const video = tile.querySelector("video");
           if (!video) return;
-          tile.addEventListener("pointerenter", () => startHoverLoop(video));
-          tile.addEventListener("focusin", () => startHoverLoop(video));
-          tile.addEventListener("pointerleave", () => stopHoverLoop(video));
-          tile.addEventListener("focusout", () => stopHoverLoop(video));
+          tile.addEventListener("pointerenter", () => startHoverLoop(tile));
+          tile.addEventListener("focusin", () => startHoverLoop(tile));
+          tile.addEventListener("pointerleave", () => stopHoverLoop(tile));
+          tile.addEventListener("focusout", () => stopHoverLoop(tile));
         });
         if ("IntersectionObserver" in window) {
           const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-              const video = entry.target.querySelector("video");
-              if (!video) return;
-              if (entry.isIntersecting && entry.intersectionRatio >= 0.42) {
-                visibleVideos.add(video);
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+                visibleTiles.add(entry.target);
               } else {
-                visibleVideos.delete(video);
-                if (!manualVideos.has(video)) stopArchiveVideo(video);
+                visibleTiles.delete(entry.target);
+                if (!manualTiles.has(entry.target)) {
+                  const video = entry.target.querySelector("video");
+                  if (video) stopArchiveVideo(video);
+                }
               }
             });
-            scheduleChaos();
-          }, { threshold: [0, 0.42, 0.68, 1] });
+            updateAutoplay();
+          }, { threshold: [0, 0.35, 0.7, 1] });
           document.querySelectorAll(".tile").forEach((tile) => observer.observe(tile));
         } else {
-          document.querySelectorAll(".tile video").forEach((video) => visibleVideos.add(video));
+          document.querySelectorAll(".tile").forEach((tile) => visibleTiles.add(tile));
         }
         document.addEventListener("visibilitychange", () => {
           if (document.hidden) {
-            window.clearTimeout(chaosTimer);
-            visibleVideos.forEach((video) => { if (!manualVideos.has(video)) stopArchiveVideo(video); });
+            visibleTiles.forEach((tile) => {
+              if (!manualTiles.has(tile)) {
+                const video = tile.querySelector("video");
+                if (video) stopArchiveVideo(video);
+              }
+            });
           } else {
-            scheduleChaos();
+            updateAutoplay();
           }
         });
         window.addEventListener("pagehide", () => {
-          window.clearTimeout(chaosTimer);
-          visibleVideos.forEach(stopArchiveVideo);
+          visibleTiles.forEach((tile) => {
+            const video = tile.querySelector("video");
+            if (video) stopArchiveVideo(video);
+          });
         }, { once: true });
-        scheduleChaos();
+        updateAutoplay();
       }
-      installChaoticArchivePlayback();
+      installArchiveViewportAutoplay();
     </script>
   </body>
 </html>`;
