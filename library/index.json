@@ -1,5 +1,247 @@
 [
   {
+    "id": "skillnotif_freespin-1-2026-08-29T12-35-01-799Z",
+    "title": "skillnotif_freespin (1)",
+    "publicOwnerId": "u_a53uzb",
+    "ownerAnonId": "anon_4mwitt_5wwi1v",
+    "ownerAnonFingerprint": "4mwitt",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T12:35:01.799Z",
+    "skeleton": "skillnotif_freespin (1).json",
+    "atlas": "skillnotif_freespin (1).atlas",
+    "textures": [
+      "skillnotif_freespin.webp"
+    ],
+    "animations": [
+      "+3 Freespin_Intro",
+      "+3 Freespin_Idle",
+      "+3 Freespin_Outro",
+      "+4 Freespin_Intro",
+      "+4 Freespin_Idle",
+      "+4 Freespin_Outro"
+    ],
+    "defaultAnimation": "+3 Freespin_Idle",
+    "files": [
+      "skillnotif_freespin (1)/skillnotif_freespin (1).json",
+      "skillnotif_freespin (1)/skillnotif_freespin (1).atlas",
+      "skillnotif_freespin (1)/skillnotif_freespin.webp",
+      "3-freespin_idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp?v=2026-08-29T12-35-01.799Z",
+    "thumbnailPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp?v=2026-08-29T12-35-01.799Z",
+    "thumbnailPosterPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "skillnotif_freespin-1-2026-08-29T12-35-01-799Z",
+      "title": "skillnotif_freespin (1)",
+      "uploadedAt": "2026-08-29T12:35:01.799Z",
+      "proofPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json?v=2026-08-29T12-35-01.799Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_4mwitt_5wwi1v",
+        "anonymousFingerprint": "4mwitt",
+        "browserFingerprintSha256": "1339609532ad78628fde29a8f71e72cccf523ed060bde32e7229f897af0d6faa",
+        "browserEnvironmentHashSha256": "9d0168d7b4330c3ab2df62a329bc4dc5887bc45094f3507f4d3d6e6fc1e6d476",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "de"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:9a77f4d8a08c203882da69c34f624ecdc0266060c08ad4a914c91d6d72a07967",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "3-freespin_idle-preview.webp",
+          "bytes": 696,
+          "sha256": "aea1bef30d35486a0f940a32142eefad01ebbe08ad86511a37afd8ef79c495b7"
+        },
+        {
+          "name": "skillnotif_freespin (1)/skillnotif_freespin (1).atlas",
+          "bytes": 122,
+          "sha256": "c92cca904ac92fda24fdd2457809c7f7835a2eef3346d527ae10b4387dd655c0"
+        },
+        {
+          "name": "skillnotif_freespin (1)/skillnotif_freespin (1).json",
+          "bytes": 3532,
+          "sha256": "0c23f63a05f446609d192f5c74ec566f7db132f4ffedfcabda822ebbba94f5fc"
+        },
+        {
+          "name": "skillnotif_freespin (1)/skillnotif_freespin.webp",
+          "bytes": 1927438,
+          "sha256": "4898a2788887d79d34dbb3a66a6a1ce4f63821f5f1373ef22dd74e96ffe3a47f"
+        }
+      ],
+      "proofHash": "9a77f4d8a08c203882da69c34f624ecdc0266060c08ad4a914c91d6d72a07967"
+    },
+    "sourceProofPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json?v=2026-08-29T12-35-01.799Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T12:35:09.408Z",
+      "entryId": "skillnotif_freespin-1-2026-08-29T12-35-01-799Z",
+      "title": "skillnotif_freespin (1)",
+      "uploadedAt": "2026-08-29T12:35:01.799Z",
+      "sourceProofHash": "9a77f4d8a08c203882da69c34f624ecdc0266060c08ad4a914c91d6d72a07967",
+      "sourceProofPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json?v=2026-08-29T12-35-01.799Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_4mwitt_5wwi1v",
+        "anonymousFingerprint": "4mwitt",
+        "browserFingerprintSha256": "1339609532ad78628fde29a8f71e72cccf523ed060bde32e7229f897af0d6faa",
+        "browserEnvironmentHashSha256": "9d0168d7b4330c3ab2df62a329bc4dc5887bc45094f3507f4d3d6e6fc1e6d476",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr",
+          "languages": [
+            "tr",
+            "en-US",
+            "de"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z",
+        "files": [
+          {
+            "name": "skillnotif_freespin (1)/skillnotif_freespin (1).json",
+            "path": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin (1)/skillnotif_freespin (1).json",
+            "bytes": 3532,
+            "sha256": "0c23f63a05f446609d192f5c74ec566f7db132f4ffedfcabda822ebbba94f5fc",
+            "github": {
+              "contentSha": "91b908c395764c1aeec3547b2bd7363e46cc85ee",
+              "commitSha": "b284cd7570fd1bd3826b37b80e1cc972e29b265b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b284cd7570fd1bd3826b37b80e1cc972e29b265b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin%20(1)/skillnotif_freespin%20(1).json"
+            }
+          },
+          {
+            "name": "skillnotif_freespin (1)/skillnotif_freespin (1).atlas",
+            "path": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin (1)/skillnotif_freespin (1).atlas",
+            "bytes": 122,
+            "sha256": "c92cca904ac92fda24fdd2457809c7f7835a2eef3346d527ae10b4387dd655c0",
+            "github": {
+              "contentSha": "21ffb2aae358c6e4bd210e6cce5b94c97c7969ea",
+              "commitSha": "53434f61d6cc5dbc51681650b53a2701729b873c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/53434f61d6cc5dbc51681650b53a2701729b873c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin%20(1)/skillnotif_freespin%20(1).atlas"
+            }
+          },
+          {
+            "name": "skillnotif_freespin (1)/skillnotif_freespin.webp",
+            "path": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin (1)/skillnotif_freespin.webp",
+            "bytes": 1927438,
+            "sha256": "4898a2788887d79d34dbb3a66a6a1ce4f63821f5f1373ef22dd74e96ffe3a47f",
+            "github": {
+              "contentSha": "315658056b6791fbae0237675a688324784539ac",
+              "commitSha": "f740838efe72994ae0a3bbb8474374c0f02c1f7e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f740838efe72994ae0a3bbb8474374c0f02c1f7e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/skillnotif_freespin%20(1)/skillnotif_freespin.webp"
+            }
+          },
+          {
+            "name": "3-freespin_idle-preview.webp",
+            "path": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp",
+            "bytes": 696,
+            "sha256": "aea1bef30d35486a0f940a32142eefad01ebbe08ad86511a37afd8ef79c495b7",
+            "github": {
+              "contentSha": "3aa868708c3f6b39ea6791714d18537145f7faf4",
+              "commitSha": "ef405375a7723d62401bdca7429db60b51491d46",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ef405375a7723d62401bdca7429db60b51491d46",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/3-freespin_idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json",
+            "bytes": 2690,
+            "sha256": "3c68db9e7761efa69390318b75983564e2e5a12715b86b4b8619926c9cf0dabc",
+            "github": {
+              "contentSha": "db9929bf09783dbd1e18f569e17d7724b63149b5",
+              "commitSha": "003651bd77fc538fccd6238d69005450fec7fff9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/003651bd77fc538fccd6238d69005450fec7fff9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/blockchain-anchor.json",
+        "anchorCommitSha": "db8a6deb69e3a3c1896acc744cc7693ce3be4d39",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/db8a6deb69e3a3c1896acc744cc7693ce3be4d39"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "6c1c1e82203b7d773d35670b31c7b7c4d57f304bcaef97d70474aa1ea9785ac9",
+      "recommendedAnchorPayload": "sha256:6c1c1e82203b7d773d35670b31c7b7c4d57f304bcaef97d70474aa1ea9785ac9",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x6c1c1e82203b7d773d35670b31c7b7c4d57f304bcaef97d70474aa1ea9785ac9",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-1-2026-08-29T12-35-01-799Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "skillnotif_freespin-2026-08-29T12-25-35-885Z",
     "title": "skillnotif_freespin",
     "publicOwnerId": "u_1sask61",
