@@ -1,5 +1,252 @@
 [
   {
+    "id": "lyla-2026-08-29T22-02-59-927Z",
+    "title": "lyla",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T22:02:59.927Z",
+    "skeleton": "Lyla.json",
+    "atlas": "Lyla.atlas",
+    "textures": [
+      "Lyla.png"
+    ],
+    "animations": [
+      "happy_hops",
+      "idea_attention",
+      "idle_arms_down",
+      "idle_arms_folded",
+      "idle_notebook",
+      "pointing_to_cards",
+      "pointing_to_cards_start",
+      "pointing_to_cards_transition_1",
+      "pointing_to_cards_transition_2",
+      "wave",
+      "writing"
+    ],
+    "defaultAnimation": "idle_arms_down",
+    "files": [
+      "lyla/Lyla.json",
+      "lyla/Lyla.atlas",
+      "lyla/Lyla.png",
+      "idle_arms_down-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/lyla-2026-08-29T22-02-59-927Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp?v=2026-08-29T22-02-59.927Z",
+    "thumbnailPath": "library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp?v=2026-08-29T22-02-59.927Z",
+    "thumbnailPosterPath": "library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "lyla-2026-08-29T22-02-59-927Z",
+      "title": "lyla",
+      "uploadedAt": "2026-08-29T22:02:59.927Z",
+      "proofPath": "library/lyla-2026-08-29T22-02-59-927Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/source-proof.json?v=2026-08-29T22-02-59.927Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/lyla-2026-08-29T22-02-59-927Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:e003985a369ee5faa57ad6604d3156e509eda8c3cf9be2c6a7249598cc7696ed",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle_arms_down-preview.webp",
+          "bytes": 726,
+          "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3"
+        },
+        {
+          "name": "lyla/Lyla.atlas",
+          "bytes": 2439,
+          "sha256": "6877eafd2c237fdca49219177e49ea66070fe1458c532214f0a16449991d0d8d"
+        },
+        {
+          "name": "lyla/Lyla.json",
+          "bytes": 228249,
+          "sha256": "ea7088528fd76620cf7426f46fc1b53c4bae49ebac7402b7d98719abc72fb175"
+        },
+        {
+          "name": "lyla/Lyla.png",
+          "bytes": 285369,
+          "sha256": "58bef24e872c2db19ec8d0c011abdae9e629602ebe83b22ae067a28837f1fdef"
+        }
+      ],
+      "proofHash": "e003985a369ee5faa57ad6604d3156e509eda8c3cf9be2c6a7249598cc7696ed"
+    },
+    "sourceProofPath": "library/lyla-2026-08-29T22-02-59-927Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/source-proof.json?v=2026-08-29T22-02-59.927Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T22:03:04.737Z",
+      "entryId": "lyla-2026-08-29T22-02-59-927Z",
+      "title": "lyla",
+      "uploadedAt": "2026-08-29T22:02:59.927Z",
+      "sourceProofHash": "e003985a369ee5faa57ad6604d3156e509eda8c3cf9be2c6a7249598cc7696ed",
+      "sourceProofPath": "library/lyla-2026-08-29T22-02-59-927Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/source-proof.json?v=2026-08-29T22-02-59.927Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/lyla-2026-08-29T22-02-59-927Z",
+        "files": [
+          {
+            "name": "lyla/Lyla.json",
+            "path": "library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.json",
+            "bytes": 228249,
+            "sha256": "ea7088528fd76620cf7426f46fc1b53c4bae49ebac7402b7d98719abc72fb175",
+            "github": {
+              "contentSha": "1a7afa38c56831ac136a7ca299fa72edcf8410b7",
+              "commitSha": "d03f8ca7312ba98f20bcaf94430fd6d1f19638ca",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d03f8ca7312ba98f20bcaf94430fd6d1f19638ca",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.json"
+            }
+          },
+          {
+            "name": "lyla/Lyla.atlas",
+            "path": "library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.atlas",
+            "bytes": 2439,
+            "sha256": "6877eafd2c237fdca49219177e49ea66070fe1458c532214f0a16449991d0d8d",
+            "github": {
+              "contentSha": "df2550083efb7d9802616a8340a0ce6f39928ac3",
+              "commitSha": "872d5e94d61481090ae2bc07f6bccf3b8ef222f2",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/872d5e94d61481090ae2bc07f6bccf3b8ef222f2",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.atlas"
+            }
+          },
+          {
+            "name": "lyla/Lyla.png",
+            "path": "library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.png",
+            "bytes": 285369,
+            "sha256": "58bef24e872c2db19ec8d0c011abdae9e629602ebe83b22ae067a28837f1fdef",
+            "github": {
+              "contentSha": "0672cd965824a047f155f9e7ac36f8519e4fb687",
+              "commitSha": "c571aa02033f32730a6976f60d904ca49af9129c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c571aa02033f32730a6976f60d904ca49af9129c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-2026-08-29T22-02-59-927Z/lyla/Lyla.png"
+            }
+          },
+          {
+            "name": "idle_arms_down-preview.webp",
+            "path": "library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp",
+            "bytes": 726,
+            "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3",
+            "github": {
+              "contentSha": "7eff509c2d4b301230c947a31b42d4bd57d88edb",
+              "commitSha": "4704a5fbef28ec644317775c7c77a5aacbe87503",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4704a5fbef28ec644317775c7c77a5aacbe87503",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-2026-08-29T22-02-59-927Z/idle_arms_down-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/lyla-2026-08-29T22-02-59-927Z/source-proof.json",
+            "bytes": 2495,
+            "sha256": "761d5de76d2d5c39531a996cfab233cd1b7cf65ef9ca143eb006409489294118",
+            "github": {
+              "contentSha": "072d1b9267b92c6ae7335bffcfd23afabaf27e1e",
+              "commitSha": "6598f3594d9280356956cbb0417e1e523d824cb0",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6598f3594d9280356956cbb0417e1e523d824cb0",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-2026-08-29T22-02-59-927Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/lyla-2026-08-29T22-02-59-927Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/blockchain-anchor.json",
+        "anchorCommitSha": "9141db746f7af7e6df9a16188e9dfcd58adb5f9c",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/9141db746f7af7e6df9a16188e9dfcd58adb5f9c"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "c6cad6c775947c038b69a3e4ecb79f131daf67978cd21761125596049aea90fc",
+      "recommendedAnchorPayload": "sha256:c6cad6c775947c038b69a3e4ecb79f131daf67978cd21761125596049aea90fc",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xc6cad6c775947c038b69a3e4ecb79f131daf67978cd21761125596049aea90fc",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/lyla-2026-08-29T22-02-59-927Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T22-02-59-927Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "everett-face-2026-08-29T22-02-07-183Z",
     "title": "everett-face",
     "publicOwnerId": "u_13nh6m7",
