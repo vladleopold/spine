@@ -1,5 +1,159 @@
 [
   {
+    "id": "everett-body-2026-08-29T22-01-23-707Z",
+    "name": "everett-body",
+    "updatedAt": "2026-08-29T22:01:33.027Z",
+    "animation_asset": {
+      "id": "everett-body-2026-08-29T22-01-23-707Z",
+      "name": "everett-body",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation",
+          "blink",
+          "celebrate",
+          "highlight-bowl",
+          "highlight-mohawk",
+          "highlight-unstyled",
+          "highlight-wolf",
+          "idle",
+          "lipsync/evfinished",
+          "lipsync/evgreeting1",
+          "lipsync/evgreeting2",
+          "lipsync/evgreeting3",
+          "lipsync/evgreeting4"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/everett-body-2026-08-29T22-01-23-707Z",
+      "manifestPath": "library/everett-body-2026-08-29T22-01-23-707Z/manifest.json",
+      "files": [
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/everett-body/everett-body.json",
+          "name": "everett-body/everett-body.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/everett-body/everett-body.atlas",
+          "name": "everett-body/everett-body.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/everett-body/everett-body.png",
+          "name": "everett-body/everett-body.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/everett-body-2026-08-29T22-01-23-707Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "everett-body.json",
+      "atlas": "everett-body.atlas",
+      "textures": [
+        "everett-body.png"
+      ],
+      "animationCount": 13,
+      "animationNames": [
+        "animation",
+        "blink",
+        "celebrate",
+        "highlight-bowl",
+        "highlight-mohawk",
+        "highlight-unstyled",
+        "highlight-wolf",
+        "idle",
+        "lipsync/evfinished",
+        "lipsync/evgreeting1",
+        "lipsync/evgreeting2",
+        "lipsync/evgreeting3",
+        "lipsync/evgreeting4"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "luke-face-2026-08-29T22-01-00-465Z",
     "name": "luke-face",
     "updatedAt": "2026-08-29T22:01:08.690Z",
