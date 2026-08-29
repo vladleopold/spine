@@ -1,5 +1,221 @@
 [
   {
+    "id": "lyla-face-2026-08-29T21-56-39-409Z",
+    "name": "lyla-face",
+    "updatedAt": "2026-08-29T21:56:48.805Z",
+    "animation_asset": {
+      "id": "lyla-face-2026-08-29T21-56-39-409Z",
+      "name": "lyla-face",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "blink",
+          "eyes-close",
+          "eyes-open",
+          "mouthflap",
+          "lipsync/accessories",
+          "lipsync/allbrushed",
+          "lipsync/allcreamed",
+          "lipsync/allwet",
+          "lipsync/braidintro",
+          "lipsync/brushtimeout",
+          "lipsync/combdone",
+          "lipsync/combprompt",
+          "lipsync/conditioner-support",
+          "lipsync/creamhalf",
+          "lipsync/creamworked",
+          "lipsync/done",
+          "lipsync/done1",
+          "lipsync/draggeddot",
+          "lipsync/finished",
+          "lipsync/finished2",
+          "lipsync/finished3",
+          "lipsync/generalbraid",
+          "lipsync/generalbraid2",
+          "lipsync/generalbraid3",
+          "lipsync/hairtie",
+          "lipsync/movewater",
+          "lipsync/movewater2",
+          "lipsync/only1piece",
+          "lipsync/setup1",
+          "lipsync/setup2",
+          "lipsync/setup2twist",
+          "lipsync/steps",
+          "lipsync/steps-alt2",
+          "lipsync/stuavailable",
+          "lipsync/stuavailabletwists",
+          "lipsync/stufinished",
+          "lipsync/stumustbraid",
+          "lipsync/stuready",
+          "lipsync/stuready-twists",
+          "lipsync/tapsections",
+          "lipsync/tapsections-twists",
+          "lipsync/twistintro",
+          "lipsync/water-support"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-blink"
+        ],
+        "interaction_type": [
+          "open-close"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/lyla-face-2026-08-29T21-56-39-409Z",
+      "manifestPath": "library/lyla-face-2026-08-29T21-56-39-409Z/manifest.json",
+      "files": [
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.json",
+          "name": "lyla-face/lyla-face.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.atlas",
+          "name": "lyla-face/lyla-face.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.png",
+          "name": "lyla-face/lyla-face.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp",
+          "name": "blink-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/lyla-face-2026-08-29T21-56-39-409Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "lyla-face.json",
+      "atlas": "lyla-face.atlas",
+      "textures": [
+        "lyla-face.png"
+      ],
+      "animationCount": 43,
+      "animationNames": [
+        "blink",
+        "eyes-close",
+        "eyes-open",
+        "mouthflap",
+        "lipsync/accessories",
+        "lipsync/allbrushed",
+        "lipsync/allcreamed",
+        "lipsync/allwet",
+        "lipsync/braidintro",
+        "lipsync/brushtimeout",
+        "lipsync/combdone",
+        "lipsync/combprompt",
+        "lipsync/conditioner-support",
+        "lipsync/creamhalf",
+        "lipsync/creamworked",
+        "lipsync/done",
+        "lipsync/done1",
+        "lipsync/draggeddot",
+        "lipsync/finished",
+        "lipsync/finished2",
+        "lipsync/finished3",
+        "lipsync/generalbraid",
+        "lipsync/generalbraid2",
+        "lipsync/generalbraid3",
+        "lipsync/hairtie",
+        "lipsync/movewater",
+        "lipsync/movewater2",
+        "lipsync/only1piece",
+        "lipsync/setup1",
+        "lipsync/setup2",
+        "lipsync/setup2twist",
+        "lipsync/steps",
+        "lipsync/steps-alt2",
+        "lipsync/stuavailable",
+        "lipsync/stuavailabletwists",
+        "lipsync/stufinished",
+        "lipsync/stumustbraid",
+        "lipsync/stuready",
+        "lipsync/stuready-twists",
+        "lipsync/tapsections",
+        "lipsync/tapsections-twists",
+        "lipsync/twistintro",
+        "lipsync/water-support"
+      ],
+      "defaultAnimation": "blink",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
     "name": "stumobile-notebookanims",
     "updatedAt": "2026-08-29T21:56:07.216Z",
