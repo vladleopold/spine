@@ -1,5 +1,249 @@
 [
   {
+    "id": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+    "title": "stumobile-notebookanims",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:55:55.507Z",
+    "skeleton": "stuMobile-notebookAnims.json",
+    "atlas": "stuMobile-notebookAnims.atlas",
+    "textures": [
+      "stuMobile-notebookAnims.png"
+    ],
+    "animations": [
+      "notebook-balloon",
+      "notebook-bubble",
+      "notebook-plunger",
+      "notebook-propeller",
+      "notebook-soda",
+      "notebook-spring",
+      "notebook-stretch",
+      "notebook-umbrella"
+    ],
+    "defaultAnimation": "notebook-balloon",
+    "files": [
+      "stumobile-notebookanims/stuMobile-notebookAnims.json",
+      "stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+      "stumobile-notebookanims/stuMobile-notebookAnims.png",
+      "notebook-balloon-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp?v=2026-08-29T21-55-55.507Z",
+    "thumbnailPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp?v=2026-08-29T21-55-55.507Z",
+    "thumbnailPosterPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+      "title": "stumobile-notebookanims",
+      "uploadedAt": "2026-08-29T21:55:55.507Z",
+      "proofPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json?v=2026-08-29T21-55-55.507Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:ce18368e40c3542dab79beb7c5ff94976a01f58c90263360e890c6084bba6255",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "notebook-balloon-preview.webp",
+          "bytes": 734,
+          "sha256": "13c589aa78de2d31124e24c1bc9d51a4acede249920307ce78c81d2badda8d1e"
+        },
+        {
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+          "bytes": 2236,
+          "sha256": "ccef4e2b4c17be61cb5897694ec4b1255ea79c46ee9d17750fcf5a3b69327830"
+        },
+        {
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.json",
+          "bytes": 43304,
+          "sha256": "957d980b46b1fc90aa4ab0ec3be23c215080840b4f37577be8fd40b59f2564fc"
+        },
+        {
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.png",
+          "bytes": 923805,
+          "sha256": "e092c50b23ce99d88322becdec94d09e9ff40c2b87aea0a121ac8f9a5bc14cf6"
+        }
+      ],
+      "proofHash": "ce18368e40c3542dab79beb7c5ff94976a01f58c90263360e890c6084bba6255"
+    },
+    "sourceProofPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json?v=2026-08-29T21-55-55.507Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:56:03.296Z",
+      "entryId": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+      "title": "stumobile-notebookanims",
+      "uploadedAt": "2026-08-29T21:55:55.507Z",
+      "sourceProofHash": "ce18368e40c3542dab79beb7c5ff94976a01f58c90263360e890c6084bba6255",
+      "sourceProofPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json?v=2026-08-29T21-55-55.507Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+        "files": [
+          {
+            "name": "stumobile-notebookanims/stuMobile-notebookAnims.json",
+            "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.json",
+            "bytes": 43304,
+            "sha256": "957d980b46b1fc90aa4ab0ec3be23c215080840b4f37577be8fd40b59f2564fc",
+            "github": {
+              "contentSha": "a46e9dc96ffbce9ba52a4fa6b1adc720df993348",
+              "commitSha": "8ac58c6955e000e62ae793fb0daebf6448f70d4f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8ac58c6955e000e62ae793fb0daebf6448f70d4f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.json"
+            }
+          },
+          {
+            "name": "stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+            "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+            "bytes": 2236,
+            "sha256": "ccef4e2b4c17be61cb5897694ec4b1255ea79c46ee9d17750fcf5a3b69327830",
+            "github": {
+              "contentSha": "5513bb9c4c8687be00656966dec025fbb0917501",
+              "commitSha": "3e3dfd4d3140f39746caed88c424b4421f8c5e03",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/3e3dfd4d3140f39746caed88c424b4421f8c5e03",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.atlas"
+            }
+          },
+          {
+            "name": "stumobile-notebookanims/stuMobile-notebookAnims.png",
+            "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.png",
+            "bytes": 923805,
+            "sha256": "e092c50b23ce99d88322becdec94d09e9ff40c2b87aea0a121ac8f9a5bc14cf6",
+            "github": {
+              "contentSha": "0c873f5dfcf9177dcdff014cbea4945519f73c1c",
+              "commitSha": "67ca824427cffb0cb9a479adfa2df7ec76723508",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/67ca824427cffb0cb9a479adfa2df7ec76723508",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.png"
+            }
+          },
+          {
+            "name": "notebook-balloon-preview.webp",
+            "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp",
+            "bytes": 734,
+            "sha256": "13c589aa78de2d31124e24c1bc9d51a4acede249920307ce78c81d2badda8d1e",
+            "github": {
+              "contentSha": "b552bc57ed62c067fb3da8d57058dba0664445cc",
+              "commitSha": "f1b4fdefddd6257cfb7cb73ac88d354505e3b015",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f1b4fdefddd6257cfb7cb73ac88d354505e3b015",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+            "bytes": 2705,
+            "sha256": "2a1df0b12afcf50f3fa4f5464b222981e4911a7e6eb9d747967c402ff27eed29",
+            "github": {
+              "contentSha": "c5ae74c02f2b91f2d8a4f5fadabaccf1b4038697",
+              "commitSha": "db3de3d5310d0c57dcaa011cf52f74942778e9fe",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/db3de3d5310d0c57dcaa011cf52f74942778e9fe",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/blockchain-anchor.json",
+        "anchorCommitSha": "833134139376a944b2babce8cdd7a401f644f8bd",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/833134139376a944b2babce8cdd7a401f644f8bd"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "52e27c8d646cafa9e3921d8281a0db34cd269bca9da42d0b78fc336343e69f53",
+      "recommendedAnchorPayload": "sha256:52e27c8d646cafa9e3921d8281a0db34cd269bca9da42d0b78fc336343e69f53",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x52e27c8d646cafa9e3921d8281a0db34cd269bca9da42d0b78fc336343e69f53",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "stumobile-2026-08-29T21-55-32-730Z",
     "title": "stumobile",
     "publicOwnerId": "u_13nh6m7",
