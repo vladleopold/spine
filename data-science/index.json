@@ -1,5 +1,149 @@
 [
   {
+    "id": "sp-neload-ng-2026-08-29T00-38-31-988Z",
+    "name": "spıneloadıng",
+    "updatedAt": "2026-08-29T00:38:51.859Z",
+    "animation_asset": {
+      "id": "sp-neload-ng-2026-08-29T00-38-31-988Z",
+      "name": "spıneloadıng",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro",
+          "outro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "25",
+          "50",
+          "75",
+          "100",
+          "intro",
+          "outro"
+        ],
+        "state": [
+          "default-25"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/sp-neload-ng-2026-08-29T00-38-31-988Z",
+      "manifestPath": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/manifest.json",
+      "files": [
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/spıneloadıng/spıneloadıng.json",
+          "name": "spıneloadıng/spıneloadıng.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/spıneloadıng/spıneloadıng.atlas",
+          "name": "spıneloadıng/spıneloadıng.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/spıneloadıng/spıneloadıng.png",
+          "name": "spıneloadıng/spıneloadıng.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/25-preview.webp",
+          "name": "25-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sp-neload-ng-2026-08-29T00-38-31-988Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "spıneloadıng.json",
+      "atlas": "spıneloadıng.atlas",
+      "textures": [
+        "spıneloadıng.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "25",
+        "50",
+        "75",
+        "100",
+        "INTRO",
+        "OUTRO"
+      ],
+      "defaultAnimation": "25",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro",
+        "outro"
+      ],
+      "confidence": 0.65,
+      "needsHumanReview": false
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "sp-neload-ng-2026-08-29T00-27-19-746Z",
     "name": "spıneloadıng",
     "updatedAt": "2026-08-29T00:27:38.578Z",
