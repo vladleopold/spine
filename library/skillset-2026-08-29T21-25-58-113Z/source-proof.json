@@ -1,0 +1,79 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "skillset-2026-08-29T21-25-58-113Z",
+  "title": "skillset",
+  "uploadedAt": "2026-08-29T21:25:58.113Z",
+  "proofPath": "library/skillset-2026-08-29T21-25-58-113Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/skillset-2026-08-29T21-25-58-113Z/source-proof.json?v=2026-08-29T21-25-58.113Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_temrck_86jfg1",
+    "anonymousFingerprint": "temrck",
+    "browserFingerprintSha256": "e56d4f70b5097517004c83c751b93aeff8561a0e40926a30b64fd897a3cc1aeb",
+    "browserEnvironmentHashSha256": "9e9eefc84c01091ac24c01783a4a3a8954f4064919e82da836244eacc68d1cbd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr-TR",
+      "languages": [
+        "tr-TR",
+        "tr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/skillset-2026-08-29T21-25-58-113Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:6ff3240b94919c28809ab0938da221e79f834eaf61ad59756254a7c8affd0ad0",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "skill_panel_idle-preview.webp",
+      "bytes": 694,
+      "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+    },
+    {
+      "name": "skillset/skillset-upgrade.webp",
+      "bytes": 2129784,
+      "sha256": "e3c2780f2702f12753db74759be458ee84095354c6468519df9e3412a13b690f"
+    },
+    {
+      "name": "skillset/skillset.atlas",
+      "bytes": 2408,
+      "sha256": "8799f0cb4ec70ca686b4c53f9955e4ab1fbf5481fba53235f646191095881c96"
+    },
+    {
+      "name": "skillset/skillset.json",
+      "bytes": 15231,
+      "sha256": "e160b57b23b7f5f13b69e53d38114226d1ea6f0cf7184596039697a2d78f618d"
+    },
+    {
+      "name": "skillset/skillset.webp",
+      "bytes": 2166237,
+      "sha256": "c120c108e38ef43bced0015dcb6a97d909aea0d7dc9d68af2be344800549b6ec"
+    }
+  ],
+  "proofHash": "6ff3240b94919c28809ab0938da221e79f834eaf61ad59756254a7c8affd0ad0"
+}
