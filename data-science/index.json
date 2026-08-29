@@ -1,5 +1,151 @@
 [
   {
+    "id": "lyla-2026-08-29T21-51-09-224Z",
+    "name": "lyla",
+    "updatedAt": "2026-08-29T21:51:18.080Z",
+    "animation_asset": {
+      "id": "lyla-2026-08-29T21-51-09-224Z",
+      "name": "lyla",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "happy_hops",
+          "idea_attention",
+          "idle_arms_down",
+          "idle_arms_folded",
+          "idle_notebook",
+          "wave",
+          "writing",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle_arms_down"
+        ],
+        "direction": [
+          "down"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/lyla-2026-08-29T21-51-09-224Z",
+      "manifestPath": "library/lyla-2026-08-29T21-51-09-224Z/manifest.json",
+      "files": [
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/lyla/Lyla.json",
+          "name": "lyla/Lyla.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/lyla/Lyla.atlas",
+          "name": "lyla/Lyla.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/lyla/Lyla.png",
+          "name": "lyla/Lyla.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/idle_arms_down-preview.webp",
+          "name": "idle_arms_down-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/lyla-2026-08-29T21-51-09-224Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Lyla.json",
+      "atlas": "Lyla.atlas",
+      "textures": [
+        "Lyla.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "happy_hops",
+        "idea_attention",
+        "idle_arms_down",
+        "idle_arms_folded",
+        "idle_notebook",
+        "wave",
+        "writing"
+      ],
+      "defaultAnimation": "idle_arms_down",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "liana-gameplay-2026-08-29T21-50-45-751Z",
     "name": "liana-gameplay",
     "updatedAt": "2026-08-29T21:50:54.452Z",
