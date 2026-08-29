@@ -1,5 +1,254 @@
 [
   {
+    "id": "luke-body-2026-08-29T22-00-07-501Z",
+    "title": "luke-body",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T22:00:07.501Z",
+    "skeleton": "luke-body.json",
+    "atlas": "luke-body.atlas",
+    "textures": [
+      "luke-body.png"
+    ],
+    "animations": [
+      "animation",
+      "blink",
+      "celebrate",
+      "highlight-braids",
+      "highlight-cornrows",
+      "highlight-taper",
+      "highlight-unstyled",
+      "idle",
+      "lipsync/lukeendscene",
+      "lipsync/lukegreeting1",
+      "lipsync/lukegreeting2",
+      "lipsync/lukegreeting3",
+      "lipsync/lukegreeting4"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "luke-body/luke-body.json",
+      "luke-body/luke-body.atlas",
+      "luke-body/luke-body.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/luke-body-2026-08-29T22-00-07-501Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp?v=2026-08-29T22-00-07.501Z",
+    "thumbnailPath": "library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp?v=2026-08-29T22-00-07.501Z",
+    "thumbnailPosterPath": "library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "luke-body-2026-08-29T22-00-07-501Z",
+      "title": "luke-body",
+      "uploadedAt": "2026-08-29T22:00:07.501Z",
+      "proofPath": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json?v=2026-08-29T22-00-07.501Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/luke-body-2026-08-29T22-00-07-501Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:166b0d091703f1db9fde695867c667cbaf4c82b1a007130bd95cc49a4b0c7357",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 726,
+          "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3"
+        },
+        {
+          "name": "luke-body/luke-body.atlas",
+          "bytes": 4500,
+          "sha256": "2ca5d6567ee917963235180150358c5a8a506f466b405e3e3fdcf1e1d7cfbc36"
+        },
+        {
+          "name": "luke-body/luke-body.json",
+          "bytes": 30487,
+          "sha256": "60badac640f62b98f14a493143ffad7d7fa6df3c13483d788dc3542a0edd5f40"
+        },
+        {
+          "name": "luke-body/luke-body.png",
+          "bytes": 474085,
+          "sha256": "841e9a4580d6839ba86b0b7dc4b1d5576698878b95d988c15006874015623d05"
+        }
+      ],
+      "proofHash": "166b0d091703f1db9fde695867c667cbaf4c82b1a007130bd95cc49a4b0c7357"
+    },
+    "sourceProofPath": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json?v=2026-08-29T22-00-07.501Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T22:00:12.703Z",
+      "entryId": "luke-body-2026-08-29T22-00-07-501Z",
+      "title": "luke-body",
+      "uploadedAt": "2026-08-29T22:00:07.501Z",
+      "sourceProofHash": "166b0d091703f1db9fde695867c667cbaf4c82b1a007130bd95cc49a4b0c7357",
+      "sourceProofPath": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json?v=2026-08-29T22-00-07.501Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/luke-body-2026-08-29T22-00-07-501Z",
+        "files": [
+          {
+            "name": "luke-body/luke-body.json",
+            "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.json",
+            "bytes": 30487,
+            "sha256": "60badac640f62b98f14a493143ffad7d7fa6df3c13483d788dc3542a0edd5f40",
+            "github": {
+              "contentSha": "6707d1f0dd4ada9cc796ef783fd68c9dd5af27cb",
+              "commitSha": "fd2d6dca8453990fee749fefe6ddca4048766d45",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fd2d6dca8453990fee749fefe6ddca4048766d45",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.json"
+            }
+          },
+          {
+            "name": "luke-body/luke-body.atlas",
+            "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.atlas",
+            "bytes": 4500,
+            "sha256": "2ca5d6567ee917963235180150358c5a8a506f466b405e3e3fdcf1e1d7cfbc36",
+            "github": {
+              "contentSha": "87670900e195894f56cf67b3b430914800850291",
+              "commitSha": "a091ffdb5885e304320647e98899e23a0783b811",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a091ffdb5885e304320647e98899e23a0783b811",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.atlas"
+            }
+          },
+          {
+            "name": "luke-body/luke-body.png",
+            "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.png",
+            "bytes": 474085,
+            "sha256": "841e9a4580d6839ba86b0b7dc4b1d5576698878b95d988c15006874015623d05",
+            "github": {
+              "contentSha": "fae2795440637deb13b50872e78d54e05ad3dbcd",
+              "commitSha": "2c34b3260dae13dd2a480968448c5019b85f1bc6",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/2c34b3260dae13dd2a480968448c5019b85f1bc6",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp",
+            "bytes": 726,
+            "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3",
+            "github": {
+              "contentSha": "7eff509c2d4b301230c947a31b42d4bd57d88edb",
+              "commitSha": "fb23f7311bb7f894ac0080e20d65a5cb94ad9661",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fb23f7311bb7f894ac0080e20d65a5cb94ad9661",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+            "bytes": 2539,
+            "sha256": "d5fdea051353732e75f682fe7deab39a3a25a22292b25775a27b6bc724cb22ba",
+            "github": {
+              "contentSha": "4ee24fee4f57b3f403dff625e53879ecac3cedd0",
+              "commitSha": "4a600132db228fa0601fc604baf474e4638a21a7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4a600132db228fa0601fc604baf474e4638a21a7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/luke-body-2026-08-29T22-00-07-501Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/blockchain-anchor.json",
+        "anchorCommitSha": "487e9c49a4e60e5842dba9f87a37487ec059f60a",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/487e9c49a4e60e5842dba9f87a37487ec059f60a"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "141d6f0846c2cb37f5fcc21cf7dfd84d2169746945a92ff249154ea5c8d2eb4f",
+      "recommendedAnchorPayload": "sha256:141d6f0846c2cb37f5fcc21cf7dfd84d2169746945a92ff249154ea5c8d2eb4f",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x141d6f0846c2cb37f5fcc21cf7dfd84d2169746945a92ff249154ea5c8d2eb4f",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/luke-body-2026-08-29T22-00-07-501Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "stu-jump-2026-08-29T21-58-33-344Z",
     "title": "stu-jump",
     "publicOwnerId": "u_13nh6m7",
