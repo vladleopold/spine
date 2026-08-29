@@ -1,5 +1,159 @@
 [
   {
+    "id": "luke-body-2026-08-29T22-00-07-501Z",
+    "name": "luke-body",
+    "updatedAt": "2026-08-29T22:00:16.816Z",
+    "animation_asset": {
+      "id": "luke-body-2026-08-29T22-00-07-501Z",
+      "name": "luke-body",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation",
+          "blink",
+          "celebrate",
+          "highlight-braids",
+          "highlight-cornrows",
+          "highlight-taper",
+          "highlight-unstyled",
+          "idle",
+          "lipsync/lukeendscene",
+          "lipsync/lukegreeting1",
+          "lipsync/lukegreeting2",
+          "lipsync/lukegreeting3",
+          "lipsync/lukegreeting4"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/luke-body-2026-08-29T22-00-07-501Z",
+      "manifestPath": "library/luke-body-2026-08-29T22-00-07-501Z/manifest.json",
+      "files": [
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.json",
+          "name": "luke-body/luke-body.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.atlas",
+          "name": "luke-body/luke-body.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/luke-body/luke-body.png",
+          "name": "luke-body/luke-body.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/luke-body-2026-08-29T22-00-07-501Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "luke-body.json",
+      "atlas": "luke-body.atlas",
+      "textures": [
+        "luke-body.png"
+      ],
+      "animationCount": 13,
+      "animationNames": [
+        "animation",
+        "blink",
+        "celebrate",
+        "highlight-braids",
+        "highlight-cornrows",
+        "highlight-taper",
+        "highlight-unstyled",
+        "idle",
+        "lipsync/lukeendscene",
+        "lipsync/lukegreeting1",
+        "lipsync/lukegreeting2",
+        "lipsync/lukegreeting3",
+        "lipsync/lukegreeting4"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stu-jump-2026-08-29T21-58-33-344Z",
     "name": "stu-jump",
     "updatedAt": "2026-08-29T21:58:44.135Z",
