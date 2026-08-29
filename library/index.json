@@ -1,5 +1,246 @@
 [
   {
+    "id": "liana-gameplay-2026-08-29T21-50-45-751Z",
+    "title": "liana-gameplay",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:50:45.751Z",
+    "skeleton": "liana-gameplay.json",
+    "atlas": "liana-gameplay.atlas",
+    "textures": [
+      "liana-gameplay.png"
+    ],
+    "animations": [
+      "blink",
+      "idle",
+      "launchBall",
+      "run-backward",
+      "run-forward"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "liana-gameplay/liana-gameplay.json",
+      "liana-gameplay/liana-gameplay.atlas",
+      "liana-gameplay/liana-gameplay.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp?v=2026-08-29T21-50-45.751Z",
+    "thumbnailPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp?v=2026-08-29T21-50-45.751Z",
+    "thumbnailPosterPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "liana-gameplay-2026-08-29T21-50-45-751Z",
+      "title": "liana-gameplay",
+      "uploadedAt": "2026-08-29T21:50:45.751Z",
+      "proofPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json?v=2026-08-29T21-50-45.751Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:1c5222d4d63061ed9f1c4af529a323dc2094be0aa3e9ec4313a7c9e44218b9aa",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 702,
+          "sha256": "07a613128df1dba85d9e8ca19d28bd82229926fd9cfb854674b62e21927d2daa"
+        },
+        {
+          "name": "liana-gameplay/liana-gameplay.atlas",
+          "bytes": 2096,
+          "sha256": "a713d53356a592d3be266cfd5693707523c9995b6521375c35e6e4fae886dbcb"
+        },
+        {
+          "name": "liana-gameplay/liana-gameplay.json",
+          "bytes": 32902,
+          "sha256": "05b7abfed390637a7352bfaeb31822ac87d6eff6b545939e5dfcb928adb108cc"
+        },
+        {
+          "name": "liana-gameplay/liana-gameplay.png",
+          "bytes": 69389,
+          "sha256": "ee2fd5ec0f2894d9129b532b4d1470b34cc1c6459323db66f87c3f1c87ee88b0"
+        }
+      ],
+      "proofHash": "1c5222d4d63061ed9f1c4af529a323dc2094be0aa3e9ec4313a7c9e44218b9aa"
+    },
+    "sourceProofPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json?v=2026-08-29T21-50-45.751Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:50:50.844Z",
+      "entryId": "liana-gameplay-2026-08-29T21-50-45-751Z",
+      "title": "liana-gameplay",
+      "uploadedAt": "2026-08-29T21:50:45.751Z",
+      "sourceProofHash": "1c5222d4d63061ed9f1c4af529a323dc2094be0aa3e9ec4313a7c9e44218b9aa",
+      "sourceProofPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json?v=2026-08-29T21-50-45.751Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z",
+        "files": [
+          {
+            "name": "liana-gameplay/liana-gameplay.json",
+            "path": "library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.json",
+            "bytes": 32902,
+            "sha256": "05b7abfed390637a7352bfaeb31822ac87d6eff6b545939e5dfcb928adb108cc",
+            "github": {
+              "contentSha": "2bb59885dfa902d9459c6a40b4120e39d1f99781",
+              "commitSha": "0d77af468f620ccb901542b2a361ad9d11bcf94a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0d77af468f620ccb901542b2a361ad9d11bcf94a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.json"
+            }
+          },
+          {
+            "name": "liana-gameplay/liana-gameplay.atlas",
+            "path": "library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.atlas",
+            "bytes": 2096,
+            "sha256": "a713d53356a592d3be266cfd5693707523c9995b6521375c35e6e4fae886dbcb",
+            "github": {
+              "contentSha": "d7c1e6f2b2bca3fe6eb4dadcc7ffe1e18fb91b61",
+              "commitSha": "fbe96bb56c82480a2805d32f2bd7a031443adc6d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fbe96bb56c82480a2805d32f2bd7a031443adc6d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.atlas"
+            }
+          },
+          {
+            "name": "liana-gameplay/liana-gameplay.png",
+            "path": "library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.png",
+            "bytes": 69389,
+            "sha256": "ee2fd5ec0f2894d9129b532b4d1470b34cc1c6459323db66f87c3f1c87ee88b0",
+            "github": {
+              "contentSha": "032dc3fa1de97e15f83cfd7d9ddaba71642abc51",
+              "commitSha": "360711999a77d7f13818a6e5b3237fbfc5ecf6cd",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/360711999a77d7f13818a6e5b3237fbfc5ecf6cd",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/liana-gameplay-2026-08-29T21-50-45-751Z/liana-gameplay/liana-gameplay.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp",
+            "bytes": 702,
+            "sha256": "07a613128df1dba85d9e8ca19d28bd82229926fd9cfb854674b62e21927d2daa",
+            "github": {
+              "contentSha": "de4c23983685f74956e7d838df5fcc23d056e21a",
+              "commitSha": "002605f97b84b81bc74c117edf179e578f927f44",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/002605f97b84b81bc74c117edf179e578f927f44",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/liana-gameplay-2026-08-29T21-50-45-751Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json",
+            "bytes": 2593,
+            "sha256": "f536a701342e98ee59c972739f621efcc15f7d02c21ff417ea5363f35b5d0e88",
+            "github": {
+              "contentSha": "953af8541bb62f7eba9ab14b55b599a25adc6c1e",
+              "commitSha": "b97048e90c791712083f274714de84d2e8683d67",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b97048e90c791712083f274714de84d2e8683d67",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/liana-gameplay-2026-08-29T21-50-45-751Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/blockchain-anchor.json",
+        "anchorCommitSha": "cd9221c983d236aae502d58cf8f31f88901e0228",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/cd9221c983d236aae502d58cf8f31f88901e0228"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "f2aedaf00545fe9e7649d8ea9b0389791738e139c36f71b5d9af26a0662ccb8d",
+      "recommendedAnchorPayload": "sha256:f2aedaf00545fe9e7649d8ea9b0389791738e139c36f71b5d9af26a0662ccb8d",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xf2aedaf00545fe9e7649d8ea9b0389791738e139c36f71b5d9af26a0662ccb8d",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/liana-gameplay-2026-08-29T21-50-45-751Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/liana-gameplay-2026-08-29T21-50-45-751Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "louisa-gameplay-2026-08-29T21-50-23-515Z",
     "title": "louisa-gameplay",
     "publicOwnerId": "u_13nh6m7",
