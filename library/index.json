@@ -1,5 +1,284 @@
 [
   {
+    "id": "lyla-face-2026-08-29T21-56-39-409Z",
+    "title": "lyla-face",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:56:39.409Z",
+    "skeleton": "lyla-face.json",
+    "atlas": "lyla-face.atlas",
+    "textures": [
+      "lyla-face.png"
+    ],
+    "animations": [
+      "blink",
+      "eyes-close",
+      "eyes-open",
+      "mouthflap",
+      "lipsync/accessories",
+      "lipsync/allbrushed",
+      "lipsync/allcreamed",
+      "lipsync/allwet",
+      "lipsync/braidintro",
+      "lipsync/brushtimeout",
+      "lipsync/combdone",
+      "lipsync/combprompt",
+      "lipsync/conditioner-support",
+      "lipsync/creamhalf",
+      "lipsync/creamworked",
+      "lipsync/done",
+      "lipsync/done1",
+      "lipsync/draggeddot",
+      "lipsync/finished",
+      "lipsync/finished2",
+      "lipsync/finished3",
+      "lipsync/generalbraid",
+      "lipsync/generalbraid2",
+      "lipsync/generalbraid3",
+      "lipsync/hairtie",
+      "lipsync/movewater",
+      "lipsync/movewater2",
+      "lipsync/only1piece",
+      "lipsync/setup1",
+      "lipsync/setup2",
+      "lipsync/setup2twist",
+      "lipsync/steps",
+      "lipsync/steps-alt2",
+      "lipsync/stuavailable",
+      "lipsync/stuavailabletwists",
+      "lipsync/stufinished",
+      "lipsync/stumustbraid",
+      "lipsync/stuready",
+      "lipsync/stuready-twists",
+      "lipsync/tapsections",
+      "lipsync/tapsections-twists",
+      "lipsync/twistintro",
+      "lipsync/water-support"
+    ],
+    "defaultAnimation": "blink",
+    "files": [
+      "lyla-face/lyla-face.json",
+      "lyla-face/lyla-face.atlas",
+      "lyla-face/lyla-face.png",
+      "blink-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/lyla-face-2026-08-29T21-56-39-409Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp?v=2026-08-29T21-56-39.409Z",
+    "thumbnailPath": "library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp?v=2026-08-29T21-56-39.409Z",
+    "thumbnailPosterPath": "library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "lyla-face-2026-08-29T21-56-39-409Z",
+      "title": "lyla-face",
+      "uploadedAt": "2026-08-29T21:56:39.409Z",
+      "proofPath": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json?v=2026-08-29T21-56-39.409Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/lyla-face-2026-08-29T21-56-39-409Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:6cfbaa8281bfbfa3f6edcfcd455668022360322a4412b947182030fbc19b8fa3",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "blink-preview.webp",
+          "bytes": 714,
+          "sha256": "ee757da1c926956c24fd82b1e1e029f943e2c5e299ba8fe5b4b19df9f52b1e48"
+        },
+        {
+          "name": "lyla-face/lyla-face.atlas",
+          "bytes": 1157,
+          "sha256": "7be477a3839b4eb5b40c3a180792476baeaa4f514e4bd13a47bd9ea914d1f73a"
+        },
+        {
+          "name": "lyla-face/lyla-face.json",
+          "bytes": 75416,
+          "sha256": "976c9916c111e899a5064bdab0b8939e63d6e47a933cc635c0086f3a5fa28def"
+        },
+        {
+          "name": "lyla-face/lyla-face.png",
+          "bytes": 182043,
+          "sha256": "850a833c7a64aa65c0be50fb05c2a35f22b5f55c62f5277aa294bc1f8d047a11"
+        }
+      ],
+      "proofHash": "6cfbaa8281bfbfa3f6edcfcd455668022360322a4412b947182030fbc19b8fa3"
+    },
+    "sourceProofPath": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json?v=2026-08-29T21-56-39.409Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:56:45.336Z",
+      "entryId": "lyla-face-2026-08-29T21-56-39-409Z",
+      "title": "lyla-face",
+      "uploadedAt": "2026-08-29T21:56:39.409Z",
+      "sourceProofHash": "6cfbaa8281bfbfa3f6edcfcd455668022360322a4412b947182030fbc19b8fa3",
+      "sourceProofPath": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json?v=2026-08-29T21-56-39.409Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/lyla-face-2026-08-29T21-56-39-409Z",
+        "files": [
+          {
+            "name": "lyla-face/lyla-face.json",
+            "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.json",
+            "bytes": 75416,
+            "sha256": "976c9916c111e899a5064bdab0b8939e63d6e47a933cc635c0086f3a5fa28def",
+            "github": {
+              "contentSha": "407cd199c9d4aaadeb705252e6e38f79d041d5f6",
+              "commitSha": "4a3abf81f853e250eafe8963393394ed1c67d405",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/4a3abf81f853e250eafe8963393394ed1c67d405",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.json"
+            }
+          },
+          {
+            "name": "lyla-face/lyla-face.atlas",
+            "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.atlas",
+            "bytes": 1157,
+            "sha256": "7be477a3839b4eb5b40c3a180792476baeaa4f514e4bd13a47bd9ea914d1f73a",
+            "github": {
+              "contentSha": "8e6c1346a44ecdf5d09935c38f15dbbb4033c823",
+              "commitSha": "d2900a62a7577c0b725d20e25199f6d9f954e436",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d2900a62a7577c0b725d20e25199f6d9f954e436",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.atlas"
+            }
+          },
+          {
+            "name": "lyla-face/lyla-face.png",
+            "path": "library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.png",
+            "bytes": 182043,
+            "sha256": "850a833c7a64aa65c0be50fb05c2a35f22b5f55c62f5277aa294bc1f8d047a11",
+            "github": {
+              "contentSha": "fed58b26005f6e889849a035caaaad24218a0b5c",
+              "commitSha": "9f8e31bd8f487f0d4efccce8f7072593d45522a7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/9f8e31bd8f487f0d4efccce8f7072593d45522a7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-face-2026-08-29T21-56-39-409Z/lyla-face/lyla-face.png"
+            }
+          },
+          {
+            "name": "blink-preview.webp",
+            "path": "library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp",
+            "bytes": 714,
+            "sha256": "ee757da1c926956c24fd82b1e1e029f943e2c5e299ba8fe5b4b19df9f52b1e48",
+            "github": {
+              "contentSha": "2028fecf9ac208bc7c462bbeb2d16b1277a01133",
+              "commitSha": "ee083927f98e75f82e5bbf90bdc3fa4e8633b44b",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ee083927f98e75f82e5bbf90bdc3fa4e8633b44b",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-face-2026-08-29T21-56-39-409Z/blink-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+            "bytes": 2540,
+            "sha256": "64b8c96ad7c2d12368198184fed85c9a1748c03f587aed6ca77c2e649c0436f0",
+            "github": {
+              "contentSha": "925a8db442de9fb62390677b659fa10db0fe3bc0",
+              "commitSha": "7320590fb43ae927816417657f30449d28b65479",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7320590fb43ae927816417657f30449d28b65479",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/lyla-face-2026-08-29T21-56-39-409Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/blockchain-anchor.json",
+        "anchorCommitSha": "b008de222285558226cb160e7e3cf8981a082076",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/b008de222285558226cb160e7e3cf8981a082076"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "2f941852a95016acdf8e2036f1146f97c39764dfb396cc63b68d168d028394d9",
+      "recommendedAnchorPayload": "sha256:2f941852a95016acdf8e2036f1146f97c39764dfb396cc63b68d168d028394d9",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x2f941852a95016acdf8e2036f1146f97c39764dfb396cc63b68d168d028394d9",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/lyla-face-2026-08-29T21-56-39-409Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
     "title": "stumobile-notebookanims",
     "publicOwnerId": "u_13nh6m7",
