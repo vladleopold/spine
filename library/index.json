@@ -1,5 +1,243 @@
 [
   {
+    "id": "stu-jump-2026-08-29T22-03-29-992Z",
+    "title": "stu-jump",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T22:03:29.992Z",
+    "skeleton": "stu-jump.json",
+    "atlas": "stu-jump.atlas",
+    "textures": [
+      "stu-jump.png"
+    ],
+    "animations": [
+      "jump-v1",
+      "jump-v2"
+    ],
+    "defaultAnimation": "jump-v1",
+    "files": [
+      "stu-jump/stu-jump.json",
+      "stu-jump/stu-jump.atlas",
+      "stu-jump/stu-jump.png",
+      "jump-v1-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/stu-jump-2026-08-29T22-03-29-992Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp?v=2026-08-29T22-03-29.992Z",
+    "thumbnailPath": "library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp?v=2026-08-29T22-03-29.992Z",
+    "thumbnailPosterPath": "library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "stu-jump-2026-08-29T22-03-29-992Z",
+      "title": "stu-jump",
+      "uploadedAt": "2026-08-29T22:03:29.992Z",
+      "proofPath": "library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json?v=2026-08-29T22-03-29.992Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/stu-jump-2026-08-29T22-03-29-992Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:ed639b7c4516a6246962aa4f2972d085cb71635582266ce298c546ada165c7a4",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "jump-v1-preview.webp",
+          "bytes": 756,
+          "sha256": "568af9955c1ed1d537220cd877ad1a3914bc3e1309ebd451e0541cb5bd00524e"
+        },
+        {
+          "name": "stu-jump/stu-jump.atlas",
+          "bytes": 1085,
+          "sha256": "3c86013686a5a8b1a47b00e2e7e7c1183a9601249dcfa65d6c9d89f6e090306a"
+        },
+        {
+          "name": "stu-jump/stu-jump.json",
+          "bytes": 19851,
+          "sha256": "7e7f68c855893213457607bf5fcb147812895566e3323ca125674cddeb913559"
+        },
+        {
+          "name": "stu-jump/stu-jump.png",
+          "bytes": 1847679,
+          "sha256": "6674657fefe752aa667965f0aac6a1b7b0933f2b4c4ca63d4520ad6f08bbabf3"
+        }
+      ],
+      "proofHash": "ed639b7c4516a6246962aa4f2972d085cb71635582266ce298c546ada165c7a4"
+    },
+    "sourceProofPath": "library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json?v=2026-08-29T22-03-29.992Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T22:03:35.967Z",
+      "entryId": "stu-jump-2026-08-29T22-03-29-992Z",
+      "title": "stu-jump",
+      "uploadedAt": "2026-08-29T22:03:29.992Z",
+      "sourceProofHash": "ed639b7c4516a6246962aa4f2972d085cb71635582266ce298c546ada165c7a4",
+      "sourceProofPath": "library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json?v=2026-08-29T22-03-29.992Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/stu-jump-2026-08-29T22-03-29-992Z",
+        "files": [
+          {
+            "name": "stu-jump/stu-jump.json",
+            "path": "library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.json",
+            "bytes": 19851,
+            "sha256": "7e7f68c855893213457607bf5fcb147812895566e3323ca125674cddeb913559",
+            "github": {
+              "contentSha": "87306507ded4c9f11a5a437bfb78b1d5ec2d3350",
+              "commitSha": "a7d6942e454db89a19361f7f6394435daebc4f66",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a7d6942e454db89a19361f7f6394435daebc4f66",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.json"
+            }
+          },
+          {
+            "name": "stu-jump/stu-jump.atlas",
+            "path": "library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.atlas",
+            "bytes": 1085,
+            "sha256": "3c86013686a5a8b1a47b00e2e7e7c1183a9601249dcfa65d6c9d89f6e090306a",
+            "github": {
+              "contentSha": "060b1da2fd3d774dbe42a6010d895e81344df543",
+              "commitSha": "af160ecf2c90ec7d9abcc18b42a9970aa0479480",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/af160ecf2c90ec7d9abcc18b42a9970aa0479480",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.atlas"
+            }
+          },
+          {
+            "name": "stu-jump/stu-jump.png",
+            "path": "library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.png",
+            "bytes": 1847679,
+            "sha256": "6674657fefe752aa667965f0aac6a1b7b0933f2b4c4ca63d4520ad6f08bbabf3",
+            "github": {
+              "contentSha": "64961869a195022e5dcd59b93cb79aea19a7c32a",
+              "commitSha": "c39e92943440c63d0c0157985184e8dc8627d330",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c39e92943440c63d0c0157985184e8dc8627d330",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-jump-2026-08-29T22-03-29-992Z/stu-jump/stu-jump.png"
+            }
+          },
+          {
+            "name": "jump-v1-preview.webp",
+            "path": "library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp",
+            "bytes": 756,
+            "sha256": "568af9955c1ed1d537220cd877ad1a3914bc3e1309ebd451e0541cb5bd00524e",
+            "github": {
+              "contentSha": "fcd4b95fd46a965988de4f21efb97551181ac873",
+              "commitSha": "ca6a453d1b65dee9f6341acfd3303fa8b96f3a13",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ca6a453d1b65dee9f6341acfd3303fa8b96f3a13",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-jump-2026-08-29T22-03-29-992Z/jump-v1-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json",
+            "bytes": 2532,
+            "sha256": "cfac49e903aa5c86b8a0f31ca70d639f59d37049af5024ae884340e18121586d",
+            "github": {
+              "contentSha": "625459179c4207e25d3e8bc92801089472e172db",
+              "commitSha": "e95a4fa2af9d386e4d3d7a153034edeaeb2140e9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e95a4fa2af9d386e4d3d7a153034edeaeb2140e9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/stu-jump-2026-08-29T22-03-29-992Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/blockchain-anchor.json",
+        "anchorCommitSha": "42256225c36df3028cf226437b385b5bcc8fa87a",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/42256225c36df3028cf226437b385b5bcc8fa87a"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "a31c873d878f6b1dc773049b7e70cf4c3d337c66a90feec7327f193c07e0aebf",
+      "recommendedAnchorPayload": "sha256:a31c873d878f6b1dc773049b7e70cf4c3d337c66a90feec7327f193c07e0aebf",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xa31c873d878f6b1dc773049b7e70cf4c3d337c66a90feec7327f193c07e0aebf",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/stu-jump-2026-08-29T22-03-29-992Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "lyla-2026-08-29T22-02-59-927Z",
     "title": "lyla",
     "publicOwnerId": "u_13nh6m7",
