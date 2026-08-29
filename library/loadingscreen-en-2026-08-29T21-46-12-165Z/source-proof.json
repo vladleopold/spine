@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "loadingscreen-en-2026-08-29T21-46-12-165Z",
+  "title": "loadingscreen-en",
+  "uploadedAt": "2026-08-29T21:46:12.165Z",
+  "proofPath": "library/loadingscreen-en-2026-08-29T21-46-12-165Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-en-2026-08-29T21-46-12-165Z/source-proof.json?v=2026-08-29T21-46-12.165Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/loadingscreen-en-2026-08-29T21-46-12-165Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ed672295700ff950b073eb215865435814baacf028a102a151b2384ed741385a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "loading-preview.webp",
+      "bytes": 728,
+      "sha256": "c64a865dcc0acc08ba26e5bbdcb29adf3478c7b931478be3516bbb923097e34f"
+    },
+    {
+      "name": "loadingscreen-en/loadingScreen-en.atlas",
+      "bytes": 663,
+      "sha256": "415d8ced7846a36cfc1b5d296b88f8d8491ed83f2f8abcee732e2e47caabc717"
+    },
+    {
+      "name": "loadingscreen-en/loadingScreen-en.json",
+      "bytes": 25986,
+      "sha256": "ae8148a7e7b74cec7b10a25b03fef4834003ceebb56d12f4f46ac904de4eb831"
+    },
+    {
+      "name": "loadingscreen-en/loadingScreen-en.png",
+      "bytes": 146442,
+      "sha256": "43d67be409e5746276dba0fe0a688a70f104c79a904f608472328659e73c35be"
+    }
+  ],
+  "proofHash": "ed672295700ff950b073eb215865435814baacf028a102a151b2384ed741385a"
+}
