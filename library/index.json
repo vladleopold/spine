@@ -1,5 +1,262 @@
 [
   {
+    "id": "stumobile-2026-08-29T21-55-32-730Z",
+    "title": "stumobile",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:55:32.730Z",
+    "skeleton": "stuMobile.json",
+    "atlas": "stuMobile.atlas",
+    "textures": [
+      "stuMobile.png"
+    ],
+    "animations": [
+      "balloon-end",
+      "balloon-hold",
+      "balloon-start",
+      "bubble-end",
+      "bubble-hold",
+      "bubble-start",
+      "cheer",
+      "hitReact",
+      "idle",
+      "spring",
+      "stretch",
+      "stretch-end",
+      "stretch-hold",
+      "stretch-spin-test-drawOrderChange",
+      "stretch-spin-test-noDrawOrderChange",
+      "stretch-start",
+      "archive/balloon-testSeq",
+      "archive/bubble-testSeq",
+      "archive/bubble-testSeq-noBubble",
+      "archive/bubble-testSeq-noCar",
+      "archive/stretch-testSeq"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "stumobile/stuMobile.json",
+      "stumobile/stuMobile.atlas",
+      "stumobile/stuMobile.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/stumobile-2026-08-29T21-55-32-730Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp?v=2026-08-29T21-55-32.730Z",
+    "thumbnailPath": "library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp?v=2026-08-29T21-55-32.730Z",
+    "thumbnailPosterPath": "library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "stumobile-2026-08-29T21-55-32-730Z",
+      "title": "stumobile",
+      "uploadedAt": "2026-08-29T21:55:32.730Z",
+      "proofPath": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json?v=2026-08-29T21-55-32.730Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/stumobile-2026-08-29T21-55-32-730Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:eed1c6db9f95226ec911a702ed9b3daf6dcd4426b88451faeeba075dc0aac2a9",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 732,
+          "sha256": "1ba1d63d9297f969c5e7a70131774a0d12061702e5f246d2c0d48fbccd21d05a"
+        },
+        {
+          "name": "stumobile/stuMobile.atlas",
+          "bytes": 956,
+          "sha256": "26e7f88315273623dfd28019c74367006471b705e8fe7ba729d28d852103afd8"
+        },
+        {
+          "name": "stumobile/stuMobile.json",
+          "bytes": 60446,
+          "sha256": "03d73a0cd8bdf0f0e859d8f21134b5eaea45819036a0be65dea85e3ab1bf85de"
+        },
+        {
+          "name": "stumobile/stuMobile.png",
+          "bytes": 767299,
+          "sha256": "382a25045bbdeb4253993808b2d7d1ff11027ce6b3f21e247ce93de4b721aa9f"
+        }
+      ],
+      "proofHash": "eed1c6db9f95226ec911a702ed9b3daf6dcd4426b88451faeeba075dc0aac2a9"
+    },
+    "sourceProofPath": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json?v=2026-08-29T21-55-32.730Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:55:38.225Z",
+      "entryId": "stumobile-2026-08-29T21-55-32-730Z",
+      "title": "stumobile",
+      "uploadedAt": "2026-08-29T21:55:32.730Z",
+      "sourceProofHash": "eed1c6db9f95226ec911a702ed9b3daf6dcd4426b88451faeeba075dc0aac2a9",
+      "sourceProofPath": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json?v=2026-08-29T21-55-32.730Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/stumobile-2026-08-29T21-55-32-730Z",
+        "files": [
+          {
+            "name": "stumobile/stuMobile.json",
+            "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.json",
+            "bytes": 60446,
+            "sha256": "03d73a0cd8bdf0f0e859d8f21134b5eaea45819036a0be65dea85e3ab1bf85de",
+            "github": {
+              "contentSha": "a64b50269c2bebf66a576f35a42dc24c4bba236c",
+              "commitSha": "232dd1d92ef114ff07a7054da897b910c5c3844c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/232dd1d92ef114ff07a7054da897b910c5c3844c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.json"
+            }
+          },
+          {
+            "name": "stumobile/stuMobile.atlas",
+            "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.atlas",
+            "bytes": 956,
+            "sha256": "26e7f88315273623dfd28019c74367006471b705e8fe7ba729d28d852103afd8",
+            "github": {
+              "contentSha": "68f8f74a581e00eca2c0c2668bede3b8b7a12073",
+              "commitSha": "23e53b4752354578916ade5819ea41b36653bc16",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/23e53b4752354578916ade5819ea41b36653bc16",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.atlas"
+            }
+          },
+          {
+            "name": "stumobile/stuMobile.png",
+            "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.png",
+            "bytes": 767299,
+            "sha256": "382a25045bbdeb4253993808b2d7d1ff11027ce6b3f21e247ce93de4b721aa9f",
+            "github": {
+              "contentSha": "13ce6adda65d08939b306f063288276e51771c31",
+              "commitSha": "d3a8e878272274a433a6a65e84f3d3bf4275a32f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d3a8e878272274a433a6a65e84f3d3bf4275a32f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp",
+            "bytes": 732,
+            "sha256": "1ba1d63d9297f969c5e7a70131774a0d12061702e5f246d2c0d48fbccd21d05a",
+            "github": {
+              "contentSha": "ed04a5354a8949a223009767e54a0d0136b7c080",
+              "commitSha": "24386ea5afb0936b68fa7486c067124e35367a05",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/24386ea5afb0936b68fa7486c067124e35367a05",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+            "bytes": 2538,
+            "sha256": "dc092c52c7a0f2e25626fc9906bc4e689c5fc446c58af6cc2dba807d3a24289e",
+            "github": {
+              "contentSha": "78462dceb75e58a4d4419c18bb6d35afd4828d4c",
+              "commitSha": "cb73c43e20e24605b2bf4d0c70a34bc37b737609",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cb73c43e20e24605b2bf4d0c70a34bc37b737609",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/stumobile-2026-08-29T21-55-32-730Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/blockchain-anchor.json",
+        "anchorCommitSha": "6b91718db2cc31fa7cda6787faca5cdd99bd4fe4",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/6b91718db2cc31fa7cda6787faca5cdd99bd4fe4"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "6986a007cae9cfbbd469d93fb42d399cf96db0ecddd2edc792ac36c7797c9f28",
+      "recommendedAnchorPayload": "sha256:6986a007cae9cfbbd469d93fb42d399cf96db0ecddd2edc792ac36c7797c9f28",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x6986a007cae9cfbbd469d93fb42d399cf96db0ecddd2edc792ac36c7797c9f28",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/stumobile-2026-08-29T21-55-32-730Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "stu-intro-2026-08-29T21-55-07-453Z",
     "title": "stu-intro",
     "publicOwnerId": "u_13nh6m7",
