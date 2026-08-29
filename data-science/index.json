@@ -1,5 +1,146 @@
 [
   {
+    "id": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+    "name": "stumobile-notebookanims",
+    "updatedAt": "2026-08-29T21:56:07.216Z",
+    "animation_asset": {
+      "id": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+      "name": "stumobile-notebookanims",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "notebook-balloon",
+          "notebook-bubble",
+          "notebook-plunger",
+          "notebook-propeller",
+          "notebook-soda",
+          "notebook-spring",
+          "notebook-stretch",
+          "notebook-umbrella"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-notebook-balloon"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+      "manifestPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/manifest.json",
+      "files": [
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.json",
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/stumobile-notebookanims/stuMobile-notebookAnims.png",
+          "name": "stumobile-notebookanims/stuMobile-notebookAnims.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/notebook-balloon-preview.webp",
+          "name": "notebook-balloon-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "stuMobile-notebookAnims.json",
+      "atlas": "stuMobile-notebookAnims.atlas",
+      "textures": [
+        "stuMobile-notebookAnims.png"
+      ],
+      "animationCount": 8,
+      "animationNames": [
+        "notebook-balloon",
+        "notebook-bubble",
+        "notebook-plunger",
+        "notebook-propeller",
+        "notebook-soda",
+        "notebook-spring",
+        "notebook-stretch",
+        "notebook-umbrella"
+      ],
+      "defaultAnimation": "notebook-balloon",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "stumobile-2026-08-29T21-55-32-730Z",
     "name": "stumobile",
     "updatedAt": "2026-08-29T21:55:41.858Z",
