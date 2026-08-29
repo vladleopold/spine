@@ -1,5 +1,141 @@
 [
   {
+    "id": "stu-intro-2026-08-29T21-55-07-453Z",
+    "name": "stu-intro",
+    "updatedAt": "2026-08-29T21:55:15.886Z",
+    "animation_asset": {
+      "id": "stu-intro-2026-08-29T21-55-07-453Z",
+      "name": "stu-intro",
+      "domain": "gamedev",
+      "asset_category": "cinematic",
+      "animation_type": "cinematic",
+      "skeleton_type": "object",
+      "content_type": "cinematic",
+      "taxonomy": {
+        "category": "cinematic",
+        "class": "sequence",
+        "type": "cutscene",
+        "tags": [
+          "intro"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "storytelling"
+        ],
+        "loop_type": [
+          "one-shot",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "idle",
+          "wave"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/stu-intro-2026-08-29T21-55-07-453Z",
+      "manifestPath": "library/stu-intro-2026-08-29T21-55-07-453Z/manifest.json",
+      "files": [
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.json",
+          "name": "stu-intro/stu-intro.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.atlas",
+          "name": "stu-intro/stu-intro.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.png",
+          "name": "stu-intro/stu-intro.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/stu-intro-2026-08-29T21-55-07-453Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "stu-intro.json",
+      "atlas": "stu-intro.atlas",
+      "textures": [
+        "stu-intro.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "idle",
+        "wave"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "intro"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "lyla-2026-08-29T21-54-29-924Z",
     "name": "lyla",
     "updatedAt": "2026-08-29T21:54:39.270Z",
