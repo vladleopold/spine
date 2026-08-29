@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "luke-face-2026-08-29T22-00-35-857Z",
+  "title": "luke-face",
+  "uploadedAt": "2026-08-29T22:00:35.857Z",
+  "proofPath": "library/luke-face-2026-08-29T22-00-35-857Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/luke-face-2026-08-29T22-00-35-857Z/source-proof.json?v=2026-08-29T22-00-35.857Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/luke-face-2026-08-29T22-00-35-857Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e3d2e8549c4d3671c27b8e8243ef2042e7995abfe57206d89e52a27419b7e502",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 718,
+      "sha256": "839eac9d7269793bac361d1d09f8cb3df6879422195081101706410c42e50d31"
+    },
+    {
+      "name": "luke-face/luke-face.atlas",
+      "bytes": 1475,
+      "sha256": "c3ee26237fab5a961eb4c759605c1206381f559d64e89ff906e57d8cd6e88c67"
+    },
+    {
+      "name": "luke-face/luke-face.json",
+      "bytes": 138205,
+      "sha256": "06a09a2bf2a013a623849da4b0844786fb71a117f27255d4ec3d3e796dce01cd"
+    },
+    {
+      "name": "luke-face/luke-face.png",
+      "bytes": 224643,
+      "sha256": "585a8f1387b1fa527068e22a386851858dab2b3282c9235d860fbdeacf622330"
+    }
+  ],
+  "proofHash": "e3d2e8549c4d3671c27b8e8243ef2042e7995abfe57206d89e52a27419b7e502"
+}
