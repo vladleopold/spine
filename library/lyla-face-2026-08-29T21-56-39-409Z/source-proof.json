@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "lyla-face-2026-08-29T21-56-39-409Z",
+  "title": "lyla-face",
+  "uploadedAt": "2026-08-29T21:56:39.409Z",
+  "proofPath": "library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/lyla-face-2026-08-29T21-56-39-409Z/source-proof.json?v=2026-08-29T21-56-39.409Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/lyla-face-2026-08-29T21-56-39-409Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:6cfbaa8281bfbfa3f6edcfcd455668022360322a4412b947182030fbc19b8fa3",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "blink-preview.webp",
+      "bytes": 714,
+      "sha256": "ee757da1c926956c24fd82b1e1e029f943e2c5e299ba8fe5b4b19df9f52b1e48"
+    },
+    {
+      "name": "lyla-face/lyla-face.atlas",
+      "bytes": 1157,
+      "sha256": "7be477a3839b4eb5b40c3a180792476baeaa4f514e4bd13a47bd9ea914d1f73a"
+    },
+    {
+      "name": "lyla-face/lyla-face.json",
+      "bytes": 75416,
+      "sha256": "976c9916c111e899a5064bdab0b8939e63d6e47a933cc635c0086f3a5fa28def"
+    },
+    {
+      "name": "lyla-face/lyla-face.png",
+      "bytes": 182043,
+      "sha256": "850a833c7a64aa65c0be50fb05c2a35f22b5f55c62f5277aa294bc1f8d047a11"
+    }
+  ],
+  "proofHash": "6cfbaa8281bfbfa3f6edcfcd455668022360322a4412b947182030fbc19b8fa3"
+}
