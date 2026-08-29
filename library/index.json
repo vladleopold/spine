@@ -1,5 +1,273 @@
 [
   {
+    "id": "skillset_mobile-2026-08-29T22-50-48-740Z",
+    "title": "skillset_mobile",
+    "publicOwnerId": "u_1sask61",
+    "ownerAnonId": "anon_temrck_86jfg1",
+    "ownerAnonFingerprint": "temrck",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T22:50:48.740Z",
+    "skeleton": "skillset_mobile.json",
+    "atlas": "skillset_mobile.atlas",
+    "textures": [
+      "skillset_mobile.webp",
+      "skillset_mobile-upgrade.webp"
+    ],
+    "animations": [
+      "skill_panel_idle",
+      "skill_select_start",
+      "skill_select_start_Slow",
+      "skill_select_stop_01_scatter",
+      "skill_select_stop_01_scatter_Hit",
+      "skill_select_stop_02_random_wild",
+      "skill_select_stop_02_random_wild_Hit",
+      "skill_select_stop_03_premium_2x2",
+      "skill_select_stop_03_premium_2x3_Hit",
+      "skill_select_stop_04_epic",
+      "skill_select_stop_04_epic_Hit"
+    ],
+    "defaultAnimation": "skill_panel_idle",
+    "files": [
+      "skillset_mobile/skillset_mobile.json",
+      "skillset_mobile/skillset_mobile.atlas",
+      "skillset_mobile/skillset_mobile.webp",
+      "skillset_mobile/skillset_mobile-upgrade.webp",
+      "skill_panel_idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp?v=2026-08-29T22-50-48.740Z",
+    "thumbnailPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp?v=2026-08-29T22-50-48.740Z",
+    "thumbnailPosterPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "skillset_mobile-2026-08-29T22-50-48-740Z",
+      "title": "skillset_mobile",
+      "uploadedAt": "2026-08-29T22:50:48.740Z",
+      "proofPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json?v=2026-08-29T22-50-48.740Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_temrck_86jfg1",
+        "anonymousFingerprint": "temrck",
+        "browserFingerprintSha256": "e56d4f70b5097517004c83c751b93aeff8561a0e40926a30b64fd897a3cc1aeb",
+        "browserEnvironmentHashSha256": "9e9eefc84c01091ac24c01783a4a3a8954f4064919e82da836244eacc68d1cbd",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr-TR",
+          "languages": [
+            "tr-TR",
+            "tr",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:1dc3e97296653058606f1ca263fc91569d7afb35cf6c9069c6a17d5dad68c106",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "skill_panel_idle-preview.webp",
+          "bytes": 694,
+          "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+        },
+        {
+          "name": "skillset_mobile/skillset_mobile-upgrade.webp",
+          "bytes": 2138760,
+          "sha256": "48a0701078dead9454bd520206477cb9109999f26c38c0920d082f24a328bac1"
+        },
+        {
+          "name": "skillset_mobile/skillset_mobile.atlas",
+          "bytes": 2629,
+          "sha256": "e09b70c196e35d0fdac4093a5b9ce8edee1e3319fc4d615605464cc2cf7064d0"
+        },
+        {
+          "name": "skillset_mobile/skillset_mobile.json",
+          "bytes": 16028,
+          "sha256": "32808ac9b30542a5694175e452e6f54e88f9dc02397b14aeb685bafb8f68a1a0"
+        },
+        {
+          "name": "skillset_mobile/skillset_mobile.webp",
+          "bytes": 820748,
+          "sha256": "625b24c230365c682bd48ab64f806c5a8e57c4ca41e7628b4d68c5ade5d38c9a"
+        }
+      ],
+      "proofHash": "1dc3e97296653058606f1ca263fc91569d7afb35cf6c9069c6a17d5dad68c106"
+    },
+    "sourceProofPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json?v=2026-08-29T22-50-48.740Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T22:50:59.959Z",
+      "entryId": "skillset_mobile-2026-08-29T22-50-48-740Z",
+      "title": "skillset_mobile",
+      "uploadedAt": "2026-08-29T22:50:48.740Z",
+      "sourceProofHash": "1dc3e97296653058606f1ca263fc91569d7afb35cf6c9069c6a17d5dad68c106",
+      "sourceProofPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json?v=2026-08-29T22-50-48.740Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_temrck_86jfg1",
+        "anonymousFingerprint": "temrck",
+        "browserFingerprintSha256": "e56d4f70b5097517004c83c751b93aeff8561a0e40926a30b64fd897a3cc1aeb",
+        "browserEnvironmentHashSha256": "9e9eefc84c01091ac24c01783a4a3a8954f4064919e82da836244eacc68d1cbd",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "tr-TR",
+          "languages": [
+            "tr-TR",
+            "tr",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Istanbul",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z",
+        "files": [
+          {
+            "name": "skillset_mobile/skillset_mobile.json",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.json",
+            "bytes": 16028,
+            "sha256": "32808ac9b30542a5694175e452e6f54e88f9dc02397b14aeb685bafb8f68a1a0",
+            "github": {
+              "contentSha": "63bd09a2fddac365ec1cf1eaa4eb2c8a9b9eb25e",
+              "commitSha": "6e4729f134aeca439c7d205ca7a19413f1c79c23",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6e4729f134aeca439c7d205ca7a19413f1c79c23",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.json"
+            }
+          },
+          {
+            "name": "skillset_mobile/skillset_mobile.atlas",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.atlas",
+            "bytes": 2629,
+            "sha256": "e09b70c196e35d0fdac4093a5b9ce8edee1e3319fc4d615605464cc2cf7064d0",
+            "github": {
+              "contentSha": "3230d9bbb39948591bcea22f53250bc13063bde4",
+              "commitSha": "6c4a14e988d455111561b611ff8c0a4e1d773503",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6c4a14e988d455111561b611ff8c0a4e1d773503",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.atlas"
+            }
+          },
+          {
+            "name": "skillset_mobile/skillset_mobile.webp",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.webp",
+            "bytes": 820748,
+            "sha256": "625b24c230365c682bd48ab64f806c5a8e57c4ca41e7628b4d68c5ade5d38c9a",
+            "github": {
+              "contentSha": "d152538871b38d6c556a8650b8e6782d8c60994d",
+              "commitSha": "a77cc731b4ef61f8ef739993c35f4fd66ef724d4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/a77cc731b4ef61f8ef739993c35f4fd66ef724d4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile.webp"
+            }
+          },
+          {
+            "name": "skillset_mobile/skillset_mobile-upgrade.webp",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile-upgrade.webp",
+            "bytes": 2138760,
+            "sha256": "48a0701078dead9454bd520206477cb9109999f26c38c0920d082f24a328bac1",
+            "github": {
+              "contentSha": "ba76053621282f3a80260c3f99f04014e3eb06e5",
+              "commitSha": "b6fbd198244fc8aa8e6969a83168dfdbf68c4918",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b6fbd198244fc8aa8e6969a83168dfdbf68c4918",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/skillset_mobile/skillset_mobile-upgrade.webp"
+            }
+          },
+          {
+            "name": "skill_panel_idle-preview.webp",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp",
+            "bytes": 694,
+            "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407",
+            "github": {
+              "contentSha": "c63d1d2931e92e7e3d71c948586dadfa4e72a64c",
+              "commitSha": "81a586b7b3b03e61dc5c0819084cd1377bc3b8cf",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/81a586b7b3b03e61dc5c0819084cd1377bc3b8cf",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/skill_panel_idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json",
+            "bytes": 2818,
+            "sha256": "194fd10e9862efa61c64741b8e36a07635eb71a4895f7563d82a6b2f4cc10493",
+            "github": {
+              "contentSha": "b945745705412e18f1588a09ecd73e0de068d8b3",
+              "commitSha": "0418249838cdb06f031b0e896c4d79a9262c0f6c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0418249838cdb06f031b0e896c4d79a9262c0f6c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/skillset_mobile-2026-08-29T22-50-48-740Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/blockchain-anchor.json",
+        "anchorCommitSha": "88d18b5a4c97f3701cc176b5acecf0fdba96d8e4",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/88d18b5a4c97f3701cc176b5acecf0fdba96d8e4"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "223aa9a5588a7cafddd779e2284768d869d3c143bf2aa3d86a8fd05e44a7a20a",
+      "recommendedAnchorPayload": "sha256:223aa9a5588a7cafddd779e2284768d869d3c143bf2aa3d86a8fd05e44a7a20a",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x223aa9a5588a7cafddd779e2284768d869d3c143bf2aa3d86a8fd05e44a7a20a",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/skillset_mobile-2026-08-29T22-50-48-740Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/skillset_mobile-2026-08-29T22-50-48-740Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "loadingscreen-en-2026-08-29T21-46-12-165Z",
     "title": "loadingscreen-en",
     "publicOwnerId": "u_13nh6m7",
