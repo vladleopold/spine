@@ -1,5 +1,176 @@
 [
   {
+    "id": "skillset_mobile-2026-08-29T22-54-00-015Z",
+    "name": "skillset_mobile",
+    "updatedAt": "2026-08-29T22:54:12.496Z",
+    "animation_asset": {
+      "id": "skillset_mobile-2026-08-29T22-54-00-015Z",
+      "name": "skillset_mobile",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "panel"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "skill_panel_idle",
+          "skill_select_start",
+          "skill_select_start_slow",
+          "skill_select_stop_01_scatter",
+          "skill_select_stop_01_scatter_hit",
+          "skill_select_stop_02_random_wild",
+          "skill_select_stop_02_random_wild_hit",
+          "skill_select_stop_03_premium_2x2",
+          "skill_select_stop_03_premium_2x3_hit",
+          "skill_select_stop_04_epic",
+          "skill_select_stop_04_epic_hit",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-skill_panel_idle"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/skillset_mobile-2026-08-29T22-54-00-015Z",
+      "manifestPath": "library/skillset_mobile-2026-08-29T22-54-00-015Z/manifest.json",
+      "files": [
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/skillset_mobile/skillset_mobile.json",
+          "name": "skillset_mobile/skillset_mobile.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/skillset_mobile/skillset_mobile.atlas",
+          "name": "skillset_mobile/skillset_mobile.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/skillset_mobile/skillset_mobile.webp",
+          "name": "skillset_mobile/skillset_mobile.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/skillset_mobile/skillset_mobile-upgrade.webp",
+          "name": "skillset_mobile/skillset_mobile-upgrade.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/skill_panel_idle-preview.webp",
+          "name": "skill_panel_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/skillset_mobile-2026-08-29T22-54-00-015Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "skillset_mobile.json",
+      "atlas": "skillset_mobile.atlas",
+      "textures": [
+        "skillset_mobile.webp",
+        "skillset_mobile-upgrade.webp"
+      ],
+      "animationCount": 11,
+      "animationNames": [
+        "skill_panel_idle",
+        "skill_select_start",
+        "skill_select_start_Slow",
+        "skill_select_stop_01_scatter",
+        "skill_select_stop_01_scatter_Hit",
+        "skill_select_stop_02_random_wild",
+        "skill_select_stop_02_random_wild_Hit",
+        "skill_select_stop_03_premium_2x2",
+        "skill_select_stop_03_premium_2x3_Hit",
+        "skill_select_stop_04_epic",
+        "skill_select_stop_04_epic_Hit"
+      ],
+      "defaultAnimation": "skill_panel_idle",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "panel"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "skillset_mobile-2026-08-29T22-50-48-740Z",
     "name": "skillset_mobile",
     "updatedAt": "2026-08-29T22:51:04.906Z",
