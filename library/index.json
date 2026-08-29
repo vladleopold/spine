@@ -1,5 +1,246 @@
 [
   {
+    "id": "louisa-gameplay-2026-08-29T21-50-23-515Z",
+    "title": "louisa-gameplay",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:50:23.515Z",
+    "skeleton": "louisa-gameplay.json",
+    "atlas": "louisa-gameplay.atlas",
+    "textures": [
+      "louisa-gameplay.png"
+    ],
+    "animations": [
+      "blink",
+      "idle",
+      "launchBall",
+      "run-backward",
+      "run-forward"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "louisa-gameplay/louisa-gameplay.json",
+      "louisa-gameplay/louisa-gameplay.atlas",
+      "louisa-gameplay/louisa-gameplay.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp?v=2026-08-29T21-50-23.515Z",
+    "thumbnailPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp?v=2026-08-29T21-50-23.515Z",
+    "thumbnailPosterPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "louisa-gameplay-2026-08-29T21-50-23-515Z",
+      "title": "louisa-gameplay",
+      "uploadedAt": "2026-08-29T21:50:23.515Z",
+      "proofPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json?v=2026-08-29T21-50-23.515Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:db32d607d192e2f9dca54045887a1c9a45ce6cdd8fb2a864772472ec67b69a8a",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 718,
+          "sha256": "839eac9d7269793bac361d1d09f8cb3df6879422195081101706410c42e50d31"
+        },
+        {
+          "name": "louisa-gameplay/louisa-gameplay.atlas",
+          "bytes": 2126,
+          "sha256": "34661b48810c7e95a04cd16a686dc2caa50516ef282fa71f9adea3ec77c2d34a"
+        },
+        {
+          "name": "louisa-gameplay/louisa-gameplay.json",
+          "bytes": 33432,
+          "sha256": "3ef182930f929a22e809579f6e687304b16f5f5b5e21027e4c15888b11633328"
+        },
+        {
+          "name": "louisa-gameplay/louisa-gameplay.png",
+          "bytes": 58239,
+          "sha256": "630de60bab20a2f0773a14a06a7dea3c705dd249fef0e6690460f4b639a1f680"
+        }
+      ],
+      "proofHash": "db32d607d192e2f9dca54045887a1c9a45ce6cdd8fb2a864772472ec67b69a8a"
+    },
+    "sourceProofPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json?v=2026-08-29T21-50-23.515Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:50:28.614Z",
+      "entryId": "louisa-gameplay-2026-08-29T21-50-23-515Z",
+      "title": "louisa-gameplay",
+      "uploadedAt": "2026-08-29T21:50:23.515Z",
+      "sourceProofHash": "db32d607d192e2f9dca54045887a1c9a45ce6cdd8fb2a864772472ec67b69a8a",
+      "sourceProofPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json?v=2026-08-29T21-50-23.515Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z",
+        "files": [
+          {
+            "name": "louisa-gameplay/louisa-gameplay.json",
+            "path": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.json",
+            "bytes": 33432,
+            "sha256": "3ef182930f929a22e809579f6e687304b16f5f5b5e21027e4c15888b11633328",
+            "github": {
+              "contentSha": "6b223da9a0ba4f6c5c9ef3a12d4db839ed46d11b",
+              "commitSha": "ee2de60d62c143889710a65287e058884a92808c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ee2de60d62c143889710a65287e058884a92808c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.json"
+            }
+          },
+          {
+            "name": "louisa-gameplay/louisa-gameplay.atlas",
+            "path": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.atlas",
+            "bytes": 2126,
+            "sha256": "34661b48810c7e95a04cd16a686dc2caa50516ef282fa71f9adea3ec77c2d34a",
+            "github": {
+              "contentSha": "39b460daceab2bd8655591e2ccf5811b33e472e1",
+              "commitSha": "6f22cec1fbcf43147be443b0a6a957da5bfaceb7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6f22cec1fbcf43147be443b0a6a957da5bfaceb7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.atlas"
+            }
+          },
+          {
+            "name": "louisa-gameplay/louisa-gameplay.png",
+            "path": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.png",
+            "bytes": 58239,
+            "sha256": "630de60bab20a2f0773a14a06a7dea3c705dd249fef0e6690460f4b639a1f680",
+            "github": {
+              "contentSha": "531dfa0acb31e44420cd1c1d49db3b9efac8edf5",
+              "commitSha": "56aa0998e04822e09bd23010c96dc76ed48044b1",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/56aa0998e04822e09bd23010c96dc76ed48044b1",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/louisa-gameplay-2026-08-29T21-50-23-515Z/louisa-gameplay/louisa-gameplay.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp",
+            "bytes": 718,
+            "sha256": "839eac9d7269793bac361d1d09f8cb3df6879422195081101706410c42e50d31",
+            "github": {
+              "contentSha": "1f106d894ce5874620e1b10b241819978bf3e7d0",
+              "commitSha": "ee0dde6c80ecc8597b636a38c65cb55227cb02e9",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ee0dde6c80ecc8597b636a38c65cb55227cb02e9",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/louisa-gameplay-2026-08-29T21-50-23-515Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json",
+            "bytes": 2604,
+            "sha256": "e1b587be21b90ea3dad6af7dc69ddb79a04dc37bad23956a8394d1b63d6397e3",
+            "github": {
+              "contentSha": "73555080d05c39dcc058c1465d40443b4f70fd51",
+              "commitSha": "ff282914cbba5a121644900ea03d6fdeeff2dfce",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ff282914cbba5a121644900ea03d6fdeeff2dfce",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/blockchain-anchor.json",
+        "anchorCommitSha": "ce4c35af2f09f4531a4ccda4847f9b2f4a1d1fb4",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/ce4c35af2f09f4531a4ccda4847f9b2f4a1d1fb4"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "b8b0b822763122978bec5f66b4d9de5dc48770eec755bb07a32ad7e573494f3a",
+      "recommendedAnchorPayload": "sha256:b8b0b822763122978bec5f66b4d9de5dc48770eec755bb07a32ad7e573494f3a",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xb8b0b822763122978bec5f66b4d9de5dc48770eec755bb07a32ad7e573494f3a",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "everett-gameplay-2026-08-29T21-49-39-701Z",
     "title": "everett-gameplay",
     "publicOwnerId": "u_13nh6m7",
