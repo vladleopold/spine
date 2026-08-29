@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "everett-body-2026-08-29T22-01-23-707Z",
+  "title": "everett-body",
+  "uploadedAt": "2026-08-29T22:01:23.707Z",
+  "proofPath": "library/everett-body-2026-08-29T22-01-23-707Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/everett-body-2026-08-29T22-01-23-707Z/source-proof.json?v=2026-08-29T22-01-23.707Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/everett-body-2026-08-29T22-01-23-707Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a245d35739fc12318853f75ce326aad8cf19b5a75a64660004bc98b7c3a95b0d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "everett-body/everett-body.atlas",
+      "bytes": 4323,
+      "sha256": "f734f99417237767b39d583afe336250177651b65f69f38c7e273926f0c5330f"
+    },
+    {
+      "name": "everett-body/everett-body.json",
+      "bytes": 28334,
+      "sha256": "d1b660bf5f62f08dfaddc69c814fe5e5087e3d792452dab72aaef195e5b54081"
+    },
+    {
+      "name": "everett-body/everett-body.png",
+      "bytes": 371431,
+      "sha256": "3f3b0d4d56da199edd49b4cf70aa02e223a834e5a144d1dd9d4487926e1e03ab"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 722,
+      "sha256": "d8e11af290a7369d9246e5787817f672a2b4053cb871bc1533cf537702aa359a"
+    }
+  ],
+  "proofHash": "a245d35739fc12318853f75ce326aad8cf19b5a75a64660004bc98b7c3a95b0d"
+}
