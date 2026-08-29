@@ -1,5 +1,243 @@
 [
   {
+    "id": "stu-intro-2026-08-29T21-55-07-453Z",
+    "title": "stu-intro",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:55:07.453Z",
+    "skeleton": "stu-intro.json",
+    "atlas": "stu-intro.atlas",
+    "textures": [
+      "stu-intro.png"
+    ],
+    "animations": [
+      "idle",
+      "wave"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "stu-intro/stu-intro.json",
+      "stu-intro/stu-intro.atlas",
+      "stu-intro/stu-intro.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/stu-intro-2026-08-29T21-55-07-453Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp?v=2026-08-29T21-55-07.453Z",
+    "thumbnailPath": "library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp?v=2026-08-29T21-55-07.453Z",
+    "thumbnailPosterPath": "library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "stu-intro-2026-08-29T21-55-07-453Z",
+      "title": "stu-intro",
+      "uploadedAt": "2026-08-29T21:55:07.453Z",
+      "proofPath": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json?v=2026-08-29T21-55-07.453Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/stu-intro-2026-08-29T21-55-07-453Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:af9081406eeba9d11a6c337b0d3d88edf32582d2f2b1fab0744938d1c8846cc7",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 724,
+          "sha256": "6b87af0ce459f9f2f108343b0475dce279df9fb3a4f04b43d21aa2409c4481ea"
+        },
+        {
+          "name": "stu-intro/stu-intro.atlas",
+          "bytes": 904,
+          "sha256": "c1e643bf6e26a6945e7835f3854229ab98a8987977ab4ddf0203a3144fcb6f9f"
+        },
+        {
+          "name": "stu-intro/stu-intro.json",
+          "bytes": 31103,
+          "sha256": "45eba6d6103a040a690f8f6b645372d92304e4805b1efb483a66d91336875395"
+        },
+        {
+          "name": "stu-intro/stu-intro.png",
+          "bytes": 305940,
+          "sha256": "854887f5d75dd91c7f67ffab2e8c8a6c339ed39da863a7d84356b3b9f6b9bb42"
+        }
+      ],
+      "proofHash": "af9081406eeba9d11a6c337b0d3d88edf32582d2f2b1fab0744938d1c8846cc7"
+    },
+    "sourceProofPath": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json?v=2026-08-29T21-55-07.453Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:55:12.616Z",
+      "entryId": "stu-intro-2026-08-29T21-55-07-453Z",
+      "title": "stu-intro",
+      "uploadedAt": "2026-08-29T21:55:07.453Z",
+      "sourceProofHash": "af9081406eeba9d11a6c337b0d3d88edf32582d2f2b1fab0744938d1c8846cc7",
+      "sourceProofPath": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json?v=2026-08-29T21-55-07.453Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/stu-intro-2026-08-29T21-55-07-453Z",
+        "files": [
+          {
+            "name": "stu-intro/stu-intro.json",
+            "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.json",
+            "bytes": 31103,
+            "sha256": "45eba6d6103a040a690f8f6b645372d92304e4805b1efb483a66d91336875395",
+            "github": {
+              "contentSha": "d3f94683daca9e3426b1db32f584656c9c307a09",
+              "commitSha": "0884dd5d8bdc6aed28baad3cecff7d2765a488ae",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0884dd5d8bdc6aed28baad3cecff7d2765a488ae",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.json"
+            }
+          },
+          {
+            "name": "stu-intro/stu-intro.atlas",
+            "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.atlas",
+            "bytes": 904,
+            "sha256": "c1e643bf6e26a6945e7835f3854229ab98a8987977ab4ddf0203a3144fcb6f9f",
+            "github": {
+              "contentSha": "730060fa785fb37c857d134956d0211e82485acc",
+              "commitSha": "f8baca22c497ca4c5d276def0fbae5bd3bac3a89",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/f8baca22c497ca4c5d276def0fbae5bd3bac3a89",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.atlas"
+            }
+          },
+          {
+            "name": "stu-intro/stu-intro.png",
+            "path": "library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.png",
+            "bytes": 305940,
+            "sha256": "854887f5d75dd91c7f67ffab2e8c8a6c339ed39da863a7d84356b3b9f6b9bb42",
+            "github": {
+              "contentSha": "6906be876b8138b31e0a3cae4536257d7d2e0855",
+              "commitSha": "eaaa9f263c94d2c5297e41d29764f20098eeccb4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/eaaa9f263c94d2c5297e41d29764f20098eeccb4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-intro-2026-08-29T21-55-07-453Z/stu-intro/stu-intro.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp",
+            "bytes": 724,
+            "sha256": "6b87af0ce459f9f2f108343b0475dce279df9fb3a4f04b43d21aa2409c4481ea",
+            "github": {
+              "contentSha": "88430a1b25aa5eb37b9113e8005996f0e61cddbe",
+              "commitSha": "7ebc3d0683d8a66c5b79941ebf9218b98675f684",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/7ebc3d0683d8a66c5b79941ebf9218b98675f684",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-intro-2026-08-29T21-55-07-453Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+            "bytes": 2538,
+            "sha256": "838e69a32479d77d6974e558bf5ed228182d3e3d209c1f8b76e745f94c68ff85",
+            "github": {
+              "contentSha": "606d6e1f24e1a1495058a401fc666599b38c0ca7",
+              "commitSha": "18e2f39a4b4ff0ec9b4f420b1f66b27682e1e473",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/18e2f39a4b4ff0ec9b4f420b1f66b27682e1e473",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/stu-intro-2026-08-29T21-55-07-453Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/blockchain-anchor.json",
+        "anchorCommitSha": "06b88cde6bdaa015a173ecc3377086556d2f4294",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/06b88cde6bdaa015a173ecc3377086556d2f4294"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "43f9168fec300299cde6cfa73632ecdb6fb162a9bda04962fde924cc97831dd0",
+      "recommendedAnchorPayload": "sha256:43f9168fec300299cde6cfa73632ecdb6fb162a9bda04962fde924cc97831dd0",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x43f9168fec300299cde6cfa73632ecdb6fb162a9bda04962fde924cc97831dd0",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/stu-intro-2026-08-29T21-55-07-453Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "lyla-2026-08-29T21-54-29-924Z",
     "title": "lyla",
     "publicOwnerId": "u_13nh6m7",
