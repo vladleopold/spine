@@ -1,5 +1,242 @@
 [
   {
+    "id": "loadingscreen-es-2026-08-29T21-46-55-399Z",
+    "title": "loadingscreen-es",
+    "publicOwnerId": "u_13nh6m7",
+    "ownerAnonId": "anon_1vg0ely_19kj40y",
+    "ownerAnonFingerprint": "1vg0ely",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-08-29T21:46:55.399Z",
+    "skeleton": "loadingScreen-es.json",
+    "atlas": "loadingScreen-es.atlas",
+    "textures": [
+      "loadingScreen-es.png"
+    ],
+    "animations": [
+      "loading"
+    ],
+    "defaultAnimation": "loading",
+    "files": [
+      "loadingscreen-es/loadingScreen-es.json",
+      "loadingscreen-es/loadingScreen-es.atlas",
+      "loadingscreen-es/loadingScreen-es.png",
+      "loading-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp?v=2026-08-29T21-46-55.399Z",
+    "thumbnailPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp?v=2026-08-29T21-46-55.399Z",
+    "thumbnailPosterPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "loadingscreen-es-2026-08-29T21-46-55-399Z",
+      "title": "loadingscreen-es",
+      "uploadedAt": "2026-08-29T21:46:55.399Z",
+      "proofPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json?v=2026-08-29T21-46-55.399Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:376381bc71e6010bce012b96f3529f3ed980bac6a0433e29fa8a6a2142b92cd7",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "loading-preview.webp",
+          "bytes": 728,
+          "sha256": "c64a865dcc0acc08ba26e5bbdcb29adf3478c7b931478be3516bbb923097e34f"
+        },
+        {
+          "name": "loadingscreen-es/loadingScreen-es.atlas",
+          "bytes": 749,
+          "sha256": "e5006044209b2ca132f1a3131cb6888484e3967bd6fa5c995c79c9636d9bf1a4"
+        },
+        {
+          "name": "loadingscreen-es/loadingScreen-es.json",
+          "bytes": 27449,
+          "sha256": "8da8f6d32fb77dceeacf0b4b7d4721377139fd15a8602858c266700f4681a361"
+        },
+        {
+          "name": "loadingscreen-es/loadingScreen-es.png",
+          "bytes": 148786,
+          "sha256": "6e690266c1aef1939bc2a91e514438c91847d1de6e5caf6d2a8c62a8b379e068"
+        }
+      ],
+      "proofHash": "376381bc71e6010bce012b96f3529f3ed980bac6a0433e29fa8a6a2142b92cd7"
+    },
+    "sourceProofPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json?v=2026-08-29T21-46-55.399Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-08-29T21:47:00.633Z",
+      "entryId": "loadingscreen-es-2026-08-29T21-46-55-399Z",
+      "title": "loadingscreen-es",
+      "uploadedAt": "2026-08-29T21:46:55.399Z",
+      "sourceProofHash": "376381bc71e6010bce012b96f3529f3ed980bac6a0433e29fa8a6a2142b92cd7",
+      "sourceProofPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json?v=2026-08-29T21-46-55.399Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1vg0ely_19kj40y",
+        "anonymousFingerprint": "1vg0ely",
+        "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+        "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "de"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 800,
+            "height": 1280,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "America/New_York",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z",
+        "files": [
+          {
+            "name": "loadingscreen-es/loadingScreen-es.json",
+            "path": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.json",
+            "bytes": 27449,
+            "sha256": "8da8f6d32fb77dceeacf0b4b7d4721377139fd15a8602858c266700f4681a361",
+            "github": {
+              "contentSha": "ff59ebcf727ed76a1232e2dfaec8903e4f5bbeac",
+              "commitSha": "6a6c1504ea6403e9a31568fbcbf7e1c2210eb7fc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6a6c1504ea6403e9a31568fbcbf7e1c2210eb7fc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.json"
+            }
+          },
+          {
+            "name": "loadingscreen-es/loadingScreen-es.atlas",
+            "path": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.atlas",
+            "bytes": 749,
+            "sha256": "e5006044209b2ca132f1a3131cb6888484e3967bd6fa5c995c79c9636d9bf1a4",
+            "github": {
+              "contentSha": "395f3a2df1a4594347b32c71ec3b8f1d0afac814",
+              "commitSha": "15ea78c66762055aca98c926c50ff0987a762d50",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/15ea78c66762055aca98c926c50ff0987a762d50",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.atlas"
+            }
+          },
+          {
+            "name": "loadingscreen-es/loadingScreen-es.png",
+            "path": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.png",
+            "bytes": 148786,
+            "sha256": "6e690266c1aef1939bc2a91e514438c91847d1de6e5caf6d2a8c62a8b379e068",
+            "github": {
+              "contentSha": "f849c066f15ad480a132d8dfb1ed568d7291134d",
+              "commitSha": "e50dff33f106b4a63e474378a4241384cacf6711",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e50dff33f106b4a63e474378a4241384cacf6711",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loadingscreen-es/loadingScreen-es.png"
+            }
+          },
+          {
+            "name": "loading-preview.webp",
+            "path": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp",
+            "bytes": 728,
+            "sha256": "c64a865dcc0acc08ba26e5bbdcb29adf3478c7b931478be3516bbb923097e34f",
+            "github": {
+              "contentSha": "1293e08ae1fb0df9e447b4ee7f094b0cac881ebe",
+              "commitSha": "0efeff61888513c86826b4655dfbf04dad3640d4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/0efeff61888513c86826b4655dfbf04dad3640d4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/loadingscreen-es-2026-08-29T21-46-55-399Z/loading-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json",
+            "bytes": 2618,
+            "sha256": "aac9ac25a87013dfd47bc17a3cca986de880c3afe251a4445193061dce9d23e9",
+            "github": {
+              "contentSha": "5e5e99af638eba0af901cbad721ec3e3c2e31896",
+              "commitSha": "31512ffa563e41c054ba5550959b62d8760b1a7c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/31512ffa563e41c054ba5550959b62d8760b1a7c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/loadingscreen-es-2026-08-29T21-46-55-399Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/blockchain-anchor.json",
+        "anchorCommitSha": "bb4e6dcb962d83ad4ba9f7476429f772253d74d3",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/bb4e6dcb962d83ad4ba9f7476429f772253d74d3"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "d780129ecf4c06e9bfe3b24556e9867d758a012e3a116b5ccff87dab6004cf68",
+      "recommendedAnchorPayload": "sha256:d780129ecf4c06e9bfe3b24556e9867d758a012e3a116b5ccff87dab6004cf68",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xd780129ecf4c06e9bfe3b24556e9867d758a012e3a116b5ccff87dab6004cf68",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/loadingscreen-es-2026-08-29T21-46-55-399Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/loadingscreen-es-2026-08-29T21-46-55-399Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "loadingscreen-en-2026-08-29T21-46-12-165Z",
     "title": "loadingscreen-en",
     "publicOwnerId": "u_13nh6m7",
