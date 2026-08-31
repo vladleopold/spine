@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "boomscale_k-2026-08-31T14-22-24-767Z",
+  "title": "boomscale_k",
+  "uploadedAt": "2026-08-31T14:22:24.767Z",
+  "proofPath": "library/boomscale_k-2026-08-31T14-22-24-767Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/source-proof.json?v=2026-08-31T14-22-24.767Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_temrck_86jfg1",
+    "anonymousFingerprint": "temrck",
+    "browserFingerprintSha256": "e56d4f70b5097517004c83c751b93aeff8561a0e40926a30b64fd897a3cc1aeb",
+    "browserEnvironmentHashSha256": "9e9eefc84c01091ac24c01783a4a3a8954f4064919e82da836244eacc68d1cbd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr-TR",
+      "languages": [
+        "tr-TR",
+        "tr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/boomscale_k-2026-08-31T14-22-24-767Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ed295dad25dbe4cd2c288c275640f9ac2f236ea803393dda8b06d4ad7672438f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "boomscale_k/BOOMSCALE_K.atlas",
+      "bytes": 227,
+      "sha256": "e21a71ee7d4e53e7dea517f16809478ffebae4dd503c5e2d371858aab2709d04"
+    },
+    {
+      "name": "boomscale_k/BOOMSCALE_K.json",
+      "bytes": 2885,
+      "sha256": "85e45328d64d3b4e5ebd5b7e088ee616e7bd279ab06eaf74b5b7ad55ec69353b"
+    },
+    {
+      "name": "boomscale_k/BOOMSCALE_K.webp",
+      "bytes": 401115,
+      "sha256": "71b32e7ba212f61d837eb86319a50634c65ad588da55cf639f6a68121c57a605"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    }
+  ],
+  "proofHash": "ed295dad25dbe4cd2c288c275640f9ac2f236ea803393dda8b06d4ad7672438f"
+}
