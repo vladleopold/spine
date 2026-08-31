@@ -179,10 +179,34 @@ function readSkeletonBounds(filePath) {
   return { width: 0, height: 0 };
 }
 
+function readAnimationNames(filePath) {
+  try {
+    const ext = path.extname(filePath).toLowerCase();
+    if (ext === '.json') {
+      const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      return Object.keys(content?.animations || {});
+    }
+    if (ext === '.skel') {
+      const dir = path.dirname(filePath);
+      const base = path.basename(filePath, '.skel');
+      const jsonSibling = path.join(dir, base + '.json');
+      if (fs.existsSync(jsonSibling)) {
+        const content = JSON.parse(fs.readFileSync(jsonSibling, 'utf8'));
+        return Object.keys(content?.animations || {});
+      }
+    }
+  } catch {}
+  return [];
+}
+
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
-const targetAnimation = args.animation || entry.defaultAnimation || '';
+let targetAnimation = args.animation || entry.defaultAnimation || '';
+const availableAnimations = readAnimationNames(skeletonFilePath);
+if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
+  targetAnimation = availableAnimations[0] || '';
+};
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
 const PAD_RATIO = 0.14; // 14% padding on each side
