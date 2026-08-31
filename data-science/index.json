@@ -1,5 +1,149 @@
 [
   {
+    "id": "scatter_bonus-2026-08-31T08-50-07-351Z",
+    "name": "scatter_bonus",
+    "updatedAt": "2026-08-31T07:54:19.945Z",
+    "animation_asset": {
+      "id": "scatter_bonus-2026-08-31T08-50-07-351Z",
+      "name": "scatter_bonus",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "bonus"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "+1fs",
+          "bonus",
+          "idle",
+          "landing",
+          "static"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z",
+      "manifestPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z/manifest.json",
+      "files": [
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/scatter_bonus/scatter_bonus.json",
+          "name": "scatter_bonus/scatter_bonus.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/scatter_bonus/scatter_bonus.atlas",
+          "name": "scatter_bonus/scatter_bonus.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/scatter_bonus/scatter_bonus.png",
+          "name": "scatter_bonus/scatter_bonus.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/scatter_bonus-2026-08-31T08-50-07-351Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "scatter_bonus.json",
+      "atlas": "scatter_bonus.atlas",
+      "textures": [
+        "scatter_bonus.png"
+      ],
+      "animationCount": 5,
+      "animationNames": [
+        "+1fs",
+        "bonus",
+        "Idle",
+        "landing",
+        "static"
+      ],
+      "defaultAnimation": "Idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "bonus"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "candy-2026-08-31T08-48-52-657Z",
     "name": "candy",
     "updatedAt": "2026-08-31T07:53:09.914Z",
