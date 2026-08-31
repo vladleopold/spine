@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "streamer_girl_front-2026-08-31T21-40-49-006Z",
+  "title": "streamer_girl_front",
+  "uploadedAt": "2026-08-31T21:40:49.006Z",
+  "proofPath": "library/streamer_girl_front-2026-08-31T21-40-49-006Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/streamer_girl_front-2026-08-31T21-40-49-006Z/source-proof.json?v=2026-08-31T21-40-49.006Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/streamer_girl_front-2026-08-31T21-40-49-006Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:3b4c91db0d90495999ab86c3c233a6a52d8853a7eeea2db5ac3c56991c25bce4",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1424,
+      "sha256": "24f049330460bc884c2dc90e06c88067e59cd36ed41fe801483e83f3b4d84e1d"
+    },
+    {
+      "name": "streamer_girl_front/streamer_girl_front.skel",
+      "bytes": 278463,
+      "sha256": "adf508f84e662ccce8531f7e10a3587f3899738598a603787b7acc17a8e76a43"
+    },
+    {
+      "name": "streamer_girl_front/streamer_girl.atlas",
+      "bytes": 30795,
+      "sha256": "d832fdc5fadade1921600417313745c00392b9d7e589125cba32548113ca3658"
+    },
+    {
+      "name": "streamer_girl_front/streamer_girl.png",
+      "bytes": 38763,
+      "sha256": "b2c4c2a88f2c7e7351a9f0160227f25b52524fbf032c7707de830bd1f924491e"
+    }
+  ],
+  "proofHash": "3b4c91db0d90495999ab86c3c233a6a52d8853a7eeea2db5ac3c56991c25bce4"
+}
