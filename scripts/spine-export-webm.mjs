@@ -334,20 +334,10 @@ function sanitizedSkelBuffer(buffer, version = "") {
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
-const skeletonRawUrl = rawUrl(skeletonFile);
-const atlasRawUrl = rawUrl(atlasFile);
-const textureRawUrls = textureFiles.map(f => rawUrl(f));
 let targetAnimation = args.animation || entry.defaultAnimation || '';
-try {
-  const warmAnimations = await warmUpAnimations();
-  if (!targetAnimation || !warmAnimations.includes(targetAnimation)) {
-    targetAnimation = warmAnimations[0] || '';
-  }
-} catch {
-  const availableAnimations = readAnimationNames(skeletonFilePath);
-  if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
-    targetAnimation = availableAnimations[0] || '';
-  }
+const availableAnimations = readAnimationNames(skeletonFilePath);
+if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
+  targetAnimation = availableAnimations[0] || '';
 }
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
@@ -387,6 +377,10 @@ const setSegments = [uploadPath, firstSet.name];
 function rawUrl(filename) {
   return `https://raw.githubusercontent.com/${args.owner}/${args.repo}/${args.branch}/${setSegments.join('/')}/${encodeURIComponent(filename)}`;
 }
+
+const skeletonRawUrl = rawUrl(skeletonFile);
+const atlasRawUrl = rawUrl(atlasFile);
+const textureRawUrls = textureFiles.map(f => rawUrl(f));
 
 async function warmUpAnimations() {
   const skelUrl = skeletonKey === 'skelUrl' ? skeletonRawUrl : skeletonRawUrl;
