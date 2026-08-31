@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "logo-small-2026-08-31T09-10-40-489Z",
+  "title": "logo-small",
+  "uploadedAt": "2026-08-31T09:10:40.489Z",
+  "proofPath": "library/logo-small-2026-08-31T09-10-40-489Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/logo-small-2026-08-31T09-10-40-489Z/source-proof.json?v=2026-08-31T09-10-40.489Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_9rj3mb_981tf7",
+    "anonymousFingerprint": "9rj3mb",
+    "browserFingerprintSha256": "90b77deddd33f1b99b2999ce9117d6272acb739d67dbede9f9fa8ae1a3fb346b",
+    "browserEnvironmentHashSha256": "3b0a110a7fb614659877ab7eec051f6c1e19802dfaecfd914fc6969ad8c394d8",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Belgrade",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/logo-small-2026-08-31T09-10-40-489Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:3a03ab2de4d306a7c512e07af27514c69a5085a2c2749c3bf93cf832a5e27d3b",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 1404,
+      "sha256": "7d20a43c8510a8146566b31cd3bdc537be884da4dfb15d21beea75ac7416a50a"
+    },
+    {
+      "name": "logo-small/Logo-small.atlas",
+      "bytes": 3397,
+      "sha256": "a5d59b648e5046750b9ec6c9bc2a3db1c82d484b0a7934177025aeff5140c1c7"
+    },
+    {
+      "name": "logo-small/Logo-small.json",
+      "bytes": 65628,
+      "sha256": "7b4aafc50095fcef3ce6b782f983d3332e171a5ac554175b0e41795dbf8976f8"
+    },
+    {
+      "name": "logo-small/Logo-small.png",
+      "bytes": 613384,
+      "sha256": "1122b5c6065c355e9cd0c8af29d4eef0d10fad98ef6cebdb0d8857a4279a3520"
+    },
+    {
+      "name": "logo-small/Logo-small2.png",
+      "bytes": 313890,
+      "sha256": "d67330a82eaf49b8c9ddaabeb484a5a988bcfa90d00da0e448b22672ac94adb8"
+    }
+  ],
+  "proofHash": "3a03ab2de4d306a7c512e07af27514c69a5085a2c2749c3bf93cf832a5e27d3b"
+}
