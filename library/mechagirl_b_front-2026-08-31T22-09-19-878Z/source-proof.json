@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "mechagirl_b_front-2026-08-31T22-09-19-878Z",
+  "title": "mechagirl_b_front",
+  "uploadedAt": "2026-08-31T22:09:19.878Z",
+  "proofPath": "library/mechagirl_b_front-2026-08-31T22-09-19-878Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/mechagirl_b_front-2026-08-31T22-09-19-878Z/source-proof.json?v=2026-08-31T22-09-19.878Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/mechagirl_b_front-2026-08-31T22-09-19-878Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:62262feaf2fd48a614ba5dda8f5fe4467f72d068e35152d4f95f77c3d9c7c706",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1382,
+      "sha256": "739f7fab23db39f19e3b49e0c52d3def0b6f87270890a2fe9f1ecbf5c03368bf"
+    },
+    {
+      "name": "mechagirl_b_front/mechagirl_b_front.skel",
+      "bytes": 187109,
+      "sha256": "ac626d8afcf600577865f2932ac8e8a512ba4007172ba3e85c634d5199a5cc9b"
+    },
+    {
+      "name": "mechagirl_b_front/mechagirl_b.atlas",
+      "bytes": 6732,
+      "sha256": "658cc1137671f95e69ae1e73ffd63cfa05c1ea7d3fc2e26491d77c0214a54995"
+    },
+    {
+      "name": "mechagirl_b_front/mechagirl_b.png",
+      "bytes": 21029,
+      "sha256": "563bce31ba74394ec7c19f578a66a45f8d170febfaac2974ca05fc0bec0df4f2"
+    }
+  ],
+  "proofHash": "62262feaf2fd48a614ba5dda8f5fe4467f72d068e35152d4f95f77c3d9c7c706"
+}
