@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-31T09:10:40.489Z",
+  "updatedAt": "2026-08-31T09:10:53.989Z",
+  "animation_asset": {
+    "id": "logo-small-2026-08-31T09-10-40-489Z",
+    "name": "logo-small",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "logo",
+    "skeleton_type": "logo",
+    "content_type": "logo",
+    "taxonomy": {
+      "category": "branding",
+      "class": "logo",
+      "type": "logo-animation",
+      "tags": [
+        "logo"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "branding"
+      ],
+      "style": [
+        "logo"
+      ],
+      "animation_state": [
+        "in",
+        "emph_01",
+        "idle",
+        "idle_02",
+        "look-down",
+        "look-down-rtol",
+        "look-down-left",
+        "look-down-right"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "direction": [
+        "left",
+        "right",
+        "down"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/logo-small-2026-08-31T09-10-40-489Z",
+    "manifestPath": "library/logo-small-2026-08-31T09-10-40-489Z/manifest.json",
+    "files": [
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/logo-small/Logo-small.json",
+        "name": "logo-small/Logo-small.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/logo-small/Logo-small.atlas",
+        "name": "logo-small/Logo-small.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/logo-small/Logo-small.png",
+        "name": "logo-small/Logo-small.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/logo-small/Logo-small2.png",
+        "name": "logo-small/Logo-small2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/logo-small-2026-08-31T09-10-40-489Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Logo-small.json",
+    "atlas": "Logo-small.atlas",
+    "textures": [
+      "Logo-small.png",
+      "Logo-small2.png"
+    ],
+    "animationCount": 8,
+    "animationNames": [
+      "IN",
+      "emph_01",
+      "idle",
+      "idle_02",
+      "look-down",
+      "look-down-RtoL",
+      "look-down-left",
+      "look-down-right"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "logo"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
