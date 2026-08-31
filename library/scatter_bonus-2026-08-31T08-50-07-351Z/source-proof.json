@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "scatter_bonus-2026-08-31T08-50-07-351Z",
+  "title": "scatter_bonus",
+  "uploadedAt": "2026-08-31T08:50:07.351Z",
+  "proofPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/source-proof.json?v=2026-08-31T08-50-07.351Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_uujz90_1sqeglz",
+    "anonymousFingerprint": "uujz90",
+    "browserFingerprintSha256": "50bed461332417d334560291572c22cbf31551552db38f26093c060599fb44ef",
+    "browserEnvironmentHashSha256": "d7263f9e3e5926e8f4207c5f0c4ac06d5dbd5225254bfc31d4932b370a102b13",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "fr-MA",
+      "languages": [
+        "fr-MA",
+        "fr-FR",
+        "fr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Africa/Sao_Tome",
+      "timezoneOffset": 0,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:f651584fc9848068217736855393dfe7f4feeeb19a47a84a18ec1b8711436c22",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 698,
+      "sha256": "000732c2140d2c90e5a17bc36e700dd19314763ba89bd1841dd05f049d082009"
+    },
+    {
+      "name": "scatter_bonus/scatter_bonus.atlas",
+      "bytes": 596,
+      "sha256": "01048687500879c8b20c57bf59662f3b66e6fc6b189a86a965c10c54894b0ce2"
+    },
+    {
+      "name": "scatter_bonus/scatter_bonus.json",
+      "bytes": 23708,
+      "sha256": "f0501d83fb2a00a9d7c3bfb4b8051342fb02228c48ac58d3f6a8188957250138"
+    },
+    {
+      "name": "scatter_bonus/scatter_bonus.png",
+      "bytes": 426770,
+      "sha256": "8b81bbd0280dec0f4218344f848b97356b0efc4960aa5e9bd8b8b891c17fd415"
+    }
+  ],
+  "proofHash": "f651584fc9848068217736855393dfe7f4feeeb19a47a84a18ec1b8711436c22"
+}
