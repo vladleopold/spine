@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "villain_android_courier_front-2026-09-01T09-05-32-220Z",
+  "title": "villain_android_courier_front",
+  "uploadedAt": "2026-09-01T09:05:32.220Z",
+  "proofPath": "library/villain_android_courier_front-2026-09-01T09-05-32-220Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/villain_android_courier_front-2026-09-01T09-05-32-220Z/source-proof.json?v=2026-09-01T09-05-32.220Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/villain_android_courier_front-2026-09-01T09-05-32-220Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:51fc08c864e7cbf7f449511ad881e23a34a1f150082ba90994cd292b16dd1458",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1408,
+      "sha256": "7f1ab69875c07ad97c873d8b7803e2d4b9be20700733c7d7de13fb5bdf64f0bc"
+    },
+    {
+      "name": "villain_android_courier_front/villain_android_courier_front.skel",
+      "bytes": 179946,
+      "sha256": "744d75bcbb4f51692cb482b96b7b43ba9a3ed27ba8c1963ff452f13099a8939a"
+    },
+    {
+      "name": "villain_android_courier_front/villain_android_courier.atlas",
+      "bytes": 7091,
+      "sha256": "37595d2d821b65f370dd421c9487d5216f4f34e5b442b85b5c808c2e4233175b"
+    },
+    {
+      "name": "villain_android_courier_front/villain_android_courier.png",
+      "bytes": 12303,
+      "sha256": "e9b5c6f23f982ca7d99e260af687b2279b9cc7b9b596567efb93c434549e9d24"
+    }
+  ],
+  "proofHash": "51fc08c864e7cbf7f449511ad881e23a34a1f150082ba90994cd292b16dd1458"
+}
