@@ -1,5 +1,138 @@
 [
   {
+    "id": "illust_kamael_cursed-2026-09-01T16-47-57-537Z",
+    "name": "illust_kamael_cursed",
+    "updatedAt": "2026-09-01T16:48:26.734Z",
+    "animation_asset": {
+      "id": "illust_kamael_cursed-2026-09-01T16-47-57-537Z",
+      "name": "illust_kamael_cursed",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "entrance",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-entrance"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z",
+      "manifestPath": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/manifest.json",
+      "files": [
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/illust_kamael_cursed/illust_kamael_cursed.skel",
+          "name": "illust_kamael_cursed/illust_kamael_cursed.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/illust_kamael_cursed/illust_kamael_cursed.atlas",
+          "name": "illust_kamael_cursed/illust_kamael_cursed.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/illust_kamael_cursed/illust_kamael_cursed.png",
+          "name": "illust_kamael_cursed/illust_kamael_cursed.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/entrance-preview.webp",
+          "name": "entrance-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/illust_kamael_cursed-2026-09-01T16-47-57-537Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "illust_kamael_cursed.skel",
+      "atlas": "illust_kamael_cursed.atlas",
+      "textures": [
+        "illust_kamael_cursed.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "entrance",
+        "idle"
+      ],
+      "defaultAnimation": "entrance",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "illust_kamael_cursed-2026-09-01T16-45-26-276Z",
     "name": "illust_kamael_cursed",
     "updatedAt": "2026-09-01T16:46:02.804Z",
