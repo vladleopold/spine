@@ -1,5 +1,245 @@
 [
   {
+    "id": "illust_kamael_cursed-2026-09-01T16-45-26-276Z",
+    "title": "illust_kamael_cursed",
+    "publicOwnerId": "u_690o23",
+    "ownerAnonId": "anon_2kr0qa_mw5e1p",
+    "ownerAnonFingerprint": "2kr0qa",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-01T16:45:26.276Z",
+    "skeleton": "illust_kamael_cursed.skel",
+    "atlas": "illust_kamael_cursed.atlas",
+    "textures": [
+      "illust_kamael_cursed.png"
+    ],
+    "animations": [
+      "entrance",
+      "idle"
+    ],
+    "defaultAnimation": "entrance",
+    "files": [
+      "illust_kamael_cursed/illust_kamael_cursed.skel",
+      "illust_kamael_cursed/illust_kamael_cursed.atlas",
+      "illust_kamael_cursed/illust_kamael_cursed.png",
+      "entrance-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp?v=2026-09-01T16-45-26.276Z",
+    "thumbnailPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp?v=2026-09-01T16-45-26.276Z",
+    "thumbnailPosterPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "illust_kamael_cursed-2026-09-01T16-45-26-276Z",
+      "title": "illust_kamael_cursed",
+      "uploadedAt": "2026-09-01T16:45:26.276Z",
+      "proofPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json?v=2026-09-01T16-45-26.276Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_2kr0qa_mw5e1p",
+        "anonymousFingerprint": "2kr0qa",
+        "browserFingerprintSha256": "52f5eab0d8df22ef177cd8b02917bc50c161ad50c945d74b06d87bda0cfe7d24",
+        "browserEnvironmentHashSha256": "8f31cd7f77e4ee5ac05ae327c3ecdeec0bfd3ccc67d2d6d8206f21cd204cb24c",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "id-ID",
+            "id",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 360,
+            "height": 806,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Jakarta",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:c535417a3644b82c75eb988016542f3a734772ebf210b33bd853ad44b7605658",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "entrance-preview.webp",
+          "bytes": 2268,
+          "sha256": "93c73dc1a44c77c144cbee8da470051b49b140a14fbd4c78ece1cf8bec6a6259"
+        },
+        {
+          "name": "illust_kamael_cursed/illust_kamael_cursed.atlas",
+          "bytes": 16260,
+          "sha256": "d37745da9a3cad73af69b2db8cfcde3cf38b0ee5909c2f787321deb3509b0ff5"
+        },
+        {
+          "name": "illust_kamael_cursed/illust_kamael_cursed.png",
+          "bytes": 1915297,
+          "sha256": "31fcabdb3ab835f0478b8c888f23795e81f132303f8facb3a98a37109d017380"
+        },
+        {
+          "name": "illust_kamael_cursed/illust_kamael_cursed.skel",
+          "bytes": 723723,
+          "sha256": "501f8c8ab5366e7f4b2565f42fb9ff514577aab5a909a2454cce5db2b79751bf"
+        }
+      ],
+      "proofHash": "c535417a3644b82c75eb988016542f3a734772ebf210b33bd853ad44b7605658"
+    },
+    "sourceProofPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json?v=2026-09-01T16-45-26.276Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-01T16:45:48.298Z",
+      "entryId": "illust_kamael_cursed-2026-09-01T16-45-26-276Z",
+      "title": "illust_kamael_cursed",
+      "uploadedAt": "2026-09-01T16:45:26.276Z",
+      "sourceProofHash": "c535417a3644b82c75eb988016542f3a734772ebf210b33bd853ad44b7605658",
+      "sourceProofPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json?v=2026-09-01T16-45-26.276Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_2kr0qa_mw5e1p",
+        "anonymousFingerprint": "2kr0qa",
+        "browserFingerprintSha256": "52f5eab0d8df22ef177cd8b02917bc50c161ad50c945d74b06d87bda0cfe7d24",
+        "browserEnvironmentHashSha256": "8f31cd7f77e4ee5ac05ae327c3ecdeec0bfd3ccc67d2d6d8206f21cd204cb24c",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "id-ID",
+            "id",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 360,
+            "height": 806,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Jakarta",
+          "timezoneOffset": -420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z",
+        "files": [
+          {
+            "name": "illust_kamael_cursed/illust_kamael_cursed.skel",
+            "path": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.skel",
+            "bytes": 723723,
+            "sha256": "501f8c8ab5366e7f4b2565f42fb9ff514577aab5a909a2454cce5db2b79751bf",
+            "github": {
+              "contentSha": "4d92df2a440fb580e7596677cf35672ca145422f",
+              "commitSha": "b9d5229049de666e6567ef620ab61ea8fe438f2a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/b9d5229049de666e6567ef620ab61ea8fe438f2a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.skel"
+            }
+          },
+          {
+            "name": "illust_kamael_cursed/illust_kamael_cursed.atlas",
+            "path": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.atlas",
+            "bytes": 16260,
+            "sha256": "d37745da9a3cad73af69b2db8cfcde3cf38b0ee5909c2f787321deb3509b0ff5",
+            "github": {
+              "contentSha": "068eb6da9dbc29f226a7aa6edeaff49f88aa97e2",
+              "commitSha": "bad258e47ce8947d9f88e0a33cadf8c4d4babf36",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bad258e47ce8947d9f88e0a33cadf8c4d4babf36",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.atlas"
+            }
+          },
+          {
+            "name": "illust_kamael_cursed/illust_kamael_cursed.png",
+            "path": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.png",
+            "bytes": 1915297,
+            "sha256": "31fcabdb3ab835f0478b8c888f23795e81f132303f8facb3a98a37109d017380",
+            "github": {
+              "contentSha": "2e794be62bdc4002f4e826d09c925b022ccb9769",
+              "commitSha": "1c21157f50ffb2f463ee29d7663c89b4b75df5c8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1c21157f50ffb2f463ee29d7663c89b4b75df5c8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/illust_kamael_cursed/illust_kamael_cursed.png"
+            }
+          },
+          {
+            "name": "entrance-preview.webp",
+            "path": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp",
+            "bytes": 2268,
+            "sha256": "93c73dc1a44c77c144cbee8da470051b49b140a14fbd4c78ece1cf8bec6a6259",
+            "github": {
+              "contentSha": "f6163b1b705fedc4ee186eea3b126aab1f4b5d3b",
+              "commitSha": "d4fa903735c2aa3c4e65b30e4434dd2540807cdb",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d4fa903735c2aa3c4e65b30e4434dd2540807cdb",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/entrance-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json",
+            "bytes": 2686,
+            "sha256": "2e424bf36e2999dfa8709c7da8f45b174f897cb3b43fea5bc36fdeae45306a12",
+            "github": {
+              "contentSha": "ae04720a206f7b0cc1e05f960f300893d88eb3e4",
+              "commitSha": "e08749ccf5e95ed5b85d65afecc65bc1fd87f26a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e08749ccf5e95ed5b85d65afecc65bc1fd87f26a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/blockchain-anchor.json",
+        "anchorCommitSha": "d4df29f46a7dcdf87fb1cb1bcc57e5f00086fb88",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/d4df29f46a7dcdf87fb1cb1bcc57e5f00086fb88"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "065c2d6acacd2bd2720c9897158bb816d1f2106a2c54a5e18d6839cd01e66242",
+      "recommendedAnchorPayload": "sha256:065c2d6acacd2bd2720c9897158bb816d1f2106a2c54a5e18d6839cd01e66242",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x065c2d6acacd2bd2720c9897158bb816d1f2106a2c54a5e18d6839cd01e66242",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-45-26-276Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "mecha_android_front-2026-09-01T10-06-48-642Z",
     "title": "mecha_android_front",
     "publicOwnerId": "u_13g32q6",
