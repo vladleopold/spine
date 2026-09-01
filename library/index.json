@@ -1,5 +1,245 @@
 [
   {
+    "id": "butterfly-2026-09-01T08-05-29-129Z",
+    "title": "butterfly",
+    "publicOwnerId": "u_13g32q6",
+    "ownerAnonId": "anon_1h9kfok_mxhunj",
+    "ownerAnonFingerprint": "1h9kfok",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-01T08:05:29.129Z",
+    "skeleton": "butterfly.skel",
+    "atlas": "butterfly.atlas",
+    "textures": [
+      "butterfly.png"
+    ],
+    "animations": [
+      "idle_front",
+      "mad_front",
+      "sleep_front",
+      "walk_front"
+    ],
+    "defaultAnimation": "idle_front",
+    "files": [
+      "butterfly/butterfly.skel",
+      "butterfly/butterfly.atlas",
+      "butterfly/butterfly.png",
+      "idle_front-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/butterfly-2026-09-01T08-05-29-129Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp?v=2026-09-01T08-05-29.129Z",
+    "thumbnailPath": "library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp?v=2026-09-01T08-05-29.129Z",
+    "thumbnailPosterPath": "library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "butterfly-2026-09-01T08-05-29-129Z",
+      "title": "butterfly",
+      "uploadedAt": "2026-09-01T08:05:29.129Z",
+      "proofPath": "library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json?v=2026-09-01T08-05-29.129Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1h9kfok_mxhunj",
+        "anonymousFingerprint": "1h9kfok",
+        "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+        "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "en-GB"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": -60,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/butterfly-2026-09-01T08-05-29-129Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:92471d32b214f794368f90584cbf78f3a8c866d6fb36b096ac0bc24ac51d27e5",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "butterfly/butterfly.atlas",
+          "bytes": 758,
+          "sha256": "42af2802764c6a4502b0b8b28f2747f59b91c48fe4a36dc89ddb25acb18e8621"
+        },
+        {
+          "name": "butterfly/butterfly.png",
+          "bytes": 1857,
+          "sha256": "b4b25c22a9fbf7ffb64922ea5b54b6d979df503b83c6a48fa8f4028604a51d68"
+        },
+        {
+          "name": "butterfly/butterfly.skel",
+          "bytes": 6307,
+          "sha256": "43bb8b84ef5d58ecb00d6dcdb7411aa4a2fbfb73dee1a5516825f12962766ede"
+        },
+        {
+          "name": "idle_front-preview.webp",
+          "bytes": 1390,
+          "sha256": "c7dbdbde00b2b23d2f2d4e4a36a14745776ce958e5d45d83fbdff4dbe5c08449"
+        }
+      ],
+      "proofHash": "92471d32b214f794368f90584cbf78f3a8c866d6fb36b096ac0bc24ac51d27e5"
+    },
+    "sourceProofPath": "library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json?v=2026-09-01T08-05-29.129Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-01T08:05:34.864Z",
+      "entryId": "butterfly-2026-09-01T08-05-29-129Z",
+      "title": "butterfly",
+      "uploadedAt": "2026-09-01T08:05:29.129Z",
+      "sourceProofHash": "92471d32b214f794368f90584cbf78f3a8c866d6fb36b096ac0bc24ac51d27e5",
+      "sourceProofPath": "library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json?v=2026-09-01T08-05-29.129Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1h9kfok_mxhunj",
+        "anonymousFingerprint": "1h9kfok",
+        "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+        "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "en-GB"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": -60,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/butterfly-2026-09-01T08-05-29-129Z",
+        "files": [
+          {
+            "name": "butterfly/butterfly.skel",
+            "path": "library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.skel",
+            "bytes": 6307,
+            "sha256": "43bb8b84ef5d58ecb00d6dcdb7411aa4a2fbfb73dee1a5516825f12962766ede",
+            "github": {
+              "contentSha": "2b62f1f70d73d794ae7eb1a2935b17f952e95507",
+              "commitSha": "ceb42edb9fe16b5688b8e6116f7f3845a16e15de",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ceb42edb9fe16b5688b8e6116f7f3845a16e15de",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.skel"
+            }
+          },
+          {
+            "name": "butterfly/butterfly.atlas",
+            "path": "library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.atlas",
+            "bytes": 758,
+            "sha256": "42af2802764c6a4502b0b8b28f2747f59b91c48fe4a36dc89ddb25acb18e8621",
+            "github": {
+              "contentSha": "d435ea563c08eb77d9995a617ed71f95c0ccc14f",
+              "commitSha": "bac510be1322250d8896c90aa321b7e27f75aa9f",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/bac510be1322250d8896c90aa321b7e27f75aa9f",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.atlas"
+            }
+          },
+          {
+            "name": "butterfly/butterfly.png",
+            "path": "library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.png",
+            "bytes": 1857,
+            "sha256": "b4b25c22a9fbf7ffb64922ea5b54b6d979df503b83c6a48fa8f4028604a51d68",
+            "github": {
+              "contentSha": "c6c9f67acd2e8b997620a2cb60ba80a7d606d25c",
+              "commitSha": "76e69e3dd284223797c1b5d128b49a529535cf92",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/76e69e3dd284223797c1b5d128b49a529535cf92",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/butterfly-2026-09-01T08-05-29-129Z/butterfly/butterfly.png"
+            }
+          },
+          {
+            "name": "idle_front-preview.webp",
+            "path": "library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp",
+            "bytes": 1390,
+            "sha256": "c7dbdbde00b2b23d2f2d4e4a36a14745776ce958e5d45d83fbdff4dbe5c08449",
+            "github": {
+              "contentSha": "d9aedd9ecd64723aad6c43ed5c873074b2434825",
+              "commitSha": "6d0a8e3c268afb261b772ee794b63fa8bd47c52a",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6d0a8e3c268afb261b772ee794b63fa8bd47c52a",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/butterfly-2026-09-01T08-05-29-129Z/idle_front-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json",
+            "bytes": 2559,
+            "sha256": "4db379cc525abe95c2980c3cc599449c0d1dd28650d9f9fd4d75dd1917b91c17",
+            "github": {
+              "contentSha": "6c9c4ae374147902ce73e4fcd4f9508e0116e44b",
+              "commitSha": "01a2fcd410c4c05214d0b1c85634d36cea90c356",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/01a2fcd410c4c05214d0b1c85634d36cea90c356",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/butterfly-2026-09-01T08-05-29-129Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/butterfly-2026-09-01T08-05-29-129Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/blockchain-anchor.json",
+        "anchorCommitSha": "480830c2d706f25c1ac6040e292c313b000a3918",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/480830c2d706f25c1ac6040e292c313b000a3918"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "33f396f4ee19d597325a56c5c5f7136f6dfcb41a09ee3add9efc1136728130b7",
+      "recommendedAnchorPayload": "sha256:33f396f4ee19d597325a56c5c5f7136f6dfcb41a09ee3add9efc1136728130b7",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x33f396f4ee19d597325a56c5c5f7136f6dfcb41a09ee3add9efc1136728130b7",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/butterfly-2026-09-01T08-05-29-129Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/butterfly-2026-09-01T08-05-29-129Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "knight_female_hero_side-2026-09-01T08-02-42-709Z",
     "title": "knight_female_hero_side",
     "publicOwnerId": "u_13g32q6",
