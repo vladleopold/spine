@@ -17,6 +17,7 @@ const args = {
   repo: 'spine',
   branch: 'main',
   githubToken: '',
+  sanitizeSkel: false,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
@@ -31,6 +32,7 @@ for (let i = 2; i < process.argv.length; i++) {
   else if (arg.startsWith('--owner=')) args.owner = arg.split('=')[1];
   else if (arg.startsWith('--repo=')) args.repo = arg.split('=')[1];
   else if (arg.startsWith('--github-token=')) args.githubToken = arg.split('=')[1];
+  else if (arg.startsWith('--sanitize-skel=')) args.sanitizeSkel = arg.split('=')[1] !== 'false';
 }
 
 if (!args.uploadId) {
@@ -567,6 +569,7 @@ fs.mkdirSync(tempDir, { recursive: true });
 
 const browser = await chromium.launch({
   headless: true,
+  ...(process.env.PLAYWRIGHT_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE } : {}),
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -598,7 +601,7 @@ try {
     let body;
     if (skeletonFile.toLowerCase().endsWith('.skel')) {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
-      body = sanitizedSkelBuffer(rawBuffer, skeletonVersion);
+      body = args.sanitizeSkel ? sanitizedSkelBuffer(rawBuffer, skeletonVersion) : rawBuffer;
     } else {
       body = fs.readFileSync(skeletonFilePath, 'utf8');
     }
@@ -621,7 +624,7 @@ try {
       });
     });
   }
-  await page.setContent(captureHtml, { waitUntil: 'networkidle', timeout: 60000 });
+  await page.setContent(captureHtml, { waitUntil: 'load', timeout: 60000 });
 
   await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
 
@@ -711,14 +714,36 @@ try {
     execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimLow} -c:v libvpx-vp9 -b:v ${bitrates.low} -pix_fmt yuv420p "${outPaths.webmLow}"`, { stdio: 'inherit' });
 
     // WebP Generation (extract first frame)
-    // High Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimHigh} -c:v libwebp "${outPaths.webpHigh}"`, { stdio: 'inherit' });
-    // Medium Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimMedium} -c:v libwebp "${outPaths.webpMedium}"`, { stdio: 'inherit' });
-    // Low Quality WebP
-    execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dimLow} -c:v libwebp "${outPaths.webpLow}"`, { stdio: 'inherit' });
-
-    console.error(`FFmpeg processing complete. Generated 3x WebM and 3x WebP.`);
+    // Prefer cwebp (webp CLI) when libwebp ffmpeg encoder is unavailable (multiple ffmpeg builds omit libwebp).
+    function convertToWebp(source, out, dim) {
+      try {
+        const pngPath = `${source}.frame.png`;
+        execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
+        try {
+          execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
+        } catch (e) {
+          execSync(`convert "${pngPath}" "${out}"`, { stdio: 'inherit' });
+        }
+        fs.rmSync(pngPath, { force: true });
+      } catch (err) {
+        throw new Error(`WebP generation failed for ${out}: ${err.message}`);
+      }
+    }
+    const webpDims = {
+      high: dimHigh,
+      medium: dimMedium,
+      low: dimLow,
+    };
+    let webpOk = true;
+    for (const q of ['high', 'medium', 'low']) {
+      try {
+        convertToWebp(outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`], outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`], webpDims[q]);
+      } catch (err) {
+        console.error(`WebP (${q}) failed: ${err.message}`);
+        webpOk = false;
+      }
+    }
+    if (webpOk) console.error(`WebP posters generated.`);
   } catch (err) {
     console.error(`FFmpeg processing failed or skipped: ${err.message}`);
     // Fallback if ffmpeg fails: just copy the original capture to the main output
