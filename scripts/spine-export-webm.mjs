@@ -190,6 +190,48 @@ function readAnimationNames(filePath) {
   return [];
 }
 
+/**
+ * Compute animation duration from JSON skeleton timeline data as a fallback
+ * when the player reports duration=0 (Spine 4.2.x JSON exports sometimes
+ * omit the top-level 'duration' field on animations).
+ * Walks all timeline keys for the given animation and returns the max 'time'.
+ */
+function readJsonAnimationDuration(filePath, animationName) {
+  try {
+    const ext = path.extname(filePath).toLowerCase();
+    let content = null;
+    if (ext === '.json') {
+      content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } else if (ext === '.skel') {
+      const dir = path.dirname(filePath);
+      const base = path.basename(filePath, '.skel');
+      const jsonSibling = path.join(dir, base + '.json');
+      if (fs.existsSync(jsonSibling)) {
+        content = JSON.parse(fs.readFileSync(jsonSibling, 'utf8'));
+      }
+    }
+    if (!content || !content.animations || !content.animations[animationName]) return 0;
+    const anim = content.animations[animationName];
+    let maxTime = 0;
+    const collect = (obj) => {
+      if (!obj) return;
+      if (Array.isArray(obj)) {
+        for (const v of obj) {
+          if (v && typeof v === 'object' && 'time' in v && typeof v.time === 'number') {
+            if (v.time > maxTime) maxTime = v.time;
+          }
+        }
+        return;
+      }
+      if (typeof obj !== 'object') return;
+      for (const k of Object.keys(obj)) collect(obj[k]);
+    };
+    collect(anim);
+    return maxTime;
+  } catch { }
+  return 0;
+}
+
 class SpineBinaryCursor {
   constructor(bytes) {
     this.bytes = bytes;
@@ -638,9 +680,20 @@ try {
   const canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
   const canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
 
+  // Fallback: if the player reported duration=0 (e.g. Spine 4.2.x JSON with no
+  // top-level 'duration' field), compute it from the raw JSON timeline data.
+  let effectiveDuration = animDuration;
+  if (effectiveDuration <= 0 && targetAnimation) {
+    const fallbackDuration = readJsonAnimationDuration(skeletonFilePath, targetAnimation);
+    if (fallbackDuration > 0) {
+      console.error(`Player reported duration=0, using JSON timeline max time=${fallbackDuration}s for '${targetAnimation}'`);
+      effectiveDuration = fallbackDuration;
+    }
+  }
+
   console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
 
-  const captureDuration = Math.max(animDuration > 0 ? animDuration : 1, 2); // Record at least 2s so short animations (e.g. 0.33s loops) show meaningful preview content
+  const captureDuration = Math.max(effectiveDuration > 0 ? effectiveDuration : 1, 2); // Record at least 2s so short animations (e.g. 0.33s loops) show meaningful preview content
   await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
 
   await page.evaluate(() => {
