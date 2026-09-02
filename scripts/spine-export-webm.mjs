@@ -693,7 +693,7 @@ try {
 
   console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
 
-  const captureDuration = Math.max(effectiveDuration > 0 ? effectiveDuration : 1, 2); // Record at least 2s so short animations (e.g. 0.33s loops) show meaningful preview content
+  const captureDuration = effectiveDuration > 0 ? effectiveDuration : 1; // Record exactly the animation duration (no artificial minimum)
   await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
 
   await page.evaluate(() => {
@@ -768,10 +768,13 @@ try {
 
     // WebP Generation (extract first frame)
     // Prefer cwebp (webp CLI) when libwebp ffmpeg encoder is unavailable (multiple ffmpeg builds omit libwebp).
+    // IMPORTANT: use the passed `source` parameter (the transcoded webm for this quality),
+    // NOT videoPath (the original browser recording) — otherwise high/medium/low would all
+    // extract from the same source, and on CI the temp file could be overwritten between calls.
     function convertToWebp(source, out, dim) {
       try {
-        const pngPath = `${source}.frame.png`;
-        execSync(`ffmpeg -y -i "${videoPath}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
+        const pngPath = `${out}.frame.png`;
+        execSync(`ffmpeg -y -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
         try {
           execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
         } catch (e) {
@@ -789,8 +792,10 @@ try {
     };
     let webpOk = true;
     for (const q of ['high', 'medium', 'low']) {
+      const webmSrc = outPaths[`webm${q[0].toUpperCase()}${q.slice(1)}`];
+      const webpOut = outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`];
       try {
-        convertToWebp(outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`], outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`], webpDims[q]);
+        convertToWebp(webmSrc, webpOut, webpDims[q]);
       } catch (err) {
         console.error(`WebP (${q}) failed: ${err.message}`);
         webpOk = false;
