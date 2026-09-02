@@ -336,8 +336,10 @@ const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 let targetAnimation = args.animation || entry.defaultAnimation || '';
 const availableAnimations = readAnimationNames(skeletonFilePath);
-if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
-  targetAnimation = availableAnimations[0] || '';
+if (availableAnimations.length > 0) {
+  if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
+    targetAnimation = availableAnimations[0] || '';
+  }
 }
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
