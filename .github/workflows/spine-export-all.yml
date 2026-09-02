@@ -22,10 +22,10 @@ jobs:
           if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
             # Parse comma-separated IDs into JSON array
             IDS="${{ github.event.inputs.filter_ids }}"
-            MATRIX_JSON=$(node -e "
+            MATRIX_JSON=$(IDS="$IDS" node -e "
               const ids = process.env.IDS.split(',').map(s => s.trim()).filter(Boolean);
               console.log(JSON.stringify(ids));
-            " IDS="$IDS")
+            ")
             echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
           else
             MATRIX_JSON=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('library/index.json', 'utf8')); console.log(JSON.stringify(data.map(d => d.id).filter(Boolean)));")
