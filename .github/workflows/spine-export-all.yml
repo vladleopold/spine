@@ -3,8 +3,8 @@ name: Spine Export All (Matrix)
 on:
   workflow_dispatch:
     inputs:
-      filter_id:
-        description: 'Optional ID to filter (leave blank for all)'
+      filter_ids:
+        description: 'Comma-separated IDs to filter (leave blank for all)'
         required: false
         default: ''
 
@@ -19,8 +19,14 @@ jobs:
       - name: Generate matrix
         id: set-matrix
         run: |
-          if [ -n "${{ github.event.inputs.filter_id }}" ]; then
-            echo "matrix=[\"${{ github.event.inputs.filter_id }}\"]" >> $GITHUB_OUTPUT
+          if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
+            # Parse comma-separated IDs into JSON array
+            IDS="${{ github.event.inputs.filter_ids }}"
+            MATRIX_JSON=$(node -e "
+              const ids = process.env.IDS.split(',').map(s => s.trim()).filter(Boolean);
+              console.log(JSON.stringify(ids));
+            " IDS="$IDS")
+            echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
           else
             MATRIX_JSON=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('library/index.json', 'utf8')); console.log(JSON.stringify(data.map(d => d.id).filter(Boolean)));")
             echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
@@ -309,4 +315,3 @@ jobs:
           
           echo "Failed to push after $MAX_RETRIES attempts."
           exit 1
-
