@@ -816,7 +816,7 @@ try {
   
   const meta = {
     animation: targetAnimation,
-    animationDuration: animDuration,
+    animationDuration: effectiveDuration,
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
