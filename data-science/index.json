@@ -1,5 +1,132 @@
 [
   {
+    "id": "img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z",
+    "name": "img_emotion_rare_erpass_4166",
+    "updatedAt": "2026-09-02T10:57:26.409Z",
+    "animation_asset": {
+      "id": "img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z",
+      "name": "img_emotion_rare_erpass_4166",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z",
+      "manifestPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/manifest.json",
+      "files": [
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.json",
+          "name": "img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.atlas",
+          "name": "img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.png",
+          "name": "img_emotion_rare_erpass_4166/Img_Emotion_Rare_ERPASS_4166.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Img_Emotion_Rare_ERPASS_4166.json",
+      "atlas": "Img_Emotion_Rare_ERPASS_4166.atlas",
+      "textures": [
+        "Img_Emotion_Rare_ERPASS_4166.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z",
     "name": "img_emotion_rare_erpass_4166",
     "updatedAt": "2026-09-02T10:56:01.294Z",
