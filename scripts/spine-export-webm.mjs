@@ -640,7 +640,7 @@ try {
 
   console.error(`Animation ready, duration=${animDuration}s, canvas=${canvasWidth}x${canvasHeight}`);
 
-  const captureDuration = animDuration > 0 ? animDuration : 1; // Exactly animDuration, no stretching/padding
+  const captureDuration = Math.max(animDuration > 0 ? animDuration : 1, 2); // Record at least 2s so short animations (e.g. 0.33s loops) show meaningful preview content
   await new Promise(resolve => setTimeout(resolve, captureDuration * 1000));
 
   await page.evaluate(() => {
