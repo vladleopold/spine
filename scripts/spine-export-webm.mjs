@@ -773,8 +773,10 @@ try {
     // extract from the same source, and on CI the temp file could be overwritten between calls.
     function convertToWebp(source, out, dim) {
       try {
+        // Extract frame at 30% into the video (skip dark intro frames)
+        const frameTime = Math.max(0.1, (effectiveDuration || 1) * 0.3);
         const pngPath = `${out}.frame.png`;
-        execSync(`ffmpeg -y -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
+        execSync(`ffmpeg -y -ss ${frameTime.toFixed(3)} -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
         try {
           execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
         } catch (e) {
