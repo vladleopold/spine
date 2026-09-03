@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "angel_captain_front-2026-09-03T11-27-44-913Z",
+  "title": "angel_captain_front",
+  "uploadedAt": "2026-09-03T11:27:44.913Z",
+  "proofPath": "library/angel_captain_front-2026-09-03T11-27-44-913Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/angel_captain_front-2026-09-03T11-27-44-913Z/source-proof.json?v=2026-09-03T11-27-44.913Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/angel_captain_front-2026-09-03T11-27-44-913Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ee548f4cd96a05f58a4180b5847ea96bd67e59ed4fc1e8740e031a500b4e56d5",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "angel_captain_front/angel_captain_front.skel",
+      "bytes": 168862,
+      "sha256": "a8f349757676425c97a088f391f595a0dc77483f9c4e40f60e77d5339ed09680"
+    },
+    {
+      "name": "angel_captain_front/angel_captain.atlas",
+      "bytes": 5826,
+      "sha256": "f6788c9186c24857d27b1003324ec8e5e53f775942862c75988d5e64a3cd32bc"
+    },
+    {
+      "name": "angel_captain_front/angel_captain.png",
+      "bytes": 14095,
+      "sha256": "30cb98464f82420cf669e73b33f2804c12ac2c6b0df69dc34f32e702b73a464c"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1412,
+      "sha256": "1d870039ac156613327d07e1eed0c27c44f7ef1688cb4cc54e194f8e9d8d5f0f"
+    }
+  ],
+  "proofHash": "ee548f4cd96a05f58a4180b5847ea96bd67e59ed4fc1e8740e031a500b4e56d5"
+}
