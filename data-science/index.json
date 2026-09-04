@@ -1,5 +1,132 @@
 [
   {
+    "id": "anticipation2-2026-09-04T13-14-42-449Z",
+    "name": "anticipation2",
+    "updatedAt": "2026-09-04T13:15:01.685Z",
+    "animation_asset": {
+      "id": "anticipation2-2026-09-04T13-14-42-449Z",
+      "name": "anticipation2",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "anticipation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-anticipation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/anticipation2-2026-09-04T13-14-42-449Z",
+      "manifestPath": "library/anticipation2-2026-09-04T13-14-42-449Z/manifest.json",
+      "files": [
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/anticipation2/anticipation2.json",
+          "name": "anticipation2/anticipation2.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/anticipation2/anticipation2.atlas",
+          "name": "anticipation2/anticipation2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/anticipation2/anticipation2.png",
+          "name": "anticipation2/anticipation2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/anticipation-preview.webp",
+          "name": "anticipation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/anticipation2-2026-09-04T13-14-42-449Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "anticipation2.json",
+      "atlas": "anticipation2.atlas",
+      "textures": [
+        "anticipation2.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "anticipation"
+      ],
+      "defaultAnimation": "anticipation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "angel_captain_side-2026-09-03T11-29-23-621Z",
     "name": "angel_captain_side",
     "updatedAt": "2026-09-03T11:29:38.539Z",
