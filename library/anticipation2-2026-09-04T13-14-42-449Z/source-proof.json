@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "anticipation2-2026-09-04T13-14-42-449Z",
+  "title": "anticipation2",
+  "uploadedAt": "2026-09-04T13:14:42.449Z",
+  "proofPath": "library/anticipation2-2026-09-04T13-14-42-449Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-04T13-14-42-449Z/source-proof.json?v=2026-09-04T13-14-42.449Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_1l7idal_1prc0gb",
+    "anonymousFingerprint": "1l7idal",
+    "browserFingerprintSha256": "b080c9fe88c4632c81908670071a632cd695c5f6e7e18094cb3c5eb8fe7973f7",
+    "browserEnvironmentHashSha256": "6b70623fa9f10a5cee160bcfab8475db0bfa0fea5d31712c004c5a13e1fa3390",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2048,
+        "height": 1152,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/anticipation2-2026-09-04T13-14-42-449Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:559471ac99cd759920da2606b21efc0aa7e943575337e63fffd7372b9af404bc",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "anticipation-preview.webp",
+      "bytes": 770,
+      "sha256": "5383726a057116acd1807d04ba12ac02189e5a8463b2996b707cd14a134527f4"
+    },
+    {
+      "name": "anticipation2/anticipation2.atlas",
+      "bytes": 8280,
+      "sha256": "5d2b3604a48b25cc51b17658b1cebe973ee8a792f3b799b1a2e1da463e1c6a23"
+    },
+    {
+      "name": "anticipation2/anticipation2.json",
+      "bytes": 42337,
+      "sha256": "ed756535937a1189b19bd3973a959ba386788851b52e810923ce5c9aa9a04065"
+    },
+    {
+      "name": "anticipation2/anticipation2.png",
+      "bytes": 2997793,
+      "sha256": "9a9e1f410a7599408300b7f4269affd3e79f62edf1999a825dd405df323fbf1e"
+    }
+  ],
+  "proofHash": "559471ac99cd759920da2606b21efc0aa7e943575337e63fffd7372b9af404bc"
+}
