@@ -1,5 +1,241 @@
 [
   {
+    "id": "321-spine-2025-2026-09-05T02-44-05-724Z",
+    "title": "321-spine(2025)",
+    "publicOwnerId": "u_1tsml1b",
+    "ownerAnonId": "anon_otflqv_1xurov5",
+    "ownerAnonFingerprint": "otflqv",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-05T02:44:05.724Z",
+    "webmGeneratedAt": "2026-09-05T02:44:05.724Z",
+    "skeleton": "321-Spine(2025).json",
+    "atlas": "spine-pet-321.atlas",
+    "textures": [
+      "spine-pet-321.png"
+    ],
+    "animations": [
+      "attack",
+      "idle",
+      "walk"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "321-spine(2025)/321-Spine(2025).json",
+      "321-spine(2025)/spine-pet-321.atlas",
+      "321-spine(2025)/spine-pet-321.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp?v=2026-09-05T02-44-05.724Z",
+    "thumbnailPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp?v=2026-09-05T02-44-05.724Z",
+    "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "321-spine-2025-2026-09-05T02-44-05-724Z",
+      "title": "321-spine(2025)",
+      "uploadedAt": "2026-09-05T02:44:05.724Z",
+      "proofPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json?v=2026-09-05T02-44-05.724Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_otflqv_1xurov5",
+        "anonymousFingerprint": "otflqv",
+        "browserFingerprintSha256": "aac0ce71d31dacbf08de75c32fdb6753a6cb1a52dd192366199901e426ef936a",
+        "browserEnvironmentHashSha256": "26f0b86250ca963450d11cd0f0e1d474cd8611a91b3d7b84514f0fd0c8a7d71d",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+          "platform": "Linux x86_64",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "America/Detroit",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 10,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:d73f1b4942830c6ade530fd8aa1a9aa6a3593bce5366a9fe8063652ea82de542",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "321-spine(2025)/321-Spine(2025).json",
+          "bytes": 91034,
+          "sha256": "7e3167410e1c1ded7a81fa87c16084986a8772c80ae8b6d298b3ddc07f1f9d8b"
+        },
+        {
+          "name": "321-spine(2025)/spine-pet-321.atlas",
+          "bytes": 2132,
+          "sha256": "1aa31dd96eff97e701a30c74e12c1758801314b2d93f18d89ef22b8df95ae051"
+        },
+        {
+          "name": "321-spine(2025)/spine-pet-321.png",
+          "bytes": 75267,
+          "sha256": "22692a91d9aa38d53ec2ab5cefd0a39f1c0d35747c384687e0b0e08097e8c97e"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 808,
+          "sha256": "a727fe94939e3141499e924ed9fe97027b77626695e2af4ea16e15dfc42b9be8"
+        }
+      ],
+      "proofHash": "d73f1b4942830c6ade530fd8aa1a9aa6a3593bce5366a9fe8063652ea82de542"
+    },
+    "sourceProofPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json?v=2026-09-05T02-44-05.724Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-05T02:44:08.793Z",
+      "entryId": "321-spine-2025-2026-09-05T02-44-05-724Z",
+      "title": "321-spine(2025)",
+      "uploadedAt": "2026-09-05T02:44:05.724Z",
+      "sourceProofHash": "d73f1b4942830c6ade530fd8aa1a9aa6a3593bce5366a9fe8063652ea82de542",
+      "sourceProofPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json?v=2026-09-05T02-44-05.724Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_otflqv_1xurov5",
+        "anonymousFingerprint": "otflqv",
+        "browserFingerprintSha256": "aac0ce71d31dacbf08de75c32fdb6753a6cb1a52dd192366199901e426ef936a",
+        "browserEnvironmentHashSha256": "26f0b86250ca963450d11cd0f0e1d474cd8611a91b3d7b84514f0fd0c8a7d71d",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+          "platform": "Linux x86_64",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "America/Detroit",
+          "timezoneOffset": 240,
+          "maxTouchPoints": 10,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z",
+        "files": [
+          {
+            "name": "321-spine(2025)/321-Spine(2025).json",
+            "path": "library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/321-Spine(2025).json",
+            "bytes": 91034,
+            "sha256": "7e3167410e1c1ded7a81fa87c16084986a8772c80ae8b6d298b3ddc07f1f9d8b",
+            "github": {
+              "contentSha": "d758e7e3764d9da98f9a5821a854adc2f0665a37",
+              "commitSha": "eb14f5068c0f34fd164eff0095bb2f6f585cbe58",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/eb14f5068c0f34fd164eff0095bb2f6f585cbe58",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/321-Spine(2025).json"
+            }
+          },
+          {
+            "name": "321-spine(2025)/spine-pet-321.atlas",
+            "path": "library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/spine-pet-321.atlas",
+            "bytes": 2132,
+            "sha256": "1aa31dd96eff97e701a30c74e12c1758801314b2d93f18d89ef22b8df95ae051",
+            "github": {
+              "contentSha": "10ed45db215778ee3f359c975df962f238c139bf",
+              "commitSha": "e2ad7f9c4ee961749d36e7ff16f14c9a5ccb5355",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e2ad7f9c4ee961749d36e7ff16f14c9a5ccb5355",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/spine-pet-321.atlas"
+            }
+          },
+          {
+            "name": "321-spine(2025)/spine-pet-321.png",
+            "path": "library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/spine-pet-321.png",
+            "bytes": 75267,
+            "sha256": "22692a91d9aa38d53ec2ab5cefd0a39f1c0d35747c384687e0b0e08097e8c97e",
+            "github": {
+              "contentSha": "ee9ce7a66753220b621d1c337afa78a6c7ae7308",
+              "commitSha": "874d680bf9eff09b5bd916d337462c3f54836e01",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/874d680bf9eff09b5bd916d337462c3f54836e01",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/321-spine-2025-2026-09-05T02-44-05-724Z/321-spine(2025)/spine-pet-321.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp",
+            "bytes": 808,
+            "sha256": "a727fe94939e3141499e924ed9fe97027b77626695e2af4ea16e15dfc42b9be8",
+            "github": {
+              "contentSha": "1d1c6fa1c31e538139a3e894c2b8af6abab5d63a",
+              "commitSha": "11a1e2a162b5b65409418abcae671efa29a48317",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/11a1e2a162b5b65409418abcae671efa29a48317",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json",
+            "bytes": 2576,
+            "sha256": "6ced9b2d466d86b9d8577b4197987c675380c77baa2010bb5bc0a0d3a3222fa3",
+            "github": {
+              "contentSha": "17784b16112e09f684eaa4a2c138027b7c1e15c2",
+              "commitSha": "733e628cbf1a95d4537b2a71c44156105e92db76",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/733e628cbf1a95d4537b2a71c44156105e92db76",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/321-spine-2025-2026-09-05T02-44-05-724Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/blockchain-anchor.json",
+        "anchorCommitSha": "efc2f1fc46c6c9eb018455d5edf092365ece4526",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/efc2f1fc46c6c9eb018455d5edf092365ece4526"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "6cebbcc0507a15a91338c5b6b18723ada82df4456f62804be13da9d0eeb100e3",
+      "recommendedAnchorPayload": "sha256:6cebbcc0507a15a91338c5b6b18723ada82df4456f62804be13da9d0eeb100e3",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x6cebbcc0507a15a91338c5b6b18723ada82df4456f62804be13da9d0eeb100e3",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T02-44-05-724Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "anticipation2-2026-09-04T14-21-00-668Z",
     "title": "anticipation2",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
