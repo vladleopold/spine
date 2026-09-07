@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-07T23:13:58.203Z",
+  "updatedAt": "2026-09-07T23:14:20.158Z",
+  "animation_asset": {
+    "id": "cow-2026-09-07T23-13-58-203Z",
+    "name": "cow",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "idle",
+        "walk",
+        "scream",
+        "select"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "walk"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/cow-2026-09-07T23-13-58-203Z",
+    "manifestPath": "library/cow-2026-09-07T23-13-58-203Z/manifest.json",
+    "files": [
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/cow/cow.json",
+        "name": "cow/cow.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/cow/cow.atlas",
+        "name": "cow/cow.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/cow/cow.png",
+        "name": "cow/cow.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cow-2026-09-07T23-13-58-203Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cow.json",
+    "atlas": "cow.atlas",
+    "textures": [
+      "cow.png"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "idle",
+      "walk",
+      "scream",
+      "select"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
