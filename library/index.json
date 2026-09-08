@@ -1,5 +1,247 @@
 [
   {
+    "id": "animstartscreen-2026-09-08T17-19-56-936Z",
+    "title": "animstartscreen",
+    "publicOwnerId": "u_q00z2",
+    "ownerAnonId": "anon_1olt2mx_ktov64",
+    "ownerAnonFingerprint": "1olt2mx",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-08T17:19:56.936Z",
+    "webmGeneratedAt": "2026-09-08T17:19:56.936Z",
+    "skeleton": "animStartScreen.json",
+    "atlas": "animStartScreen.atlas",
+    "textures": [
+      "animStartScreen.png"
+    ],
+    "animations": [
+      "startScreen",
+      "startScreenLoop",
+      "startScreenSmoke"
+    ],
+    "defaultAnimation": "startScreen",
+    "files": [
+      "animstartscreen/animStartScreen.json",
+      "animstartscreen/animStartScreen.atlas",
+      "animstartscreen/animStartScreen.png",
+      "startscreen-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/animstartscreen-2026-09-08T17-19-56-936Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp?v=2026-09-08T17-19-56.936Z",
+    "thumbnailPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp?v=2026-09-08T17-19-56.936Z",
+    "thumbnailPosterPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "animstartscreen-2026-09-08T17-19-56-936Z",
+      "title": "animstartscreen",
+      "uploadedAt": "2026-09-08T17:19:56.936Z",
+      "proofPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json?v=2026-09-08T17-19-56.936Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1olt2mx_ktov64",
+        "anonymousFingerprint": "1olt2mx",
+        "browserFingerprintSha256": "b78bd5579e557e456c63b9eda7961e3f459180aa66da5f9e36f0354889e175ad",
+        "browserEnvironmentHashSha256": "3f14db300ca4cd5bef224069a9df7dcab3ba91b31958a3cbcb38da80354840fd",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "pt-BR",
+          "languages": [
+            "pt-BR",
+            "pt",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/animstartscreen-2026-09-08T17-19-56-936Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:6cf611375a4513b4d955830175f28f108495a35ba87bef2638f3f14ee8f23bcd",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "animstartscreen/animStartScreen.atlas",
+          "bytes": 4950,
+          "sha256": "4432910a735dc63f3a79e53663e3c80ebf885c341bb9d9ed285557cf1acad177"
+        },
+        {
+          "name": "animstartscreen/animStartScreen.json",
+          "bytes": 17457,
+          "sha256": "1245eb7ff4a9f770d03f186009e639fce8211bbbd023de14dfede87f4c1be432"
+        },
+        {
+          "name": "animstartscreen/animStartScreen.png",
+          "bytes": 2737737,
+          "sha256": "8f56335358aa7b41883e87e35f3ff5da50ca5e8034a1450a28545daa3b3866a4"
+        },
+        {
+          "name": "startscreen-preview.webp",
+          "bytes": 698,
+          "sha256": "5a0045edb060dfaee73a98be42d5b0493e5dbb60255d933171d26c719826a562"
+        }
+      ],
+      "proofHash": "6cf611375a4513b4d955830175f28f108495a35ba87bef2638f3f14ee8f23bcd"
+    },
+    "sourceProofPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json?v=2026-09-08T17-19-56.936Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-08T17:20:05.252Z",
+      "entryId": "animstartscreen-2026-09-08T17-19-56-936Z",
+      "title": "animstartscreen",
+      "uploadedAt": "2026-09-08T17:19:56.936Z",
+      "sourceProofHash": "6cf611375a4513b4d955830175f28f108495a35ba87bef2638f3f14ee8f23bcd",
+      "sourceProofPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json?v=2026-09-08T17-19-56.936Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1olt2mx_ktov64",
+        "anonymousFingerprint": "1olt2mx",
+        "browserFingerprintSha256": "b78bd5579e557e456c63b9eda7961e3f459180aa66da5f9e36f0354889e175ad",
+        "browserEnvironmentHashSha256": "3f14db300ca4cd5bef224069a9df7dcab3ba91b31958a3cbcb38da80354840fd",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "pt-BR",
+          "languages": [
+            "pt-BR",
+            "pt",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Sao_Paulo",
+          "timezoneOffset": 180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/animstartscreen-2026-09-08T17-19-56-936Z",
+        "files": [
+          {
+            "name": "animstartscreen/animStartScreen.json",
+            "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.json",
+            "bytes": 17457,
+            "sha256": "1245eb7ff4a9f770d03f186009e639fce8211bbbd023de14dfede87f4c1be432",
+            "github": {
+              "contentSha": "aec85f87e910f8c6371d9023c3f7469567e2a0c6",
+              "commitSha": "cc68e12bccafbb4ff24f3d89a2caa8632bc094c0",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cc68e12bccafbb4ff24f3d89a2caa8632bc094c0",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.json"
+            }
+          },
+          {
+            "name": "animstartscreen/animStartScreen.atlas",
+            "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.atlas",
+            "bytes": 4950,
+            "sha256": "4432910a735dc63f3a79e53663e3c80ebf885c341bb9d9ed285557cf1acad177",
+            "github": {
+              "contentSha": "310393dd2ce1df392fced57df76ba6cf7a10c9a2",
+              "commitSha": "c11d4702883bbde57474865ada4ffbc6cd62c15d",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c11d4702883bbde57474865ada4ffbc6cd62c15d",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.atlas"
+            }
+          },
+          {
+            "name": "animstartscreen/animStartScreen.png",
+            "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.png",
+            "bytes": 2737737,
+            "sha256": "8f56335358aa7b41883e87e35f3ff5da50ca5e8034a1450a28545daa3b3866a4",
+            "github": {
+              "contentSha": "1cffe6f617f69a89931f2b22d6f0925a889185ea",
+              "commitSha": "fc0cd5a02a5eb7dcdb775d08ce9e1d9c6189e8f7",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/fc0cd5a02a5eb7dcdb775d08ce9e1d9c6189e8f7",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.png"
+            }
+          },
+          {
+            "name": "startscreen-preview.webp",
+            "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp",
+            "bytes": 698,
+            "sha256": "5a0045edb060dfaee73a98be42d5b0493e5dbb60255d933171d26c719826a562",
+            "github": {
+              "contentSha": "50f3bf1cda57847276cc481442aa9cf8a3b797f6",
+              "commitSha": "33b03a19dfa000f25fbda92bf477b5da86a1ab8e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/33b03a19dfa000f25fbda92bf477b5da86a1ab8e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json",
+            "bytes": 2634,
+            "sha256": "b1884ebd01feef89a65ae173a74ae20ccaa6d8782442522514a9db6fefc6573b",
+            "github": {
+              "contentSha": "315687e2b5f8aed1270730fac0ab33ef664a4f54",
+              "commitSha": "d4b1cbf25dc27cb6294c605118e5881411faaa03",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/d4b1cbf25dc27cb6294c605118e5881411faaa03",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/blockchain-anchor.json",
+        "anchorCommitSha": "3129fe8a99e6d686c221a5485520584b0c0a47b9",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/3129fe8a99e6d686c221a5485520584b0c0a47b9"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "758c7b584b63ea80586fcf60f9e61caa824e623cf578a7f81d69042cb953ee80",
+      "recommendedAnchorPayload": "sha256:758c7b584b63ea80586fcf60f9e61caa824e623cf578a7f81d69042cb953ee80",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x758c7b584b63ea80586fcf60f9e61caa824e623cf578a7f81d69042cb953ee80",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/animstartscreen-2026-09-08T17-19-56-936Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "animlogo-2026-09-08T17-18-43-338Z",
     "title": "animlogo",
     "publicOwnerId": "u_q00z2",
