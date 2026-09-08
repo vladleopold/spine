@@ -1,5 +1,153 @@
 [
   {
+    "id": "animstartscreen-2026-09-08T19-11-03-245Z",
+    "name": "animstartscreen",
+    "updatedAt": "2026-09-08T19:11:39.983Z",
+    "animation_asset": {
+      "id": "animstartscreen-2026-09-08T19-11-03-245Z",
+      "name": "animstartscreen",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "screen"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "startscreen",
+          "startscreenloop",
+          "startscreensmoke",
+          "impactsmoke",
+          "flash"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-startscreen"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/animstartscreen-2026-09-08T19-11-03-245Z",
+      "manifestPath": "library/animstartscreen-2026-09-08T19-11-03-245Z/manifest.json",
+      "files": [
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/animstartscreen/animStartScreen.json",
+          "name": "animstartscreen/animStartScreen.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/animstartscreen/animStartScreen.atlas",
+          "name": "animstartscreen/animStartScreen.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/animstartscreen/animStartScreen.png",
+          "name": "animstartscreen/animStartScreen.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/startscreen-preview.webp",
+          "name": "startscreen-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/animstartscreen-2026-09-08T19-11-03-245Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "animStartScreen.json",
+      "atlas": "animStartScreen.atlas",
+      "textures": [
+        "animStartScreen.png"
+      ],
+      "animationCount": 5,
+      "animationNames": [
+        "startScreen",
+        "startScreenLoop",
+        "startScreenSmoke",
+        "impactSmoke",
+        "flash"
+      ],
+      "defaultAnimation": "startScreen",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "screen"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "animstartscreen-2026-09-08T17-19-56-936Z",
     "name": "animstartscreen",
     "updatedAt": "2026-09-08T17:20:15.081Z",
