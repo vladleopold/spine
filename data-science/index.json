@@ -1,5 +1,136 @@
 [
   {
+    "id": "transition-2026-09-08T08-58-49-677Z",
+    "name": "transition",
+    "updatedAt": "2026-09-08T08:59:10.193Z",
+    "animation_asset": {
+      "id": "transition-2026-09-08T08-58-49-677Z",
+      "name": "transition",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "transition",
+      "skeleton_type": "ui",
+      "content_type": "transition",
+      "taxonomy": {
+        "category": "ui",
+        "class": "transition",
+        "type": "screen-transition",
+        "tags": [
+          "transition"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "screen-transition"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "transition"
+        ],
+        "state": [
+          "default-transition"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/transition-2026-09-08T08-58-49-677Z",
+      "manifestPath": "library/transition-2026-09-08T08-58-49-677Z/manifest.json",
+      "files": [
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/transition/transition.json",
+          "name": "transition/transition.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/transition/transition.atlas",
+          "name": "transition/transition.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/transition/transition.webp",
+          "name": "transition/transition.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/transition-preview.webp",
+          "name": "transition-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/transition-2026-09-08T08-58-49-677Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "transition.json",
+      "atlas": "transition.atlas",
+      "textures": [
+        "transition.webp"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "transition"
+      ],
+      "defaultAnimation": "transition",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "transition"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "cow-2026-09-07T23-13-58-203Z",
     "name": "cow",
     "updatedAt": "2026-09-07T23:14:20.158Z",
