@@ -1,5 +1,143 @@
 [
   {
+    "id": "sp_pet_fight_30202-2026-09-09T02-16-14-468Z",
+    "name": "sp_pet_fight_30202",
+    "updatedAt": "2026-09-09T02:16:37.499Z",
+    "animation_asset": {
+      "id": "sp_pet_fight_30202-2026-09-09T02-16-14-468Z",
+      "name": "sp_pet_fight_30202",
+      "domain": "gamedev",
+      "asset_category": "pet",
+      "animation_type": "pet",
+      "skeleton_type": "creature",
+      "content_type": "pet",
+      "taxonomy": {
+        "category": "character",
+        "class": "companion",
+        "type": "pet",
+        "tags": [
+          "pet"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "companion"
+        ],
+        "animation_state": [
+          "attack_1",
+          "stand",
+          "idle"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-attack_1"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z",
+      "manifestPath": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/manifest.json",
+      "files": [
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/sp_pet_fight_30202/sp_pet_fight_30202.json",
+          "name": "sp_pet_fight_30202/sp_pet_fight_30202.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/sp_pet_fight_30202/sp_pet_fight_30202.atlas",
+          "name": "sp_pet_fight_30202/sp_pet_fight_30202.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/sp_pet_fight_30202/sp_pet_fight_30202.png",
+          "name": "sp_pet_fight_30202/sp_pet_fight_30202.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/attack_1-preview.webp",
+          "name": "attack_1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/sp_pet_fight_30202-2026-09-09T02-16-14-468Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "sp_pet_fight_30202.json",
+      "atlas": "sp_pet_fight_30202.atlas",
+      "textures": [
+        "sp_pet_fight_30202.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "attack_1",
+        "stand"
+      ],
+      "defaultAnimation": "attack_1",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "pet"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "animstartscreen-2026-09-08T19-11-03-245Z",
     "name": "animstartscreen",
     "updatedAt": "2026-09-08T19:11:39.983Z",
