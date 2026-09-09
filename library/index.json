@@ -1,5 +1,271 @@
 [
   {
+    "id": "machao-2026-09-09T02-18-11-211Z",
+    "title": "machao",
+    "publicOwnerId": "u_h3ey31",
+    "ownerAnonId": "anon_tvwwds_k1flr1",
+    "ownerAnonFingerprint": "tvwwds",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-09T02:18:11.211Z",
+    "webmGeneratedAt": "2026-09-09T02:18:11.211Z",
+    "skeleton": "machao.skel",
+    "atlas": "machao.atlas",
+    "textures": [
+      "machao.png"
+    ],
+    "animations": [
+      "attack",
+      "attack_baoji",
+      "diaoyu",
+      "die",
+      "gongjian_skill",
+      "hit2",
+      "hit_diaoluo",
+      "hit_xuanzhuan",
+      "hurt",
+      "hurt2",
+      "hurt3",
+      "jump",
+      "jump2",
+      "mc_attack",
+      "mc_attack_baoji",
+      "mc_skill",
+      "move",
+      "move_1",
+      "move_dash",
+      "stand",
+      "stand2",
+      "stand3",
+      "ty_attack1_xiapi",
+      "ty_attack2_hengzhan",
+      "ty_attack3_shangtiao",
+      "ty_skill",
+      "up"
+    ],
+    "defaultAnimation": "attack",
+    "files": [
+      "machao/machao.skel",
+      "machao/machao.atlas",
+      "machao/machao.png",
+      "attack-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/machao-2026-09-09T02-18-11-211Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp?v=2026-09-09T02-18-11.211Z",
+    "thumbnailPath": "library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp?v=2026-09-09T02-18-11.211Z",
+    "thumbnailPosterPath": "library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "machao-2026-09-09T02-18-11-211Z",
+      "title": "machao",
+      "uploadedAt": "2026-09-09T02:18:11.211Z",
+      "proofPath": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/source-proof.json?v=2026-09-09T02-18-11.211Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_tvwwds_k1flr1",
+        "anonymousFingerprint": "tvwwds",
+        "browserFingerprintSha256": "0ba2f71681a76e6c8b28bcca9b1727ac9a9f5ffd48903d57045a0de27deee025",
+        "browserEnvironmentHashSha256": "660026ef6eff98ac9217e51c54f55ebcebcad854f763c60ed824f1ec7d591103",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "zh-CN",
+            "zh"
+          ],
+          "hardwareConcurrency": 10,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Singapore",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/machao-2026-09-09T02-18-11-211Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:e2b35cda7a03ecde04a4b46bf9b68d2006fb7c33b516fa384bea5d23ae839369",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "attack-preview.webp",
+          "bytes": 1376,
+          "sha256": "96508b2da33f6db5765c21a410d71b275a120eabbdb2492f9afc9b33df0d8d6c"
+        },
+        {
+          "name": "machao/machao.atlas",
+          "bytes": 24379,
+          "sha256": "3798178630fb509a19c1d2cdce5fde63371da9ac76a11b2c55ecf60a3c918fb2"
+        },
+        {
+          "name": "machao/machao.png",
+          "bytes": 746969,
+          "sha256": "5e241a7cdf9ec842bb8e506b6ca349102739458cfceb444f9aca9a7510d07e17"
+        },
+        {
+          "name": "machao/machao.skel",
+          "bytes": 378065,
+          "sha256": "b5a84ae6a17e58612b189248411bf1b2704e2f09cdad5990742411c10c670ba4"
+        }
+      ],
+      "proofHash": "e2b35cda7a03ecde04a4b46bf9b68d2006fb7c33b516fa384bea5d23ae839369"
+    },
+    "sourceProofPath": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/source-proof.json?v=2026-09-09T02-18-11.211Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-09T02:18:21.409Z",
+      "entryId": "machao-2026-09-09T02-18-11-211Z",
+      "title": "machao",
+      "uploadedAt": "2026-09-09T02:18:11.211Z",
+      "sourceProofHash": "e2b35cda7a03ecde04a4b46bf9b68d2006fb7c33b516fa384bea5d23ae839369",
+      "sourceProofPath": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/source-proof.json?v=2026-09-09T02-18-11.211Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_tvwwds_k1flr1",
+        "anonymousFingerprint": "tvwwds",
+        "browserFingerprintSha256": "0ba2f71681a76e6c8b28bcca9b1727ac9a9f5ffd48903d57045a0de27deee025",
+        "browserEnvironmentHashSha256": "660026ef6eff98ac9217e51c54f55ebcebcad854f763c60ed824f1ec7d591103",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en",
+            "zh-CN",
+            "zh"
+          ],
+          "hardwareConcurrency": 10,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Singapore",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/machao-2026-09-09T02-18-11-211Z",
+        "files": [
+          {
+            "name": "machao/machao.skel",
+            "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.skel",
+            "bytes": 378065,
+            "sha256": "b5a84ae6a17e58612b189248411bf1b2704e2f09cdad5990742411c10c670ba4",
+            "github": {
+              "contentSha": "7d5a895c8c7561cf36d73ed1eb7b1c29a1bd69d9",
+              "commitSha": "987d7aa4f98e46e84324da6bf0bdb56f9ba32fdc",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/987d7aa4f98e46e84324da6bf0bdb56f9ba32fdc",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/machao-2026-09-09T02-18-11-211Z/machao/machao.skel"
+            }
+          },
+          {
+            "name": "machao/machao.atlas",
+            "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.atlas",
+            "bytes": 24379,
+            "sha256": "3798178630fb509a19c1d2cdce5fde63371da9ac76a11b2c55ecf60a3c918fb2",
+            "github": {
+              "contentSha": "4f9c2b62b469fbd23201afde059fa0f6e81cc1e1",
+              "commitSha": "6f54401a76cc3861163d24c487eaed794f976f8c",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6f54401a76cc3861163d24c487eaed794f976f8c",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/machao-2026-09-09T02-18-11-211Z/machao/machao.atlas"
+            }
+          },
+          {
+            "name": "machao/machao.png",
+            "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.png",
+            "bytes": 746969,
+            "sha256": "5e241a7cdf9ec842bb8e506b6ca349102739458cfceb444f9aca9a7510d07e17",
+            "github": {
+              "contentSha": "f879998644ba7644133f2345290d79cd1816545d",
+              "commitSha": "e055377570fa9beeb8818d9cd76d80a919097425",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e055377570fa9beeb8818d9cd76d80a919097425",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/machao-2026-09-09T02-18-11-211Z/machao/machao.png"
+            }
+          },
+          {
+            "name": "attack-preview.webp",
+            "path": "library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp",
+            "bytes": 1376,
+            "sha256": "96508b2da33f6db5765c21a410d71b275a120eabbdb2492f9afc9b33df0d8d6c",
+            "github": {
+              "contentSha": "96d81904273d74544db45afcbaa2c632053f7e3d",
+              "commitSha": "c35a1f960bfd45ae5b01bf316bceda8c2ab89bc8",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/c35a1f960bfd45ae5b01bf316bceda8c2ab89bc8",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+            "bytes": 2537,
+            "sha256": "bc3830980ca14782a855caaa3aa6561f31490b1013b3347cc7434c5faad367d6",
+            "github": {
+              "contentSha": "640ea1ae60b45d1d455e019711387d94761b6e99",
+              "commitSha": "ecf8e072315017052fca7a915b31fb87cfe1c609",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/ecf8e072315017052fca7a915b31fb87cfe1c609",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/machao-2026-09-09T02-18-11-211Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/machao-2026-09-09T02-18-11-211Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/blockchain-anchor.json",
+        "anchorCommitSha": "019aaf36fedbdbe80ba460db5880990b9af2aba9",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/019aaf36fedbdbe80ba460db5880990b9af2aba9"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "87440995b531afb39e07aacd533424f83d1a37401820ed1d1859018508a93048",
+      "recommendedAnchorPayload": "sha256:87440995b531afb39e07aacd533424f83d1a37401820ed1d1859018508a93048",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x87440995b531afb39e07aacd533424f83d1a37401820ed1d1859018508a93048",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/machao-2026-09-09T02-18-11-211Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "sp_pet_fight_30202-2026-09-09T02-16-14-468Z",
     "title": "sp_pet_fight_30202",
     "publicOwnerId": "u_h3ey31",
