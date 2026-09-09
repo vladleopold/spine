@@ -1,5 +1,276 @@
 [
   {
+    "id": "char_1_rampage-2026-09-09T14-27-52-320Z",
+    "title": "char_1_rampage",
+    "publicOwnerId": "u_dyn6fw",
+    "ownerAnonId": "anon_6qkfbo_12pcg5r",
+    "ownerAnonFingerprint": "6qkfbo",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-09T14:27:52.320Z",
+    "webmGeneratedAt": "2026-09-09T14:27:52.320Z",
+    "skeleton": "char_1_rampage.skel",
+    "atlas": "char_1_rampage.atlas",
+    "textures": [
+      "char_1_rampage.png"
+    ],
+    "animations": [
+      "air_hit_great_1",
+      "air_hit_great_2",
+      "air_hit_great_3",
+      "air_hit_hurt",
+      "air_hit_perfect_1",
+      "air_hit_perfect_2",
+      "air_hit_perfect_3",
+      "air_hit_perfect_4",
+      "air_press_end",
+      "air_press_hurt",
+      "die",
+      "double_hit_1",
+      "double_hit_2",
+      "down_hit",
+      "down_press_hit",
+      "hurt",
+      "jump",
+      "jump_hurt",
+      "press",
+      "road_hit_great_1",
+      "road_hit_great_2",
+      "road_hit_great_3",
+      "road_hit_miss",
+      "road_hit_perfect_1",
+      "road_hit_perfect_2",
+      "road_hit_perfect_3",
+      "road_hit_perfect_4",
+      "run",
+      "standby",
+      "up_press_hit"
+    ],
+    "defaultAnimation": "air_hit_great_1",
+    "files": [
+      "char_1_rampage/char_1_rampage.skel",
+      "char_1_rampage/char_1_rampage.atlas",
+      "char_1_rampage/char_1_rampage.png",
+      "air_hit_great_1-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp?v=2026-09-09T14-27-52.320Z",
+    "thumbnailPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp?v=2026-09-09T14-27-52.320Z",
+    "thumbnailPosterPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "char_1_rampage-2026-09-09T14-27-52-320Z",
+      "title": "char_1_rampage",
+      "uploadedAt": "2026-09-09T14:27:52.320Z",
+      "proofPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json?v=2026-09-09T14-27-52.320Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6qkfbo_12pcg5r",
+        "anonymousFingerprint": "6qkfbo",
+        "browserFingerprintSha256": "95715113ac63af19d73503e1e14f73048c3f4dacc08e269bb1064303a717a2e1",
+        "browserEnvironmentHashSha256": "29b7b6fb86820532f1052f5df16419ed2621ad6907c28dc0fdec521af41bffb5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "ru",
+          "languages": [
+            "ru",
+            "ru-RU",
+            "uk",
+            "de",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Berlin",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:828f13f869b4dd0217e92f9f5cc3afadca4ba4dbc2264889ad533cf4d60caed6",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "air_hit_great_1-preview.webp",
+          "bytes": 1412,
+          "sha256": "cb46c343492ac06d1efc0fab41d1feb29b9ba2f8b114e2dfa470c8ca58b42690"
+        },
+        {
+          "name": "char_1_rampage/char_1_rampage.atlas",
+          "bytes": 5752,
+          "sha256": "23e640f7eccc3cdc960820147a8f070227b4e576734fb1ed02d6904d730792dc"
+        },
+        {
+          "name": "char_1_rampage/char_1_rampage.png",
+          "bytes": 342369,
+          "sha256": "4e8b91ae4549f209e74b3145eff8c157a9655fd10cd641f37ec077ac82508d86"
+        },
+        {
+          "name": "char_1_rampage/char_1_rampage.skel",
+          "bytes": 152168,
+          "sha256": "51bed6f03a51d9b49dd0e25cbca40c158d626ea3cb6a72ae2bde4fae8125952c"
+        }
+      ],
+      "proofHash": "828f13f869b4dd0217e92f9f5cc3afadca4ba4dbc2264889ad533cf4d60caed6"
+    },
+    "sourceProofPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json?v=2026-09-09T14-27-52.320Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-09T14:28:00.201Z",
+      "entryId": "char_1_rampage-2026-09-09T14-27-52-320Z",
+      "title": "char_1_rampage",
+      "uploadedAt": "2026-09-09T14:27:52.320Z",
+      "sourceProofHash": "828f13f869b4dd0217e92f9f5cc3afadca4ba4dbc2264889ad533cf4d60caed6",
+      "sourceProofPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json?v=2026-09-09T14-27-52.320Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6qkfbo_12pcg5r",
+        "anonymousFingerprint": "6qkfbo",
+        "browserFingerprintSha256": "95715113ac63af19d73503e1e14f73048c3f4dacc08e269bb1064303a717a2e1",
+        "browserEnvironmentHashSha256": "29b7b6fb86820532f1052f5df16419ed2621ad6907c28dc0fdec521af41bffb5",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "ru",
+          "languages": [
+            "ru",
+            "ru-RU",
+            "uk",
+            "de",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Berlin",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z",
+        "files": [
+          {
+            "name": "char_1_rampage/char_1_rampage.skel",
+            "path": "library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.skel",
+            "bytes": 152168,
+            "sha256": "51bed6f03a51d9b49dd0e25cbca40c158d626ea3cb6a72ae2bde4fae8125952c",
+            "github": {
+              "contentSha": "6a80bf11d52018482b524039d56376afa0c52e82",
+              "commitSha": "564603ff7abcde81d54d1b5efc60454d96101996",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/564603ff7abcde81d54d1b5efc60454d96101996",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.skel"
+            }
+          },
+          {
+            "name": "char_1_rampage/char_1_rampage.atlas",
+            "path": "library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.atlas",
+            "bytes": 5752,
+            "sha256": "23e640f7eccc3cdc960820147a8f070227b4e576734fb1ed02d6904d730792dc",
+            "github": {
+              "contentSha": "7a85ff356cbe6730c26ee071f68642c4ee20ff8a",
+              "commitSha": "e8755f19a52e48df24c9a5f1e6e59c279d868053",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/e8755f19a52e48df24c9a5f1e6e59c279d868053",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.atlas"
+            }
+          },
+          {
+            "name": "char_1_rampage/char_1_rampage.png",
+            "path": "library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.png",
+            "bytes": 342369,
+            "sha256": "4e8b91ae4549f209e74b3145eff8c157a9655fd10cd641f37ec077ac82508d86",
+            "github": {
+              "contentSha": "a9827b8f24b76e4a9fd99388c0225555d7bbaf56",
+              "commitSha": "38f01251826c788d6827243ba5746b762f7fbda4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/38f01251826c788d6827243ba5746b762f7fbda4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/char_1_rampage-2026-09-09T14-27-52-320Z/char_1_rampage/char_1_rampage.png"
+            }
+          },
+          {
+            "name": "air_hit_great_1-preview.webp",
+            "path": "library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp",
+            "bytes": 1412,
+            "sha256": "cb46c343492ac06d1efc0fab41d1feb29b9ba2f8b114e2dfa470c8ca58b42690",
+            "github": {
+              "contentSha": "c2afc6469e53a122bfe9421f035392b0c7f21343",
+              "commitSha": "da1ff08d4dbcac1c1c2e3a8a188c21858fae7752",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/da1ff08d4dbcac1c1c2e3a8a188c21858fae7752",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/char_1_rampage-2026-09-09T14-27-52-320Z/air_hit_great_1-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json",
+            "bytes": 2632,
+            "sha256": "3ab5cf3766f414e8261e568c8dd8e5e22385f5f49384d09c3d591d32a7d22a2f",
+            "github": {
+              "contentSha": "13addee00ce384ab83c57daf3202853f2ee4dca9",
+              "commitSha": "79608e53815e577a03ab4a99f215dc9939156516",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/79608e53815e577a03ab4a99f215dc9939156516",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/char_1_rampage-2026-09-09T14-27-52-320Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/blockchain-anchor.json",
+        "anchorCommitSha": "4152c98c59f5422f9fb990d6e495a277ae0f16b7",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/4152c98c59f5422f9fb990d6e495a277ae0f16b7"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "84816800faec457fb39b22bb4c3a4328f6148f5d91621e60f874f27e770a5bf2",
+      "recommendedAnchorPayload": "sha256:84816800faec457fb39b22bb4c3a4328f6148f5d91621e60f874f27e770a5bf2",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x84816800faec457fb39b22bb4c3a4328f6148f5d91621e60f874f27e770a5bf2",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/char_1_rampage-2026-09-09T14-27-52-320Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T14-27-52-320Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "char_1_rampage-2026-09-09T14-22-44-065Z",
     "title": "char_1_rampage",
     "publicOwnerId": "u_dyn6fw",
