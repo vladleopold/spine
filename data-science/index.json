@@ -1,5 +1,201 @@
 [
   {
+    "id": "machao-2026-09-09T02-18-11-211Z",
+    "name": "machao",
+    "updatedAt": "2026-09-09T02:18:32.935Z",
+    "animation_asset": {
+      "id": "machao-2026-09-09T02-18-11-211Z",
+      "name": "machao",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "one-shot"
+        ],
+        "animation_state": [
+          "attack",
+          "attack_baoji",
+          "diaoyu",
+          "die",
+          "gongjian_skill",
+          "hit2",
+          "hit_diaoluo",
+          "hit_xuanzhuan",
+          "hurt",
+          "hurt2",
+          "hurt3",
+          "jump",
+          "jump2",
+          "mc_attack",
+          "mc_attack_baoji",
+          "mc_skill",
+          "move",
+          "move_1",
+          "move_dash",
+          "stand",
+          "stand2",
+          "stand3",
+          "ty_attack1_xiapi",
+          "ty_attack2_hengzhan",
+          "ty_attack3_shangtiao",
+          "ty_skill",
+          "up",
+          "idle"
+        ],
+        "state": [
+          "default-attack"
+        ],
+        "action": [
+          "attack"
+        ],
+        "direction": [
+          "up"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/machao-2026-09-09T02-18-11-211Z",
+      "manifestPath": "library/machao-2026-09-09T02-18-11-211Z/manifest.json",
+      "files": [
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.skel",
+          "name": "machao/machao.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.atlas",
+          "name": "machao/machao.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/machao/machao.png",
+          "name": "machao/machao.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/attack-preview.webp",
+          "name": "attack-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/machao-2026-09-09T02-18-11-211Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "machao.skel",
+      "atlas": "machao.atlas",
+      "textures": [
+        "machao.png"
+      ],
+      "animationCount": 27,
+      "animationNames": [
+        "attack",
+        "attack_baoji",
+        "diaoyu",
+        "die",
+        "gongjian_skill",
+        "hit2",
+        "hit_diaoluo",
+        "hit_xuanzhuan",
+        "hurt",
+        "hurt2",
+        "hurt3",
+        "jump",
+        "jump2",
+        "mc_attack",
+        "mc_attack_baoji",
+        "mc_skill",
+        "move",
+        "move_1",
+        "move_dash",
+        "stand",
+        "stand2",
+        "stand3",
+        "ty_attack1_xiapi",
+        "ty_attack2_hengzhan",
+        "ty_attack3_shangtiao",
+        "ty_skill",
+        "up"
+      ],
+      "defaultAnimation": "attack",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "sp_pet_fight_30202-2026-09-09T02-16-14-468Z",
     "name": "sp_pet_fight_30202",
     "updatedAt": "2026-09-09T02:16:37.499Z",
