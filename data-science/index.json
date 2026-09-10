@@ -1,5 +1,143 @@
 [
   {
+    "id": "explosion-2026-09-10T10-40-30-323Z",
+    "name": "explosion",
+    "updatedAt": "2026-09-10T10:40:49.272Z",
+    "animation_asset": {
+      "id": "explosion-2026-09-10T10-40-30-323Z",
+      "name": "explosion",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "explosion"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect"
+        ],
+        "animation_state": [
+          "explosion",
+          "explosion_select",
+          "hook"
+        ],
+        "state": [
+          "default-explosion"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/explosion-2026-09-10T10-40-30-323Z",
+      "manifestPath": "library/explosion-2026-09-10T10-40-30-323Z/manifest.json",
+      "files": [
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/explosion/explosion.json",
+          "name": "explosion/explosion.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/explosion/explosion.atlas",
+          "name": "explosion/explosion.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/explosion/explosion.webp",
+          "name": "explosion/explosion.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/explosion-preview.webp",
+          "name": "explosion-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/explosion-2026-09-10T10-40-30-323Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "explosion.json",
+      "atlas": "explosion.atlas",
+      "textures": [
+        "explosion.webp"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "explosion",
+        "explosion_select",
+        "hook"
+      ],
+      "defaultAnimation": "explosion",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "explosion"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "char_1_rampage-2026-09-09T17-46-12-969Z",
     "name": "char_1_rampage",
     "updatedAt": "2026-09-09T17:46:29.124Z",
