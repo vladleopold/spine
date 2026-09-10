@@ -1,5 +1,243 @@
 [
   {
+    "id": "explosion-2026-09-10T12-33-03-862Z",
+    "title": "explosion",
+    "publicOwnerId": "u_110br41",
+    "ownerAnonId": "anon_1yhdtee_1gee4ph",
+    "ownerAnonFingerprint": "1yhdtee",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-10T12:33:03.862Z",
+    "webmGeneratedAt": "2026-09-10T12:33:03.862Z",
+    "skeleton": "explosion.json",
+    "atlas": "explosion.atlas",
+    "textures": [
+      "explosion.webp"
+    ],
+    "animations": [
+      "explosion",
+      "explosion_select",
+      "hook"
+    ],
+    "defaultAnimation": "explosion",
+    "files": [
+      "explosion/explosion.json",
+      "explosion/explosion.atlas",
+      "explosion/explosion.webp",
+      "explosion-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/explosion-2026-09-10T12-33-03-862Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp?v=2026-09-10T12-33-03.862Z",
+    "thumbnailPath": "library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp?v=2026-09-10T12-33-03.862Z",
+    "thumbnailPosterPath": "library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "explosion-2026-09-10T12-33-03-862Z",
+      "title": "explosion",
+      "uploadedAt": "2026-09-10T12:33:03.862Z",
+      "proofPath": "library/explosion-2026-09-10T12-33-03-862Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/source-proof.json?v=2026-09-10T12-33-03.862Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1yhdtee_1gee4ph",
+        "anonymousFingerprint": "1yhdtee",
+        "browserFingerprintSha256": "45c8a11fd9ff46d04a9549e320b6d8d4de937bd46d8d61e60d384d8625f064de",
+        "browserEnvironmentHashSha256": "04ccc2ac9c6f1ac8e7b7eee60469333d360f17bb964b9016286f1c2766ffdabb",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 22,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Sarajevo",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/explosion-2026-09-10T12-33-03-862Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:d4bd46470522f97b2e94586da7cf25cb0cb69e89e080c5c32f7e4a15be4673c7",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "explosion-preview.webp",
+          "bytes": 694,
+          "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+        },
+        {
+          "name": "explosion/explosion.atlas",
+          "bytes": 2073,
+          "sha256": "c4935711a159b11212b308e11cb7024216de2e49edc5b7d8cead55a2b2fcfa5d"
+        },
+        {
+          "name": "explosion/explosion.json",
+          "bytes": 11893,
+          "sha256": "529a1521dff82078fb0d31346dfef991d45750ba50a48d11f9102f74fc8c5be0"
+        },
+        {
+          "name": "explosion/explosion.webp",
+          "bytes": 1723780,
+          "sha256": "5f2f0e26df0445ff0b01998f400e9d1afa2b022c766f301b4c169ff6662ea20c"
+        }
+      ],
+      "proofHash": "d4bd46470522f97b2e94586da7cf25cb0cb69e89e080c5c32f7e4a15be4673c7"
+    },
+    "sourceProofPath": "library/explosion-2026-09-10T12-33-03-862Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/source-proof.json?v=2026-09-10T12-33-03.862Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-10T12:33:19.249Z",
+      "entryId": "explosion-2026-09-10T12-33-03-862Z",
+      "title": "explosion",
+      "uploadedAt": "2026-09-10T12:33:03.862Z",
+      "sourceProofHash": "d4bd46470522f97b2e94586da7cf25cb0cb69e89e080c5c32f7e4a15be4673c7",
+      "sourceProofPath": "library/explosion-2026-09-10T12-33-03-862Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/source-proof.json?v=2026-09-10T12-33-03.862Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1yhdtee_1gee4ph",
+        "anonymousFingerprint": "1yhdtee",
+        "browserFingerprintSha256": "45c8a11fd9ff46d04a9549e320b6d8d4de937bd46d8d61e60d384d8625f064de",
+        "browserEnvironmentHashSha256": "04ccc2ac9c6f1ac8e7b7eee60469333d360f17bb964b9016286f1c2766ffdabb",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 22,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Sarajevo",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/explosion-2026-09-10T12-33-03-862Z",
+        "files": [
+          {
+            "name": "explosion/explosion.json",
+            "path": "library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.json",
+            "bytes": 11893,
+            "sha256": "529a1521dff82078fb0d31346dfef991d45750ba50a48d11f9102f74fc8c5be0",
+            "github": {
+              "contentSha": "bc141052cc1f33effffd65ff499eddcbf22edd3d",
+              "commitSha": "8fa2305c1195a83b65de9948684f59e86865b027",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8fa2305c1195a83b65de9948684f59e86865b027",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.json"
+            }
+          },
+          {
+            "name": "explosion/explosion.atlas",
+            "path": "library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.atlas",
+            "bytes": 2073,
+            "sha256": "c4935711a159b11212b308e11cb7024216de2e49edc5b7d8cead55a2b2fcfa5d",
+            "github": {
+              "contentSha": "612c674d436bdfe8d13ab6a9b302c8370b5e97e2",
+              "commitSha": "795697c6c42bded81759fa1a058d590629450f47",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/795697c6c42bded81759fa1a058d590629450f47",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.atlas"
+            }
+          },
+          {
+            "name": "explosion/explosion.webp",
+            "path": "library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.webp",
+            "bytes": 1723780,
+            "sha256": "5f2f0e26df0445ff0b01998f400e9d1afa2b022c766f301b4c169ff6662ea20c",
+            "github": {
+              "contentSha": "f0d0247e16a4260790893759f5814d255e119345",
+              "commitSha": "6adc1cb4aed7008297b261d4e4f33d2c4a303811",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6adc1cb4aed7008297b261d4e4f33d2c4a303811",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/explosion-2026-09-10T12-33-03-862Z/explosion/explosion.webp"
+            }
+          },
+          {
+            "name": "explosion-preview.webp",
+            "path": "library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp",
+            "bytes": 694,
+            "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5",
+            "github": {
+              "contentSha": "687cfc515bd1143468bd597be25ff2cace2f0fa1",
+              "commitSha": "321c201f2c9c234dacdad2483b9b2bae13eabc09",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/321c201f2c9c234dacdad2483b9b2bae13eabc09",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/explosion-2026-09-10T12-33-03-862Z/explosion-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/explosion-2026-09-10T12-33-03-862Z/source-proof.json",
+            "bytes": 2536,
+            "sha256": "0c54224025c0d459fdd1df58e0b49da9f2234719c19fa8717c9cf5752ccd6744",
+            "github": {
+              "contentSha": "b4c4f127e9a780a98d0f8e80385c2fc0dbaa89c2",
+              "commitSha": "586585dcce7bf4db00db045eab97fada63108aac",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/586585dcce7bf4db00db045eab97fada63108aac",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/explosion-2026-09-10T12-33-03-862Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/explosion-2026-09-10T12-33-03-862Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/blockchain-anchor.json",
+        "anchorCommitSha": "37ada1b517479de46930279c0841e5fcb771f05a",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/37ada1b517479de46930279c0841e5fcb771f05a"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "58dd1b7feb258c30846343b7ef9fb618478aedf423463f767a06e3f936c016c4",
+      "recommendedAnchorPayload": "sha256:58dd1b7feb258c30846343b7ef9fb618478aedf423463f767a06e3f936c016c4",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x58dd1b7feb258c30846343b7ef9fb618478aedf423463f767a06e3f936c016c4",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/explosion-2026-09-10T12-33-03-862Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T12-33-03-862Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "explosion-2026-09-10T10-40-30-323Z",
     "title": "explosion",
     "publicOwnerId": "u_110br41",
