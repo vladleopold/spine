@@ -1,5 +1,138 @@
 [
   {
+    "id": "progress_bar-2026-09-11T08-41-25-831Z",
+    "name": "progress_bar",
+    "updatedAt": "2026-09-11T08:41:52.836Z",
+    "animation_asset": {
+      "id": "progress_bar-2026-09-11T08-41-25-831Z",
+      "name": "progress_bar",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "loader",
+      "skeleton_type": "ui",
+      "content_type": "loader",
+      "taxonomy": {
+        "category": "ui",
+        "class": "feedback",
+        "type": "loader",
+        "tags": [
+          "progress"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "loading-feedback"
+        ],
+        "loop_type": [
+          "loop",
+          "loop-candidate"
+        ],
+        "animation_state": [
+          "idle"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/progress_bar-2026-09-11T08-41-25-831Z",
+      "manifestPath": "library/progress_bar-2026-09-11T08-41-25-831Z/manifest.json",
+      "files": [
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/progress_bar/Progress_bar.json",
+          "name": "progress_bar/Progress_bar.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/progress_bar/Progress_bar.atlas",
+          "name": "progress_bar/Progress_bar.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/progress_bar/Progress_bar.png",
+          "name": "progress_bar/Progress_bar.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/progress_bar-2026-09-11T08-41-25-831Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Progress_bar.json",
+      "atlas": "Progress_bar.atlas",
+      "textures": [
+        "Progress_bar.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "progress"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "l1_l5-2026-09-10T20-53-46-455Z",
     "name": "l1_l5",
     "updatedAt": "2026-09-10T20:54:13.890Z",
