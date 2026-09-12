@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "full_body_skins_cow-2026-09-12T11-21-25-772Z",
+  "title": "full_body_skins_cow",
+  "uploadedAt": "2026-09-12T11:21:25.772Z",
+  "proofPath": "library/full_body_skins_cow-2026-09-12T11-21-25-772Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/full_body_skins_cow-2026-09-12T11-21-25-772Z/source-proof.json?v=2026-09-12T11-21-25.772Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_7edgk5_bwf1a7",
+    "anonymousFingerprint": "7edgk5",
+    "browserFingerprintSha256": "891b3b3d91a9cc9968bf66101946e251c10d43fdbbbc6330c26e3b0f1003d723",
+    "browserEnvironmentHashSha256": "690356a7464f1399a4003d089aa106b32808eee5838442f00a1f72bc097c60cd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "vi",
+      "languages": [
+        "vi",
+        "en-US",
+        "en",
+        "fr-FR",
+        "fr"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Bangkok",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/full_body_skins_cow-2026-09-12T11-21-25-772Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:163977ec5fe7ccbd987b5572829fe09a9e079568029c32ec24b4ee3f223fbb06",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "full_body_skins_cow/full_body_skins_cow.atlas",
+      "bytes": 2839,
+      "sha256": "523e8813547c6b78d2a48f1c3b325c5002211c73f4a5d33cd362e88886a04f12"
+    },
+    {
+      "name": "full_body_skins_cow/full_body_skins_cow.json",
+      "bytes": 146274,
+      "sha256": "3c0626c9ad365d28b77da8985e7df05915174b886cb5dd6a1b4620c2895b22f7"
+    },
+    {
+      "name": "full_body_skins_cow/full_body_skins_cow.png",
+      "bytes": 983821,
+      "sha256": "1b7ef8138f2e54b2cb0046515e113b322269fe68c0cdf08f333bf139958e1f84"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 1222,
+      "sha256": "f38c55206a69774ddb91a28682ca237e99392dd95ae64e5f726953e74a298b96"
+    }
+  ],
+  "proofHash": "163977ec5fe7ccbd987b5572829fe09a9e079568029c32ec24b4ee3f223fbb06"
+}
