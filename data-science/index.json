@@ -1,5 +1,218 @@
 [
   {
+    "id": "office_boss_view-2026-09-12T12-19-53-833Z",
+    "name": "office_boss_view",
+    "updatedAt": "2026-09-12T12:20:27.605Z",
+    "animation_asset": {
+      "id": "office_boss_view-2026-09-12T12-19-53-833Z",
+      "name": "office_boss_view",
+      "domain": "gamedev",
+      "asset_category": "monster",
+      "animation_type": "creature",
+      "skeleton_type": "monster",
+      "content_type": "creature",
+      "taxonomy": {
+        "category": "character",
+        "class": "enemy",
+        "type": "monster",
+        "tags": [
+          "boss"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "enemy"
+        ],
+        "state": [
+          "combat-capable",
+          "default-01_bowjob_begin_office_anim1"
+        ],
+        "animation_state": [
+          "01_bowjob_begin_office_anim1",
+          "01_bowjob_begin_office_anim2",
+          "02_lickdick_slow_office_anim1",
+          "02_lickdick_slow_office_anim2",
+          "03_lickdick_fast_office_anim1",
+          "03_lickdick_fast_office_anim2",
+          "03_lickdick_fast_office_anim3",
+          "04_suckdick_slow_office_anim1",
+          "04_suckdick_slow_office_anim2",
+          "05_suckdick_fast_office_anim1",
+          "05_suckdick_fast_office_anim2",
+          "05_suckdick_fast_office_anim3",
+          "06_boobjob_swing_office_anim1",
+          "06_boobjob_swing_office_anim2",
+          "07_boobjob_hard_office_anim1",
+          "07_boobjob_hard_office_anim2",
+          "07_boobjob_hard_office_anim3",
+          "08_boobsuck_office_anim1",
+          "08_boobsuck_office_anim2",
+          "08_boobsuck_office_anim3",
+          "08_boobsuck_office_anim4"
+        ],
+        "loop_type": [],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/office_boss_view-2026-09-12T12-19-53-833Z",
+      "manifestPath": "library/office_boss_view-2026-09-12T12-19-53-833Z/manifest.json",
+      "files": [
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view.json",
+          "name": "office_boss_view/office_boss_view.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view.atlas",
+          "name": "office_boss_view/office_boss_view.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view.png",
+          "name": "office_boss_view/office_boss_view.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view2.png",
+          "name": "office_boss_view/office_boss_view2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view3.png",
+          "name": "office_boss_view/office_boss_view3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view4.png",
+          "name": "office_boss_view/office_boss_view4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view5.png",
+          "name": "office_boss_view/office_boss_view5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view6.png",
+          "name": "office_boss_view/office_boss_view6.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/office_boss_view/office_boss_view7.png",
+          "name": "office_boss_view/office_boss_view7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/01_bowjob_begin_office_anim1-preview.webp",
+          "name": "01_bowjob_begin_office_anim1-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/office_boss_view-2026-09-12T12-19-53-833Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "office_boss_view.json",
+      "atlas": "office_boss_view.atlas",
+      "textures": [
+        "office_boss_view.png",
+        "office_boss_view2.png",
+        "office_boss_view3.png",
+        "office_boss_view4.png",
+        "office_boss_view5.png",
+        "office_boss_view6.png",
+        "office_boss_view7.png"
+      ],
+      "animationCount": 21,
+      "animationNames": [
+        "01_Bowjob_begin_office_anim1",
+        "01_Bowjob_begin_office_anim2",
+        "02_LickDick_slow_office_anim1",
+        "02_LickDick_slow_office_anim2",
+        "03_LickDick_fast_office_anim1",
+        "03_LickDick_fast_office_anim2",
+        "03_LickDick_fast_office_anim3",
+        "04_SuckDick_slow_office_anim1",
+        "04_SuckDick_slow_office_anim2",
+        "05_SuckDick_fast_office_anim1",
+        "05_SuckDick_fast_office_anim2",
+        "05_SuckDick_fast_office_anim3",
+        "06_BoobJob_swing_office_anim1",
+        "06_BoobJob_swing_office_anim2",
+        "07_BoobJob_hard_office_anim1",
+        "07_BoobJob_hard_office_anim2",
+        "07_BoobJob_hard_office_anim3",
+        "08_BoobSuck_office_anim1",
+        "08_BoobSuck_office_anim2",
+        "08_BoobSuck_office_anim3",
+        "08_BoobSuck_office_anim4"
+      ],
+      "defaultAnimation": "01_Bowjob_begin_office_anim1",
+      "fileCount": 12,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 8
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "boss"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "p2_master1200-v5-2026-09-12T12-18-44-041Z",
     "name": "p2_master1200 v5",
     "updatedAt": "2026-09-12T12:19:06.787Z",
