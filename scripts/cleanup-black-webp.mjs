@@ -30,7 +30,8 @@ for (const entry of entries) {
   const match = entry.thumbnailPoster.match(/\/assets\/(.*?)(?:\?|$)/);
   if (!match) continue;
 
-  const localPath = path.join(ROOT, match[1]);
+  const relativePath = match[1].replace(/^assets\//, "");
+  const localPath = path.join(ROOT, relativePath);
 
   if (!fs.existsSync(localPath)) {
     const idx = index.findIndex((e) => e.id === entry.id);
