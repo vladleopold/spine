@@ -450,10 +450,6 @@
       "destination": "/api/github-generated?type=webm&id=:id"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/api/github-asset?path=:1"
-    },
-    {
       "source": "/assets/:path(.*)",
       "destination": "/api/github-asset?path=:path"
     },
