@@ -89,9 +89,9 @@ for (const entry of entries) {
 
     const extractFrame = (dim, outPath, quality) => {
       const commands = [
-        `ffmpeg -y -i "${webmPath}" -vf "select=eq(n\\,0)" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
-        `ffmpeg -y -ss 0 -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
-        `ffmpeg -y -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
+        `ffmpeg -y -ss 2 -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
+        `ffmpeg -y -i "${webmPath}" -vf "select=eq(n\\,24)" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
+        `ffmpeg -y -ss 1 -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`,
       ];
       for (const cmd of commands) {
         try {
