@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-13T03:05:51.615Z",
+  "updatedAt": "2026-09-13T03:06:04.777Z",
+  "animation_asset": {
+    "id": "redeggnest-2026-09-13T03-05-51-615Z",
+    "name": "redeggnest",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "animation1",
+        "animation2",
+        "animation3",
+        "egg"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation1"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/redeggnest-2026-09-13T03-05-51-615Z",
+    "manifestPath": "library/redeggnest-2026-09-13T03-05-51-615Z/manifest.json",
+    "files": [
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/redeggnest/redeggnest.json",
+        "name": "redeggnest/redeggnest.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/redeggnest/redeggnest.atlas",
+        "name": "redeggnest/redeggnest.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/redeggnest/redeggnest.png",
+        "name": "redeggnest/redeggnest.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/animation1-preview.webp",
+        "name": "animation1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/redeggnest-2026-09-13T03-05-51-615Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "redeggnest.json",
+    "atlas": "redeggnest.atlas",
+    "textures": [
+      "redeggnest.png"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "animation1",
+      "animation2",
+      "animation3",
+      "egg"
+    ],
+    "defaultAnimation": "animation1",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
