@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "character-2026-08-04T20-33-55-647Z",
+  "title": "character",
+  "uploadedAt": "2026-08-04T20:33:55.647Z",
+  "proofPath": "library/character-2026-08-04T20-33-55-647Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/character-2026-08-04T20-33-55-647Z/source-proof.json?v=2026-08-04T20-33-55.647Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_8mscxw_8wb2a9",
+    "anonymousFingerprint": "8mscxw",
+    "browserFingerprintSha256": "62084cb29f0df7288599528c876c856ce0a6f756d23db779eb274ab58dcfc331",
+    "browserEnvironmentHashSha256": "ed3b55be0b776393a0c648d0532d0d295de2c4e17faff4c74f7fe5e15b2f2492",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "fr-MG",
+      "languages": [
+        "fr-MG",
+        "en-GB",
+        "fr-FR",
+        "en-US",
+        "fr",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 360,
+        "height": 800,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Indian/Antananarivo",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/character-2026-08-04T20-33-55-647Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:26dcafb43860703a778fd718f8d0b023a8f4a2a00d615ce58868ed69e7054b93",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "0-preview.webp",
+      "bytes": 702,
+      "sha256": "f9a6aaad1ed30f0d2540ddb970c37a981d78e34e78fb3fc17491011d7c72dee0"
+    },
+    {
+      "name": "character/Albert.png",
+      "bytes": 2041148,
+      "sha256": "aa1d7e8101b02e5b47b1bcb54a61dfe3000763e35b76225cdfc28952d806a739"
+    },
+    {
+      "name": "character/character.atlas",
+      "bytes": 530,
+      "sha256": "d45be01380e4eebdd5b8fe1e13e9a5703129fe10a254a8226c4a7fb0a0ea6fd3"
+    },
+    {
+      "name": "character/character.skel",
+      "bytes": 172634,
+      "sha256": "cd34cdb9add9fb4fc59811e26c3cc38d3c40880333598040c7495f984c0570b6"
+    }
+  ],
+  "proofHash": "26dcafb43860703a778fd718f8d0b023a8f4a2a00d615ce58868ed69e7054b93"
+}

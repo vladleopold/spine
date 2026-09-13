@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "sishen-2026-08-19T09-41-40-969Z",
+  "title": "sishen",
+  "uploadedAt": "2026-08-19T09:41:40.969Z",
+  "proofPath": "library/sishen-2026-08-19T09-41-40-969Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/sishen-2026-08-19T09-41-40-969Z/source-proof.json?v=2026-08-19T09-41-40.969Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1otvclw_73g9on",
+    "anonymousFingerprint": "1otvclw",
+    "browserFingerprintSha256": "99346641e5d2116d8413db16b2d307e40f7d9bde02808311e8f6f2576228fa4f",
+    "browserEnvironmentHashSha256": "039dd5a09cc0a7d702a2c34def74665fea1fb05576207e3f56ddd6a0f3b224e9",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-IN",
+      "languages": [
+        "en-IN",
+        "en-GB",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 28,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Calcutta",
+      "timezoneOffset": -330,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/sishen-2026-08-19T09-41-40-969Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9d77623adde8ff808e0e826fef7f8ddde674508705c8839c3b1a1e90a6a4120f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "juhun-preview.webp",
+      "bytes": 1430,
+      "sha256": "6added667d43936f4ef511690556f0b2bd2111d29db38586eb07cb25ea061e9d"
+    },
+    {
+      "name": "sishen/sishen.atlas.txt",
+      "bytes": 2014,
+      "sha256": "b26bf4005a09266185d9428b86abcd52e73676897c7c86128d23e062596b88fc"
+    },
+    {
+      "name": "sishen/sishen.json",
+      "bytes": 20078,
+      "sha256": "86013b408fdb9916494d69b65c832b4eaa0f0b8ce2c00a4bae073e9498bc6d46"
+    },
+    {
+      "name": "sishen/sishen.png",
+      "bytes": 94441,
+      "sha256": "775b7360b38ad4a08111b593ddd5479de7528f2bb7639e2895f679e25eac9734"
+    }
+  ],
+  "proofHash": "9d77623adde8ff808e0e826fef7f8ddde674508705c8839c3b1a1e90a6a4120f"
+}

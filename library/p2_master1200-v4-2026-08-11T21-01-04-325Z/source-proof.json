@@ -1,0 +1,86 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "p2_master1200-v4-2026-08-11T21-01-04-325Z",
+  "title": "p2_master1200 v4",
+  "uploadedAt": "2026-08-11T21:01:04.325Z",
+  "proofPath": "library/p2_master1200-v4-2026-08-11T21-01-04-325Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/p2_master1200-v4-2026-08-11T21-01-04-325Z/source-proof.json?v=2026-08-11T21-01-04.325Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_d561s3_1njpquf",
+    "anonymousFingerprint": "d561s3",
+    "browserFingerprintSha256": "1f9a4bd9d8822b90dfaf5ef17d89dcf7fbbf33d4defabaacc0487d779c10bb4a",
+    "browserEnvironmentHashSha256": "5bfbc116d7637e4e2876cc35ccaa3692e5f294b2bf47702c89bb487aec391ec5",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "es-ES",
+      "languages": [
+        "es-ES"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 1680,
+        "height": 1050,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "America/Caracas",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/p2_master1200-v4-2026-08-11T21-01-04-325Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e2e1f966ba476e8ac5ebebac516ee596339e4380eaea323e12efeece68d57777",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "01_idle-preview.webp",
+      "bytes": 1600,
+      "sha256": "a2551fd043a8672f821eb36a4c92ad7fc2aa1ceb4eafaac8983b76c66b635384"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V4.atlas",
+      "bytes": 3550,
+      "sha256": "89df1968429e444db775f291fc9b48fa09a218d5ef8398421d18b85048333085"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V4.json",
+      "bytes": 205736,
+      "sha256": "5a419ab2298cd47cd840e7bebd64a96036fd094563e821824de483c1ff389af2"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V4.png",
+      "bytes": 2020007,
+      "sha256": "09108315d5288db82eec33e0dc7881dea156f3d5cce0e2afde3725f6324af814"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V42.png",
+      "bytes": 1192878,
+      "sha256": "814d011a4846079c90237dfd84354a9852b70a7da59f3e5c702b1c517c945d51"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V43.png",
+      "bytes": 1006492,
+      "sha256": "13fc48ebb4f28db56e1ca35df1265fa38ca46d5b3f82ab72899b14141114b0c7"
+    },
+    {
+      "name": "p2_master1200 v4/p2_master1200 V44.png",
+      "bytes": 67032,
+      "sha256": "65d5854ac8484ed1c3292bed718b5e48e8fac33abe35df4eca9c61f75b47473b"
+    }
+  ],
+  "proofHash": "e2e1f966ba476e8ac5ebebac516ee596339e4380eaea323e12efeece68d57777"
+}

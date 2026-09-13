@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "scissor-2026-06-13T11-29-21-440Z",
+  "title": "scissor",
+  "uploadedAt": "2026-06-13T11:29:21.440Z",
+  "proofPath": "library/scissor-2026-06-13T11-29-21-440Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T11-29-21-440Z/source-proof.json?v=2026-06-13T11-29-21.440Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/scissor-2026-06-13T11-29-21-440Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:12903b0f71d833c725cd39b219c858d3db77d1a2c85a521d1a9771c35474550f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webm",
+      "bytes": 391926,
+      "sha256": "ea24e7349295e102b5c52db1a28b3c69cbd92e5369ff36bf0e1641bfc947f97b"
+    },
+    {
+      "name": "animation-preview.webp",
+      "bytes": 74072,
+      "sha256": "b83f2ea48d29c223731509388c654d68314672e17d1b30e916a5c164450afe0e"
+    },
+    {
+      "name": "scissor/Scissor.atlas",
+      "bytes": 397,
+      "sha256": "4ab38d383e81b172c52a0a49f1848de62e0146a39e09aa303b64cc1bc00a54c8"
+    },
+    {
+      "name": "scissor/Scissor.json",
+      "bytes": 9631,
+      "sha256": "646d77c70bfca53e8d39bff988d3a4cf66b412e3855df3775d8656b25523af6d"
+    },
+    {
+      "name": "scissor/Scissor.webp",
+      "bytes": 495988,
+      "sha256": "2cfc7614479b96a2bb1f8c0a7ec1a696f170669145bf20491f798203108f53bf"
+    }
+  ],
+  "proofHash": "12903b0f71d833c725cd39b219c858d3db77d1a2c85a521d1a9771c35474550f"
+}

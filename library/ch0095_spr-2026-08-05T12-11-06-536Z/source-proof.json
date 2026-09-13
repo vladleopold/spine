@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ch0095_spr-2026-08-05T12-11-06-536Z",
+  "title": "ch0095_spr",
+  "uploadedAt": "2026-08-05T12:11:06.536Z",
+  "proofPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ch0095_spr-2026-08-05T12-11-06-536Z/source-proof.json?v=2026-08-05T12-11-06.536Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_f15jvc_cn6dff",
+    "anonymousFingerprint": "f15jvc",
+    "browserFingerprintSha256": "ae86d664dfcd11eb4692e4bd334ea14273ff30d46429a9497462c078f7c18957",
+    "browserEnvironmentHashSha256": "e6ec412a5ec9f6fdb010f7e4665388f4a14d2725e4981804db54f0a7fd52f2f7",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "zh-TW",
+        "zh-CN"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2195,
+        "height": 1235,
+        "colorDepth": 24,
+        "pixelRatio": 1.75
+      },
+      "timezone": "Asia/Hong_Kong",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 2,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ch0095_spr-2026-08-05T12-11-06-536Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:37044487ef7773daddc1dac24f5b7774ca0aae776796d5790aa9022b98ca89a1",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "00-preview.webp",
+      "bytes": 1310,
+      "sha256": "c62eda13f40621315f833fd41b2980d7a220f4b2150eca8f0591b4550caf6942"
+    },
+    {
+      "name": "ch0095_spr/CH0095_spr.atlas",
+      "bytes": 1368,
+      "sha256": "973c81c5dfc2c707ca1263d7b08c6350c0a5263a20e679eaecc74958cc104a25"
+    },
+    {
+      "name": "ch0095_spr/CH0095_spr.png",
+      "bytes": 564568,
+      "sha256": "88affd3108d1598212e761c8eb2b9f8216c38c2a920ab7aa22766526834c6fb5"
+    },
+    {
+      "name": "ch0095_spr/CH0095_spr.skel",
+      "bytes": 11267,
+      "sha256": "85ac37a2d3c74c285d7b64862ccdcaf25a42fb31a92e5bfcfd2aac3014b8ba84"
+    }
+  ],
+  "proofHash": "37044487ef7773daddc1dac24f5b7774ca0aae776796d5790aa9022b98ca89a1"
+}

@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "stu-fullbody-2026-08-29T21-57-37-671Z",
+  "title": "stu-fullbody",
+  "uploadedAt": "2026-08-29T21:57:37.671Z",
+  "proofPath": "library/stu-fullbody-2026-08-29T21-57-37-671Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/stu-fullbody-2026-08-29T21-57-37-671Z/source-proof.json?v=2026-08-29T21-57-37.671Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/stu-fullbody-2026-08-29T21-57-37-671Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:7ce6392be59e2e04a5d0f6f6897bcc7690c6f3c492cdff80c4a8b6978139b5c0",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 708,
+      "sha256": "7904fef2419a34da9adc69772cad862d73945802c77cc1a4d9c8e78f404f15e1"
+    },
+    {
+      "name": "stu-fullbody/stu-fullBody.atlas",
+      "bytes": 1562,
+      "sha256": "981c47ae892a5b7d6bc4cf94b9b66eaaf648efd190df25e1d523e2dfaf32828c"
+    },
+    {
+      "name": "stu-fullbody/stu-fullBody.json",
+      "bytes": 9214,
+      "sha256": "a35cb41548a6cd814649ef40c6d4395d5e5521344da92a45c25eca2d57c7247a"
+    },
+    {
+      "name": "stu-fullbody/stu-fullBody.png",
+      "bytes": 70276,
+      "sha256": "a916a093926c309490070e0cbdf090d7111e77f3142fbbfa3f184df87e9730aa"
+    }
+  ],
+  "proofHash": "7ce6392be59e2e04a5d0f6f6897bcc7690c6f3c492cdff80c4a8b6978139b5c0"
+}

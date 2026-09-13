@@ -1,0 +1,98 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+  "title": "basegame_bg_desktop",
+  "uploadedAt": "2026-07-24T04:47:37.286Z",
+  "proofPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json?v=2026-07-24T04-47-37.286Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_w5h8en_cxmafx",
+    "anonymousFingerprint": "w5h8en",
+    "browserFingerprintSha256": "74aa9de5ea8d0d2c3927144759e2dc832a8dd6bc395c4af9cc78bd6e23639a37",
+    "browserEnvironmentHashSha256": "bd32fb079fb63a066eacda986b7df85514319bc4d1d4d8090fe4dc7cc0615d4d",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Asia/Calcutta",
+      "timezoneOffset": -330,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:344ce7ed6ff6d545a0ae301890dd4eb4ee3af62d4bc4dac0697b61f282023c05",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webm",
+      "bytes": 398995,
+      "sha256": "25ac54f4f9025ad866124331cccbe499fec6919005655f32fa6b8a0b4fbcf649"
+    },
+    {
+      "name": "animation-preview.webp",
+      "bytes": 36162,
+      "sha256": "57374e1551a43685d104ed689c86febd9b9c7ba9066563a4902bbe3ef132108b"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop_2.png",
+      "bytes": 2376172,
+      "sha256": "0cb803fd82322cf5c5a9a08f41e7a89301292a88e9adfa0bbf99b35da49eae2a"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop_3.png",
+      "bytes": 1036621,
+      "sha256": "8e33b82629e7d3bc63f07a2c6bbd3da879ac62792a278bcc34ce2351b2c4782f"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop_4.png",
+      "bytes": 619598,
+      "sha256": "4a40f7d7dc24637f7b48d4beb775f86e471a90f799424b33b470bfb4cd596739"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop_5.png",
+      "bytes": 1042987,
+      "sha256": "3dd59b6fd84670cb91f69082b2403add37b5f501ca181d3170e44aca3ba57dd8"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop.atlas",
+      "bytes": 3056,
+      "sha256": "f810a3d092556321a4da3273bdbb5a90cd249c9645d79476e160581e79e0dc55"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop.json",
+      "bytes": 47363,
+      "sha256": "0c7de6f142ce6972cdceb072f3e97e18823774ffa524d8e8c307a936b17884b5"
+    },
+    {
+      "name": "basegame_bg_desktop/basegame_bg_desktop.png",
+      "bytes": 2046980,
+      "sha256": "911663f790cc145172074cd02de03c985ff81ececed6e8601b56869ed5f18d9c"
+    }
+  ],
+  "proofHash": "344ce7ed6ff6d545a0ae301890dd4eb4ee3af62d4bc4dac0697b61f282023c05"
+}

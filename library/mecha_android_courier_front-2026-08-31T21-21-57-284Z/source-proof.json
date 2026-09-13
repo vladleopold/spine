@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "mecha_android_courier_front-2026-08-31T21-21-57-284Z",
+  "title": "mecha_android_courier_front",
+  "uploadedAt": "2026-08-31T21:21:57.284Z",
+  "proofPath": "library/mecha_android_courier_front-2026-08-31T21-21-57-284Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/mecha_android_courier_front-2026-08-31T21-21-57-284Z/source-proof.json?v=2026-08-31T21-21-57.284Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/mecha_android_courier_front-2026-08-31T21-21-57-284Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9423bb9fbed31447944ac7cf8b266599b128dc1437258063c65e39e4aaf13df6",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1452,
+      "sha256": "a861fa8c9e3840b972fb6e3f06351b4a88bdaa6bec166e8072ddc8cdcccfd4f0"
+    },
+    {
+      "name": "mecha_android_courier_front/mecha_android_courier_front.skel",
+      "bytes": 276733,
+      "sha256": "bb399c1cc4a9a00042c0e3b0266e554bcda6076c0454d9146749c98de9f0c32b"
+    },
+    {
+      "name": "mecha_android_courier_front/mecha_android_courier.atlas",
+      "bytes": 12412,
+      "sha256": "b70e4e7d64321f30361a633dd942da2c8795ade1b804cb7c2cc2d7c1a7d11236"
+    },
+    {
+      "name": "mecha_android_courier_front/mecha_android_courier.png",
+      "bytes": 11495,
+      "sha256": "cb9ef7ad09cefb1cab685e0cc6a947f8bae0b1abd0ed60b889f50fd87881cad5"
+    }
+  ],
+  "proofHash": "9423bb9fbed31447944ac7cf8b266599b128dc1437258063c65e39e4aaf13df6"
+}

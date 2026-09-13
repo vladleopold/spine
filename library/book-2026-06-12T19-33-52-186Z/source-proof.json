@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "book-2026-06-12T19-33-52-186Z",
+  "title": "book",
+  "uploadedAt": "2026-06-12T19:33:52.186Z",
+  "proofPath": "library/book-2026-06-12T19-33-52-186Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/book-2026-06-12T19-33-52-186Z/source-proof.json?v=2026-06-12T19-33-52.186Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/book-2026-06-12T19-33-52-186Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:16d3e213947173cba2b52dd892f9bdec4e9907f58a7a552e65782a1feddf476f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "book/Book.atlas",
+      "bytes": 280,
+      "sha256": "ccc2d55dc61e88c6b69bf5a48ee1120c2aace1adbb4cd015bfbd5eeb1ed13ffc"
+    },
+    {
+      "name": "book/Book.json",
+      "bytes": 23615,
+      "sha256": "31180329e34575e1d908aed36284c3e6d32face240c0b689729baf18efa10ffc"
+    },
+    {
+      "name": "book/Book.png",
+      "bytes": 2342874,
+      "sha256": "d07bf812e3351ecfa2129835680eb7c710ee1b55af48bbb80001133471b50f0a"
+    },
+    {
+      "name": "hit-preview.webm",
+      "bytes": 759121,
+      "sha256": "365391eafbe2e08c782ee53c1de1041967da77177a3c172981eab5d1026ab150"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 219856,
+      "sha256": "a7ab0f83c54bd230489aeeac8bdce6548df6898c430921bcd48f3f174ef1ff53"
+    }
+  ],
+  "proofHash": "16d3e213947173cba2b52dd892f9bdec4e9907f58a7a552e65782a1feddf476f"
+}

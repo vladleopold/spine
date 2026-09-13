@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "lyla-2026-08-29T21-51-09-224Z",
+  "title": "lyla",
+  "uploadedAt": "2026-08-29T21:51:09.224Z",
+  "proofPath": "library/lyla-2026-08-29T21-51-09-224Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/lyla-2026-08-29T21-51-09-224Z/source-proof.json?v=2026-08-29T21-51-09.224Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/lyla-2026-08-29T21-51-09-224Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c385d8bec58a3c5540d73e3b11caa02d0d05875197dbef80868b8b1c6e763e2d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle_arms_down-preview.webp",
+      "bytes": 726,
+      "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3"
+    },
+    {
+      "name": "lyla/Lyla.atlas",
+      "bytes": 2881,
+      "sha256": "dbab989b00d8a1b970532228264ea7d4256f919bdb859cb31dda94d47af9ad52"
+    },
+    {
+      "name": "lyla/Lyla.json",
+      "bytes": 137006,
+      "sha256": "48bb2b7e797e93d4e563079c3d5068de49cedc693daaf7cc757ed72a6f738a34"
+    },
+    {
+      "name": "lyla/Lyla.png",
+      "bytes": 385168,
+      "sha256": "a4c1720996da0789670aaec0e56c5fa6218f320d6f9be64f783c67725a0a4d69"
+    }
+  ],
+  "proofHash": "c385d8bec58a3c5540d73e3b11caa02d0d05875197dbef80868b8b1c6e763e2d"
+}

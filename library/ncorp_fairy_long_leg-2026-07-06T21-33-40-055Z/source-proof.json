@@ -1,0 +1,67 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z",
+  "title": "ncorp_fairy_long_leg",
+  "uploadedAt": "2026-07-06T21:33:40.055Z",
+  "proofPath": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z/source-proof.json?v=2026-07-06T21-33-40.055Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_9e531g_1u3grdz",
+    "anonymousFingerprint": "9e531g",
+    "browserFingerprintSha256": "91259241a39bc1a1c765e29928dc43563fd9fd4a0202435cb18c88d7de431c11",
+    "browserEnvironmentHashSha256": "4e62bceb9d0763919ca22487d97a689a1eafd647ebd8105bc56f833dbec4419b",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ncorp_fairy_long_leg-2026-07-06T21-33-40-055Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9c07c37628b7d5581e5138ef3c5badd8f8158d3c166587e90809b5c2875b3411",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.atlas",
+      "bytes": 633,
+      "sha256": "1f1ce7362e11d6ab1a146b406242f4e5b488add77d97c67e77ac8a059ef325ad"
+    },
+    {
+      "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.json",
+      "bytes": 18904,
+      "sha256": "eb452d348f38396927dd0df9edf601cd361be7a78f5cd712b82352b2e5e190b0"
+    },
+    {
+      "name": "ncorp_fairy_long_leg/ncorp_fairy_long_leg.png",
+      "bytes": 778822,
+      "sha256": "3e9c008b8d601eb927ab57a8dfd7fc5fcc6030fcb53f91fd47f2f81063cf957b"
+    }
+  ],
+  "proofHash": "9c07c37628b7d5581e5138ef3c5badd8f8158d3c166587e90809b5c2875b3411"
+}

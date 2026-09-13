@@ -1,0 +1,110 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "instruction-2026-05-14T07-09-57-306Z",
+  "title": "instruction",
+  "uploadedAt": "2026-05-14T07:09:57.306Z",
+  "proofPath": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/instruction-2026-05-14T07-09-57-306Z/source-proof.json?v=2026-05-14T07-09-57.306Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+    "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+    "anonymousFingerprint": "1kaqmj9",
+    "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+    "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk-UA",
+      "languages": [
+        "uk-UA",
+        "uk",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/instruction-2026-05-14T07-09-57-306Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:fc53654e161f461a9fbe9e79c38ad912058135b967ab3ad4b76f8b958e505409",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle_landscape-preview.webm",
+      "bytes": 494583,
+      "sha256": "9b34f2871a283b40c063bcac11f3ccf315980b70fe55119fb4868fca0bd0c5cb"
+    },
+    {
+      "name": "idle_landscape-preview.webp",
+      "bytes": 142632,
+      "sha256": "41f0dde2ae1c50acbe0260463176483a7e3511eadde41347c99729cf015bea8c"
+    },
+    {
+      "name": "instruction/instruction.atlas",
+      "bytes": 4760,
+      "sha256": "3c81dd7b8de1c18ab2c0a7fe8758f5ca37ca730dfa5c708ae5489ea8b573899d"
+    },
+    {
+      "name": "instruction/instruction.json",
+      "bytes": 60418,
+      "sha256": "f3037c07b33914fcc8c7a656f8560ba2a64f7e8cd1160e39cb6dce468a3fa4dc"
+    },
+    {
+      "name": "instruction/instruction.png",
+      "bytes": 966253,
+      "sha256": "8fccd33c5fe152cc51ec11b7bdf099aee47fdf50d0f34c8ef749845aafb4d4f2"
+    },
+    {
+      "name": "instruction/instruction2.png",
+      "bytes": 275443,
+      "sha256": "8860da4ddb6b534ffca6159f0bcef157d613b8ebef49cfc906a91fa94cf6aea0"
+    },
+    {
+      "name": "transition/transition.atlas",
+      "bytes": 11054,
+      "sha256": "66ff0add10cbee82424b38013ab6cb867d5decd32a037149ecb41bb8b547b710"
+    },
+    {
+      "name": "transition/transition.json",
+      "bytes": 144938,
+      "sha256": "02f94e09f4a1454b7704631b169f0896ecb4f94b4f0330027c9178efa6a1a22f"
+    },
+    {
+      "name": "transition/transition.png",
+      "bytes": 1083922,
+      "sha256": "bae7b90947d147e7536848ab01e3d17c86b706675f9c28bae9d9266bf811acaa"
+    },
+    {
+      "name": "transition/transition2.png",
+      "bytes": 1225815,
+      "sha256": "ccafe7386a398fdd95d75f9d4725edd5b7483283c4bc96cfc425fe60b0bb3bbb"
+    },
+    {
+      "name": "transition/transition3.png",
+      "bytes": 1235675,
+      "sha256": "c6151947b8c7072eae17b5559652c00ba3de726de564163eaac2d4e842d6d640"
+    }
+  ],
+  "proofHash": "fc53654e161f461a9fbe9e79c38ad912058135b967ab3ad4b76f8b958e505409"
+}

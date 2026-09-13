@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "full_body-2026-09-12T11-21-10-586Z",
+  "title": "full_body",
+  "uploadedAt": "2026-09-12T11:21:10.586Z",
+  "proofPath": "library/full_body-2026-09-12T11-21-10-586Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/full_body-2026-09-12T11-21-10-586Z/source-proof.json?v=2026-09-12T11-21-10.586Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_7edgk5_bwf1a7",
+    "anonymousFingerprint": "7edgk5",
+    "browserFingerprintSha256": "891b3b3d91a9cc9968bf66101946e251c10d43fdbbbc6330c26e3b0f1003d723",
+    "browserEnvironmentHashSha256": "690356a7464f1399a4003d089aa106b32808eee5838442f00a1f72bc097c60cd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "vi",
+      "languages": [
+        "vi",
+        "en-US",
+        "en",
+        "fr-FR",
+        "fr"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Bangkok",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/full_body-2026-09-12T11-21-10-586Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:1031b60481c9b081dfbedda7c2d8b4a2560d2c11a3a62347ec4efe6f31fd0c5a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "full_body/full_body.atlas",
+      "bytes": 2317,
+      "sha256": "eadd86495b5c2a7ff8be385a22bb95cf157c300422435a4abb8d4f32bf450a44"
+    },
+    {
+      "name": "full_body/full_body.json",
+      "bytes": 99434,
+      "sha256": "62092f9bc6218f0e1f7ed75207617d76416c3237c47a175fa56c3edb6e9c9b32"
+    },
+    {
+      "name": "full_body/full_body.png",
+      "bytes": 667493,
+      "sha256": "80da9c690206369e380b531caa5b4a2d89dca177b2b1eaba6736695b782d2290"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 1208,
+      "sha256": "282d9e7dea3252036642c7333f00517de285f6d380746514ea09bbc22f9fa593"
+    }
+  ],
+  "proofHash": "1031b60481c9b081dfbedda7c2d8b4a2560d2c11a3a62347ec4efe6f31fd0c5a"
+}

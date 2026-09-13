@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "s200012-2026-07-27T09-42-29-952Z",
+  "title": "s200012",
+  "uploadedAt": "2026-07-27T09:42:29.952Z",
+  "proofPath": "library/s200012-2026-07-27T09-42-29-952Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/s200012-2026-07-27T09-42-29-952Z/source-proof.json?v=2026-07-27T09-42-29.952Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/s200012-2026-07-27T09-42-29-952Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:55f3c8ff32e18d97c6b0eee7b7cb0577c1ab6c869060c08820d3e72484f8179e",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation_1_loop-preview.webp",
+      "bytes": 696,
+      "sha256": "fd2a0dfc5791892fa7482438d373aa4c4a928777ebe549fba8dbfedd1b7625eb"
+    },
+    {
+      "name": "s200012/s200012.atlas",
+      "bytes": 5208,
+      "sha256": "313ee3a78c81543affd86e8883d259b7854c139a9a272f60fdccbbe96e79f108"
+    },
+    {
+      "name": "s200012/s200012.json",
+      "bytes": 364274,
+      "sha256": "a3375ebc50521763d99784c54feaa3706d06c25edddc673546709b6ddc736abd"
+    },
+    {
+      "name": "s200012/s200012.png",
+      "bytes": 1532876,
+      "sha256": "800c84bdc74c4b79bea8ed47fd8edd1169ab483fa651e7b135b997d509b8801f"
+    }
+  ],
+  "proofHash": "55f3c8ff32e18d97c6b0eee7b7cb0577c1ab6c869060c08820d3e72484f8179e"
+}

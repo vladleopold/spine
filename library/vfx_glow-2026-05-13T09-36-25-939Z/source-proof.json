@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "vfx_glow-2026-05-13T09-36-25-939Z",
+  "title": "vfx_glow",
+  "uploadedAt": "2026-05-13T09:36:25.939Z",
+  "proofPath": "library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/vfx_glow-2026-05-13T09-36-25-939Z/source-proof.json",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_h0oehi_motm1m",
+    "anonymousFingerprint": "h0oehi",
+    "browserFingerprintSha256": "68ec51ffd2512afc1fc9cab857778e8e070fc5ef0e4085da0257a8605d5f8418",
+    "browserEnvironmentHashSha256": "aa42323cec73ecbae8e7d8274cdea3a9fe3313c46b5653eb3f0851322e0d6219",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1710,
+        "height": 1107,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Saigon",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/vfx_glow-2026-05-13T09-36-25-939Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a569f3cfff06ab3943909bdd71b7622117cf6e511df219cdbaf0c954438634f5",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webm",
+      "bytes": 325433,
+      "sha256": "9cb13c23d2cb2fecf5a76a5c158a16317995ed04fbace0c6a0b74dddabfb1490"
+    },
+    {
+      "name": "animation-preview.webp",
+      "bytes": 46880,
+      "sha256": "659b2c8283a773bf83d4245cf7976c48fa22989c11cfade32effde8fab429f58"
+    },
+    {
+      "name": "vfx_glow/vfx_glow.atlas",
+      "bytes": 142,
+      "sha256": "d39f45229f8d89c13c2d754cfe80ba5553c6a52d819366d97d9233d1c62479ee"
+    },
+    {
+      "name": "vfx_glow/vfx_glow.json",
+      "bytes": 4298,
+      "sha256": "2a09ff3b8b25a19fbf44c63d5e0be6f5521f5adb601286c38884dd6d36ea091f"
+    },
+    {
+      "name": "vfx_glow/vfx_glow.png",
+      "bytes": 27439,
+      "sha256": "d3be0c9fb5c9353d596407ea355795df2a10a5d5a932e564e3aad38d247e4ca7"
+    }
+  ],
+  "proofHash": "a569f3cfff06ab3943909bdd71b7622117cf6e511df219cdbaf0c954438634f5"
+}

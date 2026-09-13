@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "spine-2026-08-28T11-21-25-609Z",
+  "title": "spine",
+  "uploadedAt": "2026-08-28T11:21:25.609Z",
+  "proofPath": "library/spine-2026-08-28T11-21-25-609Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/spine-2026-08-28T11-21-25-609Z/source-proof.json?v=2026-08-28T11-21-25.609Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1j0pv7v_peuia7",
+    "anonymousFingerprint": "1j0pv7v",
+    "browserFingerprintSha256": "607353ee5eee8622e5b6dbdaec3a0a2712d0a6dd8b71e79d7c39ec0074d8e5fe",
+    "browserEnvironmentHashSha256": "c7514ce69999ad3bbbd2d6f1ba897e10cf57be92ee561e4272d6e78f391d81a6",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/spine-2026-08-28T11-21-25-609Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d972df9ae4d729cd06e4737b2a89cf62ece06245f24935e110a669a8c92e7917",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 1396,
+      "sha256": "451735d9825a14e4bc9b91154f2a2094bbcda61ff1bf57cb9ecdc72585a40d85"
+    },
+    {
+      "name": "spine/spine.atlas",
+      "bytes": 1706,
+      "sha256": "9b7fcdb3908ee84fa055a38a6db3834974540c7141d32fb01b234b3d65bf098d"
+    },
+    {
+      "name": "spine/spine.json",
+      "bytes": 2065,
+      "sha256": "ff2a159ad18d018b0af5cb18a914ff2c02b2ff1930bdbba84be81517f83de98e"
+    },
+    {
+      "name": "spine/spine.png",
+      "bytes": 96165,
+      "sha256": "08c32dc85919864b1568529c4688168176e60dfda292e773815b11cb7e893d33"
+    }
+  ],
+  "proofHash": "d972df9ae4d729cd06e4737b2a89cf62ece06245f24935e110a669a8c92e7917"
+}

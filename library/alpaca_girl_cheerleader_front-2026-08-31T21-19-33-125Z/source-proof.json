@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z",
+  "title": "alpaca_girl_cheerleader_front",
+  "uploadedAt": "2026-08-31T21:19:33.125Z",
+  "proofPath": "library/alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z/source-proof.json?v=2026-08-31T21-19-33.125Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:b4431ff1a7d9ab6f265376a44266f7b6e454f5517f8b5a2acb31b130d3f11945",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "alpaca_girl_cheerleader_front/alpaca_girl_cheerleader_front.skel",
+      "bytes": 360344,
+      "sha256": "6b6627400e39a76377b88c145867d45a609686fe78b35e40214ccb23eb79550f"
+    },
+    {
+      "name": "alpaca_girl_cheerleader_front/alpaca_girl_cheerleader.atlas",
+      "bytes": 14355,
+      "sha256": "b7b6a9fac795cf6143b2a0b877faf471e183cd18e6b9599bc6646a0ecabe2846"
+    },
+    {
+      "name": "alpaca_girl_cheerleader_front/alpaca_girl_cheerleader.png",
+      "bytes": 20445,
+      "sha256": "add772a8faa2c9808e34dc0b8ac151f1ff1c0d0fe39c9cee58382c0dae887333"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1456,
+      "sha256": "be393eb7194e893d90996d4acdc34417c94925fed12b9e4e0f7bc1474dd56633"
+    }
+  ],
+  "proofHash": "b4431ff1a7d9ab6f265376a44266f7b6e454f5517f8b5a2acb31b130d3f11945"
+}

@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "cookie0605s01-2026-08-18T23-42-39-438Z",
+  "title": "cookie0605s01",
+  "uploadedAt": "2026-08-18T23:42:39.438Z",
+  "proofPath": "library/cookie0605s01-2026-08-18T23-42-39-438Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/cookie0605s01-2026-08-18T23-42-39-438Z/source-proof.json?v=2026-08-18T23-42-39.438Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_e6g2a7_kvsjqd",
+    "anonymousFingerprint": "e6g2a7",
+    "browserFingerprintSha256": "325b6831a665290c1754fd3fc38b001b73df127d14ce08d3f3bd130cca60afe7",
+    "browserEnvironmentHashSha256": "cfac534509d15ed24d48fc43102877850f7c2fab7f96a823021a59f775f33ed4",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "pt-BR",
+      "languages": [
+        "pt-BR",
+        "pt",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 393,
+        "height": 873,
+        "colorDepth": 24,
+        "pixelRatio": 2.75
+      },
+      "timezone": "America/Sao_Paulo",
+      "timezoneOffset": 180,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/cookie0605s01-2026-08-18T23-42-39-438Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:8a5f58a47eec660d351533a4046d94f30e6de80bbc31a8c0aa6dfe2a7e26f90d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "axe-preview.webp",
+      "bytes": 1028,
+      "sha256": "ea8645e10f8b4d78da1b935e560195d046a12b7e3daae8c6affc5ba598d34470"
+    },
+    {
+      "name": "cookie0605s01/cookie0605s01.atlas",
+      "bytes": 37450,
+      "sha256": "82b6f24560bfac807ea964627380837719b3fd668b8db740a031376f0bff2e22"
+    },
+    {
+      "name": "cookie0605s01/cookie0605s01.png",
+      "bytes": 942202,
+      "sha256": "4a714947e29e766ece9811eb797dcc3421139cf43a24806fac4f1e9c08ea9549"
+    },
+    {
+      "name": "cookie0605s01/cookie0605s01.skel",
+      "bytes": 743964,
+      "sha256": "4d3103bf2454108cac2f33dcdfdd4d3e02ede65cd26b8263e21428480668d166"
+    }
+  ],
+  "proofHash": "8a5f58a47eec660d351533a4046d94f30e6de80bbc31a8c0aa6dfe2a7e26f90d"
+}

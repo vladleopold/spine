@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "reels-background-2026-08-13T06-21-29-121Z",
+  "title": "reels-background",
+  "uploadedAt": "2026-08-13T06:21:29.121Z",
+  "proofPath": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json?v=2026-08-13T06-21-29.121Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_xjkvz8_hucwd9",
+    "anonymousFingerprint": "xjkvz8",
+    "browserFingerprintSha256": "5d15b95b9d52f96a84f82423cfa9faa7b5f7a0d833b825e846ff705531d99ea1",
+    "browserEnvironmentHashSha256": "17832b6f07a66fcfa435b34acacc7838fa4252a5416be0766bb911959196bb3b",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Linux x86_64",
+      "language": "be-BY",
+      "languages": [
+        "be-BY",
+        "be",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Vilnius",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/reels-background-2026-08-13T06-21-29-121Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:181fda9ce00ad4627c601ec268858a2da16fad2302fb0d0593e16233413694ad",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "base-game-preview.webp",
+      "bytes": 698,
+      "sha256": "5a0045edb060dfaee73a98be42d5b0493e5dbb60255d933171d26c719826a562"
+    },
+    {
+      "name": "reels-background/reels-background.atlas",
+      "bytes": 626,
+      "sha256": "e4c299c928d3a547318cd247be1105f98657ca2af27ddc2b0018c9f2e0bbfc6b"
+    },
+    {
+      "name": "reels-background/reels-background.json",
+      "bytes": 37508,
+      "sha256": "8026b2030388ab0f22b53b9af74a9bc9eb2b823a2daf4baac49033549bcf72b0"
+    },
+    {
+      "name": "reels-background/reels-background.webp",
+      "bytes": 825105,
+      "sha256": "cf7a827ace0eddb1ccfa954126eae7bc929afc0c98a82e185f100f3cd7b78d03"
+    }
+  ],
+  "proofHash": "181fda9ce00ad4627c601ec268858a2da16fad2302fb0d0593e16233413694ad"
+}

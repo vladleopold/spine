@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "measuring_tape-2026-06-13T11-30-37-404Z",
+  "title": "measuring_tape",
+  "uploadedAt": "2026-06-13T11:30:37.404Z",
+  "proofPath": "library/measuring_tape-2026-06-13T11-30-37-404Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/measuring_tape-2026-06-13T11-30-37-404Z/source-proof.json?v=2026-06-13T11-30-37.404Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/measuring_tape-2026-06-13T11-30-37-404Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ef41585e18623a3a9cdc883556cc1be181ce5112ae8151dc0692880ceb6585a3",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "hit-preview.webm",
+      "bytes": 494217,
+      "sha256": "f87f2b39871240e0b6501f1d8857e6a3287f4d5df8c0053f127380f2630a59d6"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 181432,
+      "sha256": "f8b80457ce73b3bee32480a7f8dedc287b2b4fea57c2f3d28108be45f8e750e5"
+    },
+    {
+      "name": "measuring_tape/Measuring_Tape.atlas",
+      "bytes": 173,
+      "sha256": "b83ba44487b0ca4f4e1fda516c9af827a57029b762c4f5470e447aa8487e0ed2"
+    },
+    {
+      "name": "measuring_tape/Measuring_Tape.json",
+      "bytes": 34560,
+      "sha256": "a06a69eab5bf8ed7766a1aa8842e063f7204545874b0770758f3ced011d54635"
+    },
+    {
+      "name": "measuring_tape/Measuring_Tape.webp",
+      "bytes": 1369499,
+      "sha256": "521c4772e84f028ab3a7c7aa8c253318aaea4f994a09beafdb89d0f28dc262e4"
+    }
+  ],
+  "proofHash": "ef41585e18623a3a9cdc883556cc1be181ce5112ae8151dc0692880ceb6585a3"
+}

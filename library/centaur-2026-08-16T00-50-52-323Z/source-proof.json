@@ -1,0 +1,78 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "centaur-2026-08-16T00-50-52-323Z",
+  "title": "centaur",
+  "uploadedAt": "2026-08-16T00:50:52.323Z",
+  "proofPath": "library/centaur-2026-08-16T00-50-52-323Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/centaur-2026-08-16T00-50-52-323Z/source-proof.json?v=2026-08-16T00-50-52.323Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1p1wjwm_1o5hb8b",
+    "anonymousFingerprint": "1p1wjwm",
+    "browserFingerprintSha256": "98deb86ddb1c14dbdbf41c5ec8c91179dacbb9ffe1ef7849295423b91172d47d",
+    "browserEnvironmentHashSha256": "cb4de231ae78829cb337297f6412b77ec8d498006e27ba21ed7c344af58caf09",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/centaur-2026-08-16T00-50-52-323Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:27468272f068b4fb017b820a8a262ef283319e9365b1129a5f4899caaf8f1e62",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "attack-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "centaur/Centaur_2.png",
+      "bytes": 1026933,
+      "sha256": "9ed7e662c97c0897bf40c04a853f24fff34c28a711b5f99637fc782f7d737c2f"
+    },
+    {
+      "name": "centaur/Centaur.atlas",
+      "bytes": 4335,
+      "sha256": "f9bea49c7bf7c55242fa72bf98993dd8614bcb372b8177707be0d1d818dae75c"
+    },
+    {
+      "name": "centaur/Centaur.png",
+      "bytes": 1908137,
+      "sha256": "7b1f46afde2df1f10ab92286da01bff5d1fc36dbd956261aa380ba6d60afa8dc"
+    },
+    {
+      "name": "centaur/Centaur.skel",
+      "bytes": 170584,
+      "sha256": "f0b4ae1a9d2c38e3cd2a395f53f32180465c4c35f5ef6b5c8a4087d4e7415961"
+    }
+  ],
+  "proofHash": "27468272f068b4fb017b820a8a262ef283319e9365b1129a5f4899caaf8f1e62"
+}

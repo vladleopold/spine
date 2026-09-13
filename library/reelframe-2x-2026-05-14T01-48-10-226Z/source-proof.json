@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "reelframe-2x-2026-05-14T01-48-10-226Z",
+  "title": "reelframe@2x",
+  "uploadedAt": "2026-05-14T01:48:10.226Z",
+  "proofPath": "library/reelframe-2x-2026-05-14T01-48-10-226Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/reelframe-2x-2026-05-14T01-48-10-226Z/source-proof.json?v=2026-05-14T01-48-10.226Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+    "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+    "anonymousFingerprint": "1kaqmj9",
+    "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+    "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk-UA",
+      "languages": [
+        "uk-UA",
+        "uk",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/reelframe-2x-2026-05-14T01-48-10-226Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d608cd56fd2dd677f7ab09101f25a4cbf120b20154b98cccbffecb594aa57271",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "box_upgrade-preview.webm",
+      "bytes": 69954,
+      "sha256": "cf303e9ff4a058dcae2be8ec753f27ae228064b021da497292d4c6d74d3fc94c"
+    },
+    {
+      "name": "box_upgrade-preview.webp",
+      "bytes": 24358,
+      "sha256": "b98003618322e7c42a238b1c0a2d73164a6fd41d6b2f7749e52c3dfa54ad0375"
+    },
+    {
+      "name": "reelframe@2x/reelframe@2x.atlas",
+      "bytes": 206,
+      "sha256": "7cfa14b3b24e22c5586c8542fc6eb1820413415d2a950ed31b3da25c3984fa17"
+    },
+    {
+      "name": "reelframe@2x/reelframe@2x.json",
+      "bytes": 3717,
+      "sha256": "61bc3f9a1a47d7ad8b649623703b9c929389152e64b1738a7cc63bff09202e21"
+    },
+    {
+      "name": "reelframe@2x/reelframe@2x.webp",
+      "bytes": 141038,
+      "sha256": "a61100398a4a7e2558cbfa1b44d50c0c1f28d389b90fe653d682d167d43d5e67"
+    }
+  ],
+  "proofHash": "d608cd56fd2dd677f7ab09101f25a4cbf120b20154b98cccbffecb594aa57271"
+}

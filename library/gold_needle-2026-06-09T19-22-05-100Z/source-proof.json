@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "gold_needle-2026-06-09T19-22-05-100Z",
+  "title": "gold_needle",
+  "uploadedAt": "2026-06-09T19:22:05.100Z",
+  "proofPath": "library/gold_needle-2026-06-09T19-22-05-100Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/gold_needle-2026-06-09T19-22-05-100Z/source-proof.json?v=2026-06-09T19-22-05.100Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/gold_needle-2026-06-09T19-22-05-100Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:330207bd17d736efd2b4bb50bfb5ff7b95d81579e99038d6f7cc52f26e02e170",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "gold_needle/Gold_Needle.atlas",
+      "bytes": 399,
+      "sha256": "79bb60fb55906ef122576191f42f874fe8a2ddd798f56c05962d6c60b230c986"
+    },
+    {
+      "name": "gold_needle/Gold_Needle.json",
+      "bytes": 25417,
+      "sha256": "e1938ce1214990aa0740dc706d1b68012f39e0ea6cc5e4b6fc896c4022d0a91f"
+    },
+    {
+      "name": "gold_needle/Gold_Needle.png",
+      "bytes": 1183877,
+      "sha256": "0a10e5067123978df86fdfb48456f91f0b4e42f8907d7ea744db7eba684d56e9"
+    },
+    {
+      "name": "hit-preview.webm",
+      "bytes": 581610,
+      "sha256": "83027032bc193fe80d33f65a397e8c9675395bf89d011c43882b4c211a0810c1"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 192656,
+      "sha256": "d5a09c178ee0554250acbc521240af1fdff0ec64a08cb89b175be5da74e0150b"
+    }
+  ],
+  "proofHash": "330207bd17d736efd2b4bb50bfb5ff7b95d81579e99038d6f7cc52f26e02e170"
+}

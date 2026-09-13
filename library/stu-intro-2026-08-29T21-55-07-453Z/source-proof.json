@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "stu-intro-2026-08-29T21-55-07-453Z",
+  "title": "stu-intro",
+  "uploadedAt": "2026-08-29T21:55:07.453Z",
+  "proofPath": "library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/stu-intro-2026-08-29T21-55-07-453Z/source-proof.json?v=2026-08-29T21-55-07.453Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/stu-intro-2026-08-29T21-55-07-453Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:af9081406eeba9d11a6c337b0d3d88edf32582d2f2b1fab0744938d1c8846cc7",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 724,
+      "sha256": "6b87af0ce459f9f2f108343b0475dce279df9fb3a4f04b43d21aa2409c4481ea"
+    },
+    {
+      "name": "stu-intro/stu-intro.atlas",
+      "bytes": 904,
+      "sha256": "c1e643bf6e26a6945e7835f3854229ab98a8987977ab4ddf0203a3144fcb6f9f"
+    },
+    {
+      "name": "stu-intro/stu-intro.json",
+      "bytes": 31103,
+      "sha256": "45eba6d6103a040a690f8f6b645372d92304e4805b1efb483a66d91336875395"
+    },
+    {
+      "name": "stu-intro/stu-intro.png",
+      "bytes": 305940,
+      "sha256": "854887f5d75dd91c7f67ffab2e8c8a6c339ed39da863a7d84356b3b9f6b9bb42"
+    }
+  ],
+  "proofHash": "af9081406eeba9d11a6c337b0d3d88edf32582d2f2b1fab0744938d1c8846cc7"
+}

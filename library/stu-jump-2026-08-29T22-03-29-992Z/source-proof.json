@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "stu-jump-2026-08-29T22-03-29-992Z",
+  "title": "stu-jump",
+  "uploadedAt": "2026-08-29T22:03:29.992Z",
+  "proofPath": "library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/stu-jump-2026-08-29T22-03-29-992Z/source-proof.json?v=2026-08-29T22-03-29.992Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/stu-jump-2026-08-29T22-03-29-992Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ed639b7c4516a6246962aa4f2972d085cb71635582266ce298c546ada165c7a4",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "jump-v1-preview.webp",
+      "bytes": 756,
+      "sha256": "568af9955c1ed1d537220cd877ad1a3914bc3e1309ebd451e0541cb5bd00524e"
+    },
+    {
+      "name": "stu-jump/stu-jump.atlas",
+      "bytes": 1085,
+      "sha256": "3c86013686a5a8b1a47b00e2e7e7c1183a9601249dcfa65d6c9d89f6e090306a"
+    },
+    {
+      "name": "stu-jump/stu-jump.json",
+      "bytes": 19851,
+      "sha256": "7e7f68c855893213457607bf5fcb147812895566e3323ca125674cddeb913559"
+    },
+    {
+      "name": "stu-jump/stu-jump.png",
+      "bytes": 1847679,
+      "sha256": "6674657fefe752aa667965f0aac6a1b7b0933f2b4c4ca63d4520ad6f08bbabf3"
+    }
+  ],
+  "proofHash": "ed639b7c4516a6246962aa4f2972d085cb71635582266ce298c546ada165c7a4"
+}

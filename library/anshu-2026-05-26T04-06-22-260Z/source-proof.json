@@ -1,0 +1,79 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "anshu-2026-05-26T04-06-22-260Z",
+  "title": "anshu",
+  "uploadedAt": "2026-05-26T04:06:22.260Z",
+  "proofPath": "library/anshu-2026-05-26T04-06-22-260Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/anshu-2026-05-26T04-06-22-260Z/source-proof.json?v=2026-05-26T04-06-22.260Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_rm3gx4_1n72yye",
+    "anonymousFingerprint": "rm3gx4",
+    "browserFingerprintSha256": "42edabde48b46270d88129fcbaf288e8714082614f0d88f92239970f21ec2e1c",
+    "browserEnvironmentHashSha256": "d55237fbfdb8a63262a223ff151277b193532425211493455aa5690f1b12a315",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2048,
+        "height": 1152,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/anshu-2026-05-26T04-06-22-260Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:1318595ed8b67c6d7edfc63b5f6db9146a889266c4cb4619d3f65eda06e95d3d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "1-preview.webm",
+      "bytes": 91585,
+      "sha256": "dc48b7514a601fdeef05500f506fc23f73f4ed350c2715332d5c3844519c59a1"
+    },
+    {
+      "name": "1-preview.webp",
+      "bytes": 26902,
+      "sha256": "813f399e15462f4fef0c75a5a6eedd73d0b7aeecc07158a0a497005f9b936f69"
+    },
+    {
+      "name": "anshu/anShu.atlas",
+      "bytes": 258,
+      "sha256": "a8bc8ef32861fe06e30a96521717dac555da8a2b7772b69c9131d24f320fb06e"
+    },
+    {
+      "name": "anshu/anShu.json",
+      "bytes": 37623,
+      "sha256": "bebf5ce43a72699c600d3509d431c43e6240c6eb48c8a3956a9c6ada23e3fe2a"
+    },
+    {
+      "name": "anshu/anShu.png",
+      "bytes": 1916236,
+      "sha256": "4c75ae7cc60611d2d9c149c856b09703a8f512161f1291e882ad0a154d9b9fbe"
+    }
+  ],
+  "proofHash": "1318595ed8b67c6d7edfc63b5f6db9146a889266c4cb4619d3f65eda06e95d3d"
+}

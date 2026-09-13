@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ef_card_light-2026-08-18T09-56-09-105Z",
+  "title": "ef_card_light",
+  "uploadedAt": "2026-08-18T09:56:09.105Z",
+  "proofPath": "library/ef_card_light-2026-08-18T09-56-09-105Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/ef_card_light-2026-08-18T09-56-09-105Z/source-proof.json?v=2026-08-18T09-56-09.105Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1b1n6xa_j9xpgr",
+    "anonymousFingerprint": "1b1n6xa",
+    "browserFingerprintSha256": "0c01858fb24e997111f211444060ff5f9f066e43074aed7cb301a9aed26c8d24",
+    "browserEnvironmentHashSha256": "1e1540b772981fdf0544323445f233ea9099b3ab23b04e50f4d6ca7cd7320fb0",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/ef_card_light-2026-08-18T09-56-09-105Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:b077d509ca0fc89856ea924f140181b00e80e114671af4ceb7826165ceffcc35",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ef_card_light/ef_card_light.atlas",
+      "bytes": 475,
+      "sha256": "6e48862791ede692fe33c4a4a4315a4a631512f63c55cab6138ef0c05c3fc2b7"
+    },
+    {
+      "name": "ef_card_light/ef_card_light.json",
+      "bytes": 21656,
+      "sha256": "d3b5408e3f1bfcb6199c70db446a6216a21eefc63d1e8be9555af3dea0ff76f5"
+    },
+    {
+      "name": "ef_card_light/ef_card_light.png",
+      "bytes": 31715,
+      "sha256": "f707399f619cce28bdbbea701765432b4cc5a8f9384b3476ecc646d4711f5ca6"
+    },
+    {
+      "name": "ef_ting-preview.webp",
+      "bytes": 1234,
+      "sha256": "2fcc1dcfcc05a648350b7c87d6abbdc174c4b0fa8c4f7a206cbed0d4983d16f3"
+    }
+  ],
+  "proofHash": "b077d509ca0fc89856ea924f140181b00e80e114671af4ceb7826165ceffcc35"
+}

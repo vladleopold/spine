@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "nextgen-2026-08-15T18-48-39-854Z",
+  "title": "nextgen",
+  "uploadedAt": "2026-08-15T18:48:39.854Z",
+  "proofPath": "library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/nextgen-2026-08-15T18-48-39-854Z/source-proof.json?v=2026-08-15T18-48-39.854Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_6ygmc6_19wrnio",
+    "anonymousFingerprint": "6ygmc6",
+    "browserFingerprintSha256": "c21c4792842474a4784a30fc6c6d5500e1f0c398abf0158f8a304159e73a193f",
+    "browserEnvironmentHashSha256": "7fc9113be6710a89ed8289c606cc885482ea60190d957d87af53ddb33f39ed13",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 10,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1728,
+        "height": 1117,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/nextgen-2026-08-15T18-48-39-854Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:42a171ef520f97a9fe92ed633b62aa984a94c34908f660a68b96947f21a2485a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "nextgen/nextgen_atlas.png",
+      "bytes": 935672,
+      "sha256": "904c0fe2056eadb2eb62b3eccb8858356b19283169b30e109032c2c9a77ced50"
+    },
+    {
+      "name": "nextgen/nextgen.atlas",
+      "bytes": 144,
+      "sha256": "ce7c1043aae37401c6ee69abde6d2e66c72edd1182ce1e01ddfd7a3de4b289ae"
+    },
+    {
+      "name": "nextgen/nextgen.json",
+      "bytes": 1346,
+      "sha256": "ffc1c67d70f69759641d9bc50299792f49e1a595116c1e6059d73244a32c598f"
+    }
+  ],
+  "proofHash": "42a171ef520f97a9fe92ed633b62aa984a94c34908f660a68b96947f21a2485a"
+}

@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "mecha_android_overload_front-2026-08-31T21-21-07-040Z",
+  "title": "mecha_android_overload_front",
+  "uploadedAt": "2026-08-31T21:21:07.040Z",
+  "proofPath": "library/mecha_android_overload_front-2026-08-31T21-21-07-040Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/mecha_android_overload_front-2026-08-31T21-21-07-040Z/source-proof.json?v=2026-08-31T21-21-07.040Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/mecha_android_overload_front-2026-08-31T21-21-07-040Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:0bdb0eb8b17ef2a2de8000817e640c6686a5db8a8112218d1cefc64b64d170c1",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1494,
+      "sha256": "c535f78d4a2cd43687aff25e828d2fea521891cf649cf198077c67c7e5626756"
+    },
+    {
+      "name": "mecha_android_overload_front/mecha_android_overload_front.skel",
+      "bytes": 243990,
+      "sha256": "df21d077aecd553e86c304214bb1dfe257f426c0e90353cdd636f7fb3dcb9f39"
+    },
+    {
+      "name": "mecha_android_overload_front/mecha_android_overload.atlas",
+      "bytes": 8837,
+      "sha256": "93781af0645eaa27e4053d1025ca6151d8ceb35d4dc44d6c49d1bbd9b91c2469"
+    },
+    {
+      "name": "mecha_android_overload_front/mecha_android_overload.png",
+      "bytes": 20847,
+      "sha256": "f0ddaf1e63d39aa6fa3189b51c3593881d53a87050962fbf42b324bea0c92808"
+    }
+  ],
+  "proofHash": "0bdb0eb8b17ef2a2de8000817e640c6686a5db8a8112218d1cefc64b64d170c1"
+}

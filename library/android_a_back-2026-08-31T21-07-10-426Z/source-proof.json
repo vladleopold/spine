@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "android_a_back-2026-08-31T21-07-10-426Z",
+  "title": "android_a_back",
+  "uploadedAt": "2026-08-31T21:07:10.426Z",
+  "proofPath": "library/android_a_back-2026-08-31T21-07-10-426Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/android_a_back-2026-08-31T21-07-10-426Z/source-proof.json?v=2026-08-31T21-07-10.426Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/android_a_back-2026-08-31T21-07-10-426Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:8a083bd562f91e830597c7ec125b330c21db6ec7dba2d4a554a1624e5ec013c9",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "android_a_back/android_a_back.skel",
+      "bytes": 143348,
+      "sha256": "910a018115e08b2d30a845d12592c7109d813a7c955d302a11f1284fcce05cde"
+    },
+    {
+      "name": "android_a_back/android_a.atlas",
+      "bytes": 5933,
+      "sha256": "e335c57e3a7a0a041ee9f097bccb6330355d7908ce39d86a80aec5e618e182d3"
+    },
+    {
+      "name": "android_a_back/android_a.png",
+      "bytes": 16993,
+      "sha256": "de1196d3cb70819eea96e47b1ba9df6de3a0ba1dca1fde55817cfe13771bdf70"
+    },
+    {
+      "name": "down-run_back-preview.webp",
+      "bytes": 1494,
+      "sha256": "0c0cb08ccb901123eeda07a8977f3f5a9208bddb67b21e53a87db42bb9a0c85d"
+    }
+  ],
+  "proofHash": "8a083bd562f91e830597c7ec125b330c21db6ec7dba2d4a554a1624e5ec013c9"
+}

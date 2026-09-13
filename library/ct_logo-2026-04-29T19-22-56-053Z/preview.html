@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ct_logo.json - hit</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.2.113/dist/spine-player.css" />
+    <style>
+      * { box-sizing: border-box; }
+      html, body, #app { width: 100%; height: 100%; margin: 0; }
+      body {
+        overflow: hidden;
+        background: #101318;
+        color: #e7edf4;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      #app {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 18px;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(105,170,255,.18), transparent 32rem),
+          linear-gradient(135deg, #151a20 0%, #0f1318 54%, #171b1d 100%);
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .eyebrow {
+        margin: 0 0 4px;
+        color: #8cc7ff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .site-title {
+        margin: 0;
+        color: #f7fbff;
+        font-size: clamp(30px, 4vw, 54px);
+        line-height: .95;
+      }
+      .topbar-note {
+        max-width: 300px;
+        color: rgba(231,237,244,.62);
+        font-size: 14px;
+        line-height: 1.35;
+        text-align: right;
+      }
+      .stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+        gap: 18px;
+        min-height: 0;
+      }
+      #player {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 8px;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+        background:
+          linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+          #141920;
+        background-size: 36px 36px;
+      }
+      #sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        overflow: auto;
+        padding-right: 2px;
+        scrollbar-color: rgba(140,199,255,.45) rgba(255,255,255,.06);
+      }
+      .side-card {
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 8px;
+        background: rgba(255,255,255,.05);
+      }
+      .status-card {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-height: 46px;
+        padding: 12px 14px;
+        color: #d8e7f7;
+        font-size: 14px;
+      }
+      .asset-card {
+        display: grid;
+        overflow: hidden;
+      }
+      .asset-row {
+        display: grid;
+        grid-template-columns: 20px minmax(0,1fr);
+        gap: 9px;
+        align-items: center;
+        padding: 13px;
+        color: rgba(231,237,244,.78);
+        background: rgba(255,255,255,.02);
+        font-size: 13px;
+      }
+      .asset-row + .asset-row {
+        border-top: 1px solid rgba(255,255,255,.045);
+      }
+      .asset-row span {
+        overflow-wrap: anywhere;
+      }
+      .zoom-card,
+      .set-card,
+      .animation-card {
+        padding: 14px;
+      }
+      .set-card select {
+        width: 100%;
+        height: 38px;
+        padding: 0 10px;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 8px;
+        color: rgba(231,237,244,.9);
+        background: #20262c;
+        outline: none;
+      }
+      .zoom-header,
+      .zoom-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .zoom-header {
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .zoom-label {
+        min-width: 74px;
+        min-height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 8px;
+        color: rgba(231,237,244,.86);
+        background: rgba(255,255,255,.045);
+        font-size: 13px;
+      }
+      .zoom-controls button {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 8px;
+        color: rgba(231,237,244,.86);
+        background: rgba(255,255,255,.045);
+        cursor: pointer;
+      }
+      .zoom-controls input[type="range"] {
+        width: 100%;
+        accent-color: #8cc7ff;
+      }
+      .title {
+        margin: 0 0 8px;
+        color: #f7fbff;
+        font-size: 22px;
+        line-height: 1.1;
+      }
+      .meta {
+        margin: 0 0 12px;
+        color: rgba(231,237,244,.62);
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      .section-title {
+        margin: 0 0 10px;
+        color: #f7fbff;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      #animation-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+        gap: 8px;
+      }
+      #animation-list button {
+        min-width: 0;
+        min-height: 38px;
+        padding: 0 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 8px;
+        color: rgba(231,237,244,.86);
+        background: rgba(255,255,255,.045);
+        cursor: pointer;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      #animation-list button:hover {
+        border-color: rgba(140,199,255,.48);
+        background: rgba(140,199,255,.1);
+      }
+      #animation-list button.active {
+        border-color: rgba(140,199,255,.82);
+        color: #fff;
+        background: rgba(71,156,255,.22);
+      }
+      @media (max-width: 760px) {
+        body { overflow: auto; }
+        #app { height: auto; min-height: 100%; padding: 16px; }
+        .topbar { align-items: flex-start; flex-direction: column; }
+        .topbar-note { max-width: none; text-align: left; }
+        .stage { grid-template-columns: 1fr; }
+        #sidebar { overflow: visible; padding-right: 0; }
+        #player { height: 60vh; min-height: 360px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Web preview</p>
+          <h1 class="site-title">Spine Preview</h1>
+        </div>
+        <div class="topbar-note">Сгенерированный предпросмотр Spine-анимации</div>
+      </header>
+      <div class="stage">
+        <div id="player"></div>
+        <aside id="sidebar">
+          <div class="side-card status-card">↻ <span id="status-text">Готово. Найдено анимаций: 0.</span></div>
+          <div class="side-card asset-card">
+            <div class="asset-row">♬ <span id="file-summary"></span></div>
+            <div class="asset-row">▧ <span>Texture aliases уже встроены в предпросмотр</span></div>
+          </div>
+          <div class="side-card set-card" id="set-card">
+            <div class="section-title">Набор</div>
+            <select id="set-select"></select>
+          </div>
+          <div class="side-card zoom-card">
+            <div class="zoom-header">
+              <div class="section-title">Масштаб</div>
+              <div class="zoom-label" id="zoom-label">100%</div>
+            </div>
+            <div class="zoom-controls">
+              <button type="button" id="zoom-out" title="Уменьшить">−</button>
+              <input id="zoom-range" type="range" min="0.25" max="4" step="0.05" />
+              <button type="button" id="zoom-in" title="Увеличить">+</button>
+            </div>
+          </div>
+          <div class="side-card animation-card">
+            <h2 class="title">Анимации</h2>
+            <p class="meta"></p>
+            <div class="section-title">Список</div>
+            <div id="animation-list"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.2.113/dist/iife/spine-player.js"></script>
+    <script type="application/json" id="spine-preview-config">{"activeLabel":"ct_logo","zoom":1,"sets":[{"label":"ct_logo","skeleton":"https://spine-link.vercel.app/api/github-asset?path=library%2Fct_logo-2026-04-29T19-22-56-053Z%2Fct_logo%2Fct_logo.json","atlas":"https://spine-link.vercel.app/api/github-asset?path=library%2Fct_logo-2026-04-29T19-22-56-053Z%2Fct_logo%2Fct_logo.atlas.docx","rawDataURIs":{"ct_logo.json":"https://spine-link.vercel.app/api/github-asset?path=library%2Fct_logo-2026-04-29T19-22-56-053Z%2Fct_logo%2Fct_logo.json","ct_logo.atlas.docx":"https://spine-link.vercel.app/api/github-asset?path=library%2Fct_logo-2026-04-29T19-22-56-053Z%2Fct_logo%2Fct_logo.atlas.docx","ct_logo.png":"https://spine-link.vercel.app/api/github-asset?path=library%2Fct_logo-2026-04-29T19-22-56-053Z%2Fct_logo%2Fct_logo.png"},"animation":"hit","animations":["hit","win"],"atlasPages":["ct_logo.png"],"skin":"default","premultipliedAlpha":true,"viewport":{"padLeft":"14%","padRight":"14%","padTop":"14%","padBottom":"14%"}}]}</script>
+    <script>
+      const config = JSON.parse(document.getElementById("spine-preview-config").textContent);
+      const sets = config.sets || [];
+      const activeSet = { value: sets.find((set) => set.label === config.activeLabel) || sets[0] };
+      const activeAnimation = { name: activeSet.value?.animation || "" };
+      const currentZoom = { value: config.zoom || 1 };
+      const baseViewport = { value: null };
+      const animationNames = { value: activeSet.value?.animations?.length ? activeSet.value.animations : [activeSet.value?.animation].filter(Boolean) };
+      const animationList = document.getElementById("animation-list");
+      const setCard = document.getElementById("set-card");
+      const setSelect = document.getElementById("set-select");
+      const meta = document.querySelector(".meta");
+      const statusText = document.getElementById("status-text");
+      const fileSummary = document.getElementById("file-summary");
+      const zoomLabel = document.getElementById("zoom-label");
+      const zoomRange = document.getElementById("zoom-range");
+      const zoomOut = document.getElementById("zoom-out");
+      const zoomIn = document.getElementById("zoom-in");
+      let player;
+      zoomRange.value = String(currentZoom.value);
+      zoomLabel.textContent = Math.round(currentZoom.value * 100) + "%";
+
+      function syncSetInfo() {
+        if (!activeSet.value) return;
+        meta.textContent = activeSet.value.skeleton + " + " + activeSet.value.atlas;
+        statusText.textContent = "Готово. Найдено анимаций: " + animationNames.value.length + ".";
+        fileSummary.textContent = activeSet.value.skeleton + " + " + activeSet.value.atlas + (activeSet.value.atlasPages?.length ? " + " + activeSet.value.atlasPages.join(", ") : "");
+        setCard.style.display = sets.length > 1 ? "" : "none";
+        setSelect.value = activeSet.value.label;
+      }
+
+      function renderSetList() {
+        setSelect.innerHTML = "";
+        sets.forEach((set) => {
+          const option = document.createElement("option");
+          option.value = set.label;
+          option.textContent = set.label;
+          setSelect.appendChild(option);
+        });
+      }
+
+      function rememberBaseViewport() {
+        if (!player.currentViewport) return;
+        const viewport = player.currentViewport;
+        baseViewport.value = {
+          x: viewport.x,
+          y: viewport.y,
+          width: viewport.width * currentZoom.value,
+          height: viewport.height * currentZoom.value,
+          padLeft: viewport.padLeft * currentZoom.value,
+          padRight: viewport.padRight * currentZoom.value,
+          padTop: viewport.padTop * currentZoom.value,
+          padBottom: viewport.padBottom * currentZoom.value
+        };
+      }
+
+      function applyZoom(nextZoom) {
+        currentZoom.value = Math.min(4, Math.max(0.25, Number(nextZoom)));
+        zoomRange.value = String(currentZoom.value);
+        zoomLabel.textContent = Math.round(currentZoom.value * 100) + "%";
+        const base = baseViewport.value;
+        if (!base || !player.currentViewport) return;
+        const centerX = base.x + base.width / 2;
+        const centerY = base.y + base.height / 2;
+        const width = base.width / currentZoom.value;
+        const height = base.height / currentZoom.value;
+        const nextViewport = {
+          x: centerX - width / 2,
+          y: centerY - height / 2,
+          width,
+          height,
+          padLeft: base.padLeft / currentZoom.value,
+          padRight: base.padRight / currentZoom.value,
+          padTop: base.padTop / currentZoom.value,
+          padBottom: base.padBottom / currentZoom.value
+        };
+        player.previousViewport = { ...nextViewport };
+        player.currentViewport = nextViewport;
+        player.viewportTransitionStart = performance.now();
+      }
+
+      function createPlayer() {
+        if (!activeSet.value) return;
+        player?.dispose();
+        document.getElementById("player").innerHTML = "";
+        baseViewport.value = null;
+        player = new spine.SpinePlayer("player", {
+        ...activeSet.value,
+        showControls: true,
+        showLoading: true,
+        alpha: true,
+        preserveDrawingBuffer: true,
+        backgroundColor: "00000000",
+        success: (loadedPlayer) => {
+          player = loadedPlayer;
+          requestAnimationFrame(() => {
+            rememberBaseViewport();
+            applyZoom(currentZoom.value);
+          });
+        }
+      });
+      }
+
+      zoomRange.addEventListener("input", () => applyZoom(zoomRange.value));
+      zoomOut.addEventListener("click", () => applyZoom(currentZoom.value - 0.1));
+      zoomIn.addEventListener("click", () => applyZoom(currentZoom.value + 0.1));
+      setSelect.addEventListener("change", () => {
+        activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0];
+        activeAnimation.name = activeSet.value?.animation || "";
+        animationNames.value = activeSet.value?.animations?.length ? activeSet.value.animations : [activeSet.value?.animation].filter(Boolean);
+        syncSetInfo();
+        renderAnimationList();
+        createPlayer();
+      });
+
+      function renderAnimationList() {
+        animationList.innerHTML = "";
+        animationNames.value.forEach((animationName) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = animationName;
+          button.title = animationName;
+          button.className = animationName === activeAnimation.name ? "active" : "";
+          button.addEventListener("click", () => {
+            activeAnimation.name = animationName;
+            player.setAnimation(animationName, true);
+            applyZoom(currentZoom.value);
+            renderAnimationList();
+          });
+          animationList.appendChild(button);
+        });
+      }
+
+      renderSetList();
+      syncSetInfo();
+      createPlayer();
+      renderAnimationList();
+    </script>
+  </body>
+</html>

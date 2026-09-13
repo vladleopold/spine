@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "machao-2026-09-09T02-18-11-211Z",
+  "title": "machao",
+  "uploadedAt": "2026-09-09T02:18:11.211Z",
+  "proofPath": "library/machao-2026-09-09T02-18-11-211Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/machao-2026-09-09T02-18-11-211Z/source-proof.json?v=2026-09-09T02-18-11.211Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_tvwwds_k1flr1",
+    "anonymousFingerprint": "tvwwds",
+    "browserFingerprintSha256": "0ba2f71681a76e6c8b28bcca9b1727ac9a9f5ffd48903d57045a0de27deee025",
+    "browserEnvironmentHashSha256": "660026ef6eff98ac9217e51c54f55ebcebcad854f763c60ed824f1ec7d591103",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "zh-CN",
+        "zh"
+      ],
+      "hardwareConcurrency": 10,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Singapore",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/machao-2026-09-09T02-18-11-211Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e2b35cda7a03ecde04a4b46bf9b68d2006fb7c33b516fa384bea5d23ae839369",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "attack-preview.webp",
+      "bytes": 1376,
+      "sha256": "96508b2da33f6db5765c21a410d71b275a120eabbdb2492f9afc9b33df0d8d6c"
+    },
+    {
+      "name": "machao/machao.atlas",
+      "bytes": 24379,
+      "sha256": "3798178630fb509a19c1d2cdce5fde63371da9ac76a11b2c55ecf60a3c918fb2"
+    },
+    {
+      "name": "machao/machao.png",
+      "bytes": 746969,
+      "sha256": "5e241a7cdf9ec842bb8e506b6ca349102739458cfceb444f9aca9a7510d07e17"
+    },
+    {
+      "name": "machao/machao.skel",
+      "bytes": 378065,
+      "sha256": "b5a84ae6a17e58612b189248411bf1b2704e2f09cdad5990742411c10c670ba4"
+    }
+  ],
+  "proofHash": "e2b35cda7a03ecde04a4b46bf9b68d2006fb7c33b516fa384bea5d23ae839369"
+}

@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "candy-2026-08-31T08-48-52-657Z",
+  "title": "candy",
+  "uploadedAt": "2026-08-31T08:48:52.657Z",
+  "proofPath": "library/candy-2026-08-31T08-48-52-657Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/candy-2026-08-31T08-48-52-657Z/source-proof.json?v=2026-08-31T08-48-52.657Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_uujz90_1sqeglz",
+    "anonymousFingerprint": "uujz90",
+    "browserFingerprintSha256": "50bed461332417d334560291572c22cbf31551552db38f26093c060599fb44ef",
+    "browserEnvironmentHashSha256": "d7263f9e3e5926e8f4207c5f0c4ac06d5dbd5225254bfc31d4932b370a102b13",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "fr-MA",
+      "languages": [
+        "fr-MA",
+        "fr-FR",
+        "fr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Africa/Sao_Tome",
+      "timezoneOffset": 0,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/candy-2026-08-31T08-48-52-657Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:dd099beeeff70f80d6c151e84868d2ff6e9260576ff65c418a899fe72a91a3f0",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "candy/candy_2.png",
+      "bytes": 667144,
+      "sha256": "7f59998c93076114f6d6c6587f128ce8c8e3ba19a2fab8344d05e535228fb968"
+    },
+    {
+      "name": "candy/candy.atlas",
+      "bytes": 4067,
+      "sha256": "8f29a737b15a6088d9832a17866c192747841ba6e9fb99cd9a12e1d2131a77d2"
+    },
+    {
+      "name": "candy/candy.json",
+      "bytes": 31800,
+      "sha256": "8b798fd86a51bf3af98b77d766ebc27f0f07281014de503d5db319edc9929633"
+    },
+    {
+      "name": "candy/candy.png",
+      "bytes": 139057,
+      "sha256": "883e9801bd6dcff475c4e58dd5df5af1a686b40715b1274c915f2a08def7f95e"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 702,
+      "sha256": "649a727b124e7c552bb4acbd3173941b52bd89ed6b4be98afc3ea796589fe496"
+    }
+  ],
+  "proofHash": "dd099beeeff70f80d6c151e84868d2ff6e9260576ff65c418a899fe72a91a3f0"
+}

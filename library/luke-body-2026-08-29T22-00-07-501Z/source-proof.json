@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "luke-body-2026-08-29T22-00-07-501Z",
+  "title": "luke-body",
+  "uploadedAt": "2026-08-29T22:00:07.501Z",
+  "proofPath": "library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/luke-body-2026-08-29T22-00-07-501Z/source-proof.json?v=2026-08-29T22-00-07.501Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/luke-body-2026-08-29T22-00-07-501Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:166b0d091703f1db9fde695867c667cbaf4c82b1a007130bd95cc49a4b0c7357",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 726,
+      "sha256": "a3938d12aa27793fa35ebefda54905850c62f28be10e2ae1dc181af45b240cb3"
+    },
+    {
+      "name": "luke-body/luke-body.atlas",
+      "bytes": 4500,
+      "sha256": "2ca5d6567ee917963235180150358c5a8a506f466b405e3e3fdcf1e1d7cfbc36"
+    },
+    {
+      "name": "luke-body/luke-body.json",
+      "bytes": 30487,
+      "sha256": "60badac640f62b98f14a493143ffad7d7fa6df3c13483d788dc3542a0edd5f40"
+    },
+    {
+      "name": "luke-body/luke-body.png",
+      "bytes": 474085,
+      "sha256": "841e9a4580d6839ba86b0b7dc4b1d5576698878b95d988c15006874015623d05"
+    }
+  ],
+  "proofHash": "166b0d091703f1db9fde695867c667cbaf4c82b1a007130bd95cc49a4b0c7357"
+}

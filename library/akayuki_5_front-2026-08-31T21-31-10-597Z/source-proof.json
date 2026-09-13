@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "akayuki_5_front-2026-08-31T21-31-10-597Z",
+  "title": "akayuki_5_front",
+  "uploadedAt": "2026-08-31T21:31:10.597Z",
+  "proofPath": "library/akayuki_5_front-2026-08-31T21-31-10-597Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/akayuki_5_front-2026-08-31T21-31-10-597Z/source-proof.json?v=2026-08-31T21-31-10.597Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/akayuki_5_front-2026-08-31T21-31-10-597Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:368b6a7feac2f82874752aab3ed00fca4c9826dd7224f858634d45eebb4bee7e",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "akayuki_5_front/akayuki_5_front.skel",
+      "bytes": 174174,
+      "sha256": "2e7fa45aa821b6897a70042594c0983bc49f6bd918bd09d173581302fece3ca6"
+    },
+    {
+      "name": "akayuki_5_front/akayuki_5.atlas",
+      "bytes": 9260,
+      "sha256": "86c49d993fc4156632e940b169315de04838f688db0c4934c4b6a38f9857e643"
+    },
+    {
+      "name": "akayuki_5_front/akayuki_5.png",
+      "bytes": 17835,
+      "sha256": "0ec686ed5b8fea53825f2f3524e94c865e3a4e51f772d2aa5e0e80d8d73e7b64"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1318,
+      "sha256": "3494ce8037152a662c85bf920437ec2923fbc90a9437a5fe28e21244880a7b9d"
+    }
+  ],
+  "proofHash": "368b6a7feac2f82874752aab3ed00fca4c9826dd7224f858634d45eebb4bee7e"
+}

@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "fool_demo_fx-2026-05-14T08-20-31-261Z",
+  "title": "fool_demo_fx",
+  "uploadedAt": "2026-05-14T08:20:31.261Z",
+  "proofPath": "library/fool_demo_fx-2026-05-14T08-20-31-261Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/fool_demo_fx-2026-05-14T08-20-31-261Z/source-proof.json?v=2026-05-14T08-20-31.261Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/fool_demo_fx-2026-05-14T08-20-31-261Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:1a1e7a7fcf5bd27f54c97bf20d6aaddd84f94a407fdfb17d85232d8f042debea",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "fool_demo_fx/fool_demo_fx_Material.png",
+      "bytes": 1660638,
+      "sha256": "17cc94c0d9d287f2d6a35ad154023020a9fdba0462b282d396767e2d232bb2d0"
+    },
+    {
+      "name": "fool_demo_fx/fool_demo_fx.atlas",
+      "bytes": 3119,
+      "sha256": "e903c6f9006d5c270d475b493c4d1b6d3292c8c3a3c44079b5767414ca6b24ac"
+    },
+    {
+      "name": "fool_demo_fx/fool_demo_fx.json",
+      "bytes": 4778,
+      "sha256": "91fc930686c6c52f8860ae4504acb99d05e56ba26392486d58c9712105dd4c28"
+    },
+    {
+      "name": "summon_fx-preview.webm",
+      "bytes": 4605,
+      "sha256": "d5793b7fedca5378314c3b086fae5b3458c18a8b8385c3c241e04ef4b32aac58"
+    },
+    {
+      "name": "summon_fx-preview.webp",
+      "bytes": 2618,
+      "sha256": "46de5fbc30ba0a619e46c945dedef969e9e66abaf65b58e6960337cbba307663"
+    }
+  ],
+  "proofHash": "1a1e7a7fcf5bd27f54c97bf20d6aaddd84f94a407fdfb17d85232d8f042debea"
+}
