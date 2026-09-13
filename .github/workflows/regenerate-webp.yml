@@ -32,6 +32,9 @@ jobs:
       - name: Generate WebP from WebM
         run: node scripts/regenerate-webp.mjs
 
+      - name: Remove black posters
+        run: node scripts/cleanup-black-webp.mjs
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
@@ -48,6 +51,7 @@ jobs:
               git fetch origin main
               git reset --hard origin/main
               node scripts/regenerate-webp.mjs
+              node scripts/cleanup-black-webp.mjs
               git add library/
               git commit -m "Regenerate WebP posters from WebM videos"
             done
