@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-07T10:09:03.633Z",
+  "updatedAt": "2026-05-07T10:09:14.068Z",
+  "animation_asset": {
+    "id": "hv1-2026-05-07T10-09-03-633Z",
+    "name": "hv1",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "win"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-win",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/hv1-2026-05-07T10-09-03-633Z",
+    "manifestPath": "library/hv1-2026-05-07T10-09-03-633Z/manifest.json",
+    "files": [
+      {
+        "path": "library/hv1-2026-05-07T10-09-03-633Z/hv1/HV1.json",
+        "name": "hv1/HV1.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/hv1-2026-05-07T10-09-03-633Z/hv1/HV1.atlas",
+        "name": "hv1/HV1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/hv1-2026-05-07T10-09-03-633Z/hv1/HV1.png",
+        "name": "hv1/HV1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/hv1-2026-05-07T10-09-03-633Z/win-preview.webm",
+        "name": "win-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/hv1-2026-05-07T10-09-03-633Z/win-preview.webp",
+        "name": "win-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "HV1.json",
+    "atlas": "HV1.atlas",
+    "textures": [
+      "HV1.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "win"
+    ],
+    "defaultAnimation": "win",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

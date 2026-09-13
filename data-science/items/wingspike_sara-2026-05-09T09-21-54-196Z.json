@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-09T09:21:54.196Z",
+  "updatedAt": "2026-05-09T09:22:16.352Z",
+  "animation_asset": {
+    "id": "wingspike_sara-2026-05-09T09-21-54-196Z",
+    "name": "wingspike_sara",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "action",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/wingspike_sara-2026-05-09T09-21-54-196Z",
+    "manifestPath": "library/wingspike_sara-2026-05-09T09-21-54-196Z/manifest.json",
+    "files": [
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/wingspike_sara/wingspike_sara.json",
+        "name": "wingspike_sara/wingspike_sara.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/wingspike_sara/wingspike_sara.atlas",
+        "name": "wingspike_sara/wingspike_sara.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/wingspike_sara/wingspike_sara.png",
+        "name": "wingspike_sara/wingspike_sara.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/wingspike_sara/wingspike_sara_2.png",
+        "name": "wingspike_sara/wingspike_sara_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/wingspike_sara/wingspike_sara_3.png",
+        "name": "wingspike_sara/wingspike_sara_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/wingspike_sara-2026-05-09T09-21-54-196Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "wingspike_sara.json",
+    "atlas": "wingspike_sara.atlas",
+    "textures": [
+      "wingspike_sara.png",
+      "wingspike_sara_2.png",
+      "wingspike_sara_3.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "action",
+      "idle"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 4
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

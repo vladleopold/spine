@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-11T21:02:59.869Z",
+  "updatedAt": "2026-08-11T21:03:19.825Z",
+  "animation_asset": {
+    "id": "p2_master1200-v6-2026-08-11T21-02-59-869Z",
+    "name": "p2_master1200 v6",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "transition",
+    "skeleton_type": "ui",
+    "content_type": "transition",
+    "taxonomy": {
+      "category": "ui",
+      "class": "transition",
+      "type": "screen-transition",
+      "tags": [
+        "transition"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "screen-transition"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "01_idle",
+        "02_transition",
+        "03_finish",
+        "idle"
+      ],
+      "state": [
+        "default-01_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z",
+    "manifestPath": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/manifest.json",
+    "files": [
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.json",
+        "name": "p2_master1200 v6/p2_master1200 V6.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.atlas",
+        "name": "p2_master1200 v6/p2_master1200 V6.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V6.png",
+        "name": "p2_master1200 v6/p2_master1200 V6.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V62.png",
+        "name": "p2_master1200 v6/p2_master1200 V62.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/p2_master1200 v6/p2_master1200 V63.png",
+        "name": "p2_master1200 v6/p2_master1200 V63.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/01_idle-preview.webp",
+        "name": "01_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/p2_master1200-v6-2026-08-11T21-02-59-869Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "p2_master1200 V6.json",
+    "atlas": "p2_master1200 V6.atlas",
+    "textures": [
+      "p2_master1200 V6.png",
+      "p2_master1200 V62.png",
+      "p2_master1200 V63.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "01_idle",
+      "02_transition",
+      "03_finish"
+    ],
+    "defaultAnimation": "01_idle",
+    "fileCount": 8,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 4
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "transition"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

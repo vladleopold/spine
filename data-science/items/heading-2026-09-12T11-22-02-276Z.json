@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-12T11:22:02.276Z",
+  "updatedAt": "2026-09-12T11:22:20.509Z",
+  "animation_asset": {
+    "id": "heading-2026-09-12T11-22-02-276Z",
+    "name": "heading",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "transition",
+    "skeleton_type": "ui",
+    "content_type": "transition",
+    "taxonomy": {
+      "category": "ui",
+      "class": "transition",
+      "type": "screen-transition",
+      "tags": [
+        "transition"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "screen-transition"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "01_idle",
+        "02_transition",
+        "03_finish",
+        "idle"
+      ],
+      "state": [
+        "default-01_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/heading-2026-09-12T11-22-02-276Z",
+    "manifestPath": "library/heading-2026-09-12T11-22-02-276Z/manifest.json",
+    "files": [
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/heading/Heading.json",
+        "name": "heading/Heading.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/heading/Heading.atlas",
+        "name": "heading/Heading.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/heading/Heading.png",
+        "name": "heading/Heading.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/heading/Heading2.png",
+        "name": "heading/Heading2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/01_idle-preview.webp",
+        "name": "01_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/heading-2026-09-12T11-22-02-276Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Heading.json",
+    "atlas": "Heading.atlas",
+    "textures": [
+      "Heading.png",
+      "Heading2.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "01_idle",
+      "02_transition",
+      "03_finish"
+    ],
+    "defaultAnimation": "01_idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "transition"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T12:25:35.885Z",
+  "updatedAt": "2026-08-29T12:25:48.097Z",
+  "animation_asset": {
+    "id": "skillnotif_freespin-2026-08-29T12-25-35-885Z",
+    "name": "skillnotif_freespin",
+    "domain": "gamedev",
+    "asset_category": "cinematic",
+    "animation_type": "cinematic",
+    "skeleton_type": "object",
+    "content_type": "cinematic",
+    "taxonomy": {
+      "category": "cinematic",
+      "class": "sequence",
+      "type": "cutscene",
+      "tags": [
+        "intro",
+        "outro"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "storytelling"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "+3 freespin_intro",
+        "+3 freespin_idle",
+        "+3 freespin_outro",
+        "+4 freespin_intro",
+        "+4 freespin_idle",
+        "+4 freespin_outro",
+        "idle"
+      ],
+      "state": [
+        "default-+3 freespin_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z",
+    "manifestPath": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/manifest.json",
+    "files": [
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/skillnotif_freespin/skillnotif_freespin.json",
+        "name": "skillnotif_freespin/skillnotif_freespin.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/skillnotif_freespin/skillnotif_freespin.atlas",
+        "name": "skillnotif_freespin/skillnotif_freespin.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/skillnotif_freespin/skillnotif_freespin.webp",
+        "name": "skillnotif_freespin/skillnotif_freespin.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/3-freespin_idle-preview.webp",
+        "name": "3-freespin_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "skillnotif_freespin.json",
+    "atlas": "skillnotif_freespin.atlas",
+    "textures": [
+      "skillnotif_freespin.webp"
+    ],
+    "animationCount": 6,
+    "animationNames": [
+      "+3 Freespin_Intro",
+      "+3 Freespin_Idle",
+      "+3 Freespin_Outro",
+      "+4 Freespin_Intro",
+      "+4 Freespin_Idle",
+      "+4 Freespin_Outro"
+    ],
+    "defaultAnimation": "+3 Freespin_Idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "intro",
+      "outro"
+    ],
+    "confidence": 0.65,
+    "needsHumanReview": false
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

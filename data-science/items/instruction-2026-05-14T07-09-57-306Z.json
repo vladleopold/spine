@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-14T07:09:57.306Z",
+  "updatedAt": "2026-05-14T07:10:46.202Z",
+  "animation_asset": {
+    "id": "instruction-2026-05-14T07-09-57-306Z",
+    "name": "instruction",
+    "domain": "gamedev",
+    "asset_category": "background",
+    "animation_type": "background",
+    "skeleton_type": "background",
+    "content_type": "background",
+    "taxonomy": {
+      "category": "environment",
+      "class": "background",
+      "type": "animated-background",
+      "tags": [
+        "landscape"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "scene-background"
+      ],
+      "perspective": [
+        "2d"
+      ],
+      "animation_state": [
+        "idle_landscape",
+        "idle_portrait",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-idle_landscape"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/instruction-2026-05-14T07-09-57-306Z",
+    "manifestPath": "library/instruction-2026-05-14T07-09-57-306Z/manifest.json",
+    "files": [
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.json",
+        "name": "instruction/instruction.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.atlas",
+        "name": "instruction/instruction.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction.png",
+        "name": "instruction/instruction.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/instruction/instruction2.png",
+        "name": "instruction/instruction2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.json",
+        "name": "transition/transition.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.atlas",
+        "name": "transition/transition.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition.png",
+        "name": "transition/transition.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition2.png",
+        "name": "transition/transition2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/transition/transition3.png",
+        "name": "transition/transition3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webm",
+        "name": "idle_landscape-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/idle_landscape-preview.webp",
+        "name": "idle_landscape-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/instruction-2026-05-14T07-09-57-306Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "instruction.json",
+    "atlas": "instruction.atlas",
+    "textures": [
+      "instruction.png",
+      "instruction2.png",
+      "transition.png",
+      "transition2.png",
+      "transition3.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "idle_landscape",
+      "idle_portrait"
+    ],
+    "defaultAnimation": "idle_landscape",
+    "fileCount": 13,
+    "skeletonCount": 4,
+    "atlasCount": 2,
+    "textureCount": 6
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "landscape"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

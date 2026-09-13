@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-14T08:35:52.799Z",
+  "updatedAt": "2026-08-14T08:36:04.236Z",
+  "animation_asset": {
+    "id": "intro-2026-08-14T08-35-52-799Z",
+    "name": "intro",
+    "domain": "gamedev",
+    "asset_category": "cinematic",
+    "animation_type": "cinematic",
+    "skeleton_type": "object",
+    "content_type": "cinematic",
+    "taxonomy": {
+      "category": "cinematic",
+      "class": "sequence",
+      "type": "cutscene",
+      "tags": [
+        "intro"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "storytelling"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "blue_hover",
+        "blue_press",
+        "blue_select",
+        "idle",
+        "in",
+        "red_hover",
+        "red_press",
+        "red_select"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/intro-2026-08-14T08-35-52-799Z",
+    "manifestPath": "library/intro-2026-08-14T08-35-52-799Z/manifest.json",
+    "files": [
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/intro/Intro.json",
+        "name": "intro/Intro.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/intro/Intro.atlas",
+        "name": "intro/Intro.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/intro/Intro.webp",
+        "name": "intro/Intro.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/intro-2026-08-14T08-35-52-799Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Intro.json",
+    "atlas": "Intro.atlas",
+    "textures": [
+      "Intro.webp"
+    ],
+    "animationCount": 8,
+    "animationNames": [
+      "Blue_Hover",
+      "Blue_Press",
+      "Blue_Select",
+      "Idle",
+      "In",
+      "Red_Hover",
+      "Red_Press",
+      "Red_Select"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "intro"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

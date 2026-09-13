@@ -1,0 +1,138 @@
+@view-transition {
+  navigation: none;
+}
+
+:root {
+  background: #000;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  animation-name: spinePageOut;
+}
+
+::view-transition-new(root) {
+  animation-name: spinePageIn;
+}
+
+html.spine-page-leaving body {
+  opacity: 0;
+  transform: translateY(6px) scale(0.995);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+body {
+  transition:
+    opacity 220ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.spine-low-power-particles,
+.particle-field--seo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.spine-low-power-particles {
+  overflow: hidden;
+  opacity: 0.48;
+  contain: strict;
+}
+
+.spine-low-power-particles::before {
+  position: absolute;
+  inset: -12vh -12vw;
+  content: "";
+  background-image:
+    radial-gradient(circle at 12% 20%, rgba(140, 199, 255, 0.34) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 18%, rgba(255, 106, 40, 0.28) 0 1px, transparent 2px),
+    radial-gradient(circle at 48% 76%, rgba(179, 255, 64, 0.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 24% 62%, rgba(255, 255, 255, 0.18) 0 1px, transparent 2px);
+  background-position:
+    0 0,
+    38px 72px,
+    96px 18px,
+    140px 112px;
+  background-size:
+    164px 164px,
+    220px 220px,
+    280px 280px,
+    340px 340px;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  animation: spineLowPowerParticles 160s linear infinite;
+}
+
+.spine-low-power-particles.is-static::before {
+  animation: none;
+  will-change: auto;
+}
+
+body > :not(.particle-field--seo):not(.spine-low-power-particles) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes spinePageOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.992);
+  }
+}
+
+@keyframes spinePageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.996);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spineLowPowerParticles {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-96px, -128px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 1ms;
+  }
+
+  html.spine-page-leaving body,
+  body {
+    transition-duration: 1ms;
+    transform: none;
+  }
+
+  .spine-low-power-particles::before {
+    animation: none;
+    will-change: auto;
+  }
+}

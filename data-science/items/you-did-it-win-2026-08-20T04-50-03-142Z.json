@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-20T04:50:03.142Z",
+  "updatedAt": "2026-08-20T04:50:19.133Z",
+  "animation_asset": {
+    "id": "you-did-it-win-2026-08-20T04-50-03-142Z",
+    "name": "you did it win",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "animation",
+        "you did it"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-animation",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/you-did-it-win-2026-08-20T04-50-03-142Z",
+    "manifestPath": "library/you-did-it-win-2026-08-20T04-50-03-142Z/manifest.json",
+    "files": [
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/you did it win/you did it win.json",
+        "name": "you did it win/you did it win.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/you did it win/you did it win.atlas.txt",
+        "name": "you did it win/you did it win.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/you did it win/you did it win.png",
+        "name": "you did it win/you did it win.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/you-did-it-win-2026-08-20T04-50-03-142Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "you did it win.json",
+    "atlas": "you did it win.atlas.txt",
+    "textures": [
+      "you did it win.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "animation",
+      "you did it"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

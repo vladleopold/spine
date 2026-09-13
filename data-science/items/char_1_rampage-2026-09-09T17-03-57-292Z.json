@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-09T17:03:57.292Z",
+  "updatedAt": "2026-09-09T17:04:15.349Z",
+  "animation_asset": {
+    "id": "char_1_rampage-2026-09-09T17-03-57-292Z",
+    "name": "char_1_rampage",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "one-shot"
+      ],
+      "animation_state": [
+        "air_hit_great_1",
+        "air_hit_great_2",
+        "air_hit_great_3",
+        "air_hit_hurt",
+        "air_hit_perfect_1",
+        "air_hit_perfect_2",
+        "air_hit_perfect_3",
+        "air_hit_perfect_4",
+        "air_press_end",
+        "air_press_hurt",
+        "die",
+        "double_hit_1",
+        "double_hit_2",
+        "down_hit",
+        "down_press_hit",
+        "hurt",
+        "jump",
+        "jump_hurt",
+        "press",
+        "road_hit_great_1",
+        "road_hit_great_2",
+        "road_hit_great_3",
+        "road_hit_miss",
+        "road_hit_perfect_1",
+        "road_hit_perfect_2",
+        "road_hit_perfect_3",
+        "road_hit_perfect_4",
+        "run",
+        "standby",
+        "up_press_hit"
+      ],
+      "state": [
+        "default-air_hit_great_1"
+      ],
+      "action": [
+        "run",
+        "attack"
+      ],
+      "direction": [
+        "up",
+        "down"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/char_1_rampage-2026-09-09T17-03-57-292Z",
+    "manifestPath": "library/char_1_rampage-2026-09-09T17-03-57-292Z/manifest.json",
+    "files": [
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/char_1_rampage/char_1_rampage.skel",
+        "name": "char_1_rampage/char_1_rampage.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/char_1_rampage/char_1_rampage.atlas",
+        "name": "char_1_rampage/char_1_rampage.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/char_1_rampage/char_1_rampage.png",
+        "name": "char_1_rampage/char_1_rampage.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/air_hit_great_1-preview.webp",
+        "name": "air_hit_great_1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/char_1_rampage-2026-09-09T17-03-57-292Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "char_1_rampage.skel",
+    "atlas": "char_1_rampage.atlas",
+    "textures": [
+      "char_1_rampage.png"
+    ],
+    "animationCount": 30,
+    "animationNames": [
+      "air_hit_great_1",
+      "air_hit_great_2",
+      "air_hit_great_3",
+      "air_hit_hurt",
+      "air_hit_perfect_1",
+      "air_hit_perfect_2",
+      "air_hit_perfect_3",
+      "air_hit_perfect_4",
+      "air_press_end",
+      "air_press_hurt",
+      "die",
+      "double_hit_1",
+      "double_hit_2",
+      "down_hit",
+      "down_press_hit",
+      "hurt",
+      "jump",
+      "jump_hurt",
+      "press",
+      "road_hit_great_1",
+      "road_hit_great_2",
+      "road_hit_great_3",
+      "road_hit_miss",
+      "road_hit_perfect_1",
+      "road_hit_perfect_2",
+      "road_hit_perfect_3",
+      "road_hit_perfect_4",
+      "run",
+      "standby",
+      "up_press_hit"
+    ],
+    "defaultAnimation": "air_hit_great_1",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

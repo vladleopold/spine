@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-23T05:31:27.757Z",
+  "updatedAt": "2026-07-23T05:31:44.629Z",
+  "animation_asset": {
+    "id": "symbol-2026-07-23T05-31-27-757Z",
+    "name": "symbol",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "sym_a_idle",
+        "sym_a_land",
+        "sym_a_win",
+        "sym_j_idle",
+        "sym_j_land",
+        "sym_j_win",
+        "sym_k_idle",
+        "sym_k_land",
+        "sym_k_win",
+        "sym_q_idle",
+        "sym_q_land",
+        "sym_q_win",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-sym_a_idle",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/symbol-2026-07-23T05-31-27-757Z",
+    "manifestPath": "library/symbol-2026-07-23T05-31-27-757Z/manifest.json",
+    "files": [
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/symbol/symbol.json",
+        "name": "symbol/symbol.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/symbol/symbol.atlas",
+        "name": "symbol/symbol.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/symbol/symbol.png",
+        "name": "symbol/symbol.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/sym_a_idle-preview.webm",
+        "name": "sym_a_idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/sym_a_idle-preview.webp",
+        "name": "sym_a_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/symbol-2026-07-23T05-31-27-757Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "symbol.json",
+    "atlas": "symbol.atlas",
+    "textures": [
+      "symbol.png"
+    ],
+    "animationCount": 12,
+    "animationNames": [
+      "sym_A_idle",
+      "sym_A_land",
+      "sym_A_win",
+      "sym_J_idle",
+      "sym_J_land",
+      "sym_J_win",
+      "sym_K_idle",
+      "sym_K_land",
+      "sym_K_win",
+      "sym_Q_idle",
+      "sym_Q_land",
+      "sym_Q_win"
+    ],
+    "defaultAnimation": "sym_A_idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

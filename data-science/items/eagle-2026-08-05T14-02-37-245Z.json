@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-05T14:02:37.245Z",
+  "updatedAt": "2026-08-05T14:02:48.547Z",
+  "animation_asset": {
+    "id": "eagle-2026-08-05T14-02-37-245Z",
+    "name": "eagle",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "eagle_flying",
+        "eagle_idle",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-eagle_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/eagle-2026-08-05T14-02-37-245Z",
+    "manifestPath": "library/eagle-2026-08-05T14-02-37-245Z/manifest.json",
+    "files": [
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/eagle/Eagle.json",
+        "name": "eagle/Eagle.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/eagle/Eagle.atlas",
+        "name": "eagle/Eagle.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/eagle/Eagle.png",
+        "name": "eagle/Eagle.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/eagle_idle-preview.webp",
+        "name": "eagle_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/eagle-2026-08-05T14-02-37-245Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Eagle.json",
+    "atlas": "Eagle.atlas",
+    "textures": [
+      "Eagle.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "Eagle_flying",
+      "Eagle_Idle"
+    ],
+    "defaultAnimation": "Eagle_Idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

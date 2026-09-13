@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-10T19:04:40.947Z",
+  "updatedAt": "2026-08-10T19:04:52.969Z",
+  "animation_asset": {
+    "id": "01-a-pose-2026-08-10T19-04-40-947Z",
+    "name": "01 a pose",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "wave"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-wave"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/01-a-pose-2026-08-10T19-04-40-947Z",
+    "manifestPath": "library/01-a-pose-2026-08-10T19-04-40-947Z/manifest.json",
+    "files": [
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/01 a pose/01 A Pose.json",
+        "name": "01 a pose/01 A Pose.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/01 a pose/01 A Pose.atlas",
+        "name": "01 a pose/01 A Pose.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/01 a pose/01 A Pose.webp",
+        "name": "01 a pose/01 A Pose.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/wave-preview.webp",
+        "name": "wave-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/01-a-pose-2026-08-10T19-04-40-947Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "01 A Pose.json",
+    "atlas": "01 A Pose.atlas",
+    "textures": [
+      "01 A Pose.webp"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "wave"
+    ],
+    "defaultAnimation": "wave",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

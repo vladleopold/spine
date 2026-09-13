@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-03T09:48:50.705Z",
+  "updatedAt": "2026-09-03T09:49:11.445Z",
+  "animation_asset": {
+    "id": "attractframe-2026-09-03T09-48-50-705Z",
+    "name": "attractframe",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "super_boost_2_left1",
+        "super_boost_2_left2",
+        "super_boost_2_left3",
+        "super_boost_2_right1",
+        "super_boost_2_right2",
+        "super_boost_2_right3",
+        "super_boost_3"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-super_boost_3"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/attractframe-2026-09-03T09-48-50-705Z",
+    "manifestPath": "library/attractframe-2026-09-03T09-48-50-705Z/manifest.json",
+    "files": [
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/attractframe/attractframe.json",
+        "name": "attractframe/attractframe.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/attractframe/attractframe.atlas",
+        "name": "attractframe/attractframe.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/attractframe/attractframe.png",
+        "name": "attractframe/attractframe.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/attractframe/attractframe_2.png",
+        "name": "attractframe/attractframe_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/super_boost_3-preview.webp",
+        "name": "super_boost_3-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/attractframe-2026-09-03T09-48-50-705Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "attractframe.json",
+    "atlas": "attractframe.atlas",
+    "textures": [
+      "attractframe.png",
+      "attractframe_2.png"
+    ],
+    "animationCount": 7,
+    "animationNames": [
+      "super_boost_2_left1",
+      "super_boost_2_left2",
+      "super_boost_2_left3",
+      "super_boost_2_right1",
+      "super_boost_2_right2",
+      "super_boost_2_right3",
+      "super_boost_3"
+    ],
+    "defaultAnimation": "super_boost_3",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

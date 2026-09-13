@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-13T19:02:25.790Z",
+  "updatedAt": "2026-06-13T19:02:39.740Z",
+  "animation_asset": {
+    "id": "gold_needle-2026-06-13T19-02-25-790Z",
+    "name": "gold_needle",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "one-shot"
+      ],
+      "animation_state": [
+        "hit",
+        "landing"
+      ],
+      "state": [
+        "default-hit"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/gold_needle-2026-06-13T19-02-25-790Z",
+    "manifestPath": "library/gold_needle-2026-06-13T19-02-25-790Z/manifest.json",
+    "files": [
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/gold_needle/Gold_Needle.json",
+        "name": "gold_needle/Gold_Needle.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/gold_needle/Gold_Needle.atlas",
+        "name": "gold_needle/Gold_Needle.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/gold_needle/Gold_Needle.webp",
+        "name": "gold_needle/Gold_Needle.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/hit-preview.webm",
+        "name": "hit-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/hit-preview.webp",
+        "name": "hit-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/gold_needle-2026-06-13T19-02-25-790Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Gold_Needle.json",
+    "atlas": "Gold_Needle.atlas",
+    "textures": [
+      "Gold_Needle.webp"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "Hit",
+      "Landing"
+    ],
+    "defaultAnimation": "Hit",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

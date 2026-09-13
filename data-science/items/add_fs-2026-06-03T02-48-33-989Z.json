@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-03T02:48:33.989Z",
+  "updatedAt": "2026-06-03T02:48:48.332Z",
+  "animation_asset": {
+    "id": "add_fs-2026-06-03T02-48-33-989Z",
+    "name": "add_fs",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "add_fs_end",
+        "add_fs_loop",
+        "add_fs_start"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-add_fs_end"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/add_fs-2026-06-03T02-48-33-989Z",
+    "manifestPath": "library/add_fs-2026-06-03T02-48-33-989Z/manifest.json",
+    "files": [
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/add_fs/add_fs.json",
+        "name": "add_fs/add_fs.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/add_fs/add_fs.atlas",
+        "name": "add_fs/add_fs.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/add_fs/add_fs.png",
+        "name": "add_fs/add_fs.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/placeholder_3/placeholder_3.json",
+        "name": "placeholder_3/placeholder_3.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/placeholder_3/placeholder_3.atlas",
+        "name": "placeholder_3/placeholder_3.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/placeholder_3/placeholder_3.png",
+        "name": "placeholder_3/placeholder_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/add_fs_end-preview.webm",
+        "name": "add_fs_end-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/add_fs_end-preview.webp",
+        "name": "add_fs_end-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/add_fs-2026-06-03T02-48-33-989Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "add_fs.json",
+    "atlas": "add_fs.atlas",
+    "textures": [
+      "add_fs.png",
+      "placeholder_3.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "add_fs_end",
+      "add_fs_loop",
+      "add_fs_start"
+    ],
+    "defaultAnimation": "add_fs_end",
+    "fileCount": 10,
+    "skeletonCount": 4,
+    "atlasCount": 2,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

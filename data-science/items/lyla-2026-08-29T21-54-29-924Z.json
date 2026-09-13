@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T21:54:29.924Z",
+  "updatedAt": "2026-08-29T21:54:39.270Z",
+  "animation_asset": {
+    "id": "lyla-2026-08-29T21-54-29-924Z",
+    "name": "lyla",
+    "domain": "gamedev",
+    "asset_category": "cinematic",
+    "animation_type": "cinematic",
+    "skeleton_type": "object",
+    "content_type": "cinematic",
+    "taxonomy": {
+      "category": "cinematic",
+      "class": "sequence",
+      "type": "cutscene",
+      "tags": [
+        "intro",
+        "outro"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "storytelling"
+      ],
+      "loop_type": [
+        "one-shot",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "blink",
+        "bodyflap",
+        "idle",
+        "intro-english",
+        "intro-spanish",
+        "intro2-english",
+        "intro2-spanish",
+        "mouthflap",
+        "outro-english",
+        "archive/pose-front",
+        "archive/pose-quarter"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/lyla-2026-08-29T21-54-29-924Z",
+    "manifestPath": "library/lyla-2026-08-29T21-54-29-924Z/manifest.json",
+    "files": [
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/lyla/lyla.json",
+        "name": "lyla/lyla.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/lyla/lyla.atlas",
+        "name": "lyla/lyla.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/lyla/lyla.png",
+        "name": "lyla/lyla.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/lyla-2026-08-29T21-54-29-924Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "lyla.json",
+    "atlas": "lyla.atlas",
+    "textures": [
+      "lyla.png"
+    ],
+    "animationCount": 11,
+    "animationNames": [
+      "blink",
+      "bodyflap",
+      "idle",
+      "intro-english",
+      "intro-spanish",
+      "intro2-english",
+      "intro2-spanish",
+      "mouthflap",
+      "outro-english",
+      "archive/pose-front",
+      "archive/pose-quarter"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "intro",
+      "outro"
+    ],
+    "confidence": 0.65,
+    "needsHumanReview": false
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

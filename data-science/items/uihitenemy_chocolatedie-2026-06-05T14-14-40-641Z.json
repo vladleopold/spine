@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-05T14:14:40.641Z",
+  "updatedAt": "2026-06-05T14:14:55.116Z",
+  "animation_asset": {
+    "id": "uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z",
+    "name": "uihitenemy_chocolatedie",
+    "domain": "gamedev",
+    "asset_category": "monster",
+    "animation_type": "creature",
+    "skeleton_type": "monster",
+    "content_type": "creature",
+    "taxonomy": {
+      "category": "character",
+      "class": "enemy",
+      "type": "monster",
+      "tags": [
+        "enemy"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "enemy"
+      ],
+      "state": [
+        "combat-capable",
+        "default-idle"
+      ],
+      "animation_state": [
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z",
+    "manifestPath": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/manifest.json",
+    "files": [
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.json",
+        "name": "uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.atlas",
+        "name": "uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.png",
+        "name": "uihitenemy_chocolatedie/UIHitEnemy_chocolatedie.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/uihitenemy_chocolatedie-2026-06-05T14-14-40-641Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "UIHitEnemy_chocolatedie.json",
+    "atlas": "UIHitEnemy_chocolatedie.atlas",
+    "textures": [
+      "UIHitEnemy_chocolatedie.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "idle"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "enemy"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-20T04:51:04.175Z",
+  "updatedAt": "2026-08-20T04:51:17.570Z",
+  "animation_asset": {
+    "id": "sparkle-layers-2026-08-20T04-51-04-175Z",
+    "name": "sparkle layers",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "animation",
+        "sparkles"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/sparkle-layers-2026-08-20T04-51-04-175Z",
+    "manifestPath": "library/sparkle-layers-2026-08-20T04-51-04-175Z/manifest.json",
+    "files": [
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/sparkle layers/sparkle layers.json",
+        "name": "sparkle layers/sparkle layers.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/sparkle layers/sparkle layers.atlas.txt",
+        "name": "sparkle layers/sparkle layers.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/sparkle layers/sparkle layers.png",
+        "name": "sparkle layers/sparkle layers.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sparkle-layers-2026-08-20T04-51-04-175Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "sparkle layers.json",
+    "atlas": "sparkle layers.atlas.txt",
+    "textures": [
+      "sparkle layers.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "animation",
+      "sparkles"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-24T04:47:37.286Z",
+  "updatedAt": "2026-07-24T04:48:27.614Z",
+  "animation_asset": {
+    "id": "basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+    "name": "basegame_bg_desktop",
+    "domain": "gamedev",
+    "asset_category": "background",
+    "animation_type": "background",
+    "skeleton_type": "background",
+    "content_type": "background",
+    "taxonomy": {
+      "category": "environment",
+      "class": "background",
+      "type": "animated-background",
+      "tags": [
+        "bg"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "scene-background"
+      ],
+      "perspective": [
+        "2d"
+      ],
+      "animation_state": [
+        "animation"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z",
+    "manifestPath": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/manifest.json",
+    "files": [
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.json",
+        "name": "basegame_bg_desktop/basegame_bg_desktop.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.atlas",
+        "name": "basegame_bg_desktop/basegame_bg_desktop.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop.png",
+        "name": "basegame_bg_desktop/basegame_bg_desktop.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_2.png",
+        "name": "basegame_bg_desktop/basegame_bg_desktop_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_3.png",
+        "name": "basegame_bg_desktop/basegame_bg_desktop_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_4.png",
+        "name": "basegame_bg_desktop/basegame_bg_desktop_4.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/basegame_bg_desktop/basegame_bg_desktop_5.png",
+        "name": "basegame_bg_desktop/basegame_bg_desktop_5.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webm",
+        "name": "animation-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/basegame_bg_desktop-2026-07-24T04-47-37-286Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "basegame_bg_desktop.json",
+    "atlas": "basegame_bg_desktop.atlas",
+    "textures": [
+      "basegame_bg_desktop.png",
+      "basegame_bg_desktop_2.png",
+      "basegame_bg_desktop_3.png",
+      "basegame_bg_desktop_4.png",
+      "basegame_bg_desktop_5.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 11,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 6
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "bg"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

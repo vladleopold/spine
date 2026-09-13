@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T23:06:27.948Z",
+  "updatedAt": "2026-05-11T23:06:36.801Z",
+  "animation_asset": {
+    "id": "aguilar-juiceshaker-2026-05-11T23-06-27-948Z",
+    "name": "aguilar-juiceshaker",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "idle-left",
+        "idle-right",
+        "shake-left",
+        "shake-right",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle-left"
+      ],
+      "direction": [
+        "left",
+        "right"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z",
+    "manifestPath": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/manifest.json",
+    "files": [
+      {
+        "path": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/aguilar-juiceshaker/aguilar-juiceshaker.json",
+        "name": "aguilar-juiceshaker/aguilar-juiceshaker.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/aguilar-juiceshaker/aguilar-juiceshaker.atlas",
+        "name": "aguilar-juiceshaker/aguilar-juiceshaker.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/aguilar-juiceshaker/aguilar-juiceshaker.png",
+        "name": "aguilar-juiceshaker/aguilar-juiceshaker.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/idle-left-preview.webm",
+        "name": "idle-left-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/aguilar-juiceshaker-2026-05-11T23-06-27-948Z/idle-left-preview.webp",
+        "name": "idle-left-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "aguilar-juiceshaker.json",
+    "atlas": "aguilar-juiceshaker.atlas",
+    "textures": [
+      "aguilar-juiceshaker.png"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "idle-left",
+      "idle-right",
+      "shake-left",
+      "shake-right"
+    ],
+    "defaultAnimation": "idle-left",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

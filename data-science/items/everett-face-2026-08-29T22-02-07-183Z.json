@@ -1,0 +1,283 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T22:02:07.183Z",
+  "updatedAt": "2026-08-29T22:02:17.969Z",
+  "animation_asset": {
+    "id": "everett-face-2026-08-29T22-02-07-183Z",
+    "name": "everett-face",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "animation",
+        "blink",
+        "eyes-close",
+        "eyes-open",
+        "lipsync/evblowdryprompt",
+        "lipsync/evbuzzerprompt1",
+        "lipsync/evbuzzerprompt2",
+        "lipsync/evbuzzerprompt3",
+        "lipsync/evcelebrate1",
+        "lipsync/evcelebrate2",
+        "lipsync/evcelebrate3",
+        "lipsync/evcelebrate4",
+        "lipsync/evcelebrate5",
+        "lipsync/evcelebrate6",
+        "lipsync/evcelebrate7",
+        "lipsync/evdesign",
+        "lipsync/evdesigndone",
+        "lipsync/evdesignprompt",
+        "lipsync/evdryclayprompt1",
+        "lipsync/evdryclayprompt2",
+        "lipsync/evdryclayprompt3",
+        "lipsync/evendscene",
+        "lipsync/evendscenealt",
+        "lipsync/evendscenealt2",
+        "lipsync/evendscenealt3",
+        "lipsync/evendscenealt4",
+        "lipsync/evevent1",
+        "lipsync/evevent2",
+        "lipsync/evfade",
+        "lipsync/evfinished",
+        "lipsync/evgelprompt",
+        "lipsync/evgelprompt2",
+        "lipsync/evgreeting1",
+        "lipsync/evgreeting2",
+        "lipsync/evgreeting3",
+        "lipsync/evgreeting4",
+        "lipsync/evhair-hover-1",
+        "lipsync/evhair-hover-2",
+        "lipsync/evhair-hover-3",
+        "lipsync/evhairselect1",
+        "lipsync/evhairselect2",
+        "lipsync/evhairsprayprompt1",
+        "lipsync/evhairtie1",
+        "lipsync/evhairtie2",
+        "lipsync/evhairtie3",
+        "lipsync/evnextstep",
+        "lipsync/evpart1",
+        "lipsync/evpart2",
+        "lipsync/evpartdone",
+        "lipsync/evpartprompt1",
+        "lipsync/evpartprompt2",
+        "lipsync/evproducts",
+        "lipsync/evscissor",
+        "lipsync/evseasaltprompt2",
+        "lipsync/evstep5",
+        "lipsync/evstep6",
+        "lipsync/evstep6alt1",
+        "lipsync/evstep6alt2",
+        "lipsync/evstep6alt3",
+        "lipsync/evstep6prompt",
+        "lipsync/evsteps",
+        "lipsync/evstuavailable1",
+        "lipsync/evstufinished1",
+        "lipsync/evstufinished2",
+        "lipsync/evstufinished2alt",
+        "lipsync/evstufinished2alt2",
+        "lipsync/evstusetup",
+        "lipsync/evtapsections1",
+        "lipsync/evtapsections2",
+        "lipsync/evtrim1",
+        "lipsync/evtrim2",
+        "lipsync/evwater1",
+        "lipsync/evwater2",
+        "lipsync/evwater3",
+        "lipsync/evwet2",
+        "lipsync/evwet3"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-animation"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/everett-face-2026-08-29T22-02-07-183Z",
+    "manifestPath": "library/everett-face-2026-08-29T22-02-07-183Z/manifest.json",
+    "files": [
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/everett-face/everett-face.json",
+        "name": "everett-face/everett-face.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/everett-face/everett-face.atlas",
+        "name": "everett-face/everett-face.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/everett-face/everett-face.png",
+        "name": "everett-face/everett-face.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/everett-face-2026-08-29T22-02-07-183Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "everett-face.json",
+    "atlas": "everett-face.atlas",
+    "textures": [
+      "everett-face.png"
+    ],
+    "animationCount": 76,
+    "animationNames": [
+      "animation",
+      "blink",
+      "eyes-close",
+      "eyes-open",
+      "lipsync/evblowdryprompt",
+      "lipsync/evbuzzerprompt1",
+      "lipsync/evbuzzerprompt2",
+      "lipsync/evbuzzerprompt3",
+      "lipsync/evcelebrate1",
+      "lipsync/evcelebrate2",
+      "lipsync/evcelebrate3",
+      "lipsync/evcelebrate4",
+      "lipsync/evcelebrate5",
+      "lipsync/evcelebrate6",
+      "lipsync/evcelebrate7",
+      "lipsync/evdesign",
+      "lipsync/evdesigndone",
+      "lipsync/evdesignprompt",
+      "lipsync/evdryclayprompt1",
+      "lipsync/evdryclayprompt2",
+      "lipsync/evdryclayprompt3",
+      "lipsync/evendscene",
+      "lipsync/evendscenealt",
+      "lipsync/evendscenealt2",
+      "lipsync/evendscenealt3",
+      "lipsync/evendscenealt4",
+      "lipsync/evevent1",
+      "lipsync/evevent2",
+      "lipsync/evfade",
+      "lipsync/evfinished",
+      "lipsync/evgelprompt",
+      "lipsync/evgelprompt2",
+      "lipsync/evgreeting1",
+      "lipsync/evgreeting2",
+      "lipsync/evgreeting3",
+      "lipsync/evgreeting4",
+      "lipsync/evhair-hover-1",
+      "lipsync/evhair-hover-2",
+      "lipsync/evhair-hover-3",
+      "lipsync/evhairselect1",
+      "lipsync/evhairselect2",
+      "lipsync/evhairsprayprompt1",
+      "lipsync/evhairtie1",
+      "lipsync/evhairtie2",
+      "lipsync/evhairtie3",
+      "lipsync/evnextstep",
+      "lipsync/evpart1",
+      "lipsync/evpart2",
+      "lipsync/evpartdone",
+      "lipsync/evpartprompt1",
+      "lipsync/evpartprompt2",
+      "lipsync/evproducts",
+      "lipsync/evscissor",
+      "lipsync/evseasaltprompt2",
+      "lipsync/evstep5",
+      "lipsync/evstep6",
+      "lipsync/evstep6alt1",
+      "lipsync/evstep6alt2",
+      "lipsync/evstep6alt3",
+      "lipsync/evstep6prompt",
+      "lipsync/evsteps",
+      "lipsync/evstuavailable1",
+      "lipsync/evstufinished1",
+      "lipsync/evstufinished2",
+      "lipsync/evstufinished2alt",
+      "lipsync/evstufinished2alt2",
+      "lipsync/evstusetup",
+      "lipsync/evtapsections1",
+      "lipsync/evtapsections2",
+      "lipsync/evtrim1",
+      "lipsync/evtrim2",
+      "lipsync/evwater1",
+      "lipsync/evwater2",
+      "lipsync/evwater3",
+      "lipsync/evwet2",
+      "lipsync/evwet3"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

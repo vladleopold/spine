@@ -1,0 +1,243 @@
+name: Spine Export WebM
+
+on:
+  repository_dispatch:
+    types: [spine-export-webm]
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright with Chromium
+        run: |
+          echo "=== INSTALLING PLAYWRIGHT ==="
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium --with-deps
+          echo "=== PLAYWRIGHT INSTALLED ==="
+
+      - name: Install system dependencies
+        run: |
+          echo "=== INSTALLING SYSTEM DEPS ==="
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
+            libwayland-egl1 ffmpeg
+          echo "=== SYSTEM DEPS INSTALLED ==="
+
+      - name: Compute animation duration from skeleton JSON
+        id: duration
+        run: |
+          echo "=== COMPUTING ANIMATION DURATION ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          uploadPath="library/${uploadId}"
+          # Find the first directory inside uploadPath
+          setName=$(find "$uploadPath" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
+          skeletonPath=""
+          if [ -n "$setName" ]; then
+            for f in "${uploadPath}/${setName}"/*.json; do
+              if [ -f "$f" ]; then
+                skeletonPath="$f"
+                break
+              fi
+            done
+          fi
+          echo "Skeleton path: $skeletonPath"
+          echo "Animation: $animation"
+
+          if [ -z "$skeletonPath" ] || [ ! -f "$skeletonPath" ]; then
+            echo "Skeleton JSON not found, using fallback duration 0 to let browser calculate"
+            echo "anim_duration=0" >> $GITHUB_OUTPUT
+          else
+            duration=$(node -e "
+              const fs = require('fs');
+              const animName = '$animation';
+              const data = JSON.parse(fs.readFileSync('$skeletonPath', 'utf8'));
+              const anim = data.animations && data.animations[animName];
+              if (!anim) { console.log(0); process.exit(0); }
+              let max = 0;
+              const traverse = (obj) => {
+                if (Array.isArray(obj)) {
+                  obj.forEach(item => { if (item && typeof item.time === 'number' && item.time > max) max = item.time; });
+                } else if (obj && typeof obj === 'object') {
+                  Object.values(obj).forEach(traverse);
+                }
+              };
+              traverse(anim);
+              console.log(max > 0 ? max.toFixed(4) : 0);
+            " 2>/dev/null || echo "0")
+            echo "Computed duration: ${duration}s"
+            echo "anim_duration=${duration}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Export WebM preview
+        id: export
+        run: |
+          echo "=== STARTING EXPORT ==="
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          animation="${{ github.event.client_payload.animation }}"
+          animDuration="${{ steps.duration.outputs.anim_duration }}"
+          
+          echo "Upload ID: $uploadId"
+          echo "Animation: $animation"
+          echo "Animation duration: ${animDuration}s"
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="${{ github.event.client_payload.uploadId }}" \
+            --animation="${{ github.event.client_payload.animation }}" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --anim-duration="${animDuration}" \
+            --output="${{ github.workspace }}/${{ github.event.client_payload.uploadId }}-preview.webm"
+          echo "=== EXPORT COMPLETED ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and Push Atomically
+        run: |
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          origin="${{ github.event.client_payload.origin }}"
+          basePath="library"
+          indexPath="${basePath}/index.json"
+          metaPath="${{ github.workspace }}/${uploadId}-preview.webm.json"
+          
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $i/$MAX_RETRIES..."
+            
+            # 1. Always fetch fresh state first — no rebase conflicts possible
+            git fetch origin main
+            git reset --hard origin/main
+            
+          # 2. Copy media files on top of fresh state
+          mkdir -p "${basePath}/${uploadId}"
+          for ext in "webm" "webp"; do
+            for suffix in "" "-medium" "-low"; do
+              # Script outputs: {uploadId}-preview{suffix}.webm
+              f="${uploadId}-preview${suffix}.${ext}"
+              if [ -f "$f" ]; then
+                # Rename to: preview{suffix}.webm (inside uploadId dir)
+                cp "$f" "${basePath}/${uploadId}/preview${suffix}.${ext}"
+                echo "Copied: $f -> ${basePath}/${uploadId}/preview${suffix}.${ext}"
+              fi
+            done
+          done
+            
+            # 3. Update index.json on top of fresh state
+            node -e "
+              const fs = require('fs');
+              const uploadId = '$uploadId';
+              const origin = '$origin';
+              const basePath = '$basePath';
+              const indexPath = '$indexPath';
+              const metaPath = '$metaPath';
+              
+              const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+              let videoMeta = {};
+              let isError = false;
+              if (fs.existsSync(metaPath)) {
+                try { videoMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); if (videoMeta.error) isError = true; } catch(e) {}
+              }
+              
+              const uploadedUrls = {};
+              const targetDir = basePath + '/' + uploadId;
+              
+              ['', '-medium', '-low'].forEach(suffix => {
+                const webmF = 'preview' + suffix + '.webm';
+                const webpF = 'preview' + suffix + '.webp';
+                if (fs.existsSync(targetDir + '/' + webmF)) {
+                  let k = 'webmPreview'; if (suffix === '-medium') k = 'webmPreviewMedium'; if (suffix === '-low') k = 'webmPreviewLow';
+                  uploadedUrls[k] = origin + '/assets/' + basePath + '/' + uploadId + '/' + webmF;
+                }
+                if (fs.existsSync(targetDir + '/' + webpF)) {
+                  let k = 'webpPoster'; if (suffix === '-medium') k = 'webpPosterMedium'; if (suffix === '-low') k = 'webpPosterLow';
+                  uploadedUrls[k] = origin + '/assets/' + basePath + '/' + uploadId + '/' + webpF;
+                }
+              });
+              
+              const entryIndex = indexData.findIndex(e => e.id === uploadId);
+              if (entryIndex !== -1) {
+                delete indexData[entryIndex].webmChunksJson;
+                delete indexData[entryIndex].webmChunks;
+                delete indexData[entryIndex].webmChunkCount;
+                delete indexData[entryIndex].webmIsChunked;
+                
+                indexData[entryIndex] = {
+                  ...indexData[entryIndex],
+                  ...uploadedUrls,
+                  webmPreviewPath: isError ? undefined : \`\${basePath}/\${uploadId}/preview.webm\`,
+                  webmStatus: isError ? 'error' : 'ready',
+                  webmError: isError ? videoMeta.error : undefined,
+                  webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                };
+              }
+              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+            "
+            
+            # 4. Stage and commit
+            git add library/
+            if git diff-index --quiet HEAD --; then
+              echo "No changes to commit (perhaps already processed?)"
+              exit 0
+            fi
+            
+            git commit -m "Auto-export media for ${uploadId}"
+            
+            # 5. Push — if rejected, loop back with fresh HEAD
+            if git push origin main; then
+              echo "Successfully committed and pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Retrying with fresh HEAD..."
+              sleep $((RANDOM % 5 + 2))
+            fi
+          done
+          
+          echo "Failed to push after $MAX_RETRIES attempts."
+          exit 1
+
+      - name: Trigger full animation export (background)
+        if: success()
+        run: |
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
+            -d "{
+              \"event_type\": \"spine-export-full\",
+              \"client_payload\": {
+                \"uploadId\": \"${{ github.event.client_payload.uploadId }}\",
+                \"origin\": \"${{ github.event.client_payload.origin }}\",
+                \"owner\": \"${{ github.event.client_payload.owner }}\",
+                \"repo\": \"${{ github.event.client_payload.repo }}\",
+                \"branch\": \"${{ github.event.client_payload.branch }}\"
+              }
+            }"
+          echo "Dispatched spine-export-full for ${{ github.event.client_payload.uploadId }}"

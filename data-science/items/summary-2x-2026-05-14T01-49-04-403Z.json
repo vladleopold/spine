@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-14T01:49:04.403Z",
+  "updatedAt": "2026-05-14T01:49:44.083Z",
+  "animation_asset": {
+    "id": "summary-2x-2026-05-14T01-49-04-403Z",
+    "name": "summary@2x",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "summary_end",
+        "summary_idle",
+        "summary_start",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-summary_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/summary-2x-2026-05-14T01-49-04-403Z",
+    "manifestPath": "library/summary-2x-2026-05-14T01-49-04-403Z/manifest.json",
+    "files": [
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/summary@2x/summary@2x.json",
+        "name": "summary@2x/summary@2x.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/summary@2x/summary@2x.atlas",
+        "name": "summary@2x/summary@2x.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/summary@2x/summary@2x.webp",
+        "name": "summary@2x/summary@2x.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/summary_idle-preview.webm",
+        "name": "summary_idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/summary_idle-preview.webp",
+        "name": "summary_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/summary-2x-2026-05-14T01-49-04-403Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "summary@2x.json",
+    "atlas": "summary@2x.atlas",
+    "textures": [
+      "summary@2x.webp"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "summary_end",
+      "summary_idle",
+      "summary_start"
+    ],
+    "defaultAnimation": "summary_idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

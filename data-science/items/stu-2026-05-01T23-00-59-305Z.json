@@ -1,0 +1,311 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-01T23:00:59.305Z",
+  "updatedAt": "2026-05-11T21:38:35.158Z",
+  "animation_asset": {
+    "id": "stu-2026-05-01T23-00-59-305Z",
+    "name": "stu",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "fx"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "ground_stu_animations/bend_idle",
+        "ground_stu_animations/blink",
+        "ground_stu_animations/celebrate_wave",
+        "ground_stu_animations/faceplant_to_idle",
+        "ground_stu_animations/fist_pump",
+        "ground_stu_animations/flag_leave",
+        "ground_stu_animations/flag_pick",
+        "ground_stu_animations/flag_wave",
+        "ground_stu_animations/idle_1",
+        "ground_stu_animations/idle_2",
+        "ground_stu_animations/idle_gym",
+        "ground_stu_animations/idle_gym_land",
+        "ground_stu_animations/idle_to_bend",
+        "ground_stu_animations/idle_to_faceplant",
+        "ground_stu_animations/idle_to_roll_backwards",
+        "ground_stu_animations/idle_to_sit_on_ground_idle",
+        "ground_stu_animations/idle_to_somersault",
+        "ground_stu_animations/jump_broad",
+        "ground_stu_animations/jump_broad_2",
+        "ground_stu_animations/jump_broad_to_splat",
+        "ground_stu_animations/jump_off_swing_idle",
+        "ground_stu_animations/jump_off_swing_landing",
+        "ground_stu_animations/jump_up",
+        "ground_stu_animations/jump_up_2",
+        "ground_stu_animations/prepare_to_jump_idle",
+        "ground_stu_animations/prepare_to_jump_start",
+        "ground_stu_animations/relieved",
+        "ground_stu_animations/sit_on_butt_to_idle",
+        "ground_stu_animations/sit_on_ground_idle",
+        "ground_stu_animations/sit_push_on_ground",
+        "ground_stu_animations/sit_to_somersault",
+        "ground_stu_animations/splat_to_landing_on_butt",
+        "ground_stu_animations/stand_push_on_ground",
+        "ground_stu_animations/walk_1",
+        "ground_stu_animations/walk_2",
+        "ground_stu_animations/walk_march",
+        "sand_castle/sand_castle_complete",
+        "sand_castle/sand_castle_destroyed_side",
+        "sand_castle/sand_castle_destroyed_top",
+        "sand_castle/sand_castle_destroyed_total_1",
+        "sand_castle/sand_castle_destroyed_total_2",
+        "sand_castle/sand_castle_fx",
+        "swing/swing_0_to_360",
+        "swing/swing_0_to_360_fix",
+        "swing/swing_360_to_0",
+        "swing/swing_360_to_0_fix",
+        "swing/swing_anticipation",
+        "swing/swing_anticipation_higher",
+        "swing/swing_anticipation_higher_reverse",
+        "swing/swing_anticipation_reverse",
+        "swing/swing_idle",
+        "swing/swing_static",
+        "swing_stu_animations/backwards_jump_off_swing_idle",
+        "swing_stu_animations/backwards_jump_off_swing_landing",
+        "swing_stu_animations/backwards_rock_on_swing",
+        "swing_stu_animations/backwards_sit_on_swing_idle",
+        "swing_stu_animations/backwards_sit_on_swing_to_roll_to_ground",
+        "swing_stu_animations/backwards_stand_to_faceplant",
+        "swing_stu_animations/face_forward_to_backwards_faceplant",
+        "swing_stu_animations/ground_standing_to_sit_on_swing",
+        "swing_stu_animations/questioning_look",
+        "swing_stu_animations/rock_on_swing",
+        "swing_stu_animations/shakes_head_no",
+        "swing_stu_animations/sit_on_swing_idle",
+        "swing_stu_animations/sit_on_swing_to_ground",
+        "swing_stu_animations/sit_on_swing_to_stand_on_swing",
+        "swing_stu_animations/stand_on_swing_idle",
+        "swing_stu_animations/stand_on_swing_to_ground",
+        "swing_stu_animations/stand_on_swing_to_roll_to_ground",
+        "swing_stu_animations/stand_on_swing_to_sit_on_swing",
+        "swing_stu_animations/stand_to_faceplant",
+        "trapeze/trapeze_0_to_360",
+        "trapeze/trapeze_0_to_360_fix",
+        "trapeze/trapeze_360_to_0",
+        "trapeze/trapeze_360_to_0_fix",
+        "trapeze/trapeze_anticipation",
+        "trapeze/trapeze_anticipation_higher",
+        "trapeze/trapeze_anticipation_higher_reverse",
+        "trapeze/trapeze_anticipation_reverse",
+        "trapeze/trapeze_idle",
+        "trapeze/trapeze_static",
+        "trapeze_stu_animations/backwards_hang_on_trapeze_idle",
+        "trapeze_stu_animations/backwards_hang_on_trapeze_to_roll",
+        "trapeze_stu_animations/backwards_swing_on_trapeze",
+        "trapeze_stu_animations/hang_on_trapeze_idle",
+        "trapeze_stu_animations/hang_on_trapeze_to_roll",
+        "trapeze_stu_animations/swing_on_trapeze",
+        "idle"
+      ],
+      "state": [
+        "default-ground_stu_animations/idle_1"
+      ],
+      "action": [
+        "walk"
+      ],
+      "direction": [
+        "up"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/stu-2026-05-01T23-00-59-305Z",
+    "manifestPath": "library/stu-2026-05-01T23-00-59-305Z/manifest.json",
+    "files": [
+      {
+        "path": "library/stu-2026-05-01T23-00-59-305Z/stu/Stu.json",
+        "name": "stu/Stu.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/stu-2026-05-01T23-00-59-305Z/stu/Stu.atlas",
+        "name": "stu/Stu.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/stu-2026-05-01T23-00-59-305Z/stu/Stu.png",
+        "name": "stu/Stu.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/stu-2026-05-01T23-00-59-305Z/ground_stu_animations-idle_1-preview.webm",
+        "name": "ground_stu_animations-idle_1-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/stu-2026-05-01T23-00-59-305Z/ground_stu_animations-idle_1-preview.webp",
+        "name": "ground_stu_animations-idle_1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Stu.json",
+    "atlas": "Stu.atlas",
+    "textures": [
+      "Stu.png"
+    ],
+    "animationCount": 87,
+    "animationNames": [
+      "ground_stu_animations/bend_idle",
+      "ground_stu_animations/blink",
+      "ground_stu_animations/celebrate_wave",
+      "ground_stu_animations/faceplant_to_idle",
+      "ground_stu_animations/fist_pump",
+      "ground_stu_animations/flag_leave",
+      "ground_stu_animations/flag_pick",
+      "ground_stu_animations/flag_wave",
+      "ground_stu_animations/idle_1",
+      "ground_stu_animations/idle_2",
+      "ground_stu_animations/idle_gym",
+      "ground_stu_animations/idle_gym_land",
+      "ground_stu_animations/idle_to_bend",
+      "ground_stu_animations/idle_to_faceplant",
+      "ground_stu_animations/idle_to_roll_backwards",
+      "ground_stu_animations/idle_to_sit_on_ground_idle",
+      "ground_stu_animations/idle_to_somersault",
+      "ground_stu_animations/jump_broad",
+      "ground_stu_animations/jump_broad_2",
+      "ground_stu_animations/jump_broad_to_splat",
+      "ground_stu_animations/jump_off_swing_idle",
+      "ground_stu_animations/jump_off_swing_landing",
+      "ground_stu_animations/jump_up",
+      "ground_stu_animations/jump_up_2",
+      "ground_stu_animations/prepare_to_jump_idle",
+      "ground_stu_animations/prepare_to_jump_start",
+      "ground_stu_animations/relieved",
+      "ground_stu_animations/sit_on_butt_to_idle",
+      "ground_stu_animations/sit_on_ground_idle",
+      "ground_stu_animations/sit_push_on_ground",
+      "ground_stu_animations/sit_to_somersault",
+      "ground_stu_animations/splat_to_landing_on_butt",
+      "ground_stu_animations/stand_push_on_ground",
+      "ground_stu_animations/walk_1",
+      "ground_stu_animations/walk_2",
+      "ground_stu_animations/walk_march",
+      "sand_castle/sand_castle_complete",
+      "sand_castle/sand_castle_destroyed_side",
+      "sand_castle/sand_castle_destroyed_top",
+      "sand_castle/sand_castle_destroyed_total_1",
+      "sand_castle/sand_castle_destroyed_total_2",
+      "sand_castle/sand_castle_fx",
+      "swing/swing_0_to_360",
+      "swing/swing_0_to_360_fix",
+      "swing/swing_360_to_0",
+      "swing/swing_360_to_0_fix",
+      "swing/swing_anticipation",
+      "swing/swing_anticipation_higher",
+      "swing/swing_anticipation_higher_reverse",
+      "swing/swing_anticipation_reverse",
+      "swing/swing_idle",
+      "swing/swing_static",
+      "swing_stu_animations/backwards_jump_off_swing_idle",
+      "swing_stu_animations/backwards_jump_off_swing_landing",
+      "swing_stu_animations/backwards_rock_on_swing",
+      "swing_stu_animations/backwards_sit_on_swing_idle",
+      "swing_stu_animations/backwards_sit_on_swing_to_roll_to_ground",
+      "swing_stu_animations/backwards_stand_to_faceplant",
+      "swing_stu_animations/face_forward_to_backwards_faceplant",
+      "swing_stu_animations/ground_standing_to_sit_on_swing",
+      "swing_stu_animations/questioning_look",
+      "swing_stu_animations/rock_on_swing",
+      "swing_stu_animations/shakes_head_no",
+      "swing_stu_animations/sit_on_swing_idle",
+      "swing_stu_animations/sit_on_swing_to_ground",
+      "swing_stu_animations/sit_on_swing_to_stand_on_swing",
+      "swing_stu_animations/stand_on_swing_idle",
+      "swing_stu_animations/stand_on_swing_to_ground",
+      "swing_stu_animations/stand_on_swing_to_roll_to_ground",
+      "swing_stu_animations/stand_on_swing_to_sit_on_swing",
+      "swing_stu_animations/stand_to_faceplant",
+      "trapeze/trapeze_0_to_360",
+      "trapeze/trapeze_0_to_360_fix",
+      "trapeze/trapeze_360_to_0",
+      "trapeze/trapeze_360_to_0_fix",
+      "trapeze/trapeze_anticipation",
+      "trapeze/trapeze_anticipation_higher",
+      "trapeze/trapeze_anticipation_higher_reverse",
+      "trapeze/trapeze_anticipation_reverse",
+      "trapeze/trapeze_idle",
+      "trapeze/trapeze_static",
+      "trapeze_stu_animations/backwards_hang_on_trapeze_idle",
+      "trapeze_stu_animations/backwards_hang_on_trapeze_to_roll",
+      "trapeze_stu_animations/backwards_swing_on_trapeze",
+      "trapeze_stu_animations/hang_on_trapeze_idle",
+      "trapeze_stu_animations/hang_on_trapeze_to_roll",
+      "trapeze_stu_animations/swing_on_trapeze"
+    ],
+    "defaultAnimation": "ground_stu_animations/idle_1",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "fx"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

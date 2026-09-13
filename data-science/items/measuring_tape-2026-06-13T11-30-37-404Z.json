@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-13T11:30:37.404Z",
+  "updatedAt": "2026-06-13T11:30:54.160Z",
+  "animation_asset": {
+    "id": "measuring_tape-2026-06-13T11-30-37-404Z",
+    "name": "measuring_tape",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "one-shot"
+      ],
+      "animation_state": [
+        "hit"
+      ],
+      "state": [
+        "default-hit"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/measuring_tape-2026-06-13T11-30-37-404Z",
+    "manifestPath": "library/measuring_tape-2026-06-13T11-30-37-404Z/manifest.json",
+    "files": [
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/measuring_tape/Measuring_Tape.json",
+        "name": "measuring_tape/Measuring_Tape.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/measuring_tape/Measuring_Tape.atlas",
+        "name": "measuring_tape/Measuring_Tape.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/measuring_tape/Measuring_Tape.webp",
+        "name": "measuring_tape/Measuring_Tape.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/hit-preview.webm",
+        "name": "hit-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/hit-preview.webp",
+        "name": "hit-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/measuring_tape-2026-06-13T11-30-37-404Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Measuring_Tape.json",
+    "atlas": "Measuring_Tape.atlas",
+    "textures": [
+      "Measuring_Tape.webp"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "Hit"
+    ],
+    "defaultAnimation": "Hit",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

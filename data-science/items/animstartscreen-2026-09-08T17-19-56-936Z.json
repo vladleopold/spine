@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-08T17:19:56.936Z",
+  "updatedAt": "2026-09-08T17:20:15.081Z",
+  "animation_asset": {
+    "id": "animstartscreen-2026-09-08T17-19-56-936Z",
+    "name": "animstartscreen",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "ui",
+    "skeleton_type": "ui",
+    "content_type": "ui",
+    "taxonomy": {
+      "category": "ui",
+      "class": "interface",
+      "type": "panel",
+      "tags": [
+        "screen"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "interface"
+      ],
+      "interaction_type": [
+        "clickable",
+        "state"
+      ],
+      "style": [
+        "game-ui"
+      ],
+      "animation_state": [
+        "startscreen",
+        "startscreenloop",
+        "startscreensmoke"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-startscreen"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/animstartscreen-2026-09-08T17-19-56-936Z",
+    "manifestPath": "library/animstartscreen-2026-09-08T17-19-56-936Z/manifest.json",
+    "files": [
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.json",
+        "name": "animstartscreen/animStartScreen.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.atlas",
+        "name": "animstartscreen/animStartScreen.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/animstartscreen/animStartScreen.png",
+        "name": "animstartscreen/animStartScreen.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/startscreen-preview.webp",
+        "name": "startscreen-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/animstartscreen-2026-09-08T17-19-56-936Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "animStartScreen.json",
+    "atlas": "animStartScreen.atlas",
+    "textures": [
+      "animStartScreen.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "startScreen",
+      "startScreenLoop",
+      "startScreenSmoke"
+    ],
+    "defaultAnimation": "startScreen",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "screen"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
