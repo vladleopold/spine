@@ -397,7 +397,23 @@ export default async function handler(request, response) {
 
     if (!githubResponse.ok) {
       const fallbackPath = await findFallbackGitHubPath({ owner, repo, branch, token, path });
-      if (!fallbackPath || fallbackPath === path) return response.status(githubResponse.status).send('Asset not found');
+      if (!fallbackPath || fallbackPath === path) {
+      const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${encodeURIComponent(path).replace(/%2F/g, '/')}`;
+      const rawResponse = await fetch(rawUrl, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3.raw' } });
+      if (rawResponse.ok) {
+        const buffer = Buffer.from(await rawResponse.arrayBuffer());
+        if (buffer.length) {
+          response.setHeader('Content-Type', contentTypeFor(path));
+          response.setHeader('X-Spine-Link-Asset-Cache', 'raw');
+          response.setHeader('Content-Length', String(buffer.length));
+          if (isIndexableMediaPath(path)) response.setHeader('X-Robots-Tag', 'index, follow');
+          if (isVideo(path)) response.setHeader('Accept-Ranges', 'bytes');
+          if (request.method === 'HEAD') return response.status(200).end();
+          return response.status(200).send(buffer);
+        }
+      }
+      return response.status(githubResponse.status).send('Asset not found');
+    }
       const fallbackEncodedPath = encodeURIComponent(fallbackPath).replace(/%2F/g, '/');
       githubResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${fallbackEncodedPath}?ref=${encodeURIComponent(branch)}`, {
         headers: githubHeaders(token),
