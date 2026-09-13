@@ -185,6 +185,32 @@ function compareArchiveEntries(a, b) {
   return String(b?.uploadedAt || '').localeCompare(String(a?.uploadedAt || ''));
 }
 
+function archiveDedupeKey(entry) {
+  const normalize = (value = '') =>
+    String(value || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  return [
+    normalize(entry?.title),
+    normalize(String(entry?.skeleton || '').split('/').pop() || ''),
+    normalize(String(entry?.atlas || '').split('/').pop() || ''),
+  ].join('|');
+}
+
+function dedupeArchiveEntries(entries) {
+  const seen = new Set();
+  const result = [];
+  for (const entry of entries) {
+    if (!entry || typeof entry !== 'object') continue;
+    const key = archiveDedupeKey(entry);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    result.push(entry);
+  }
+  return result;
+}
+
 function previewUrl(entry) {
   const id = encodeURIComponent(String(entry?.id || ''));
   const animation = String(entry?.defaultAnimation || '').trim();
@@ -1057,10 +1083,10 @@ function archiveHtml({ origin, entries, exclusions, metrics }) {
           tiles.forEach((tile) => {
             const video = tile.querySelector("video");
             if (!video) return;
-            const shouldPlay = activeTiles.has(tile) && !video.paused;
+            const shouldPlay = activeTiles.has(tile) && video.paused;
             const shouldPause = !activeTiles.has(tile) && !video.paused;
             if (shouldPause) stopArchiveVideo(video);
-            else if (shouldPlay && video.paused) playArchiveVideo(video);
+            else if (shouldPlay) playArchiveVideo(video);
           });
         }
         document.querySelectorAll(".tile").forEach((tile) => {
@@ -1630,11 +1656,12 @@ export default async function handler(request, response) {
       return response.status(200).json({
         ok: true,
         generatedAt: new Date().toISOString(),
-        entries: homepageFeedEntries(origin, entries, metrics),
+        entries: homepageFeedEntries(origin, dedupeArchiveEntries(entries), metrics),
       });
     }
 
     const layoutEntries = await enrichArchiveLayout(settings, origin, entries);
+    const gridEntries = dedupeArchiveEntries(layoutEntries);
 
     const archiveId = String(request.query?.id || '').trim();
     response.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -1662,7 +1689,7 @@ export default async function handler(request, response) {
     if (request.method === 'HEAD') {
       return response.status(200).send('');
     }
-    return response.status(200).send(archiveHtml({ origin, entries: layoutEntries, exclusions, metrics }));
+    return response.status(200).send(archiveHtml({ origin, entries: gridEntries, exclusions, metrics }));
   } catch (error) {
     return response.status(500).send(error instanceof Error ? error.message : 'Archive failed');
   }
