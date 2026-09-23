@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "transition-2026-09-23T13-15-22-647Z",
+  "title": "transition",
+  "uploadedAt": "2026-09-23T13:15:22.647Z",
+  "proofPath": "library/transition-2026-09-23T13-15-22-647Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/transition-2026-09-23T13-15-22-647Z/source-proof.json?v=2026-09-23T13-15-22.647Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ksapi1_uksjmf",
+    "anonymousFingerprint": "1ksapi1",
+    "browserFingerprintSha256": "646b1c51bf981ecbbe64c6d4991c4a95429fa573dc824fe4cfb2d3d874f29d5f",
+    "browserEnvironmentHashSha256": "c20f5388e55b691d8cae7c97e4b655a09809592b133387565b93412e323bf2ea",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "hi"
+      ],
+      "hardwareConcurrency": 10,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1680,
+        "height": 1050,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Calcutta",
+      "timezoneOffset": -330,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/transition-2026-09-23T13-15-22-647Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9f93544b601c6bad7a6b82f240c5685b0086a211298c7fa7fa7639be18926106",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "transition/transition.atlas",
+      "bytes": 1492,
+      "sha256": "2f13b8ce4b80fdaf24fa1689443fde20da24aaa04b88a77c4f2f45ec22d277bc"
+    },
+    {
+      "name": "transition/transition.json",
+      "bytes": 4154,
+      "sha256": "c9589a078de54f64312fa47fbe7a53ee6c72c75dbeea80ab42fe0d94c628341b"
+    },
+    {
+      "name": "transition/transition.webp",
+      "bytes": 422856,
+      "sha256": "fb136d9d44e7e1077de19a8847fa7d1fca56566db7d47fa84c18eabf84728a32"
+    }
+  ],
+  "proofHash": "9f93544b601c6bad7a6b82f240c5685b0086a211298c7fa7fa7639be18926106"
+}
