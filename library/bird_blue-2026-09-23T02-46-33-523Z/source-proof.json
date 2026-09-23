@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "bird_blue-2026-09-23T02-46-33-523Z",
+  "title": "bird_blue",
+  "uploadedAt": "2026-09-23T02:46:33.523Z",
+  "proofPath": "library/bird_blue-2026-09-23T02-46-33-523Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bird_blue-2026-09-23T02-46-33-523Z/source-proof.json?v=2026-09-23T02-46-33.523Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ij1szw_1qj4mv5",
+    "anonymousFingerprint": "1ij1szw",
+    "browserFingerprintSha256": "392d1963e9b39f133894c1406ca21f3c685ce269081a260ceb8066742ccdde2e",
+    "browserEnvironmentHashSha256": "cd3b40fd2f8e079424076e99a5bb24a730b9649c76420d819851172f7210b286",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "vi",
+      "languages": [
+        "vi"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Saigon",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/bird_blue-2026-09-23T02-46-33-523Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:30a9267057ae89557e9d407aa8deb95b967cb9002b4798be05710594f06a545f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "bird_blue/bird_blue.atlas",
+      "bytes": 2243,
+      "sha256": "46e224f0769c2ea0cf053108bba3706957b9f30318550235873bbda29afca01d"
+    },
+    {
+      "name": "bird_blue/bird_blue.png",
+      "bytes": 57278,
+      "sha256": "afba38a1de00beb9cb44be0ef4e4794750c10b0a148a03293dad283f2586ef76"
+    },
+    {
+      "name": "bird_blue/bird_blue.skel",
+      "bytes": 42585,
+      "sha256": "400e6ba40f04a22f4a0d3f240da99d8eacf4ebd7efc4829450315ffeba619d8a"
+    },
+    {
+      "name": "fly-preview.webp",
+      "bytes": 1428,
+      "sha256": "141bce04c5d4c2741d5af41f34b2aae058d782ad592c2850f96f6e246cbb5fb3"
+    }
+  ],
+  "proofHash": "30a9267057ae89557e9d407aa8deb95b967cb9002b4798be05710594f06a545f"
+}
