@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "megawin-2026-09-24T19-12-38-421Z",
+  "title": "megawin",
+  "uploadedAt": "2026-09-24T19:12:38.421Z",
+  "proofPath": "library/megawin-2026-09-24T19-12-38-421Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/megawin-2026-09-24T19-12-38-421Z/source-proof.json?v=2026-09-24T19-12-38.421Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ihaxts_1js6gww",
+    "anonymousFingerprint": "1ihaxts",
+    "browserFingerprintSha256": "599b952118132f0b69efd831ad33660d21a6bdb9514db97f28f27a5756476a6d",
+    "browserEnvironmentHashSha256": "d125864da451ce1c0c33f6296ff4469061f412f49b8cf746292ea42859a8a33e",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "fr"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 3360,
+        "height": 1890,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "America/Chicago",
+      "timezoneOffset": 300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/megawin-2026-09-24T19-12-38-421Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:256426f533be89151802d104c5806c9e83a6d40ad27c25e4ac1aba239e82386a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "megawin-intro-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "megawin/MegaWin.atlas",
+      "bytes": 277,
+      "sha256": "6f4e0438abf2a81aa891dbd81bfb33927812094c8220a24b60fcdd7c5821d3f1"
+    },
+    {
+      "name": "megawin/MegaWin.json",
+      "bytes": 27724,
+      "sha256": "ac4ad5f81bb60fd9b00be739b4e5f21aea9e48568b3bc1192a87e0a6ff5c17c7"
+    },
+    {
+      "name": "megawin/MegaWin.png",
+      "bytes": 581358,
+      "sha256": "d648c09fe4c98afcea2b62ecaf55323f741067d0ea613d0c80ce47143599d983"
+    }
+  ],
+  "proofHash": "256426f533be89151802d104c5806c9e83a6d40ad27c25e4ac1aba239e82386a"
+}
