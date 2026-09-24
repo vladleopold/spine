@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "coin-2026-09-24T19-19-51-558Z",
+  "title": "coin",
+  "uploadedAt": "2026-09-24T19:19:51.558Z",
+  "proofPath": "library/coin-2026-09-24T19-19-51-558Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/coin-2026-09-24T19-19-51-558Z/source-proof.json?v=2026-09-24T19-19-51.558Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ihaxts_1js6gww",
+    "anonymousFingerprint": "1ihaxts",
+    "browserFingerprintSha256": "599b952118132f0b69efd831ad33660d21a6bdb9514db97f28f27a5756476a6d",
+    "browserEnvironmentHashSha256": "d125864da451ce1c0c33f6296ff4469061f412f49b8cf746292ea42859a8a33e",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "fr"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 3360,
+        "height": 1890,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "America/Chicago",
+      "timezoneOffset": 300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/coin-2026-09-24T19-19-51-558Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:5997aff4179a328a80df2542f47b14be6c8857611625c8d45baeb2a0b3bf50b0",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "coin/Coin_Export_01.atlas",
+      "bytes": 130,
+      "sha256": "eccff11d4636e21728f940057681367c85b7cc86a555b0495c001fa2c3d52173"
+    },
+    {
+      "name": "coin/Coin_Export_01.png",
+      "bytes": 59527,
+      "sha256": "24fddba330ee78a7a0557176849bd5301794b6c325744b38867c324ee2e1c876"
+    },
+    {
+      "name": "coin/Coin.json",
+      "bytes": 12994,
+      "sha256": "3e38a42e0fbf6d6bf96ac241c010346b3b7066ebd3c7d01e7352c9dfed2fad88"
+    },
+    {
+      "name": "coinflip-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    }
+  ],
+  "proofHash": "5997aff4179a328a80df2542f47b14be6c8857611625c8d45baeb2a0b3bf50b0"
+}
