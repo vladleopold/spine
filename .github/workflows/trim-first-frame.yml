@@ -123,8 +123,11 @@ jobs:
             return 1
           }
           for i in $(seq 1 3); do
-            commit_and_push
-            rc=$?
+            # GitHub runs steps with `bash -e`, so a bare call would abort the
+            # step on any non-zero return before rc could be inspected. The
+            # `|| rc=$?` form makes the call a tested command instead.
+            rc=0
+            commit_and_push || rc=$?
             if [ $rc -eq 0 ]; then
               echo "Pushed on attempt $i"
               exit 0
