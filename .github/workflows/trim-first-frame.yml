@@ -87,9 +87,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           commit_and_push() {
+            # Return codes: 0 = pushed, 2 = nothing to commit, 1 = push failed.
             git add library/
             if git diff --cached --quiet; then
-              return 1
+              return 2
             fi
             git commit -m "Trim black leading frames from previews (shard ${SHARD})" || return 1
             # Rebase-and-retry, never re-run. The shards are disjoint (files are
@@ -108,8 +109,17 @@ jobs:
             return 1
           }
           for i in $(seq 1 3); do
-            if commit_and_push; then
+            commit_and_push
+            rc=$?
+            if [ $rc -eq 0 ]; then
               echo "Pushed on attempt $i"
+              exit 0
+            fi
+            if [ $rc -eq 2 ]; then
+              # This shard has no black lead left to cut (it was already trimmed
+              # by an earlier run). That is success, not a failure: reporting it
+              # as a failure used to cost 3 pointless re-trims and then a red X.
+              echo "Nothing left to trim in this shard - all clips already start on a visible frame."
               exit 0
             fi
             echo "Commit/push failed (attempt $i), recomputing from current origin/main..."
