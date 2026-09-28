@@ -51,8 +51,10 @@ jobs:
             echo "No asset versions to bump."
             exit 0
           fi
-          git add library/index.json library/trimmed-ids-*.json
-          # Only deletions of the marker files should remain for those paths.
+          # -A stages both the rewritten index.json and the removal of the
+          # marker files. An explicit pathspec for the markers would abort with
+          # "pathspec did not match" when the script already deleted them all.
+          git add -A library/
           git commit -m "Bump asset versions for trimmed previews"
           for i in 1 2 3 4 5 6 7 8; do
             if git push origin HEAD:main; then
