@@ -953,8 +953,10 @@ try {
     if (webpOk) console.error(`WebP posters generated.`);
   } catch (err) {
     console.error(`FFmpeg processing failed or skipped: ${err.message}`);
-    // Fallback if ffmpeg fails: just copy the original capture to the main output
-    if (!fs.existsSync(outPaths.webmHigh)) fs.copyFileSync(videoPath, outPaths.webmHigh);
+    // Fallback if ffmpeg fails: copy the capture to the main output. This must be
+    // outputPath (post-trim), not videoPath (pre-trim), or the black lead we just
+    // removed would come straight back.
+    if (!fs.existsSync(outPaths.webmHigh)) fs.copyFileSync(outputPath, outPaths.webmHigh);
   }
 
   function getFileSize(filePath) {
