@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "lh_conor-2026-09-28T14-20-43-144Z",
+  "title": "lh_conor",
+  "uploadedAt": "2026-09-28T14:20:43.144Z",
+  "proofPath": "library/lh_conor-2026-09-28T14-20-43-144Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/lh_conor-2026-09-28T14-20-43-144Z/source-proof.json?v=2026-09-28T14-20-43.144Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_ktrm79_6efwv0",
+    "anonymousFingerprint": "ktrm79",
+    "browserFingerprintSha256": "c16b9a60de043ce5fe7ba1280f16a2218498f2ba8deadf171819a9f534f1edb9",
+    "browserEnvironmentHashSha256": "709ec5cff0532eb3a3661cfb5caac239e356236bd1651ff87be1a51e25ff66cf",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "id"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1366,
+        "height": 768,
+        "colorDepth": 24,
+        "pixelRatio": 0.75
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/lh_conor-2026-09-28T14-20-43-144Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:184de21d6d76f83477bc4b74065d24346211c9eb6a9494526b7e9bb61d97ecd8",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "click-preview.webp",
+      "bytes": 1428,
+      "sha256": "e9e8478562db8fd28927220e58ec61258b77c0f9632c2ad9973d29abefc3f546"
+    },
+    {
+      "name": "lh_conor/lh_conor.atlas",
+      "bytes": 4647,
+      "sha256": "d2029f1582bff107dc8a8f0f658bb69cf5ea83ac43deaa467aac41ca201478b4"
+    },
+    {
+      "name": "lh_conor/lh_conor.png",
+      "bytes": 1559434,
+      "sha256": "2057818b5ec163c1bf27d372f318b2c4dcf0884782ffb98f576d9bd3797f3fec"
+    },
+    {
+      "name": "lh_conor/lh_conor.skel",
+      "bytes": 250651,
+      "sha256": "4e8fdce350377c6187d2fe039e743951078b2191e2a970be83f41c8491c33866"
+    }
+  ],
+  "proofHash": "184de21d6d76f83477bc4b74065d24346211c9eb6a9494526b7e9bb61d97ecd8"
+}
