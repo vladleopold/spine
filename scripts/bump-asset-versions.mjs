@@ -71,7 +71,36 @@ if (!Array.isArray(entries)) {
 }
 
 const stamp = new Date().toISOString();
+const stampQuery = encodeURIComponent(stamp.replace(/[^a-z0-9.:-]/gi, "-"));
+
+// Some asset URLs stored in the index already carry a literal `?v=` (e.g.
+// thumbnailPoster, written at upload time). The site helper appendAssetVersion
+// refuses to touch a URL that already has `?v=`, so those keep serving the
+// pre-trim bytes from cache no matter what the timestamps say. Rewrite the
+// embedded query on every /assets/ field of a bumped entry.
+const ASSET_FIELDS = [
+  "thumbnail",
+  "thumbnailPoster",
+  "poster",
+  "webpPoster",
+  "webpPosterMedium",
+  "webpPosterLow",
+  "webmPreview",
+  "webmPreviewMedium",
+  "webmPreviewLow",
+  "webmPreviewFallback",
+  "video",
+  "videoFallback",
+];
+
+function refreshEmbeddedVersion(value) {
+  if (typeof value !== "string" || !value.includes("/assets/")) return value;
+  if (!/[?&]v=/i.test(value)) return value;
+  return value.replace(/([?&])v=[^&#]*/i, `$1v=${stampQuery}`);
+}
+
 let n = 0;
+let urls = 0;
 for (const e of entries) {
   if (!e || !ids.has(e.id)) continue;
   // Both must be restamped. The trim job rewrites the .webm clips AND their
@@ -80,6 +109,12 @@ for (const e of entries) {
   // served from the Vercel edge / browser cache.
   e.webmGeneratedAt = stamp;
   e.posterGeneratedAt = stamp;
+  for (const f of ASSET_FIELDS) {
+    if (e[f] === undefined || e[f] === null) continue;
+    const next = refreshEmbeddedVersion(e[f]);
+    if (next !== e[f]) urls += 1;
+    e[f] = next;
+  }
   n += 1;
 }
 
@@ -92,7 +127,7 @@ if (!n) {
   process.exit(0);
 }
 
-console.error(`Bumping webm+poster timestamps to ${stamp} for ${n} of ${matched} recorded entr${matched === 1 ? "y" : "ies"}.`);
+console.error(`Bumping webm+poster timestamps to ${stamp} for ${n} of ${matched} recorded entr${matched === 1 ? "y" : "ies"}; refreshed ${urls} embedded ?v= asset URL(s).`);
 if (dryRun) process.exit(0);
 
 fs.writeFileSync(INDEX, `${JSON.stringify(entries, null, 2)}\n`);
