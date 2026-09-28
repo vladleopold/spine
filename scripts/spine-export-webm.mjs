@@ -589,11 +589,18 @@ ${skinLine}    showLoading: false,
         }
       } catch (e) {}
 
-      // Force 30 FPS playback by overriding requestAnimationFrame for the player?
-      // Not strictly necessary if we capture at 30fps and record for exact duration,
-      // but let's record using MediaRecorder.
-      if (player.canvas) {
+      // Recording is started explicitly via window.__startRecording() AFTER
+      // the canvas has reached its final size. Starting captureStream on the
+      // initial 300x150 default canvas breaks the track when the player
+      // resizes it: every recorded frame comes out black even though the
+      // live canvas renders fine.
+      window.__canvasSize = function () {
+        if (player && player.canvas) return [player.canvas.width, player.canvas.height];
+        return [0, 0];
+      };
+      window.__startRecording = function () {
         try {
+          if (!player || !player.canvas) return 'no-canvas';
           var stream = player.canvas.captureStream(30);
           var recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
           var chunks = [];
@@ -605,14 +612,15 @@ ${skinLine}    showLoading: false,
             reader.readAsDataURL(blob);
           };
           recorder.start();
-          
+
           window.__stopRecording = function() {
             if (recorder.state === 'recording') recorder.stop();
           };
-        } catch(err) {
-           window.__captureError = 'MediaRecorder failed: ' + err.message;
+          return 'recording';
+        } catch (err) {
+          return 'error: ' + err.message;
         }
-      }
+      };
     },
     error: function (p, err) {
       window.__captureError = 'Player creation failed: ' + err;
@@ -771,16 +779,40 @@ try {
       }
     }
 
-    // Let a few frames render (recorder has been running since player
-    // success), then sample the live canvas for visible content.
+    // Let a few frames render, then wait for the canvas backing store to
+    // settle at its final size. Starting the recorder earlier (on the
+    // initial 300x150 canvas) breaks the capture track on resize.
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    let canvasSize = [0, 0];
+    let stableCount = 0;
+    for (let i = 0; i < 20; i++) {
+      const s = await page.evaluate(() => (typeof window.__canvasSize === 'function' ? window.__canvasSize() : [0, 0]));
+      if (s[0] > 0 && s[0] === canvasSize[0] && s[1] === canvasSize[1]) {
+        stableCount++;
+        if (stableCount >= 2) break;
+      } else {
+        stableCount = 0;
+      }
+      canvasSize = s;
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    canvasWidth = canvasSize[0] || videoWidth;
+    canvasHeight = canvasSize[1] || videoHeight;
     const framePeak = await page.evaluate(() => (typeof window.__framePeak === 'function' ? window.__framePeak() : -1));
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {
       console.error(`Skin ${label} rendered no visible content, trying next skin...`);
-      await page.evaluate(() => { if (window.__stopRecording) window.__stopRecording(); });
       continue;
+    }
+
+    // Start recording only now, on the settled canvas showing content.
+    const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
+    console.error(`Skin ${label}: recorder ${recState}`);
+    if (recState !== 'recording') {
+      lastCaptureError = `MediaRecorder failed to start (${recState})`;
+      console.error(`Capture with skin ${label} failed: ${lastCaptureError}`);
+      break;
     }
 
     captureDuration = effectiveDuration > 0 ? effectiveDuration : 1; // Record exactly the animation duration (no artificial minimum)
