@@ -74,8 +74,12 @@ const stamp = new Date().toISOString();
 let n = 0;
 for (const e of entries) {
   if (!e || !ids.has(e.id)) continue;
+  // Both must be restamped. The trim job rewrites the .webm clips AND their
+  // .webp posters from the new first frame, and the two share one ?v= pair,
+  // so leaving a stale posterGeneratedAt would keep the old black poster
+  // served from the Vercel edge / browser cache.
   e.webmGeneratedAt = stamp;
-  if (!e.posterGeneratedAt) e.posterGeneratedAt = stamp;
+  e.posterGeneratedAt = stamp;
   n += 1;
 }
 
@@ -88,7 +92,7 @@ if (!n) {
   process.exit(0);
 }
 
-console.error(`Bumping webmGeneratedAt to ${stamp} for ${n} of ${matched} recorded entr${matched === 1 ? "y" : "ies"}.`);
+console.error(`Bumping webm+poster timestamps to ${stamp} for ${n} of ${matched} recorded entr${matched === 1 ? "y" : "ies"}.`);
 if (dryRun) process.exit(0);
 
 fs.writeFileSync(INDEX, `${JSON.stringify(entries, null, 2)}\n`);
