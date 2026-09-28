@@ -40,6 +40,24 @@ function frameLumaAvg(mediaPath) {
   }
 }
 
+// Peak (max) luma of a single frame. YAVG is useless here: a frame that is
+// visually a black square still reports YAVG ~20 because YUV limited range
+// puts "black" at Y=16, not Y=0. YMAX below PEAK_MIN means no visible pixel.
+function frameLumaPeak(mediaPath) {
+  try {
+    const out = execSync(
+      `ffmpeg -i "${mediaPath}" -vf signalstats,metadata=print:file=- -frames:v 1 -f null - 2>&1`,
+      { encoding: "utf8" }
+    ).replace(/\r/g, "\n");
+    const match = out.match(/lavfi\.signalstats\.YMAX=([0-9.]+)/);
+    return match ? parseFloat(match[1]) : null;
+  } catch {
+    return null;
+  }
+}
+
+const PEAK_MIN = 64;
+
 function probeDuration(webmPath) {
   try {
     const out = execSync(`ffprobe -v error -show_entries format=duration -of csv=p=0 "${webmPath}"`, { encoding: "utf8" }).trim();
@@ -69,25 +87,9 @@ for (const entry of entries) {
 
   const exists = fs.existsSync(localPath);
   const size = exists ? fs.statSync(localPath).size : 0;
+  const existingPeak = exists && size > 0 ? frameLumaPeak(localPath) : null;
 
-  // Fast path: large posters are very likely fine — skip without decoding.
-  if (exists && size > 60000) {
-    skipped++;
-    continue;
-  }
-
-  // Small/broken posters always regenerate. Existing posters <= 60 KB are
-  // checked for blackness so no black WebP poster remains on the page.
-  let existingLuma = null;
-  if (exists && size > 0) {
-    existingLuma = frameLumaAvg(localPath);
-    if (existingLuma !== null && existingLuma >= 8) {
-      skipped++;
-      continue;
-    }
-  }
-
-  console.error(`Processing ${entry.id} (${size} bytes, YAVG ${existingLuma === null ? "n/a" : existingLuma.toFixed(1)})...`);
+  console.error(`Processing ${entry.id} (${size} bytes, YMAX ${existingPeak === null ? "n/a" : existingPeak.toFixed(0)})...`);
 
   let webmPath = path.join(dir, "preview.webm");
   if (!fs.existsSync(webmPath) || fs.statSync(webmPath).size < 1000) {
@@ -124,20 +126,23 @@ for (const entry of entries) {
     }
 
     const duration = probeDuration(webmPath);
+    // Frame 1 first, then frame 2, 3 ... then an even sweep of the whole clip,
+    // so a black opening frame is never baked into the poster.
     const candidates = duration > 0
       ? [
-          Math.min(2, Math.max(0.05, duration * 0.6)),
-          Math.min(1.2, Math.max(0.05, duration * 0.35)),
-          Math.min(0.6, Math.max(0.05, duration * 0.12)),
-          Math.max(0.05, duration - 0.15),
-        ]
-      : [0.75, 0.4, 0.15, 0.05];
+          ...Array.from({ length: 8 }, (_, i) => +(i / 25).toFixed(3)),
+          ...Array.from({ length: 12 }, (_, i) => +((duration * (i + 1)) / 13).toFixed(3)),
+          +Math.max(0.04, duration - 0.08).toFixed(3),
+        ].filter((t) => t < duration)
+      : [0, 0.04, 0.08, 0.75];
 
-    // Pick the first frame that is not black; fall back to the first candidate
-    // so a poster file is never left empty even when the source is dark.
+    // Pick the first frame that actually contains an image; if every sampled
+    // frame is black, keep the brightest one so we never write an empty file.
     const pngPath = path.join(dir, ".frame-check.png");
     let chosenTime = candidates[0];
-    let chosenLuma = null;
+    let chosenPeak = null;
+    let bestTime = candidates[0];
+    let bestPeak = -1;
     try {
       for (const time of candidates) {
         try { fs.unlinkSync(pngPath); } catch {}
@@ -145,20 +150,23 @@ for (const entry of entries) {
           execSync(`ffmpeg -y -ss ${time} -i "${webmPath}" -vframes 1 "${pngPath}"`, { stdio: "pipe", timeout: 30000 });
         } catch {}
         if (!fs.existsSync(pngPath) || fs.statSync(pngPath).size < 100) continue;
-        const luma = frameLumaAvg(pngPath);
-        if (luma !== null && luma >= 8) {
+        const peak = frameLumaPeak(pngPath);
+        if (peak === null) continue;
+        if (peak > bestPeak) { bestPeak = peak; bestTime = time; }
+        if (peak >= PEAK_MIN) {
           chosenTime = time;
-          chosenLuma = luma;
+          chosenPeak = peak;
           break;
         }
       }
-      if (chosenLuma === null && fs.existsSync(pngPath) && fs.statSync(pngPath).size >= 100) {
-        chosenLuma = frameLumaAvg(pngPath);
+      if (chosenPeak === null && bestPeak >= 0) {
+        chosenTime = bestTime;
+        chosenPeak = bestPeak;
       }
     } finally {
       try { fs.unlinkSync(pngPath); } catch {}
     }
-    console.error(`  Using frame at ${chosenTime.toFixed(2)}s of ${duration.toFixed(2)}s (YAVG ${chosenLuma === null ? "unknown" : chosenLuma.toFixed(1)})`);
+    console.error(`  Using frame at ${chosenTime.toFixed(2)}s of ${duration.toFixed(2)}s (YMAX ${chosenPeak === null ? "unknown" : chosenPeak.toFixed(0)})`);
 
     const extractFrame = (dim, outPath, quality) => {
       try {
@@ -187,26 +195,20 @@ for (const entry of entries) {
     extractFrame(dimMedium, path.join(dir, "preview-medium.webp"), 30);
     extractFrame(dimLow, path.join(dir, "preview-low.webp"), 15);
 
-    // Re-run every -preview.webp output through luma check; fix the ones that
-    // came out black (e.g. extra per-animation posters).
+    // Every .webp in this folder was just re-encoded from the chosen frame;
+    // re-check all of them so a black output never goes unnoticed.
     const blackWebpFiles = [];
     for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".webp"))) {
-      if (fs.statSync(path.join(dir, f)).size > 200) continue;
-      blackWebpFiles.push(f);
+      const p = path.join(dir, f);
+      const peak = fs.statSync(p).size > 100 ? frameLumaPeak(p) : null;
+      if (peak === null || peak < PEAK_MIN) blackWebpFiles.push(f);
     }
-    const lumaOfPoster = fs.existsSync(localPath) && fs.statSync(localPath).size > 100 ? frameLumaAvg(localPath) : null;
-    const posterBlack = lumaOfPoster === null || lumaOfPoster < 8;
     for (const f of blackWebpFiles) {
-      const outPath = path.join(dir, f);
-      extractFrame(dimHigh, outPath, 50);
-      const luma = frameLumaAvg(outPath);
-      if (luma !== null && luma >= 8) {
-        console.error(`  Re-fixed black poster ${f} (YAVG ${luma.toFixed(1)})`);
-      }
+      console.error(`  Poster still has no visible frame: ${f}`);
     }
 
-    const mainPosterLuma = fs.existsSync(localPath) && fs.statSync(localPath).size > 100 ? frameLumaAvg(localPath) : null;
-    const ok = mainPosterLuma !== null && mainPosterLuma >= 8;
+    const mainPosterPeak = fs.existsSync(localPath) && fs.statSync(localPath).size > 100 ? frameLumaPeak(localPath) : null;
+    const ok = mainPosterPeak !== null && mainPosterPeak >= PEAK_MIN;
 
     if (ok) {
       fixed++;
@@ -216,10 +218,10 @@ for (const entry of entries) {
         entry.thumbnailPoster = String(entry.thumbnailPoster).replace(/[?&]v=[^&]*/, "") + `?v=${encodeURIComponent(fresh)}`;
         indexChanged = true;
       }
-      console.error(`  Fixed ${entry.id} → main poster YAVG ${mainPosterLuma.toFixed(1)}`);
+      console.error(`  Fixed ${entry.id} → poster YMAX ${mainPosterPeak.toFixed(0)}`);
     } else {
       failed++;
-      console.error(`  Still broken: ${entry.id} (poster YAVG ${mainPosterLuma === null ? "n/a" : mainPosterLuma.toFixed(1)})`);
+      console.error(`  Still broken: ${entry.id} (poster YMAX ${mainPosterPeak === null ? "n/a" : mainPosterPeak.toFixed(0)})`);
     }
   } catch (err) {
     failed++;
