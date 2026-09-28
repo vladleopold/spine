@@ -107,16 +107,6 @@ function listWebms(dir, out = []) {
   return out;
 }
 
-function listWebps(dir, out = []) {
-  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (item.name.startsWith(".")) continue;
-    const full = path.join(dir, item.name);
-    if (item.isDirectory()) listWebps(full, out);
-    else if (item.name.toLowerCase().endsWith(".webp")) out.push(full);
-  }
-  return out;
-}
-
 if (!fs.existsSync(LIBRARY)) {
   console.error("library/ not found");
   process.exit(1);
@@ -167,6 +157,7 @@ if (dryRun) {
 
 let trimmed = 0;
 let failed = 0;
+const trimmedFiles = [];
 
 async function trimOne({ file, cut }) {
   const rel = path.relative(ROOT, file);
@@ -192,6 +183,7 @@ async function trimOne({ file, cut }) {
     if (!fs.existsSync(tmp) || fs.statSync(tmp).size < 200) throw new Error("empty output");
     fs.renameSync(tmp, file);
     trimmed += 1;
+    trimmedFiles.push(file);
     console.error(`cut ${cut} frame(s): ${rel}`);
   } catch (err) {
     failed += 1;
@@ -215,34 +207,77 @@ console.error(`\nTrimmed: ${trimmed}, failed: ${failed}, of ${candidates.length}
 if (withPosters) {
   // Re-take posters from the new frame 0. Same rule as regenerate-webp.mjs:
   // the poster is the first frame, no fallback frames.
-  const webps = listWebps(LIBRARY);
+  //
+  // Only directories that were actually trimmed are touched. Re-encoding
+  // every poster in the library would make all shards rewrite the same files
+  // and collide on push, for no benefit: a poster is only wrong if its source
+  // clip started on a black frame.
+  const trimmedDirs = new Set();
+  for (const c of trimmedFiles) trimmedDirs.add(path.dirname(c));
+
+  const webps = [];
+  for (const dir of trimmedDirs) {
+    for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (f.isFile() && f.name.toLowerCase().endsWith(".webp")) webps.push(path.join(dir, f.name));
+    }
+  }
+  // Per-animation previews live in a nested animations/<set>/ folder, so
+  // include those directories too.
+  for (const dir of [...trimmedDirs]) {
+    const animationsDir = path.join(dir, "animations");
+    if (!fs.existsSync(animationsDir)) continue;
+    for (const setDir of fs.readdirSync(animationsDir, { withFileTypes: true })) {
+      if (!setDir.isDirectory()) continue;
+      const sub = path.join(animationsDir, setDir.name);
+      for (const f of fs.readdirSync(sub, { withFileTypes: true })) {
+        if (f.isFile() && f.name.toLowerCase().endsWith(".webp")) webps.push(path.join(sub, f.name));
+      }
+    }
+  }
+
   let posters = 0;
   let posterFailed = 0;
+  console.error(`\nRewriting posters in ${trimmedDirs.size} trimmed directories (${webps.length} webp files)...`);
   for (const poster of webps) {
     const dir = path.dirname(poster);
-    const webm = ["preview.webm", "preview-medium.webm", "preview-low.webm"]
-      .map((n) => path.join(dir, n))
-      .find((p) => fs.existsSync(p));
-    if (!webm) continue;
     const base = path.basename(poster).toLowerCase();
-    const { w, h } = dims(webm);
+
+    // Match the poster to the clip it was taken from. Standard posters use
+    // the same basename ("preview.webp" <- "preview.webm"); per-animation
+    // posters use "<name>-preview.webp" next to "<name>-preview.webm", and
+    // their dimensions/quality come from that clip, not the entry's main one.
+    const siblingWebm = base.replace(/\.webp$/, ".webm");
+    let webm = path.join(dir, siblingWebm);
+    let isMain = base === "preview.webp" || base === "preview-medium.webp" || base === "preview-low.webp";
+    if (!fs.existsSync(webm)) {
+      if (!isMain) continue; // per-animation poster with no matching clip
+      webm = ["preview.webm", "preview-medium.webm", "preview-low.webm"]
+        .map((n) => path.join(dir, n))
+        .find((p) => fs.existsSync(p));
+      if (!webm) continue;
+    }
+    const sourceWebm = webm;
+
+    const { w, h } = dims(sourceWebm);
     if (!w || !h) continue;
     let dim;
     let quality;
-    if (base === "preview.webp" || base === "preview.webm") { dim = `${w}x${h}`; quality = 50; }
-    else if (base === "preview-medium.webp") {
+    if (isMain && base === "preview-medium.webp") {
       const s = Math.min(1, 1080 / w);
       dim = `${Math.round(w * s) & ~1}x${Math.round(h * s) & ~1}`; quality = 30;
-    } else if (base === "preview-low.webp") {
+    } else if (isMain && base === "preview-low.webp") {
       const s = Math.min(1, 360 / w);
       dim = `${Math.round(w * s) & ~1}x${Math.round(h * s) & ~1}`; quality = 15;
-    } else { continue; }
+    } else {
+      dim = `${w}x${h}`;
+      quality = 50;
+    }
     try {
       // libwebp is not built into every ffmpeg (notably Homebrew builds on
       // macOS), so fall back to cwebp / ImageMagick like the exporter does.
       const png = `${poster}.frame.png`;
       try {
-        run(FFMPEG, ["-y", "-v", "error", "-ss", "0", "-i", webm, "-vframes", "1", "-s", dim, "-c:v", "png", png]);
+        run(FFMPEG, ["-y", "-v", "error", "-ss", "0", "-i", sourceWebm, "-vframes", "1", "-s", dim, "-c:v", "png", png]);
         try {
           run("cwebp", ["-quiet", png, "-q", String(quality), "-o", poster]);
         } catch {
