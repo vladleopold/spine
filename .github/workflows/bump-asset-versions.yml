@@ -1,0 +1,66 @@
+name: Bump asset versions
+
+# The trim workflow rewrites .webm/.webp bytes, but the site serves every asset
+# as "<file>?v=<webmGeneratedAt>-<posterGeneratedAt>-<proofHash>" (spine-link
+# lib/asset-version.js). New bytes behind an unchanged query string stay hidden
+# behind the Vercel edge and the browser cache, so the trims look like no-ops.
+# Bumping webmGeneratedAt is what actually publishes them.
+#
+# This runs as a single job, after the shards are done: every shard edits
+# library/index.json itself, so they would conflict on that 20 MB file forever.
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Trim Black First Frames"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-asset-versions
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: main
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Bump versions for every entry the trim touched
+        run: node scripts/bump-asset-versions.mjs
+
+      - name: Commit and push
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: |
+          if [ -z "$(git status --porcelain library/)" ]; then
+            echo "No asset versions to bump."
+            exit 0
+          fi
+          git add library/index.json library/trimmed-ids-*.json
+          # Only deletions of the marker files should remain for those paths.
+          git commit -m "Bump asset versions for trimmed previews"
+          for i in 1 2 3 4 5 6 7 8; do
+            if git push origin HEAD:main; then
+              echo "Pushed."
+              exit 0
+            fi
+            echo "Push rejected (attempt $i), rebasing..."
+            git pull --rebase origin main
+          done
+          echo "Could not push after 8 attempts."
+          exit 1
