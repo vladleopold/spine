@@ -4594,12 +4594,16 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
            const totalChunks = Math.ceil(base64.length / CHUNK);
            const results = await Promise.all(Array.from({ length: totalChunks }, async (_, i) => {
              const chunk = base64.slice(i * CHUNK, (i + 1) * CHUNK);
-             const chunkPath = `${fp}.__chunks/${String(i).padStart(5, "0")}`;
-             const cb = JSON.stringify({ action: "multipart-upload-chunk", googleIdToken, anonymousAccount, settings: nextSettings, path: chunkPath, chunkIndex: i, contentBase64: chunk, message: `${commitPrefix}: chunk ${i} of ${f.name}` });
+               // Send the base file path: the server appends ".__chunks/NNNNN"
+               // itself. Sending the full chunk path here made it double up as
+               // "file.png.__chunks/00001.__chunks/00001", so reassemble-file
+               // never found the chunks and the upload failed before the
+               // library index was updated.
+               const cb = JSON.stringify({ action: "multipart-upload-chunk", googleIdToken, anonymousAccount, settings: nextSettings, path: fp, chunkIndex: i, contentBase64: chunk, message: `${commitPrefix}: chunk ${i} of ${f.name}` });
              const cr = await fetch("/api/github-upload", { method: "POST", headers: rh, body: cb });
              const cres = await cr.json().catch(() => ({}));
              if (!cr.ok) throw new Error(`Chunk ${i} upload failed: ${cr.status}`);
-             return { chunkPath, bytes: Number(cres.bytes), sha256: String(cres.sha256) };
+               return { chunkPath: String(cres.chunkPath || `${fp}.__chunks/${String(i).padStart(5, "0")}`), bytes: Number(cres.bytes), sha256: String(cres.sha256) };
            }));
            for (const cr of results) { uploadedProofFiles.push({ name: `${f.name}.__chunks/${cr.chunkPath.split("/").pop()}`, path: cr.chunkPath, bytes: cr.bytes, sha256: cr.sha256, github: { contentSha: "", commitSha: "", commitUrl: "", downloadUrl: "" } }); }
            const rb = JSON.stringify({ action: "reassemble-file", googleIdToken, anonymousAccount, settings: nextSettings, path: fp, chunkCount: totalChunks, message: `${commitPrefix}: reassemble ${f.name}` });

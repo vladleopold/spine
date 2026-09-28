@@ -1023,7 +1023,10 @@ export default async function handler(request, response) {
       if (!filePath || !contentBase64 || !Number.isFinite(chunkIndex)) {
         return response.status(400).json({ error: 'Invalid chunk payload' });
       }
-      const chunkPath = `${filePath}.__chunks/${String(chunkIndex).padStart(5, '0')}`;
+      // Accept either the base file path or an already-suffixed chunk path.
+      const chunkPath = /(^|\/)[^/]+\.__chunks\/\d{5}$/.test(filePath)
+        ? filePath
+        : `${filePath}.__chunks/${String(chunkIndex).padStart(5, '0')}`;
       const existingChunk = await getGitHubContent(settings, chunkPath);
       const writeResult = await putGitHubContent(settings, chunkPath, contentBase64, message, existingChunk?.sha, origin);
       return response.status(200).json({
