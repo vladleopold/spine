@@ -21,6 +21,10 @@ on:
         description: 'Max files to trim (0 = no limit)'
         required: false
         default: '0'
+      repair:
+        description: 'Also re-take posters whose clip is already trimmed (1 = yes)'
+        required: false
+        default: '0'
 
 jobs:
   trim:
@@ -55,6 +59,7 @@ jobs:
         env:
           ONLY_SHARD: ${{ inputs.shard }}
           POSTERS: ${{ inputs.posters }}
+          REPAIR: ${{ inputs.repair }}
           LIMIT: ${{ inputs.limit }}
         run: |
           set -euo pipefail
@@ -68,21 +73,30 @@ jobs:
           if [ "$POSTERS" = "1" ]; then
             POSTER_ARG="--posters"
           fi
+          REPAIR_ARG=""
+          if [ "${REPAIR:-0}" = "1" ]; then
+            REPAIR_ARG="--repair-posters"
+          fi
           LIMIT_ARG=""
           if [ "$LIMIT" != "0" ] && [ -n "$LIMIT" ]; then
             LIMIT_ARG="--limit $LIMIT"
           fi
-          echo "Running: node scripts/trim-first-frame.mjs $SHARD_ARG $POSTER_ARG $LIMIT_ARG"
-          node scripts/trim-first-frame.mjs $SHARD_ARG $POSTER_ARG $LIMIT_ARG
+          echo "Running: node scripts/trim-first-frame.mjs $SHARD_ARG $POSTER_ARG $REPAIR_ARG $LIMIT_ARG"
+          node scripts/trim-first-frame.mjs $SHARD_ARG $POSTER_ARG $REPAIR_ARG $LIMIT_ARG
 
       - name: Commit and push
         env:
           SHARD: ${{ matrix.shard }}
           POSTERS: ${{ inputs.posters }}
+          REPAIR: ${{ inputs.repair }}
         run: |
           POSTER_ARG=""
           if [ "$POSTERS" = "1" ]; then
             POSTER_ARG="--posters"
+          fi
+          REPAIR_ARG=""
+          if [ "${REPAIR:-0}" = "1" ]; then
+            REPAIR_ARG="--repair-posters"
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -125,7 +139,7 @@ jobs:
             echo "Commit/push failed (attempt $i), recomputing from current origin/main..."
             git fetch origin main
             git reset --hard origin/main
-            node scripts/trim-first-frame.mjs --shard "${SHARD}" $POSTER_ARG
+            node scripts/trim-first-frame.mjs --shard "${SHARD}" $POSTER_ARG $REPAIR_ARG
           done
           echo "Failed to push after 3 attempts"
           exit 1
