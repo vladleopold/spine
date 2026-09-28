@@ -37,6 +37,7 @@ const FFPROBE = "ffprobe";
 const argv = process.argv.slice(2);
 const dryRun = argv.includes("--dry-run");
 const withPosters = argv.includes("--posters");
+const repairPosters = argv.includes("--repair-posters");
 const limitIdx = argv.indexOf("--limit");
 const limit = limitIdx >= 0 ? Number(argv[limitIdx + 1]) : Infinity;
 const shardIdx = argv.indexOf("--shard");
@@ -44,6 +45,17 @@ const shard = shardIdx >= 0 ? String(argv[shardIdx + 1]).split("/").map(Number) 
 
 function run(cmd, args) {
   return execFileSync(cmd, args, { encoding: "utf8", maxBuffer: 1024 * 1024 * 64, stdio: ["ignore", "pipe", "pipe"] });
+}
+
+/** Peak luma of a poster's single frame, or null when it cannot be read. */
+function posterPeak(file) {
+  try {
+    const out = run(FFMPEG, ["-v", "error", "-i", file, "-vf", "signalstats,metadata=print:file=-", "-frames:v", "1", "-f", "null", "-"]);
+    const m = /YMAX=([0-9.]+)/.exec(out);
+    return m ? Number(m[1]) : null;
+  } catch {
+    return null;
+  }
 }
 
 /** Per-frame peak luma for the whole clip, in decode order. */
@@ -113,6 +125,9 @@ if (dryRun) {
 let trimmed = 0;
 let failed = 0;
 const trimmedFiles = [];
+// Entry directories whose posters were re-taken; they need the same
+// ?v= bump as trimmed clips, so they feed the marker file as well.
+const repairedDirs = new Set();
 
 async function trimOne({ file, cut }) {
   const rel = path.relative(ROOT, file);
@@ -174,6 +189,11 @@ if (withPosters) {
   // clip started on a black frame.
   const trimmedDirs = new Set();
   for (const c of trimmedFiles) trimmedDirs.add(path.dirname(c));
+  // --repair-posters: the clips are already trimmed from an earlier run, so
+  // nothing shows up in trimmedFiles even though the posters are still stale.
+  // Sweep every entry directory in this shard and rewrite only the posters
+  // that are themselves black while their clip now opens on a visible frame.
+  if (repairPosters) for (const f of all) trimmedDirs.add(path.dirname(f));
 
   const webps = [];
   for (const dir of trimmedDirs) {
@@ -236,6 +256,17 @@ if (withPosters) {
     }
     const sourceWebm = webm;
 
+    // In repair mode the poster is only rewritten when it is still black
+    // while its clip now starts on a visible frame. Re-encoding every poster
+    // in the library would be wasteful and would make all shards fight over
+    // the same files on push.
+    if (repairPosters) {
+      const peak = posterPeak(poster);
+      if (peak === null || peak >= BLACK_PEAK) continue;
+      const src = framePeaks(sourceWebm);
+      if (!src || !src.length || src[0] < BLACK_PEAK) continue; // clip still opens black: a trim is needed, not a poster re-take
+    }
+
     const { w, h } = dims(sourceWebm);
     if (!w || !h) continue;
     let dim;
@@ -265,6 +296,7 @@ if (withPosters) {
         try { fs.rmSync(png, { force: true }); } catch { /* ignore */ }
       }
       posters += 1;
+      repairedDirs.add(path.dirname(poster));
     } catch (err) {
       posterFailed += 1;
       console.error(`poster FAILED ${path.relative(ROOT, poster)}: ${String(err.message).slice(0, 120)}`);
@@ -288,6 +320,14 @@ if (withPosters) {
 // file, and the "Bump asset versions" workflow merges them in one pass.
 const touched = new Set();
 for (const file of trimmedFiles) touched.add(path.basename(path.dirname(file)));
+// Posters may sit in a nested animations/<set>/ folder, so walk up until the
+// directory is a direct child of the library root to get the real entry id.
+const entryIdOf = (dir) => {
+  let d = dir;
+  while (d !== LIBRARY && path.dirname(d) !== LIBRARY && path.dirname(d) !== d) d = path.dirname(d);
+  return path.basename(d);
+};
+for (const dir of repairedDirs) touched.add(entryIdOf(dir));
 
 if (touched.size) {
   const marker = path.join(LIBRARY, `trimmed-ids-${shard ? shard[0] : "all"}.json`);
