@@ -23,14 +23,13 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import { execFileSync } from "child_process";
+import { analyzeBlackLead, framePeaks, dims, BLACK_PEAK } from "./lib/black-lead.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const LIBRARY = path.join(ROOT, "library");
 
 // A frame whose peak luma is below this has no visible pixel.
-const BLACK_PEAK = 40;
 // Never cut more than this many frames even if the whole clip looks black.
-const MAX_CUT = 120;
 const CONCURRENCY = Math.max(2, Math.min(8, os.cpus().length - 1));
 const FFMPEG = "ffmpeg";
 const FFPROBE = "ffprobe";
@@ -48,54 +47,8 @@ function run(cmd, args) {
 }
 
 /** Per-frame peak luma for the whole clip, in decode order. */
-function framePeaks(webmPath) {
-  // metadata=print:file=- writes to stdout, so capture stdout explicitly.
-  const out = run(FFMPEG, [
-    "-v", "error",
-    "-i", webmPath,
-    "-vf", "signalstats,metadata=print:file=-",
-    "-f", "null", "-",
-  ]);
-  const markers = [...out.matchAll(/frame:(\d+)\s/g)];
-  const peaks = [];
-  for (const m of markers) {
-    const seg = out.slice(m.index, m.index + 4000);
-    const y = /YMAX=([0-9.]+)/.exec(seg);
-    if (y) peaks.push(parseFloat(y[1]));
-  }
-  return peaks;
-}
 
-function frameRate(webmPath) {
-  try {
-    const out = run(FFPROBE, [
-      "-v", "error",
-      "-select_streams", "v:0",
-      "-show_entries", "stream=r_frame_rate",
-      "-of", "default=nw=1:nk=1",
-      webmPath,
-    ]).trim();
-    const [num, den] = out.split("/").map(Number);
-    if (Number.isFinite(num) && Number.isFinite(den) && den > 0) return num / den;
-  } catch { /* default below */ }
-  return 30;
-}
 
-function dims(webmPath) {
-  try {
-    const out = run(FFPROBE, [
-      "-v", "error",
-      "-select_streams", "v:0",
-      "-show_entries", "stream=width,height",
-      "-of", "csv=p=0",
-      webmPath,
-    ]).trim();
-    const [w, h] = out.split(",").map(Number);
-    return { w, h };
-  } catch {
-    return { w: 0, h: 0 };
-  }
-}
 
 function listWebms(dir, out = []) {
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -134,16 +87,18 @@ for (const file of all) {
   if (!peaks.length) continue;
   if (peaks[0] >= BLACK_PEAK) continue; // first frame is fine, leave it alone
 
-  let cut = 0;
-  while (cut < peaks.length && cut < MAX_CUT && peaks[cut] < BLACK_PEAK) cut += 1;
-  if (cut <= 0) continue;
-  // Everything is black: nothing to gain from cutting, and cutting would
-  // leave an empty clip. Keep such files and let the poster step flag them.
-  if (cut >= peaks.length) {
-    console.error(`  all-black, skipped: ${path.relative(ROOT, file)} (${peaks.length} frames)`);
+  // Fade-aware detection: only a *flat* black lead is removable. A clip that
+  // ramps out of black (luma climbing 17, 22, 30, 36, 45, ...) is a deliberate
+  // fade-in and is left untouched, as is a short black pad or a clip that
+  // never reveals any content. See scripts/lib/black-lead.mjs.
+  const verdict = analyzeBlackLead(peaks);
+  if (!verdict.cut) {
+    if (verdict.reason === "all-black") {
+      console.error(`  all-black, skipped: ${path.relative(ROOT, file)} (${peaks.length} frames)`);
+    }
     continue;
   }
-  candidates.push({ file, cut, from: peaks[0], to: peaks[cut] });
+  candidates.push({ file, cut: verdict.cut, from: peaks[0], to: peaks[verdict.cut] });
 }
 console.error(`Scanned ${scanned}; files with black leading frames: ${candidates.length}`);
 
@@ -162,14 +117,19 @@ const trimmedFiles = [];
 async function trimOne({ file, cut }) {
   const rel = path.relative(ROOT, file);
   const tmp = `${file}.trim.webm`;
-  const fps = frameRate(file);
   try {
     run(FFMPEG, [
       "-y", "-v", "error",
       "-i", file,
-      // Drop the leading black run, then retime so the first visible frame
-      // lands back on t=0.
-      "-vf", `trim=start_frame=${cut},setpts=N/(${fps.toFixed(6)}*TB)`,
+      // Drop the leading black run, then re-base timestamps to zero.
+      //
+      // setpts=PTS-STARTPTS is deliberately used instead of the usual
+      // setpts=N/(FPS*TB): Matroska/WebM stores timestamps at millisecond
+      // precision, so ffprobe reports r_frame_rate=1000/1 and avg_frame_rate
+      // =0/0 for these clips. Deriving a frame rate from that would rescale
+      // the whole clip to the wrong speed. PTS-STARTPTS needs no frame rate at
+      // all and keeps the true duration.
+      "-vf", `trim=start_frame=${cut},setpts=PTS-STARTPTS`,
       "-an",
       "-c:v", "libvpx-vp9",
       "-b:v", "0",
