@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { trimBlackLead } from './lib/black-lead.mjs';
 
 const args = {
   uploadId: '',
@@ -863,6 +864,22 @@ try {
   fs.copyFileSync(videoPath, outputPath);
 
   console.error(`WebM saved: ${outputPath} (${webmBuffer.length} bytes, ${canvasWidth}x${canvasHeight})`);
+
+  // MediaRecorder can start before the first real frame lands on the canvas,
+  // and the amount of leading black it captures varies per run (7 frames for
+  // one variant, 21 for another), so waiting a fixed time is not reliable.
+  // Measure the file that was actually recorded and drop a leading *flat* black
+  // run. Deliberate fade-ins ramp out of black and are kept.
+  //
+  // This runs before the quality ladder and the posters are generated, so all
+  // three WebM variants and all three WebP posters inherit the trimmed start.
+  const leadResult = trimBlackLead(outputPath, {
+    label: path.basename(outputPath),
+    log: (line) => console.error(line),
+  });
+  if (leadResult.trimmed) {
+    console.error(`Black lead trimmed: ${leadResult.cut} frame(s) removed before export`);
+  }
 
   // Use ffmpeg to generate 3 qualities of WebM and 3 WebP posters
   const baseOutputPath = outputPath.replace(/\.webm$/i, '');
