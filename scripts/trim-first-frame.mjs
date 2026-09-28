@@ -209,12 +209,30 @@ if (withPosters) {
     const siblingWebm = base.replace(/\.webp$/, ".webm");
     let webm = path.join(dir, siblingWebm);
     let isMain = base === "preview.webp" || base === "preview-medium.webp" || base === "preview-low.webp";
-    if (!fs.existsSync(webm)) {
-      if (!isMain) continue; // per-animation poster with no matching clip
+    if (!fs.existsSync(webm) && isMain) {
       webm = ["preview.webm", "preview-medium.webm", "preview-low.webm"]
         .map((n) => path.join(dir, n))
-        .find((p) => fs.existsSync(p));
-      if (!webm) continue;
+        .find((p) => fs.existsSync(p)) || "";
+    }
+    if (!webm || !fs.existsSync(webm)) {
+      // Per-animation posters sit in the entry root as "<set>-preview.webp"
+      // while their clip lives in animations/<set>/ as
+      // "<entry>-anim-<set>-preview.webm", so there is NO same-named sibling
+      // to pair with. This is the layout the card poster actually comes from,
+      // so without this the poster keeps the pre-trim black first frame even
+      // though the clip next to it is already fixed.
+      const m = /^(.+)-preview(?:-(medium|low))?\.webp$/.exec(base);
+      if (!m) continue;
+      const setDir = path.join(dir, "animations", m[1]);
+      if (!fs.existsSync(setDir)) continue;
+      const suffix = m[2] ? `-${m[2]}` : "";
+      const clip = fs.readdirSync(setDir, { withFileTypes: true })
+        .filter((f) => f.isFile() && f.name.toLowerCase().endsWith(".webm"))
+        .map((f) => f.name)
+        .filter((n) => n.includes(`-anim-${m[1]}-preview${suffix}.webm`))
+        .sort()[0];
+      if (!clip) continue;
+      webm = path.join(setDir, clip);
     }
     const sourceWebm = webm;
 
