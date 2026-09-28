@@ -255,43 +255,26 @@ if (withPosters) {
   console.error(`\nPosters rewritten from new frame 0: ${posters}, failed: ${posterFailed}, of ${webps.length} webp files.`);
 }
 
-// Bump the asset version for every entry we touched.
+// Record the entry ids we touched, so their asset version can be bumped.
 //
 // The site builds each asset URL as "<file>?v=<webmGeneratedAt>-<posterGeneratedAt>-<proofHash>"
 // (see spine-link lib/asset-version.js). Rewriting the .webm/.webp bytes does
 // NOT change that query string, so both the Vercel edge and the browser keep
-// serving the pre-trim clip from cache. Touching the entry's webmGeneratedAt is
+// serving the pre-trim clip from cache. Bumping the entry's webmGeneratedAt is
 // what actually makes the new bytes visible on the site.
-const bumped = new Set();
-for (const file of trimmedFiles) bumped.add(path.basename(path.dirname(file)));
+//
+// This deliberately does NOT edit library/index.json itself. Every shard would
+// rewrite that one 20 MB file with a different set of entries, so the rebase
+// that stitches the shards together would conflict on it every single time and
+// no shard could land. Instead each shard drops a small, shard-unique marker
+// file, and the "Bump asset versions" workflow merges them in one pass.
+const touched = new Set();
+for (const file of trimmedFiles) touched.add(path.basename(path.dirname(file)));
 
-if (bumped.size) {
-  const indexPath = path.join(LIBRARY, "index.json");
-  if (fs.existsSync(indexPath)) {
-    let entries;
-    try {
-      entries = JSON.parse(fs.readFileSync(indexPath, "utf8"));
-    } catch (err) {
-      console.error(`Could not parse library/index.json: ${String(err.message).slice(0, 120)}`);
-      entries = null;
-    }
-    if (Array.isArray(entries)) {
-      const stamp = new Date().toISOString();
-      let n = 0;
-      for (const e of entries) {
-        if (!e || !bumped.has(e.id)) continue;
-        e.webmGeneratedAt = stamp;
-        if (!e.posterGeneratedAt) e.posterGeneratedAt = stamp;
-        n += 1;
-      }
-      if (n) {
-        fs.writeFileSync(indexPath, `${JSON.stringify(entries, null, 2)}\n`);
-        console.error(`Bumped webmGeneratedAt for ${n} entr${n === 1 ? "y" : "ies"} in library/index.json (${stamp}).`);
-      }
-    }
-  } else {
-    console.error("library/index.json not found; asset versions left unchanged.");
-  }
+if (touched.size) {
+  const marker = path.join(LIBRARY, `trimmed-ids-${shard ? shard[0] : "all"}.json`);
+  fs.writeFileSync(marker, `${JSON.stringify([...touched].sort(), null, 2)}\n`);
+  console.error(`Recorded ${touched.size} touched entr${touched.size === 1 ? "y" : "ies"} in ${path.relative(ROOT, marker)}.`);
 }
 
 process.exit(0);
