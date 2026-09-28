@@ -766,16 +766,54 @@ try {
     // Low Quality
     execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimLow} -c:v libvpx-vp9 -b:v ${bitrates.low} -pix_fmt yuv420p "${outPaths.webmLow}"`, { stdio: 'inherit' });
 
-    // WebP Generation (extract first frame)
-    // Prefer cwebp (webp CLI) when libwebp ffmpeg encoder is unavailable (multiple ffmpeg builds omit libwebp).
-    // IMPORTANT: use the passed `source` parameter (the transcoded webm for this quality),
-    // NOT videoPath (the original browser recording) — otherwise high/medium/low would all
-    // extract from the same source, and on CI the temp file could be overwritten between calls.
+    // WebP poster: save a frame from the video that actually contains an
+    // image. YUV limited range puts "black" at Y=16, so a frame that looks
+    // like a black square still reports YAVG ~20 — use the peak (YMAX) and
+    // reject anything below PEAK_MIN. Try frame 1, frame 2, ... then sweep
+    // the clip, so a dark opening frame is never baked into the poster.
+    const PEAK_MIN = 64;
+    function frameLumaPeak(mediaPath) {
+      try {
+        const out = execSync(
+          `ffmpeg -i "${mediaPath}" -vf signalstats,metadata=print:file=- -frames:v 1 -f null - 2>&1`,
+          { encoding: "utf8" }
+        ).replace(/\r/g, "\n");
+        const m = out.match(/lavfi\.signalstats\.YMAX=([0-9.]+)/);
+        return m ? parseFloat(m[1]) : null;
+      } catch {
+        return null;
+      }
+    }
+    function pickFrameTime(source, out, dim) {
+      const dur = Math.max(0.1, effectiveDuration || 1);
+      const times = [
+        ...Array.from({ length: 8 }, (_, i) => i / 25),
+        Math.max(0.1, dur * 0.3),
+        dur * 0.5,
+        dur * 0.65,
+        dur * 0.8,
+        Math.max(0.05, dur - 0.08),
+      ].filter((t, i, a) => t < dur && a.indexOf(t) === i);
+      const pngPath = `${out}.frame.png`;
+      let chosen = times[0];
+      let best = -1;
+      for (const t of times) {
+        try { fs.rmSync(pngPath, { force: true }); } catch {}
+        try {
+          execSync(`ffmpeg -y -ss ${t.toFixed(3)} -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: "pipe", timeout: 30000 });
+        } catch {}
+        if (!fs.existsSync(pngPath) || fs.statSync(pngPath).size < 100) continue;
+        const peak = frameLumaPeak(pngPath);
+        if (peak === null) continue;
+        if (peak > best) { best = peak; chosen = t; }
+        if (peak >= PEAK_MIN) return t;
+      }
+      return chosen;
+    }
     function convertToWebp(source, out, dim) {
       try {
-        // Extract frame at 30% into the video (skip dark intro frames)
-        const frameTime = Math.max(0.1, (effectiveDuration || 1) * 0.3);
         const pngPath = `${out}.frame.png`;
+        const frameTime = pickFrameTime(source, out, dim);
         execSync(`ffmpeg -y -ss ${frameTime.toFixed(3)} -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
         try {
           execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
