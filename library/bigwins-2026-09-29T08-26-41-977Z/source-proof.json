@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "bigwins-2026-09-29T08-26-41-977Z",
+  "title": "bigwins",
+  "uploadedAt": "2026-09-29T08:26:41.977Z",
+  "proofPath": "library/bigwins-2026-09-29T08-26-41-977Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bigwins-2026-09-29T08-26-41-977Z/source-proof.json?v=2026-09-29T08-26-41.977Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1yhdtee_1gee4ph",
+    "anonymousFingerprint": "1yhdtee",
+    "browserFingerprintSha256": "cb7eb77fdd599fe5939f8fb9459dcb6d14ef4ac9bbe2e28bf67914711e355fd2",
+    "browserEnvironmentHashSha256": "4903f8f3b6d52fbe896087a6f248b2728b99e1bf5ee70ad05d72fb82befdf46a",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 22,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Sarajevo",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/bigwins-2026-09-29T08-26-41-977Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:f196d98f41850d1573908a71b3019fc742577dca0f74af2482c9fa9dfc681eb0",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "big_win-big_win_in-preview.webp",
+      "bytes": 980,
+      "sha256": "e56d3c5befa579894b47597d6552d5926f6fe35e4dabbaeef575683f49c6b002"
+    },
+    {
+      "name": "bigwins/bigWins_2.webp",
+      "bytes": 6002033,
+      "sha256": "3a0c45b23d03e1a0f5ac6424539c348fe973c94ac58e02e485510627c3069e12"
+    },
+    {
+      "name": "bigwins/bigWins.atlas",
+      "bytes": 4983,
+      "sha256": "ef2c47cc5e274b28792e752c5659a4a4cb7dc7dc72ba344efdb8db89fc076c0e"
+    },
+    {
+      "name": "bigwins/bigWins.json",
+      "bytes": 114419,
+      "sha256": "c21e9f84d9bdaacb6970698f2a5865f87081f2a136098a80d686c772b115fa3b"
+    },
+    {
+      "name": "bigwins/bigWins.webp",
+      "bytes": 16387032,
+      "sha256": "fce88bb4829685c735ef0d12c6685e90816cce25a71e386d5a6ebf882e6f64a8"
+    }
+  ],
+  "proofHash": "f196d98f41850d1573908a71b3019fc742577dca0f74af2482c9fa9dfc681eb0"
+}
