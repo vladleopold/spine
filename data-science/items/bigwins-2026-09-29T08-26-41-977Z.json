@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-29T08:26:41.977Z",
+  "updatedAt": "2026-09-29T08:28:09.334Z",
+  "animation_asset": {
+    "id": "bigwins-2026-09-29T08-26-41-977Z",
+    "name": "bigwins",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "big_win/big_win_in",
+        "big_win/big_win_loop",
+        "big_win/big_win_out",
+        "mega_win/mega_win_in",
+        "mega_win/mega_win_loop",
+        "mega_win/mega_win_out",
+        "super_win/super_win_in",
+        "super_win/super_win_in_loop",
+        "super_win/super_win_out"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-big_win/big_win_in",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/bigwins-2026-09-29T08-26-41-977Z",
+    "manifestPath": "library/bigwins-2026-09-29T08-26-41-977Z/manifest.json",
+    "files": [
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/bigwins/bigWins.json",
+        "name": "bigwins/bigWins.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/bigwins/bigWins.atlas",
+        "name": "bigwins/bigWins.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/bigwins/bigWins.webp",
+        "name": "bigwins/bigWins.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/bigwins/bigWins_2.webp",
+        "name": "bigwins/bigWins_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/big_win-big_win_in-preview.webp",
+        "name": "big_win-big_win_in-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/bigwins-2026-09-29T08-26-41-977Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "bigWins.json",
+    "atlas": "bigWins.atlas",
+    "textures": [
+      "bigWins.webp",
+      "bigWins_2.webp"
+    ],
+    "animationCount": 9,
+    "animationNames": [
+      "big_win/big_win_in",
+      "big_win/big_win_loop",
+      "big_win/big_win_out",
+      "mega_win/mega_win_in",
+      "mega_win/mega_win_loop",
+      "mega_win/mega_win_out",
+      "super_win/super_win_in",
+      "super_win/super_win_in_loop",
+      "super_win/super_win_out"
+    ],
+    "defaultAnimation": "big_win/big_win_in",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
