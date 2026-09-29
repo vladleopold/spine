@@ -1,5 +1,259 @@
 [
   {
+    "id": "bomb-2026-09-29T10-21-57-068Z",
+    "title": "bomb",
+    "publicOwnerId": "u_tynru4",
+    "ownerAnonId": "anon_72lfrnvl_djar2gxy34",
+    "ownerAnonFingerprint": "u1cor9ywlkmumch1hc",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-29T10:21:57.068Z",
+    "webmGeneratedAt": "2026-09-29T10:21:57.068Z",
+    "skeleton": "bomb.skel",
+    "atlas": "bomb.atlas",
+    "textures": [
+      "power_blast.png"
+    ],
+    "animations": [
+      "idle",
+      "idle_stk",
+      "minbet_hide",
+      "minbet_idle",
+      "minbet_start",
+      "somebody",
+      "somebody_big",
+      "somebody_big_stk",
+      "somebody_stk",
+      "start",
+      "start_stk",
+      "you_won1",
+      "you_won1_stk",
+      "you_won2",
+      "you_won2_stk"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "bomb/bomb.skel",
+      "bomb/bomb.atlas",
+      "bomb/power_blast.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/bomb-2026-09-29T10-21-57-068Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp?v=2026-09-29T10-21-57.068Z",
+    "thumbnailPath": "library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp?v=2026-09-29T10-21-57.068Z",
+    "thumbnailPosterPath": "library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "bomb-2026-09-29T10-21-57-068Z",
+      "title": "bomb",
+      "uploadedAt": "2026-09-29T10:21:57.068Z",
+      "proofPath": "library/bomb-2026-09-29T10-21-57-068Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/source-proof.json?v=2026-09-29T10-21-57.068Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_72lfrnvl_djar2gxy34",
+        "anonymousFingerprint": "u1cor9ywlkmumch1hc",
+        "browserFingerprintSha256": "ea2b71258cbd40e6f52d99f1e08e3801c47fb29fe9fc488f5c847cc99e6df84c",
+        "browserEnvironmentHashSha256": "26a9c050d81c9a9642ea95015fb12744dbd76a7952a839dda9256436b582a19e",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk-UA",
+          "languages": [
+            "uk-UA",
+            "uk",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2048,
+            "height": 1152,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/bomb-2026-09-29T10-21-57-068Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:af390009c89719b16a6f1b27a854c145df02d13b75d71d4c7babf96769a00403",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "bomb/bomb.atlas",
+          "bytes": 30646,
+          "sha256": "ae0968f770d0caa75a973e436c82316b3d0d11454a96423634d461cbe799e1a6"
+        },
+        {
+          "name": "bomb/bomb.skel",
+          "bytes": 88626,
+          "sha256": "507aaaf21bc80ba3afbe39997a2cc67e5c3e7ec86e9c3db60ff4d18577b5efe5"
+        },
+        {
+          "name": "bomb/power_blast.png",
+          "bytes": 5237477,
+          "sha256": "7f02d622b749700f7ec7c83ab30ba4c6bc5f6580cb30bc0071c66f9c8027b84b"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 1692,
+          "sha256": "e80529b3bd58fd3aee08a84373500874d1ceffb4d0f5cfd6d44447ff98cc5ed4"
+        }
+      ],
+      "proofHash": "af390009c89719b16a6f1b27a854c145df02d13b75d71d4c7babf96769a00403"
+    },
+    "sourceProofPath": "library/bomb-2026-09-29T10-21-57-068Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/source-proof.json?v=2026-09-29T10-21-57.068Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-29T10:22:24.350Z",
+      "entryId": "bomb-2026-09-29T10-21-57-068Z",
+      "title": "bomb",
+      "uploadedAt": "2026-09-29T10:21:57.068Z",
+      "sourceProofHash": "af390009c89719b16a6f1b27a854c145df02d13b75d71d4c7babf96769a00403",
+      "sourceProofPath": "library/bomb-2026-09-29T10-21-57-068Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/source-proof.json?v=2026-09-29T10-21-57.068Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_72lfrnvl_djar2gxy34",
+        "anonymousFingerprint": "u1cor9ywlkmumch1hc",
+        "browserFingerprintSha256": "ea2b71258cbd40e6f52d99f1e08e3801c47fb29fe9fc488f5c847cc99e6df84c",
+        "browserEnvironmentHashSha256": "26a9c050d81c9a9642ea95015fb12744dbd76a7952a839dda9256436b582a19e",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "uk-UA",
+          "languages": [
+            "uk-UA",
+            "uk",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "screen": {
+            "width": 2048,
+            "height": 1152,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/bomb-2026-09-29T10-21-57-068Z",
+        "files": [
+          {
+            "name": "bomb/bomb.skel",
+            "path": "library/bomb-2026-09-29T10-21-57-068Z/bomb/bomb.skel",
+            "bytes": 88626,
+            "sha256": "507aaaf21bc80ba3afbe39997a2cc67e5c3e7ec86e9c3db60ff4d18577b5efe5",
+            "github": {
+              "contentSha": "1f6c2fd7959a3dfec4a53fd306830f619ec68f63",
+              "commitSha": "8a8a45ff23bac2b51e04a7b0437b290facb0d7b4",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/8a8a45ff23bac2b51e04a7b0437b290facb0d7b4",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bomb-2026-09-29T10-21-57-068Z/bomb/bomb.skel"
+            }
+          },
+          {
+            "name": "bomb/bomb.atlas",
+            "path": "library/bomb-2026-09-29T10-21-57-068Z/bomb/bomb.atlas",
+            "bytes": 30646,
+            "sha256": "ae0968f770d0caa75a973e436c82316b3d0d11454a96423634d461cbe799e1a6",
+            "github": {
+              "contentSha": "dfde3653a23f0a770d5a898ebe53584738a2f1ab",
+              "commitSha": "cb49c9c2f180999fe76c11f0b52f20f9b4bb9809",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/cb49c9c2f180999fe76c11f0b52f20f9b4bb9809",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bomb-2026-09-29T10-21-57-068Z/bomb/bomb.atlas"
+            }
+          },
+          {
+            "name": "bomb/power_blast.png",
+            "path": "library/bomb-2026-09-29T10-21-57-068Z/bomb/power_blast.png",
+            "bytes": 5237477,
+            "sha256": "7f02d622b749700f7ec7c83ab30ba4c6bc5f6580cb30bc0071c66f9c8027b84b",
+            "github": {
+              "contentSha": "0a10b952e2c01a37f0b7cd1a276cd80479a0f431",
+              "commitSha": "1e55648701b52258a91e0cab3b1a013d59c0170e",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/1e55648701b52258a91e0cab3b1a013d59c0170e",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bomb-2026-09-29T10-21-57-068Z/bomb/power_blast.png"
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp",
+            "bytes": 1692,
+            "sha256": "e80529b3bd58fd3aee08a84373500874d1ceffb4d0f5cfd6d44447ff98cc5ed4",
+            "github": {
+              "contentSha": "c4029709bb7af91a579cd4b21aead1dd165fd4fc",
+              "commitSha": "6495e173c62f35d7f299131e601ba1acffe68749",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/6495e173c62f35d7f299131e601ba1acffe68749",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bomb-2026-09-29T10-21-57-068Z/idle-preview.webp"
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/bomb-2026-09-29T10-21-57-068Z/source-proof.json",
+            "bytes": 2534,
+            "sha256": "9b737329632709916a162827cd96549d6b42b1bcd95b515a5343dba2118dd7a1",
+            "github": {
+              "contentSha": "6f1ca930487b54dcec8606493e695bc7e163d6ce",
+              "commitSha": "689f49f02a15142c18e5ffaaa673db59c54a7c34",
+              "commitUrl": "https://github.com/vladleopold/spine/commit/689f49f02a15142c18e5ffaaa673db59c54a7c34",
+              "downloadUrl": "https://raw.githubusercontent.com/vladleopold/spine/main/library/bomb-2026-09-29T10-21-57-068Z/source-proof.json"
+            }
+          }
+        ],
+        "anchorPath": "library/bomb-2026-09-29T10-21-57-068Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/blockchain-anchor.json",
+        "anchorCommitSha": "778d56c7a14fd3bc9ff307a49d665f15449a6ed6",
+        "anchorCommitUrl": "https://github.com/vladleopold/spine/commit/778d56c7a14fd3bc9ff307a49d665f15449a6ed6"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "466f474b00c3026d0d20fffb8f774b4b15f0556f0ccc271a872e6689fa9088a8",
+      "recommendedAnchorPayload": "sha256:466f474b00c3026d0d20fffb8f774b4b15f0556f0ccc271a872e6689fa9088a8",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x466f474b00c3026d0d20fffb8f774b4b15f0556f0ccc271a872e6689fa9088a8",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/bomb-2026-09-29T10-21-57-068Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/bomb-2026-09-29T10-21-57-068Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "win_animations_720p-2026-09-29T08-43-56-653Z",
     "title": "win_animations_720p",
     "publicOwnerId": "u_13v45hd",
