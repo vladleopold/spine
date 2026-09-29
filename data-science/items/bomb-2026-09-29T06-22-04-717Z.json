@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-29T06:22:04.717Z",
+  "updatedAt": "2026-09-29T06:22:37.746Z",
+  "animation_asset": {
+    "id": "bomb-2026-09-29T06-22-04-717Z",
+    "name": "bomb",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "blast"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "idle",
+        "idle_stk",
+        "minbet_hide",
+        "minbet_idle",
+        "minbet_start",
+        "somebody",
+        "somebody_big",
+        "somebody_big_stk",
+        "somebody_stk",
+        "start",
+        "start_stk",
+        "you_won1",
+        "you_won1_stk",
+        "you_won2",
+        "you_won2_stk"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/bomb-2026-09-29T06-22-04-717Z",
+    "manifestPath": "library/bomb-2026-09-29T06-22-04-717Z/manifest.json",
+    "files": [
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/bomb/bomb.skel",
+        "name": "bomb/bomb.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/bomb/bomb.atlas",
+        "name": "bomb/bomb.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/bomb/power_blast.png",
+        "name": "bomb/power_blast.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/bomb-2026-09-29T06-22-04-717Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "bomb.skel",
+    "atlas": "bomb.atlas",
+    "textures": [
+      "power_blast.png"
+    ],
+    "animationCount": 15,
+    "animationNames": [
+      "idle",
+      "idle_stk",
+      "minbet_hide",
+      "minbet_idle",
+      "minbet_start",
+      "somebody",
+      "somebody_big",
+      "somebody_big_stk",
+      "somebody_stk",
+      "start",
+      "start_stk",
+      "you_won1",
+      "you_won1_stk",
+      "you_won2",
+      "you_won2_stk"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "blast"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
