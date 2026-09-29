@@ -127,7 +127,7 @@
     "blockchainAnchor": {
       "type": "SpineLinkGitHubBlockchainAnchor",
       "version": 1,
-      "createdAt": "2026-09-29T12:00:51.050Z",
+      "createdAt": "2026-09-29T12:02:34.580Z",
       "entryId": "fool_hv_1-2026-09-29T12-00-23-518Z",
       "title": "fool_hv_1",
       "uploadedAt": "2026-09-29T12:00:23.518Z",
@@ -263,12 +263,12 @@
         "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
         "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
       },
-      "anchorHash": "3a76dfad577079a8264ea1dec448cb3edc02f7ce947cacbe204a8e67cc59c648",
-      "recommendedAnchorPayload": "sha256:3a76dfad577079a8264ea1dec448cb3edc02f7ce947cacbe204a8e67cc59c648",
+      "anchorHash": "becff52843367b1d31e06fb5b42c65118c0862f151236164a4a866ff38e44ca7",
+      "recommendedAnchorPayload": "sha256:becff52843367b1d31e06fb5b42c65118c0862f151236164a4a866ff38e44ca7",
       "blockchain": {
         "status": "disabled",
         "chain": "evm",
-        "transactionData": "0x3a76dfad577079a8264ea1dec448cb3edc02f7ce947cacbe204a8e67cc59c648",
+        "transactionData": "0xbecff52843367b1d31e06fb5b42c65118c0862f151236164a4a866ff38e44ca7",
         "message": "Blockchain anchoring is temporarily disabled."
       },
       "anchorPath": "library/fool_hv_1-2026-09-29T12-00-23-518Z/blockchain-anchor.json",
