@@ -2,7 +2,7 @@
   {
     "id": "anubis-2026-09-29T06-18-54-324Z",
     "name": "anubis",
-    "updatedAt": "2026-09-29T06:19:11.044Z",
+    "updatedAt": "2026-09-29T06:20:32.775Z",
     "animation_asset": {
       "id": "anubis-2026-09-29T06-18-54-324Z",
       "name": "anubis",
@@ -36,7 +36,7 @@
           "one-shot"
         ],
         "state": [
-          "default-idle",
+          "default-win",
           "win"
         ],
         "platform": [
@@ -86,8 +86,8 @@
           "format": "png"
         },
         {
-          "path": "library/anubis-2026-09-29T06-18-54-324Z/idle-preview.webp",
-          "name": "idle-preview.webp",
+          "path": "library/anubis-2026-09-29T06-18-54-324Z/win-preview.webp",
+          "name": "win-preview.webp",
           "role": "texture",
           "format": "webp"
         },
@@ -116,7 +116,7 @@
         "idle",
         "win"
       ],
-      "defaultAnimation": "idle",
+      "defaultAnimation": "win",
       "fileCount": 6,
       "skeletonCount": 3,
       "atlasCount": 1,
