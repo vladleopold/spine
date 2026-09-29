@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-29T08:30:37.244Z",
+  "updatedAt": "2026-09-29T08:31:56.215Z",
+  "animation_asset": {
+    "id": "specianmessages-2026-09-29T08-30-37-244Z",
+    "name": "specianmessages",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "congrats/congrats_in",
+        "congrats/congrats_loop",
+        "congrats/congrats_out",
+        "extra_fs/x2/extra_fs_in_x2",
+        "extra_fs/x2/extra_fs_loop_x2",
+        "extra_fs/x2/extra_fs_out_x2",
+        "extra_fs/x3/extra_fs_in_x3",
+        "extra_fs/x3/extra_fs_loop_x3",
+        "extra_fs/x3/extra_fs_out_x3",
+        "extra_fs/x10/extra_fs_in_x10",
+        "extra_fs/x10/extra_fs_loop_x10",
+        "extra_fs/x10/extra_fs_out_x10",
+        "total_win/total_in",
+        "total_win/total_loop",
+        "total_win/total_out"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-congrats/congrats_in",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/specianmessages-2026-09-29T08-30-37-244Z",
+    "manifestPath": "library/specianmessages-2026-09-29T08-30-37-244Z/manifest.json",
+    "files": [
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/specianmessages/specianMessages.json",
+        "name": "specianmessages/specianMessages.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/specianmessages/specianMessages.atlas",
+        "name": "specianmessages/specianMessages.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/specianmessages/specianMessages.webp",
+        "name": "specianmessages/specianMessages.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/specianmessages/specianMessages_2.webp",
+        "name": "specianmessages/specianMessages_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/congrats-congrats_in-preview.webp",
+        "name": "congrats-congrats_in-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/specianmessages-2026-09-29T08-30-37-244Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "specianMessages.json",
+    "atlas": "specianMessages.atlas",
+    "textures": [
+      "specianMessages.webp",
+      "specianMessages_2.webp"
+    ],
+    "animationCount": 15,
+    "animationNames": [
+      "congrats/congrats_in",
+      "congrats/congrats_loop",
+      "congrats/congrats_out",
+      "extra_fs/x2/extra_fs_in_x2",
+      "extra_fs/x2/extra_fs_loop_x2",
+      "extra_fs/x2/extra_fs_out_x2",
+      "extra_fs/x3/extra_fs_in_x3",
+      "extra_fs/x3/extra_fs_loop_x3",
+      "extra_fs/x3/extra_fs_out_x3",
+      "extra_fs/x10/extra_fs_in_x10",
+      "extra_fs/x10/extra_fs_loop_x10",
+      "extra_fs/x10/extra_fs_out_x10",
+      "total_win/total_in",
+      "total_win/total_loop",
+      "total_win/total_out"
+    ],
+    "defaultAnimation": "congrats/congrats_in",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
