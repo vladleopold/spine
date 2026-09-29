@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "pet3009-2026-09-29T05-35-54-241Z",
+  "title": "pet3009",
+  "uploadedAt": "2026-09-29T05:35:54.241Z",
+  "proofPath": "library/pet3009-2026-09-29T05-35-54-241Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/pet3009-2026-09-29T05-35-54-241Z/source-proof.json?v=2026-09-29T05-35-54.241Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_30pna_1y280bg",
+    "anonymousFingerprint": "30pna",
+    "browserFingerprintSha256": "660808e1311316776b700c03ba4ed830dc8790629b7763940ae386dbb5c391c1",
+    "browserEnvironmentHashSha256": "5f63f8e54ca226e179fbba4f9d55a831f45dc4e8e6b574fa4fff7d341c216842",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "th",
+      "languages": [
+        "th",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Bangkok",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/pet3009-2026-09-29T05-35-54-241Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:57b9b627081a63d3521aa27d46bb07205c96c276469ea419fbe8f76c3bc02f3f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 1434,
+      "sha256": "5c250fdf81e7113cfd7b7f43a3ce3bf8f672ab48c5b552050b6b5266db255fc1"
+    },
+    {
+      "name": "pet3009/Pet3009.atlas",
+      "bytes": 6255,
+      "sha256": "248b0fb08cf85dcfc46dfe72a8793922a12ff99512be41c2d9414a87ad01f322"
+    },
+    {
+      "name": "pet3009/Pet3009.json",
+      "bytes": 447525,
+      "sha256": "513e5660c44e12e361cd8233a93a7b153cf4485d17a2a0c63099f113d13caee2"
+    },
+    {
+      "name": "pet3009/Pet3009.png",
+      "bytes": 1608867,
+      "sha256": "70cdd2ef7486907b326fbf91967671678f5c6310afd40b582f2ccc4e04000c59"
+    }
+  ],
+  "proofHash": "57b9b627081a63d3521aa27d46bb07205c96c276469ea419fbe8f76c3bc02f3f"
+}
