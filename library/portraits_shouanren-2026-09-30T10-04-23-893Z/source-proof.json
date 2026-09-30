@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "portraits_shouanren-2026-09-30T10-04-23-893Z",
+  "title": "portraits_shouanren",
+  "uploadedAt": "2026-09-30T10:04:23.893Z",
+  "proofPath": "library/portraits_shouanren-2026-09-30T10-04-23-893Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-04-23-893Z/source-proof.json?v=2026-09-30T10-04-23.893Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_rlpnib_15d45wg",
+    "anonymousFingerprint": "rlpnib",
+    "browserFingerprintSha256": "1a06293a0a432358961196ca080bf3740d88b513961220aa994584ec086f3ef7",
+    "browserEnvironmentHashSha256": "804adf84b63c0bce3f4e45c4425c2b6df40f9eedf041ca0c845ecba1984cdef8",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1440,
+        "height": 900,
+        "colorDepth": 30,
+        "pixelRatio": 1.7999999523162842
+      },
+      "timezone": "America/Los_Angeles",
+      "timezoneOffset": 420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/portraits_shouanren-2026-09-30T10-04-23-893Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d0b3f97a33dc11a80ec9e89e1946d762d49f204e9ee85247e2104f44227bd414",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 1514,
+      "sha256": "8bfa7ab7ee875695cfd4799ac4a6af8e984846cf9c1e3838b6054d522d51064a"
+    },
+    {
+      "name": "portraits_shouanren/Portraits_Shouanren.atlas",
+      "bytes": 11037,
+      "sha256": "bb8b5923c80b1159b0ed863e16efc486644856821903bbe7c616becf1978a06e"
+    },
+    {
+      "name": "portraits_shouanren/Portraits_Shouanren.json",
+      "bytes": 419615,
+      "sha256": "f9125489268cff19d18ede672311153472b07873a52073efd419ab8f0a954cf8"
+    },
+    {
+      "name": "portraits_shouanren/Portraits_Shouanren.png",
+      "bytes": 15610134,
+      "sha256": "a61c94d8e18c054444ff86ad18f285b7c69cb5ac53d6ae1b07c60403bd656650"
+    }
+  ],
+  "proofHash": "d0b3f97a33dc11a80ec9e89e1946d762d49f204e9ee85247e2104f44227bd414"
+}
