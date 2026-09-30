@@ -892,7 +892,15 @@ try {
     webpLow: `${baseOutputPath}-low.webp`,
   };
 
-  const bitrates = { high: '1200k', medium: '350k', low: '150k' };
+  // Битрейт считаем от числа пикселей кадра. Раньше стояло фиксированное
+  // 1200k, а на кадре 1644x1612 это меньше половины бита на пиксель —
+  // картинка рассыпается, и это выглядит как низкий фреймрейт.
+  const pixels = videoWidth * videoHeight;
+  const bitrateFor = (bitsPerPixel) => {
+    const kbps = Math.round((pixels * bitsPerPixel) / 1000);
+    return `${Math.max(450, Math.min(6000, kbps))}k`;
+  };
+  const bitrates = { high: bitrateFor(120), medium: bitrateFor(60), low: bitrateFor(28) };
   
   // Calculate scaled dimensions (keeping aspect ratio, ensuring even numbers)
   function calcScale(maxWidth) {
@@ -913,11 +921,20 @@ try {
     
     // WebM Generation
     // High Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimHigh} -c:v libvpx-vp9 -b:v ${bitrates.high} -pix_fmt yuv420p "${outPaths.webmHigh}"`, { stdio: 'inherit' });
+    // deadline=realtime заставляет кодировщик выдать все кадры: при
+    // deadline=good он часть просто отбрасывает, и анимация идёт рывками.
+    // lag-in-frames 0 убирает задержку между кадрами на выходе.
+    const vp9 = (dim, bitrate, out) =>
+      `ffmpeg -y -i "${videoPath}" -r 30 -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
+      `-pix_fmt yuv420p -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
+      `-auto-alt-ref 0 -row-mt 1 -g 30 -threads 4 "${out}"`;
+
+    // High Quality
+    execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
     // Medium Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimMedium} -c:v libvpx-vp9 -b:v ${bitrates.medium} -pix_fmt yuv420p "${outPaths.webmMedium}"`, { stdio: 'inherit' });
+    execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
     // Low Quality
-    execSync(`ffmpeg -y -i "${videoPath}" -r 30 -s ${dimLow} -c:v libvpx-vp9 -b:v ${bitrates.low} -pix_fmt yuv420p "${outPaths.webmLow}"`, { stdio: 'inherit' });
+    execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
 
     // WebP poster: the first frame of the video.
     function convertToWebp(source, out, dim) {
