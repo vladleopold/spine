@@ -1,5 +1,240 @@
 [
   {
+    "id": "portraits_shouanren-2026-09-30T10-07-11-062Z",
+    "title": "portraits_shouanren",
+    "publicOwnerId": "u_1v21ff5",
+    "ownerAnonId": "anon_rlpnib_15d45wg",
+    "ownerAnonFingerprint": "rlpnib",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-09-30T10:07:11.062Z",
+    "webmGeneratedAt": "2026-09-30T10:07:11.062Z",
+    "skeleton": "Portraits_Shouanren.json",
+    "atlas": "Portraits_Shouanren.atlas",
+    "textures": [
+      "Portraits_Shouanren.png"
+    ],
+    "animations": [
+      "idle",
+      "idle2"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "portraits_shouanren/Portraits_Shouanren.json",
+      "portraits_shouanren/Portraits_Shouanren.atlas",
+      "portraits_shouanren/Portraits_Shouanren.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/idle-preview.webp?v=2026-09-30T10-07-11.062Z",
+    "thumbnailPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/idle-preview.webp?v=2026-09-30T10-07-11.062Z",
+    "thumbnailPosterPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "portraits_shouanren-2026-09-30T10-07-11-062Z",
+      "title": "portraits_shouanren",
+      "uploadedAt": "2026-09-30T10:07:11.062Z",
+      "proofPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json?v=2026-09-30T10-07-11.062Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_rlpnib_15d45wg",
+        "anonymousFingerprint": "rlpnib",
+        "browserFingerprintSha256": "1a06293a0a432358961196ca080bf3740d88b513961220aa994584ec086f3ef7",
+        "browserEnvironmentHashSha256": "804adf84b63c0bce3f4e45c4425c2b6df40f9eedf041ca0c845ecba1984cdef8",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1440,
+            "height": 900,
+            "colorDepth": 30,
+            "pixelRatio": 1.7999999523162842
+          },
+          "timezone": "America/Los_Angeles",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:c1d2914f1632f15af9f675274f6214d97ad7745494bb32a430edce9860264205",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 1438,
+          "sha256": "1e89c50856e0e4d8d27b8d31de546412eee63ec45dd32aeb5fd1a91b6bd6db84"
+        },
+        {
+          "name": "portraits_shouanren/Portraits_Shouanren.atlas",
+          "bytes": 11037,
+          "sha256": "bb8b5923c80b1159b0ed863e16efc486644856821903bbe7c616becf1978a06e"
+        },
+        {
+          "name": "portraits_shouanren/Portraits_Shouanren.json",
+          "bytes": 419615,
+          "sha256": "f9125489268cff19d18ede672311153472b07873a52073efd419ab8f0a954cf8"
+        },
+        {
+          "name": "portraits_shouanren/Portraits_Shouanren.png",
+          "bytes": 15610134,
+          "sha256": "a61c94d8e18c054444ff86ad18f285b7c69cb5ac53d6ae1b07c60403bd656650"
+        }
+      ],
+      "proofHash": "c1d2914f1632f15af9f675274f6214d97ad7745494bb32a430edce9860264205"
+    },
+    "sourceProofPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json?v=2026-09-30T10-07-11.062Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-09-30T10:07:42.637Z",
+      "entryId": "portraits_shouanren-2026-09-30T10-07-11-062Z",
+      "title": "portraits_shouanren",
+      "uploadedAt": "2026-09-30T10:07:11.062Z",
+      "sourceProofHash": "c1d2914f1632f15af9f675274f6214d97ad7745494bb32a430edce9860264205",
+      "sourceProofPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json?v=2026-09-30T10-07-11.062Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_rlpnib_15d45wg",
+        "anonymousFingerprint": "rlpnib",
+        "browserFingerprintSha256": "1a06293a0a432358961196ca080bf3740d88b513961220aa994584ec086f3ef7",
+        "browserEnvironmentHashSha256": "804adf84b63c0bce3f4e45c4425c2b6df40f9eedf041ca0c845ecba1984cdef8",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1440,
+            "height": 900,
+            "colorDepth": 30,
+            "pixelRatio": 1.7999999523162842
+          },
+          "timezone": "America/Los_Angeles",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z",
+        "files": [
+          {
+            "name": "Portraits_Shouanren.png",
+            "path": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/portraits_shouanren/Portraits_Shouanren.png",
+            "bytes": 15610134,
+            "sha256": "a61c94d8e18c054444ff86ad18f285b7c69cb5ac53d6ae1b07c60403bd656650",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Portraits_Shouanren.json",
+            "path": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/portraits_shouanren/Portraits_Shouanren.json",
+            "bytes": 419615,
+            "sha256": "f9125489268cff19d18ede672311153472b07873a52073efd419ab8f0a954cf8",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Portraits_Shouanren.atlas",
+            "path": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/portraits_shouanren/Portraits_Shouanren.atlas",
+            "bytes": 11037,
+            "sha256": "bb8b5923c80b1159b0ed863e16efc486644856821903bbe7c616becf1978a06e",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/idle-preview.webp",
+            "bytes": 1438,
+            "sha256": "1e89c50856e0e4d8d27b8d31de546412eee63ec45dd32aeb5fd1a91b6bd6db84",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/source-proof.json",
+            "bytes": 2668,
+            "sha256": "72d8cded12a01b3a1d644223c26f30645ad271f445f13f7ea959751e345bd182",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "55efe5daa811c33fa87a2290772082e4f918272ac6d134329d9aff473d75ca98",
+      "recommendedAnchorPayload": "sha256:55efe5daa811c33fa87a2290772082e4f918272ac6d134329d9aff473d75ca98",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x55efe5daa811c33fa87a2290772082e4f918272ac6d134329d9aff473d75ca98",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/portraits_shouanren-2026-09-30T10-07-11-062Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/portraits_shouanren-2026-09-30T10-07-11-062Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "portraits_shouanren-2026-09-30T10-04-23-893Z",
     "title": "portraits_shouanren",
     "publicOwnerId": "u_1v21ff5",
