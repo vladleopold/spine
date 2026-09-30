@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-30T09:04:50.506Z",
+  "updatedAt": "2026-09-30T09:06:12.192Z",
+  "animation_asset": {
+    "id": "transitions-2026-09-30T09-04-50-506Z",
+    "name": "transitions",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "s1tos2"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-s1tos2"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/transitions-2026-09-30T09-04-50-506Z",
+    "manifestPath": "library/transitions-2026-09-30T09-04-50-506Z/manifest.json",
+    "files": [
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Transitions.json",
+        "name": "transitions/Transitions.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Transitions.atlas",
+        "name": "transitions/Transitions.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test.png",
+        "name": "transitions/Widgets_Transitions_Halloween test.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test_2.png",
+        "name": "transitions/Widgets_Transitions_Halloween test_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test_3.png",
+        "name": "transitions/Widgets_Transitions_Halloween test_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test_4.png",
+        "name": "transitions/Widgets_Transitions_Halloween test_4.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test_5.png",
+        "name": "transitions/Widgets_Transitions_Halloween test_5.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/transitions/Widgets_Transitions_Halloween test_6.png",
+        "name": "transitions/Widgets_Transitions_Halloween test_6.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/s1tos2-preview.webp",
+        "name": "s1tos2-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/transitions-2026-09-30T09-04-50-506Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Transitions.json",
+    "atlas": "Transitions.atlas",
+    "textures": [
+      "Widgets_Transitions_Halloween test.png",
+      "Widgets_Transitions_Halloween test_2.png",
+      "Widgets_Transitions_Halloween test_3.png",
+      "Widgets_Transitions_Halloween test_4.png",
+      "Widgets_Transitions_Halloween test_5.png",
+      "Widgets_Transitions_Halloween test_6.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "S1toS2"
+    ],
+    "defaultAnimation": "S1toS2",
+    "fileCount": 11,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 7
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
