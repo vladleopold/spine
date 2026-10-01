@@ -1,5 +1,151 @@
 [
   {
+    "id": "big-win-popup-2026-10-01T11-37-34-856Z",
+    "name": "big-win-popup",
+    "updatedAt": "2026-10-01T11:37:53.939Z",
+    "animation_asset": {
+      "id": "big-win-popup-2026-10-01T11-37-34-856Z",
+      "name": "big-win-popup",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "popup"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "in",
+          "loop",
+          "out"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-in",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/big-win-popup-2026-10-01T11-37-34-856Z",
+      "manifestPath": "library/big-win-popup-2026-10-01T11-37-34-856Z/manifest.json",
+      "files": [
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/big-win-popup/big-win-popup.json",
+          "name": "big-win-popup/big-win-popup.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/big-win-popup/big-win-popup.atlas",
+          "name": "big-win-popup/big-win-popup.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/big-win-popup/big-win-popup.png",
+          "name": "big-win-popup/big-win-popup.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/in-preview.webp",
+          "name": "in-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/big-win-popup-2026-10-01T11-37-34-856Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "big-win-popup.json",
+      "atlas": "big-win-popup.atlas",
+      "textures": [
+        "big-win-popup.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "in",
+        "loop",
+        "out"
+      ],
+      "defaultAnimation": "in",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "popup"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "icon-wild-2026-10-01T10-59-28-372Z",
     "name": "icon wild",
     "updatedAt": "2026-10-01T11:00:44.660Z",
