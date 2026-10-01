@@ -1,5 +1,253 @@
 [
   {
+    "id": "splashscreen-2026-10-01T07-22-27-383Z",
+    "title": "splashscreen",
+    "publicOwnerId": "u_e2aji8",
+    "ownerAnonId": "anon_107c1u1_88qh5g",
+    "ownerAnonFingerprint": "107c1u1",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-01T07:22:27.383Z",
+    "webmGeneratedAt": "2026-10-01T07:22:27.383Z",
+    "skeleton": "splashscreen.json",
+    "atlas": "jackpot_reward.atlas.txt",
+    "textures": [
+      "jackpot_reward.png"
+    ],
+    "animations": [
+      "begin",
+      "end",
+      "idle",
+      "landscape_layout",
+      "page1",
+      "page2",
+      "portrait_layout"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "splashscreen/splashscreen.json",
+      "splashscreen/jackpot_reward.atlas.txt",
+      "splashscreen/jackpot_reward.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/splashscreen-2026-10-01T07-22-27-383Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/idle-preview.webp?v=2026-10-01T07-22-27.383Z",
+    "thumbnailPath": "library/splashscreen-2026-10-01T07-22-27-383Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/idle-preview.webp?v=2026-10-01T07-22-27.383Z",
+    "thumbnailPosterPath": "library/splashscreen-2026-10-01T07-22-27-383Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "splashscreen-2026-10-01T07-22-27-383Z",
+      "title": "splashscreen",
+      "uploadedAt": "2026-10-01T07:22:27.383Z",
+      "proofPath": "library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json?v=2026-10-01T07-22-27.383Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_107c1u1_88qh5g",
+        "anonymousFingerprint": "107c1u1",
+        "browserFingerprintSha256": "cc3b4a2544f534242715b9d9ff33a729327188a020454b9a1ba3f4abe3ecd4d2",
+        "browserEnvironmentHashSha256": "3ffdd666cfc6393715d5ce02f125c0a5189a8d79d6ab94fc005dc3393a5eb2ed",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en",
+            "zh-CN",
+            "ja"
+          ],
+          "hardwareConcurrency": 6,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1344,
+            "height": 840,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/splashscreen-2026-10-01T07-22-27-383Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:be20cba7861f8aab21e2ec4cd74ed0ee51ce3ef5ed0cde27e11bfd1bba466f20",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 744,
+          "sha256": "fd62b8a3e01c686c7e5360a1fde54ebc0ffeab84edcd95c6183b4a0bf6b87473"
+        },
+        {
+          "name": "splashscreen/jackpot_reward.atlas.txt",
+          "bytes": 899,
+          "sha256": "805db132585c9d984b295d967f93b20e532d373a887a373c1a17d3500364b2d4"
+        },
+        {
+          "name": "splashscreen/jackpot_reward.png",
+          "bytes": 3321534,
+          "sha256": "69ea5a009dd87e31e5510c0f25f1f4b812ba25ecb5d9b10c454fd7085ba6ff8b"
+        },
+        {
+          "name": "splashscreen/splashscreen.json",
+          "bytes": 13730,
+          "sha256": "9eafbfb886aa453ef3318caef332317da828618299a2bf43a84f9ccff7185332"
+        }
+      ],
+      "proofHash": "be20cba7861f8aab21e2ec4cd74ed0ee51ce3ef5ed0cde27e11bfd1bba466f20"
+    },
+    "sourceProofPath": "library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json?v=2026-10-01T07-22-27.383Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-01T07:22:46.223Z",
+      "entryId": "splashscreen-2026-10-01T07-22-27-383Z",
+      "title": "splashscreen",
+      "uploadedAt": "2026-10-01T07:22:27.383Z",
+      "sourceProofHash": "be20cba7861f8aab21e2ec4cd74ed0ee51ce3ef5ed0cde27e11bfd1bba466f20",
+      "sourceProofPath": "library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json?v=2026-10-01T07-22-27.383Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_107c1u1_88qh5g",
+        "anonymousFingerprint": "107c1u1",
+        "browserFingerprintSha256": "cc3b4a2544f534242715b9d9ff33a729327188a020454b9a1ba3f4abe3ecd4d2",
+        "browserEnvironmentHashSha256": "3ffdd666cfc6393715d5ce02f125c0a5189a8d79d6ab94fc005dc3393a5eb2ed",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en",
+            "zh-CN",
+            "ja"
+          ],
+          "hardwareConcurrency": 6,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1344,
+            "height": 840,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/splashscreen-2026-10-01T07-22-27-383Z",
+        "files": [
+          {
+            "name": "jackpot_reward.png",
+            "path": "library/splashscreen-2026-10-01T07-22-27-383Z/splashscreen/jackpot_reward.png",
+            "bytes": 3321534,
+            "sha256": "69ea5a009dd87e31e5510c0f25f1f4b812ba25ecb5d9b10c454fd7085ba6ff8b",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "splashscreen.json",
+            "path": "library/splashscreen-2026-10-01T07-22-27-383Z/splashscreen/splashscreen.json",
+            "bytes": 13730,
+            "sha256": "9eafbfb886aa453ef3318caef332317da828618299a2bf43a84f9ccff7185332",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "jackpot_reward.atlas.txt",
+            "path": "library/splashscreen-2026-10-01T07-22-27-383Z/splashscreen/jackpot_reward.atlas.txt",
+            "bytes": 899,
+            "sha256": "805db132585c9d984b295d967f93b20e532d373a887a373c1a17d3500364b2d4",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/splashscreen-2026-10-01T07-22-27-383Z/idle-preview.webp",
+            "bytes": 744,
+            "sha256": "fd62b8a3e01c686c7e5360a1fde54ebc0ffeab84edcd95c6183b4a0bf6b87473",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/splashscreen-2026-10-01T07-22-27-383Z/source-proof.json",
+            "bytes": 2634,
+            "sha256": "e96d4b1de2c8a5f878a51cbe151a78be60c96a3d335685381716f9f49c4c380e",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library/splashscreen-2026-10-01T07-22-27-383Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "fd713aece75abdb437cba54dccd886426f39c82c36f2addb6fa6f5eec5f3f672",
+      "recommendedAnchorPayload": "sha256:fd713aece75abdb437cba54dccd886426f39c82c36f2addb6fa6f5eec5f3f672",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xfd713aece75abdb437cba54dccd886426f39c82c36f2addb6fa6f5eec5f3f672",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/splashscreen-2026-10-01T07-22-27-383Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/splashscreen-2026-10-01T07-22-27-383Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "dryad-2026-09-30T21-54-03-321Z",
     "title": "dryad",
     "publicOwnerId": "u_1fsw2kl",
