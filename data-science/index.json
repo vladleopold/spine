@@ -1,5 +1,155 @@
 [
   {
+    "id": "slepica-2026-10-01T13-33-54-409Z",
+    "name": "slepica",
+    "updatedAt": "2026-10-01T13:33:58.246Z",
+    "animation_asset": {
+      "id": "slepica-2026-10-01T13-33-54-409Z",
+      "name": "slepica",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "death",
+          "free",
+          "idle",
+          "jump1",
+          "jump2",
+          "not",
+          "win"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win",
+          "lose"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/slepica-2026-10-01T13-33-54-409Z",
+      "manifestPath": "library/slepica-2026-10-01T13-33-54-409Z/manifest.json",
+      "files": [
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/slepica/slepica.json",
+          "name": "slepica/slepica.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/slepica/slepica.atlas",
+          "name": "slepica/slepica.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/slepica/slepica.webp",
+          "name": "slepica/slepica.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/slepica-2026-10-01T13-33-54-409Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "slepica.json",
+      "atlas": "slepica.atlas",
+      "textures": [
+        "slepica.webp"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "death",
+        "free",
+        "idle",
+        "jump1",
+        "jump2",
+        "not",
+        "win"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "big-win-popup-2026-10-01T11-37-34-856Z",
     "name": "big-win-popup",
     "updatedAt": "2026-10-01T11:37:53.939Z",
