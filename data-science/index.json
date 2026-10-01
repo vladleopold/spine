@@ -1,5 +1,190 @@
 [
   {
+    "id": "icon-wild-2026-10-01T10-59-28-372Z",
+    "name": "icon wild",
+    "updatedAt": "2026-10-01T11:00:44.660Z",
+    "animation_asset": {
+      "id": "icon-wild-2026-10-01T10-59-28-372Z",
+      "name": "icon wild",
+      "domain": "gamedev",
+      "asset_category": "icon",
+      "animation_type": "icon",
+      "skeleton_type": "icon",
+      "content_type": "icon",
+      "taxonomy": {
+        "category": "ui",
+        "class": "icon",
+        "type": "icon-animation",
+        "tags": [
+          "icon"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "style": [
+          "icon"
+        ],
+        "loop_type": [
+          "short-loop",
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "animation_state": [
+          "appear",
+          "blur",
+          "idle",
+          "nowin",
+          "respineidle",
+          "respineidle2",
+          "respineidle3",
+          "win1",
+          "win2",
+          "win3"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/icon-wild-2026-10-01T10-59-28-372Z",
+      "manifestPath": "library/icon-wild-2026-10-01T10-59-28-372Z/manifest.json",
+      "files": [
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icon wild.json",
+          "name": "icon wild/icon wild.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons.atlas",
+          "name": "icon wild/icons.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons.png",
+          "name": "icon wild/icons.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons_2.png",
+          "name": "icon wild/icons_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons_3.png",
+          "name": "icon wild/icons_3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons_4.png",
+          "name": "icon wild/icons_4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/icon wild/icons_5.png",
+          "name": "icon wild/icons_5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/icon-wild-2026-10-01T10-59-28-372Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "icon wild.json",
+      "atlas": "icons.atlas",
+      "textures": [
+        "icons.png",
+        "icons_2.png",
+        "icons_3.png",
+        "icons_4.png",
+        "icons_5.png"
+      ],
+      "animationCount": 10,
+      "animationNames": [
+        "appear",
+        "blur",
+        "idle",
+        "noWin",
+        "respineidle",
+        "respineidle2",
+        "respineidle3",
+        "win1",
+        "win2",
+        "win3"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 10,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 6
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "icon"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "intro-2026-10-01T07-47-27-763Z",
     "name": "intro",
     "updatedAt": "2026-10-01T07:48:28.391Z",
