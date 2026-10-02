@@ -1,5 +1,153 @@
 [
   {
+    "id": "splashscreen-2026-10-02T05-40-42-082Z",
+    "name": "splashscreen",
+    "updatedAt": "2026-10-02T05:40:59.821Z",
+    "animation_asset": {
+      "id": "splashscreen-2026-10-02T05-40-42-082Z",
+      "name": "splashscreen",
+      "domain": "gamedev",
+      "asset_category": "background",
+      "animation_type": "background",
+      "skeleton_type": "background",
+      "content_type": "background",
+      "taxonomy": {
+        "category": "environment",
+        "class": "background",
+        "type": "animated-background",
+        "tags": [
+          "landscape"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "scene-background"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "begin",
+          "end",
+          "idle",
+          "landscape_layout",
+          "page1",
+          "page2",
+          "portrait_layout"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/splashscreen-2026-10-02T05-40-42-082Z",
+      "manifestPath": "library/splashscreen-2026-10-02T05-40-42-082Z/manifest.json",
+      "files": [
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/splashscreen/splashscreen.json",
+          "name": "splashscreen/splashscreen.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/splashscreen/jackpot_reward.atlas.txt",
+          "name": "splashscreen/jackpot_reward.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/splashscreen/jackpot_reward.png",
+          "name": "splashscreen/jackpot_reward.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/splashscreen-2026-10-02T05-40-42-082Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "splashscreen.json",
+      "atlas": "jackpot_reward.atlas.txt",
+      "textures": [
+        "jackpot_reward.png"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "begin",
+        "end",
+        "idle",
+        "landscape_layout",
+        "page1",
+        "page2",
+        "portrait_layout"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "landscape"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "fs_plus1-2026-10-02T04-40-35-068Z",
     "name": "fs_plus1",
     "updatedAt": "2026-10-02T04:40:38.269Z",
