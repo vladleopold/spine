@@ -1,5 +1,160 @@
 [
   {
+    "id": "chick_main-2026-10-02T21-00-55-853Z",
+    "name": "chick_main",
+    "updatedAt": "2026-10-02T21:01:26.680Z",
+    "animation_asset": {
+      "id": "chick_main-2026-10-02T21-00-55-853Z",
+      "name": "chick_main",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "idle",
+          "jump",
+          "run",
+          "run_start",
+          "special"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "action": [
+          "run"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/chick_main-2026-10-02T21-00-55-853Z",
+      "manifestPath": "library/chick_main-2026-10-02T21-00-55-853Z/manifest.json",
+      "files": [
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/chick_main/chick_main.json",
+          "name": "chick_main/chick_main.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/chick_main/chick_main.atlas",
+          "name": "chick_main/chick_main.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/chick_main/chick_main_1.png",
+          "name": "chick_main/chick_main_1.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/chick_main/chick_main_2.png",
+          "name": "chick_main/chick_main_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/chick_main/chick_main_3.png",
+          "name": "chick_main/chick_main_3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/chick_main-2026-10-02T21-00-55-853Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "chick_main.json",
+      "atlas": "chick_main.atlas",
+      "textures": [
+        "chick_main_1.png",
+        "chick_main_2.png",
+        "chick_main_3.png"
+      ],
+      "animationCount": 5,
+      "animationNames": [
+        "Idle",
+        "Jump",
+        "run",
+        "Run_Start",
+        "Special"
+      ],
+      "defaultAnimation": "Idle",
+      "fileCount": 8,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 4
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "symbol_wild-2026-10-02T12-55-21-525Z",
     "name": "symbol_wild",
     "updatedAt": "2026-10-02T12:55:26.467Z",
