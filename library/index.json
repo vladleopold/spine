@@ -1,5 +1,240 @@
 [
   {
+    "id": "zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+    "title": "zuozhu_shengli_ren",
+    "publicOwnerId": "u_1fae8nb",
+    "ownerAnonId": "anon_1hzcmo6_n0df0t",
+    "ownerAnonFingerprint": "1hzcmo6",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-02T07:48:44.555Z",
+    "webmGeneratedAt": "2026-10-02T07:48:44.555Z",
+    "skeleton": "zuozhu_shengli_ren.skel",
+    "atlas": "zuozhu_shengli_ren.atlas",
+    "textures": [
+      "zuozhu_shengli_ren.png"
+    ],
+    "animations": [
+      "idle1",
+      "idle2"
+    ],
+    "defaultAnimation": "idle1",
+    "files": [
+      "zuozhu_shengli_ren/zuozhu_shengli_ren.skel",
+      "zuozhu_shengli_ren/zuozhu_shengli_ren.atlas",
+      "zuozhu_shengli_ren/zuozhu_shengli_ren.png",
+      "idle1-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp?v=2026-10-02T07-48-44.555Z",
+    "thumbnailPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp?v=2026-10-02T07-48-44.555Z",
+    "thumbnailPosterPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+      "title": "zuozhu_shengli_ren",
+      "uploadedAt": "2026-10-02T07:48:44.555Z",
+      "proofPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json?v=2026-10-02T07-48-44.555Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1hzcmo6_n0df0t",
+        "anonymousFingerprint": "1hzcmo6",
+        "browserFingerprintSha256": "052f5531995a697a0b5cda265e04644728d2bf56d111fa417f26f7cb36fdbbd8",
+        "browserEnvironmentHashSha256": "5925c00c1b5c2a55b8ebbc40a3dd2df2c6d80e99ee65fc5dddf8eedcee4ffc7c",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Bucharest",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:3689d5d0d789d2cded980fa54ebdd438db9796771309c913127dc724b5efdd8d",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle1-preview.webp",
+          "bytes": 1450,
+          "sha256": "3809d1dbf78e0f8434c3cb00a238713cbcb3af9cf2a450fb1658328371a9c278"
+        },
+        {
+          "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.atlas",
+          "bytes": 7699,
+          "sha256": "e923019157c9b00015a19ef2b0cb8562abff5183dcccdb5b5a6b4a4fdfa99739"
+        },
+        {
+          "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.png",
+          "bytes": 991626,
+          "sha256": "a4041e53dda82f43a217fce9238fe226a8c5256fe8988e1e73cfa39e52f005d6"
+        },
+        {
+          "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.skel",
+          "bytes": 191192,
+          "sha256": "2c6e36c416ea6bb298142bdb3df1fb104c18589597be620751ad401d8cbfd50d"
+        }
+      ],
+      "proofHash": "3689d5d0d789d2cded980fa54ebdd438db9796771309c913127dc724b5efdd8d"
+    },
+    "sourceProofPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json?v=2026-10-02T07-48-44.555Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-02T07:48:49.496Z",
+      "entryId": "zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+      "title": "zuozhu_shengli_ren",
+      "uploadedAt": "2026-10-02T07:48:44.555Z",
+      "sourceProofHash": "3689d5d0d789d2cded980fa54ebdd438db9796771309c913127dc724b5efdd8d",
+      "sourceProofPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json?v=2026-10-02T07-48-44.555Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1hzcmo6_n0df0t",
+        "anonymousFingerprint": "1hzcmo6",
+        "browserFingerprintSha256": "052f5531995a697a0b5cda265e04644728d2bf56d111fa417f26f7cb36fdbbd8",
+        "browserEnvironmentHashSha256": "5925c00c1b5c2a55b8ebbc40a3dd2df2c6d80e99ee65fc5dddf8eedcee4ffc7c",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 12,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Europe/Bucharest",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+        "files": [
+          {
+            "name": "zuozhu_shengli_ren.skel",
+            "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.skel",
+            "bytes": 191192,
+            "sha256": "2c6e36c416ea6bb298142bdb3df1fb104c18589597be620751ad401d8cbfd50d",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "zuozhu_shengli_ren.atlas",
+            "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.atlas",
+            "bytes": 7699,
+            "sha256": "e923019157c9b00015a19ef2b0cb8562abff5183dcccdb5b5a6b4a4fdfa99739",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "zuozhu_shengli_ren.png",
+            "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.png",
+            "bytes": 991626,
+            "sha256": "a4041e53dda82f43a217fce9238fe226a8c5256fe8988e1e73cfa39e52f005d6",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle1-preview.webp",
+            "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp",
+            "bytes": 1450,
+            "sha256": "3809d1dbf78e0f8434c3cb00a238713cbcb3af9cf2a450fb1658328371a9c278",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json",
+            "bytes": 2631,
+            "sha256": "f771189938df7182158487f7b7eda97a2a6673e4cfdb3ecd508b9aaa8a51b0e0",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "f2e19cab0946c27634b93296bb4302b07af9f41c0375e5d4cc68a0e7f4d0ddfd",
+      "recommendedAnchorPayload": "sha256:f2e19cab0946c27634b93296bb4302b07af9f41c0375e5d4cc68a0e7f4d0ddfd",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xf2e19cab0946c27634b93296bb4302b07af9f41c0375e5d4cc68a0e7f4d0ddfd",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "splashscreen-2026-10-02T05-40-42-082Z",
     "title": "splashscreen",
     "publicOwnerId": "u_e2aji8",

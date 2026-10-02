@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-02T07:48:44.555Z",
+  "updatedAt": "2026-10-02T07:48:49.789Z",
+  "animation_asset": {
+    "id": "zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+    "name": "zuozhu_shengli_ren",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "idle1",
+        "idle2"
+      ],
+      "loop_type": [
+        "loop-candidate"
+      ],
+      "state": [
+        "default-idle1"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z",
+    "manifestPath": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/manifest.json",
+    "files": [
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.skel",
+        "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.atlas",
+        "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/zuozhu_shengli_ren/zuozhu_shengli_ren.png",
+        "name": "zuozhu_shengli_ren/zuozhu_shengli_ren.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/idle1-preview.webp",
+        "name": "idle1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/zuozhu_shengli_ren-2026-10-02T07-48-44-555Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "zuozhu_shengli_ren.skel",
+    "atlas": "zuozhu_shengli_ren.atlas",
+    "textures": [
+      "zuozhu_shengli_ren.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "idle1",
+      "idle2"
+    ],
+    "defaultAnimation": "idle1",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
