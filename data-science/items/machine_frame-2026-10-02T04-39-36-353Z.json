@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-02T04:39:36.353Z",
+  "updatedAt": "2026-10-02T04:39:43.719Z",
+  "animation_asset": {
+    "id": "machine_frame-2026-10-02T04-39-36-353Z",
+    "name": "machine_frame",
+    "domain": "gamedev",
+    "asset_category": "robot",
+    "animation_type": "mechanical",
+    "skeleton_type": "robot",
+    "content_type": "mechanical",
+    "taxonomy": {
+      "category": "character",
+      "class": "mechanical",
+      "type": "robot",
+      "tags": [
+        "machine"
+      ]
+    },
+    "tags": {
+      "rig_type": [
+        "mechanical",
+        "spine-json"
+      ],
+      "material": [
+        "metal",
+        "atlas-mapped"
+      ],
+      "animation_state": [
+        "machine_frame_bonus"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-machine_frame_bonus"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/machine_frame-2026-10-02T04-39-36-353Z",
+    "manifestPath": "library/machine_frame-2026-10-02T04-39-36-353Z/manifest.json",
+    "files": [
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/machine_frame/machine_frame.json",
+        "name": "machine_frame/machine_frame.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/machine_frame/machine_frame.atlas.txt",
+        "name": "machine_frame/machine_frame.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/machine_frame/machine_frame.png",
+        "name": "machine_frame/machine_frame.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/machine_frame_bonus-preview.webp",
+        "name": "machine_frame_bonus-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/machine_frame-2026-10-02T04-39-36-353Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "machine_frame.json",
+    "atlas": "machine_frame.atlas.txt",
+    "textures": [
+      "machine_frame.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "machine_frame_bonus"
+    ],
+    "defaultAnimation": "machine_frame_bonus",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "machine"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
