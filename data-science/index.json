@@ -1,5 +1,139 @@
 [
   {
+    "id": "respin-2026-10-02T04-39-25-049Z",
+    "name": "respin",
+    "updatedAt": "2026-10-02T04:39:29.030Z",
+    "animation_asset": {
+      "id": "respin-2026-10-02T04-39-25-049Z",
+      "name": "respin",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "begin",
+          "end",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/respin-2026-10-02T04-39-25-049Z",
+      "manifestPath": "library/respin-2026-10-02T04-39-25-049Z/manifest.json",
+      "files": [
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/respin/respin.json",
+          "name": "respin/respin.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/respin/respin.atlas.txt",
+          "name": "respin/respin.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/respin/respin.png",
+          "name": "respin/respin.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/respin-2026-10-02T04-39-25-049Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "respin.json",
+      "atlas": "respin.atlas.txt",
+      "textures": [
+        "respin.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "begin",
+        "end",
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "splashscreen-2026-10-02T04-16-35-312Z",
     "name": "splashscreen",
     "updatedAt": "2026-10-02T04:16:53.015Z",
