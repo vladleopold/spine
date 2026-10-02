@@ -1,5 +1,148 @@
 [
   {
+    "id": "symbol_wild-2026-10-02T12-55-21-525Z",
+    "name": "symbol_wild",
+    "updatedAt": "2026-10-02T12:55:26.467Z",
+    "animation_asset": {
+      "id": "symbol_wild-2026-10-02T12-55-21-525Z",
+      "name": "symbol_wild",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "symbol_idle",
+          "symbol_land",
+          "symbol_win",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-symbol_idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/symbol_wild-2026-10-02T12-55-21-525Z",
+      "manifestPath": "library/symbol_wild-2026-10-02T12-55-21-525Z/manifest.json",
+      "files": [
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/symbol_wild/symbol_wild.json",
+          "name": "symbol_wild/symbol_wild.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/symbol_wild/symbols.atlas.txt",
+          "name": "symbol_wild/symbols.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/symbol_wild/symbols.png",
+          "name": "symbol_wild/symbols.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/symbol_idle-preview.webp",
+          "name": "symbol_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/symbol_wild-2026-10-02T12-55-21-525Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "symbol_wild.json",
+      "atlas": "symbols.atlas.txt",
+      "textures": [
+        "symbols.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "symbol_idle",
+        "symbol_land",
+        "symbol_win"
+      ],
+      "defaultAnimation": "symbol_idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "symbol_lo1-2026-10-02T09-10-00-288Z",
     "name": "symbol_lo1",
     "updatedAt": "2026-10-02T09:10:05.834Z",
