@@ -22,7 +22,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 // MAX_FOLDERS works they move into the next permanent library_NN collection.
 // `library` itself became the first permanent collection, kept under its original
 // name so no work loses its path.
-const STAGING_DIR = process.env.LIBRARY_STAGING_DIR || "library_02";
+// Uploads land in the highest-numbered library_NN folder. Once it holds
+// MAX_FOLDERS works it becomes a permanent collection and the next number opens,
+// so the repository grows as many folders as it needs.
 const PREFIX = "library_";
 const MAX_FOLDERS = 999;
 const dryRun = process.argv.includes("--dry-run");
@@ -150,8 +152,8 @@ ${collection}/
 
 // The checkout already contains the whole tree, so a plain `git mv` relocates a
 // work folder in one commit instead of thousands of Contents API round trips.
-async function moveEntry(fromName, toCollection) {
-  const from = `${STAGING_DIR}/${fromName}`;
+async function moveEntry(fromName, toCollection, stagingName) {
+  const from = `${stagingName}/${fromName}`;
   const to = `${toCollection}/${fromName}`;
   if (dryRun) {
     log(`  [dry-run] ${from} -> ${to}`);
@@ -163,11 +165,14 @@ async function moveEntry(fromName, toCollection) {
 }
 
 async function main() {
-  const staging = await listFolder(STAGING_DIR);
-  const entries = staging.filter((item) => item.type === "dir" && isEntryFolder(item.name)).map((item) => item.name);
   const highest = await highestCollection();
+  // `library` is collection #1 and is never written to again, so staging is always
+  // the highest library_NN folder.
+  const stagingName = `${PREFIX}${String(highest).padStart(2, "0")}`;
+  const staging = await listFolder(stagingName);
+  const entries = staging.filter((item) => item.type === "dir" && isEntryFolder(item.name)).map((item) => item.name);
 
-  log(`Папка набора ${STAGING_DIR}: папок ${entries.length} (предел ${MAX_FOLDERS})`);
+  log(`Папка набора ${stagingName}: папок ${entries.length} (предел ${MAX_FOLDERS})`);
   log(`Последняя постоянная сборка: ${PREFIX}${String(highest).padStart(2, "0")}`);
 
   if (entries.length < MAX_FOLDERS) {
@@ -175,9 +180,12 @@ async function main() {
     return;
   }
 
+  // The folder we just filled becomes permanent; the next number is the new
+  // staging folder that receives uploads from now on.
+  const filled = stagingName;
   const nextIndex = highest + 1;
   const next = `${PREFIX}${String(nextIndex).padStart(2, "0")}`;
-  log(`Ротация: ${entries.length} папок -> ${next}`);
+  log(`Ротация: ${filled} переполнена (${entries.length}), становится постоянной; наборная папка — ${next}`);
 
   if (!dryRun) {
     await api(`/contents/${next}/index.json`, {
@@ -202,7 +210,7 @@ async function main() {
   }
 
   const ordered = [...entries].sort();
-  for (const name of ordered) await moveEntry(name, next);
+  for (const name of ordered) await moveEntry(name, next, stagingName);
 
   const first = monthOf(ordered[0]);
   const last = monthOf(ordered[ordered.length - 1]);
