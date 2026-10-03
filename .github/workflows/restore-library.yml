@@ -1,11 +1,9 @@
-name: Restore library folder
+name: Restore library folder (retry)
 
-# Откат переименования library -> library_01.
-#
-# Исходная схема: все работы лежат в library, и все записанные ссылки вида
-# /assets/library/<работа>/... ведут на место. Переименование сломало их, из-за
-# чего Google Search Console видел 404 у каждой работы. Этот сценарий
-# возвращает прежнее имя папки, чинит индекс и убирает пустые папки сборок.
+# Повтор отката: прошлый запуск терял изменения, потому что при отклонении пуша
+# делал git reset --hard поверх свежего origin/main, и уже сделанное переименование
+# исчезало. Здесь после отката делается pull --rebase, а если он не проходит —
+# rename повторяется на актуальной ветке и пушится принудительно.
 
 on:
   workflow_dispatch:
@@ -25,47 +23,36 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Rename library_01 back to library
+      - name: Rename, rewrite index, drop empty folders
         run: |
           set -euo pipefail
-          if [ -d library ] && [ -d library_01 ]; then
-            echo "Обе папки существуют, переименование не выполняю."
-          elif [ -d library_01 ]; then
+          if [ -d library_01 ] && [ ! -d library ]; then
             git mv library_01 library
             echo "library_01 -> library"
-          else
-            echo "Нечего переименовывать."
           fi
-
-      - name: Restore index paths
-        run: |
-          set -euo pipefail
-          node --input-type=module <<'NODE'
-          import fs from "node:fs";
-          const file = "library/index.json";
-          if (!fs.existsSync(file)) { console.log("нет индекса"); process.exit(0); }
-          const entries = JSON.parse(fs.readFileSync(file, "utf8"));
-          let touched = 0;
-          for (const entry of entries) {
-            let changed = false;
-            for (const [key, value] of Object.entries(entry)) {
-              if (typeof value !== "string" || !value.includes("/library_01/")) continue;
-              entry[key] = value.split("/library_01/").join("/library/");
-              changed = true;
+          if [ -f library/index.json ]; then
+            node --input-type=module <<'NODE'
+            import fs from "node:fs";
+            const file = "library/index.json";
+            const entries = JSON.parse(fs.readFileSync(file, "utf8"));
+            let touched = 0;
+            for (const entry of entries) {
+              let changed = false;
+              for (const [key, value] of Object.entries(entry)) {
+                if (typeof value !== "string" || !value.includes("/library_01/")) continue;
+                entry[key] = value.split("/library_01/").join("/library/");
+                changed = true;
+              }
+              if (typeof entry.previewPath === "string" && entry.previewPath.startsWith("library_01/")) {
+                entry.previewPath = `library/${entry.previewPath.slice("library_01/".length)}`;
+                changed = true;
+              }
+              if (changed) touched += 1;
             }
-            if (typeof entry.previewPath === "string" && entry.previewPath.startsWith("library_01/")) {
-              entry.previewPath = `library/${entry.previewPath.slice("library_01/".length)}`;
-              changed = true;
-            }
-            if (changed) touched += 1;
-          }
-          fs.writeFileSync(file, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
-          console.log(`обновлено записей: ${touched} из ${entries.length}`);
-          NODE
-
-      - name: Remove empty collection folders
-        run: |
-          set -euo pipefail
+            fs.writeFileSync(file, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+            console.log(`обновлено записей: ${touched} из ${entries.length}`);
+            NODE
+          fi
           for dir in library_*; do
             [ -d "$dir" ] || continue
             if [ -z "$(find "$dir" -mindepth 1 -maxdepth 1 -type d -print -quit)" ]; then
@@ -73,23 +60,43 @@ jobs:
               echo "удалено: $dir"
             fi
           done
-
-      - name: Commit and push
-        run: |
-          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "Изменений нет."
-            exit 0
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Изменений не требуется."
+          else
+            git commit -m "Вернуть прежнюю схему: все работы снова в library"
           fi
-          git add -A library library_0* .github 2>/dev/null || git add -A
-          git commit -m "Вернуть прежнюю схему: все работы снова в library"
+
+      - name: Push with force after rebase
+        run: |
+          set -euo pipefail
           for i in 1 2 3 4 5; do
             if git push origin HEAD:main; then echo "Pushed on attempt $i"; exit 0; fi
-            sleep $((RANDOM % 5 + 3))
+            echo "push отклонён (попытка $i), переносим изменения поверх origin/main"
             git fetch origin main
-            git reset --hard origin/main
+            git rebase origin/main || { echo "rebase не удался, применяем с нуля"; git reset --hard origin/main; }
+            # после rebase переименование могло потеряться — повторяем
+            if [ -d library_01 ] && [ ! -d library ]; then
+              git mv library_01 library
+              if [ -f library/index.json ]; then
+                node --input-type=module <<'NODE'
+                import fs from "node:fs";
+                const file = "library/index.json";
+                const entries = JSON.parse(fs.readFileSync(file, "utf8"));
+                for (const entry of entries) {
+                  for (const [key, value] of Object.entries(entry)) {
+                    if (typeof value === "string" && value.includes("/library_01/")) entry[key] = value.split("/library_01/").join("/library/");
+                  }
+                  if (typeof entry.previewPath === "string" && entry.previewPath.startsWith("library_01/")) entry.previewPath = `library/${entry.previewPath.slice("library_01/".length)}`;
+                }
+                fs.writeFileSync(file, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+                NODE
+              fi
+              git add -A
+              git diff --cached --quiet || git commit -m "Вернуть прежнюю схему: все работы снова в library"
+            fi
           done
           echo "Could not push after 5 attempts."
           exit 1
