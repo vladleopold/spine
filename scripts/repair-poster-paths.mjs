@@ -71,7 +71,9 @@ function canonicalUrl(id) {
   return `${ORIGIN}/assets/library/${encodeURIComponent(id)}/${CANONICAL}`;
 }
 
-const FIELDS = ["thumbnail", "thumbnailPoster"];
+// webpPosterLow is a fallback poster the archive falls back to, so a dead
+// preview-low.webp in it leaves those cards black too.
+const FIELDS = ["thumbnail", "thumbnailPoster", "webpPosterLow"];
 let repaired = 0;
 let blocked = 0;
 let missingEntry = 0;
