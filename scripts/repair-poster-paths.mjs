@@ -121,10 +121,10 @@ for (const e of entries) {
   }
 
   for (const field of PATH_FIELDS) {
-    const current = cleanRepoPath(String(e[field] || "").replace(/^\/+/, ""));
+    const current = String(e[field] || "").replace(/^\/+/, "").replace(/\/+$/, "");
     if (!current) continue;
     const name = current.split("/").pop() || "";
-    if (!BLOCKED.test(name) || has(name) || !has(CANONICAL)) continue;
+    if (!BLOCKED.test(name) || !has(CANONICAL)) continue;
     details.push(`  ${e.id}: ${field} ${name} -> ${CANONICAL}`);
     repairedIds.add(e.id);
     e[field] = current.replace(BLOCKED, CANONICAL);
