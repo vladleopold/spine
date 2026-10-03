@@ -18,7 +18,11 @@ import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const STAGING_DIR = "library";
+// The collection that receives new uploads. It rotates on its own: once it holds
+// MAX_FOLDERS works they move into the next permanent library_NN collection.
+// `library` itself became the first permanent collection, kept under its original
+// name so no work loses its path.
+const STAGING_DIR = process.env.LIBRARY_STAGING_DIR || "library_02";
 const PREFIX = "library_";
 const MAX_FOLDERS = 999;
 const dryRun = process.argv.includes("--dry-run");
@@ -76,6 +80,8 @@ async function highestCollection() {
     .map((item) => (item.type === "dir" ? item.name.match(new RegExp(`^${PREFIX}(\\d+)$`)) : null))
     .filter(Boolean)
     .map((match) => Number(match[1]));
+  // The original `library` folder is collection #1: it is frozen and only read.
+  if (items.some((item) => item.type === "dir" && item.name === "library")) indexes.push(1);
   return indexes.length ? Math.max(...indexes) : 0;
 }
 
