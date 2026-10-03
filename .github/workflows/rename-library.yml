@@ -1,0 +1,42 @@
+name: Rename library to library_01
+
+# Папка library переполнена (1000 элементов) и должна стать первой постоянной
+# сборкой. Переименование через git mv сохраняет историю файлов, поэтому все
+# работы остаются на месте.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rename-library
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rename library to library_01
+        run: |
+          set -euo pipefail
+          if [ -d library_01 ]; then
+            echo "library_01 уже существует; нечего переименовывать."
+            exit 0
+          fi
+          git mv library library_01
+          git -c user.name=github-actions[bot] -c user.email=41898282+github-actions[bot]@users.noreply.github.com \
+            commit -m "Переименовать library в library_01: папка постоянная, набор идёт в library_02"
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then echo "Pushed on attempt $i"; exit 0; fi
+            sleep $((RANDOM % 5 + 3))
+            git fetch origin main
+            git reset --hard origin/main
+          done
+          echo "Could not push after 5 attempts."
+          exit 1
