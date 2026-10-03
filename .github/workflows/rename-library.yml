@@ -26,10 +26,25 @@ jobs:
         run: |
           set -euo pipefail
           if [ -d library_01 ]; then
-            echo "library_01 уже существует; нечего переименовывать."
+            echo "library_01 уже существует; переименование пропущено."
+          else
+            git mv library library_01
+            git -c user.name=github-actions[bot] -c user.email=41898282+github-actions[bot]@users.noreply.github.com \
+              commit -m "Переименовать library в library_01: папка постоянная, набор идёт в library_02"
+          fi
+
+      # Renaming the folder breaks every stored path, so rewrite the index in the
+      # same run; otherwise the site stops finding the files.
+      - name: Rewrite index paths
+        run: node scripts/migrate-collection-paths.mjs library library_01
+
+      - name: Push migration
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain library_01)" ]; then
+            echo "Пути уже актуальны."
             exit 0
           fi
-          git mv library library_01
           git -c user.name=github-actions[bot] -c user.email=41898282+github-actions[bot]@users.noreply.github.com \
             commit -m "Переименовать library в library_01: папка постоянная, набор идёт в library_02"
           for i in 1 2 3 4 5; do
