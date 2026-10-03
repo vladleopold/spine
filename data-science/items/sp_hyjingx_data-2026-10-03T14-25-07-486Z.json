@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-03T14:25:07.486Z",
+  "updatedAt": "2026-10-03T14:25:23.308Z",
+  "animation_asset": {
+    "id": "sp_hyjingx_data-2026-10-03T14-25-07-486Z",
+    "name": "sp_hyjingx_data",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "biyan",
+        "idle1",
+        "idle2"
+      ],
+      "loop_type": [
+        "loop-candidate"
+      ],
+      "state": [
+        "default-idle1"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z",
+    "manifestPath": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/manifest.json",
+    "files": [
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_Data.json",
+        "name": "sp_hyjingx_data/SP_HYJINGX_Data.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX.atlas",
+        "name": "sp_hyjingx_data/SP_HYJINGX.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_2.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_3.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_4.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX_4.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_5.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX_5.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/sp_hyjingx_data/SP_HYJINGX_6.png",
+        "name": "sp_hyjingx_data/SP_HYJINGX_6.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/idle1-preview.webp",
+        "name": "idle1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/sp_hyjingx_data-2026-10-03T14-25-07-486Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "SP_HYJINGX_Data.json",
+    "atlas": "SP_HYJINGX.atlas",
+    "textures": [
+      "SP_HYJINGX.png",
+      "SP_HYJINGX_2.png",
+      "SP_HYJINGX_3.png",
+      "SP_HYJINGX_4.png",
+      "SP_HYJINGX_5.png",
+      "SP_HYJINGX_6.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "biyan",
+      "idle1",
+      "idle2"
+    ],
+    "defaultAnimation": "idle1",
+    "fileCount": 11,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 7
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
