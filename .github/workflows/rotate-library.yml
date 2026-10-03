@@ -13,6 +13,11 @@ on:
     # Раз в сутки: ротация нужна редко, но проверять надо регулярно.
     - cron: "23 3 * * *"
   workflow_dispatch:
+    inputs:
+      finalize_into:
+        description: 'Перенести содержимое папки набора в эту постоянную сборку и начать заново (например library_01). Оставьте пустым для обычной проверки ротации.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -37,6 +42,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Finalize staging collection (optional one-off)
+        if: ${{ inputs.finalize_into != '' }}
+        run: node scripts/finalize-staging-collection.mjs "${{ inputs.finalize_into }}"
 
       - name: Rotate library folders
         run: node scripts/rotate-library.mjs
