@@ -1,0 +1,95 @@
+name: Restore library folder
+
+# Откат переименования library -> library_01.
+#
+# Исходная схема: все работы лежат в library, и все записанные ссылки вида
+# /assets/library/<работа>/... ведут на место. Переименование сломало их, из-за
+# чего Google Search Console видел 404 у каждой работы. Этот сценарий
+# возвращает прежнее имя папки, чинит индекс и убирает пустые папки сборок.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: restore-library
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rename library_01 back to library
+        run: |
+          set -euo pipefail
+          if [ -d library ] && [ -d library_01 ]; then
+            echo "Обе папки существуют, переименование не выполняю."
+          elif [ -d library_01 ]; then
+            git mv library_01 library
+            echo "library_01 -> library"
+          else
+            echo "Нечего переименовывать."
+          fi
+
+      - name: Restore index paths
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const file = "library/index.json";
+          if (!fs.existsSync(file)) { console.log("нет индекса"); process.exit(0); }
+          const entries = JSON.parse(fs.readFileSync(file, "utf8"));
+          let touched = 0;
+          for (const entry of entries) {
+            let changed = false;
+            for (const [key, value] of Object.entries(entry)) {
+              if (typeof value !== "string" || !value.includes("/library_01/")) continue;
+              entry[key] = value.split("/library_01/").join("/library/");
+              changed = true;
+            }
+            if (typeof entry.previewPath === "string" && entry.previewPath.startsWith("library_01/")) {
+              entry.previewPath = `library/${entry.previewPath.slice("library_01/".length)}`;
+              changed = true;
+            }
+            if (changed) touched += 1;
+          }
+          fs.writeFileSync(file, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+          console.log(`обновлено записей: ${touched} из ${entries.length}`);
+          NODE
+
+      - name: Remove empty collection folders
+        run: |
+          set -euo pipefail
+          for dir in library_*; do
+            [ -d "$dir" ] || continue
+            if [ -z "$(find "$dir" -mindepth 1 -maxdepth 1 -type d -print -quit)" ]; then
+              git rm -r -q "$dir"
+              echo "удалено: $dir"
+            fi
+          done
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Изменений нет."
+            exit 0
+          fi
+          git add -A library library_0* .github 2>/dev/null || git add -A
+          git commit -m "Вернуть прежнюю схему: все работы снова в library"
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then echo "Pushed on attempt $i"; exit 0; fi
+            sleep $((RANDOM % 5 + 3))
+            git fetch origin main
+            git reset --hard origin/main
+          done
+          echo "Could not push after 5 attempts."
+          exit 1
