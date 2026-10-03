@@ -1,0 +1,42 @@
+name: Rotate Library
+
+# Папка набора не должна расти бесконечно: GitHub ругается на каталоги за
+# 1000 элементов. Когда в папке набора становится 999 работ, они переезжают в
+# следующую постоянную сборку (library_03, library_04, ...), а сама папка
+# набора остаётся пустой под новые работы. Сайт читает все сборки, поэтому
+# работы не пропадают.
+
+on:
+  repository_dispatch:
+    types: [rotate-library]
+  schedule:
+    # Раз в сутки: ротация нужна редко, но проверять надо регулярно.
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Ротация правит общий library/index.json, поэтому два прогона одновременно
+# недопустимы.
+concurrency:
+  group: rotate-library
+
+jobs:
+  rotate:
+    name: Move works into the next collection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rotate library folders
+        run: node scripts/rotate-library.mjs
