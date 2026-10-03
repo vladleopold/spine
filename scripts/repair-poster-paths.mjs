@@ -74,6 +74,9 @@ function canonicalUrl(id) {
 // webpPosterLow is a fallback poster the archive falls back to, so a dead
 // preview-low.webp in it leaves those cards black too.
 const FIELDS = ["thumbnail", "thumbnailPoster", "webpPosterLow"];
+// thumbnailPosterPath / thumbnailPath hold a bare repo path, so they need their own
+// pass: a blocked basename there still resolves to a dead file in the archive.
+const PATH_FIELDS = ["thumbnailPosterPath", "thumbnailPath"];
 let repaired = 0;
 let blocked = 0;
 let missingEntry = 0;
@@ -114,6 +117,17 @@ for (const e of entries) {
     details.push(`  ${e.id}: ${field} ${name} -> ${target}`);
     repairedIds.add(e.id);
     e[field] = next;
+    repaired += 1;
+  }
+
+  for (const field of PATH_FIELDS) {
+    const current = cleanRepoPath(String(e[field] || "").replace(/^\/+/, ""));
+    if (!current) continue;
+    const name = current.split("/").pop() || "";
+    if (!BLOCKED.test(name) || has(name) || !has(CANONICAL)) continue;
+    details.push(`  ${e.id}: ${field} ${name} -> ${CANONICAL}`);
+    repairedIds.add(e.id);
+    e[field] = current.replace(BLOCKED, CANONICAL);
     repaired += 1;
   }
 }
