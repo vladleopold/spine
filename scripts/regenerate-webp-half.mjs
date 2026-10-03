@@ -49,17 +49,50 @@ for (const entry of index) {
     const halfH = Math.max(1, Math.round(h / 2));
     const dim = `${halfW}x${halfH}`;
 
+    // Seek after -i so the frame is properly decoded, and verify it is not empty
+    // before writing: an unchecked frame is how black posters got published.
+    const frameHasContent = (pngPath) => {
+      if (!fs.existsSync(pngPath)) return false;
+      try {
+        const raw = execSync(
+          `ffmpeg -y -v error -i "${pngPath}" -vf scale=48:48 -pix_fmt gray -f rawvideo -`,
+          { stdio: ["ignore", "pipe", "ignore"], maxBuffer: 64 * 1024 * 1024 }
+        );
+        if (!raw || raw.length < 100) return false;
+        let lit = 0;
+        for (let i = 0; i < raw.length; i++) if (raw[i] > 24) lit++;
+        return lit >= 24 && lit / raw.length >= 0.02;
+      } catch {
+        return false;
+      }
+    };
+
+    const probePng = `${webpPath}.probe.png`;
+    let goodSs = null;
+    for (const ss of [0, 0.15, 0.35, 0.6, 0.9]) {
+      try {
+        execSync(`ffmpeg -y -v error -ss ${ss} -i "${webmPath}" -vframes 1 -c:v png "${probePng}"`, {
+          stdio: "pipe",
+          timeout: 60000,
+        });
+      } catch {}
+      if (frameHasContent(probePng)) { goodSs = ss; break; }
+      try { fs.unlinkSync(probePng); } catch {}
+    }
+
+    if (goodSs === null) {
+      console.error(`${entryId}: no frame with visible content; poster left untouched.`);
+      failed++;
+      continue;
+    }
+
     try {
       execSync(
-        `ffmpeg -y -i "${webmPath}" -vf "select=eq(n\\,0)" -vframes 1 -s ${dim} -c:v libwebp -q:v 50 "${webpPath}"`,
+        `ffmpeg -y -v error -ss ${goodSs} -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v 50 "${webpPath}"`,
         { stdio: "pipe", timeout: 60000 }
       );
-    } catch {
-      execSync(
-        `ffmpeg -y -ss 0 -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v 50 "${webpPath}"`,
-        { stdio: "pipe", timeout: 60000 }
-      );
-    }
+    } catch {}
+    try { fs.unlinkSync(probePng); } catch {}
 
     if (fs.existsSync(webpPath) && fs.statSync(webpPath).size > 500) {
       processed++;

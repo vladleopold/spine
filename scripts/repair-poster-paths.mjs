@@ -47,9 +47,9 @@ if (!Array.isArray(entries)) {
 }
 
 // The asset API answers 404 for preview-low.webp on purpose (commit c265a59,
-// to stop cards showing a 360px thumbnail). Those URLs are dead by policy, not
-// by accident, but the site already filters them out when building feed JSON,
-// so rewriting them here would fight that decision instead of fixing data.
+// to stop cards showing a 360px thumbnail). Such a stored URL can never load,
+// so it has to be repointed at the canonical poster like any other dead path --
+// skipping it left those cards permanently black.
 const BLOCKED = /\bpreview-low\.webp$/i;
 
 const ORIGIN = "https://spine-link.vercel.app";
@@ -97,11 +97,9 @@ for (const e of entries) {
     const current = e[field];
     const name = storedBasename(current);
     if (!name) continue;
-    if (BLOCKED.test(name)) {
-      blocked += 1;
-      continue;
-    }
-    if (has(name)) continue; // the file is right there; nothing to do
+    // preview-low.webp is served as 404, so a stored pointer at it is always dead.
+    if (BLOCKED.test(name)) blocked += 1;
+    else if (has(name)) continue; // the file is right there; nothing to do
 
     const target = has(CANONICAL) ? CANONICAL : has("preview-medium.webp") ? "preview-medium.webp" : "";
     if (!target) {
@@ -120,7 +118,7 @@ for (const e of entries) {
 
 console.error(
   `Repaired ${repaired} poster field(s) across ${repairedIds.size} entr${repairedIds.size === 1 ? "y" : "ies"}; ` +
-  `skipped ${blocked} preview-low.webp (blocked by the asset API on purpose); ${missingEntry} entr${missingEntry === 1 ? "y has no" : "ies have no"} directory on disk.`,
+  `repointed ${blocked} preview-low.webp poster(s) (served as 404); ${missingEntry} entr${missingEntry === 1 ? "y has no" : "ies have no"} directory on disk.`,
 );
 for (const d of details.slice(0, 60)) console.error(d);
 if (details.length > 60) console.error(`  ... and ${details.length - 60} more`);

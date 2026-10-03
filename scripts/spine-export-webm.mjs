@@ -936,11 +936,50 @@ try {
     // Low Quality
     execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
 
-    // WebP poster: the first frame of the video.
+    // WebP poster: a frame that actually has visible content.
+    //
+    // `-ss` before `-i` is an input seek -- ffmpeg jumps straight to a keyframe
+    // and can emit a frame that is never displayed, which produced fully black
+    // posters. Seeking after `-i` decodes properly, and if the opening frame is
+    // still empty we walk forward through the clip until something is visible.
+    function frameHasContent(pngPath) {
+      try {
+        const raw = execSync(
+          `ffmpeg -y -v error -i "${pngPath}" -vf scale=48:48 -pix_fmt gray -f rawvideo -`,
+          { stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }
+        );
+        if (!raw || raw.length < 100) return false;
+        let lit = 0;
+        for (let i = 0; i < raw.length; i++) if (raw[i] > 24) lit++;
+        return lit >= 24 && lit / raw.length >= 0.02;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function pickPosterFrame(source, pngPath) {
+      for (const ss of [0, 0.15, 0.35, 0.6, 0.9]) {
+        try {
+          execSync(`ffmpeg -y -v error -ss ${ss} -i "${source}" -vframes 1 -c:v png "${pngPath}"`, { stdio: 'inherit' });
+        } catch (e) {
+          continue;
+        }
+        if (frameHasContent(pngPath)) return ss;
+        try { fs.rmSync(pngPath, { force: true }); } catch (e) {}
+      }
+      return null;
+    }
+
     function convertToWebp(source, out, dim) {
       try {
         const pngPath = `${out}.frame.png`;
-        execSync(`ffmpeg -y -ss 0 -i "${source}" -vframes 1 -s ${dim} -c:v png "${pngPath}"`, { stdio: 'inherit' });
+        const ss = pickPosterFrame(source, pngPath);
+        if (ss === null) {
+          throw new Error('no frame with visible content in the clip');
+        }
+        if (ss !== 0) {
+          console.error(`  Poster: first frame was empty, using ${ss}s instead.`);
+        }
         try {
           execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
         } catch (e) {

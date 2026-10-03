@@ -36,8 +36,17 @@ let skipped = 0;
 let failed = 0;
 let indexChanged = false;
 
-// Poster = the first frame of the preview WebM. No fallback to later frames.
-const FIRST_FRAME_SS = 0;
+// Poster = a real frame of the preview WebM.
+//
+// This used to be `-ss 0` before `-i`, which is an input seek: ffmpeg jumps to a
+// keyframe and can decode a frame that is never displayed (often a black
+// placeholder), so the poster came out empty while the video looked fine.
+// Seeking after `-i` decodes properly, and we still verify the result and walk
+// forward through the clip until a frame with visible content is found.
+const FRAME_CANDIDATES_SS = [0, 0.15, 0.35, 0.6, 0.9];
+// A frame whose lit pixels are below this share is treated as blank.
+const MIN_LIT_RATIO = 0.02;
+const MIN_LIT_PIXELS = 24;
 
 for (const entry of entries) {
   const match = entry.thumbnailPoster.match(/\/assets\/(.*?)(?:\?|$)/);
@@ -83,9 +92,51 @@ for (const entry of entries) {
       continue;
     }
 
+    // Decode the frame and measure it, so we never publish an empty poster.
+    const frameHasContent = (pngPath) => {
+      if (!fs.existsSync(pngPath)) return false;
+      try {
+        const raw = execSync(
+          `ffmpeg -y -v error -i "${pngPath}" -vf scale=48:48 -pix_fmt gray -f rawvideo -`,
+          { stdio: ["ignore", "pipe", "ignore"], maxBuffer: 64 * 1024 * 1024 }
+        );
+        if (!raw || raw.length < 100) return false;
+        let lit = 0;
+        for (let i = 0; i < raw.length; i++) if (raw[i] > 24) lit++;
+        return lit >= MIN_LIT_PIXELS && lit / raw.length >= MIN_LIT_RATIO;
+      } catch {
+        return false;
+      }
+    };
+
+    // Find the earliest frame that actually has something in it.
+    const probePng = path.join(dir, ".poster-probe.png");
+    let goodSs = null;
+    for (const ss of FRAME_CANDIDATES_SS) {
+      try {
+        execSync(`ffmpeg -y -v error -ss ${ss} -i "${webmPath}" -vframes 1 -c:v png "${probePng}"`, {
+          stdio: "pipe",
+          timeout: 30000,
+        });
+      } catch {}
+      if (frameHasContent(probePng)) {
+        goodSs = ss;
+        break;
+      }
+    }
+    if (goodSs === null) {
+      console.error(`  ${entry.id}: no frame with visible content; posters left untouched.`);
+      skipped++;
+      try { fs.unlinkSync(probePng); } catch {}
+      continue;
+    }
+    if (goodSs !== FRAME_CANDIDATES_SS[0]) {
+      console.error(`  ${entry.id}: first frame is empty, using ${goodSs}s instead.`);
+    }
+
     const extractFrame = (dim, outPath, quality) => {
       try {
-        execSync(`ffmpeg -y -ss ${FIRST_FRAME_SS} -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`, { stdio: "pipe", timeout: 30000 });
+        execSync(`ffmpeg -y -v error -ss ${goodSs} -i "${webmPath}" -vframes 1 -s ${dim} -c:v libwebp -q:v ${quality} "${outPath}"`, { stdio: "pipe", timeout: 30000 });
       } catch {}
       return fs.existsSync(outPath) && fs.statSync(outPath).size > 200;
     };
@@ -109,6 +160,7 @@ for (const entry of entries) {
     extractFrame(dimHigh, path.join(dir, "preview.webp"), 50);
     extractFrame(dimMedium, path.join(dir, "preview-medium.webp"), 30);
     extractFrame(dimLow, path.join(dir, "preview-low.webp"), 15);
+    try { fs.unlinkSync(probePng); } catch {}
 
     fixed++;
     // Bump the poster URL cache-buster so the CDN serves the new frame.
