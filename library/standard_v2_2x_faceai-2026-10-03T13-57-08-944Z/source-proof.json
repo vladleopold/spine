@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+  "title": "standard_v2_2x_faceai",
+  "uploadedAt": "2026-10-03T13:57:08.944Z",
+  "proofPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json?v=2026-10-03T13-57-08.944Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_c85thp_1n9txpn",
+    "anonymousFingerprint": "c85thp",
+    "browserFingerprintSha256": "11aa95b966020fe5f738096c0b94e5fcb69bfc89f6ada7b3b7bde843a4ab6960",
+    "browserEnvironmentHashSha256": "06778dfc8471b25ef7805d2ec8bb66f2ccf9b28398b66558b4d25c7ce02aa900",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+      "platform": "Win32",
+      "language": "ru",
+      "languages": [
+        "ru",
+        "en",
+        "en-GB",
+        "en-US"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Europe/Berlin",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:34bcd7d7ed19bdd8e37e5d698573b5b75ce221ac626a2e69fa321d1ba78ef7db",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 740,
+      "sha256": "4745cbefbd473baa911f98d96871b757bb60b4409066aacfe122bc88adf40349"
+    },
+    {
+      "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.json",
+      "bytes": 748622,
+      "sha256": "962dd77eaf07d24d8cece8bdfb51456084d92ebefe22353f5fe6b441823d9f72"
+    },
+    {
+      "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+      "bytes": 1432480,
+      "sha256": "94a01be865680ce94217bfcd24d656dcf0ef3e84deb7f3388f0f32c468bb2ea6"
+    },
+    {
+      "name": "standard_v2_2x_faceai/standard_v2_2x_faceai(5).atlas",
+      "bytes": 805,
+      "sha256": "b9486e117846939c50a57b26848ec952ede8a4293d2443b4ddba4d06af42dc8a"
+    }
+  ],
+  "proofHash": "34bcd7d7ed19bdd8e37e5d698573b5b75ce221ac626a2e69fa321d1ba78ef7db"
+}

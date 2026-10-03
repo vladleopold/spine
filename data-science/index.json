@@ -1,5 +1,157 @@
 [
   {
+    "id": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+    "name": "standard_v2_2x_faceai",
+    "updatedAt": "2026-10-03T13:57:12.814Z",
+    "animation_asset": {
+      "id": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+      "name": "standard_v2_2x_faceai",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "hit"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "animation_state": [
+          "hit_face",
+          "hit_l",
+          "hit_l2",
+          "hit_r",
+          "hit_r2",
+          "idle",
+          "wait"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "action": [
+          "attack"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+      "manifestPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/manifest.json",
+      "files": [
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/standard_v2_2x_faceai/standard_v2_2x_faceai.json",
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/standard_v2_2x_faceai/standard_v2_2x_faceai(5).atlas",
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai(5).atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "standard_v2_2x_faceai.json",
+      "atlas": "standard_v2_2x_faceai(5).atlas",
+      "textures": [
+        "standard_v2_2x_faceai.webp"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "Hit_Face",
+        "Hit_L",
+        "Hit_L2",
+        "Hit_R",
+        "Hit_R2",
+        "Idle",
+        "Wait"
+      ],
+      "defaultAnimation": "Idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "hit"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "chick_main-2026-10-02T21-00-55-853Z",
     "name": "chick_main",
     "updatedAt": "2026-10-02T21:01:26.680Z",

@@ -1,5 +1,225 @@
 [
   {
+    "id": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+    "title": "standard_v2_2x_faceai",
+    "publicOwnerId": "u_j72nlp",
+    "ownerAnonId": "anon_c85thp_1n9txpn",
+    "ownerAnonFingerprint": "c85thp",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-03T13:57:08.944Z",
+    "webmGeneratedAt": "2026-10-03T13:57:08.944Z",
+    "skeleton": "standard_v2_2x_faceai.json",
+    "atlas": "standard_v2_2x_faceai(5).atlas",
+    "textures": [
+      "standard_v2_2x_faceai.webp"
+    ],
+    "animations": [
+      "Hit_Face",
+      "Hit_L",
+      "Hit_L2",
+      "Hit_R",
+      "Hit_R2",
+      "Idle",
+      "Wait"
+    ],
+    "defaultAnimation": "Idle",
+    "files": [
+      "standard_v2_2x_faceai/standard_v2_2x_faceai.json",
+      "standard_v2_2x_faceai/standard_v2_2x_faceai(5).atlas",
+      "standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp?v=2026-10-03T13-57-08.944Z",
+    "thumbnailPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp?v=2026-10-03T13-57-08.944Z",
+    "thumbnailPosterPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+      "title": "standard_v2_2x_faceai",
+      "uploadedAt": "2026-10-03T13:57:08.944Z",
+      "proofPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json?v=2026-10-03T13-57-08.944Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_c85thp_1n9txpn",
+        "anonymousFingerprint": "c85thp",
+        "browserFingerprintSha256": "11aa95b966020fe5f738096c0b94e5fcb69bfc89f6ada7b3b7bde843a4ab6960",
+        "browserEnvironmentHashSha256": "06778dfc8471b25ef7805d2ec8bb66f2ccf9b28398b66558b4d25c7ce02aa900",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+          "platform": "Win32",
+          "language": "ru",
+          "languages": [
+            "ru",
+            "en",
+            "en-GB",
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Europe/Berlin",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:34bcd7d7ed19bdd8e37e5d698573b5b75ce221ac626a2e69fa321d1ba78ef7db",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 740,
+          "sha256": "4745cbefbd473baa911f98d96871b757bb60b4409066aacfe122bc88adf40349"
+        },
+        {
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.json",
+          "bytes": 748622,
+          "sha256": "962dd77eaf07d24d8cece8bdfb51456084d92ebefe22353f5fe6b441823d9f72"
+        },
+        {
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+          "bytes": 1432480,
+          "sha256": "94a01be865680ce94217bfcd24d656dcf0ef3e84deb7f3388f0f32c468bb2ea6"
+        },
+        {
+          "name": "standard_v2_2x_faceai/standard_v2_2x_faceai(5).atlas",
+          "bytes": 805,
+          "sha256": "b9486e117846939c50a57b26848ec952ede8a4293d2443b4ddba4d06af42dc8a"
+        }
+      ],
+      "proofHash": "34bcd7d7ed19bdd8e37e5d698573b5b75ce221ac626a2e69fa321d1ba78ef7db"
+    },
+    "sourceProofPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json?v=2026-10-03T13-57-08.944Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-03T13:57:12.527Z",
+      "entryId": "standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+      "title": "standard_v2_2x_faceai",
+      "uploadedAt": "2026-10-03T13:57:08.944Z",
+      "sourceProofHash": "34bcd7d7ed19bdd8e37e5d698573b5b75ce221ac626a2e69fa321d1ba78ef7db",
+      "sourceProofPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json?v=2026-10-03T13-57-08.944Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_c85thp_1n9txpn",
+        "anonymousFingerprint": "c85thp",
+        "browserFingerprintSha256": "11aa95b966020fe5f738096c0b94e5fcb69bfc89f6ada7b3b7bde843a4ab6960",
+        "browserEnvironmentHashSha256": "06778dfc8471b25ef7805d2ec8bb66f2ccf9b28398b66558b4d25c7ce02aa900",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+          "platform": "Win32",
+          "language": "ru",
+          "languages": [
+            "ru",
+            "en",
+            "en-GB",
+            "en-US"
+          ],
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Europe/Berlin",
+          "timezoneOffset": -120,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z",
+        "files": [
+          {
+            "name": "standard_v2_2x_faceai.webp",
+            "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/standard_v2_2x_faceai/standard_v2_2x_faceai.webp",
+            "bytes": 1432480,
+            "sha256": "94a01be865680ce94217bfcd24d656dcf0ef3e84deb7f3388f0f32c468bb2ea6",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/idle-preview.webp",
+            "bytes": 740,
+            "sha256": "4745cbefbd473baa911f98d96871b757bb60b4409066aacfe122bc88adf40349",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/source-proof.json",
+            "bytes": 2704,
+            "sha256": "735d4d820b560ffd5683cb872108435a72a07df5be295bd2272aea0d81157285",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "d239dda23f43fbb680f95d95b4028c87d16d52c7d28fede5befdb9d69a478aae",
+      "recommendedAnchorPayload": "sha256:d239dda23f43fbb680f95d95b4028c87d16d52c7d28fede5befdb9d69a478aae",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xd239dda23f43fbb680f95d95b4028c87d16d52c7d28fede5befdb9d69a478aae",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library/standard_v2_2x_faceai-2026-10-03T13-57-08-944Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "chick_main-2026-10-02T21-00-55-853Z",
     "title": "chick_main",
     "publicOwnerId": "u_185wjs3",
