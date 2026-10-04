@@ -17,7 +17,9 @@ concurrency:
 
 jobs:
   restore:
+    # Renaming 996 works in a 6 GB repository needs well past the default 6 minutes.
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
