@@ -1,0 +1,66 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "capriccio_character-2026-10-04T22-27-28-639Z",
+  "title": "capriccio_character",
+  "uploadedAt": "2026-10-04T22:27:28.639Z",
+  "proofPath": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library_02/capriccio_character-2026-10-04T22-27-28-639Z/source-proof.json?v=2026-10-04T22-27-28.639Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_i8xlhe_1v2hl6m",
+    "anonymousFingerprint": "i8xlhe",
+    "browserFingerprintSha256": "86792ec0a5d6b353e511c6b0c70a9667cf64474818d1b42b059d5b61a143a7a5",
+    "browserEnvironmentHashSha256": "c08f1b3cff6a51e8c849ef5d2a0176945e4b3bf160d0cb75eb708135ab54b95d",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "th-TH",
+      "languages": [
+        "th-TH"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Bangkok",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library_02/capriccio_character-2026-10-04T22-27-28-639Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:4cf43b5c5af46b80aa0c6c3d9f28a70c3f3bd8406e09f69505a90fdb23dca984",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "capriccio_character/Capriccio.atlas",
+      "bytes": 15644,
+      "sha256": "63e636f92ff62284314ab8fee48df7e56d5e218ece9b394d652fb4ec34d01425"
+    },
+    {
+      "name": "capriccio_character/Capriccio_character.json",
+      "bytes": 275049,
+      "sha256": "718687964097d63ddf246e0a1806771b8588bf02840597b3ef2250dd37910892"
+    },
+    {
+      "name": "capriccio_character/Capriccio.png",
+      "bytes": 2386472,
+      "sha256": "7077d8fb7aec9ef072410b2f04673ffea251858578629b5cfa5251e543b6956e"
+    }
+  ],
+  "proofHash": "4cf43b5c5af46b80aa0c6c3d9f28a70c3f3bd8406e09f69505a90fdb23dca984"
+}

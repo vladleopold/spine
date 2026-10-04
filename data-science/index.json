@@ -1,5 +1,132 @@
 [
   {
+    "id": "capriccio_character-2026-10-04T22-27-28-639Z",
+    "name": "capriccio_character",
+    "updatedAt": "2026-10-04T22:27:40.715Z",
+    "animation_asset": {
+      "id": "capriccio_character-2026-10-04T22-27-28-639Z",
+      "name": "capriccio_character",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "character"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/capriccio_character-2026-10-04T22-27-28-639Z",
+      "manifestPath": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/capriccio_character/Capriccio_character.json",
+          "name": "capriccio_character/Capriccio_character.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/capriccio_character/Capriccio.atlas",
+          "name": "capriccio_character/Capriccio.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/capriccio_character/Capriccio.png",
+          "name": "capriccio_character/Capriccio.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/capriccio_character-2026-10-04T22-27-28-639Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Capriccio_character.json",
+      "atlas": "Capriccio.atlas",
+      "textures": [
+        "Capriccio.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 5,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 1
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "character"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "sp_hyjingx_data-2026-10-03T14-25-07-486Z",
     "name": "sp_hyjingx_data",
     "updatedAt": "2026-10-03T14:25:23.308Z",
