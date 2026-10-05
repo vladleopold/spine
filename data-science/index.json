@@ -1,5 +1,148 @@
 [
   {
+    "id": "character_right-2026-10-05T07-22-42-314Z",
+    "name": "character_right",
+    "updatedAt": "2026-10-05T07:22:45.760Z",
+    "animation_asset": {
+      "id": "character_right-2026-10-05T07-22-42-314Z",
+      "name": "character_right",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "character"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "charge",
+          "idle",
+          "win"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "direction": [
+          "right"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/character_right-2026-10-05T07-22-42-314Z",
+      "manifestPath": "library_02/character_right-2026-10-05T07-22-42-314Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/character_right/character_right.json",
+          "name": "character_right/character_right.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/character_right/collection_meter.atlas.txt",
+          "name": "character_right/collection_meter.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/character_right/collection_meter.png",
+          "name": "character_right/collection_meter.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/character_right-2026-10-05T07-22-42-314Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "character_right.json",
+      "atlas": "collection_meter.atlas.txt",
+      "textures": [
+        "collection_meter.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "charge",
+        "idle",
+        "win"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "character"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "capriccio_character-2026-10-04T22-27-28-639Z",
     "name": "capriccio_character",
     "updatedAt": "2026-10-04T22:27:40.715Z",
