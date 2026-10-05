@@ -1,5 +1,139 @@
 [
   {
+    "id": "r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z",
+    "name": "r_sophia falling in pit",
+    "updatedAt": "2026-10-05T17:48:59.201Z",
+    "animation_asset": {
+      "id": "r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z",
+      "name": "r_sophia falling in pit",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "fallingin"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-fallingin"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z",
+      "manifestPath": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/r_sophia falling in pit/R_Sophia falling in pit.json",
+          "name": "r_sophia falling in pit/R_Sophia falling in pit.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/r_sophia falling in pit/R_Sophia falling in pit.atlas",
+          "name": "r_sophia falling in pit/R_Sophia falling in pit.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/r_sophia falling in pit/R_Sophia falling in pit.png",
+          "name": "r_sophia falling in pit/R_Sophia falling in pit.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/r_sophia falling in pit/R_Sophia falling in pit_2.png",
+          "name": "r_sophia falling in pit/R_Sophia falling in pit_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/fallingin-preview.webp",
+          "name": "fallingin-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "R_Sophia falling in pit.json",
+      "atlas": "R_Sophia falling in pit.atlas",
+      "textures": [
+        "R_Sophia falling in pit.png",
+        "R_Sophia falling in pit_2.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "fallingIn"
+      ],
+      "defaultAnimation": "fallingIn",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character_right-2026-10-05T07-22-42-314Z",
     "name": "character_right",
     "updatedAt": "2026-10-05T07:22:45.760Z",
