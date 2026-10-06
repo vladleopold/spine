@@ -1,5 +1,251 @@
 [
   {
+    "id": "free_spins_outro-2026-10-06T06-08-46-141Z",
+    "title": "free_spins_outro",
+    "publicOwnerId": "u_e2aji8",
+    "ownerAnonId": "anon_107c1u1_88qh5g",
+    "ownerAnonFingerprint": "107c1u1",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-06T06:08:46.141Z",
+    "webmGeneratedAt": "2026-10-06T06:08:46.141Z",
+    "skeleton": "free_spins_outro.json",
+    "atlas": "win_sequence.atlas.txt",
+    "textures": [
+      "win_sequence.png"
+    ],
+    "animations": [
+      "1transition_splash_begin",
+      "2transition_splash_idle",
+      "3transition_splash_end",
+      "landscape_layout",
+      "portrait_layout"
+    ],
+    "defaultAnimation": "2transition_splash_idle",
+    "files": [
+      "free_spins_outro/free_spins_outro.json",
+      "free_spins_outro/win_sequence.atlas.txt",
+      "free_spins_outro/win_sequence.png",
+      "2transition_splash_idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp?v=2026-10-06T06-08-46.141Z",
+    "thumbnailPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp?v=2026-10-06T06-08-46.141Z",
+    "thumbnailPosterPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "free_spins_outro-2026-10-06T06-08-46-141Z",
+      "title": "free_spins_outro",
+      "uploadedAt": "2026-10-06T06:08:46.141Z",
+      "proofPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json?v=2026-10-06T06-08-46.141Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_107c1u1_88qh5g",
+        "anonymousFingerprint": "107c1u1",
+        "browserFingerprintSha256": "d1b82e0b126ec4d44e4e52df6621524523e7f6596b3bf8af9e0398fd06c560a3",
+        "browserEnvironmentHashSha256": "721d1fe6526b5e5f667cc2d859171a904c7d215fa530f9a14b49d31750737d80",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en",
+            "zh-CN",
+            "ja"
+          ],
+          "hardwareConcurrency": 6,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1344,
+            "height": 840,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:406a9486d1cc4bc253f96352e9cd3878a5071ea0a5146ba67021b5729051951c",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "2transition_splash_idle-preview.webp",
+          "bytes": 10418,
+          "sha256": "076e26606dc0c9338abde864b0f51eb6c970e4cf77bd0c545518f40b26f3d423"
+        },
+        {
+          "name": "free_spins_outro/free_spins_outro.json",
+          "bytes": 11817,
+          "sha256": "e282483fde5c00f40e4524d982905468db351b2b7bba39ae112f4b9aaca25f2e"
+        },
+        {
+          "name": "free_spins_outro/win_sequence.atlas.txt",
+          "bytes": 1632,
+          "sha256": "b72622ef7af4e2db1a0d98982e882fd9130d4e986819f907e92f06a5035cf25d"
+        },
+        {
+          "name": "free_spins_outro/win_sequence.png",
+          "bytes": 4619897,
+          "sha256": "b93d683d2628a5dd3124c4b2c10efd30c4dc8064f2aefe5ed6dedb63c0d56563"
+        }
+      ],
+      "proofHash": "406a9486d1cc4bc253f96352e9cd3878a5071ea0a5146ba67021b5729051951c"
+    },
+    "sourceProofPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json?v=2026-10-06T06-08-46.141Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-06T06:09:06.416Z",
+      "entryId": "free_spins_outro-2026-10-06T06-08-46-141Z",
+      "title": "free_spins_outro",
+      "uploadedAt": "2026-10-06T06:08:46.141Z",
+      "sourceProofHash": "406a9486d1cc4bc253f96352e9cd3878a5071ea0a5146ba67021b5729051951c",
+      "sourceProofPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json?v=2026-10-06T06-08-46.141Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_107c1u1_88qh5g",
+        "anonymousFingerprint": "107c1u1",
+        "browserFingerprintSha256": "d1b82e0b126ec4d44e4e52df6621524523e7f6596b3bf8af9e0398fd06c560a3",
+        "browserEnvironmentHashSha256": "721d1fe6526b5e5f667cc2d859171a904c7d215fa530f9a14b49d31750737d80",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "zh-TW",
+          "languages": [
+            "zh-TW",
+            "zh",
+            "en-US",
+            "en",
+            "zh-CN",
+            "ja"
+          ],
+          "hardwareConcurrency": 6,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1344,
+            "height": 840,
+            "colorDepth": 24,
+            "pixelRatio": 2
+          },
+          "timezone": "Asia/Taipei",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z",
+        "files": [
+          {
+            "name": "win_sequence.png",
+            "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/win_sequence.png",
+            "bytes": 4619897,
+            "sha256": "b93d683d2628a5dd3124c4b2c10efd30c4dc8064f2aefe5ed6dedb63c0d56563",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "free_spins_outro.json",
+            "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/free_spins_outro.json",
+            "bytes": 11817,
+            "sha256": "e282483fde5c00f40e4524d982905468db351b2b7bba39ae112f4b9aaca25f2e",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "win_sequence.atlas.txt",
+            "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/win_sequence.atlas.txt",
+            "bytes": 1632,
+            "sha256": "b72622ef7af4e2db1a0d98982e882fd9130d4e986819f907e92f06a5035cf25d",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "2transition_splash_idle-preview.webp",
+            "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp",
+            "bytes": 10418,
+            "sha256": "076e26606dc0c9338abde864b0f51eb6c970e4cf77bd0c545518f40b26f3d423",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json",
+            "bytes": 2697,
+            "sha256": "93f567e1d7f63f5e1a5ffa160503a5c00e44b5c9616c3e3342285b0a8fe8f6aa",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "0d1b70439428bb03734f20c20c69a96492ba6e8c64c275104394985aec6b1fc2",
+      "recommendedAnchorPayload": "sha256:0d1b70439428bb03734f20c20c69a96492ba6e8c64c275104394985aec6b1fc2",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x0d1b70439428bb03734f20c20c69a96492ba6e8c64c275104394985aec6b1fc2",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_outro-2026-10-06T06-08-46-141Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z",
     "title": "r_sophia falling in pit",
     "publicOwnerId": "u_161c5ht",

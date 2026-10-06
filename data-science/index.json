@@ -1,5 +1,152 @@
 [
   {
+    "id": "free_spins_outro-2026-10-06T06-08-46-141Z",
+    "name": "free_spins_outro",
+    "updatedAt": "2026-10-06T06:09:06.419Z",
+    "animation_asset": {
+      "id": "free_spins_outro-2026-10-06T06-08-46-141Z",
+      "name": "free_spins_outro",
+      "domain": "gamedev",
+      "asset_category": "background",
+      "animation_type": "background",
+      "skeleton_type": "background",
+      "content_type": "background",
+      "taxonomy": {
+        "category": "environment",
+        "class": "background",
+        "type": "animated-background",
+        "tags": [
+          "landscape"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "scene-background"
+        ],
+        "perspective": [
+          "2d"
+        ],
+        "animation_state": [
+          "1transition_splash_begin",
+          "2transition_splash_idle",
+          "3transition_splash_end",
+          "landscape_layout",
+          "portrait_layout",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-2transition_splash_idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z",
+      "manifestPath": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/free_spins_outro.json",
+          "name": "free_spins_outro/free_spins_outro.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/win_sequence.atlas.txt",
+          "name": "free_spins_outro/win_sequence.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/free_spins_outro/win_sequence.png",
+          "name": "free_spins_outro/win_sequence.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/2transition_splash_idle-preview.webp",
+          "name": "2transition_splash_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/free_spins_outro-2026-10-06T06-08-46-141Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "free_spins_outro.json",
+      "atlas": "win_sequence.atlas.txt",
+      "textures": [
+        "win_sequence.png"
+      ],
+      "animationCount": 5,
+      "animationNames": [
+        "1transition_splash_begin",
+        "2transition_splash_idle",
+        "3transition_splash_end",
+        "landscape_layout",
+        "portrait_layout"
+      ],
+      "defaultAnimation": "2transition_splash_idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "landscape"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "r_sophia-falling-in-pit-2026-10-05T17-48-57-640Z",
     "name": "r_sophia falling in pit",
     "updatedAt": "2026-10-05T17:48:59.201Z",
