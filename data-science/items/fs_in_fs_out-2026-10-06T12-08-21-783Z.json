@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-06T12:08:21.783Z",
+  "updatedAt": "2026-10-06T12:09:25.465Z",
+  "animation_asset": {
+    "id": "fs_in_fs_out-2026-10-06T12-08-21-783Z",
+    "name": "fs_in_fs_out",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "book_idle",
+        "book_in",
+        "book_out",
+        "select_original",
+        "select_v1",
+        "select_v2",
+        "select_v3",
+        "select_v4",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-book_idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z",
+    "manifestPath": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/manifest.json",
+    "files": [
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out.json",
+        "name": "fs_in_fs_out/fs_in_fs_out.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out.atlas",
+        "name": "fs_in_fs_out/fs_in_fs_out.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out.webp",
+        "name": "fs_in_fs_out/fs_in_fs_out.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out_2.webp",
+        "name": "fs_in_fs_out/fs_in_fs_out_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out_3.webp",
+        "name": "fs_in_fs_out/fs_in_fs_out_3.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out_4.webp",
+        "name": "fs_in_fs_out/fs_in_fs_out_4.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/fs_in_fs_out/fs_in_fs_out_5.webp",
+        "name": "fs_in_fs_out/fs_in_fs_out_5.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/book_idle-preview.webp",
+        "name": "book_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/fs_in_fs_out-2026-10-06T12-08-21-783Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "fs_in_fs_out.json",
+    "atlas": "fs_in_fs_out.atlas",
+    "textures": [
+      "fs_in_fs_out.webp",
+      "fs_in_fs_out_2.webp",
+      "fs_in_fs_out_3.webp",
+      "fs_in_fs_out_4.webp",
+      "fs_in_fs_out_5.webp"
+    ],
+    "animationCount": 8,
+    "animationNames": [
+      "book_idle",
+      "book_in",
+      "book_out",
+      "select_original",
+      "select_v1",
+      "select_v2",
+      "select_v3",
+      "select_v4"
+    ],
+    "defaultAnimation": "book_idle",
+    "fileCount": 10,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 6
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
