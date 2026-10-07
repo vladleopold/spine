@@ -1,5 +1,142 @@
 [
   {
+    "id": "pointpopup-2026-10-07T13-06-39-787Z",
+    "name": "pointpopup",
+    "updatedAt": "2026-10-07T13:06:40.779Z",
+    "animation_asset": {
+      "id": "pointpopup-2026-10-07T13-06-39-787Z",
+      "name": "pointpopup",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "popup"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "animation"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/pointpopup-2026-10-07T13-06-39-787Z",
+      "manifestPath": "library_02/pointpopup-2026-10-07T13-06-39-787Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/pointpopup/PointPopup.json",
+          "name": "pointpopup/PointPopup.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/pointpopup/PointPopup.atlas",
+          "name": "pointpopup/PointPopup.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/pointpopup/PointPopup.png",
+          "name": "pointpopup/PointPopup.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/pointpopup-2026-10-07T13-06-39-787Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "PointPopup.json",
+      "atlas": "PointPopup.atlas",
+      "textures": [
+        "PointPopup.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "animation"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "popup"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "switch-2026-10-07T10-52-20-333Z",
     "name": "switch",
     "updatedAt": "2026-10-07T10:52:20.883Z",
