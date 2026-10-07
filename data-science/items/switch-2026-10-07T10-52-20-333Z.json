@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-07T10:52:20.333Z",
+  "updatedAt": "2026-10-07T10:52:20.883Z",
+  "animation_asset": {
+    "id": "switch-2026-10-07T10-52-20-333Z",
+    "name": "switch",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "switch"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-switch"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library_02/switch-2026-10-07T10-52-20-333Z",
+    "manifestPath": "library_02/switch-2026-10-07T10-52-20-333Z/manifest.json",
+    "files": [
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/switch/switch.json",
+        "name": "switch/switch.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/switch/switch.atlas",
+        "name": "switch/switch.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/switch/switch.webp",
+        "name": "switch/switch.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/switch-preview.webp",
+        "name": "switch-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/switch-2026-10-07T10-52-20-333Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "switch.json",
+    "atlas": "switch.atlas",
+    "textures": [
+      "switch.webp"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "switch"
+    ],
+    "defaultAnimation": "switch",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
