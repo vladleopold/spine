@@ -1,5 +1,244 @@
 [
   {
+    "id": "low_symbols-2026-10-08T00-23-37-802Z",
+    "title": "low_symbols",
+    "publicOwnerId": "u_1vl56uz",
+    "ownerAnonId": "anon_2ob0ll_ywcomp",
+    "ownerAnonFingerprint": "2ob0ll",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-08T00:23:37.802Z",
+    "webmGeneratedAt": "2026-10-08T00:23:37.802Z",
+    "skeleton": "low_symbols.json",
+    "atlas": "low_symbols.atlas",
+    "textures": [
+      "low_symbols.png"
+    ],
+    "animations": [
+      "idle",
+      "win"
+    ],
+    "defaultAnimation": "idle",
+    "files": [
+      "low_symbols/low_symbols.json",
+      "low_symbols/low_symbols.atlas",
+      "low_symbols/low_symbols.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp?v=2026-10-08T00-23-37.802Z",
+    "thumbnailPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp?v=2026-10-08T00-23-37.802Z",
+    "thumbnailPosterPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "low_symbols-2026-10-08T00-23-37-802Z",
+      "title": "low_symbols",
+      "uploadedAt": "2026-10-08T00:23:37.802Z",
+      "proofPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json?v=2026-10-08T00-23-37.802Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_2ob0ll_ywcomp",
+        "anonymousFingerprint": "2ob0ll",
+        "browserFingerprintSha256": "b5ca3523299271ee48f3d3a2c92af9b4a402984cf7dcd6802daf7b62533768b6",
+        "browserEnvironmentHashSha256": "e5d7f575c8f6376891b9cf8eeb500f88d01b21ed1fc157b6ed2cf8167590b46e",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Tbilisi",
+          "timezoneOffset": -240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:e56c6b3a1f1c7f9d5ad2ddccc10cd2db4857077c12468436db66917c879bf10f",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "idle-preview.webp",
+          "bytes": 1562,
+          "sha256": "f9fca1b15eb2287808ec1fbe4ae6982188b829355894aa593b99c64ec1201a69"
+        },
+        {
+          "name": "low_symbols/low_symbols.atlas",
+          "bytes": 1545,
+          "sha256": "f7dce8abd030cbedbeab54674898ad724f3781119ce4c868b4aa495ee8688c5b"
+        },
+        {
+          "name": "low_symbols/low_symbols.json",
+          "bytes": 42821,
+          "sha256": "5848e51ffe0c2289c490fa7775451f1bf1c981206a02ff5717c0f989cd295bda"
+        },
+        {
+          "name": "low_symbols/low_symbols.png",
+          "bytes": 1237352,
+          "sha256": "5bb43ee333f85b4d33788220e74dbee1a278145a8708582c98f0f64120e000b8"
+        }
+      ],
+      "proofHash": "e56c6b3a1f1c7f9d5ad2ddccc10cd2db4857077c12468436db66917c879bf10f"
+    },
+    "sourceProofPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json?v=2026-10-08T00-23-37.802Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-08T00:23:34.041Z",
+      "entryId": "low_symbols-2026-10-08T00-23-37-802Z",
+      "title": "low_symbols",
+      "uploadedAt": "2026-10-08T00:23:37.802Z",
+      "sourceProofHash": "e56c6b3a1f1c7f9d5ad2ddccc10cd2db4857077c12468436db66917c879bf10f",
+      "sourceProofPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json?v=2026-10-08T00-23-37.802Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_2ob0ll_ywcomp",
+        "anonymousFingerprint": "2ob0ll",
+        "browserFingerprintSha256": "b5ca3523299271ee48f3d3a2c92af9b4a402984cf7dcd6802daf7b62533768b6",
+        "browserEnvironmentHashSha256": "e5d7f575c8f6376891b9cf8eeb500f88d01b21ed1fc157b6ed2cf8167590b46e",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 16,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 2560,
+            "height": 1440,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "Asia/Tbilisi",
+          "timezoneOffset": -240,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z",
+        "files": [
+          {
+            "name": "low_symbols.json",
+            "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.json",
+            "bytes": 42821,
+            "sha256": "5848e51ffe0c2289c490fa7775451f1bf1c981206a02ff5717c0f989cd295bda",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "low_symbols.atlas",
+            "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.atlas",
+            "bytes": 1545,
+            "sha256": "f7dce8abd030cbedbeab54674898ad724f3781119ce4c868b4aa495ee8688c5b",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "low_symbols.png",
+            "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.png",
+            "bytes": 1237352,
+            "sha256": "5bb43ee333f85b4d33788220e74dbee1a278145a8708582c98f0f64120e000b8",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp",
+            "bytes": 1562,
+            "sha256": "f9fca1b15eb2287808ec1fbe4ae6982188b829355894aa593b99c64ec1201a69",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json",
+            "bytes": 2587,
+            "sha256": "28b5a57a0da1be4c1541f0b254680824f13d00ed6589d936f4c68fe6d9db2efa",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "380059166107ec0de9bb366ba5d8c5a2b05f9ab646a027a57919fb95e9f2ab03",
+      "recommendedAnchorPayload": "sha256:380059166107ec0de9bb366ba5d8c5a2b05f9ab646a027a57919fb95e9f2ab03",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x380059166107ec0de9bb366ba5d8c5a2b05f9ab646a027a57919fb95e9f2ab03",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library_02/low_symbols-2026-10-08T00-23-37-802Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "pointpopup-2026-10-07T13-06-39-787Z",
     "title": "pointpopup",
     "publicOwnerId": "u_1hna0cc",

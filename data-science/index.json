@@ -1,5 +1,145 @@
 [
   {
+    "id": "low_symbols-2026-10-08T00-23-37-802Z",
+    "name": "low_symbols",
+    "updatedAt": "2026-10-08T00:23:34.045Z",
+    "animation_asset": {
+      "id": "low_symbols-2026-10-08T00-23-37-802Z",
+      "name": "low_symbols",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop",
+        "tags": [
+          "win"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "interaction_type": [
+          "collectible"
+        ],
+        "animation_state": [
+          "idle",
+          "win"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z",
+      "manifestPath": "library_02/low_symbols-2026-10-08T00-23-37-802Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.json",
+          "name": "low_symbols/low_symbols.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.atlas",
+          "name": "low_symbols/low_symbols.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/low_symbols/low_symbols.png",
+          "name": "low_symbols/low_symbols.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/low_symbols-2026-10-08T00-23-37-802Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "low_symbols.json",
+      "atlas": "low_symbols.atlas",
+      "textures": [
+        "low_symbols.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "idle",
+        "win"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "win"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "pointpopup-2026-10-07T13-06-39-787Z",
     "name": "pointpopup",
     "updatedAt": "2026-10-07T13:06:40.779Z",
