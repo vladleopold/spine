@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "free_spins_intro-2026-10-08T06-28-48-468Z",
+  "title": "free_spins_intro",
+  "uploadedAt": "2026-10-08T06:28:48.468Z",
+  "proofPath": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library_02/free_spins_intro-2026-10-08T06-28-48-468Z/source-proof.json?v=2026-10-08T06-28-48.468Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_107c1u1_88qh5g",
+    "anonymousFingerprint": "107c1u1",
+    "browserFingerprintSha256": "d1b82e0b126ec4d44e4e52df6621524523e7f6596b3bf8af9e0398fd06c560a3",
+    "browserEnvironmentHashSha256": "721d1fe6526b5e5f667cc2d859171a904c7d215fa530f9a14b49d31750737d80",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en",
+        "zh-CN",
+        "ja"
+      ],
+      "hardwareConcurrency": 6,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1344,
+        "height": 840,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:7a3c78e05b1497ca2d53afea8fcbdee53acd79960724015cd045c7cbf55d79dd",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "free_spins_intro/free_spins_intro.json",
+      "bytes": 28208,
+      "sha256": "d8fee5b7ef372de0fac55d436c086e22189e181cf20b56265e97bc586ae72268"
+    },
+    {
+      "name": "free_spins_intro/win_sequence.atlas.txt",
+      "bytes": 1632,
+      "sha256": "b72622ef7af4e2db1a0d98982e882fd9130d4e986819f907e92f06a5035cf25d"
+    },
+    {
+      "name": "free_spins_intro/win_sequence.png",
+      "bytes": 4619897,
+      "sha256": "b93d683d2628a5dd3124c4b2c10efd30c4dc8064f2aefe5ed6dedb63c0d56563"
+    },
+    {
+      "name": "transition_splash_idle-preview.webp",
+      "bytes": 7816,
+      "sha256": "02758bcc6e54af23affc5e103831e66b1aab964b3096cc86fc541e81be05fb84"
+    }
+  ],
+  "proofHash": "7a3c78e05b1497ca2d53afea8fcbdee53acd79960724015cd045c7cbf55d79dd"
+}
