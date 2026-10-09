@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-09T21:45:12.001Z",
+  "updatedAt": "2026-10-09T21:45:42.000Z",
+  "animation_asset": {
+    "id": "cl_0_ch_painter-2026-10-09T21-45-12-001Z",
+    "name": "cl_0_ch_painter",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "angry",
+        "angry2",
+        "crying",
+        "crying2",
+        "disgust",
+        "disgust2",
+        "embarrassed",
+        "embarrassed2",
+        "horny",
+        "horny2",
+        "laughing",
+        "laughing2",
+        "normal",
+        "screaming",
+        "screaming2",
+        "thinking",
+        "thinking2"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-angry"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z",
+    "manifestPath": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/manifest.json",
+    "files": [
+      {
+        "path": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/cl_0_ch_painter/cl_0_ch_painter.json",
+        "name": "cl_0_ch_painter/cl_0_ch_painter.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/cl_0_ch_painter/cl_0_ch_painter.atlas",
+        "name": "cl_0_ch_painter/cl_0_ch_painter.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/cl_0_ch_painter/cl_0_ch_painter.png",
+        "name": "cl_0_ch_painter/cl_0_ch_painter.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/cl_0_ch_painter-2026-10-09T21-45-12-001Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cl_0_ch_painter.json",
+    "atlas": "cl_0_ch_painter.atlas",
+    "textures": [
+      "cl_0_ch_painter.png"
+    ],
+    "animationCount": 17,
+    "animationNames": [
+      "angry",
+      "angry2",
+      "crying",
+      "crying2",
+      "disgust",
+      "disgust2",
+      "embarrassed",
+      "embarrassed2",
+      "horny",
+      "horny2",
+      "laughing",
+      "laughing2",
+      "normal",
+      "screaming",
+      "screaming2",
+      "thinking",
+      "thinking2"
+    ],
+    "defaultAnimation": "angry",
+    "fileCount": 5,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 1
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
