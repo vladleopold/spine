@@ -1,5 +1,232 @@
 [
   {
+    "id": "cl_0_ch_painter-2026-10-09T20-31-03-301Z",
+    "title": "cl_0_ch_painter",
+    "publicOwnerId": "u_1pv23gp",
+    "ownerAnonId": "anon_nhwrce_1pp1i4z",
+    "ownerAnonFingerprint": "nhwrce",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-09T20:31:03.301Z",
+    "webmGeneratedAt": "2026-10-09T20:31:03.301Z",
+    "skeleton": "cl_0_ch_painter.json",
+    "atlas": "cl_0_ch_painter.atlas.txt",
+    "textures": [
+      "cl_0_ch_painter.png"
+    ],
+    "animations": [
+      "angry",
+      "angry2",
+      "crying",
+      "crying2",
+      "disgust",
+      "disgust2",
+      "embarrassed",
+      "embarrassed2",
+      "horny",
+      "horny2",
+      "laughing",
+      "laughing2",
+      "normal",
+      "screaming",
+      "screaming2",
+      "thinking",
+      "thinking2"
+    ],
+    "defaultAnimation": "angry",
+    "files": [
+      "cl_0_ch_painter/cl_0_ch_painter.json",
+      "cl_0_ch_painter/cl_0_ch_painter.atlas.txt",
+      "cl_0_ch_painter/cl_0_ch_painter.png",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z",
+    "repositoryUrl": "",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "cl_0_ch_painter-2026-10-09T20-31-03-301Z",
+      "title": "cl_0_ch_painter",
+      "uploadedAt": "2026-10-09T20:31:03.301Z",
+      "proofPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json?v=2026-10-09T20-31-03.301Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_nhwrce_1pp1i4z",
+        "anonymousFingerprint": "nhwrce",
+        "browserFingerprintSha256": "1e07a75a62195c63c27c06090a7a0d76e72146ac95c237b9f1ae48f43b2a6e13",
+        "browserEnvironmentHashSha256": "6b5e2fd652cadfe364abbffbd27811919ebd85ccb23698b64576cda05957aad1",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "ru"
+          ],
+          "hardwareConcurrency": 28,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1707,
+            "height": 960,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "Asia/Singapore",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:29feb0bba1572c5cdfe513d7f75e742d3e6a1b5807af5e99d3f908734db2c3b1",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "cl_0_ch_painter/cl_0_ch_painter.atlas.txt",
+          "bytes": 482,
+          "sha256": "9d2ec96806a8db107fbbf9ea265cab64eddf1be1b3a9a24e82dd6582a69b52d2"
+        },
+        {
+          "name": "cl_0_ch_painter/cl_0_ch_painter.json",
+          "bytes": 2821246,
+          "sha256": "43fd8bd3fc96da1074abdb11ceb06a3a636ef996343e9578a2d4849a1dc42db0"
+        },
+        {
+          "name": "cl_0_ch_painter/cl_0_ch_painter.png",
+          "bytes": 5446863,
+          "sha256": "aee37c5a59ebbb16d4d0e1f24794df8358a2969d8265970610e66ca203b3e02b"
+        }
+      ],
+      "proofHash": "29feb0bba1572c5cdfe513d7f75e742d3e6a1b5807af5e99d3f908734db2c3b1"
+    },
+    "sourceProofPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json?v=2026-10-09T20-31-03.301Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-09T20:31:29.693Z",
+      "entryId": "cl_0_ch_painter-2026-10-09T20-31-03-301Z",
+      "title": "cl_0_ch_painter",
+      "uploadedAt": "2026-10-09T20:31:03.301Z",
+      "sourceProofHash": "29feb0bba1572c5cdfe513d7f75e742d3e6a1b5807af5e99d3f908734db2c3b1",
+      "sourceProofPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json?v=2026-10-09T20-31-03.301Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_nhwrce_1pp1i4z",
+        "anonymousFingerprint": "nhwrce",
+        "browserFingerprintSha256": "1e07a75a62195c63c27c06090a7a0d76e72146ac95c237b9f1ae48f43b2a6e13",
+        "browserEnvironmentHashSha256": "6b5e2fd652cadfe364abbffbd27811919ebd85ccb23698b64576cda05957aad1",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "ru"
+          ],
+          "hardwareConcurrency": 28,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1707,
+            "height": 960,
+            "colorDepth": 24,
+            "pixelRatio": 1.5
+          },
+          "timezone": "Asia/Singapore",
+          "timezoneOffset": -480,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z",
+        "files": [
+          {
+            "name": "cl_0_ch_painter.json",
+            "path": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/cl_0_ch_painter/cl_0_ch_painter.json",
+            "bytes": 2821246,
+            "sha256": "43fd8bd3fc96da1074abdb11ceb06a3a636ef996343e9578a2d4849a1dc42db0",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "cl_0_ch_painter.png",
+            "path": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/cl_0_ch_painter/cl_0_ch_painter.png",
+            "bytes": 5446863,
+            "sha256": "aee37c5a59ebbb16d4d0e1f24794df8358a2969d8265970610e66ca203b3e02b",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "cl_0_ch_painter.atlas.txt",
+            "path": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/cl_0_ch_painter/cl_0_ch_painter.atlas.txt",
+            "bytes": 482,
+            "sha256": "9d2ec96806a8db107fbbf9ea265cab64eddf1be1b3a9a24e82dd6582a69b52d2",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/source-proof.json",
+            "bytes": 2457,
+            "sha256": "c78431ee5ea0995dde2b6392701620bbd2c96743c6707f2679c3c5d0c3e61449",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "14552dd9fa0832e46e9503345cbde3d34a126bfb574ced9a7d408acf5a5ffd4e",
+      "recommendedAnchorPayload": "sha256:14552dd9fa0832e46e9503345cbde3d34a126bfb574ced9a7d408acf5a5ffd4e",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x14552dd9fa0832e46e9503345cbde3d34a126bfb574ced9a7d408acf5a5ffd4e",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/library_02/cl_0_ch_painter-2026-10-09T20-31-03-301Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "cl_0_ch_painter-2026-10-09T20-29-01-415Z",
     "title": "cl_0_ch_painter",
     "publicOwnerId": "u_1pv23gp",
