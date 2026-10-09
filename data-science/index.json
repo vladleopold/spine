@@ -1,5 +1,138 @@
 [
   {
+    "id": "guy_final-2026-10-09T13-27-26-230Z",
+    "name": "guy_final",
+    "updatedAt": "2026-10-09T13:27:38.962Z",
+    "animation_asset": {
+      "id": "guy_final-2026-10-09T13-27-26-230Z",
+      "name": "guy_final",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "animation",
+          "demo",
+          "speak",
+          "wink"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-animation"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/guy_final-2026-10-09T13-27-26-230Z",
+      "manifestPath": "library_02/guy_final-2026-10-09T13-27-26-230Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/guy_final/Guy_final.json",
+          "name": "guy_final/Guy_final.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/guy_final/Guy_final.atlas",
+          "name": "guy_final/Guy_final.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/guy_final/Guy_final.png",
+          "name": "guy_final/Guy_final.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/animation-preview.webp",
+          "name": "animation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/guy_final-2026-10-09T13-27-26-230Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Guy_final.json",
+      "atlas": "Guy_final.atlas",
+      "textures": [
+        "Guy_final.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "animation",
+        "demo",
+        "speak",
+        "wink"
+      ],
+      "defaultAnimation": "animation",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "coin-2026-10-09T11-43-27-658Z",
     "name": "coin",
     "updatedAt": "2026-10-09T11:43:29.372Z",
