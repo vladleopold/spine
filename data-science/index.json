@@ -1,5 +1,145 @@
 [
   {
+    "id": "girl_final-2026-10-09T13-31-02-741Z",
+    "name": "girl_final",
+    "updatedAt": "2026-10-09T13:31:15.919Z",
+    "animation_asset": {
+      "id": "girl_final-2026-10-09T13-31-02-741Z",
+      "name": "girl_final",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "girl"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "demo",
+          "idle",
+          "speak",
+          "wink"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/girl_final-2026-10-09T13-31-02-741Z",
+      "manifestPath": "library_02/girl_final-2026-10-09T13-31-02-741Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/girl_final/Girl_final.json",
+          "name": "girl_final/Girl_final.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/girl_final/Girl_final.atlas",
+          "name": "girl_final/Girl_final.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/girl_final/Girl_final.png",
+          "name": "girl_final/Girl_final.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/girl_final-2026-10-09T13-31-02-741Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Girl_final.json",
+      "atlas": "Girl_final.atlas",
+      "textures": [
+        "Girl_final.png"
+      ],
+      "animationCount": 4,
+      "animationNames": [
+        "demo",
+        "idle",
+        "speak",
+        "wink"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "girl"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "guy_final-2026-10-09T13-29-54-373Z",
     "name": "guy_final",
     "updatedAt": "2026-10-09T13:30:06.699Z",
