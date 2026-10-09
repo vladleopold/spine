@@ -1,5 +1,155 @@
 [
   {
+    "id": "coin-2026-10-09T11-43-27-658Z",
+    "name": "coin",
+    "updatedAt": "2026-10-09T11:43:29.372Z",
+    "animation_asset": {
+      "id": "coin-2026-10-09T11-43-27-658Z",
+      "name": "coin",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "particle",
+          "glow"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "fs_counter_glow_anim",
+          "jackpot_grand",
+          "jackpot_major",
+          "jackpot_mini",
+          "jackpot_minor",
+          "jackpot_wheel",
+          "particle_coin"
+        ],
+        "state": [
+          "default-fs_counter_glow_anim"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/coin-2026-10-09T11-43-27-658Z",
+      "manifestPath": "library_02/coin-2026-10-09T11-43-27-658Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/coin/coin.json",
+          "name": "coin/coin.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/coin/coin.atlas",
+          "name": "coin/coin.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/coin/coin.webp",
+          "name": "coin/coin.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/fs_counter_glow_anim-preview.webp",
+          "name": "fs_counter_glow_anim-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/coin-2026-10-09T11-43-27-658Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "coin.json",
+      "atlas": "coin.atlas",
+      "textures": [
+        "coin.webp"
+      ],
+      "animationCount": 7,
+      "animationNames": [
+        "fs_counter_glow_anim",
+        "jackpot_grand",
+        "jackpot_major",
+        "jackpot_mini",
+        "jackpot_minor",
+        "jackpot_wheel",
+        "particle_coin"
+      ],
+      "defaultAnimation": "fs_counter_glow_anim",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "particle",
+        "glow"
+      ],
+      "confidence": 0.65,
+      "needsHumanReview": false
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "transition-2026-10-09T09-06-45-684Z",
     "name": "transition",
     "updatedAt": "2026-10-09T09:06:54.878Z",
