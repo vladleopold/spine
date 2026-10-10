@@ -233,10 +233,10 @@ jobs:
           echo "type=alpha" > "$DIR/export-type.txt"
 
           # From each transparent WebM the site also offers MOV (ProRes 4444,
-          // keeps the alpha), GIF (palette-based) and a PNG sequence (one PNG
-          // per frame, keeps the alpha). All three are derived from the alpha
-          // WebM so they carry the same transparency and the same 3-quality
-          // ladder as the WebM itself.
+          # keeps the alpha), GIF (palette-based) and a PNG sequence (one PNG
+          # per frame, keeps the alpha). All three are derived from the alpha
+          # WebM so they carry the same transparency and the same 3-quality
+          # ladder as the WebM itself.
           for suffix in "" "-medium" "-low"; do
             SRC="$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.webm"
             [ -f "$SRC" ] || continue
@@ -245,11 +245,11 @@ jobs:
             ffmpeg -y -v error -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov"
 
             # GIF — two-pass palette. The alpha channel of the source is
-            // folded into the 1-bit transparency of the GIF.
+            # folded into the 1-bit transparency of the GIF.
             ffmpeg -y -v error -i "$SRC"               -vf "fps=15,scale=360:-1:flags=lanczos,split[s0][p1];[s0]palettegen[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif"
 
             # PNG sequence — one PNG per frame, alpha channel kept, packed
-            // into a single zip so it ships as one downloadable file.
+            # into a single zip so it ships as one downloadable file.
             TMPDIR="$DIR/pngseq${suffix//-/}"
             mkdir -p "$TMPDIR"
             ffmpeg -y -v error -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png"
