@@ -39,13 +39,26 @@ jobs:
             libwayland-egl1 ffmpeg
           echo "=== SYSTEM DEPS INSTALLED ==="
 
+      - name: Resolve library collection folder
+        id: basepath
+        run: |
+          uploadId="${{ github.event.client_payload.uploadId }}"
+          basePath=$(node -e "
+            import('./scripts/resolve-library.mjs').then(m => {
+              console.log(m.collectionPathForUpload(process.cwd(), process.argv[1]));
+            });
+          " "$uploadId")
+          echo "Collection folder for $uploadId: $basePath"
+          echo "basePath=$basePath" >> "$GITHUB_OUTPUT"
+
       - name: Compute animation duration from skeleton JSON
         id: duration
         run: |
           echo "=== COMPUTING ANIMATION DURATION ==="
           uploadId="${{ github.event.client_payload.uploadId }}"
           animation="${{ github.event.client_payload.animation }}"
-          uploadPath="library/${uploadId}"
+          basePath="${{ steps.basepath.outputs.basePath }}"
+          uploadPath="${basePath}/${uploadId}"
           # Find the first directory inside uploadPath
           setName=$(find "$uploadPath" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -1)
           skeletonPath=""
@@ -115,7 +128,7 @@ jobs:
         run: |
           uploadId="${{ github.event.client_payload.uploadId }}"
           origin="${{ github.event.client_payload.origin }}"
-          basePath="library"
+          basePath="${{ steps.basepath.outputs.basePath }}"
           indexPath="${basePath}/index.json"
           metaPath="${{ github.workspace }}/${uploadId}-preview.webm.json"
           
@@ -201,7 +214,7 @@ jobs:
             "
             
             # 4. Stage and commit
-            git add library/
+            git add "$basePath"
             if git diff-index --quiet HEAD --; then
               echo "No changes to commit (perhaps already processed?)"
               exit 0
