@@ -270,6 +270,13 @@ jobs:
     permissions:
       contents: write
 
+    # Every commit job writes library_NN/index.json in the same branch, so they
+    # must take turns: a concurrent push is rejected by the branch lock and the
+    # loser rebuilds on a HEAD the winner has already moved.
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -313,9 +320,12 @@ jobs:
           for i in $(seq 1 $MAX_RETRIES); do
             echo "=== Attempt $i/$MAX_RETRIES ==="
 
-            # 1. Always start from fresh remote HEAD to avoid conflicts
-            git fetch origin main
-            git reset --hard origin/main
+            # 1. Always start from fresh remote HEAD to avoid conflicts.
+            # Shallow checkouts do not refresh origin/main on a plain fetch, so
+            # FETCH_HEAD is used directly; otherwise every retry rebuilt on the
+            # stale HEAD and the push was rejected all the same.
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
 
             # 2. Process all downloaded artifacts and update index.json
             node -e "
