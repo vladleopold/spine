@@ -34,7 +34,6 @@ jobs:
             import { entryForUpload } from './scripts/resolve-library.mjs';
             const found = entryForUpload(process.cwd(), '$UPLOAD_ID');
             const entry = found ? found.entry : null;
-            if (entry) console.log('Collection folder: ' + found.basePath);
             if (!entry || !Array.isArray(entry.animations) || entry.animations.length === 0) {
               console.log(JSON.stringify({ matrix: [], has_items: false }));
             } else {
