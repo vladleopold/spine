@@ -75,7 +75,7 @@ async function listFolder(dir) {
   return items;
 }
 
-/** Highest collection index already present: library_02 -> 2. */
+/** Highest collection index whose folder already exists: library_02 -> 2. */
 async function highestCollection() {
   const items = await listFolder("");
   const indexes = items
@@ -85,6 +85,27 @@ async function highestCollection() {
   // The original `library` folder is collection #1: it is frozen and only read.
   if (items.some((item) => item.type === "dir" && item.name === "library")) indexes.push(1);
   return indexes.length ? Math.max(...indexes) : 0;
+}
+
+/**
+ * The folder that receives new uploads: the highest-numbered collection that
+ * actually holds works, which is what an upload can be routed to. Empty
+ * placeholder folders carry no index.json and are skipped, so a rotation that
+ * created `library_90` but never filled it does not strand new uploads there.
+ */
+async function activeStagingCollection() {
+  const items = await listFolder("");
+  const numbered = items
+    .map((item) => (item.type === "dir" ? item.name.match(new RegExp(`^${PREFIX}(\\d+)$`)) : null))
+    .filter(Boolean)
+    .map((match) => ({ name: match[0], index: Number(match[1]) }))
+    .sort((a, b) => b.index - a.index);
+  for (const { name } of numbered) {
+    const contents = await listFolder(name);
+    const hasIndex = contents.some((item) => item.name === "index.json");
+    if (hasIndex) return { name, index: numbered.find((x) => x.name === name).index };
+  }
+  return null;
 }
 
 function monthOf(id) {
@@ -164,16 +185,24 @@ async function moveEntry(fromName, toCollection, stagingName) {
   log(`  ${fromName} -> ${toCollection}`);
 }
 
+/** Writes a file only when it is missing, so a re-run never clobbers data. */
+function writeIfAbsent(target, contents) {
+  if (fs.existsSync(target)) return;
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, contents, "utf8");
+}
+
 async function main() {
-  const highest = await highestCollection();
-  // `library` is collection #1 and is never written to again, so staging is always
-  // the highest library_NN folder.
-  const stagingName = `${PREFIX}${String(highest).padStart(2, "0")}`;
+  const active = await activeStagingCollection();
+  if (!active) {
+    log("Активная папка набора не найдена: ротация не нужна.");
+    return;
+  }
+  const stagingName = active.name;
   const staging = await listFolder(stagingName);
   const entries = staging.filter((item) => item.type === "dir" && isEntryFolder(item.name)).map((item) => item.name);
 
   log(`Папка набора ${stagingName}: папок ${entries.length} (предел ${MAX_FOLDERS})`);
-  log(`Последняя постоянная сборка: ${PREFIX}${String(highest).padStart(2, "0")}`);
 
   if (entries.length < MAX_FOLDERS) {
     log("Ротация не нужна.");
@@ -181,9 +210,12 @@ async function main() {
   }
 
   // The folder we just filled becomes permanent; the next number is the new
-  // staging folder that receives uploads from now on.
+  // staging folder that receives uploads from now on. The number comes from the
+  // highest folder that exists, not from the active one, so empty placeholders
+  // left by earlier runs are reused instead of skipped forever.
   const filled = stagingName;
-  const nextIndex = highest + 1;
+  const highest = await highestCollection();
+  const nextIndex = Math.max(highest, active.index) + 1;
   const next = `${PREFIX}${String(nextIndex).padStart(2, "0")}`;
   log(`Ротация: ${filled} переполнена (${entries.length}), становится постоянной; наборная папка — ${next}`);
 
@@ -225,12 +257,12 @@ async function main() {
   if (dryRun) return;
 
   // One commit for the whole rotation: 999 renames would be unreadable otherwise.
-  fs.writeFileSync(
-    path.join(ROOT, next, ".gitkeep"),
-    "",
-  );
-  fs.writeFileSync(path.join(ROOT, STAGING_DIR, ".gitkeep"), "");
-  execFileSync("git", ["add", "-A", `${next}`, STAGING_DIR], { cwd: ROOT, stdio: "pipe" });
+  // Keep the filled folder in the tree with an empty index so GitHub keeps it
+  // around; the new staging folder needs a README-less placeholder for the same
+  // reason. Both are staged explicitly rather than via git add -A, because the
+  // checkout also carries build output.
+  writeIfAbsent(path.join(ROOT, filled, "index.json"), "[]");
+  execFileSync("git", ["add", "-A", filled, next], { cwd: ROOT, stdio: "pipe" });
   execFileSync(
     "git",
     [
