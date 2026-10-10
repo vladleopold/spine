@@ -1043,11 +1043,23 @@ try {
         if (ss !== 0) {
           console.error(`  Poster: first frame was empty, using ${ss}s instead.`);
         }
-        try {
-          execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' });
-        } catch (e) {
-          execSync(`convert "${pngPath}" "${out}"`, { stdio: 'inherit' });
+        // Posters are optional for playback, so every encoder is tried in turn:
+        // cwebp (webp package), ImageMagick convert, then ffmpeg, which is always
+        // installed and carries libwebp. Without the last one a missing package
+        // silently costs every poster on the site.
+        let encoded = false;
+        for (const attempt of [
+          () => execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' }),
+          () => execSync(`convert "${pngPath}" "${out}"`, { stdio: 'inherit' }),
+          () => execSync(`ffmpeg -y -loglevel error -i "${pngPath}" -c:v libwebp -lossless 1 -quality 90 "${out}"`, { stdio: 'inherit' }),
+        ]) {
+          if (fs.existsSync(out) && fs.statSync(out).size > 0) { encoded = true; break; }
+          try {
+            attempt();
+            if (fs.existsSync(out) && fs.statSync(out).size > 0) { encoded = true; break; }
+          } catch (e) { /* try the next encoder */ }
         }
+        if (!encoded) throw new Error('no WebP encoder available (cwebp, convert, ffmpeg)');
         fs.rmSync(pngPath, { force: true });
       } catch (err) {
         throw new Error(`WebP generation failed for ${out}: ${err.message}`);
