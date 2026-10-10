@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { trimBlackLead } from './lib/black-lead.mjs';
+import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 
 const args = {
   uploadId: '',
@@ -42,20 +43,28 @@ if (!args.uploadId) {
 }
 
 const repoRoot = path.resolve(args.repoPath);
-const indexPath = path.join(repoRoot, args.basePath, 'index.json');
+
+// The work may sit in any library_NN collection, and the active one moves as the
+// library rotates, so the folder is looked up by upload id instead of being
+// assumed from --base-path. The flag stays as an override and a last resort.
+const found = entryForUpload(repoRoot, args.uploadId);
+const basePath = found ? found.basePath : collectionPathForUpload(repoRoot, args.uploadId, args.basePath);
+const indexPath = path.join(repoRoot, basePath, 'index.json');
 if (!fs.existsSync(indexPath)) {
   console.error(`Index not found at ${indexPath}`);
   process.exit(1);
 }
 
 const indexEntries = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
-const entry = indexEntries.find(e => e.id === args.uploadId);
+const entry = found ? found.entry : indexEntries.find(e => e.id === args.uploadId);
 if (!entry) {
   console.error(`Entry ${args.uploadId} not found in index`);
   process.exit(1);
 }
 
-const uploadPath = entry.previewPath || path.posix.join(args.basePath, args.uploadId);
+console.log(`Collection folder for ${args.uploadId}: ${basePath}`);
+
+const uploadPath = entry.previewPath || path.posix.join(basePath, args.uploadId);
 
 function findSetDirectories(baseDir) {
   const results = [];
