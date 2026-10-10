@@ -242,19 +242,30 @@ jobs:
             [ -f "$SRC" ] || continue
 
             # MOV with alpha — prores_ks in yuva444p preserves transparency.
-            ffmpeg -y -v error -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov"
+            # Non-critical: a single missing format must not fail the whole
+            # alpha export, otherwise the animation would lose every derived
+            # file (MOV/GIF/PNG) for all three quality levels.
+            ffmpeg -y -v error -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || echo "MOV failed for suffix: $suffix (non-critical)"
 
             # GIF — two-pass palette. The alpha channel of the source is
             # folded into the 1-bit transparency of the GIF.
-            ffmpeg -y -v error -i "$SRC"               -vf "fps=15,scale=360:-1:flags=lanczos,split[s0][p1];[s0]palettegen[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif"
+            # Guarded for sub-2-frame clips: the palette filter dies on inputs
+            # with fewer than 2 frames, so a 1-frame animation is skipped
+            # instead of taking the whole job down.
+            FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -of csv=p=0 "$SRC" 2>/dev/null || echo 0)
+            if [ "${FRAMES:-0}" -ge 2 ] 2>/dev/null; then
+              ffmpeg -y -v error -i "$SRC"               -vf "fps=15,scale=360:-1:flags=lanczos,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || echo "GIF failed for suffix: $suffix (non-critical)"
+            else
+              echo "Skipping GIF for suffix: $suffix (only ${FRAMES:-0} frames)"
+            fi
 
             # PNG sequence — one PNG per frame, alpha channel kept, packed
             # into a single zip so it ships as one downloadable file.
             TMPDIR="$DIR/pngseq${suffix//-/}"
             mkdir -p "$TMPDIR"
-            ffmpeg -y -v error -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png"
+            ffmpeg -y -v error -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png" || echo "PNG sequence failed for suffix: $suffix (non-critical)"
             if [ -d "$TMPDIR" ] && [ "$(ls -A "$TMPDIR" 2>/dev/null)" ]; then
-              (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" .)
+              (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" .) || echo "PNG zip failed for suffix: $suffix (non-critical)"
               rm -rf "$TMPDIR"
             else
               rm -rf "$TMPDIR"
