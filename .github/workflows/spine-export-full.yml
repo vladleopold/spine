@@ -30,10 +30,11 @@ jobs:
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           echo "=== Reading animations for: $UPLOAD_ID ==="
 
-          RESULT=$(node -e "
-            const fs = require('fs');
-            const index = JSON.parse(fs.readFileSync('library/index.json', 'utf8'));
-            const entry = index.find(e => e.id === '$UPLOAD_ID');
+          RESULT=$(node --input-type=module -e "
+            import { entryForUpload } from './scripts/resolve-library.mjs';
+            const found = entryForUpload(process.cwd(), '$UPLOAD_ID');
+            const entry = found ? found.entry : null;
+            if (entry) console.log('Collection folder: ' + found.basePath);
             if (!entry || !Array.isArray(entry.animations) || entry.animations.length === 0) {
               console.log(JSON.stringify({ matrix: [], has_items: false }));
             } else {
@@ -297,8 +298,14 @@ jobs:
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           ORIGIN="${{ github.event.client_payload.origin }}"
-          BASE_PATH="library"
+          # The work may live in any library_NN collection, and the active one
+          # moves as the library rotates, so the folder is resolved by upload id.
+          BASE_PATH=$(node --input-type=module -e "
+            import { collectionPathForUpload } from './scripts/resolve-library.mjs';
+            console.log(collectionPathForUpload(process.cwd(), process.argv[1]));
+          " "$UPLOAD_ID")
           INDEX_PATH="${BASE_PATH}/index.json"
+          echo "Collection folder for $UPLOAD_ID: $BASE_PATH"
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -395,7 +402,7 @@ jobs:
             "
 
             # 3. Stage everything
-            git add library/
+            git add "$BASE_PATH"
             if git diff-index --quiet HEAD --; then
               echo "No changes to commit — all animations already up to date."
               exit 0
