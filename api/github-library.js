@@ -7,6 +7,7 @@ const defaultOwner = 'vladleopold';
 const defaultRepo = 'spine';
 const defaultBranch = 'main';
 const defaultBasePath = 'library';
+// Second library folder that receives new uploads; read alongside the first.
 const legacyPublicOwnerAliases = {
   u_rdrnig: 'u_yois91',
 };
@@ -71,7 +72,7 @@ function cleanPublicText(value = '', maxLength = 280) {
 
 function safeImage(value = '') {
   const url = String(value).trim();
-  return /^https:\/\/[^\s"'<>]+$/i.test(url) ? url : '';
+  return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/webp;base64,/i.test(url) ? url : '';
 }
 
 function safeVideo(value = '') {
@@ -118,17 +119,157 @@ function generatedThumbnailUrl(origin, entry) {
     : '';
 }
 
-function generatedPreviewWebmUrl(origin, entry) {
-  const id = String(entry?.id || '').trim();
-  return id ? `${origin}/v_holder.webm` : '';
-}
-
 function githubHeaders(token) {
-  return {
+  const headers = {
     Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
     'X-GitHub-Api-Version': '2022-11-28',
   };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+}
+
+// Постоянные сборки лежат в папках library_NN. Перечисляем их вместо того,
+// чтобы держать список в коде: ротация создаёт новую папку, и сайт начинает
+// видеть её сразу, без правки кода и деплоя.
+// Works are spread across library_01, library_02, ... folders, each capped at the
+// GitHub limit. They are listed at runtime so a folder added by a rotation shows up
+// without a code change or a deploy.
+/**
+ * Merges two metrics documents. View counts add up because they are independent
+ * events; a like is counted once per visitor, so it is merged as a set and
+ * re-counted, which also repairs folders that were split by an earlier bug.
+ */
+function mergeMetrics(a, b) {
+  const out = { entries: {} };
+  for (const doc of [a, b]) {
+    const entries = doc && typeof doc === 'object' ? doc.entries : null;
+    if (!entries || typeof entries !== 'object') continue;
+    for (const [id, value] of Object.entries(entries)) {
+      if (!value || typeof value !== 'object') continue;
+      const target = out.entries[id] || { likes: 0, views: 0, likedBy: {}, recentViews: {} };
+      target.likedBy = { ...(target.likedBy || {}), ...(value.likedBy || {}) };
+      target.likes = Object.keys(target.likedBy).length;
+      target.views = (Number(target.views) || 0) + (Number(value.views) || 0);
+      const recent = { ...(target.recentViews || {}) };
+      for (const [key, at] of Object.entries(value.recentViews || {})) {
+        if (!recent[key] || String(at) > String(recent[key])) recent[key] = at;
+      }
+      target.recentViews = recent;
+      out.entries[id] = target;
+    }
+  }
+  out.updatedAt = new Date().toISOString();
+  return out;
+}
+
+async function libraryCollectionPaths(settings) {
+  const paths = [cleanRepoPath(settings.basePath || defaultBasePath)];
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/?ref=${encodeURIComponent(settings.branch)}`,
+      { headers: githubHeaders(settings.token) },
+    );
+    if (!response.ok) return paths;
+    const items = await response.json();
+    if (!Array.isArray(items)) return paths;
+    const folders = items
+      .filter((item) => item && item.type === "dir" && /^library(_\d+)?$/.test(String(item.name || "")))
+      .map((item) => item.name)
+      .sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+    for (const name of folders) if (!paths.includes(name)) paths.push(name);
+  } catch (e) {
+    // Listing failed: the configured folder alone still beats an empty site.
+  }
+  return paths;
+}
+
+
+// Правило цензуры. `allow`-правила возвращают конкретную работу в ленту,
+// поэтому у закрытого автора можно оставить исключение.
+// The admin page edits library/censorship.json directly. Its id lists are folded
+// into the exclusion rules here so the existing filter picks them up.
+async function withCensorshipLists(settings, exclusions) {
+  try {
+    const text = await githubText(settings, 'library/censorship.json');
+    const parsed = text ? JSON.parse(text) : null;
+    const blocked = Array.isArray(parsed?.blocked) ? parsed.blocked : [];
+    const allowed = Array.isArray(parsed?.allowed) ? parsed.allowed : [];
+    // `blocked` holds account ids, so the rule targets the owner fields; an id is
+    // matched there too so a raw work id can be listed directly.
+    const ownerRules = (ids) => ids.map((id) => ({ enabled: true, type: 'exact', field: 'owner', pattern: String(id) }));
+    // An exception names a work, not an account: closed authors can keep one piece
+    // visible while the rest of their catalogue stays hidden.
+    const workRules = (ids) => ids.map((id) => ({ enabled: true, type: 'exact', field: 'id', pattern: String(id) }));
+    return {
+      rules: [...(exclusions?.rules || []), ...ownerRules(blocked)],
+      allow: [...(exclusions?.allow || []), ...workRules(allowed)],
+    };
+  } catch (e) {
+    return exclusions;
+  }
+}
+
+function censorshipRuleMatches(entry, rule) {
+  if (!rule || rule.enabled === false) return false;
+  const pattern = String(rule.pattern || '').trim();
+  if (!pattern) return false;
+  const haystack = censorshipFieldText(entry, String(rule.field || 'all'));
+  if (!haystack) return false;
+  if (rule.type === 'exact') {
+    const wanted = String(rule.pattern || '').trim().toLowerCase();
+    if (!wanted) return false;
+    return haystack.split(/\s+/).some((value) => value.toLowerCase() === wanted);
+  }
+  if (rule.type === 'regex') {
+    try {
+      const flags = String(rule.flags || 'i').replace(/[^dgimsuvy]/g, '') || 'i';
+      return new RegExp(pattern, flags).test(haystack);
+    } catch {
+      return false;
+    }
+  }
+  return haystack.toLowerCase().includes(pattern.toLowerCase());
+}
+
+function censorshipFieldText(entry, field) {
+  if (!entry || typeof entry !== 'object') return '';
+  const files = Array.isArray(entry.files) ? entry.files.join(' ') : '';
+  const animations = Array.isArray(entry.animations) ? entry.animations.join(' ') : '';
+  const values = {
+    all: [
+      entry.id,
+      entry.title,
+      entry.ownerEmail,
+      entry.ownerName,
+      entry.publicOwnerId,
+      entry.ownerAnonId,
+      entry.ownerAnonFingerprint,
+      files,
+      animations,
+      entry.previewPath,
+    ],
+    id: [entry.id],
+    title: [entry.title],
+    ownerEmail: [entry.ownerEmail],
+    ownerName: [entry.ownerName],
+    publicOwnerId: [entry.publicOwnerId],
+    owner: [entry.publicOwnerId, entry.ownerAnonId, entry.ownerAnonFingerprint, entry.id],
+    ownerAnonId: [entry.ownerAnonId],
+    ownerAnonFingerprint: [entry.ownerAnonFingerprint],
+    files: [files],
+    animations: [animations],
+    path: [entry.previewPath],
+  };
+  return (values[field] || values.all).filter(Boolean).join(' ');
+}
+
+function entryHiddenByCensorship(entry, exclusions) {
+  const rules = Array.isArray(exclusions?.rules) ? exclusions.rules : [];
+  if (!rules.some((rule) => censorshipRuleMatches(entry, rule))) return false;
+  const allow = Array.isArray(exclusions?.allow) ? exclusions.allow : [];
+  return !allow.some((rule) => censorshipRuleMatches(entry, rule));
 }
 
 async function githubText(settings, path) {
@@ -195,9 +336,9 @@ function indexablePortfolioState(entries) {
   };
 }
 
-function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
-  const { visibleEntries, isPortfolioMode } = indexablePortfolioState(entries);
-  const firstEntry = visibleEntries[0] || entries[0] || {};
+function createLibraryHtml({ origin, publicOwnerId, entries: entriesWithFallback, metrics }) {
+  const { visibleEntries, isPortfolioMode } = indexablePortfolioState(entriesWithFallback);
+  const firstEntry = visibleEntries[0] || entriesWithFallback[0] || {};
   const showOwnerName = firstEntry.showOwnerLibrary !== false;
   const ownerName = escapeHtml(showOwnerName ? firstEntry.ownerName || 'Spine-Link creator' : 'Spine-Link library');
   const rawOwnerName = showOwnerName ? firstEntry.ownerName || 'Spine-Link creator' : 'Spine-Link library';
@@ -219,7 +360,14 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
       const rawThumbnail = entryImageAsset(entry.thumbnail || '', entry, 'thumbnail');
       const derivedTexture = derivedMediaFromFiles(origin, entry, ['.png', '.jpg', '.jpeg', '.webp']);
       const thumbnailPoster = entryImageAsset(entry.thumbnailPoster || '', entry, 'poster') || generatedThumbnailUrl(origin, entry) || derivedTexture;
-      const webmPreview = entryVideoAsset(entry.webmPreview || '', entry, 'webm') || derivedMediaFromFiles(origin, entry, ['.webm']) || generatedPreviewWebmUrl(origin, entry);
+      // No shared placeholder video: a card without its own webm renders the
+      // poster only, so a fresh entry never borrows another entry's clip.
+      // The profile page is a video gallery for Google video search, so every
+      // card is presented as a moving clip. Medium (720p) is used: light enough
+      // to play several cards at once, but no longer the 360p low tier. The
+      // full-quality clip is still reachable from the dedicated video watch
+      // page (/video/<id>).
+      const webmPreview = entryVideoAsset(entry.webmPreviewMedium || entry.webmPreview || '', entry, 'webm') || derivedMediaFromFiles(origin, entry, ['.webm']);
       const isGifPreview = entry.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(rawThumbnail);
       const thumbnail = isGifPreview ? '' : rawThumbnail;
       const date = entry.uploadedAt ? new Date(entry.uploadedAt) : null;
@@ -234,12 +382,17 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
       const likeCount = metric.likes;
       const viewCount = metric.views;
       const thumbnailStyle = thumbnail || thumbnailPoster ? ` style="--library-thumbnail: url('${escapeHtml(thumbnailPoster || thumbnail)}')"` : '';
+      // The profile page is a video gallery for Google video search: every work
+      // is presented as a moving clip. First click on the clip plays it; the
+      // second click — the dedicated "Spine" button — sends the user to the
+      // interactive Spine animation page (/p/<id>) for that exact video.
       const previewMedia = `<video class="library-card-webm"${webmPreview ? ` src="${escapeHtml(webmPreview)}" data-video-src="${escapeHtml(webmPreview)}"` : ''}${thumbnailPoster || thumbnail ? ` poster="${escapeHtml(thumbnailPoster || thumbnail)}"` : ''} muted playsinline preload="metadata" autoplay aria-label="${itemTitle} video preview"></video>`;
       const likeButton = isPortfolioMode ? `<button class="portfolio-like-button" type="button" data-metric-id="${escapeHtml(likeId)}" data-metric-like data-metric-current-likes="${likeCount}" data-metric-current-views="${viewCount}" aria-pressed="false" title="Like"><span data-metric-like-icon aria-hidden="true">♡</span><strong data-metric-likes>${likeCount}</strong></button>` : '';
       const cardSizeMode = entry.cardSize && entry.cardSize !== 'auto' ? 'manual' : 'auto';
       return `<article class="library-card ${libraryCardSizeClass(entry, index)}" data-entry-id="${entryId}" data-card-size-mode="${cardSizeMode}"${thumbnailStyle}>
         ${likeButton}
         <a class="library-card-link" href="${previewUrl}" aria-label="Open ${itemTitle}${isPortfolioMode ? ' in World SPINE ARCHIVE' : ''}">
+          ${webmPreview ? `<span class="library-card-spine-link" data-spine-href="${escapeHtml(playerPathForEntry(entry) || previewUrl)}" role="link" tabindex="0" aria-label="Open Spine animation for ${itemTitle}">Spine</span>` : ''}
           <div class="library-card-visual">
             ${previewMedia}
             <span class="stack-icon" aria-hidden="true"></span>
@@ -385,6 +538,7 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
     <link rel="stylesheet" href="/page-transitions.css" />
     <script type="application/ld+json">${jsonScript(structuredData)}</script>
     <script src="/page-transitions.js" defer></script>
+    <script src="/spine-embers.js?v=2026-09-30" defer></script>
     <style>
       * { box-sizing: border-box; }
       * { scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
@@ -403,7 +557,9 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
       .creator-logo-spine i:nth-child(3) { width: 10px; transform: translateX(3px); }
       .creator-logo-spine i:nth-child(4) { width: 9px; transform: translateX(4px); }
       .creator-logo-spine i:nth-child(5) { width: 8px; transform: translateX(5px); }
-      .creator-logo-plus { margin-left: 4px; color: #ff6a28; font-size: .62em; font-weight: 800; letter-spacing: .18em; line-height: 1; text-transform: uppercase; transform: translate(-10px, .18em); }
+      .creator-logo-plus { margin-left: 4px; color: #ff6a28; font-size: .62em; font-weight: 800; letter-spacing: .18em; line-height: 1; text-transform: uppercase; transform: translate(-10px, .18em); transition: color 160ms ease; }
+      .creator-logo:hover, .creator-logo:focus-visible { color: #fff; }
+      .creator-logo:hover .creator-logo-plus, .creator-logo:focus-visible .creator-logo-plus { color: #fff; }
       .creator-row { display: flex; align-items: center; justify-self: end; min-width: 0; max-width: 100%; }
       .creator-avatar { flex: 0 0 auto; width: 72px; height: 72px; overflow: hidden; border: 0; border-radius: 999px; background: #181b20; box-shadow: 0 0 0 1px rgba(140,199,255,.08); }
       .creator-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -433,6 +589,38 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
       .library-card-link { position: relative; z-index: 1; display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; color: inherit; text-decoration: none; }
       .library-card-visual { position: relative; display: flex; flex: 1 1 auto; align-items: flex-end; justify-content: space-between; min-height: 0; padding: 24px; color: #fff; background: linear-gradient(rgba(9,11,13,.05), rgba(9,11,13,.18)); overflow: hidden; }
       .library-card-webm { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; opacity: .96; transform: none; transform-origin: center; pointer-events: none; }
+      /* Explicit second-click affordance: the "Spine" badge jumps straight to
+         the interactive Spine animation page for the video that is playing. */
+      .library-card-spine-link {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 54px;
+        min-height: 28px;
+        padding: 0 10px;
+        border: 1px solid rgba(179,255,64,.72);
+        border-radius: 999px;
+        color: #eaffc2;
+        background: rgba(10,18,6,.78);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity .16s ease, transform .16s ease;
+        pointer-events: auto;
+      }
+      .library-card:hover .library-card-spine-link,
+      .library-card:focus-within .library-card-spine-link { opacity: 1; transform: translateY(0); }
+      .library-card-spine-link:hover { border-color: rgba(179,255,64,.95); background: rgba(179,255,64,.16); }
+      .library-card-spine-link:focus-visible { outline: 2px solid rgba(179,255,64,.9); outline-offset: 2px; }
+      .library-card-link { position: relative; z-index: 1; display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; color: inherit; text-decoration: none; }
       .portfolio-like-button { position: absolute; top: 14px; right: 14px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 10px; border: 1px solid rgba(255,185,214,.42); border-radius: 999px; color: #ffe4ef; background: rgba(8,9,11,.68); box-shadow: 0 12px 30px rgba(0,0,0,.32); backdrop-filter: blur(10px); cursor: pointer; }
       .portfolio-like-button span { color: currentColor; font-size: 20px; line-height: 1; transform: translateY(-1px); }
       .portfolio-like-button strong { color: currentColor; font-size: 12px; font-weight: 950; line-height: 1; }
@@ -601,6 +789,7 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
         }
         function scheduleChaos() {
           window.clearTimeout(chaosTimer);
+          chaosTimer = window.setTimeout(runChaos, 1200 + Math.random() * 2500);
         }
         function randomSample(items, count) {
           return items
@@ -671,7 +860,56 @@ function createLibraryHtml({ origin, publicOwnerId, entries, metrics }) {
         }, { once: true });
         scheduleChaos();
       }
-      installChaoticCardPlayback();
+      // Video gallery for Google video search: every work is presented as a
+      // moving clip. First click on a card plays that clip; the second click
+      // sends the user to the interactive Spine animation page (/p/<id>) for
+      // the video they just clicked. The "Spine" badge is the explicit second
+      // click affordance.
+      function installVideoSecondClickNavigation() {
+        document.querySelectorAll(".library-card").forEach((card) => {
+          const link = card.querySelector(".library-card-link");
+          const spineLink = card.querySelector(".library-card-spine-link");
+          if (!link) return;
+          const target = (spineLink && spineLink.dataset.spineHref) || link.getAttribute("href") || "";
+          if (!target) return;
+          let clickedOnce = false;
+          const navigate = () => { window.location.href = target; };
+          link.addEventListener("click", (event) => {
+            if (event.target.closest(".library-card-spine-link")) return;
+            event.preventDefault();
+            event.stopPropagation();
+            if (!clickedOnce) {
+              clickedOnce = true;
+              const video = card.querySelector(".library-card-webm");
+              if (video) {
+                video.muted = true;
+                video.loop = false;
+                try { video.currentTime = 0; } catch {}
+                const src = video.dataset.videoSrc || video.getAttribute("src") || "";
+                if (src && !video.getAttribute("src")) video.setAttribute("src", src);
+                video.play().catch(() => {});
+                window.setTimeout(() => { clickedOnce = false; }, 2200);
+                return;
+              }
+            }
+            navigate();
+          }, true);
+          if (spineLink) {
+            spineLink.addEventListener("click", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              navigate();
+            });
+            spineLink.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                navigate();
+              }
+            });
+          }
+        });
+      }
+      installVideoSecondClickNavigation();
     </script>
     <script>window.SpineLinkMetricsConfig = {};</script>
     <script src="/spine-metrics.js" defer></script>
@@ -690,7 +928,7 @@ export default async function handler(request, response) {
 
   const requestedPublicOwnerId = String(request.query?.user || '').trim();
   const publicOwnerId = legacyPublicOwnerAliases[requestedPublicOwnerId] || requestedPublicOwnerId;
-  if (!/^u_[a-z0-9]{3,32}$/i.test(requestedPublicOwnerId)) return response.status(400).send('Invalid public library');
+  if (!/^(u_[a-z0-9]{3,32}|anon_[a-z0-9]+_[a-z0-9]+)$/i.test(requestedPublicOwnerId)) return response.status(400).send('Invalid public library');
 
   const settings = {
     owner: process.env.GITHUB_OWNER || defaultOwner,
@@ -701,16 +939,55 @@ export default async function handler(request, response) {
   };
   const origin = `${request.headers['x-forwarded-proto'] || 'https'}://${request.headers['x-forwarded-host'] || request.headers.host}`;
 
+  // Detect world-spine-archive page - show all entries regardless of viewer
+  const isArchivePage = request.url?.includes('/world-spine-archive') === true;
+
   try {
-    const indexText = await githubText(settings, `${settings.basePath}/index.json`);
-    const metricsText = await githubText(settings, `${settings.basePath}/metrics.json`);
-    const metrics = parseMetricsJson(metricsText);
-    const allEntries = indexText ? JSON.parse(indexText) : [];
-    const entries = Array.isArray(allEntries)
-      ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId)
-      : [];
-    entries.sort(compareLibraryEntries);
-    const { visibleEntries, isPortfolioMode } = indexablePortfolioState(entries);
+    // Постоянные сборки library_NN перечисляются автоматически, чтобы новые
+    // папки после ротации были видны без правки кода.
+    const basePaths = await libraryCollectionPaths(settings);
+    const collected = [];
+    for (const basePath of basePaths) {
+      const text = await githubText(settings, `${basePath}/index.json`);
+      if (!text) continue;
+      try {
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) collected.push(...parsed);
+      } catch (err) {}
+    }
+    // Metrics live in the collection that received the work, so every
+    // collection is read and the entries merged. Reading only the active folder
+    // silently dropped the counters of works that had already rotated away.
+    let metrics = { entries: {} };
+    for (const basePath of basePaths) {
+      const text = await githubText(settings, `${basePath}/metrics.json`);
+      if (!text) continue;
+      const parsed = parseMetricsJson(text);
+      metrics = mergeMetrics(metrics, parsed);
+    }
+    // Цензура применяется и к ленте: закрытые авторы и работы не должны попадать
+    // в выдачу. Список правил общий с архивом, включая список исключений.
+    const exclusionsText = await githubText(settings, `${settings.basePath}/archive-exclusions.json`);
+    let exclusions = { rules: [], allow: [] };
+    try {
+      const parsed = exclusionsText ? JSON.parse(exclusionsText) : null;
+      if (parsed && typeof parsed === 'object') {
+        exclusions = {
+          rules: Array.isArray(parsed.rules) ? parsed.rules : [],
+          allow: Array.isArray(parsed.allow) ? parsed.allow : [],
+        };
+      }
+    } catch (err) {}
+    exclusions = await withCensorshipLists(settings, exclusions);
+    const allEntries = collected.filter((entry) => !entryHiddenByCensorship(entry, exclusions));
+    const entries = isArchivePage
+      ? allEntries
+      : (Array.isArray(allEntries)
+          ? allEntries.filter((entry) => String(entry?.publicOwnerId || '') === publicOwnerId)
+          : []);
+    const entriesWithFallback = entries.length > 0 ? entries : allEntries;
+    entriesWithFallback.sort(compareLibraryEntries);
+    const { visibleEntries, isPortfolioMode } = indexablePortfolioState(entriesWithFallback);
     const robotsTag = isPortfolioMode && visibleEntries.length > 0
       ? 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1'
       : 'noindex, follow';
@@ -721,7 +998,7 @@ export default async function handler(request, response) {
     if (request.method === 'HEAD') {
       return response.status(200).send('');
     }
-    return response.status(200).send(createLibraryHtml({ origin, publicOwnerId, entries, metrics }));
+    return response.status(200).send(createLibraryHtml({ origin, publicOwnerId, entries: entriesWithFallback, metrics }));
   } catch (error) {
     return response.status(500).send(error instanceof Error ? error.message : 'Library failed');
   }
