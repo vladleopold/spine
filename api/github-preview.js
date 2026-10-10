@@ -2222,7 +2222,11 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         // thumbnails at once, so the moving preview is the LOW quality WebM
         // (360p) while the page's main video surface is the full one. The
         // poster is always a static WebP, which is cheap to load.
-        const medWebm = entryVideoAsset(target.url || item?.webmPreviewMedium || item?.webmPreview || '', item, 'webm');
+        // Owner cards are a strip of several thumbnails at once, so the moving
+        // preview is the MEDIUM (720p) WebM — light enough to load several at
+        // once, but no longer the 360p low tier. The full-quality clip is kept
+        // separately so the page's main player can still use it.
+        const medWebm = entryVideoAsset(item?.webmPreviewMedium || item?.webmPreview || '', item, 'webm');
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
