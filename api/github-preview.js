@@ -890,9 +890,9 @@ function createHtml(config) {
       *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       html, body, #app { width: 100%; min-height: 100%; margin: 0; }
       body { overflow: auto; background: #000; color: #e7edf4; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      #app { position: relative; z-index: 1; display: grid; grid-template-rows: auto auto auto; gap: 18px; min-height: 100vh; padding: 24px; background: rgba(0,0,0,.78); }
-      @media (max-width: 1024px) { #app { gap: 8px; padding: 10px 14px 6px; } }
-      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+      #app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; max-height: 100vh; overflow: hidden; padding: 14px 18px 10px; background: rgba(0,0,0,.78); }
+      html, body { height: 100%; overflow: hidden; }
+      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex: 0 0 auto; }
       .brand-link { display: inline-block; color: inherit; text-decoration: none; }
       .brand-logo { display: inline-flex; align-items: center; gap: 5px; color: #fff; font-family: "Trebuchet MS", Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; line-height: .78; letter-spacing: .1em; text-shadow: 0 0 1px rgba(255,255,255,.86), 0 6px 18px rgba(0,0,0,.42); }
       .brand-spine-mark { display: inline-grid; gap: 4px; width: 16px; margin: 0 -3px 0 -5px; transform: translateY(1px); }
@@ -904,9 +904,11 @@ function createHtml(config) {
       .brand-spine-mark i:nth-child(5) { width: 8px; transform: translateX(8px); }
       .brand-plus { margin-left: 10px; color: #ff6a28; font-size: .72em; font-weight: 800; letter-spacing: .22em; line-height: 1; text-transform: uppercase; }
       .brand-link:hover .brand-plus { color: #8cc7ff; }
-      .stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 38vw); gap: 18px; min-height: 560px; height: calc(100vh - 104px); }
-      @media (min-width: 1600px) { .stage { grid-template-columns: minmax(0, 1fr) minmax(360px, 30vw); } }
-      .player-frame { position: relative; min-width: 0; min-height: 0; }
+      /* Плеер — почти на весь экран; панель справа уходит вниз и растягивается
+         по ширине, вместо того чтобы растягивать страницу вниз и создавать скрол. */
+      .stage { display: flex; flex-direction: column; gap: 14px; min-height: 0; height: calc(100vh - 104px); max-height: calc(100vh - 104px); overflow: hidden; }
+      .player-frame { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
+      #player { width: 100%; height: 100%; min-height: 0; }
       .video-watch-panel { position: relative; display: grid; gap: 10px; overflow: hidden; padding: 16px; border: 1px solid rgba(255,185,214,.46); border-radius: 8px; background: #020304; box-shadow: 0 20px 64px rgba(0,0,0,.34); }
       .video-watch-panel--bottom { margin-top: 4px; }
       .seo-video-frame { display: flex; align-items: center; justify-content: center; width: 100%; height: min(70vh, 820px); min-height: 220px; max-height: min(70vh, 820px); overflow: hidden; border: 1px solid rgba(140,199,255,.22); border-radius: 8px; background: #000; }
@@ -924,7 +926,17 @@ function createHtml(config) {
       .library-nav-button:disabled { display: none; }
       .library-nav-button--prev { left: 14px; }
       .library-nav-button--next { right: 14px; }
-      #sidebar { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 2px; }
+      #sidebar { min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding-right: 2px; flex: 0 0 auto; max-height: 42vh; }
+      #sidebar .preview-card { padding: 10px; }
+      .animation-card.is-open .animation-menu { max-height: 220px; }
+      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .owner-library a { min-height: 110px; }
+      .animation-download-block { padding: 8px 10px; }
+      .animation-download-row { flex-wrap: wrap; gap: 6px; }
+      .animation-download-button { flex: 0 0 auto; }
+      /* Огромное видео-превью под плеером убрано — оно растягивало страницу
+         и грузило пользователю файлы, которые и так не влезали в экран. */
+      .video-watch-panel { display: none !important; }
       .preview-card { padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
       .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
       .topbar .preview-top-row {
@@ -982,9 +994,9 @@ function createHtml(config) {
       .proof-card a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 38px; padding: 0 10px; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: #dff1ff; background: rgba(140,199,255,.08); font-size: 12px; font-weight: 850; text-decoration: none; }
       .proof-card a:hover { border-color: rgba(179,255,64,.58); color: #fff; }
       .proof-card code { overflow: hidden; max-width: 132px; color: rgba(237,245,255,.68); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-      select { min-height: 48px; padding: 0 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; color: #e7edf4; background: #1a2027; width: 100%; box-sizing: border-box; }
+      select, button { width: 100%; }
+      select { min-height: 48px; padding: 0 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; color: #e7edf4; background: #1a2027; }
       button { min-height: 38px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: rgba(231,237,244,.86); background: rgba(255,255,255,.045); cursor: pointer; }
-      .animation-menu button { width: 100%; box-sizing: border-box; }
       button.active, button:hover { border-color: rgba(140,199,255,.82); color: #fff; background: rgba(71,156,255,.22); }
       .animation-card { position: relative; }
       .animation-card.is-open .animation-menu { display: grid; gap: 6px; max-height: 320px; overflow: auto; margin-top: 0; padding: 8px; border: 1px solid rgba(140,199,255,.34); border-radius: 10px; background: rgba(9,13,17,.94); box-shadow: 0 22px 50px rgba(0,0,0,.52); backdrop-filter: blur(12px); }
@@ -1032,9 +1044,8 @@ function createHtml(config) {
       .owner-profile strong { flex: 0 1 auto; min-width: 0; color: #fff; font-size: 16px; overflow-wrap: anywhere; }
       .owner-profile span { flex: 0 0 auto; color: rgba(231,237,244,.62); font-size: 12px; }
       .owner-library { display: none; gap: 10px; }
-      .owner-library.is-visible { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); align-items: stretch; align-content: start; }
-      .owner-library a { position: relative; display: block; overflow: hidden; min-height: 132px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); isolation: isolate; }
-      .owner-thumb { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; background: rgba(255,255,255,.08); transform: scale(1.05); transform-origin: center; }
+      .owner-library.is-visible { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); align-items: stretch; }
+      .owner-library a { position: relative; display: block; overflow: hidden; min-height: 154px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); isolation: isolate; }
       .owner-library a::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.18) 45%, rgba(8,10,12,.82)); pointer-events: none; }
       .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); transform: translateY(-2px); }
       .owner-thumb { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; background: rgba(255,255,255,.08); transform: scale(1.08); transform-origin: center; }
@@ -2207,13 +2218,14 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       ownerEntries.sort(compareLibraryEntries);
       const ownerLibraryItems = ownerEntries.map((item) => {
         const target = resolvePreviewTarget(item);
+        // Owner cards must stay lightweight: the sidebar is a strip of several
+        // thumbnails at once, so the moving preview is the LOW quality WebM
+        // (360p) while the page's main video surface is the full one. The
+        // poster is always a static WebP, which is cheap to load.
         // Owner cards are a strip of several thumbnails at once, so the moving
         // preview is the MEDIUM (720p) WebM — light enough to load several at
         // once, but no longer the 360p low tier. The full-quality clip is kept
         // separately so the page's main player can still use it.
-        // Prefer medium (720p), then low (360p), then the full clip. The old
-        // `library/` collection only ever has the full clip, so the low tier is
-        // the safe fallback that keeps a strip of thumbnails light.
         const medWebm = entryVideoAsset(item?.webmPreviewMedium || item?.webmPreviewLow || item?.webmPreview || '', item, 'webm');
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
