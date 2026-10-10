@@ -890,9 +890,9 @@ function createHtml(config) {
       *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       html, body, #app { width: 100%; min-height: 100%; margin: 0; }
       body { overflow: auto; background: #000; color: #e7edf4; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      #app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; max-height: 100vh; overflow: hidden; padding: 14px 18px 10px; background: rgba(0,0,0,.78); }
-      html, body { height: 100%; overflow: hidden; }
-      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex: 0 0 auto; }
+      #app { position: relative; z-index: 1; display: grid; grid-template-rows: auto auto auto; gap: 18px; min-height: 100vh; padding: 24px; background: rgba(0,0,0,.78); }
+      @media (max-width: 1024px) { #app { gap: 8px; padding: 10px 14px 6px; } }
+      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
       .brand-link { display: inline-block; color: inherit; text-decoration: none; }
       .brand-logo { display: inline-flex; align-items: center; gap: 5px; color: #fff; font-family: "Trebuchet MS", Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; line-height: .78; letter-spacing: .1em; text-shadow: 0 0 1px rgba(255,255,255,.86), 0 6px 18px rgba(0,0,0,.42); }
       .brand-spine-mark { display: inline-grid; gap: 4px; width: 16px; margin: 0 -3px 0 -5px; transform: translateY(1px); }
@@ -904,11 +904,8 @@ function createHtml(config) {
       .brand-spine-mark i:nth-child(5) { width: 8px; transform: translateX(8px); }
       .brand-plus { margin-left: 10px; color: #ff6a28; font-size: .72em; font-weight: 800; letter-spacing: .22em; line-height: 1; text-transform: uppercase; }
       .brand-link:hover .brand-plus { color: #8cc7ff; }
-      /* Плеер — почти на весь экран; панель справа уходит вниз и растягивается
-         по ширине, вместо того чтобы растягивать страницу вниз и создавать скрол. */
-      .stage { display: flex; flex-direction: column; gap: 14px; min-height: 0; height: calc(100vh - 104px); max-height: calc(100vh - 104px); overflow: hidden; }
-      .player-frame { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
-      #player { width: 100%; height: 100%; min-height: 0; }
+      .stage { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 18px; min-height: 560px; height: calc(100vh - 104px); }
+      .player-frame { position: relative; min-width: 0; min-height: 0; }
       .video-watch-panel { position: relative; display: grid; gap: 10px; overflow: hidden; padding: 16px; border: 1px solid rgba(255,185,214,.46); border-radius: 8px; background: #020304; box-shadow: 0 20px 64px rgba(0,0,0,.34); }
       .video-watch-panel--bottom { margin-top: 4px; }
       .seo-video-frame { display: flex; align-items: center; justify-content: center; width: 100%; height: min(70vh, 820px); min-height: 220px; max-height: min(70vh, 820px); overflow: hidden; border: 1px solid rgba(140,199,255,.22); border-radius: 8px; background: #000; }
@@ -926,17 +923,7 @@ function createHtml(config) {
       .library-nav-button:disabled { display: none; }
       .library-nav-button--prev { left: 14px; }
       .library-nav-button--next { right: 14px; }
-      #sidebar { min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding-right: 2px; flex: 0 0 auto; max-height: 42vh; }
-      #sidebar .preview-card { padding: 10px; }
-      .animation-card.is-open .animation-menu { max-height: 220px; }
-      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-      .owner-library a { min-height: 110px; }
-      .animation-download-block { padding: 8px 10px; }
-      .animation-download-row { flex-wrap: wrap; gap: 6px; }
-      .animation-download-button { flex: 0 0 auto; }
-      /* Огромное видео-превью под плеером убрано — оно растягивало страницу
-         и грузило пользователю файлы, которые и так не влезали в экран. */
-      .video-watch-panel { display: none !important; }
+      #sidebar { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 2px; }
       .preview-card { padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
       .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
       .topbar .preview-top-row {
@@ -2218,10 +2205,6 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       ownerEntries.sort(compareLibraryEntries);
       const ownerLibraryItems = ownerEntries.map((item) => {
         const target = resolvePreviewTarget(item);
-        // Owner cards must stay lightweight: the sidebar is a strip of several
-        // thumbnails at once, so the moving preview is the LOW quality WebM
-        // (360p) while the page's main video surface is the full one. The
-        // poster is always a static WebP, which is cheap to load.
         // Owner cards are a strip of several thumbnails at once, so the moving
         // preview is the MEDIUM (720p) WebM — light enough to load several at
         // once, but no longer the 360p low tier. The full-quality clip is kept
