@@ -394,8 +394,8 @@ jobs:
 
                   // Per-animation preview duration, read from the meta.json the
                   // exporter writes next to every WebM. This is the single source
-                  // of truth for "is this animation's preview long enough to show
-                  // as a moving thumbnail" — without it the site cannot tell a
+                  // of truth for is this animation's preview long enough to show
+                  // as a moving thumbnail - without it the site cannot tell a
                   // 1-frame clip (idle) from a 2-second clip (win).
                   const metaFile = path.join(sourceDir, 'meta.json');
                   if (fs.existsSync(metaFile)) {
@@ -463,7 +463,7 @@ jobs:
 
               // Automatic preview fallback — runs after every full export, so
               // it works for both freshly created pages and existing ones.
-              // A work's "main" preview is the one for defaultAnimation. When
+              // A work's main preview is the one for defaultAnimation. When
               // that animation's preview is a 1–3 frame clip (an idle that is
               // a single held frame) the moving thumbnail is effectively a
               // still image, so the site silently re-points defaultAnimation at
