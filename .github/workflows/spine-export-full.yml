@@ -392,6 +392,22 @@ jobs:
 
                   if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
 
+                  // Per-animation preview duration, read from the meta.json the
+                  // exporter writes next to every WebM. This is the single source
+                  // of truth for "is this animation's preview long enough to show
+                  // as a moving thumbnail" — without it the site cannot tell a
+                  // 1-frame clip (idle) from a 2-second clip (win).
+                  const metaFile = path.join(sourceDir, 'meta.json');
+                  if (fs.existsSync(metaFile)) {
+                    try {
+                      const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
+                      const animDur = Number(meta?.animationDuration);
+                      if (Number.isFinite(animDur) && animDur > 0) {
+                        allAnimPreviews[animName].previewDuration = animDur;
+                      }
+                    } catch (e) { /* meta parse failed — skip */ }
+                  }
+
                   const files = fs.readdirSync(sourceDir);
                   for (const file of files) {
                     if (['anim-name.txt', 'safe-name.txt', 'export-type.txt', 'meta.json'].includes(file)) continue;
@@ -435,9 +451,19 @@ jobs:
               }
 
               const hasExports = Object.keys(allAnimPreviews).length > 0;
+
+              // Work-level preview duration: the duration of the animation the
+              // work is currently presenting (defaultAnimation). The page
+              // renderer uses this to decide whether the chosen preview is
+              // long enough, or whether to fall back to another animation's
+              // preview that is.
+              const chosenAnim = String(indexData[entryIndex]?.defaultAnimation || '').trim();
+              const chosenPreview = allAnimPreviews[chosenAnim];
+              const chosenDuration = chosenPreview ? Number(chosenPreview.previewDuration) : NaN;
               indexData[entryIndex] = {
                 ...indexData[entryIndex],
                 allAnimationPreviews: allAnimPreviews,
+                previewDuration: Number.isFinite(chosenDuration) && chosenDuration > 0 ? chosenDuration : undefined,
                 fullExportStatus: hasExports ? 'ready' : 'failed',
                 fullExportGeneratedAt: new Date().toISOString(),
               };
