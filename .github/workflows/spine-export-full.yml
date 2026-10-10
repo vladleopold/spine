@@ -29,29 +29,8 @@ jobs:
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           echo "=== Reading animations for: $UPLOAD_ID ==="
-
-          RESULT=$(node --input-type=module -e "
-            import { entryForUpload } from './scripts/resolve-library.mjs';
-            const found = entryForUpload(process.cwd(), '$UPLOAD_ID');
-            const entry = found ? found.entry : null;
-            // Diagnostics go to stderr so they never pollute the JSON the shell
-            // captures into $RESULT — a stray console.log line used to break
-            // the downstream JSON.parse with "Unexpected token 'C'".
-            const log = (...a) => process.stderr.write(a.join(' ') + '\n');
-            if (found) log('Collection folder: ' + found.basePath);
-            if (!entry || !Array.isArray(entry.animations) || entry.animations.length === 0) {
-              console.log(JSON.stringify({ matrix: [], has_items: false }));
-            } else {
-              console.log(JSON.stringify({ matrix: entry.animations, has_items: true }));
-            }
-          ")
-
-          MATRIX=$(echo "$RESULT" | node -e "process.stdin.setEncoding('utf8');let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const r=JSON.parse(d);process.stdout.write(JSON.stringify(r.matrix));});")
-          HAS_ITEMS=$(echo "$RESULT" | node -e "process.stdin.setEncoding('utf8');let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const r=JSON.parse(d);process.stdout.write(String(r.has_items));});")
-
-          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
-          echo "has_items=${HAS_ITEMS}" >> $GITHUB_OUTPUT
-          echo "=== Matrix: $MATRIX  |  has_items: $HAS_ITEMS ==="
+          node scripts/spine-export-matrix.mjs "$UPLOAD_ID"
+          echo "=== Matrix done ==="
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  STAGE 2a — Export OPAQUE WebM + WebP + MP4  (one job per animation)
