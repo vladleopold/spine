@@ -19,16 +19,36 @@ jobs:
       - name: Generate matrix
         id: set-matrix
         run: |
+          # The library now spans several library_NN folders and holds more works
+          # than GitHub's 256-job matrix limit, so ids are grouped into batches
+          # and each matrix job exports its whole batch.
+          BATCH_SIZE=4
           if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
             # Parse comma-separated IDs into JSON array
             IDS="${{ github.event.inputs.filter_ids }}"
-            MATRIX_JSON=$(IDS="$IDS" node -e "
+            MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node -e "
               const ids = process.env.IDS.split(',').map(s => s.trim()).filter(Boolean);
-              console.log(JSON.stringify(ids));
+              const size = Number(process.env.BATCH_SIZE) || 1;
+              const batches = [];
+              for (let i = 0; i < ids.length; i += size) batches.push(ids.slice(i, i + size));
+              console.log(JSON.stringify(batches));
             ")
             echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
           else
-            MATRIX_JSON=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('library/index.json', 'utf8')); console.log(JSON.stringify(data.map(d => d.id).filter(Boolean)));")
+            MATRIX_JSON=$(node --input-type=module -e "
+              import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
+              const root = process.cwd();
+              const ids = [];
+              for (const folder of listCollectionFolders(root)) {
+                const index = readIndex(root, folder);
+                if (!index) continue;
+                for (const entry of index) if (entry && entry.id) ids.push(entry.id);
+              }
+              const size = Number(process.env.BATCH_SIZE) || 1;
+              const batches = [];
+              for (let i = 0; i < ids.length; i += size) batches.push(ids.slice(i, i + size));
+              console.log(JSON.stringify(batches));
+            ")
             echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
           fi
 
@@ -38,7 +58,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        uploadId: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        batch: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,37 +87,54 @@ jobs:
 
       - name: Run Export Script
         run: |
-          node scripts/spine-export-webm.mjs \
-            --upload-id="${{ matrix.uploadId }}" \
-            --repo-path="${{ github.workspace }}" \
-            --output="${{ github.workspace }}/${{ matrix.uploadId }}-preview.webm"
+          # One job exports the whole batch; a work that fails is recorded in
+          # its own artifact so the rest of the batch still lands.
+          echo '${{ matrix.batch }}' > batch.json
+          node -e "
+            const fs = require('fs');
+            const ids = JSON.parse(fs.readFileSync('batch.json', 'utf8'));
+            // Trailing newline matters: `read` silently skips a last line
+            // that has no terminator, which would drop one work per batch.
+            fs.writeFileSync('batch-ids.txt', ids.map((id) => id + '\n').join(''));
+          "
+          while IFS= read -r uploadId; do
+            [ -z "$uploadId" ] && continue
+            echo "=== Exporting $uploadId ==="
+            node scripts/spine-export-webm.mjs \
+              --upload-id="$uploadId" \
+              --repo-path="${{ github.workspace }}" \
+              --output="${{ github.workspace }}/$uploadId-preview.webm" || echo "Export failed for $uploadId (recorded as error)"
+          done < batch-ids.txt
 
       - name: Prepare Artifacts
         run: |
-          mkdir -p "artifact_${{ matrix.uploadId }}"
-          
-          # Move generated files to artifact dir if they exist
-          for ext in "webm" "webp"; do
-            for suffix in "" "-medium" "-low"; do
-              f="${{ matrix.uploadId }}-preview${suffix}.${ext}"
-              if [ -f "$f" ]; then
-                mv "$f" "artifact_${{ matrix.uploadId }}/"
-              fi
+          while IFS= read -r uploadId; do
+            [ -z "$uploadId" ] && continue
+            mkdir -p "batch/$uploadId"
+            
+            # Move generated files to artifact dir if they exist
+            for ext in "webm" "webp"; do
+              for suffix in "" "-medium" "-low"; do
+                f="$uploadId-preview${suffix}.${ext}"
+                if [ -f "$f" ]; then
+                  mv "$f" "batch/$uploadId/"
+                fi
+              done
             done
-          done
-          
-          # Move videoMeta json if it exists
-          if [ -f "${{ matrix.uploadId }}-preview.webm.json" ]; then
-            mv "${{ matrix.uploadId }}-preview.webm.json" "artifact_${{ matrix.uploadId }}/meta.json"
-          else
-            echo "{}" > "artifact_${{ matrix.uploadId }}/meta.json"
-          fi
+            
+            # Move videoMeta json if it exists
+            if [ -f "$uploadId-preview.webm.json" ]; then
+              mv "$uploadId-preview.webm.json" "batch/$uploadId/meta.json"
+            else
+              echo "{}" > "batch/$uploadId/meta.json"
+            fi
+          done < batch-ids.txt
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: export-${{ matrix.uploadId }}
-          path: artifact_${{ matrix.uploadId }}/*
+          name: export-${{ strategy.job-index }}
+          path: batch/
           retention-days: 1
           overwrite: true
 
@@ -129,11 +166,13 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
+            const { entryForUpload } = await import('./scripts/resolve-library.mjs');
             
             const origin = 'https://spine-link.vercel.app';
-            const basePath = 'library';
-            const indexPath = `${basePath}/index.json`;
-            const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+            const repoRoot = process.cwd();
+            // Each work may live in a different library_NN folder, so the folder
+            // and its index are resolved per upload and flushed at the end.
+            const touchedIndexes = new Map();
             
             const artifactsDir = 'downloaded-artifacts';
             if (!fs.existsSync(artifactsDir)) {
@@ -141,12 +180,38 @@ jobs:
               return;
             }
             
-            const dirs = fs.readdirSync(artifactsDir);
-            for (const dir of dirs) {
-              const match = dir.match(/^export-(.+)$/);
-              if (!match) continue;
-              const uploadId = match[1];
-              const sourceDir = path.join(artifactsDir, dir);
+            // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used a
+            // flat `export-<uploadId>/`, so both layouts are accepted.
+            function collectExportDirs(root) {
+              const out = [];
+              for (const name of fs.readdirSync(root)) {
+                const jobDir = path.join(root, name);
+                if (!fs.statSync(jobDir).isDirectory()) continue;
+                const entries = fs.readdirSync(jobDir);
+                if (!entries.length) continue;
+                const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
+                if (nested.length) {
+                  for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
+                } else if (/^export-/.test(name)) {
+                  out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
+                }
+              }
+              return out;
+            }
+            
+            const dirs = collectExportDirs(artifactsDir);
+            for (const { uploadId, sourceDir } of dirs) {
+              const found = entryForUpload(repoRoot, uploadId);
+              if (!found) {
+                console.log(`Skipping ${uploadId}: no collection folder holds it.`);
+                continue;
+              }
+              const basePath = found.basePath;
+              const indexPath = path.join(repoRoot, basePath, 'index.json');
+              if (!touchedIndexes.has(basePath)) {
+                touchedIndexes.set(basePath, { indexPath, indexData: found.index });
+              }
+              const indexData = touchedIndexes.get(basePath).indexData;
               const targetDir = path.join(basePath, uploadId);
               
               if (!fs.existsSync(targetDir)) {
@@ -206,7 +271,10 @@ jobs:
               }
             }
             
-            fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+            for (const [basePath, { indexPath, indexData }] of touchedIndexes) {
+              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+              console.log(`Updated ${basePath}/index.json`);
+            }
             console.log("Updated index.json successfully");
 
       - name: Commit and Push
@@ -223,24 +291,47 @@ jobs:
             git reset --hard origin/main
             
             # 2. Re-run the artifact processing script on top of fresh state
-            node -e "
-              const fs = require('fs');
-              const path = require('path');
+            node --input-type=module -e "
+              import fs from 'node:fs';
+              import path from 'node:path';
+              import { entryForUpload } from './scripts/resolve-library.mjs';
               
               const origin = 'https://spine-link.vercel.app';
-              const basePath = 'library';
-              const indexPath = path.join(basePath, 'index.json');
-              const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+              const repoRoot = process.cwd();
+              // Each work may live in a different library_NN folder, so the folder
+              // and its index are resolved per upload and flushed at the end.
+              const touched = new Map();
               
               const artifactsDir = 'downloaded-artifacts';
               if (!fs.existsSync(artifactsDir)) { console.log('No artifacts dir'); process.exit(0); }
               
-              const dirs = fs.readdirSync(artifactsDir);
-              for (const dir of dirs) {
-                const match = dir.match(/^export-(.+)$/);
-                if (!match) continue;
-                const uploadId = match[1];
-                const sourceDir = path.join(artifactsDir, dir);
+              // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used
+              // a flat `export-<uploadId>/`, so both layouts are accepted.
+              function collectExportDirs(root) {
+                const out = [];
+                for (const name of fs.readdirSync(root)) {
+                  const jobDir = path.join(root, name);
+                  if (!fs.statSync(jobDir).isDirectory()) continue;
+                  const entries = fs.readdirSync(jobDir);
+                  if (!entries.length) continue;
+                  const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
+                  if (nested.length) {
+                    for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
+                  } else if (/^export-/.test(name)) {
+                    out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
+                  }
+                }
+                return out;
+              }
+              
+              const dirs = collectExportDirs(artifactsDir);
+              for (const { uploadId, sourceDir } of dirs) {
+                const found = entryForUpload(repoRoot, uploadId);
+                if (!found) { console.log('Skipping ' + uploadId + ': not in any collection.'); continue; }
+                const basePath = found.basePath;
+                const indexPath = path.join(repoRoot, basePath, 'index.json');
+                if (!touched.has(basePath)) touched.set(basePath, { indexPath, indexData: found.index });
+                const indexData = touched.get(basePath).indexData;
                 const targetDir = path.join(basePath, uploadId);
                 
                 if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
@@ -288,12 +379,14 @@ jobs:
                   };
                 }
               }
-              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
-              console.log('index.json updated.');
+              for (const [basePath, { indexPath, indexData }] of touched) {
+                fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+                console.log('updated ' + basePath + '/index.json');
+              }
             "
             
             # 3. Stage changes
-            git add library/
+            git add library_*/ library/
             
             if git diff-index --quiet HEAD --; then
               echo "No changes to commit."
