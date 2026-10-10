@@ -145,6 +145,15 @@ function sanitizeSkeletonData(json) {
   return sanitizeSkeletonJson(json);
 }
 
+// Margin kept around an animation inside the preview canvas. The runtime frames a
+// clip from the union of every frame's attachment quads, and for VFX-only skeletons
+// (soft glows, staggered particles) that box is far larger than the pixels a viewer
+// actually sees. A wide margin then shrinks the visible burst to a small dim blob in
+// the middle of the canvas. A narrow margin keeps the framing close to the exported
+// video, which is rendered with no padding at all, while still leaving room for
+// elements that reach the very edge of their quad.
+const PREVIEW_PAD = "0%";
+
 function escapeHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -160,7 +169,7 @@ function cleanPublicText(value = '', maxLength = 120) {
 
 function safePublicImage(value = '') {
   const url = String(value).trim();
-  return /^https:\/\/[^\s"'<>]+$/i.test(url) ? url : '';
+  return /^https:\/\/[^\s"'<>]+$/i.test(url) || /^data:image\/webp;base64,/i.test(url) ? url : '';
 }
 
 function skinNamesFromSkeletonJson(skeletonJson) {
@@ -406,9 +415,13 @@ function isPublicArchiveEntry(entry, exclusions) {
 
 function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '') {
   const id = String(entry?.id || entryId || '').trim();
-  const contentUrl = entryVideoAsset(entry?.webmPreview || '', entry, 'webm');
+  // Prefer the preview of an animation that is actually long enough to show as
+  // a moving clip. A 1-frame `idle` preview is a still image, so the video-watch
+  // panel and the SEO metadata would otherwise surface a zero-length video.
+  const target = resolvePreviewTarget(entry);
+  const contentUrl = entryVideoAsset(target.url || entry?.webmPreview || '', entry, 'webm');
   const poster =
-    entryImageAsset(entry?.thumbnailPoster || '', entry, 'poster') ||
+    entryImageAsset(target.poster || entry?.thumbnailPoster || '', entry, 'poster') ||
     generatedThumbnailUrl(origin, entry) ||
     entryImageAsset(entry?.thumbnail || '', entry, 'thumbnail');
   if (!id || !contentUrl || !poster) return null;
@@ -416,21 +429,23 @@ function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl =
   const description =
     cleanPublicText(note || entry?.note || `${name} Spine animation video preview and interactive Spine web player on Spine-Link.`, 260) ||
     `${name} Spine animation video preview and interactive Spine web player on Spine-Link.`;
+  const watchPageUrl = `${origin}/video/${encodeURIComponent(id)}`;
   return {
     id,
     name,
     description,
     thumbnailUrl: poster,
     contentUrl,
-    embedUrl: embedUrl || pageUrlForEntry(origin, id),
-    url: canonicalUrl || pageUrlForEntry(origin, id),
-    proofDocuments: proofDocumentsForEntry(origin, entry, canonicalUrl || pageUrlForEntry(origin, id)),
+    embedUrl: embedUrl || watchPageUrl,
+    url: watchPageUrl,
+    playerPageUrl: canonicalUrl || pageUrlForEntry(origin, id),
+    proofDocuments: proofDocumentsForEntry(origin, entry, watchPageUrl),
     sourceProofUrl: sourceProofUrlForEntry(origin, entry),
     blockchainAnchorUrl: blockchainAnchorUrlForEntry(origin, entry),
     proofHash: sanitizeSha256(entry?.sourceProof?.proofHash || entry?.blockchainAnchor?.sourceProofHash),
     anchorHash: sanitizeSha256(entry?.blockchainAnchor?.anchorHash),
     uploadDate: isoDate(entry?.uploadedAt) || '2026-05-04T00:00:00.000Z',
-    duration: durationToIso8601(entry?.previewDuration),
+    duration: durationToIso8601(Number.isFinite(target.duration) && target.duration > 0 ? target.duration : entry?.previewDuration),
     width: positiveInteger(entry?.previewWidth),
     height: positiveInteger(entry?.previewHeight),
   };
@@ -523,8 +538,8 @@ function seoHead({
     <meta name="application-name" content="Spine Portfolio" />
     <meta name="apple-mobile-web-app-title" content="Spine Portfolio" />
     <meta name="theme-color" content="#000000" />
-    <link rel="canonical" href="${escapeHtml(url)}" />
-    ${playerUrl && playerUrl !== url ? `<link rel="alternate" href="${escapeHtml(playerUrl)}" title="Interactive Spine player" />` : ''}
+    <link rel="canonical" href="${escapeHtml(video?.playerPageUrl || url)}" />
+    ${video?.url && video.url !== url ? `<link rel="alternate" href="${escapeHtml(video.url)}" title="${escapeHtml(video.name)} video watch page" />` : ''}
     ${archiveUrl && archiveUrl !== url ? `<link rel="alternate" href="${escapeHtml(archiveUrl)}" title="World SPINE ARCHIVE detail page" />` : ''}
     <meta property="og:type" content="${video ? 'video.other' : 'website'}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
@@ -548,11 +563,14 @@ function seoHead({
 }
 
 function githubHeaders(token) {
-  return {
+  const headers = {
     Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
     'X-GitHub-Api-Version': '2022-11-28',
   };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
 }
 
 function isSkeleton(name) {
@@ -616,6 +634,33 @@ async function githubJson(settings, path) {
   return response.json();
 }
 
+// Every library_NN folder is a collection; they are listed at runtime so a folder
+// added by a rotation is found without a deploy.
+// Works are spread across library_01, library_02, ... folders, each capped at the
+// GitHub limit. They are listed at runtime so a folder added by a rotation shows up
+// without a code change or a deploy.
+async function libraryCollectionPaths(settings) {
+  const paths = [cleanRepoPath(settings.basePath || defaultBasePath)];
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/?ref=${encodeURIComponent(settings.branch)}`,
+      { headers: githubHeaders(settings.token) },
+    );
+    if (!response.ok) return paths;
+    const items = await response.json();
+    if (!Array.isArray(items)) return paths;
+    const folders = items
+      .filter((item) => item && item.type === "dir" && /^library(_\d+)?$/.test(String(item.name || "")))
+      .map((item) => item.name)
+      .sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+    for (const name of folders) if (!paths.includes(name)) paths.push(name);
+  } catch (e) {
+    // Listing failed: the configured folder alone still beats an empty site.
+  }
+  return paths;
+}
+
+
 async function githubText(settings, path) {
   return cachedGithubText(settings, path);
 }
@@ -629,7 +674,7 @@ async function githubFileHead(settings, path, maxBytes = 256) {
   const rawUrl = `https://raw.githubusercontent.com/${settings.owner}/${settings.repo}/${settings.branch}/${encodeRepoPath(path)}`;
   const response = await fetch(rawUrl, {
     headers: {
-      Authorization: `Bearer ${settings.token}`,
+      ...(settings.token ? { Authorization: `Bearer ${settings.token}` } : {}),
       Range: `bytes=0-${maxBytes - 1}`,
       Accept: 'application/octet-stream',
     },
@@ -666,11 +711,145 @@ async function findSpineSetDirectories(settings, uploadPath, maxDepth = 3) {
   return found;
 }
 
+// Download buttons for the work page sidebar — mirrors the editor block in
+// src/SpineApp.tsx so the server-rendered /p/<id> page offers the same files.
+// Each animation in `entry.allAnimationPreviews` carries its own set of URLs;
+// the "All" variants fall back to whichever animation actually has the file.
+// Resolves which preview a work should present as its moving thumbnail.
+//
+// A work is created from one Spine skeleton that can carry several animations
+// (idle, win, …). The exporter records one preview per animation, but the work
+// only has a single "main" preview — the one for its defaultAnimation. When
+// that animation is a 1–3 frame clip (e.g. an `idle` that is a single held
+// frame) the resulting WebM is effectively a still image: the owner-thumb and
+// the video-watch panel show a zero-length video and the user sees nothing
+// moving.
+//
+// This resolver checks the chosen animation's preview duration. If it is too
+// short (< 2 s) it walks the remaining animations in declaration order and
+// returns the first one whose preview is long enough. The returned object
+// carries the URL, the poster and the duration so every consumer (owner card,
+// video-watch panel, SEO metadata) renders the same moving clip.
+function resolvePreviewTarget(entry) {
+  const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
+    ? entry.allAnimationPreviews
+    : null;
+  const animations = Array.isArray(entry?.animations) ? entry.animations : (previews ? Object.keys(previews) : []);
+  const chosen = String(entry?.defaultAnimation || '').trim();
+
+  const pick = (name) => {
+    const p = previews && previews[name];
+    if (!p) return null;
+    return {
+      name,
+      url: typeof p.webmPreview === 'string' && p.webmPreview.trim() ? p.webmPreview.trim() : '',
+      poster: typeof p.webpPoster === 'string' && p.webpPoster.trim() ? p.webpPoster.trim() : '',
+      duration: Number(p.previewDuration),
+    };
+  };
+
+  const order = [];
+  if (chosen && animations.includes(chosen)) order.push(chosen);
+  for (const a of animations) if (!order.includes(a)) order.push(a);
+
+  const candidates = order.map(pick).filter(Boolean);
+  const first = candidates[0] || null;
+  const fallback = candidates.find((c) => Number.isFinite(c.duration) && c.duration >= 2) || null;
+  const target = fallback || first;
+
+  return {
+    name: target ? target.name : chosen,
+    url: target ? target.url : (typeof entry?.webmPreview === 'string' ? entry.webmPreview.trim() : ''),
+    poster: target ? target.poster : '',
+    duration: target ? target.duration : Number(entry?.previewDuration || 0),
+    isFallback: Boolean(target && fallback && target.name !== chosen),
+  };
+}
+
+function animationDownloadButton(label, url) {
+  const safe = safePublicAsset(url);
+  if (!safe) return "";
+  return `<a class="animation-download-button" href="${escapeHtml(safe)}" download rel="noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg> ${escapeHtml(label)}</a>`;
+}
+
+function animationDownloadBlock(entry) {
+  const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
+    ? entry.allAnimationPreviews
+    : null;
+  if (!previews || !Object.keys(previews).length) return "";
+
+  const pick = (name, keys) => {
+    const p = previews[name];
+    if (!p) return "";
+    for (const k of keys) {
+      const v = p[k];
+      if (typeof v === 'string' && v.trim()) return v.trim();
+    }
+    return "";
+  };
+
+  const rows = [];
+  const qualities = [
+    { label: 'high', suffix: '', tag: '1080p' },
+    { label: 'medium', suffix: 'Medium', tag: '720p' },
+    { label: 'low', suffix: 'Low', tag: '360p' },
+  ];
+
+  const webm = [];
+  const mp4 = [];
+  const mov = [];
+  const gif = [];
+  const png = [];
+  for (const name of Object.keys(previews)) {
+    for (const q of qualities) {
+      if (pick(name, ['webm' + q.suffix + 'Preview'])) webm.push(animationDownloadButton(`WebM · ${q.tag}`, pick(name, ['webm' + q.suffix + 'Preview'])));
+      if (pick(name, ['mp4' + q.suffix + 'Preview'])) mp4.push(animationDownloadButton(`MP4 · ${q.tag}`, pick(name, ['mp4' + q.suffix + 'Preview'])));
+      if (pick(name, ['mov' + q.suffix + 'Alpha'])) mov.push(animationDownloadButton(`MOV α · ${q.tag}`, pick(name, ['mov' + q.suffix + 'Alpha'])));
+      if (pick(name, ['gif' + q.suffix + 'Alpha'])) gif.push(animationDownloadButton(`GIF α · ${q.tag}`, pick(name, ['gif' + q.suffix + 'Alpha'])));
+      if (pick(name, ['png' + q.suffix + 'Alpha'])) png.push(animationDownloadButton(`PNG seq α · ${q.tag}`, pick(name, ['png' + q.suffix + 'Alpha'])));
+    }
+  }
+
+  // "All animations" variants: scan every animation for the first file that exists.
+  const allKeys = (keys) => {
+    for (const name of Object.keys(previews)) {
+      const u = pick(name, keys);
+      if (u) return u;
+    }
+    return "";
+  };
+  const allMov = animationDownloadButton('All MOV α · 1080p', allKeys(['movAlpha']));
+  const allGif = animationDownloadButton('All GIF α · 1080p', allKeys(['gifAlpha']));
+  const allPng = animationDownloadButton('All PNG seq α · 1080p', allKeys(['pngAlpha']));
+
+  const section = (title, buttons) => {
+    const items = [...new Set(buttons)].filter(Boolean).join("");
+    if (!items) return "";
+    return `<div class="animation-download-group"><div class="animation-download-group-title">${escapeHtml(title)}</div><div class="animation-download-row">${items}</div></div>`;
+  };
+
+  const groups = [
+    section('WebM', webm),
+    section('MP4', mp4),
+    section('MOV with alpha', [...mov, allMov]),
+    section('GIF with alpha', [...gif, allGif]),
+    section('PNG sequence with alpha', [...png, allPng]),
+  ].filter(Boolean).join("");
+
+  if (!groups) return "";
+
+  return `<div class="animation-download-block">
+    <div class="animation-download-title">Download animations</div>
+    ${groups}
+  </div>`;
+}
+
 function createHtml(config) {
   const video = config.video || null;
   const origin = config.origin || 'https://spine-link.vercel.app';
   const entryMetricId = String(config.entryId || 'spine-preview');
   const metric = metricCountsForId(config.metrics, entryMetricId);
+  const entry = config.entry || {};
   const clientConfig = {
     ...config,
     metrics: {
@@ -701,6 +880,7 @@ function createHtml(config) {
     <link rel="stylesheet" href="/page-transitions.css" />
     <link rel="stylesheet" id="spine-player-stylesheet" href="https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css" />
     <script src="/page-transitions.js" defer></script>
+    <script src="/spine-embers.js?v=2026-09-30" defer></script>
     <style>
       * { box-sizing: border-box; }
       * { scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
@@ -710,10 +890,11 @@ function createHtml(config) {
       *::-webkit-scrollbar-thumb:hover { background: rgba(100,106,115,.78); background-clip: content-box; }
       html, body, #app { width: 100%; min-height: 100%; margin: 0; }
       body { overflow: auto; background: #000; color: #e7edf4; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      #app { position: relative; z-index: 1; display: grid; grid-template-rows: auto auto auto; gap: 18px; min-height: 100vh; padding: 24px; background: rgba(0,0,0,.78); }
-      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+      #app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; max-height: 100vh; overflow: hidden; padding: 14px 18px 10px; background: rgba(0,0,0,.78); }
+      html, body { height: 100%; overflow: hidden; }
+      .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex: 0 0 auto; }
       .brand-link { display: inline-block; color: inherit; text-decoration: none; }
-      .brand-logo { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-family: "Trebuchet MS", Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; line-height: .78; letter-spacing: .18em; text-shadow: 0 0 1px rgba(255,255,255,.86), 0 6px 18px rgba(0,0,0,.42); }
+      .brand-logo { display: inline-flex; align-items: center; gap: 5px; color: #fff; font-family: "Trebuchet MS", Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; line-height: .78; letter-spacing: .1em; text-shadow: 0 0 1px rgba(255,255,255,.86), 0 6px 18px rgba(0,0,0,.42); }
       .brand-spine-mark { display: inline-grid; gap: 4px; width: 16px; margin: 0 -3px 0 -5px; transform: translateY(1px); }
       .brand-spine-mark i { display: block; width: 16px; height: 7px; border-radius: 999px; background: #ff5a1f; box-shadow: 0 0 8px rgba(255,90,31,.22); }
       .brand-spine-mark i:nth-child(1) { transform: translateX(-1px); }
@@ -721,14 +902,13 @@ function createHtml(config) {
       .brand-spine-mark i:nth-child(3) { width: 12px; transform: translateX(4px); }
       .brand-spine-mark i:nth-child(4) { width: 10px; transform: translateX(6px); }
       .brand-spine-mark i:nth-child(5) { width: 8px; transform: translateX(8px); }
-      .brand-plus { margin-left: 8px; color: #ff6a28; font-size: .72em; font-weight: 800; letter-spacing: .22em; line-height: 1; text-transform: uppercase; transform: translate(-15px, .18em); }
+      .brand-plus { margin-left: 10px; color: #ff6a28; font-size: .72em; font-weight: 800; letter-spacing: .22em; line-height: 1; text-transform: uppercase; }
       .brand-link:hover .brand-plus { color: #8cc7ff; }
-      .player-top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; }
-      .player-top-button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 14px; border: 1px solid rgba(140,199,255,.32); border-radius: 8px; color: #dff1ff; background: rgba(140,199,255,.08); box-shadow: 0 12px 28px rgba(0,0,0,.24), inset 0 0 18px rgba(140,199,255,.06); font-size: 13px; font-weight: 950; text-decoration: none; white-space: nowrap; }
-      .player-top-button.is-primary { border-color: rgba(179,255,64,.62); color: #eaffc2; background: rgba(179,255,64,.1); }
-      .player-top-button:hover { border-color: rgba(255,106,40,.7); color: #fff; background: rgba(255,106,40,.12); }
-      .stage { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 18px; min-height: 560px; height: calc(100vh - 104px); }
-      .player-frame { position: relative; min-width: 0; min-height: 0; }
+      /* Плеер — почти на весь экран; панель справа уходит вниз и растягивается
+         по ширине, вместо того чтобы растягивать страницу вниз и создавать скрол. */
+      .stage { display: flex; flex-direction: column; gap: 14px; min-height: 0; height: calc(100vh - 104px); max-height: calc(100vh - 104px); overflow: hidden; }
+      .player-frame { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
+      #player { width: 100%; height: 100%; min-height: 0; }
       .video-watch-panel { position: relative; display: grid; gap: 10px; overflow: hidden; padding: 16px; border: 1px solid rgba(255,185,214,.46); border-radius: 8px; background: #020304; box-shadow: 0 20px 64px rgba(0,0,0,.34); }
       .video-watch-panel--bottom { margin-top: 4px; }
       .seo-video-frame { display: flex; align-items: center; justify-content: center; width: 100%; height: min(70vh, 820px); min-height: 220px; max-height: min(70vh, 820px); overflow: hidden; border: 1px solid rgba(140,199,255,.22); border-radius: 8px; background: #000; }
@@ -736,15 +916,62 @@ function createHtml(config) {
       .video-watch-copy { display: grid; gap: 5px; pointer-events: none; }
       .video-watch-copy h1 { margin: 0; color: #fff; font-size: clamp(24px, 3.4vw, 44px); line-height: 1; letter-spacing: 0; text-shadow: 0 4px 18px rgba(0,0,0,.76); }
       .video-watch-copy p { max-width: 780px; margin: 0; color: rgba(237,245,255,.78); font-size: 14px; line-height: 1.35; }
-      #player { width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#565656 25%, #505052 0 50%, #565656 0 75%, #505052 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
+      /* Сцена под анимацию тёмная: мягкое свечение и полупрозрачные частицы на
+         средне-серой шахматке почти не читались — больше половины видимых пикселей
+         не набирали контраста с фоном. Узор оставлен тёмным, чтобы прозрачные
+         области всё так же читались, но не съедали контраст анимации. */
+      #player { width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#1c1f24 25%, #141619 0 50%, #1c1f24 0 75%, #141619 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
       .library-nav-button { position: absolute; top: 50%; z-index: 8; display: grid; place-items: center; width: 52px; min-height: 78px; padding: 0; border: 1px solid rgba(140,199,255,.55); border-radius: 8px; color: #f7fbff; background: rgba(9,13,17,.68); box-shadow: 0 16px 34px rgba(0,0,0,.38), inset 0 0 22px rgba(140,199,255,.08); font-size: 42px; font-weight: 800; line-height: 1; transform: translateY(-50%); backdrop-filter: blur(10px); }
       .library-nav-button:hover { border-color: rgba(179,255,64,.78); background: rgba(23,31,18,.78); }
       .library-nav-button:disabled { display: none; }
       .library-nav-button--prev { left: 14px; }
       .library-nav-button--next { right: 14px; }
-      #sidebar { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 2px; }
+      #sidebar { min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding-right: 2px; flex: 0 0 auto; max-height: 42vh; }
+      #sidebar .preview-card { padding: 10px; }
+      .animation-card.is-open .animation-menu { max-height: 220px; }
+      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .owner-library a { min-height: 110px; }
+      .animation-download-block { padding: 8px 10px; }
+      .animation-download-row { flex-wrap: wrap; gap: 6px; }
+      .animation-download-button { flex: 0 0 auto; }
+      /* Огромное видео-превью под плеером убрано — оно растягивало страницу
+         и грузило пользователю файлы, которые и так не влезали в экран. */
+      .video-watch-panel { display: none !important; }
       .preview-card { padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
-      .preview-top-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr); gap: 12px; align-items: stretch; margin-bottom: 12px; }
+      .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .topbar .preview-top-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+      .topbar .preview-top-row .preview-card { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+      .topbar .preview-top-row .owner-card { display: none; }
+      .topbar .preview-top-row .owner-card.is-visible { display: flex; flex: 1 1 auto; min-width: 0; }
+      .topbar .preview-top-row .like-card { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; }
+      .topbar .preview-top-row .section-title { display: none; }
+      /* The like is the rightmost control and reads as a round badge. */
+      .topbar .preview-like-button {
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        min-height: 40px;
+        min-width: 40px;
+        padding: 0;
+        gap: 0;
+        border-radius: 50%;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
       .section-title { margin: 0 0 10px; color: #f7fbff; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
       .seo-video-card { display: none; }
       .seo-video-card.is-visible { display: block; }
@@ -754,7 +981,16 @@ function createHtml(config) {
       .preview-like-button.is-liked { border-color: rgba(255,118,171,.78); color: #ff76ab; background: rgba(255,118,171,.14); }
       .preview-view-count { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 34px; margin-top: 8px; color: rgba(231,237,244,.78); font-size: 13px; font-weight: 850; }
       .preview-view-count strong { color: #fff; }
-      .proof-card { display: ${video?.sourceProofUrl || video?.blockchainAnchorUrl ? 'grid' : 'none'}; gap: 10px; }
+      .proof-card { display: ${video?.sourceProofUrl || video?.blockchainAnchorUrl ? 'block' : 'none'}; }
+      .proof-card > summary { display: flex; align-items: center; gap: 9px; margin: 0; color: #f7fbff; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; list-style: none; }
+      .proof-card > summary::-webkit-details-marker { display: none; }
+      .proof-card > summary::before { flex: 0 0 auto; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 7px solid #8cc7ff; content: ''; transition: transform .16s ease; }
+      .proof-card[open] > summary::before { transform: rotate(90deg); }
+      .proof-card > summary:hover { color: #fff; }
+      .proof-links { display: grid; gap: 10px; margin-top: 10px; }
+      /* A nested display (grid/flex) beats the native <details> hiding, so the
+         collapsed state has to be stated explicitly or the links stay visible. */
+      .proof-card:not([open]) > .proof-links { display: none; }
       .proof-card a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 38px; padding: 0 10px; border: 1px solid rgba(140,199,255,.2); border-radius: 8px; color: #dff1ff; background: rgba(140,199,255,.08); font-size: 12px; font-weight: 850; text-decoration: none; }
       .proof-card a:hover { border-color: rgba(179,255,64,.58); color: #fff; }
       .proof-card code { overflow: hidden; max-width: 132px; color: rgba(237,245,255,.68); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
@@ -762,22 +998,46 @@ function createHtml(config) {
       select { min-height: 48px; padding: 0 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; color: #e7edf4; background: #1a2027; }
       button { min-height: 38px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: rgba(231,237,244,.86); background: rgba(255,255,255,.045); cursor: pointer; }
       button.active, button:hover { border-color: rgba(140,199,255,.82); color: #fff; background: rgba(71,156,255,.22); }
-      #animation-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; }
+      .animation-card { position: relative; }
+      .animation-card.is-open .animation-menu { display: grid; gap: 6px; max-height: 320px; overflow: auto; margin-top: 0; padding: 8px; border: 1px solid rgba(140,199,255,.34); border-radius: 10px; background: rgba(9,13,17,.94); box-shadow: 0 22px 50px rgba(0,0,0,.52); backdrop-filter: blur(12px); }
       .note-text { margin: 0; color: rgba(231,237,244,.88); font-size: 16px; line-height: 1.45; overflow-wrap: anywhere; white-space: pre-wrap; }
       .note-card:empty { display: none; }
       .owner-card { display: none; gap: 12px; }
       .owner-card.is-visible { display: grid; }
-      .preview-top-row .preview-card { min-height: 0; }
-      .preview-top-row .section-title { margin-bottom: 8px; }
-      .preview-top-row .owner-profile { gap: 10px; }
-      .preview-top-row .owner-avatar { width: 40px; height: 40px; }
-      .preview-top-row .owner-profile strong { font-size: 15px; }
-      .preview-top-row .owner-profile span { font-size: 11px; }
-      .preview-top-row .like-card { display: grid; align-content: start; gap: 10px; }
-      .preview-top-row .like-card .preview-like-button { min-height: 42px; }
-      .preview-top-row .preview-view-count { margin-top: 0; }
+      .preview-top-row .preview-card { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+      .preview-top-row .section-title, .preview-top-row .like-card .section-title { display: none; }
+      .preview-top-row .owner-card { display: none; }
+      .preview-top-row .owner-card.is-visible { display: flex; flex: 1 1 auto; min-width: 0; }
+
+      .preview-top-row .owner-profile { flex: 1 1 auto; gap: 8px; min-width: 0; overflow: hidden; }
+      .preview-top-row .owner-avatar { flex: 0 0 30px; width: 30px; height: 30px; }
+      .preview-top-row .owner-profile-text { flex: 1 1 auto; flex-wrap: nowrap; gap: 8px; overflow: hidden; }
+      .preview-top-row .owner-profile strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; }
+      .preview-top-row .owner-profile span { overflow: hidden; min-width: 0; font-size: 10px; text-overflow: ellipsis; }
+      .preview-top-row .preview-view-count { order: 2; flex: 0 0 auto; width: auto; min-height: 0; margin: 0; gap: 6px; font-size: 12px; white-space: nowrap; }
+      .preview-top-row .preview-view-count span:last-child { display: none; }
+      .preview-top-row .like-card .preview-like-button { order: 1; flex: 0 0 auto; width: auto; min-height: 38px; padding: 0 14px; gap: 8px; }
       .owner-profile { display: flex; align-items: center; gap: 12px; min-width: 0; }
-      .owner-avatar { width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; object-fit: cover; background: rgba(255,255,255,.08); }
+      .owner-avatar {
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 50%;
+        object-fit: cover;
+        background: rgba(255,255,255,.08);
+        /* Anonymous owners share one sprite laid out 6 across by 4 down. The frame
+           index picks a single cell: the sheet is scaled to 600% x 400% of the
+           avatar box, so 100% of the box shows exactly one frame, and
+           background-position shifts it to the chosen row and column. */
+        background-image: url("/avatars/anonim-sprite.png");
+        background-repeat: no-repeat;
+        background-size: 600% 400%;
+        background-position:
+          calc(var(--owner-avatar-frame, 0) % 6) / 5 * 100%
+          calc(floor(var(--owner-avatar-frame, 0) / 6) / 3 * 100%;
+        /* Кадр не должен вылезать за круг. */
+        overflow: hidden;
+      }
       .owner-avatar-fallback { display: grid; place-items: center; color: #111; font-weight: 900; background: #b3ff40; }
       .owner-profile-text { display: flex; flex: 1 1 auto; align-items: baseline; gap: 40px; min-width: 0; max-width: 100%; flex-wrap: wrap; }
       .owner-profile strong, .owner-profile span { white-space: nowrap; }
@@ -798,28 +1058,27 @@ function createHtml(config) {
         *::-webkit-scrollbar { width: 0; height: 0; display: none; }
         html, body, #app { min-height: 100%; }
         body { background: #030404; }
-        #app { display: flex; flex-direction: column; gap: 10px; min-height: 100%; padding: 12px 16px 56px; background: #030404; }
+        #app { display: flex; flex-direction: column; gap: 10px; min-height: 100%; padding: 12px 16px 8px; background: #030404; }
         .topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; overflow: hidden; }
         .brand-link { min-width: 0; overflow: hidden; }
-        .brand-logo { max-width: 100%; gap: 5px; font-size: clamp(24px, 5.6vw, 30px); letter-spacing: .16em; }
+        .brand-logo { max-width: 100%; gap: 3px; font-size: clamp(24px, 5.6vw, 30px); letter-spacing: .1em; }
         .brand-spine-mark { gap: 3px; width: 11px; margin: 0 -3px 0 -5px; transform: translateY(0); }
         .brand-spine-mark i { width: 11px; height: 5px; }
         .brand-spine-mark i:nth-child(2) { width: 10px; }
         .brand-spine-mark i:nth-child(3) { width: 9px; }
         .brand-spine-mark i:nth-child(4) { width: 8px; }
         .brand-spine-mark i:nth-child(5) { width: 7px; }
-        .brand-plus { margin-left: 5px; font-size: .64em; letter-spacing: .17em; transform: translate(-15px, .16em); }
-        .player-top-actions { flex: 0 0 auto; justify-content: flex-end; width: auto; margin-left: auto; }
-        .player-top-button { max-width: min(36vw, 120px); min-height: 34px; padding: 0 12px; overflow: hidden; border-color: rgba(179,255,64,.58); border-radius: 8px; color: #efffd8; background: rgba(179,255,64,.08); font-size: clamp(12px, 2.8vw, 15px); text-overflow: ellipsis; box-shadow: none; }
+        .brand-plus { margin-left: 7px; font-size: .64em; letter-spacing: .17em; }
         .stage { display: contents; }
         #sidebar { display: contents; }
         .player-frame { order: 2; height: auto; min-height: 0; }
-        .preview-top-row { order: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: clamp(8px, 2vw, 16px); min-width: 0; margin: 4px clamp(0px, 3.6vw, 32px) 10px; overflow: hidden; }
+        .topbar { gap: 10px; }
+        .topbar .preview-top-row { gap: 8px; margin: 0; overflow: hidden; }
         .preview-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
         .preview-top-row .section-title, .like-card .section-title { display: none; }
         .owner-card.is-visible { display: block; min-width: 0; }
         .preview-top-row .owner-profile { gap: clamp(8px, 1.7vw, 12px); min-width: 0; }
-        .preview-top-row .owner-avatar { flex: 0 0 clamp(54px, 8.9vw, 80px); width: clamp(54px, 8.9vw, 80px); height: clamp(54px, 8.9vw, 80px); aspect-ratio: 1 / 1; border: 0; border-radius: 50%; }
+        .preview-top-row .owner-avatar { flex: 0 0 clamp(34px, 5.6vw, 46px); width: clamp(34px, 5.6vw, 46px); height: clamp(34px, 5.6vw, 46px); aspect-ratio: 1 / 1; border: 0; border-radius: 50%; }
         .owner-profile-text { display: grid; gap: 3px; min-width: 0; }
         .preview-top-row .owner-profile strong { overflow: hidden; min-width: 0; color: #fff; font-size: clamp(19px, 4.4vw, 28px); font-weight: 950; line-height: 1.05; text-overflow: ellipsis; }
         .preview-top-row .owner-profile span { overflow: hidden; min-width: 0; color: rgba(231,237,244,.48); font-size: clamp(12px, 2.8vw, 17px); font-weight: 850; letter-spacing: .14em; line-height: 1; text-transform: uppercase; text-overflow: ellipsis; }
@@ -828,33 +1087,77 @@ function createHtml(config) {
         .preview-view-count span:last-child { display: none; }
         .preview-view-count span:first-child { position: relative; flex: 0 0 clamp(18px, 3.2vw, 24px); width: clamp(18px, 3.2vw, 24px); height: clamp(12px, 2.2vw, 16px); overflow: hidden; border: 2px solid currentColor; border-radius: 50% / 62%; color: rgba(231,237,244,.76); font-size: 0; }
         .preview-view-count span:first-child::after { content: ""; position: absolute; top: 50%; left: 50%; width: 34%; aspect-ratio: 1 / 1; border-radius: 50%; background: currentColor; transform: translate(-50%, -50%); }
-        .preview-view-count strong { font-size: clamp(22px, 4.8vw, 30px); }
-        .preview-like-button { order: 3; width: clamp(68px, 10vw, 86px); height: clamp(68px, 10vw, 86px); min-height: 0; padding: 0; gap: clamp(4px, 1vw, 7px); border-color: rgba(255,118,171,.76); border-radius: 50%; color: #ff8dbc; background: rgba(74,18,39,.5); box-shadow: none; font-size: 24px; }
-        .preview-like-button span { font-size: clamp(24px, 4.6vw, 32px); }
-        .preview-like-button strong { font-size: clamp(20px, 4.2vw, 28px); }
-        #player { width: 100%; height: min(86vw, 600px); min-height: 360px; border-color: rgba(255,255,255,.18); border-radius: 12px; background-size: 132px 132px; }
-        .spine-player-controls { min-height: 84px; }
+        .preview-view-count strong { font-size: clamp(16px, 3.4vw, 22px); }
+        .topbar .preview-like-button { order: 1; width: clamp(38px, 10vw, 44px); height: clamp(38px, 10vw, 44px); min-height: 0; padding: 0; gap: 0; flex-direction: column; border-color: rgba(255,118,171,.76); border-radius: 50%; color: #ff8dbc; background: rgba(74,18,39,.5); box-shadow: none; font-size: 15px; }
+        .preview-like-button span { font-size: clamp(18px, 3.4vw, 24px); }
+        .preview-like-button strong { font-size: clamp(15px, 3vw, 20px); }
+        #player { width: 100%; height: calc(100dvh - 236px); min-height: 300px; max-height: 760px; border-color: rgba(255,255,255,.18); border-radius: 12px; background-size: 132px 132px; }
+        .spine-player-controls { min-height: 74px; }
         .library-nav-button { display: none; }
-        .animation-card { order: 3; margin: 12px 32px 0; }
-        .animation-card .section-title { margin: 0 0 10px; font-size: 16px; letter-spacing: .14em; }
-        #animation-list { grid-template-columns: 1fr; gap: 6px; }
-        #animation-list button { min-height: 38px; border-color: rgba(140,199,255,.78); border-radius: 8px; color: #f1f7ff; background: rgba(31,58,91,.72); font-size: 14px; font-weight: 850; }
+        .animation-card { order: 3; margin: 10px 16px 0; }
+        .animation-card .section-title { display: none; }
+        .animation-card { padding: 0; }
+        .animation-menu { position: static; max-height: 46vh; margin-top: 0; padding: 5px; gap: 4px; }
+        #animation-menu button { min-height: 40px; }
+        .animation-menu button { min-height: 40px; border-color: rgba(140,199,255,.78); border-radius: 8px; color: #f1f7ff; background: rgba(31,58,91,.72); font-size: 14px; font-weight: 850; }
         #set-card, .note-card, .proof-card, .owner-library { order: 4; margin-inline: 32px; }
         .video-watch-panel { display: none; }
         .seo-video-frame { max-height: min(62vh, 520px); }
       }
       @media (max-width: 560px) {
-        #app { padding: 10px 12px 56px; }
+        #app { padding: 10px 12px 8px; }
         .topbar { grid-template-columns: minmax(0, 1fr) auto; justify-items: stretch; }
-        .brand-logo { font-size: clamp(21px, 6.2vw, 28px); letter-spacing: .14em; }
-        .player-top-actions { justify-self: end; margin-left: 0; }
-        .player-top-button { max-width: min(34vw, 116px); min-height: 34px; padding-inline: 9px; }
-        .preview-top-row { grid-template-columns: minmax(0, 1fr) auto auto; margin: 2px 0 10px; }
+        .brand-logo { gap: 2px; font-size: clamp(21px, 6.2vw, 28px); letter-spacing: .06em; }
+        .preview-top-row { margin: 2px 0 10px; }
         .preview-like-button { width: 60px; height: 60px; }
       }
       .spine-link-loop-button { position: relative; margin-right: 12px !important; }
+      /* Панель управления свёрнута и выезжает по нажатию на ручку. */
       .spine-player-controls { z-index: 4; }
       .spine-player-controls.spine-player-controls-hidden { pointer-events: auto; opacity: 1; }
+        overflow: hidden;
+        max-height: 0;
+        min-height: 0 !important;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: max-height 260ms ease, opacity 200ms ease, transform 260ms ease, padding 260ms ease;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+        max-height: 190px;
+        opacity: 1;
+        transform: translateY(0);
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+        position: absolute;
+        right: 14px;
+        bottom: 12px;
+        z-index: 6;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-width: 42px;
+        min-height: 42px;
+        padding: 0 12px;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 999px;
+        color: #e9f2ff;
+        background: rgba(8,11,16,.72);
+        box-shadow: 0 10px 26px rgba(0,0,0,.34);
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 850;
+      }
+        display: inline-block;
+        font-size: 11px;
+        line-height: 1;
+        transform: translateY(1px);
+        transition: transform 260ms ease;
+      }
       .spine-link-loop-button::before, .spine-link-loop-button::after { position: absolute; inset: 0; display: grid; place-items: center; font-size: 30px; font-weight: 900; line-height: 1; }
       .spine-link-loop-button.is-on::before { content: "↻"; color: #54cfff; text-shadow: 0 0 14px rgba(84, 207, 255, 0.72); transform: translateY(-1px); }
       .spine-link-loop-button.is-off::before { content: "↻"; color: rgba(210, 216, 222, 0.42); transform: translateY(-1px); }
@@ -865,9 +1168,10 @@ function createHtml(config) {
     <div id="app">
       <header class="topbar">
         <a class="brand-link" href="/" aria-label="Spine-Link home"><span class="brand-logo" aria-hidden="true"><span>s</span><span>p</span><span class="brand-spine-mark"><i></i><i></i><i></i><i></i><i></i></span><span>n</span><span>e</span><span class="brand-plus">link</span></span></a>
-        <nav class="player-top-actions" aria-label="Spine-Link player navigation">
-          <a class="player-top-button is-primary" href="/">Create preview</a>
-        </nav>
+        <div class="preview-top-row">
+          <div class="preview-card owner-card" id="owner-card"><div id="owner-profile"></div></div>
+          <div class="preview-card like-card" data-metric-id="${escapeHtml(entryMetricId)}" data-metric-label="stats" aria-label="${metric.likes} likes and ${metric.views} views"><div class="preview-view-count" data-metric-id="${escapeHtml(entryMetricId)}"><span aria-hidden="true">◉</span><strong data-metric-views>${metric.views}</strong><span>views</span></div><button class="preview-like-button" id="preview-like-button" type="button" data-metric-id="${escapeHtml(entryMetricId)}" data-metric-like data-metric-current-likes="${metric.likes}" data-metric-current-views="${metric.views}" aria-pressed="false" aria-label="Like"><span data-metric-like-icon aria-hidden="true">♡</span><strong data-metric-likes>${metric.likes}</strong></button></div>
+        </div>
       </header>
       <div class="stage">
         <div class="player-frame">
@@ -877,13 +1181,10 @@ function createHtml(config) {
         </div>
         <aside id="sidebar">
           <div class="preview-card" id="set-card"><div class="section-title">Set</div><select id="set-select"></select></div>
-          <div class="preview-top-row">
-            <div class="preview-card owner-card" id="owner-card"><div class="section-title">Creator</div><div id="owner-profile"></div></div>
-            <div class="preview-card like-card" data-metric-id="${escapeHtml(entryMetricId)}" data-metric-label="stats" aria-label="${metric.likes} likes and ${metric.views} views"><div class="section-title">Metrics</div><button class="preview-like-button" id="preview-like-button" type="button" data-metric-id="${escapeHtml(entryMetricId)}" data-metric-like data-metric-current-likes="${metric.likes}" data-metric-current-views="${metric.views}" aria-pressed="false"><span data-metric-like-icon aria-hidden="true">♡</span><strong data-metric-likes>${metric.likes}</strong></button><div class="preview-view-count" data-metric-id="${escapeHtml(entryMetricId)}"><span aria-hidden="true">◉</span><strong data-metric-views>${metric.views}</strong><span>views</span></div></div>
-          </div>
           <div class="preview-card note-card" id="note-card"><div class="section-title">Text</div><p class="note-text" id="note-text"></p></div>
-          <div class="preview-card animation-card"><div class="section-title">Animations</div><div id="animation-list"></div></div>
-          ${video?.sourceProofUrl || video?.blockchainAnchorUrl ? `<div class="preview-card proof-card"><div class="section-title">Origin proof</div>${video.sourceProofUrl ? `<a href="${escapeHtml(video.sourceProofUrl)}" target="_blank" rel="noreferrer">source-proof.json${video.proofHash ? `<code>${escapeHtml(shortHash(video.proofHash))}</code>` : ''}</a>` : ''}${video.blockchainAnchorUrl ? `<a href="${escapeHtml(video.blockchainAnchorUrl)}" target="_blank" rel="noreferrer">blockchain-anchor.json${video.anchorHash ? `<code>${escapeHtml(shortHash(video.anchorHash))}</code>` : ''}</a>` : ''}</div>` : ''}
+          <div class="preview-card animation-card is-open" id="animation-card"><div class="section-title">Animations</div><div class="animation-menu" id="animation-menu" role="menu"></div></div>
+          ${animationDownloadBlock(entry)}
+          ${video?.sourceProofUrl || video?.blockchainAnchorUrl ? `<details class="preview-card proof-card"><summary class="section-title">Origin proof</summary><div class="proof-links">${video.sourceProofUrl ? `<a href="${escapeHtml(video.sourceProofUrl)}" target="_blank" rel="noreferrer">source-proof.json${video.proofHash ? `<code>${escapeHtml(shortHash(video.proofHash))}</code>` : ''}</a>` : ''}${video.blockchainAnchorUrl ? `<a href="${escapeHtml(video.blockchainAnchorUrl)}" target="_blank" rel="noreferrer">blockchain-anchor.json${video.anchorHash ? `<code>${escapeHtml(shortHash(video.anchorHash))}</code>` : ''}</a>` : ''}</div></details>` : ''}
           <div class="preview-card owner-library" id="owner-library"></div>
         </aside>
       </div>
@@ -914,13 +1215,18 @@ function createHtml(config) {
         const queryAnimation = queryValue("animation");
         return setHasAnimation(set, queryAnimation) ? queryAnimation : set?.animation || "";
       }
+      // Kept in sync with the server-side PREVIEW_PAD: a narrow margin so a clip whose
+      // attachment quads are far larger than its visible pixels still fills the canvas.
+      const PREVIEW_PAD = "0%";
       const activeSet = { value: initialSet() };
       const activeAnimation = { name: initialAnimation(activeSet.value) };
       const loopEnabled = { value: true };
+      // Сценарий in -> idle -> out для проектов с такими анимациями.
+      const scenarioState = { names: [], index: 0, active: false };
       const currentZoom = { value: config.zoom || 1 };
       const baseViewport = { value: null };
       const animationNames = { value: activeSet.value?.animations || [] };
-      const animationList = document.getElementById("animation-list");
+      const animationMenu = document.getElementById("animation-menu");
       const setCard = document.getElementById("set-card");
       const setSelect = document.getElementById("set-select");
       const noteCard = document.getElementById("note-card");
@@ -976,8 +1282,10 @@ const pinchDistance = { value: null };
       const runtimeLoaders = new Map();
       function legacyRuntimeForSet(set) {
         const version = String(set?.skeletonVersion || "");
-        if (/^3\\.7(?:\\.|$)/.test(version)) return "3.7";
-        if (/^3\\.8(?:\\.|$)/.test(version)) return "3.8";
+        // В шаблонной строке точка экранируется одним обратным слэшем:
+        // было "\\." — регулярка искала буквальную "\." и никогда не срабатывала.
+        if (/^3\.7(?:\.|$)/.test(version)) return "3.7";
+        if (/^3\.8(?:\.|$)/.test(version)) return "3.8";
         return "";
       }
       function setPlayerStylesheet(href) {
@@ -1007,6 +1315,20 @@ const pinchDistance = { value: null };
           document.head.appendChild(script);
         });
       }
+      // Рантайм создаёт Input с autoPreventDefault=true и гасит колесо над канвасом
+      // в capture-фазе: страница не прокручивается, когда курсор над плеером. Наше
+      // масштабирование живёт на Ctrl/⌘+колесе и пинче, поэтому это гашение нам не
+      // нужно. Класс рантайм закрыт извне, поэтому снимаем флаг с живого экземпляра.
+      function releaseRuntimeWheelCapture() {
+        const p = player;
+        const input = p?.input;
+        if (input && input.autoPreventDefault) {
+          input.autoPreventDefault = false;
+          return true;
+        }
+        return false;
+      }
+
       function loadSpineRuntime(set) {
         const runtime = legacyRuntimeForSet(set);
         const key = runtime || "4.3.13";
@@ -1041,6 +1363,7 @@ const pinchDistance = { value: null };
         activeSet.value = nextSet;
         activeAnimation.name = initialAnimation(nextSet);
         syncSetInfo();
+        syncScenario(animationNames.value);
         renderAnimationList();
         createPlayer();
       }
@@ -1060,12 +1383,38 @@ const pinchDistance = { value: null };
         if (!video.getAttribute("src")) video.setAttribute("src", source);
         video.muted = true;
         video.playsInline = true;
-        video.play().catch(() => {});
+        // Клипы по 2-3 секунды: без повтора карточка замирала на последнем кадре и
+        // выглядела пустой, хотя анимация в ней есть.
+        video.loop = true;
+        if (video.ended || (video.currentTime > 0 && video.currentTime >= video.duration - 0.05)) {
+          try { video.currentTime = 0; } catch (e) {}
+        }
+        const attempt = video.play();
+        if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
       }
       function stopOwnerThumb(video) {
         if (!video) return;
         video.pause();
         try { video.currentTime = 0; } catch {}
+      }
+      // Shared sprite for anonymous owners: 24 frames laid out 6 across by 4 down.
+      const OWNER_AVATAR_COLUMNS = 6;
+      const OWNER_AVATAR_ROWS = 4;
+      const OWNER_AVATAR_FRAMES = OWNER_AVATAR_COLUMNS * OWNER_AVATAR_ROWS;
+
+      function ownerAvatarSpriteUrl() {
+        return "/avatars/anonim-sprite.png";
+      }
+
+      // The frame follows the owner id, so an owner always gets the same face, and two
+      // different owners rarely land on the same one.
+      function ownerAvatarFrame(seed) {
+        const text = String(seed || "");
+        let hash = 0;
+        for (let i = 0; i < text.length; i += 1) {
+          hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+        }
+        return hash % OWNER_AVATAR_FRAMES;
       }
       function renderOwnerCard() {
         const owner = config.ownerProfile || {};
@@ -1076,15 +1425,14 @@ const pinchDistance = { value: null };
         ownerLibrary.innerHTML = "";
         if (!owner.visible) return;
         ownerProfile.className = "owner-profile";
-        const avatar = owner.picture ? document.createElement("img") : document.createElement("div");
-        avatar.className = owner.picture ? "owner-avatar" : "owner-avatar owner-avatar-fallback";
-        if (owner.picture) {
-          avatar.src = owner.picture;
-          avatar.alt = "";
-        } else {
-          avatar.setAttribute("aria-hidden", "true");
-          avatar.textContent = String(owner.name || "S").slice(0, 1).toUpperCase();
-        }
+        const avatar = document.createElement("img");
+        avatar.className = "owner-avatar";
+        avatar.alt = "";
+        // Anonymous owners have no portrait, so they get a frame from the shared
+        // sprite. The frame is picked from the owner id, so the same person keeps
+        // the same face everywhere and two owners rarely collide.
+        avatar.src = owner.picture || ownerAvatarSpriteUrl(owner.id || owner.name || "");
+        avatar.style.setProperty("--owner-avatar-frame", String(ownerAvatarFrame(owner.id || owner.name || "")));
         const ownerText = document.createElement("div");
         ownerText.className = "owner-profile-text";
         const ownerName = document.createElement("strong");
@@ -1109,7 +1457,7 @@ const pinchDistance = { value: null };
             thumb.dataset.videoSrc = videoSrc;
             if (item.thumbnailPoster) thumb.poster = item.thumbnailPoster;
             thumb.muted = true;
-            thumb.loop = false;
+            thumb.loop = true;
             thumb.playsInline = true;
             thumb.preload = "none";
             thumb.setAttribute("aria-hidden", "true");
@@ -1227,18 +1575,278 @@ const pinchDistance = { value: null };
         }, { once: true });
         scheduleChaos();
       }
-      function rememberBaseViewport() { if (!player?.currentViewport) return; const v = player.currentViewport; baseViewport.value = { x: v.x, y: v.y, width: v.width * currentZoom.value, height: v.height * currentZoom.value, padLeft: v.padLeft * currentZoom.value, padRight: v.padRight * currentZoom.value, padTop: v.padTop * currentZoom.value, padBottom: v.padBottom * currentZoom.value }; }
+      // Кадр зафиксирован на весь показ: переключение анимации не должно
+      // пересчитывать вьюпорт и сбивать центровку.
+      function rememberBaseViewport() { if (!player?.currentViewport) return;
+        const v = player.currentViewport; baseViewport.value = { x: v.x, y: v.y, width: v.width * currentZoom.value, height: v.height * currentZoom.value, padLeft: v.padLeft * currentZoom.value, padRight: v.padRight * currentZoom.value, padTop: v.padTop * currentZoom.value, padBottom: v.padBottom * currentZoom.value }; }
+      // Один якорь на весь показ. В скелете бывают клипы разного масштаба, поэтому
+      // размер кадра подстраивается под анимацию, а точка, вокруг которой он
+      // центрируется, остаётся прежней: переключение ничего не двигает.
+      const stageOffset = { value: null };
+      function captureStageOffset() {
+        const v = player?.currentViewport;
+        if (!v) return;
+        stageOffset.value = { x: 0, y: 0 };
+      }
+      // Кадр остаётся тем, каким его посчитал рантайм под конкретный клип, но
+      // пользовательское смещение (зум/панорама) сохраняется: якорь задаёт не
+      // абсолютную точку мира, а долю отступа от центра кадра.
+      function applyStageAnchor() {
+        const v = player?.currentViewport;
+        const offset = stageOffset.value;
+        if (!v || !offset) return;
+        v.x = v.x + v.width * offset.x;
+        v.y = v.y + v.height * offset.y;
+        player.previousViewport = { ...v };
+        player.viewportTransitionStart = performance.now();
+      }
       function touchDistance(touches) { const a = touches.item(0), b = touches.item(1); if (!a || !b) return 0; return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
-      function applyZoom(nextZoom) { currentZoom.value = Math.min(4, Math.max(0.25, Number(nextZoom))); playerElement.style.setProperty("--preview-pattern-size", (140 * currentZoom.value) + "px"); const b = baseViewport.value; if (!b || !player?.currentViewport) return; const cx = b.x + b.width / 2, cy = b.y + b.height / 2, width = b.width / currentZoom.value, height = b.height / currentZoom.value; const next = { x: cx - width / 2, y: cy - height / 2, width, height, padLeft: b.padLeft / currentZoom.value, padRight: b.padRight / currentZoom.value, padTop: b.padTop / currentZoom.value, padBottom: b.padBottom / currentZoom.value }; player.previousViewport = { ...next }; player.currentViewport = next; player.viewportTransitionStart = performance.now(); }
+      function applyZoom(nextZoom) { currentZoom.value = Math.min(4, Math.max(0.6, Number(nextZoom))); playerElement.style.setProperty("--preview-pattern-size", (140 * currentZoom.value) + "px"); const b = baseViewport.value; if (!b || !player?.currentViewport) return; const cx = b.x + b.width / 2, cy = b.y + b.height / 2, width = b.width / currentZoom.value, height = b.height / currentZoom.value; const next = { x: cx - width / 2, y: cy - height / 2, width, height, padLeft: b.padLeft / currentZoom.value, padRight: b.padRight / currentZoom.value, padTop: b.padTop / currentZoom.value, padBottom: b.padBottom / currentZoom.value }; player.previousViewport = { ...next }; player.currentViewport = next; player.viewportTransitionStart = performance.now(); }
+      function limitPlayerFps(loadedPlayer, maxFps) {
+        if (!loadedPlayer || typeof loadedPlayer.drawFrame !== "function") return;
+        const targetMs = 1000 / Math.max(1, maxFps);
+        let lastRender = 0;
+        const originalDrawFrame = loadedPlayer.drawFrame.bind(loadedPlayer);
+        loadedPlayer.drawFrame = (requestNextFrame = true) => {
+          if (loadedPlayer.disposed || loadedPlayer.error) return;
+          if (document.hidden) return; // stop rendering when tab hidden
+          const now = performance.now();
+          const paused = loadedPlayer.paused === true;
+          const frameBudget = paused ? 1000 / Math.min(8, maxFps) : targetMs;
+          if (now - lastRender >= frameBudget) {
+            lastRender = now;
+            originalDrawFrame(false);
+          }
+          if (requestNextFrame && !loadedPlayer.stopRequestAnimationFrame) {
+            requestAnimationFrame(() => loadedPlayer.drawFrame(true));
+          }
+        };
+      }
       function updateLoopButtonState(button) { button.classList.toggle("is-on", loopEnabled.value); button.classList.toggle("is-off", !loopEnabled.value); button.title = loopEnabled.value ? "Loop on" : "Loop off"; button.setAttribute("aria-label", button.title); button.setAttribute("aria-pressed", String(loopEnabled.value)); }
       function setTrackLoop() { const entry = player?.animationState?.getCurrent?.(0); if (entry) entry.loop = loopEnabled.value; }
       function disableMix() { if (player?.animationState?.data) player.animationState.data.defaultMix = 0; }
-      function playActiveAnimationFromStart() { if (!player || !activeAnimation.name) return; disableMix(); const entry = player.setAnimation(activeAnimation.name, loopEnabled.value); if (entry) { entry.mixDuration = 0; entry.mixTime = 0; entry.listener = { ...(entry.listener || {}), complete: () => { if (!loopEnabled.value) player.pause(); } }; } player.play(); }
+      function normalizeAnimationToken(name) {
+        const token = String(name || "").trim().toLowerCase();
+        const slash = token.lastIndexOf("/");
+        return slash >= 0 ? token.slice(slash + 1) : token;
+      }
+      // Любой проект с анимациями in / idle / out играет их по очереди.
+      function syncScenario(names) {
+        const lookup = new Map();
+        (Array.isArray(names) ? names : []).forEach((name) => {
+          const token = normalizeAnimationToken(name);
+          if (token && !lookup.has(token)) lookup.set(token, name);
+        });
+        // Наборы бывают двух видов: in/out и begin/end — по смыслу одно и то же.
+        const entry = lookup.has("in") ? "in" : (lookup.has("begin") ? "begin" : "");
+        const exit = lookup.has("out") ? "out" : (lookup.has("end") ? "end" : "");
+        // Средняя фаза: idle, иначе loop. Без неё сценарий просто вход -> выход.
+        const middle = lookup.has("idle") ? "idle" : (lookup.has("loop") ? "loop" : "");
+        // idle удваивается, чтобы работа не выглядела «замершей» в середине цикла.
+        const cycle = entry && exit ? [entry, middle, middle, exit] : [];
+        scenarioState.names = cycle.map((token) => lookup.get(token)).filter(Boolean);
+        scenarioState.active = scenarioState.names.length > 1;
+        scenarioState.index = Math.max(0, scenarioState.names.indexOf(activeAnimation.name));
+      }
+      function isScenarioStep(name) { return scenarioState.active && scenarioState.names.indexOf(name) >= 0; }
+      // Кадр зафиксирован на весь показ: переключение анимации не должно
+      // пересчитывать вьюпорт и сбивать центровку. Снимок берём до setAnimation
+      // (рантайм успевает перемерить кадр) и возвращаем сразу после.
+      function playAnimationEntry(name) {
+        if (!player || !name) return;
+        disableMix();
+        const scenarioStep = isScenarioStep(name);
+        const entry = player.setAnimation(name, scenarioStep ? false : loopEnabled.value);
+        if (entry) {
+          entry.mixDuration = 0;
+          entry.mixTime = 0;
+          entry.listener = { ...(entry.listener || {}), complete: () => {
+            if (scenarioStep) { playNextScenarioStep(); return; }
+            if (!loopEnabled.value) player.pause();
+          } };
+        }
+        player.play();
+        rememberBaseViewport();
+        applyStageAnchor();
+      }
+      function playNextScenarioStep() {
+        if (!scenarioState.active || !player || !scenarioState.names.length) return;
+        scenarioState.index = (scenarioState.index + 1) % scenarioState.names.length;
+        const nextName = scenarioState.names[scenarioState.index];
+        activeAnimation.name = nextName;
+        syncUrl(true);
+        renderAnimationList();
+        playAnimationEntry(nextName);
+      }
+      function playActiveAnimationFromStart() {
+        if (!player || !activeAnimation.name) return;
+        if (isScenarioStep(activeAnimation.name)) scenarioState.index = scenarioState.names.indexOf(activeAnimation.name);
+        playAnimationEntry(activeAnimation.name);
+      }
       function togglePlayback() { if (!player) return; if (player.paused === false) { player.pause(); return; } playActiveAnimationFromStart(); }
       function installLoopButton() { const buttons = player?.dom?.querySelector(".spine-player-buttons"); const playButton = buttons?.querySelector(".spine-player-button"); if (!buttons || !playButton) return; playButton.onclick = (event) => { event.preventDefault(); event.stopPropagation(); togglePlayback(); }; if (buttons.querySelector(".spine-link-loop-button")) return; const button = document.createElement("button"); button.type = "button"; button.className = "spine-player-button spine-link-loop-button"; updateLoopButtonState(button); button.onclick = (event) => { event.preventDefault(); event.stopPropagation(); loopEnabled.value = !loopEnabled.value; setTrackLoop(); updateLoopButtonState(button); }; playButton.insertAdjacentElement("afterend", button); }
       function panByPixels(deltaX, deltaY) { const v = player?.currentViewport, b = baseViewport.value, canvas = player?.canvas; if (!v || !b || !canvas) return; const totalWidth = v.width + v.padLeft + v.padRight, totalHeight = v.height + v.padTop + v.padBottom; const worldDeltaX = deltaX / Math.max(1, canvas.clientWidth) * totalWidth, worldDeltaY = deltaY / Math.max(1, canvas.clientHeight) * totalHeight; v.x -= worldDeltaX; v.y += worldDeltaY; b.x -= worldDeltaX * currentZoom.value; b.y += worldDeltaY * currentZoom.value; player.previousViewport = { ...v }; player.viewportTransitionStart = performance.now(); }
-      async function createPlayer() { if (!activeSet.value) return; player?.dispose(); document.getElementById("player").innerHTML = ""; baseViewport.value = null; const SpinePlayer = await loadSpineRuntime(activeSet.value); player = new SpinePlayer("player", { ...activeSet.value, showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: false, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? []; const filteredNames = names.filter(name => !name.startsWith('Backup/')); if (filteredNames.length) { animationNames.value = filteredNames; const queryAnimation = queryValue("animation"); if (queryAnimation && filteredNames.includes(queryAnimation)) activeAnimation.name = queryAnimation; if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) activeAnimation.name = activeSet.value?.animation && filteredNames.includes(activeSet.value.animation) ? activeSet.value.animation : filteredNames[0]; renderAnimationList(); syncUrl(); } disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); applyZoom(currentZoom.value); }); }, error: (_player, message) => { const box = document.getElementById("player"); if (box) box.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Spine player error: ' + String(message || "could not load animation").replace(/[<>&]/g, "") + '</div>'; } }); }
-      function renderAnimationList() { animationList.innerHTML = ""; animationNames.value.forEach((animationName) => { const button = document.createElement("button"); button.type = "button"; button.textContent = animationName; button.className = animationName === activeAnimation.name ? "active" : ""; button.onclick = () => { activeAnimation.name = animationName; syncUrl(); playActiveAnimationFromStart(); applyZoom(currentZoom.value); renderAnimationList(); }; animationList.appendChild(button); }); }
+
+      // The exported skeleton header (skeleton.x/y/width/height) describes the
+      // REST pose only. When an animation moves a bone/slot outside that box --
+      // which is normal for particle/VFX tracks that scale or fly far from the
+      // origin -- the shipped viewport is far too small and the effect gets
+      // cropped to a sliver (often invisible). So we drop the static
+      // x/y/width/height and let the runtime's calculateAnimationViewport()
+      // measure the true bounds of the animation that is actually playing.
+      function measuredViewport(set) {
+        const src = set?.viewport || {};
+        const viewport = {
+          padLeft: src.padLeft !== undefined ? src.padLeft : PREVIEW_PAD,
+          padRight: src.padRight !== undefined ? src.padRight : PREVIEW_PAD,
+          padTop: src.padTop !== undefined ? src.padTop : PREVIEW_PAD,
+          padBottom: src.padBottom !== undefined ? src.padBottom : PREVIEW_PAD,
+        };
+        // Keep a saved per-entry layout clip if the entry explicitly defined one
+        // (the author framed it by hand), otherwise let the runtime measure.
+        if (src.__locked) {
+          viewport.x = src.x; viewport.y = src.y; viewport.width = src.width; viewport.height = src.height;
+        }
+        return viewport;
+      }
+      // Ask the runtime to re-fit the current animation, then cache it as the
+      // base used by zoom/pan. This is the "fix it on the fly" path.
+      function refitToContent(targetPlayer) {
+        const p = targetPlayer || player;
+        if (!p?.skeleton?.data) return false;
+        const names = p.skeleton.data.animations.map((a) => a.name);
+        const active = activeAnimation.name && names.includes(activeAnimation.name) ? activeAnimation.name : names[0];
+        if (!active) return false;
+        try {
+          p.setViewport(active);
+        } catch (e) {
+          return false;
+        }
+        rememberBaseViewport();
+        applyZoom(currentZoom.value);
+        return true;
+      }
+      // Measure the real bounding box of the animation that is playing. The
+      // runtime does this internally (calculateAnimationViewport); we redo it
+      // here purely to compare "what the animation needs" against "what the
+      // current viewport shows", so we can self-heal when the two disagree.
+      // Pure maths on the skeleton -- no GPU readback, so it is reliable even
+      // though this page runs with preserveDrawingBuffer off.
+      function measuredAnimationBounds(targetPlayer, steps = 60) {
+        const p = targetPlayer || player;
+        const skeleton = p?.skeleton;
+        if (!skeleton?.data) return null;
+        const animation = skeleton.data.findAnimation(activeAnimation.name) || skeleton.data.animations[0];
+        if (!animation) return null;
+        const ns = window.spine || {};
+        const MixFrom = ns.MixFrom || p.constructor?.MixFrom;
+        const Physics = ns.Physics || { update: 0 };
+        const duration = Number(animation.duration) || 0;
+        const stepTime = duration > 0 ? duration / steps : 0;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        const scratch = [0, 0];
+        for (let i = 0; i <= steps; i++) {
+          const time = i * stepTime;
+          try {
+            animation.apply(skeleton, time, time, false, [], 1, MixFrom?.setup, false, false, false);
+            skeleton.updateWorldTransform(Physics.update);
+            const offset = new (ns.Vector2 || function () { this.x = 0; this.y = 0; })();
+            const size = new (ns.Vector2 || function () { this.x = 0; this.y = 0; })();
+            const clipping = p.sceneRenderer?.skeletonRenderer?.getSkeletonClipping?.();
+            skeleton.getBounds(offset, size, scratch, clipping);
+            if (Number.isFinite(offset.x) && Number.isFinite(offset.y) && Number.isFinite(size.x) && Number.isFinite(size.y)) {
+              minX = Math.min(minX, offset.x);
+              maxX = Math.max(maxX, offset.x + size.x);
+              minY = Math.min(minY, offset.y);
+              maxY = Math.max(maxY, offset.y + size.y);
+            }
+          } catch (e) {
+            // One bad sample should not abort the whole measurement.
+          }
+        }
+        if (!Number.isFinite(minX) || !Number.isFinite(minY)) return null;
+        return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+      }
+
+      // Self-heal: if the playing animation reaches outside the viewport we are
+      // currently showing, re-measure and re-fit. Runs a bounded number of
+      // times after load and after every clip switch, so a bad framing heals
+      // itself instead of leaving the user staring at a cropped animation.
+      let healAttempts = 0;
+      function ensureVisibleContent() {
+        if (healAttempts >= 3) return;
+        const p = player;
+        const viewport = p?.currentViewport;
+        if (!viewport || !Number.isFinite(viewport.width) || viewport.width <= 0) return;
+        const bounds = measuredAnimationBounds(p);
+        if (!bounds || !(bounds.width > 0) || !(bounds.height > 0)) return;
+        // A little slack: 1% so rounding on the very first frame is not read as
+        // "clipped" and we do not loop re-fitting forever.
+        const slackX = bounds.width * 0.01;
+        const slackY = bounds.height * 0.01;
+        const viewRight = viewport.x + viewport.width;
+        const viewBottom = viewport.y + viewport.height;
+        const clipped =
+          bounds.x < viewport.x - slackX ||
+          bounds.y < viewport.y - slackY ||
+          bounds.x + bounds.width > viewRight + slackX ||
+          bounds.y + bounds.height > viewBottom + slackY;
+        if (!clipped) return;
+        healAttempts++;
+        refitToContent(p);
+      }
+      function resetHealAttempts() { healAttempts = 0; }
+
+      // На медленной сети текстура едет секундами: канвас существует, но пуст, и
+      // пользователь видит тёмный бокс вместо работы. Показываем выгрузку того же
+      // клипа сразу как подложку и убираем её, когда интерактивный плеер готов.
+      function showPreviewVideoFallback() {
+        const box = document.getElementById("player");
+        const src = config.video?.contentUrl || "";
+        if (!box || !src) return null;
+        box.innerHTML = '<video class="preview-fallback-video" src="' + src.replace(/[<>&"]/g, "") + '" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:0"></video>';
+        const video = box.querySelector("video");
+        if (video) {
+          video.muted = true;
+          const attempt = video.play();
+          if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
+        }
+        return video;
+      }
+      function clearPreviewVideoFallback() {
+        const video = document.querySelector("#player .preview-fallback-video");
+        if (!video) return;
+        try { video.pause(); } catch (e) {}
+        if (video.parentNode) video.parentNode.removeChild(video);
+      }
+
+      async function createPlayer() { if (!activeSet.value) return; resetHealAttempts(); player?.dispose(); baseViewport.value = null; showPreviewVideoFallback(); const SpinePlayer = await loadSpineRuntime(activeSet.value); player = new SpinePlayer("player", { ...activeSet.value, viewport: measuredViewport(activeSet.value), showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: false, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; limitPlayerFps(loadedPlayer, 30); releaseRuntimeWheelCapture(); requestAnimationFrame(clearPreviewVideoFallback); const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? []; const filteredNames = names.filter(name => !name.startsWith('Backup/')); if (filteredNames.length) { animationNames.value = filteredNames; syncScenario(filteredNames); const queryAnimation = queryValue("animation"); if (queryAnimation && filteredNames.includes(queryAnimation)) activeAnimation.name = queryAnimation; if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) activeAnimation.name = activeSet.value?.animation && filteredNames.includes(activeSet.value.animation) ? activeSet.value.animation : filteredNames[0]; renderAnimationList(); syncUrl(); } disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); captureStageOffset(); applyZoom(currentZoom.value); window.setTimeout(ensureVisibleContent, 120); window.setTimeout(ensureVisibleContent, 420); window.setTimeout(applyStageAnchor, 560); window.setTimeout(applyStageAnchor, 900); }); }, error: (_player, message) => { const box = document.getElementById("player"); if (!box) return;
+        // WebGL недоступен или рантайм не смог поднять скелет: оставляем выгрузку
+        // того же клипа, чтобы работа осталась видна.
+        if (showPreviewVideoFallback()) { const v = box.querySelector("video"); if (v) v.controls = true; return; }
+        box.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Spine player error: ' + String(message || "could not load animation").replace(/[<>&]/g, "") + '</div>'; } }); }
+      function renderAnimationList() {
+        animationMenu.innerHTML = "";
+        animationNames.value.forEach((animationName) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.role = "menuitem";
+          button.textContent = animationName;
+          button.className = animationName === activeAnimation.name ? "active" : "";
+          button.onclick = () => {
+            activeAnimation.name = animationName;
+            syncUrl();
+            playActiveAnimationFromStart();
+            renderAnimationList();
+            resetHealAttempts();
+            applyStageAnchor();
+            window.setTimeout(ensureVisibleContent, 150);
+            window.setTimeout(ensureVisibleContent, 500);
+            window.setTimeout(applyStageAnchor, 700);
+          };
+          animationMenu.appendChild(button);
+        });
+      }
       function syncPreviewLike() {
         return;
       }
@@ -1306,23 +1914,51 @@ playerElement.addEventListener("touchstart", (event) => {
        }, true);
        window.addEventListener("mousemove", (event) => { if (!panPosition.value) return; event.preventDefault(); event.stopImmediatePropagation(); const deltaX = event.clientX - panPosition.value.x, deltaY = event.clientY - panPosition.value.y; panPosition.value = { x: event.clientX, y: event.clientY }; panByPixels(deltaX, deltaY); }, { passive: false, capture: true });
        window.addEventListener("mouseup", (event) => { if (event.button !== 0) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
-      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); renderAnimationList(); syncUrl(); createPlayer(); };
+      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); syncScenario(animationNames.value); renderAnimationList(); syncUrl(); createPlayer(); };
       window.addEventListener("popstate", applySelectionFromUrl);
-      renderSetList(); syncSetInfo(); renderOwnerCard(); installOwnerLibraryChaos(); syncPreviewLike(); syncLibraryNavigationButtons(); syncUrl(true); createPlayer(); renderAnimationList();
+      syncScenario(animationNames.value); renderSetList(); syncSetInfo(); renderOwnerCard(); installOwnerLibraryChaos(); syncPreviewLike(); syncLibraryNavigationButtons(); syncUrl(true); createPlayer(); renderAnimationList();
+      const seoVideo = document.querySelector('.video-watch-player');
+      if (seoVideo && seoVideo.getAttribute('autoplay') !== null) {
+        seoVideo.muted = true;
+        seoVideo.playsInline = true;
+        seoVideo.load();
+        seoVideo.play().catch(() => {});
+      }
     </script>
     <script>window.SpineLinkMetricsConfig = { viewId: ${JSON.stringify(entryMetricId)} };</script>
     <script src="/spine-metrics.js" defer></script>
+    <script src="/drop-handoff.js" defer></script>
   </body>
 </html>`;
+}
+
+/** Безопасная вставка JSON в разметку: экранируем < и разделители строк,
+ *  чтобы данные не сломали HTML и корректно читались парсером. */
+function jsonScript(value) {
+  return JSON.stringify(value).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 }
 
 function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, metrics, videoSeo, robots, playerUrl, archiveUrl }) {
   const title = cleanPublicText(entry?.title || entryId || 'Spine preview');
   const poster = entryImageAsset(entry?.thumbnailPoster || '', entry, 'poster') || generatedThumbnailUrl(origin, entry);
-  const video = entryVideoAsset(entry?.webmPreview || '', entry, 'webm') || `${origin}/v_holder.webm`;
+  const video = entryVideoAsset(entry?.webmPreview || '', entry, 'webm');
   const ownerUrl = ownerProfile?.url || (entry?.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '/');
   const metricId = String(entryId || title);
   const metric = metricCountsForId(metrics, metricId);
+  // Сетка работ автора под видео. Текущая работа из списка убираем,
+  // чтобы не показывать её дважды.
+  const currentEntryId = String(entry?.id || entryId || '');
+  const authorWorks = (Array.isArray(ownerProfile?.library) ? ownerProfile.library : [])
+    .filter((item) => String(item?.url || '') !== `${origin}/p/${encodeURIComponent(currentEntryId)}`)
+    .map((item) => ({
+      title: cleanPublicText(item?.title || 'Spine preview', 80),
+      url: String(item?.url || '/'),
+      poster: item?.thumbnailPoster || item?.thumbnail || '',
+      video: item?.webmPreview || '',
+      animations: Number(item?.animations) || 0,
+    }))
+    .filter((item) => item.video || item.poster);
+  const authorWorksJson = jsonScript({ works: authorWorks });
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -1331,6 +1967,7 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
     ${seoHead({ origin, entryId, video: videoSeo, fallbackTitle: `${title} - Spine-Link video preview`, robots, playerUrl, archiveUrl })}
     <link rel="stylesheet" href="/page-transitions.css" />
     <script src="/page-transitions.js" defer></script>
+    <script src="/spine-embers.js?v=2026-09-30" defer></script>
     <style>
       * { box-sizing: border-box; }
       body { min-height: 100vh; margin: 0; color: #edf5ff; background: #050607; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -1340,6 +1977,7 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
       .back { color: #b3ff40; font-weight: 800; text-decoration: none; }
       .video-card { overflow: hidden; border: 2px solid rgba(255,185,214,.72); border-radius: 8px; background: #111; box-shadow: 0 24px 80px rgba(0,0,0,.42); }
       video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
+      .video-placeholder { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000 center / cover no-repeat; }
       .body { display: grid; gap: 10px; padding: 18px; background: rgba(17,17,20,.86); }
       h1 { margin: 0; color: #fff; font-size: clamp(28px, 6vw, 48px); line-height: 1; }
       p { margin: 0; color: rgba(237,245,255,.72); font-size: 16px; line-height: 1.45; }
@@ -1349,23 +1987,122 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
       .preview-like-button.is-liked { border-color: rgba(255,118,171,.78); color: #ff76ab; background: rgba(255,118,171,.14); }
       .preview-view-count { display: inline-flex; align-items: center; gap: 8px; color: rgba(237,245,255,.72); font-size: 14px; font-weight: 850; }
       .preview-view-count strong { color: #fff; }
+      /* Логотип ведёт на главную: «Spine» белая, «link» оранжевая,
+         при наведении вся надпись белеет. */
+      .brand { display: inline-flex; align-items: baseline; gap: 6px; color: #f7fbff; font-weight: 900; letter-spacing: .04em; text-decoration: none; }
+      .brand-link-part { color: #ff6a28; }
+      .brand:hover, .brand:focus-visible { color: #fff; }
+      .brand:hover .brand-link-part, .brand:focus-visible .brand-link-part { color: #fff; }
+      .brand:focus-visible { outline: 2px solid #ff6a28; outline-offset: 3px; border-radius: 4px; }
+      /* Видео зациклено и перезапускается само, если браузер снял паузу. */
+      .video-card video { width: 100%; display: block; background: #050607; }
+      /* Сетка работ автора: каждая ячейка случайно показывает свою работу. */
+      .author-works { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.1); }
+      .author-works-title { margin: 0 0 12px; color: rgba(237,245,255,.72); font-size: 13px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+      .author-works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 22vw, 240px), 1fr)); gap: 10px; }
+      .author-works-empty { margin: 0; color: rgba(237,245,255,.5); font-size: 14px; }
+      .author-work { position: relative; display: block; overflow: hidden; aspect-ratio: var(--work-ratio, 16 / 9); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background: #050607; text-decoration: none; }
+      .author-work:hover { border-color: rgba(179,255,64,.7); }
+      .author-work img, .author-work video { width: 100%; height: 100%; object-fit: cover; }
+      .author-work-label { position: absolute; right: 0; bottom: 0; left: 0; padding: 16px 10px 8px; color: #fff; background: linear-gradient(transparent, rgba(3,5,7,.86)); font-size: 12px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) { .author-work { content-visibility: auto; } }
     </style>
   </head>
   <body>
     <main class="page">
-      <div class="topbar"><div class="brand">Spine-Link</div><a class="back" href="${ownerUrl}">Open portfolio</a></div>
+      <div class="topbar"><a class="brand" href="/" aria-label="Spine-Link home" title="На главную"><span class="brand-spine">Spine</span><span class="brand-link-part">link</span></a><a class="back" href="${ownerUrl}">Open portfolio</a></div>
       <section class="video-card">
-        <video src="${escapeHtml(video)}"${poster ? ` poster="${escapeHtml(poster)}"` : ''} muted playsinline preload="metadata" autoplay controls></video>
+        ${video
+          ? `<video id="video-fallback-player" src="${escapeHtml(video)}"${poster ? ` poster="${escapeHtml(poster)}"` : ''} muted loop playsinline preload="metadata" autoplay controls></video>`
+          : `<div class="video-placeholder" role="img" aria-label="${escapeHtml(title)}"${poster ? ` style="background-image:url('${escapeHtml(poster)}')"` : ''}></div>`}
         <div class="body">
           <h1>${title}</h1>
-          ${note ? `<p>${cleanPublicText(note, 240)}</p>` : '<p>This older library item uses the portfolio video holder because its original Spine source files are no longer available.</p>'}
+          ${note ? `<p>${cleanPublicText(note, 240)}</p>` : '<p>No preview video is available for this item yet.</p>'}
           <button class="preview-like-button" id="preview-like-button" type="button" data-metric-id="${escapeHtml(metricId)}" data-metric-like data-metric-current-likes="${metric.likes}" data-metric-current-views="${metric.views}" aria-pressed="false"><span data-metric-like-icon aria-hidden="true">♡</span><strong data-metric-likes>${metric.likes}</strong></button>
           <div class="preview-view-count" data-metric-id="${escapeHtml(metricId)}" data-metric-label="stats" aria-label="${metric.likes} likes and ${metric.views} views"><span aria-hidden="true">◉</span><strong data-metric-views>${metric.views}</strong><span>views</span></div>
         </div>
       </section>
+      ${authorWorks.length
+        ? `<section class="author-works" aria-label="More work by ${escapeHtml(ownerProfile?.name || 'this author')}">
+            <h2 class="author-works-title">More work by ${escapeHtml(ownerProfile?.name || 'this author')}</h2>
+            <div class="author-works-grid" id="author-works-grid" data-works='${authorWorksJson}'></div>
+          </section>`
+        : ''}
     </main>
+    <script>
+      // Главное видео играет по кругу и само перезапускается,
+      // если браузер остановил его из-за экономии энергии.
+      const v = document.getElementById('video-fallback-player');
+      if (v) {
+        v.loop = true;
+        v.muted = true;
+        v.playsInline = true;
+        v.addEventListener('ended', () => { v.currentTime = 0; v.play().catch(() => {}); });
+        v.load();
+        v.play().catch(() => {});
+      }
+
+      // Сетка работ автора: каждая ячейка показывает свою работу, а при
+      // наведении переключается на следующую по случайному порядку.
+      const grid = document.getElementById('author-works-grid');
+      if (grid) {
+        const works = (() => {
+          try { return JSON.parse(grid.dataset.works || '{}').works || []; } catch { return []; }
+        })();
+        if (works.length) {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          // По одной работе на ячейку, порядок перемешан.
+          const shuffled = works
+            .map((w) => ({ w, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map((item) => item.w);
+
+          grid.textContent = '';
+          shuffled.forEach((work) => {
+            const cell = document.createElement('a');
+            cell.className = 'author-work';
+            cell.href = work.url;
+            cell.setAttribute('aria-label', work.title);
+            if (work.video) {
+              const video = document.createElement('video');
+              video.src = work.video;
+              if (work.poster) video.poster = work.poster;
+              video.muted = true;
+              video.loop = true;
+              video.playsInline = true;
+              video.preload = 'none';
+              video.setAttribute('aria-hidden', 'true');
+              cell.appendChild(video);
+              if (!reduceMotion) {
+                // Запуск в случайный момент: сетка выглядит живой,
+                // но не грузит всё видео разом.
+                const delay = 400 + Math.random() * 2600;
+                const play = () => {
+                  if (video.readyState >= 2) { video.play().catch(() => {}); return; }
+                  video.addEventListener('loadeddata', () => video.play().catch(() => {}), { once: true });
+                  video.load();
+                };
+                setTimeout(play, delay);
+              }
+            } else if (work.poster) {
+              const img = document.createElement('img');
+              img.src = work.poster;
+              img.alt = '';
+              img.loading = 'lazy';
+              cell.appendChild(img);
+            }
+            const label = document.createElement('span');
+            label.className = 'author-work-label';
+            label.textContent = work.title;
+            cell.appendChild(label);
+            grid.appendChild(cell);
+          });
+        }
+      }
+    </script>
     <script>window.SpineLinkMetricsConfig = { viewId: ${JSON.stringify(metricId)} };</script>
     <script src="/spine-metrics.js" defer></script>
+    <script src="/drop-handoff.js" defer></script>
   </body>
 </html>`;
 }
@@ -1438,9 +2175,21 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       textures: textureUrls,
       skin: preferredSkinName(skinNames),
       premultipliedAlpha: hasPremultipliedAlpha(atlasText),
-      viewport: viewportFromJson(skeletonJson)
-        ? { ...viewportFromJson(skeletonJson), padLeft: '14%', padRight: '14%', padTop: '14%', padBottom: '14%' }
-        : { padLeft: '14%', padRight: '14%', padTop: '14%', padBottom: '14%' },
+      viewport: entry?.layout && Number.isFinite(Number(entry.layout.width)) && Number(entry.layout.width) > 0
+        ? {
+            __locked: true,
+            x: Number(entry.layout.x) || 0,
+            y: Number(entry.layout.y) || 0,
+            width: Number(entry.layout.width),
+            height: Number(entry.layout.height) || 1,
+            padLeft: Number.isFinite(Number(entry.layout.padLeft)) ? Number(entry.layout.padLeft) : 0,
+            padRight: Number.isFinite(Number(entry.layout.padRight)) ? Number(entry.layout.padRight) : 0,
+            padTop: Number.isFinite(Number(entry.layout.padTop)) ? Number(entry.layout.padTop) : 0,
+            padBottom: Number.isFinite(Number(entry.layout.padBottom)) ? Number(entry.layout.padBottom) : 0,
+          }
+        : viewportFromJson(skeletonJson)
+          ? { ...viewportFromJson(skeletonJson), padLeft: PREVIEW_PAD, padRight: PREVIEW_PAD, padTop: PREVIEW_PAD, padBottom: PREVIEW_PAD }
+          : { padLeft: PREVIEW_PAD, padRight: PREVIEW_PAD, padTop: PREVIEW_PAD, padBottom: PREVIEW_PAD },
     });
   }
 
@@ -1467,15 +2216,26 @@ async function createDynamicPreview(settings, uploadPath, origin) {
           })
         : [];
       ownerEntries.sort(compareLibraryEntries);
-      const ownerLibraryItems = ownerEntries.map((item) => ({
-        title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
-        url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
-        thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
-        thumbnailPoster: entryImageAsset(item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
-        webmPreview: entryVideoAsset(item?.webmPreview || '', item, 'webm') || `${origin}/v_holder.webm`,
-        thumbnailType: '',
-        animations: Array.isArray(item?.animations) ? item.animations.length : 0,
-      }));
+      const ownerLibraryItems = ownerEntries.map((item) => {
+        const target = resolvePreviewTarget(item);
+        // Owner cards must stay lightweight: the sidebar is a strip of several
+        // thumbnails at once, so the moving preview is the LOW quality WebM
+        // (360p) while the page's main video surface is the full one. The
+        // poster is always a static WebP, which is cheap to load.
+        const medWebm = entryVideoAsset(target.url || item?.webmPreviewMedium || item?.webmPreview || '', item, 'webm');
+        return {
+          title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
+          url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
+          thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
+          thumbnailPoster: entryImageAsset(target.poster || item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
+          webmPreview: medWebm,
+          webmPreviewFull: entryVideoAsset(target.url || item?.webmPreview || '', item, 'webm'),
+          previewDuration: Number.isFinite(target.duration) && target.duration > 0 ? target.duration : (Number(item?.previewDuration || 0) || undefined),
+          previewAnimation: target.name || '',
+          thumbnailType: '',
+          animations: Array.isArray(item?.animations) ? item.animations.length : 0,
+        };
+      });
       ownerProfile = {
         visible: true,
         name: cleanPublicText(entry.ownerName || ownerEmail.split('@')[0] || 'anonim'),
@@ -1504,9 +2264,30 @@ async function createDynamicPreview(settings, uploadPath, origin) {
     };
   }
   return {
-    html: createHtml({ sets, note, ownerProfile, entryId, origin, video, metrics, robots, playerUrl, archiveUrl }),
+    html: createHtml({ sets, note, ownerProfile, entryId, entry, origin, video, metrics, robots, playerUrl, archiveUrl }),
     robots,
   };
+}
+
+// Finds the folder of a work by id across every library collection, so /p/<id>
+// keeps working while rotations move works between folders.
+async function resolveEntryPath(settings, entryId) {
+  const id = cleanRepoPath(entryId).split('/').pop() || '';
+  if (!id) return '';
+  const basePaths = await libraryCollectionPaths(settings);
+  for (const basePath of basePaths) {
+    const indexText = await githubText(settings, `${basePath}/index.json`);
+    if (!indexText) continue;
+    let entries = [];
+    try {
+      const parsed = JSON.parse(indexText);
+      if (Array.isArray(parsed)) entries = parsed;
+    } catch (e) {}
+    const match = entries.find((entry) => String(entry?.id || '') === id);
+    const previewPath = cleanRepoPath(match?.previewPath || '');
+    if (previewPath) return previewPath;
+  }
+  return '';
 }
 
 export default async function handler(request, response) {
@@ -1518,9 +2299,6 @@ export default async function handler(request, response) {
   const token = process.env.GITHUB_TOKEN;
   if (!token) return response.status(500).send('GITHUB_TOKEN is not configured');
 
-  const path = cleanRepoPath(request.query?.path || '');
-  if (!path) return response.status(400).send('Invalid preview path');
-
   const settings = {
     owner: process.env.GITHUB_OWNER || defaultOwner,
     repo: process.env.GITHUB_REPO || defaultRepo,
@@ -1528,6 +2306,14 @@ export default async function handler(request, response) {
     basePath: cleanRepoPath(process.env.GITHUB_BASE_PATH || defaultBasePath),
     token,
   };
+
+  let path = cleanRepoPath(request.query?.path || '');
+  if (!path) {
+    const entryId = cleanRepoPath(request.query?.entry || '');
+    if (!entryId) return response.status(400).send('Invalid preview path');
+    path = await resolveEntryPath(settings, entryId);
+    if (!path) return response.status(404).send('Preview not found');
+  }
   const origin = `${request.headers['x-forwarded-proto'] || 'https'}://${request.headers['x-forwarded-host'] || request.headers.host}`;
 
   try {
