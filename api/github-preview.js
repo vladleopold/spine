@@ -974,9 +974,11 @@ function createHtml(config) {
       #sidebar { min-height: 0; max-height: 100%; overflow: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
       .animation-card.is-open .animation-menu { max-height: 240px; }
 
-      /* Огромное видео-превью под плеером убрано — оно растягивало страницу
-         и грузило пользователю файлы, которые и так не влезали в экран. */
-      .video-watch-panel { display: none !important; }
+      /* Большое видео-превью остаётся на странице: это главная видео-поверхность
+         работы и единственное место, где показывается клип в полном качестве.
+         Оно живёт под плеером и не мешает сайдпанелу. */
+      .video-watch-panel { display: grid; }
+      .video-watch-panel .seo-video-frame { height: min(58vh, 720px); max-height: min(58vh, 720px); }
       .preview-card { padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
       .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
       .topbar .preview-top-row {
@@ -2450,21 +2452,16 @@ async function createDynamicPreview(settings, uploadPath, origin) {
       ownerEntries.sort(compareLibraryEntries);
       const ownerLibraryItems = ownerEntries.map((item) => {
         const target = resolvePreviewTarget(item);
-        // Owner cards must stay lightweight: the sidebar is a strip of several
-        // thumbnails at once, so the moving preview is the LOW quality WebM
-        // (360p) while the page's main video surface is the full one. The
-        // poster is always a static WebP, which is cheap to load.
-        // Owner cards are a strip of several thumbnails at once, so the moving
-        // preview is the MEDIUM (720p) WebM — light enough to load several at
-        // once, but no longer the 360p low tier. The full-quality clip is kept
-        // separately so the page's main player can still use it.
-        const medWebm = entryVideoAsset(item?.webmPreviewMedium || item?.webmPreviewLow || item?.webmPreview || '', item, 'webm');
+        // The owner library is a dense strip of thumbnails that autoplays several
+        // clips at once, so the cards use the LOW (360p) WebM. The full-quality
+        // clip stays on the page's big video preview below the player.
+        const lowWebm = entryVideoAsset(item?.webmPreviewLow || item?.webmPreviewMedium || item?.webmPreview || '', item, 'webm');
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
           thumbnailPoster: entryImageAsset(target.poster || item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
-          webmPreview: medWebm,
+          webmPreview: lowWebm,
           webmPreviewFull: entryVideoAsset(target.url || item?.webmPreview || '', item, 'webm'),
           previewDuration: Number.isFinite(target.duration) && target.duration > 0 ? target.duration : (Number(item?.previewDuration || 0) || undefined),
           previewAnimation: target.name || '',
