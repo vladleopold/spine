@@ -2027,6 +2027,37 @@ playerElement.addEventListener("touchstart", (event) => {
           });
         }
         function say(message) { if (statusText) statusText.textContent = message; }
+        // Show how heavy the current selection is before the user commits to a
+        // download. A HEAD request only reads Content-Length, so nothing is
+        // transferred; the result is cached per URL so re-picking a size is free.
+        var sizeCache = {};
+        function formatMegabytes(bytes) {
+          if (!bytes || bytes < 0) return "";
+          return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(bytes / 1024)) + " KB";
+        }
+        function measureSelection() {
+          if (!chosen.format || !chosen.size) return;
+          var urls = Object.keys(files).map(urlFor).filter(Boolean);
+          if (!urls.length) return;
+          var pending = urls.length;
+          var total = 0;
+          var known = 0;
+          urls.forEach(function (url) {
+            if (sizeCache[url] !== undefined) { total += sizeCache[url]; known += 1; if (--pending === 0) reportSelection(total, urls.length, true); return; }
+            fetch(url, { method: "HEAD" }).then(function (response) {
+              var length = Number(response.headers.get("content-length"));
+              if (Number.isFinite(length) && length > 0) sizeCache[url] = length;
+            }).catch(function () {}).then(function () {
+              if (--pending === 0) reportSelection(total, urls.length, true);
+            });
+          });
+        }
+        function reportSelection(total, count, done) {
+          if (!done || !total) return;
+          var size = formatMegabytes(total);
+          var label = (formatLabels[chosen.format] || "") + " " + (sizeLabels[chosen.size] || "");
+          say(label + " \u00b7 " + count + " file" + (count === 1 ? "" : "s") + " \u00b7 " + size + " total");
+        }
         function go(step) {
           if (track) track.setAttribute("data-dl-step", step);
           var at = order.indexOf(step);
@@ -2084,9 +2115,10 @@ playerElement.addEventListener("touchstart", (event) => {
             block.querySelectorAll("[data-dl-quality]").forEach(function (other) {
               other.classList.toggle("is-picked", other === chip);
             });
-            say((formatLabels[chosen.format] || "") + " " + (sizeLabels[chosen.size] || "") + " \u2014 choose how to download");
+            say((formatLabels[chosen.format] || "") + " " + (sizeLabels[chosen.size] || "") + " \u2014 checking size");
             renderRows();
             go("files");
+            measureSelection();
           });
         });
         block.querySelectorAll("[data-dl-scope]").forEach(function (chip) {
