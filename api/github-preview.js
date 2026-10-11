@@ -973,10 +973,7 @@ function createHtml(config) {
       .library-nav-button--next { right: 14px; }
       #sidebar { min-height: 0; max-height: 100%; overflow: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
       .animation-card.is-open .animation-menu { max-height: 240px; }
-      .owner-library { gap: 8px; }
-      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); align-content: start; }
-      .owner-library a { min-height: 104px; }
-      .owner-thumb { transform: scale(1.05); }
+
       /* Огромное видео-превью под плеером убрано — оно растягивало страницу
          и грузило пользователю файлы, которые и так не влезали в экран. */
       .video-watch-panel { display: none !important; }
@@ -1127,11 +1124,14 @@ function createHtml(config) {
       .owner-profile strong { flex: 0 1 auto; min-width: 0; color: #fff; font-size: 16px; overflow-wrap: anywhere; }
       .owner-profile span { flex: 0 0 auto; color: rgba(231,237,244,.62); font-size: 12px; }
       .owner-library { display: none; gap: 10px; }
-      .owner-library.is-visible { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); align-items: stretch; }
-      .owner-library a { position: relative; display: block; overflow: hidden; min-height: 154px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); isolation: isolate; }
+      /* auto-fill keeps the columns at their intended width; auto-fit let a
+         short list stretch one card across the whole panel. The fixed height
+         keeps every thumbnail a readable rectangle instead of a collapsed sliver. */
+      .owner-library.is-visible { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); grid-auto-rows: 108px; align-items: stretch; align-content: start; }
+      .owner-library a { position: relative; display: block; overflow: hidden; height: 108px; min-height: 108px; border: 1px solid rgba(255,255,255,.09); border-radius: 8px; color: inherit; text-decoration: none; background: rgba(255,255,255,.045); isolation: isolate; }
       .owner-library a::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.18) 45%, rgba(8,10,12,.82)); pointer-events: none; }
       .owner-library a:hover { border-color: rgba(179,255,64,.55); background: rgba(179,255,64,.08); transform: translateY(-2px); }
-      .owner-thumb { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; background: rgba(255,255,255,.08); transform: scale(1.08); transform-origin: center; }
+      .owner-thumb { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; background: rgba(255,255,255,.08); transform: scale(1.05); transform-origin: center; }
       .owner-library a > div { position: absolute; right: 10px; bottom: 10px; left: 10px; z-index: 2; display: grid; gap: 3px; min-width: 0; }
       .owner-library strong, .owner-library span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .owner-library strong { color: #fff; font-size: 13px; text-shadow: 0 2px 12px rgba(0,0,0,.75); }
