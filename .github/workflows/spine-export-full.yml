@@ -415,7 +415,13 @@ jobs:
                     const dst = path.join(animTargetDir, file);
                     fs.copyFileSync(src, dst);
 
-                    const url = origin + '/assets/' + basePath + '/' + uploadId + '/animations/' + safeName + '/' + file;
+                    // Derive the URL from previewPath in the entry itself rather
+                    // than from basePath: previewPath is the folder the work
+                    // actually lives in right now. If the library rotated while
+                    // this job ran, basePath can already point at the previous
+                    // collection and every URL written here would 404.
+                    const workPath = String(indexData[entryIndex]?.previewPath || (basePath + '/' + uploadId)).replace(/^\/+|\/+$/g, '');
+                    const url = origin + '/assets/' + workPath + '/animations/' + safeName + '/' + file;
                     const prefix = uploadId + '-anim-' + safeName + '-';
 
                     // Opaque WebM
