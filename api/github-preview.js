@@ -1107,16 +1107,15 @@ function createHtml(config) {
         border-radius: 50%;
         object-fit: cover;
         background: rgba(255,255,255,.08);
-        /* Anonymous owners share one sprite laid out 6 across by 4 down. The frame
-           index picks a single cell: the sheet is scaled to 600% x 400% of the
-           avatar box, so 100% of the box shows exactly one frame, and
-           background-position shifts it to the chosen row and column. */
+        /* Anonymous owners share one sprite laid out 6 across by 4 down. The
+           sheet is scaled to 600% x 400% of the avatar box, so one cell fills the
+           box exactly. The offsets are computed in JS (--owner-avatar-x/y):
+           calc() cannot take a modulo, and the invalid expression it used to
+           hold here aborted parsing of the rest of this stylesheet. */
         background-image: url("/avatars/anonim-sprite.png");
         background-repeat: no-repeat;
         background-size: 600% 400%;
-        background-position:
-          calc(var(--owner-avatar-frame, 0) % 6) / 5 * 100%
-          calc(floor(var(--owner-avatar-frame, 0) / 6) / 3 * 100%;
+        background-position: var(--owner-avatar-x, 0%) var(--owner-avatar-y, 0%);
         /* Кадр не должен вылезать за круг. */
         overflow: hidden;
       }
@@ -1517,7 +1516,10 @@ const pinchDistance = { value: null };
         // sprite. The frame is picked from the owner id, so the same person keeps
         // the same face everywhere and two owners rarely collide.
         avatar.src = owner.picture || ownerAvatarSpriteUrl(owner.id || owner.name || "");
-        avatar.style.setProperty("--owner-avatar-frame", String(ownerAvatarFrame(owner.id || owner.name || "")));
+        const avatarFrame = ownerAvatarFrame(owner.id || owner.name || "");
+        avatar.style.setProperty("--owner-avatar-frame", String(avatarFrame));
+        avatar.style.setProperty("--owner-avatar-x", (avatarFrame % 6) * 20 + "%");
+        avatar.style.setProperty("--owner-avatar-y", Math.floor(avatarFrame / 6) * 33.3333 + "%");
         const ownerText = document.createElement("div");
         ownerText.className = "owner-profile-text";
         const ownerName = document.createElement("strong");
