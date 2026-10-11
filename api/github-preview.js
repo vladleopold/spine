@@ -804,7 +804,7 @@ function animationDownloadIcon() {
   return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg>';
 }
 
-function animationDownloadBlock(entry) {
+function animationDownloadBlock(entry, origin) {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
     : null;
@@ -1266,7 +1266,7 @@ function createHtml(config) {
           <div class="preview-card" id="set-card"><div class="section-title">Set</div><select id="set-select"></select></div>
           <div class="preview-card note-card" id="note-card"><div class="section-title">Text</div><p class="note-text" id="note-text"></p></div>
           <div class="preview-card animation-card is-open" id="animation-card"><div class="section-title">Animations</div><div class="animation-menu" id="animation-menu" role="menu"></div></div>
-          ${animationDownloadBlock(entry)}
+          ${animationDownloadBlock(entry, origin)}
           ${video?.sourceProofUrl || video?.blockchainAnchorUrl ? `<details class="preview-card proof-card"><summary class="section-title">Origin proof</summary><div class="proof-links">${video.sourceProofUrl ? `<a href="${escapeHtml(video.sourceProofUrl)}" target="_blank" rel="noreferrer">source-proof.json${video.proofHash ? `<code>${escapeHtml(shortHash(video.proofHash))}</code>` : ''}</a>` : ''}${video.blockchainAnchorUrl ? `<a href="${escapeHtml(video.blockchainAnchorUrl)}" target="_blank" rel="noreferrer">blockchain-anchor.json${video.anchorHash ? `<code>${escapeHtml(shortHash(video.anchorHash))}</code>` : ''}</a>` : ''}</div></details>` : ''}
           <div class="preview-card owner-library" id="owner-library"></div>
         </aside>
