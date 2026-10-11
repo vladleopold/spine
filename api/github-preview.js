@@ -766,10 +766,42 @@ function resolvePreviewTarget(entry) {
   };
 }
 
-function animationDownloadButton(label, url) {
-  const safe = safePublicAsset(url);
-  if (!safe) return "";
-  return `<a class="animation-download-button" href="${escapeHtml(safe)}" download rel="noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg> ${escapeHtml(label)}</a>`;
+// Compact download picker for the sidebar.
+//
+// The old block listed every combination as its own button — five formats times
+// three sizes times every animation, which produced dozens of identical-looking
+// buttons and pushed the rest of the sidebar off-screen. It is replaced by a
+// three-step cascading selector: choose a FORMAT, choose a SIZE, then choose
+// whether to download every animation in one click or pick them one by one.
+// The steps slide horizontally so the interaction reads as one compact control
+// instead of a long list, and each step is keyboard reachable.
+const DOWNLOAD_FORMATS = [
+  { id: 'webm', label: 'WebM', note: 'VP9 · small file' },
+  { id: 'mp4', label: 'MP4', note: 'H.264 · widest support' },
+  { id: 'mov', label: 'MOV \u03b1', note: 'ProRes 4444 · alpha' },
+  { id: 'gif', label: 'GIF \u03b1', note: 'Palette · alpha, loops' },
+  { id: 'png', label: 'PNG seq \u03b1', note: 'Zip of frames · alpha' },
+];
+
+const DOWNLOAD_QUALITIES = [
+  { id: 'high', label: '1080p', suffix: '' },
+  { id: 'medium', label: '720p', suffix: 'Medium' },
+  { id: 'low', label: '360p', suffix: 'Low' },
+];
+
+function downloadKeysFor(format, suffix) {
+  const cap = suffix;
+  switch (format) {
+    case 'mp4': return [`mp4Preview${cap}`];
+    case 'mov': return [`movAlpha${cap}`];
+    case 'gif': return [`gifAlpha${cap}`];
+    case 'png': return [`pngAlpha${cap}`];
+    default:    return [`webmPreview${cap}`];
+  }
+}
+
+function animationDownloadIcon() {
+  return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg>';
 }
 
 function animationDownloadBlock(entry) {
@@ -778,70 +810,81 @@ function animationDownloadBlock(entry) {
     : null;
   if (!previews || !Object.keys(previews).length) return "";
 
+  const animations = Object.keys(previews);
   const pick = (name, keys) => {
     const p = previews[name];
-    if (!p) return "";
+    if (!p) return '';
     for (const k of keys) {
       const v = p[k];
       if (typeof v === 'string' && v.trim()) return v.trim();
     }
-    return "";
+    return '';
   };
 
-  const rows = [];
-  const qualities = [
-    { label: 'high', suffix: '', tag: '1080p' },
-    { label: 'medium', suffix: 'Medium', tag: '720p' },
-    { label: 'low', suffix: 'Low', tag: '360p' },
-  ];
+  // Only offer a format when at least one animation actually carries that file,
+  // so the control never sends the user to an empty download.
+  const availableFormats = DOWNLOAD_FORMATS.filter((format) =>
+    animations.some((name) => pick(name, downloadKeysFor(format.id, '')) || pick(name, downloadKeysFor(format.id, 'Medium')) || pick(name, downloadKeysFor(format.id, 'Low'))));
 
-  const webm = [];
-  const mp4 = [];
-  const mov = [];
-  const gif = [];
-  const png = [];
-  for (const name of Object.keys(previews)) {
-    for (const q of qualities) {
-      if (pick(name, ['webm' + q.suffix + 'Preview'])) webm.push(animationDownloadButton(`WebM · ${q.tag}`, pick(name, ['webm' + q.suffix + 'Preview'])));
-      if (pick(name, ['mp4' + q.suffix + 'Preview'])) mp4.push(animationDownloadButton(`MP4 · ${q.tag}`, pick(name, ['mp4' + q.suffix + 'Preview'])));
-      if (pick(name, ['mov' + q.suffix + 'Alpha'])) mov.push(animationDownloadButton(`MOV α · ${q.tag}`, pick(name, ['mov' + q.suffix + 'Alpha'])));
-      if (pick(name, ['gif' + q.suffix + 'Alpha'])) gif.push(animationDownloadButton(`GIF α · ${q.tag}`, pick(name, ['gif' + q.suffix + 'Alpha'])));
-      if (pick(name, ['png' + q.suffix + 'Alpha'])) png.push(animationDownloadButton(`PNG seq α · ${q.tag}`, pick(name, ['png' + q.suffix + 'Alpha'])));
-    }
-  }
+  if (!availableFormats.length) return '';
 
-  // "All animations" variants: scan every animation for the first file that exists.
-  const allKeys = (keys) => {
-    for (const name of Object.keys(previews)) {
-      const u = pick(name, keys);
-      if (u) return u;
-    }
-    return "";
-  };
-  const allMov = animationDownloadButton('All MOV α · 1080p', allKeys(['movAlpha']));
-  const allGif = animationDownloadButton('All GIF α · 1080p', allKeys(['gifAlpha']));
-  const allPng = animationDownloadButton('All PNG seq α · 1080p', allKeys(['pngAlpha']));
+  const formatButtons = availableFormats
+    .map((format) => `<button type="button" class="dl-chip" data-dl-format="${escapeHtml(format.id)}" aria-pressed="false">${escapeHtml(format.label)}<span>${escapeHtml(format.note)}</span></button>`)
+    .join('');
 
-  const section = (title, buttons) => {
-    const items = [...new Set(buttons)].filter(Boolean).join("");
-    if (!items) return "";
-    return `<div class="animation-download-group"><div class="animation-download-group-title">${escapeHtml(title)}</div><div class="animation-download-row">${items}</div></div>`;
-  };
+  const qualityButtons = DOWNLOAD_QUALITIES
+    .map((quality) => `<button type="button" class="dl-chip dl-chip--sm" data-dl-quality="${escapeHtml(quality.id)}" aria-pressed="false">${escapeHtml(quality.label)}</button>`)
+    .join('');
 
-  const groups = [
-    section('WebM', webm),
-    section('MP4', mp4),
-    section('MOV with alpha', [...mov, allMov]),
-    section('GIF with alpha', [...gif, allGif]),
-    section('PNG sequence with alpha', [...png, allPng]),
-  ].filter(Boolean).join("");
+  // Per-animation rows are rendered from JS once a format+size is chosen, but
+  // the shell is server-rendered so the block is complete without JavaScript.
+  const animationNames = animations
+    .map((name) => `<li class="dl-row" data-dl-animation="${escapeHtml(name)}"><span class="dl-row-name">${escapeHtml(name)}</span><span class="dl-row-links"></span></li>`)
+    .join('');
 
-  if (!groups) return "";
-
-  return `<div class="animation-download-block">
-    <div class="animation-download-title">Download animations</div>
-    ${groups}
-  </div>`;
+  return `<section class="animation-download-block" id="animation-download-block" data-dl-block aria-label="Download animations">
+    <div class="dl-head">
+      <div class="dl-head-title">Download</div>
+      <div class="dl-steps" role="tablist" aria-label="Download steps">
+        <button type="button" class="dl-step is-active" data-dl-goto="format" role="tab" aria-selected="true"><b>1</b><span>Format</span></button>
+        <button type="button" class="dl-step" data-dl-goto="size" role="tab" aria-selected="false"><b>2</b><span>Size</span></button>
+        <button type="button" class="dl-step" data-dl-goto="files" role="tab" aria-selected="false"><b>3</b><span>Files</span></button>
+      </div>
+    </div>
+    <div class="dl-viewport">
+      <div class="dl-track">
+        <div class="dl-panel" data-dl-panel="format">
+          <div class="dl-grid">${formatButtons}</div>
+        </div>
+        <div class="dl-panel" data-dl-panel="size">
+          <div class="dl-grid dl-grid--sm">${qualityButtons}</div>
+        </div>
+        <div class="dl-panel" data-dl-panel="files">
+          <div class="dl-scope">
+            <button type="button" class="dl-chip dl-chip--wide" data-dl-scope="all">All animations · one click</button>
+            <span class="dl-scope-or">or</span>
+            <button type="button" class="dl-chip dl-chip--wide" data-dl-scope="one">Pick one by one</button>
+          </div>
+          <ul class="dl-list" data-dl-list hidden>${animationNames}</ul>
+        </div>
+      </div>
+    </div>
+    <div class="dl-status" data-dl-status aria-live="polite">${animationDownloadIcon()} <span data-dl-status-text>Pick a format to start</span></div>
+    <script type="application/json" data-dl-config>${escapedJson({
+      origin,
+      animations,
+      files: animations.reduce((acc, name) => {
+        acc[name] = {};
+        for (const format of DOWNLOAD_FORMATS) {
+          for (const quality of DOWNLOAD_QUALITIES) {
+            const url = pick(name, downloadKeysFor(format.id, quality.suffix));
+            if (url) acc[name][`${format.id}-${quality.id}`] = url;
+          }
+        }
+        return acc;
+      }, {}),
+    })}</script>
+  </section>`;
 }
 
 function createHtml(config) {
@@ -906,8 +949,10 @@ function createHtml(config) {
       .brand-link:hover .brand-plus { color: #8cc7ff; }
       /* Плеер — почти на весь экран; панель справа уходит вниз и растягивается
          по ширине, вместо того чтобы растягивать страницу вниз и создавать скрол. */
-      .stage { display: flex; flex-direction: column; gap: 14px; min-height: 0; height: calc(100vh - 104px); max-height: calc(100vh - 104px); overflow: hidden; }
-      .player-frame { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
+      /* Desktop layout: the Spine player takes the full window height and stays
+         adaptive, while the side panel on its right never exceeds 420px. */
+      .stage { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 28vw, 420px); gap: 16px; min-height: 0; height: calc(100vh - 104px); max-height: calc(100vh - 104px); }
+      .player-frame { position: relative; min-width: 0; min-height: 0; }
       #player { width: 100%; height: 100%; min-height: 0; }
       .video-watch-panel { position: relative; display: grid; gap: 10px; overflow: hidden; padding: 16px; border: 1px solid rgba(255,185,214,.46); border-radius: 8px; background: #020304; box-shadow: 0 20px 64px rgba(0,0,0,.34); }
       .video-watch-panel--bottom { margin-top: 4px; }
@@ -926,14 +971,12 @@ function createHtml(config) {
       .library-nav-button:disabled { display: none; }
       .library-nav-button--prev { left: 14px; }
       .library-nav-button--next { right: 14px; }
-      #sidebar { min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding-right: 2px; flex: 0 0 auto; max-height: 42vh; }
-      #sidebar .preview-card { padding: 10px; }
-      .animation-card.is-open .animation-menu { max-height: 220px; }
-      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-      .owner-library a { min-height: 110px; }
-      .animation-download-block { padding: 8px 10px; }
-      .animation-download-row { flex-wrap: wrap; gap: 6px; }
-      .animation-download-button { flex: 0 0 auto; }
+      #sidebar { min-height: 0; max-height: 100%; overflow: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(74,78,84,.72) transparent; }
+      .animation-card.is-open .animation-menu { max-height: 240px; }
+      .owner-library { gap: 8px; }
+      .owner-library.is-visible { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); align-content: start; }
+      .owner-library a { min-height: 104px; }
+      .owner-thumb { transform: scale(1.05); }
       /* Огромное видео-превью под плеером убрано — оно растягивало страницу
          и грузило пользователю файлы, которые и так не влезали в экран. */
       .video-watch-panel { display: none !important; }
@@ -1000,6 +1043,46 @@ function createHtml(config) {
       button.active, button:hover { border-color: rgba(140,199,255,.82); color: #fff; background: rgba(71,156,255,.22); }
       .animation-card { position: relative; }
       .animation-card.is-open .animation-menu { display: grid; gap: 6px; max-height: 320px; overflow: auto; margin-top: 0; padding: 8px; border: 1px solid rgba(140,199,255,.34); border-radius: 10px; background: rgba(9,13,17,.94); box-shadow: 0 22px 50px rgba(0,0,0,.52); backdrop-filter: blur(12px); }
+      /* ── Compact download picker ──────────────────────────────────────────
+         Three short steps that slide sideways instead of a long button list:
+         Format → Size → Files. Everything stays inside the side panel width. */
+      .animation-download-block { padding: 12px; border: 1px solid rgba(140,199,255,.22); border-radius: 10px; background: rgba(140,199,255,.05); box-shadow: 0 18px 40px rgba(0,0,0,.2); }
+      .dl-head { display: grid; gap: 9px; }
+      .dl-head-title { color: #f7fbff; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+      .dl-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .dl-step { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 30px; padding: 0 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: rgba(231,237,244,.72); background: rgba(255,255,255,.04); font-size: 11px; font-weight: 850; cursor: pointer; transition: color .18s ease, background .18s ease, border-color .18s ease; }
+      .dl-step b { display: grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; color: #0b0e12; background: rgba(231,237,244,.72); font-size: 9px; font-weight: 900; }
+      .dl-step.is-active { border-color: rgba(140,199,255,.82); color: #fff; background: rgba(71,156,255,.2); }
+      .dl-step.is-active b { background: #8cc7ff; }
+      .dl-step.is-done b { background: #b3ff40; }
+      .dl-viewport { margin-top: 10px; overflow: hidden; }
+      .dl-track { display: flex; width: 300%; transition: transform .34s cubic-bezier(.22,.75,.3,1); }
+      .dl-track[data-dl-step="format"] { transform: translateX(0); }
+      .dl-track[data-dl-step="size"]   { transform: translateX(-33.3333%); }
+      .dl-track[data-dl-step="files"]  { transform: translateX(-66.6666%); }
+      .dl-panel { width: 33.3333%; flex: 0 0 33.3333%; min-width: 0; padding-right: 8px; }
+      .dl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+      .dl-grid--sm { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .dl-chip { display: grid; gap: 2px; min-height: 46px; padding: 7px 8px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: rgba(231,237,244,.86); background: rgba(255,255,255,.045); font-size: 12px; font-weight: 900; text-align: left; cursor: pointer; transition: border-color .16s ease, background .16s ease, color .16s ease, transform .12s ease; }
+      .dl-chip span { color: rgba(231,237,244,.5); font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+      .dl-chip:hover { border-color: rgba(140,199,255,.78); color: #fff; transform: translateY(-1px); }
+      .dl-chip.is-picked { border-color: rgba(179,255,64,.82); color: #eaffc2; background: rgba(179,255,64,.12); }
+      .dl-chip--sm { display: grid; place-items: center; min-height: 40px; padding: 0 4px; font-size: 12px; text-align: center; }
+      .dl-chip--wide { grid-column: 1 / -1; }
+      .dl-scope { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 6px; }
+      .dl-scope-or { color: rgba(231,237,244,.44); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      .dl-list { display: grid; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; max-height: 168px; overflow: auto; }
+      .dl-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 5px 7px; border: 1px solid rgba(255,255,255,.07); border-radius: 7px; background: rgba(255,255,255,.03); }
+      .dl-row-name { overflow: hidden; color: rgba(231,237,244,.86); font-size: 11px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+      .dl-row-links { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+      .dl-mini { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; padding: 0 7px; border: 1px solid rgba(140,199,255,.28); border-radius: 999px; color: #dff1ff; background: rgba(140,199,255,.1); font-size: 10px; font-weight: 900; text-decoration: none; }
+      .dl-mini:hover { border-color: rgba(179,255,64,.7); color: #eaffc2; background: rgba(179,255,64,.14); }
+      .dl-status { display: flex; align-items: center; gap: 7px; margin-top: 9px; min-height: 30px; padding: 0 9px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; color: rgba(231,237,244,.78); background: rgba(255,255,255,.03); font-size: 11px; font-weight: 800; }
+      .dl-status span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .dl-back { display: inline-flex; align-items: center; gap: 4px; min-height: 26px; margin-top: 8px; padding: 0 9px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; color: rgba(231,237,244,.78); background: rgba(255,255,255,.05); font-size: 10px; font-weight: 900; cursor: pointer; }
+      .dl-back:hover { border-color: rgba(140,199,255,.78); color: #fff; }
+      @media (prefers-reduced-motion: reduce) { .dl-track { transition: none; } }
+
       .note-text { margin: 0; color: rgba(231,237,244,.88); font-size: 16px; line-height: 1.45; overflow-wrap: anywhere; white-space: pre-wrap; }
       .note-card:empty { display: none; }
       .owner-card { display: none; gap: 12px; }
@@ -1916,7 +1999,124 @@ playerElement.addEventListener("touchstart", (event) => {
        window.addEventListener("mouseup", (event) => { if (event.button !== 0) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
       setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); syncScenario(animationNames.value); renderAnimationList(); syncUrl(); createPlayer(); };
       window.addEventListener("popstate", applySelectionFromUrl);
-      syncScenario(animationNames.value); renderSetList(); syncSetInfo(); renderOwnerCard(); installOwnerLibraryChaos(); syncPreviewLike(); syncLibraryNavigationButtons(); syncUrl(true); createPlayer(); renderAnimationList();
+      // Compact download picker: Format -> Size -> Files, each step sliding
+      // the track sideways. The user picks a format and a size, then either
+      // grabs every animation in one click or takes them one by one.
+      // Note: this whole script block lives inside a server-side template
+      // literal, so it is written with plain string concatenation and never
+      // uses nested template interpolation of its own.
+      function installDownloadPicker() {
+        var block = document.querySelector("[data-dl-block]");
+        if (!block) return;
+        var configNode = block.querySelector("[data-dl-config]");
+        var files = {};
+        try { files = (JSON.parse(configNode ? configNode.textContent : "{}").files) || {}; } catch (error) { files = {}; }
+        var track = block.querySelector(".dl-track");
+        var steps = Array.prototype.slice.call(block.querySelectorAll(".dl-step"));
+        var statusText = block.querySelector("[data-dl-status-text]");
+        var list = block.querySelector("[data-dl-list]");
+        var formatLabels = { webm: "WebM", mp4: "MP4", mov: "MOV \u03b1", gif: "GIF \u03b1", png: "PNG seq \u03b1" };
+        var sizeLabels = { high: "1080p", medium: "720p", low: "360p" };
+        var chosen = { format: "", size: "" };
+        var order = ["format", "size", "files"];
+        var icon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg>';
+
+        function escapeText(value) {
+          return String(value).replace(/[&<>"]/g, function (character) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[character];
+          });
+        }
+        function say(message) { if (statusText) statusText.textContent = message; }
+        function go(step) {
+          if (track) track.setAttribute("data-dl-step", step);
+          var at = order.indexOf(step);
+          steps.forEach(function (button) {
+            var position = order.indexOf(button.dataset.dlGoto);
+            button.classList.toggle("is-active", position === at);
+            button.classList.toggle("is-done", position < at);
+            button.setAttribute("aria-selected", position === at ? "true" : "false");
+          });
+        }
+        function urlFor(name) {
+          var group = files[name];
+          if (!group) return "";
+          return group[chosen.format + "-" + chosen.size] || "";
+        }
+        function renderRows() {
+          if (!list) return;
+          Array.prototype.slice.call(list.querySelectorAll(".dl-row")).forEach(function (row) {
+            var name = row.dataset.dlAnimation || "";
+            var url = urlFor(name);
+            var holder = row.querySelector(".dl-row-links");
+            if (!holder) return;
+            if (!url) {
+              holder.innerHTML = '<span class="dl-mini is-empty">not available</span>';
+              return;
+            }
+            var anchor = document.createElement("a");
+            anchor.className = "dl-mini";
+            anchor.href = url;
+            anchor.download = "";
+            anchor.rel = "noreferrer";
+            anchor.innerHTML = icon;
+            anchor.appendChild(document.createTextNode(" " + name));
+            holder.innerHTML = "";
+            holder.appendChild(anchor);
+          });
+        }
+
+        steps.forEach(function (button) {
+          button.addEventListener("click", function () { go(button.dataset.dlGoto); });
+        });
+        block.querySelectorAll("[data-dl-format]").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            chosen.format = chip.dataset.dlFormat || "";
+            block.querySelectorAll("[data-dl-format]").forEach(function (other) {
+              other.classList.toggle("is-picked", other === chip);
+            });
+            say((formatLabels[chosen.format] || "Format") + " selected \u2014 pick a size");
+            go("size");
+          });
+        });
+        block.querySelectorAll("[data-dl-quality]").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            chosen.size = chip.dataset.dlQuality || "";
+            block.querySelectorAll("[data-dl-quality]").forEach(function (other) {
+              other.classList.toggle("is-picked", other === chip);
+            });
+            say((formatLabels[chosen.format] || "") + " " + (sizeLabels[chosen.size] || "") + " \u2014 choose how to download");
+            renderRows();
+            go("files");
+          });
+        });
+        block.querySelectorAll("[data-dl-scope]").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            if (chip.dataset.dlScope === "one") {
+              if (list) list.hidden = false;
+              renderRows();
+              say("Pick an animation below to download it");
+              return;
+            }
+            var targets = Object.keys(files).map(urlFor).filter(Boolean);
+            if (!targets.length) { say("No files for this combination"); return; }
+            targets.forEach(function (url, index) {
+              window.setTimeout(function () {
+                var link = document.createElement("a");
+                link.href = url;
+                link.download = "";
+                link.rel = "noreferrer";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+              }, index * 320);
+            });
+            say("Downloading " + targets.length + " files");
+          });
+        });
+
+        go("format");
+      }
+      syncScenario(animationNames.value); renderSetList(); syncSetInfo(); renderOwnerCard(); installOwnerLibraryChaos(); installDownloadPicker(); syncPreviewLike(); syncLibraryNavigationButtons(); syncUrl(true); createPlayer(); renderAnimationList();
       const seoVideo = document.querySelector('.video-watch-player');
       if (seoVideo && seoVideo.getAttribute('autoplay') !== null) {
         seoVideo.muted = true;
