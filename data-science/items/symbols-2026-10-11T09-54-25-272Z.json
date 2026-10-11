@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-11T09:54:25.272Z",
+  "updatedAt": "2026-10-11T09:55:00.792Z",
+  "animation_asset": {
+    "id": "symbols-2026-10-11T09-54-25-272Z",
+    "name": "symbols",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "symbol_0/blur",
+        "symbol_0/static",
+        "symbol_0/win",
+        "symbol_1/blur",
+        "symbol_1/static",
+        "symbol_1/win",
+        "symbol_2/blur",
+        "symbol_2/static",
+        "symbol_2/win",
+        "symbol_3/blur",
+        "symbol_3/static",
+        "symbol_3/win",
+        "symbol_4/blur",
+        "symbol_4/static",
+        "symbol_4/win",
+        "symbol_5/blur",
+        "symbol_5/static",
+        "symbol_5/win",
+        "symbol_6/blur",
+        "symbol_6/static",
+        "symbol_6/win",
+        "symbol_7/blur",
+        "symbol_7/land",
+        "symbol_7/static",
+        "symbol_7/win"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-symbol_0/blur",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "symbols-2026-10-11T09-54-25-272Z",
+    "manifestPath": "symbols-2026-10-11T09-54-25-272Z/manifest.json",
+    "files": [
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/symbols/symbols.json",
+        "name": "symbols/symbols.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/symbols/symbols.atlas",
+        "name": "symbols/symbols.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/symbols/symbols.webp",
+        "name": "symbols/symbols.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/symbols/symbols_2.webp",
+        "name": "symbols/symbols_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/symbols/symbols_3.webp",
+        "name": "symbols/symbols_3.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "symbols-2026-10-11T09-54-25-272Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "symbols.json",
+    "atlas": "symbols.atlas",
+    "textures": [
+      "symbols.webp",
+      "symbols_2.webp",
+      "symbols_3.webp"
+    ],
+    "animationCount": 25,
+    "animationNames": [
+      "symbol_0/blur",
+      "symbol_0/static",
+      "symbol_0/win",
+      "symbol_1/blur",
+      "symbol_1/static",
+      "symbol_1/win",
+      "symbol_2/blur",
+      "symbol_2/static",
+      "symbol_2/win",
+      "symbol_3/blur",
+      "symbol_3/static",
+      "symbol_3/win",
+      "symbol_4/blur",
+      "symbol_4/static",
+      "symbol_4/win",
+      "symbol_5/blur",
+      "symbol_5/static",
+      "symbol_5/win",
+      "symbol_6/blur",
+      "symbol_6/static",
+      "symbol_6/win",
+      "symbol_7/blur",
+      "symbol_7/land",
+      "symbol_7/static",
+      "symbol_7/win"
+    ],
+    "defaultAnimation": "symbol_0/blur",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
