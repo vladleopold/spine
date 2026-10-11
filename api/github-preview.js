@@ -418,10 +418,10 @@ function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl =
   // Prefer the preview of an animation that is actually long enough to show as
   // a moving clip. A 1-frame `idle` preview is a still image, so the video-watch
   // panel and the SEO metadata would otherwise surface a zero-length video.
-  const target = resolvePreviewTarget(entry);
-  const contentUrl = entryVideoAsset(target.url || entry?.webmPreview || '', entry, 'webm');
+  const target = resolvePreviewTarget(entry, origin);
+  const contentUrl = entryVideoAsset(target.url || repairEntryAssetUrl(entry, entry?.webmPreview || '', origin), entry, 'webm');
   const poster =
-    entryImageAsset(target.poster || entry?.thumbnailPoster || '', entry, 'poster') ||
+    entryImageAsset(target.poster || repairEntryAssetUrl(entry, entry?.thumbnailPoster || '', origin), entry, 'poster') ||
     generatedThumbnailUrl(origin, entry) ||
     entryImageAsset(entry?.thumbnail || '', entry, 'thumbnail');
   if (!id || !contentUrl || !poster) return null;
@@ -730,19 +730,20 @@ async function findSpineSetDirectories(settings, uploadPath, maxDepth = 3) {
 // returns the first one whose preview is long enough. The returned object
 // carries the URL, the poster and the duration so every consumer (owner card,
 // video-watch panel, SEO metadata) renders the same moving clip.
-function resolvePreviewTarget(entry) {
+function resolvePreviewTarget(entry, origin = '') {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
     : null;
   const animations = Array.isArray(entry?.animations) ? entry.animations : (previews ? Object.keys(previews) : []);
   const chosen = String(entry?.defaultAnimation || '').trim();
 
+  const fix = origin ? (value) => repairAnimationAssetUrl(entry, value, origin) : (value) => value;
   const pick = (name) => {
     const p = previews && previews[name];
     if (!p) return null;
     return {
       name,
-      url: typeof p.webmPreview === 'string' && p.webmPreview.trim() ? p.webmPreview.trim() : '',
+      url: typeof p.webmPreview === 'string' && p.webmPreview.trim() ? fix(p.webmPreview.trim()) : '',
       poster: typeof p.webpPoster === 'string' && p.webpPoster.trim() ? p.webpPoster.trim() : '',
       duration: Number(p.previewDuration),
     };
@@ -804,6 +805,47 @@ function animationDownloadIcon() {
   return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg>';
 }
 
+// Repairs a stored asset URL that points at a collection folder the work has
+// since been rotated out of.
+//
+// index.json keeps absolute URLs per animation, but when the library rotates
+// (999 files -> library_NN+1) a work's files move while the already-written
+// URLs stay behind. Those links then 404 and the browser saves the 404 page
+// instead of the video, which shows up as a ".html" download named after the
+// clip. previewPath is the only field that always tracks where the work lives
+// now, so every per-animation URL is rebuilt from it using just the filename.
+// Same repair for the work-level preview fields (webmPreview, webmPreviewMedium,
+// webmPreviewLow, webpPoster…): they live directly under previewPath rather than
+// under animations/<name>/, so only the file name has to be swapped.
+function repairEntryAssetUrl(entry, url, origin) {
+  const raw = String(url || '').trim();
+  if (!raw) return '';
+  const file = raw.split('?')[0].split('#')[0].split('/').filter(Boolean).pop() || '';
+  const previewPath = cleanRepoPath(entry?.previewPath || '');
+  if (!file || !previewPath) return raw;
+  const version = raw.match(/[?#]v=([^&#]+)/);
+  return assetUrlForRepoPath(origin, joinRepoPath(previewPath, file), version ? version[1] : '');
+}
+
+function repairAnimationAssetUrl(entry, url, origin) {
+  const raw = String(url || '').trim();
+  if (!raw) return '';
+  const file = raw.split('?')[0].split('#')[0].split('/').filter(Boolean).pop() || '';
+  if (!file) return raw;
+  const previewPath = cleanRepoPath(entry?.previewPath || '');
+  if (!previewPath) return raw;
+  const version = raw.match(/[?#]v=([^&#]+)/);
+  return assetUrlForRepoPath(origin, joinRepoPath(previewPath, 'animations', basename(dirnameOfAnimationUrl(raw)), file), version ? version[1] : '');
+}
+
+// The per-animation folder is the parent directory of the file inside the
+// /animations/<safeName>/<file> layout.
+function dirnameOfAnimationUrl(url) {
+  const parts = String(url).split('?')[0].split('#')[0].split('/').filter(Boolean);
+  parts.pop();
+  return parts.pop() || '';
+}
+
 function animationDownloadBlock(entry, origin) {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
@@ -811,12 +853,14 @@ function animationDownloadBlock(entry, origin) {
   if (!previews || !Object.keys(previews).length) return "";
 
   const animations = Object.keys(previews);
+  // Every returned URL is rebuilt from previewPath, so a work that was rotated
+  // into library_NN+1 still downloads from where its files actually are.
   const pick = (name, keys) => {
     const p = previews[name];
     if (!p) return '';
     for (const k of keys) {
       const v = p[k];
-      if (typeof v === 'string' && v.trim()) return v.trim();
+      if (typeof v === 'string' && v.trim()) return repairAnimationAssetUrl(entry, v.trim(), origin);
     }
     return '';
   };
@@ -2453,18 +2497,26 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         : [];
       ownerEntries.sort(compareLibraryEntries);
       const ownerLibraryItems = ownerEntries.map((item) => {
-        const target = resolvePreviewTarget(item);
+        const target = resolvePreviewTarget(item, origin);
         // The owner library is a dense strip of thumbnails that autoplays several
         // clips at once, so the cards use the LOW (360p) WebM. The full-quality
         // clip stays on the page's big video preview below the player.
-        const lowWebm = entryVideoAsset(item?.webmPreviewLow || item?.webmPreviewMedium || item?.webmPreview || '', item, 'webm');
+        const lowWebm = entryVideoAsset(
+          repairEntryAssetUrl(item, item?.webmPreviewLow || item?.webmPreviewMedium || item?.webmPreview || '', origin),
+          item,
+          'webm',
+        );
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
           thumbnailPoster: entryImageAsset(target.poster || item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
           webmPreview: lowWebm,
-          webmPreviewFull: entryVideoAsset(target.url || item?.webmPreview || '', item, 'webm'),
+          webmPreviewFull: entryVideoAsset(
+            target.url || repairEntryAssetUrl(item, item?.webmPreview || '', origin),
+            item,
+            'webm',
+          ),
           previewDuration: Number.isFinite(target.duration) && target.duration > 0 ? target.duration : (Number(item?.previewDuration || 0) || undefined),
           previewAnimation: target.name || '',
           thumbnailType: '',
