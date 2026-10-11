@@ -405,6 +405,17 @@ jobs:
                       if (Number.isFinite(animDur) && animDur > 0) {
                         allAnimPreviews[animName].previewDuration = animDur;
                       }
+                      // Real pixel width per tier, so the site can label the
+                      // size buttons honestly instead of claiming a fixed
+                      // 1080p/720p/360p that only some clips actually match.
+                      const widths = meta?.qualityWidths;
+                      if (widths && typeof widths === 'object') {
+                        allAnimPreviews[animName].qualityWidths = {
+                          high: Number(widths.high) || 0,
+                          medium: Number(widths.medium) || 0,
+                          low: Number(widths.low) || 0,
+                        };
+                      }
                     } catch (e) { /* meta parse failed — skip */ }
                   }
 
