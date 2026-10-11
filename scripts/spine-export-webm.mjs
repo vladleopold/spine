@@ -965,18 +965,29 @@ try {
   };
   const bitrates = { high: bitrateFor(120), medium: bitrateFor(60), low: bitrateFor(28) };
   
-  // Calculate scaled dimensions (keeping aspect ratio, ensuring even numbers)
-  function calcScale(maxWidth) {
-    if (videoWidth <= maxWidth) return `${videoWidth}x${videoHeight}`;
-    const scale = maxWidth / videoWidth;
-    let newWidth = maxWidth;
-    let newHeight = Math.round(videoHeight * scale);
-    return `${newWidth & ~1}x${newHeight & ~1}`;
+  // Calculate scaled dimensions (keeping aspect ratio, ensuring even numbers).
+  //
+  // The three tiers used to be absolute width caps: 1080 / 720 / 360. Because
+  // calcScale returned the source size untouched whenever the source was
+  // already at or below the cap, any clip rendered at 960 wide produced a
+  // "720p" file that was byte-for-byte the 1080p one — the picker handed out
+  // two names for the same video. Tiers are now proportional steps of the
+  // source, so each one is genuinely smaller than the tier above it.
+  function scaleTo(targetWidth) {
+    if (videoWidth <= targetWidth) return `${videoWidth & ~1}x${videoHeight & ~1}`;
+    const scale = targetWidth / videoWidth;
+    const width = Math.round(videoWidth * scale) & ~1;
+    const height = Math.round(videoHeight * scale) & ~1;
+    return `${Math.max(2, width)}x${Math.max(2, height)}`;
   }
-  
-  const dimHigh = `${videoWidth}x${videoHeight}`;
-  const dimMedium = calcScale(1080);
-  const dimLow = calcScale(360);
+
+  // high = source, medium = 2/3 of source, low = 1/3 of source. Each step is
+  // applied only when it actually shrinks the frame, so small clips keep a
+  // readable size at the high tier instead of collapsing to a few pixels.
+  const dimHigh = `${videoWidth & ~1}x${videoHeight & ~1}`;
+  const dimMedium = scaleTo(Math.round(videoWidth * 0.66));
+  const dimLow = scaleTo(Math.round(videoWidth * 0.33));
+  console.error(`Quality ladder: high=${dimHigh} medium=${dimMedium} low=${dimLow}`);
 
   try {
     const { execSync } = await import('child_process');
@@ -1096,10 +1107,15 @@ try {
 
   const finalWebmBuffer = fs.existsSync(outPaths.webmHigh) ? fs.readFileSync(outPaths.webmHigh) : Buffer.from([]);
   
+  const widthOf = (dim) => Number(String(dim).split('x')[0]) || 0;
   const meta = {
     animation: targetAnimation,
     skin: chosenSkin === null ? 'default' : chosenSkin,
     animationDuration: effectiveDuration,
+    // Real pixel width of each tier. The download picker labels its buttons
+    // with these instead of a fixed "1080p/720p/360p", which only matched the
+    // file for a handful of works and was wrong for the rest.
+    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
