@@ -784,10 +784,14 @@ const DOWNLOAD_FORMATS = [
   { id: 'png', label: 'PNG seq \u03b1', note: 'Zip of frames · alpha' },
 ];
 
+// Labels are filled in per work from the real pixel width the exporter wrote
+// into meta.json. The fixed 1080p/720p/360p names were only accurate for the
+// handful of clips rendered above 1080 wide; for everything else the "720p"
+// button handed out the same bytes as the "1080p" one.
 const DOWNLOAD_QUALITIES = [
-  { id: 'high', label: '1080p', suffix: '' },
-  { id: 'medium', label: '720p', suffix: 'Medium' },
-  { id: 'low', label: '360p', suffix: 'Low' },
+  { id: 'high', label: 'Original', suffix: '' },
+  { id: 'medium', label: 'Medium', suffix: 'Medium' },
+  { id: 'low', label: 'Small', suffix: 'Low' },
 ];
 
 function downloadKeysFor(format, suffix) {
@@ -876,8 +880,23 @@ function animationDownloadBlock(entry, origin) {
     .map((format) => `<button type="button" class="dl-chip" data-dl-format="${escapeHtml(format.id)}" aria-pressed="false">${escapeHtml(format.label)}<span>${escapeHtml(format.note)}</span></button>`)
     .join('');
 
+  // Prefer a real measured width from any animation; they all come from the same
+  // skeleton, so one sample describes the whole ladder.
+  const widths = {};
+  for (const name of animations) {
+    const group = previews[name] && previews[name].qualityWidths;
+    if (!group || typeof group !== 'object') continue;
+    for (const quality of DOWNLOAD_QUALITIES) {
+      const value = Number(group[quality.id]);
+      if (Number.isFinite(value) && value > 0 && !widths[quality.id]) widths[quality.id] = value;
+    }
+  }
   const qualityButtons = DOWNLOAD_QUALITIES
-    .map((quality) => `<button type="button" class="dl-chip dl-chip--sm" data-dl-quality="${escapeHtml(quality.id)}" aria-pressed="false">${escapeHtml(quality.label)}</button>`)
+    .map((quality) => {
+      const width = widths[quality.id] || 0;
+      const label = width ? `${width}px` : quality.label;
+      return `<button type="button" class="dl-chip dl-chip--sm" data-dl-quality="${escapeHtml(quality.id)}" aria-pressed="false">${escapeHtml(label)}</button>`;
+    })
     .join('');
 
   // Per-animation rows are rendered from JS once a format+size is chosen, but
@@ -917,6 +936,7 @@ function animationDownloadBlock(entry, origin) {
     <script type="application/json" data-dl-config>${escapedJson({
       origin,
       animations,
+      widths,
       files: animations.reduce((acc, name) => {
         acc[name] = {};
         for (const format of DOWNLOAD_FORMATS) {
@@ -2057,14 +2077,20 @@ playerElement.addEventListener("touchstart", (event) => {
         var block = document.querySelector("[data-dl-block]");
         if (!block) return;
         var configNode = block.querySelector("[data-dl-config]");
-        var files = {};
-        try { files = (JSON.parse(configNode ? configNode.textContent : "{}").files) || {}; } catch (error) { files = {}; }
+        var config = {};
+        try { config = JSON.parse(configNode ? configNode.textContent : "{}") || {}; } catch (error) { config = {}; }
+        var files = config.files || {};
         var track = block.querySelector(".dl-track");
         var steps = Array.prototype.slice.call(block.querySelectorAll(".dl-step"));
         var statusText = block.querySelector("[data-dl-status-text]");
         var list = block.querySelector("[data-dl-list]");
         var formatLabels = { webm: "WebM", mp4: "MP4", mov: "MOV \u03b1", gif: "GIF \u03b1", png: "PNG seq \u03b1" };
-        var sizeLabels = { high: "1080p", medium: "720p", low: "360p" };
+        var widths = (config && config.widths) || {};
+        var sizeLabels = {
+          high: widths.high ? widths.high + "px" : "Original",
+          medium: widths.medium ? widths.medium + "px" : "Medium",
+          low: widths.low ? widths.low + "px" : "Small",
+        };
         var chosen = { format: "", size: "" };
         var order = ["format", "size", "files"];
         var icon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0-12l4 4m-4-4-4 4M5 17v3h14v-3"/></svg>';
