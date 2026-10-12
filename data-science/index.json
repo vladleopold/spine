@@ -1,5 +1,145 @@
 [
   {
+    "id": "jp_major-2026-10-12T04-25-44-534Z",
+    "name": "jp_major",
+    "updatedAt": "2026-10-12T04:25:47.734Z",
+    "animation_asset": {
+      "id": "jp_major-2026-10-12T04-25-44-534Z",
+      "name": "jp_major",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "ui",
+      "skeleton_type": "ui",
+      "content_type": "ui",
+      "taxonomy": {
+        "category": "ui",
+        "class": "interface",
+        "type": "panel",
+        "tags": [
+          "panel"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "interface"
+        ],
+        "interaction_type": [
+          "clickable",
+          "state"
+        ],
+        "style": [
+          "game-ui"
+        ],
+        "animation_state": [
+          "win"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "state": [
+          "default-win",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "jp_major-2026-10-12T04-25-44-534Z",
+      "manifestPath": "jp_major-2026-10-12T04-25-44-534Z/manifest.json",
+      "files": [
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/jp_major/jp_major.json",
+          "name": "jp_major/jp_major.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/jp_major/jackpot_panel.atlas.txt",
+          "name": "jp_major/jackpot_panel.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/jp_major/jackpot_panel.png",
+          "name": "jp_major/jackpot_panel.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/win-preview.webp",
+          "name": "win-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "jp_major-2026-10-12T04-25-44-534Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "jp_major.json",
+      "atlas": "jackpot_panel.atlas.txt",
+      "textures": [
+        "jackpot_panel.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "win"
+      ],
+      "defaultAnimation": "win",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "panel"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character_front-2026-10-12T03-05-59-750Z",
     "name": "character_front",
     "updatedAt": "2026-10-12T03:06:02.693Z",
