@@ -1,5 +1,266 @@
 [
   {
+    "id": "wild_1x3-2026-10-12T11-36-08-123Z",
+    "title": "wild_1x3",
+    "publicOwnerId": "u_7sbzv0",
+    "ownerAnonId": "anon_6mp57z_n6rtmg",
+    "ownerAnonFingerprint": "6mp57z",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-12T11:36:08.123Z",
+    "webmGeneratedAt": "2026-10-12T11:36:08.123Z",
+    "skeleton": "wild_1x3.json",
+    "atlas": "wild_1x3.atlas",
+    "textures": [
+      "wild_1x3.png",
+      "wild_1x3-1.jpg"
+    ],
+    "animations": [
+      "mugs_activation",
+      "mugs_win",
+      "pork_activation",
+      "pork_win",
+      "wild_transition"
+    ],
+    "defaultAnimation": "mugs_activation",
+    "files": [
+      "wild_1x3/wild_1x3.json",
+      "wild_1x3/wild_1x3.atlas",
+      "wild_1x3/wild_1x3.png",
+      "wild_1x3/wild_1x3-1.jpg",
+      "mugs_activation-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "wild_1x3-2026-10-12T11-36-08-123Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp?v=2026-10-12T11-36-08.123Z",
+    "thumbnailPath": "wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp?v=2026-10-12T11-36-08.123Z",
+    "thumbnailPosterPath": "wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "wild_1x3-2026-10-12T11-36-08-123Z",
+      "title": "wild_1x3",
+      "uploadedAt": "2026-10-12T11:36:08.123Z",
+      "proofPath": "wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json?v=2026-10-12T11-36-08.123Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6mp57z_n6rtmg",
+        "anonymousFingerprint": "6mp57z",
+        "browserFingerprintSha256": "ae9e4bc76d6ae9f09e279f70061c83e1cbbf095e71ba8ffa09d909a70107f1e5",
+        "browserEnvironmentHashSha256": "8c65d1889bfff45e3340eb8b6ed62f446d9d68b69cab3183781e129441eba51b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "ru-RU",
+          "languages": [
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 20,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "wild_1x3-2026-10-12T11-36-08-123Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:fa19db2f075931b44b4f64164052f9cd0e8370f3fb1dde566ab4e3dec90d5bf8",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "mugs_activation-preview.webp",
+          "bytes": 6220,
+          "sha256": "96c935694cba923c1de599cca8f949978e872a1f226b30bfa6e10bf94e356950"
+        },
+        {
+          "name": "wild_1x3/wild_1x3-1.jpg",
+          "bytes": 200395,
+          "sha256": "ad6162fad9186b36f29a341993e69015a629dbad7cf3c084cd8ddb7f09010f85"
+        },
+        {
+          "name": "wild_1x3/wild_1x3.atlas",
+          "bytes": 6048,
+          "sha256": "3ebffb052aa825263b881a75c525f4d7b17677c1d4fe880a4bf3b485b0a96da1"
+        },
+        {
+          "name": "wild_1x3/wild_1x3.json",
+          "bytes": 130218,
+          "sha256": "d3b8c34570dbe0c45c8d636f207dc273e25f892d283a5c04ec0cbd4f5a6e76ee"
+        },
+        {
+          "name": "wild_1x3/wild_1x3.png",
+          "bytes": 432812,
+          "sha256": "4aa3d9567f924a1fbacb44f168609c774b346adb8e0aae70d7918d93946ac957"
+        }
+      ],
+      "proofHash": "fa19db2f075931b44b4f64164052f9cd0e8370f3fb1dde566ab4e3dec90d5bf8"
+    },
+    "sourceProofPath": "wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json?v=2026-10-12T11-36-08.123Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-12T11:35:42.837Z",
+      "entryId": "wild_1x3-2026-10-12T11-36-08-123Z",
+      "title": "wild_1x3",
+      "uploadedAt": "2026-10-12T11:36:08.123Z",
+      "sourceProofHash": "fa19db2f075931b44b4f64164052f9cd0e8370f3fb1dde566ab4e3dec90d5bf8",
+      "sourceProofPath": "wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json?v=2026-10-12T11-36-08.123Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_6mp57z_n6rtmg",
+        "anonymousFingerprint": "6mp57z",
+        "browserFingerprintSha256": "ae9e4bc76d6ae9f09e279f70061c83e1cbbf095e71ba8ffa09d909a70107f1e5",
+        "browserEnvironmentHashSha256": "8c65d1889bfff45e3340eb8b6ed62f446d9d68b69cab3183781e129441eba51b",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "platform": "Win32",
+          "language": "ru-RU",
+          "languages": [
+            "ru-RU",
+            "ru",
+            "en-US",
+            "en"
+          ],
+          "hardwareConcurrency": 20,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1536,
+            "height": 864,
+            "colorDepth": 24,
+            "pixelRatio": 1.25
+          },
+          "timezone": "Europe/Kiev",
+          "timezoneOffset": -180,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "wild_1x3-2026-10-12T11-36-08-123Z",
+        "files": [
+          {
+            "name": "wild_1x3.json",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.json",
+            "bytes": 130218,
+            "sha256": "d3b8c34570dbe0c45c8d636f207dc273e25f892d283a5c04ec0cbd4f5a6e76ee",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "wild_1x3.atlas",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.atlas",
+            "bytes": 6048,
+            "sha256": "3ebffb052aa825263b881a75c525f4d7b17677c1d4fe880a4bf3b485b0a96da1",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "wild_1x3.png",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.png",
+            "bytes": 432812,
+            "sha256": "4aa3d9567f924a1fbacb44f168609c774b346adb8e0aae70d7918d93946ac957",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "wild_1x3-1.jpg",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3-1.jpg",
+            "bytes": 200395,
+            "sha256": "ad6162fad9186b36f29a341993e69015a629dbad7cf3c084cd8ddb7f09010f85",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "mugs_activation-preview.webp",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp",
+            "bytes": 6220,
+            "sha256": "96c935694cba923c1de599cca8f949978e872a1f226b30bfa6e10bf94e356950",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json",
+            "bytes": 2693,
+            "sha256": "a333b7d4171ddf0a5328b561a876ba86284169b07abe565bc3010490adce6c29",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "wild_1x3-2026-10-12T11-36-08-123Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "cfd19ebd1b237ca616f4624dce7dca6945039f12f6cb577fe4eb0ff82eed63e8",
+      "recommendedAnchorPayload": "sha256:cfd19ebd1b237ca616f4624dce7dca6945039f12f6cb577fe4eb0ff82eed63e8",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xcfd19ebd1b237ca616f4624dce7dca6945039f12f6cb577fe4eb0ff82eed63e8",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "wild_1x3-2026-10-12T11-36-08-123Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/wild_1x3-2026-10-12T11-36-08-123Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "wild_1x1-2026-10-12T11-03-58-484Z",
     "title": "wild_1x1",
     "publicOwnerId": "u_7sbzv0",

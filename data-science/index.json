@@ -1,5 +1,154 @@
 [
   {
+    "id": "wild_1x3-2026-10-12T11-36-08-123Z",
+    "name": "wild_1x3",
+    "updatedAt": "2026-10-12T11:35:42.844Z",
+    "animation_asset": {
+      "id": "wild_1x3-2026-10-12T11-36-08-123Z",
+      "name": "wild_1x3",
+      "domain": "gamedev",
+      "asset_category": "ui",
+      "animation_type": "transition",
+      "skeleton_type": "ui",
+      "content_type": "transition",
+      "taxonomy": {
+        "category": "ui",
+        "class": "transition",
+        "type": "screen-transition",
+        "tags": [
+          "transition"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "screen-transition"
+        ],
+        "loop_type": [
+          "one-shot"
+        ],
+        "animation_state": [
+          "mugs_activation",
+          "mugs_win",
+          "pork_activation",
+          "pork_win",
+          "wild_transition"
+        ],
+        "state": [
+          "default-mugs_activation",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-jpg",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "wild_1x3-2026-10-12T11-36-08-123Z",
+      "manifestPath": "wild_1x3-2026-10-12T11-36-08-123Z/manifest.json",
+      "files": [
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.json",
+          "name": "wild_1x3/wild_1x3.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.atlas",
+          "name": "wild_1x3/wild_1x3.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3.png",
+          "name": "wild_1x3/wild_1x3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/wild_1x3/wild_1x3-1.jpg",
+          "name": "wild_1x3/wild_1x3-1.jpg",
+          "role": "texture",
+          "format": "jpg"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/mugs_activation-preview.webp",
+          "name": "mugs_activation-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "wild_1x3-2026-10-12T11-36-08-123Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "wild_1x3.json",
+      "atlas": "wild_1x3.atlas",
+      "textures": [
+        "wild_1x3.png",
+        "wild_1x3-1.jpg"
+      ],
+      "animationCount": 5,
+      "animationNames": [
+        "mugs_activation",
+        "mugs_win",
+        "pork_activation",
+        "pork_win",
+        "wild_transition"
+      ],
+      "defaultAnimation": "mugs_activation",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "transition"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "wild_1x1-2026-10-12T11-03-58-484Z",
     "name": "wild_1x1",
     "updatedAt": "2026-10-12T11:03:33.790Z",
