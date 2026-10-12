@@ -20,11 +20,13 @@ const args = {
   branch: 'main',
   githubToken: '',
   sanitizeSkel: false,
+  fps: 60,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
   const arg = process.argv[i];
-  if (arg.startsWith('--upload-id=')) args.uploadId = arg.split('=')[1];
+  if (arg.startsWith('--fps=')) args.fps = Number(arg.split('=')[1]);
+  else if (arg.startsWith('--upload-id=')) args.uploadId = arg.split('=')[1];
   else if (arg.startsWith('--origin=')) args.origin = arg.split('=')[1];
   else if (arg.startsWith('--animation=')) args.animation = arg.split('=')[1];
   else if (arg.startsWith('--default-animation=')) args.defaultAnimation = arg.split('=')[1];
@@ -36,6 +38,8 @@ for (let i = 2; i < process.argv.length; i++) {
   else if (arg.startsWith('--github-token=')) args.githubToken = arg.split('=')[1];
   else if (arg.startsWith('--sanitize-skel=')) args.sanitizeSkel = arg.split('=')[1] !== 'false';
 }
+
+if (![30, 60, 90, 120, 190, 300].includes(args.fps)) throw new Error('Unsupported FPS; use 30,60,90,120,190,300');
 
 if (!args.uploadId) {
   console.error('Usage: spine-export-webm.mjs --upload-id=<id> --animation=<name> [options]');
@@ -665,7 +669,7 @@ ${skinLine}    showLoading: false,
       window.__startRecording = function () {
         try {
           if (!player || !player.canvas) return 'no-canvas';
-          var stream = player.canvas.captureStream(30);
+          var stream = player.canvas.captureStream(${args.fps});
           var recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
           var chunks = [];
           recorder.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
@@ -1013,7 +1017,7 @@ try {
     const vp9 = (dim, bitrate, out) =>
       `ffmpeg -y -i "${videoPath}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
       `-pix_fmt yuv420p -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
-      `-auto-alt-ref 0 -row-mt 1 -g 30 -threads 4 "${out}"`;
+      `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 16 "${out}"`;
 
     // High Quality
     execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
