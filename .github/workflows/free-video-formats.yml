@@ -1,12 +1,17 @@
-name: Free video formats (all accounts)
+name: Free parallel video formats
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/free-video-formats.yml'
+      - 'scripts/export-free-video-ladder.mjs'
   workflow_dispatch:
     inputs:
       upload_id:
-        description: "Spine upload ID"
-        required: true
+        description: 'Upload ID (leave blank for smoke-test batch)'
+        required: false
+        default: ''
       hevc:
-        description: "Also encode Apple HEVC"
         type: boolean
         default: true
 permissions:
@@ -15,34 +20,37 @@ jobs:
   formats:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        upload_id:
+          - p2_master1200-v5-2026-09-12T12-18-44-041Z
+          - full_body_skins_cow-2026-09-12T11-21-25-772Z
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install browser and encoder
+      - name: Install encoder and browser
         run: |
           npm init -y
           npm install playwright@1.59.1
           npx playwright install chromium --with-deps
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
-      - name: Generate source
+      - name: Generate original Spine WebM
         env:
-          UPLOAD_ID: ${{ inputs.upload_id }}
+          UPLOAD_ID: ${{ matrix.upload_id }}
         run: |
           node scripts/spine-export-webm.mjs --upload-id="$UPLOAD_ID" --repo-path="$GITHUB_WORKSPACE" --output="$RUNNER_TEMP/source.webm"
-      - name: Encode formats
+      - name: Parallel encode formats
         env:
-          HEVC: ${{ inputs.hevc }}
+          ENCODE_JOBS: '4'
         run: |
-          if [ "$HEVC" = "true" ]; then
-            node scripts/export-free-video-ladder.mjs "$RUNNER_TEMP/source.webm" "$RUNNER_TEMP/formats" --hevc
-          else
-            node scripts/export-free-video-ladder.mjs "$RUNNER_TEMP/source.webm" "$RUNNER_TEMP/formats"
-          fi
+          node scripts/export-free-video-ladder.mjs "$RUNNER_TEMP/source.webm" "$RUNNER_TEMP/formats" --hevc
       - uses: actions/upload-artifact@v4
         with:
-          name: free-video-formats-${{ inputs.upload_id }}
+          name: video-formats-${{ matrix.upload_id }}
           path: ${{ runner.temp }}/formats/
           retention-days: 7
