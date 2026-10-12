@@ -1,0 +1,52 @@
+name: Audit and repair Spine preview FPS
+on:
+  workflow_dispatch:
+    inputs:
+      repair:
+        description: 'Transcode valid motion clips below 30 FPS (false = audit only)'
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: spine-preview-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Audit previews and optionally repair FPS
+        run: |
+          if [ "${{ inputs.repair }}" = "true" ]; then
+            node scripts/audit-preview-videos.mjs --repair
+          else
+            node scripts/audit-preview-videos.mjs
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preview-audit-report
+          path: preview-audit-report.json
+          retention-days: 30
+      - name: Commit verified repairs
+        if: ${{ inputs.repair }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add library/ library_*/ || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Repair low-FPS WebM previews and update metadata"
+            git push origin HEAD:main
+          fi
