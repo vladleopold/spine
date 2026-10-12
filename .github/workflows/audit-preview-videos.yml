@@ -1,5 +1,9 @@
 name: Audit and repair Spine preview FPS
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-preview-videos.yml'
   schedule:
     - cron: '17 3 * * 0'
   workflow_dispatch:
@@ -32,7 +36,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
       - name: Audit previews and optionally repair FPS
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.repair }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.repair }}" = "true" ]; then
             node scripts/audit-preview-videos.mjs --repair
           else
             node scripts/audit-preview-videos.mjs
@@ -44,7 +48,7 @@ jobs:
           path: preview-audit-report.json
           retention-days: 30
       - name: Commit verified repairs
-        if: ${{ github.event_name == 'schedule' || inputs.repair }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'push' || inputs.repair }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
