@@ -1,5 +1,7 @@
 name: Audit and repair Spine preview FPS
 on:
+  schedule:
+    - cron: '17 3 * * 0'
   workflow_dispatch:
     inputs:
       repair:
@@ -9,6 +11,7 @@ on:
         default: false
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: spine-preview-audit
   cancel-in-progress: false
@@ -29,7 +32,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
       - name: Audit previews and optionally repair FPS
         run: |
-          if [ "${{ inputs.repair }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.repair }}" = "true" ]; then
             node scripts/audit-preview-videos.mjs --repair
           else
             node scripts/audit-preview-videos.mjs
@@ -41,7 +44,7 @@ jobs:
           path: preview-audit-report.json
           retention-days: 30
       - name: Commit verified repairs
-        if: ${{ inputs.repair }}
+        if: ${{ github.event_name == 'schedule' || inputs.repair }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -50,3 +53,28 @@ jobs:
             git commit -m "Repair low-FPS WebM previews and update metadata"
             git push origin HEAD:main
           fi
+
+      - name: Request missing or invalid previews from the Spine exporter
+        if: ${{ github.event_name == 'schedule' || inputs.repair }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('preview-audit-report.json','utf8'));
+            const ids = [...new Set([
+              ...report.missing,
+              ...report.invalid.map(x => x.id),
+              ...report.errors.map(x => x.id)
+            ])].filter(Boolean);
+            // Re-export in small batches to respect workflow input size and
+            // avoid exhausting the 256-job matrix in spine-export-all.yml.
+            for (let i = 0; i < ids.length; i += 32) {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'spine-export-all.yml',
+                ref: 'main',
+                inputs: { filter_ids: ids.slice(i, i + 32).join(',') }
+              });
+              core.info('Requested re-export of ' + ids.slice(i, i + 32).length + ' previews');
+            }
