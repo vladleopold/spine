@@ -428,6 +428,18 @@ const PAD_RATIO = 0.14; // 14% padding on each side
 const MIN_VIDEO_DIM = 200;
 const MAX_VIDEO_DIM = 1920;
 
+// Huge skeleton bounds commonly include off-camera game assets. Preserve a
+// native 1:1 game-camera crop instead of zooming out to show every attachment.
+// Override per upload with --game-camera=WIDTHxHEIGHT when the game uses a
+// different logical viewport. The camera is centered on the Spine origin.
+const cameraFlag = process.argv.find(arg => arg.startsWith('--game-camera='));
+const cameraMatch = cameraFlag?.split('=')[1]?.match(/^(\\d+)x(\\d+)$/i);
+const gameCameraWidth = cameraMatch ? Math.min(3840, Math.max(320, Number(cameraMatch[1]))) : 1920;
+const gameCameraHeight = cameraMatch ? Math.min(2160, Math.max(240, Number(cameraMatch[2]))) : 1080;
+const hugeScene = skeletonBounds.width > gameCameraWidth * 1.5 ||
+  skeletonBounds.height > gameCameraHeight * 1.5;
+if (hugeScene) console.error(`Huge game scene: ${skeletonBounds.width}x${skeletonBounds.height}; capturing ${gameCameraWidth}x${gameCameraHeight} camera at native scale, not off-screen content`);
+
 const rawSkelWidth = skeletonBounds.width;
 const rawSkelHeight = skeletonBounds.height;
 
@@ -436,8 +448,8 @@ const rawVideoWidth = rawSkelWidth > 0 ? rawSkelWidth * (1 + PAD_RATIO * 2) : 96
 const rawVideoHeight = rawSkelHeight > 0 ? rawSkelHeight * (1 + PAD_RATIO * 2) : 720;
 
 // Clamp to min/max and ensure even dimensions (required by video codecs)
-const videoWidth = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(rawVideoWidth))) & ~1) || 960;
-const videoHeight = (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(rawVideoHeight))) & ~1) || 720;
+const videoWidth = hugeScene ? (gameCameraWidth & ~1) : (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(rawVideoWidth))) & ~1) || 960;
+const videoHeight = hugeScene ? (gameCameraHeight & ~1) : (Math.min(MAX_VIDEO_DIM, Math.max(MIN_VIDEO_DIM, Math.round(rawVideoHeight))) & ~1) || 720;
 
 const versionMajor = skeletonVersion.split('.')[0] || '4';
 const isLegacy = parseInt(versionMajor, 10) < 4;
@@ -603,7 +615,7 @@ ${skinLine}    showLoading: false,
     preserveDrawingBuffer: true,
     alpha: true,
     backgroundColor: '#050607',
-    viewport: { padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' },
+    viewport: ${hugeScene ? JSON.stringify({ x: -videoWidth / 2, y: -videoHeight / 2, width: videoWidth, height: videoHeight, padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' }) : "{ padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' }"},
     success: function (p) {
       player = p;
       window.__ready = true;
