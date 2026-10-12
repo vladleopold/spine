@@ -81,14 +81,14 @@ export function frameRate(webmPath) {
     const out = run(FFPROBE, [
       "-v", "error",
       "-select_streams", "v:0",
-      "-show_entries", "stream=r_frame_rate",
+      "-show_entries", "stream=avg_frame_rate",
       "-of", "default=nw=1:nk=1",
       webmPath,
     ]).trim();
     const [num, den] = out.split("/").map(Number);
     if (Number.isFinite(num) && Number.isFinite(den) && den > 0) return num / den;
   } catch { /* fall through to the default */ }
-  return 30;
+  return 0; // Unknown FPS must not be treated as verified 30 FPS.
 }
 
 export function dims(webmPath) {
