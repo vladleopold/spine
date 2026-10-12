@@ -1,5 +1,145 @@
 [
   {
+    "id": "character_front-2026-10-12T03-05-59-750Z",
+    "name": "character_front",
+    "updatedAt": "2026-10-12T03:06:02.693Z",
+    "animation_asset": {
+      "id": "character_front-2026-10-12T03-05-59-750Z",
+      "name": "character_front",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "character"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "charge",
+          "idle",
+          "win"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "character_front-2026-10-12T03-05-59-750Z",
+      "manifestPath": "character_front-2026-10-12T03-05-59-750Z/manifest.json",
+      "files": [
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/character_front/character_front.json",
+          "name": "character_front/character_front.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/character_front/collection_meter.atlas.txt",
+          "name": "character_front/collection_meter.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/character_front/collection_meter.png",
+          "name": "character_front/collection_meter.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character_front-2026-10-12T03-05-59-750Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "character_front.json",
+      "atlas": "collection_meter.atlas.txt",
+      "textures": [
+        "collection_meter.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "charge",
+        "idle",
+        "win"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "character"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character_right-2026-10-12T02-51-35-323Z",
     "name": "character_right",
     "updatedAt": "2026-10-12T02:51:38.509Z",
