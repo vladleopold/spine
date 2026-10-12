@@ -1,5 +1,148 @@
 [
   {
+    "id": "character_right-2026-10-12T02-51-35-323Z",
+    "name": "character_right",
+    "updatedAt": "2026-10-12T02:51:38.509Z",
+    "animation_asset": {
+      "id": "character_right-2026-10-12T02-51-35-323Z",
+      "name": "character_right",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "character"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "animation_state": [
+          "charge",
+          "idle",
+          "win"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop",
+          "one-shot"
+        ],
+        "state": [
+          "default-idle",
+          "win"
+        ],
+        "direction": [
+          "right"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "character_right-2026-10-12T02-51-35-323Z",
+      "manifestPath": "character_right-2026-10-12T02-51-35-323Z/manifest.json",
+      "files": [
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/character_right/character_right.json",
+          "name": "character_right/character_right.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/character_right/collection_meter.atlas.txt",
+          "name": "character_right/collection_meter.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/character_right/collection_meter.png",
+          "name": "character_right/collection_meter.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character_right-2026-10-12T02-51-35-323Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "character_right.json",
+      "atlas": "collection_meter.atlas.txt",
+      "textures": [
+        "collection_meter.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "charge",
+        "idle",
+        "win"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "character"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "mo_event21_01-2026-10-11T11-18-20-009Z",
     "name": "mo_event21_01",
     "updatedAt": "2026-10-11T11:18:18.265Z",
