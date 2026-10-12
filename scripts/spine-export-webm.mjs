@@ -806,7 +806,7 @@ try {
   let chosenSkin = null;
   let animDuration = 0;
   let effectiveDuration = 0;
-  let captureDuration = 1;
+  let captureDuration = 0;
   let canvasWidth = videoWidth;
   let canvasHeight = videoHeight;
   let videoDataUrl = null;
@@ -879,7 +879,7 @@ try {
       break;
     }
 
-    // A scenario is recorded in full: every step plays once, back to back.
+    // Reset per skin attempt and preserve the source animation's complete duration.\n    captureDuration = effectiveDuration;\n    // A scenario is recorded in full: every step plays once, back to back.
     if (scenarioCycle.length > 1) {
       let scenarioDuration = 0;
       for (const stepName of scenarioCycle) {
@@ -891,7 +891,7 @@ try {
         console.error(`Scenario duration: ${scenarioDuration.toFixed(2)}s (${scenarioCycle.join(' + ')})`);
       }
     }
-    if (captureDuration <= 0) captureDuration = effectiveDuration > 0 ? effectiveDuration : 1; // Record exactly the animation duration (no artificial minimum)
+    if (!(captureDuration > 0)) throw new Error('Unknown animation duration: refusing to truncate to a guessed one-second clip');
     await new Promise((resolve) => setTimeout(resolve, captureDuration * 1000));
 
     await page.evaluate(() => {
@@ -1011,7 +1011,7 @@ try {
     // deadline=good он часть просто отбрасывает, и анимация идёт рывками.
     // lag-in-frames 0 убирает задержку между кадрами на выходе.
     const vp9 = (dim, bitrate, out) =>
-      `ffmpeg -y -i "${videoPath}" -r 30 -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
+      `ffmpeg -y -i "${videoPath}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
       `-pix_fmt yuv420p -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
       `-auto-alt-ref 0 -row-mt 1 -g 30 -threads 4 "${out}"`;
 
