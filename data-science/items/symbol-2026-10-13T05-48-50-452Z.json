@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-13T05:48:50.452Z",
+  "updatedAt": "2026-10-13T05:48:53.394Z",
+  "animation_asset": {
+    "id": "symbol-2026-10-13T05-48-50-452Z",
+    "name": "symbol",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "golden",
+        "normal"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-golden"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "symbol-2026-10-13T05-48-50-452Z",
+    "manifestPath": "symbol-2026-10-13T05-48-50-452Z/manifest.json",
+    "files": [
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/symbol/symbol.json",
+        "name": "symbol/symbol.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/symbol/symbol.atlas",
+        "name": "symbol/symbol.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/symbol/symbol.png",
+        "name": "symbol/symbol.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/golden-preview.webp",
+        "name": "golden-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "symbol-2026-10-13T05-48-50-452Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "symbol.json",
+    "atlas": "symbol.atlas",
+    "textures": [
+      "symbol.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "golden",
+      "normal"
+    ],
+    "defaultAnimation": "golden",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
