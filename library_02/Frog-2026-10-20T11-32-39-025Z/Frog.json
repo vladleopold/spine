@@ -1,0 +1,209 @@
+{
+"skeleton": { "hash": "tRXoNDid+qo", "spine": "4.3.26", "x": 71.45764, "y": -191.3859, "width": 50, "height": 50 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "FrogAnim0001", "parent": "root", "x": 96.45764, "y": -166.3859, "scaleX": 0.1, "scaleY": 0.1 },
+	{ "name": "frogShadow", "parent": "root", "x": 95.66193, "y": -163.42647, "scaleX": 0.1, "scaleY": 0.1 }
+],
+"slots": [
+	{ "name": "frogShadow", "bone": "frogShadow", "color": "ffffff82", "attachment": "frogShadow" },
+	{ "name": "FrogAnim0001", "bone": "FrogAnim0001", "attachment": "Treefrog_anim_1." }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"FrogAnim0001": {
+				"Treefrog_anim_1.": {
+					"width": 500,
+					"height": 500,
+					"sequence": { "count": 20, "digits": 4 }
+				}
+			},
+			"frogShadow": {
+				"frogShadow": { "x": -49.03274, "y": -45.90302, "scaleX": 0.71661, "scaleY": 0.33917, "width": 350, "height": 350 }
+			}
+		}
+	}
+],
+"animations": {
+	"FrogIdle": {
+		"slots": {
+			"frogShadow": {
+				"rgba": [
+					{ "color": "ffffff83" }
+				]
+			}
+		},
+		"bones": {
+			"FrogAnim0001": {
+				"translate": [
+					{ "x": 396.4999, "y": -192.6944 }
+				],
+				"scale": [
+					{ "x": 1.5, "y": 1.5 }
+				]
+			},
+			"frogShadow": {
+				"translate": [
+					{ "x": 399.2061, "y": -172.0173 }
+				],
+				"scale": [
+					{ "x": 1.74255, "y": 3.59875 }
+				]
+			},
+			"root": {
+				"scale": [
+					{ "x": 0.5, "y": 0.5 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"FrogAnim0001": {
+					"Treefrog_anim_1.": {
+						"sequence": [
+							{ "delay": 0.03333333 }
+						]
+					}
+				}
+			}
+		}
+	},
+	"FrogLeapAway": {
+		"slots": {
+			"frogShadow": {
+				"rgba": [
+					{ "color": "ffffff83" },
+					{ "time": 0.3333333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.6666667, "color": "ffffff83", "curve": "stepped" },
+					{ "time": 1, "color": "ffffff83" },
+					{ "time": 1.3333334, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"FrogAnim0001": {
+				"rotate": [
+					{},
+					{ "time": 0.6666667, "value": 8.10003 }
+				],
+				"translate": [
+					{ "x": 396.4999, "y": -192.6944 },
+					{ "time": 0.3333333, "x": 287.72705, "y": -154.22975 },
+					{ "time": 0.6666667, "x": 201.32053, "y": -233.04875 }
+				],
+				"scale": [
+					{ "x": 1.5, "y": 1.5 },
+					{ "time": 0.06666667, "x": 1.6, "y": 1.22875 },
+					{ "time": 0.3333333, "x": 2, "y": 2 },
+					{ "time": 0.6666667, "x": 1.5, "y": 1.5 }
+				]
+			},
+			"frogShadow": {
+				"translate": [
+					{ "x": 399.2061, "y": -172.0173 },
+					{ "time": 0.3333333, "x": 98.48276, "y": -136.87433 },
+					{ "time": 0.5, "x": -140.2127, "y": 0.41726685 }
+				],
+				"scale": [
+					{ "x": 1.74255, "y": 3.59875 }
+				]
+			},
+			"root": {
+				"scale": [
+					{ "x": 0.5, "y": 0.5 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"FrogAnim0001": {
+					"Treefrog_anim_1.": {
+						"sequence": [
+							{ "mode": "once", "delay": 0.03333333 },
+							{ "time": 0.6666667 }
+						]
+					}
+				}
+			}
+		}
+	},
+	"FrogLeapIn": {
+		"slots": {
+			"FrogAnim0001": {
+				"rgba": [
+					{
+						"color": "ffffff00",
+						"curve": [ 0.06666667, 1, 0.13333334, 1, 0.06666667, 1, 0.13333334, 1, 0.06666667, 1, 0.13333334, 1, 0.06666667, 0, 0.13333334, 1 ]
+					},
+					{ "time": 0.2, "color": "ffffffff" }
+				]
+			},
+			"frogShadow": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.6666667, "color": "ffffff83" }
+				]
+			}
+		},
+		"bones": {
+			"FrogAnim0001": {
+				"translate": [
+					{
+						"x": 522.9812,
+						"y": -279.2545,
+						"curve": [ 0.0651852, 522.9812, 0.2220247, 503.0301, 0.0651852, -279.2545, 0.2220247, -168.88683 ]
+					},
+					{
+						"time": 0.3666667,
+						"x": 463.7794,
+						"y": -168.88683,
+						"curve": [ 0.498321, 429.435, 0.62, 396.4999, 0.498321, -168.88683, 0.62, -192.6944 ]
+					},
+					{ "time": 0.6666667, "x": 396.4999, "y": -192.6944 }
+				],
+				"scale": [
+					{
+						"x": 0.5,
+						"y": 0.5,
+						"curve": [ 0.22222224, 0.5, 0.44444445, 1.5, 0.22222224, 0.5, 0.44444445, 1.5 ]
+					},
+					{ "time": 0.6666667, "x": 1.5, "y": 1.5 }
+				]
+			},
+			"frogShadow": {
+				"translate": [
+					{ "x": 399.2061, "y": -172.0173 }
+				],
+				"scale": [
+					{ "x": 1.74255, "y": 3.59875 }
+				]
+			},
+			"root": {
+				"translate": [
+					{},
+					{ "time": 0.3333333, "y": 0.00604248 }
+				],
+				"scale": [
+					{ "x": 0.5, "y": 0.5 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"FrogAnim0001": {
+					"Treefrog_anim_1.": {
+						"sequence": [
+							{ "mode": "once", "delay": 0.03333333 },
+							{ "time": 0.6666667 }
+						]
+					}
+				}
+			}
+		}
+	}
+}
+}
