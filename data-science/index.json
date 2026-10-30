@@ -1,5 +1,223 @@
 [
   {
+    "id": "yuuka_home-2026-10-30T05-22-48-582Z",
+    "name": "yuuka_home",
+    "updatedAt": "2026-10-30T05:23:11.015Z",
+    "animation_asset": {
+      "id": "yuuka_home-2026-10-30T05-22-48-582Z",
+      "name": "yuuka_home",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "fx"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect",
+          "loop-candidate",
+          "loop"
+        ],
+        "animation_state": [
+          "dev_bg_fx",
+          "dev_hair",
+          "dev_hair1",
+          "dev_idle",
+          "dev_lookend_01_m",
+          "dev_look_01_m",
+          "dev_patend_01_m",
+          "dev_pat_01_m",
+          "dev_talk_01_m",
+          "dev_talk_02_m",
+          "dev_talk_03_m",
+          "dev_talk_04_m",
+          "dev_talk_05_m",
+          "dev_talk_06_m",
+          "dummy",
+          "idle_01",
+          "lookend_01_a",
+          "lookend_01_m",
+          "look_01_a",
+          "look_01_m",
+          "patend_01_a",
+          "patend_01_m",
+          "pat_01_a",
+          "pat_01_m",
+          "start_idle_01",
+          "talk_01_a",
+          "talk_01_m",
+          "talk_02_a",
+          "talk_02_m",
+          "talk_03_a",
+          "talk_03_m",
+          "talk_04_a",
+          "talk_04_m",
+          "talk_05_a",
+          "talk_05_m",
+          "talk_06_a",
+          "talk_06_m",
+          "idle"
+        ],
+        "state": [
+          "default-dev_bg_fx"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "rig_type": [
+          "spine-skel",
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "yuuka_home-2026-10-30T05-22-48-582Z",
+      "manifestPath": "yuuka_home-2026-10-30T05-22-48-582Z/manifest.json",
+      "files": [
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/yuuka_home/Yuuka_home.skel",
+          "name": "yuuka_home/Yuuka_home.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/yuuka_home/Yuuka_home.atlas",
+          "name": "yuuka_home/Yuuka_home.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/yuuka_home/Yuuka_home.png",
+          "name": "yuuka_home/Yuuka_home.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/yuuka_home/Yuuka_home2.png",
+          "name": "yuuka_home/Yuuka_home2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/dev_bg_fx-preview.webp",
+          "name": "dev_bg_fx-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "yuuka_home-2026-10-30T05-22-48-582Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Yuuka_home.skel",
+      "atlas": "Yuuka_home.atlas",
+      "textures": [
+        "Yuuka_home.png",
+        "Yuuka_home2.png"
+      ],
+      "animationCount": 37,
+      "animationNames": [
+        "Dev_BG_FX",
+        "Dev_Hair",
+        "Dev_Hair1",
+        "Dev_Idle",
+        "Dev_LookEnd_01_M",
+        "Dev_Look_01_M",
+        "Dev_PatEnd_01_M",
+        "Dev_Pat_01_M",
+        "Dev_Talk_01_M",
+        "Dev_Talk_02_M",
+        "Dev_Talk_03_M",
+        "Dev_Talk_04_M",
+        "Dev_Talk_05_M",
+        "Dev_Talk_06_M",
+        "Dummy",
+        "Idle_01",
+        "LookEnd_01_A",
+        "LookEnd_01_M",
+        "Look_01_A",
+        "Look_01_M",
+        "PatEnd_01_A",
+        "PatEnd_01_M",
+        "Pat_01_A",
+        "Pat_01_M",
+        "Start_Idle_01",
+        "Talk_01_A",
+        "Talk_01_M",
+        "Talk_02_A",
+        "Talk_02_M",
+        "Talk_03_A",
+        "Talk_03_M",
+        "Talk_04_A",
+        "Talk_04_M",
+        "Talk_05_A",
+        "Talk_05_M",
+        "Talk_06_A",
+        "Talk_06_M"
+      ],
+      "defaultAnimation": "Dev_BG_FX",
+      "fileCount": 7,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 3
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "fx"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "turret_grave-2026-10-28T16-07-13-274Z",
     "name": "turret_grave",
     "updatedAt": "2026-10-28T16:07:14.659Z",
