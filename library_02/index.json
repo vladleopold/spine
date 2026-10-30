@@ -1,5 +1,244 @@
 [
   {
+    "id": "cherry-2026-10-30T11-24-57-053Z",
+    "title": "cherry",
+    "publicOwnerId": "u_7l1mpv",
+    "ownerAnonId": "anon_1ws934d_1q144oy",
+    "ownerAnonFingerprint": "1ws934d",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-10-30T11:24:57.053Z",
+    "webmGeneratedAt": "2026-10-30T11:24:57.053Z",
+    "skeleton": "cherry.json",
+    "atlas": "cherry.atlas",
+    "textures": [
+      "cherry.png"
+    ],
+    "animations": [
+      "cherry-celebrate",
+      "cherry-sheen"
+    ],
+    "defaultAnimation": "cherry-celebrate",
+    "files": [
+      "cherry/cherry.json",
+      "cherry/cherry.atlas",
+      "cherry/cherry.png",
+      "cherry-celebrate-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "cherry-2026-10-30T11-24-57-053Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp?v=2026-10-30T11-24-57.053Z",
+    "thumbnailPath": "cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp?v=2026-10-30T11-24-57.053Z",
+    "thumbnailPosterPath": "cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "cherry-2026-10-30T11-24-57-053Z",
+      "title": "cherry",
+      "uploadedAt": "2026-10-30T11:24:57.053Z",
+      "proofPath": "cherry-2026-10-30T11-24-57-053Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/source-proof.json?v=2026-10-30T11-24-57.053Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ws934d_1q144oy",
+        "anonymousFingerprint": "1ws934d",
+        "browserFingerprintSha256": "45646d9b9b6b3c4d2383ba605165ae367a115e46d76e15a4b96f37c1575b79e5",
+        "browserEnvironmentHashSha256": "63da60a3f901f38620b4aae74fa890169ac72befb3756ec243b641b3b153ef71",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": 0,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "cherry-2026-10-30T11-24-57-053Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:dbdad16a6d8e9be86c40ecbec7eda8fd66d0651208486af19635ca59c66629b6",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "cherry-celebrate-preview.webp",
+          "bytes": 4144,
+          "sha256": "6bc816bccaff8f73501f9fe22e3821e290cb09a83f41c711e0a2dc8007b9b815"
+        },
+        {
+          "name": "cherry/cherry.atlas",
+          "bytes": 1971,
+          "sha256": "f0987fef298973df1326402679845fb611c6c2e7d98d3a2eddfae3dedef200b1"
+        },
+        {
+          "name": "cherry/cherry.json",
+          "bytes": 21445,
+          "sha256": "dcbc6e435d7c4ea324bcb707c40b5edb6ec56c9e58b8fbf6e69d3ce7697f434b"
+        },
+        {
+          "name": "cherry/cherry.png",
+          "bytes": 483930,
+          "sha256": "11e07a5a6ab37c696c82b5a4b3ca986fd1d0cf437ac91a0b23ed817c2bfc8837"
+        }
+      ],
+      "proofHash": "dbdad16a6d8e9be86c40ecbec7eda8fd66d0651208486af19635ca59c66629b6"
+    },
+    "sourceProofPath": "cherry-2026-10-30T11-24-57-053Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/source-proof.json?v=2026-10-30T11-24-57.053Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-10-30T11:24:59.556Z",
+      "entryId": "cherry-2026-10-30T11-24-57-053Z",
+      "title": "cherry",
+      "uploadedAt": "2026-10-30T11:24:57.053Z",
+      "sourceProofHash": "dbdad16a6d8e9be86c40ecbec7eda8fd66d0651208486af19635ca59c66629b6",
+      "sourceProofPath": "cherry-2026-10-30T11-24-57-053Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/source-proof.json?v=2026-10-30T11-24-57.053Z",
+      "uploader": {
+        "mode": "anonymous-browser",
+        "anonymousAccountId": "anon_1ws934d_1q144oy",
+        "anonymousFingerprint": "1ws934d",
+        "browserFingerprintSha256": "45646d9b9b6b3c4d2383ba605165ae367a115e46d76e15a4b96f37c1575b79e5",
+        "browserEnvironmentHashSha256": "63da60a3f901f38620b4aae74fa890169ac72befb3756ec243b641b3b153ef71",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+          "platform": "MacIntel",
+          "language": "en-GB",
+          "languages": [
+            "en-GB",
+            "en-US",
+            "en",
+            "ru"
+          ],
+          "hardwareConcurrency": 14,
+          "deviceMemory": 32,
+          "screen": {
+            "width": 1728,
+            "height": 1117,
+            "colorDepth": 30,
+            "pixelRatio": 2
+          },
+          "timezone": "Europe/London",
+          "timezoneOffset": 0,
+          "maxTouchPoints": 0,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "cherry-2026-10-30T11-24-57-053Z",
+        "files": [
+          {
+            "name": "cherry.json",
+            "path": "cherry-2026-10-30T11-24-57-053Z/cherry/cherry.json",
+            "bytes": 21445,
+            "sha256": "dcbc6e435d7c4ea324bcb707c40b5edb6ec56c9e58b8fbf6e69d3ce7697f434b",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "cherry.atlas",
+            "path": "cherry-2026-10-30T11-24-57-053Z/cherry/cherry.atlas",
+            "bytes": 1971,
+            "sha256": "f0987fef298973df1326402679845fb611c6c2e7d98d3a2eddfae3dedef200b1",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "cherry.png",
+            "path": "cherry-2026-10-30T11-24-57-053Z/cherry/cherry.png",
+            "bytes": 483930,
+            "sha256": "11e07a5a6ab37c696c82b5a4b3ca986fd1d0cf437ac91a0b23ed817c2bfc8837",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "cherry-celebrate-preview.webp",
+            "path": "cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp",
+            "bytes": 4144,
+            "sha256": "6bc816bccaff8f73501f9fe22e3821e290cb09a83f41c711e0a2dc8007b9b815",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "cherry-2026-10-30T11-24-57-053Z/source-proof.json",
+            "bytes": 2520,
+            "sha256": "f77a16747a7b9a9247b22fe5e7a90b664d8fe1c30da5f9d922ca40c8fbd0c738",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "cherry-2026-10-30T11-24-57-053Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "359394ee28abac3e3d7f49ed7a55a46d8ed49bd32651cd64f6c108677f311644",
+      "recommendedAnchorPayload": "sha256:359394ee28abac3e3d7f49ed7a55a46d8ed49bd32651cd64f6c108677f311644",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x359394ee28abac3e3d7f49ed7a55a46d8ed49bd32651cd64f6c108677f311644",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "cherry-2026-10-30T11-24-57-053Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "yuuka_home-2026-10-30T05-22-48-582Z",
     "title": "yuuka_home",
     "publicOwnerId": "u_1scguh2",
