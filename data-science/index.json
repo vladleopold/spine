@@ -1,5 +1,147 @@
 [
   {
+    "id": "build_char_377_gdglow-2026-10-31T01-59-20-411Z",
+    "name": "build_char_377_gdglow",
+    "updatedAt": "2026-10-31T01:59:31.726Z",
+    "animation_asset": {
+      "id": "build_char_377_gdglow-2026-10-31T01-59-20-411Z",
+      "name": "build_char_377_gdglow",
+      "domain": "gamedev",
+      "asset_category": "character",
+      "animation_type": "character",
+      "skeleton_type": "humanoid",
+      "content_type": "character",
+      "taxonomy": {
+        "category": "character",
+        "class": "humanoid",
+        "type": "character",
+        "tags": [
+          "char"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "avatar"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-skel",
+          "spine-json"
+        ],
+        "animation_state": [
+          "default",
+          "interact",
+          "move",
+          "relax",
+          "sit",
+          "sleep"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-default"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "build_char_377_gdglow-2026-10-31T01-59-20-411Z",
+      "manifestPath": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/manifest.json",
+      "files": [
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/build_char_377_gdglow/build_char_377_gdglow.skel",
+          "name": "build_char_377_gdglow/build_char_377_gdglow.skel",
+          "role": "skeleton",
+          "format": "skel"
+        },
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/build_char_377_gdglow/build_char_377_gdglow.atlas",
+          "name": "build_char_377_gdglow/build_char_377_gdglow.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/build_char_377_gdglow/build_char_377_gdglow.png",
+          "name": "build_char_377_gdglow/build_char_377_gdglow.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/default-preview.webp",
+          "name": "default-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "build_char_377_gdglow.skel",
+      "atlas": "build_char_377_gdglow.atlas",
+      "textures": [
+        "build_char_377_gdglow.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "Default",
+        "Interact",
+        "Move",
+        "Relax",
+        "Sit",
+        "Sleep"
+      ],
+      "defaultAnimation": "Default",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "char"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "cherry-2026-10-30T11-24-57-053Z",
     "name": "cherry",
     "updatedAt": "2026-10-30T11:24:59.565Z",
