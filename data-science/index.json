@@ -1,5 +1,197 @@
 [
   {
+    "id": "character2-2026-11-01T23-31-46-459Z",
+    "name": "character2",
+    "updatedAt": "2026-11-01T23:32:04.150Z",
+    "animation_asset": {
+      "id": "character2-2026-11-01T23-31-46-459Z",
+      "name": "character2",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "idle",
+          "idle_to_action1_to_idle",
+          "idle_to_action2_to_idle",
+          "idle_to_action3_to_idle",
+          "idle_to_action4_to_idle",
+          "idle_to_action5_to_idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "character2-2026-11-01T23-31-46-459Z",
+      "manifestPath": "character2-2026-11-01T23-31-46-459Z/manifest.json",
+      "files": [
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2.json",
+          "name": "character2/character2.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2.atlas",
+          "name": "character2/character2.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2.png",
+          "name": "character2/character2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_2.png",
+          "name": "character2/character2_2.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_3.png",
+          "name": "character2/character2_3.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_4.png",
+          "name": "character2/character2_4.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_5.png",
+          "name": "character2/character2_5.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_6.png",
+          "name": "character2/character2_6.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/character2/character2_7.png",
+          "name": "character2/character2_7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/idle-preview.webp",
+          "name": "idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "character2-2026-11-01T23-31-46-459Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "character2.json",
+      "atlas": "character2.atlas",
+      "textures": [
+        "character2.png",
+        "character2_2.png",
+        "character2_3.png",
+        "character2_4.png",
+        "character2_5.png",
+        "character2_6.png",
+        "character2_7.png"
+      ],
+      "animationCount": 11,
+      "animationNames": [
+        "action1",
+        "action2",
+        "action3",
+        "action4",
+        "action5",
+        "idle",
+        "idle_to_action1_to_idle",
+        "idle_to_action2_to_idle",
+        "idle_to_action3_to_idle",
+        "idle_to_action4_to_idle",
+        "idle_to_action5_to_idle"
+      ],
+      "defaultAnimation": "idle",
+      "fileCount": 12,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 8
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character1-2026-11-01T23-28-46-401Z",
     "name": "character1",
     "updatedAt": "2026-11-01T23:29:13.622Z",
