@@ -59,7 +59,7 @@ jobs:
           fi
 
       - name: Request missing or invalid previews from the Spine exporter
-        if: ${{ github.event_name == 'schedule' || inputs.repair }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'push' || inputs.repair }}
         uses: actions/github-script@v7
         with:
           script: |
