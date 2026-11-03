@@ -27,9 +27,7 @@ jobs:
           # than GitHub's 256-job matrix limit, so ids are grouped into batches
           # and each matrix job exports its whole batch.
           BATCH_SIZE=4
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo 'matrix=[["anticipation2-2026-09-03T09-45-43-854Z"]]' >> "$GITHUB_OUTPUT"
-          elif [ -n "${{ github.event.inputs.filter_ids }}" ]; then
+          if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
             # Parse comma-separated IDs into JSON array
             IDS="${{ github.event.inputs.filter_ids }}"
             MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node -e "
