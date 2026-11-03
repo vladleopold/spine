@@ -63,7 +63,12 @@ for (const folder of listCollectionFolders(root)) {
         changed = true;
         report.repaired.push({id:entry.id,before:info,after:checked});
       } finally { if(fs.existsSync(tmp)) fs.unlinkSync(tmp); }
-    } catch(error) { report.errors.push({id:entry.id,error:String(error.message||error).slice(0,300)}); }
+    } catch(error) {
+      // A corrupt/empty WebM is a repair candidate, not a fatal audit failure.
+      // Keep the full reason in the report so the dispatch step can re-export it.
+      report.invalid.push({id:entry.id,reason:'ffprobe failed; source re-export required',
+        error:String(error.message||error).slice(0,300)});
+    }
   }
   if (changed) fs.writeFileSync(path.join(root,folder,'index.json'),JSON.stringify(entries,null,2)+'\n');
 }
