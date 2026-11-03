@@ -33,7 +33,21 @@ jobs:
             # Parse comma-separated IDs into JSON array
             IDS="${{ github.event.inputs.filter_ids }}"
             MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node -e "
-              const ids = process.env.IDS.split(',').map(s => s.trim()).filter(Boolean);
+              import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
+              const root = process.cwd();
+              const validIds = new Set();
+              const isExportable = (entry) =>
+                entry && entry.id &&
+                /\.(json|skel)$/i.test(String(entry.skeleton || '')) &&
+                /\.atlas(?:\.txt)?$/i.test(String(entry.atlas || '')) &&
+                Array.isArray(entry.textures) &&
+                entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
+                Array.isArray(entry.animations) && entry.animations.length > 0;
+              for (const folder of listCollectionFolders(root)) {
+                const index = readIndex(root, folder) || [];
+                for (const entry of index) if (isExportable(entry)) validIds.add(entry.id);
+              }
+              const ids = process.env.IDS.split(',').map(s => s.trim()).filter(id => validIds.has(id));
               const size = Number(process.env.BATCH_SIZE) || 1;
               const batches = [];
               for (let i = 0; i < ids.length; i += size) batches.push(ids.slice(i, i + size));
@@ -45,10 +59,17 @@ jobs:
               import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
               const root = process.cwd();
               const ids = [];
+              const isExportable = (entry) =>
+                entry && entry.id &&
+                /\.(json|skel)$/i.test(String(entry.skeleton || '')) &&
+                /\.atlas(?:\.txt)?$/i.test(String(entry.atlas || '')) &&
+                Array.isArray(entry.textures) &&
+                entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
+                Array.isArray(entry.animations) && entry.animations.length > 0;
               for (const folder of listCollectionFolders(root)) {
                 const index = readIndex(root, folder);
                 if (!index) continue;
-                for (const entry of index) if (entry && entry.id) ids.push(entry.id);
+                for (const entry of index) if (isExportable(entry)) ids.push(entry.id);
               }
               const size = Number(process.env.BATCH_SIZE) || 1;
               const batches = [];
