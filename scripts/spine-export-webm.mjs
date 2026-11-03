@@ -1160,3 +1160,5 @@ try {
   await browser.close();
   try { fs.rmSync(tempDir, { recursive: true }); } catch { }
 }
+
+// Trigger full Spine export matrix after the workflow fix.
