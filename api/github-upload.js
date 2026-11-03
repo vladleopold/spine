@@ -331,13 +331,14 @@ function isSpineExportEntry(entry) {
   const atlas = String(entry?.atlas || '');
   const textures = Array.isArray(entry?.textures) ? entry.textures : [];
   const files = Array.isArray(entry?.files) ? entry.files : [];
+  const hasAnimations = Array.isArray(entry?.animations) && entry.animations.length > 0;
   const hasSkeleton = /\.(json|skel)$/i.test(skeleton) &&
     files.some((file) => typeof file === 'string' && /\.(json|skel)$/i.test(file));
   const hasAtlas = /\.atlas(?:\.txt)?$/i.test(atlas) &&
     files.some((file) => typeof file === 'string' && /\.atlas(?:\.txt)?$/i.test(file));
   const hasTexture = textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
     files.some((file) => typeof file === 'string' && /\.(png|jpe?g|webp)$/i.test(file));
-  return hasSkeleton && hasAtlas && hasTexture;
+  return hasSkeleton && hasAtlas && hasTexture && hasAnimations;
 }
 
 async function dispatchSpineExportWebm(settings, entry, origin) {
@@ -1121,7 +1122,7 @@ export default async function handler(request, response) {
         publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
         showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
         portfolioMode: Boolean(entry?.portfolioMode),
-        ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' }),
+        ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: isSpineExportEntry(entry) ? 'pending' : 'skipped' }),
       };
        const nextEntries = existingEntry
          ? currentEntries.map((e) => (e.id === entry.id ? nextEntry : e))
