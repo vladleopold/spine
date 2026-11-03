@@ -11,7 +11,7 @@ on:
 jobs:
   generate-matrix:
     name: 📋 Build animation matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       matrix:    ${{ steps.set-matrix.outputs.matrix }}
       has-items: ${{ steps.set-matrix.outputs.has_items }}
@@ -39,7 +39,7 @@ jobs:
     name: 🎬 Opaque · ${{ matrix.animation }}
     needs: generate-matrix
     if: needs.generate-matrix.outputs.has-items == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -157,7 +157,7 @@ jobs:
     name: 🌀 Alpha · ${{ matrix.animation }}
     needs: generate-matrix
     if: needs.generate-matrix.outputs.has-items == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -291,7 +291,7 @@ jobs:
     name: 💾 Commit all to repository
     needs: [export-opaque, export-alpha]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
 
