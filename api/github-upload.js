@@ -326,9 +326,27 @@ function generatedPreviewWebmUrl(origin, entry) {
   return id ? `${origin}/v_holder.webm` : '';
 }
 
+function isSpineExportEntry(entry) {
+  const skeleton = String(entry?.skeleton || '');
+  const atlas = String(entry?.atlas || '');
+  const textures = Array.isArray(entry?.textures) ? entry.textures : [];
+  const files = Array.isArray(entry?.files) ? entry.files : [];
+  const hasSkeleton = /\.(json|skel)$/i.test(skeleton) &&
+    files.some((file) => typeof file === 'string' && /\.(json|skel)$/i.test(file));
+  const hasAtlas = /\.atlas(?:\.txt)?$/i.test(atlas) &&
+    files.some((file) => typeof file === 'string' && /\.atlas(?:\.txt)?$/i.test(file));
+  const hasTexture = textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
+    files.some((file) => typeof file === 'string' && /\.(png|jpe?g|webp)$/i.test(file));
+  return hasSkeleton && hasAtlas && hasTexture;
+}
+
 async function dispatchSpineExportWebm(settings, entry, origin) {
   const id = String(entry?.id || '').trim();
   if (!id) return null;
+  if (!isSpineExportEntry(entry)) {
+    console.log(`[UPLOAD] skipping WebM export for ${id}: missing Spine skeleton, atlas, or texture files`);
+    return { status: 'skipped', reason: 'missing-spine-assets' };
+  }
   const defaultAnimation = String(entry?.defaultAnimation || (Array.isArray(entry?.animations) ? entry.animations[0] : '') || '').trim();
   const animations = Array.isArray(entry?.animations) ? entry.animations : [];
   try {
