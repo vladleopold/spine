@@ -13,8 +13,13 @@ const outputFile = process.env.GITHUB_OUTPUT;
 const found = entryForUpload(process.cwd(), uploadId);
 const entry = found ? found.entry : null;
 
-const result = !entry || !Array.isArray(entry.animations) || entry.animations.length === 0
-  ? { matrix: [], has_items: false }
+const hasSkeleton = /\.(json|skel)$/i.test(String(entry?.skeleton || ''));
+const hasAtlas = /\.atlas(?:\.txt)?$/i.test(String(entry?.atlas || ''));
+const hasTextures = Array.isArray(entry?.textures) &&
+  entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file)));
+const result = !entry || !hasSkeleton || !hasAtlas || !hasTextures ||
+  !Array.isArray(entry.animations) || entry.animations.length === 0
+  ? { matrix: [], has_items: false, reason: 'missing-spine-assets-or-animations' }
   : { matrix: entry.animations, has_items: true };
 
 if (outputFile) {
