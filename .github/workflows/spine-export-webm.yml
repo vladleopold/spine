@@ -31,7 +31,10 @@ jobs:
           echo "=== INSTALLING PLAYWRIGHT ==="
           npm init -y
           npm install playwright@1.59.1
-          npx playwright install chromium --with-deps
+          # Install the browser only. OS packages are installed in the next step;
+          # Playwright's --with-deps currently misidentifies the hosted image as
+          # ubuntu26.04 and aborts before Chromium is downloaded.
+          npx playwright install chromium
           echo "=== PLAYWRIGHT INSTALLED ==="
 
       - name: Install system dependencies
