@@ -18,6 +18,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -48,6 +55,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -166,6 +180,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -305,6 +326,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
