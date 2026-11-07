@@ -109,7 +109,7 @@ jobs:
               ffmpeg -y -i "$SRC" \
                 -c:v libx264 -preset fast -crf 23 \
                 -movflags +faststart -pix_fmt yuv420p \
-                "$DST" && echo "MP4 ready: $DST" || echo "MP4 failed for $SRC (non-critical)"
+                "$DST" && echo "MP4 ready: $DST" || exit 1
             fi
           done
 
@@ -245,7 +245,7 @@ jobs:
             # Non-critical: a single missing format must not fail the whole
             # alpha export, otherwise the animation would lose every derived
             # file (MOV/GIF/PNG) for all three quality levels.
-            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p10le               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || echo "MOV failed for suffix: $suffix (non-critical)"
+            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p10le               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || exit 1
 
             # GIF — two-pass palette. The alpha channel of the source is
             # folded into the 1-bit transparency of the GIF.
@@ -254,7 +254,7 @@ jobs:
             # instead of taking the whole job down.
             FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -of csv=p=0 "$SRC" 2>/dev/null || echo 0)
             if [ "${FRAMES:-0}" -ge 2 ] 2>/dev/null; then
-              ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -vf "fps=15,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || echo "GIF failed for suffix: $suffix (non-critical)"
+              ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -vf "fps=15,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || exit 1
             else
               echo "Skipping GIF for suffix: $suffix (only ${FRAMES:-0} frames)"
             fi
@@ -468,7 +468,9 @@ jobs:
                 }
               }
 
-              const hasExports = Object.keys(allAnimPreviews).length > 0;
+              const requiredKeys = ['webmPreview','mp4Preview','movAlpha','gifAlpha','pngAlpha'].flatMap(key => ['', 'Medium', 'Low'].map(suffix => key + suffix));
+              const expected = Array.isArray(indexData[entryIndex].animations) ? indexData[entryIndex].animations : Object.keys(allAnimPreviews);
+              const hasExports = expected.length > 0 && expected.every(name => requiredKeys.every(key => typeof allAnimPreviews[name]?.[key] === 'string' && allAnimPreviews[name][key]));
 
               // Work-level preview duration: the duration of the animation the
               // work is currently presenting (defaultAnimation). The page
@@ -508,7 +510,7 @@ jobs:
                 allAnimationPreviews: allAnimPreviews,
                 ...(effectiveDefault && effectiveDefault !== chosenAnim ? { defaultAnimation: effectiveDefault } : {}),
                 previewDuration: Number.isFinite(effectiveDuration) && effectiveDuration > 0 ? effectiveDuration : undefined,
-                fullExportStatus: hasExports ? 'ready' : 'failed',
+                fullExportStatus: hasExports ? 'ready' : 'partial',
                 fullExportGeneratedAt: new Date().toISOString(),
               };
 

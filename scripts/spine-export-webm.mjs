@@ -547,7 +547,7 @@ for (const name of availableAnimations) {
 const scenarioEntry = tokenIndex.has('in') ? tokenIndex.get('in') : tokenIndex.get('begin');
 const scenarioExit = tokenIndex.has('out') ? tokenIndex.get('out') : tokenIndex.get('end');
 const scenarioIdle = tokenIndex.has('idle') ? tokenIndex.get('idle') : tokenIndex.get('loop');
-const scenarioCycle = scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
+const scenarioCycle = !args.animation && scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
 const captureAnimation = scenarioCycle.length > 1 ? scenarioCycle[0] : targetAnimation;
 if (scenarioCycle.length > 1) {
   console.error(`Scenario: ${scenarioCycle.join(' -> ')} (запись превью по кругу)`);

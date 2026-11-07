@@ -1,10 +1,6 @@
 name: Spine Export All (Matrix)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/spine-export-webm.mjs'
   workflow_dispatch:
     inputs:
       filter_ids:
