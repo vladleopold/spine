@@ -26,11 +26,13 @@ jobs:
             /scripts/
             /library*/index.json
       - name: Checkout only this work
+        id: source
         run: node scripts/prepare-render.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - name: Install renderer
+        if: steps.source.outputs.dispatch_only != 'true'
         run: |
           npm install --no-save playwright@1.59.1
           npx playwright install chromium

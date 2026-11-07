@@ -10,6 +10,11 @@ if(!/^[\w.-]+$/.test(id)||id.includes('..'))throw Error('Invalid upload ID');
 const origin=new URL(config.origin||'https://spine-link.vercel.app').origin;
 if(origin!=='https://spine-link.vercel.app')throw Error('Unsupported preview origin');
 const found=entryForUpload(process.cwd(),id);if(!found)throw Error('Upload not found');
+if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
+  const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:id,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
+  if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
+  console.log('Full export verification dispatched');process.exit(0);
+}
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');

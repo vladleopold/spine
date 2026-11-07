@@ -902,8 +902,8 @@ try {
     if (args.alpha) {
       const framesDir = path.join(tempDir, 'alpha-frames');
       fs.mkdirSync(framesDir, { recursive: true });
-      await page.clock.install();
-      await page.clock.pauseAt(new Date());
+      await page.clock.install({ time: new Date('2020-01-01T00:00:00Z') });
+      await page.clock.pauseAt(new Date('2020-01-01T00:01:00Z'));
       await page.evaluate(name => {
         const p = window.__exportPlayer;
         p.animationState.clearTracks();

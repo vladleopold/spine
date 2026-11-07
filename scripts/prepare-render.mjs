@@ -8,3 +8,5 @@ if(!found)throw Error('Upload not found');
 const work=String(found.entry.previewPath||`${found.basePath}/${config.uploadId}`);
 if(work.startsWith('/')||work.split('/').includes('..'))throw Error('Invalid work path');
 execFileSync('git',['sparse-checkout','add','--skip-checks',`/${work}/`],{stdio:'inherit'});
+
+if(process.env.GITHUB_OUTPUT)fs.appendFileSync(process.env.GITHUB_OUTPUT,`dispatch_only=${config.dispatchOnly===true}\n`);
