@@ -286,7 +286,7 @@ jobs:
             mkdir -p "$TMPDIR"
             ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png" || echo "PNG sequence failed for suffix: $suffix (non-critical)"
             if [ -d "$TMPDIR" ] && [ "$(ls -A "$TMPDIR" 2>/dev/null)" ]; then
-              (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" .) || echo "PNG zip failed for suffix: $suffix (non-critical)"
+              (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" ./*.png) || exit 1
               rm -rf "$TMPDIR"
             else
               rm -rf "$TMPDIR"

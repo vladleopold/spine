@@ -1174,6 +1174,9 @@ try {
     // with these instead of a fixed "1080p/720p/360p", which only matched the
     // file for a handful of works and was wrong for the rest.
     animations: availableAnimations,
+    skeleton: skeletonFile,
+    atlas: atlasFile,
+    textures: textureFiles,
     alpha: args.alpha,
     qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
     capturedDuration: captureDuration,
