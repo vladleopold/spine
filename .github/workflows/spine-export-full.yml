@@ -208,7 +208,7 @@ jobs:
             --alpha \
             --output="${{ github.workspace }}/${UPLOAD_ID}-anim-${SAFE}-alpha.webm" \
             && echo "Alpha export succeeded" \
-            || echo "Alpha export failed (non-critical, continuing)"
+            || exit 1
 
           echo "safe_name=${SAFE}" >> $GITHUB_OUTPUT
           echo "=== Alpha WebM done ==="
@@ -245,7 +245,7 @@ jobs:
             # Non-critical: a single missing format must not fail the whole
             # alpha export, otherwise the animation would lose every derived
             # file (MOV/GIF/PNG) for all three quality levels.
-            ffmpeg -y -v error -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || echo "MOV failed for suffix: $suffix (non-critical)"
+            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p10le               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || echo "MOV failed for suffix: $suffix (non-critical)"
 
             # GIF — two-pass palette. The alpha channel of the source is
             # folded into the 1-bit transparency of the GIF.
@@ -254,7 +254,7 @@ jobs:
             # instead of taking the whole job down.
             FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -of csv=p=0 "$SRC" 2>/dev/null || echo 0)
             if [ "${FRAMES:-0}" -ge 2 ] 2>/dev/null; then
-              ffmpeg -y -v error -i "$SRC"               -vf "fps=15,scale=360:-1:flags=lanczos,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || echo "GIF failed for suffix: $suffix (non-critical)"
+              ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -vf "fps=15,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p][p1]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || echo "GIF failed for suffix: $suffix (non-critical)"
             else
               echo "Skipping GIF for suffix: $suffix (only ${FRAMES:-0} frames)"
             fi
@@ -263,7 +263,7 @@ jobs:
             # into a single zip so it ships as one downloadable file.
             TMPDIR="$DIR/pngseq${suffix//-/}"
             mkdir -p "$TMPDIR"
-            ffmpeg -y -v error -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png" || echo "PNG sequence failed for suffix: $suffix (non-critical)"
+            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png" || echo "PNG sequence failed for suffix: $suffix (non-critical)"
             if [ -d "$TMPDIR" ] && [ "$(ls -A "$TMPDIR" 2>/dev/null)" ]; then
               (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" .) || echo "PNG zip failed for suffix: $suffix (non-critical)"
               rm -rf "$TMPDIR"
@@ -336,6 +336,7 @@ jobs:
             console.log(collectionPathForUpload(process.cwd(), process.argv[1]));
           " "$UPLOAD_ID")
           INDEX_PATH="${BASE_PATH}/index.json"
+          WORK_PATH=$(node --input-type=module -e "import {entryForUpload} from './scripts/resolve-library.mjs'; console.log(entryForUpload(process.cwd(), process.argv[1]).entry.previewPath)" "$UPLOAD_ID")
           echo "Collection folder for $UPLOAD_ID: $BASE_PATH"
 
           git config --global user.name "github-actions[bot]"
@@ -387,7 +388,7 @@ jobs:
 
                   const animName = fs.readFileSync(animNameFile, 'utf8').trim();
                   const safeName = fs.readFileSync(safeNameFile, 'utf8').trim();
-                  const animTargetDir = path.join(basePath, uploadId, 'animations', safeName);
+                  const animTargetDir = path.join(String(indexData[entryIndex].previewPath || path.join(basePath, uploadId)), 'animations', safeName);
                   fs.mkdirSync(animTargetDir, { recursive: true });
 
                   if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
@@ -517,7 +518,7 @@ jobs:
             "
 
             # 3. Stage everything
-            git add "$BASE_PATH"
+            git add "$BASE_PATH" "$WORK_PATH/animations"
             if git diff-index --quiet HEAD --; then
               echo "No changes to commit — all animations already up to date."
               exit 0

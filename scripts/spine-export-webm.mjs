@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -20,23 +21,25 @@ const args = {
   branch: 'main',
   githubToken: '',
   sanitizeSkel: false,
-  fps: 60,
+  fps: 30,
+  alpha: false,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
   const arg = process.argv[i];
-  if (arg.startsWith('--fps=')) args.fps = Number(arg.split('=')[1]);
-  else if (arg.startsWith('--upload-id=')) args.uploadId = arg.split('=')[1];
-  else if (arg.startsWith('--origin=')) args.origin = arg.split('=')[1];
-  else if (arg.startsWith('--animation=')) args.animation = arg.split('=')[1];
-  else if (arg.startsWith('--default-animation=')) args.defaultAnimation = arg.split('=')[1];
-  else if (arg.startsWith('--output=')) args.output = arg.split('=')[1];
-  else if (arg.startsWith('--repo-path=')) args.repoPath = arg.split('=')[1];
-  else if (arg.startsWith('--base-path=')) args.basePath = arg.split('=')[1];
-  else if (arg.startsWith('--owner=')) args.owner = arg.split('=')[1];
-  else if (arg.startsWith('--repo=')) args.repo = arg.split('=')[1];
-  else if (arg.startsWith('--github-token=')) args.githubToken = arg.split('=')[1];
-  else if (arg.startsWith('--sanitize-skel=')) args.sanitizeSkel = arg.split('=')[1] !== 'false';
+  if (arg === '--alpha') args.alpha = true;
+  else if (arg.startsWith('--fps=')) args.fps = Number(arg.slice(arg.indexOf('=') + 1));
+  else if (arg.startsWith('--upload-id=')) args.uploadId = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--origin=')) args.origin = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--animation=')) args.animation = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--default-animation=')) args.defaultAnimation = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--output=')) args.output = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--repo-path=')) args.repoPath = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--base-path=')) args.basePath = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--owner=')) args.owner = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--repo=')) args.repo = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--github-token=')) args.githubToken = arg.slice(arg.indexOf('=') + 1);
+  else if (arg.startsWith('--sanitize-skel=')) args.sanitizeSkel = arg.slice(arg.indexOf('=') + 1) !== 'false';
 }
 
 if (![30, 60, 90, 120, 190, 300].includes(args.fps)) throw new Error('Unsupported FPS; use 30,60,90,120,190,300');
@@ -70,25 +73,20 @@ console.log(`Collection folder for ${args.uploadId}: ${basePath}`);
 
 const uploadPath = entry.previewPath || path.posix.join(basePath, args.uploadId);
 
-function findSetDirectories(baseDir) {
-  const results = [];
-  try {
-    const entries = fs.readdirSync(baseDir, { withFileTypes: true });
-    for (const dirent of entries) {
-      if (!dirent.isDirectory()) continue;
-      const dirPath = path.join(baseDir, dirent.name);
-      try {
-        const files = fs.readdirSync(dirPath);
-        const hasSkeleton = files.some(f => /\.(json|skel)$/i.test(f));
-        const hasAtlas = files.some(f => /\.(atlas|atlas\.txt|atlas\.docx)$/i.test(f));
-        const hasImage = files.some(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
-        if (hasSkeleton && hasAtlas && hasImage) {
-          results.push({ name: dirent.name, path: dirPath });
-        }
-      } catch { }
-    }
-  } catch { }
-  return results;
+function findSetDirectories(baseDir, depth = 0) {
+  if (depth > 6 || !fs.existsSync(baseDir)) return [];
+  const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+  const files = entries.filter(e => e.isFile()).map(e => e.name);
+  const skeletons = files.filter(f => /\.(json|skel)$/i.test(f));
+  const validSkeleton = skeletons.some(f => {
+    if (/\.skel$/i.test(f)) return true;
+    try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(baseDir, f), 'utf8')).bones); } catch { return false; }
+  });
+  if (validSkeleton && files.some(f => /\.atlas(?:\.txt|\.docx)?$/i.test(f)) && files.some(f => /\.(png|jpe?g|webp)$/i.test(f))) {
+    return [{ name: path.basename(baseDir), path: baseDir }];
+  }
+  return entries.filter(e => e.isDirectory() && !e.name.endsWith('.__chunks') && e.name !== 'animations')
+    .flatMap(e => findSetDirectories(path.join(baseDir, e.name), depth + 1));
 }
 
 const previewDir = path.join(repoRoot, uploadPath);
@@ -101,7 +99,7 @@ if (sets.length === 0) {
 
 const firstSet = sets[0];
 const setFiles = fs.readdirSync(firstSet.path);
-const skeletonFile = setFiles.find(f => /\.(json|skel)$/i.test(f));
+const skeletonFile = setFiles.find(f => /\.json$/i.test(f) && (() => { try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(firstSet.path, f), 'utf8')).bones); } catch { return false; } })()) || setFiles.find(f => /\.skel$/i.test(f));
 const atlasFile = setFiles.find(f => /\.(atlas|atlas\.txt|atlas\.docx)$/i.test(f));
 const textureFiles = setFiles.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
@@ -471,7 +469,7 @@ const playerCssUrl = isLegacy
 const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'skeleton';
 const atlasKey = 'atlas';
 
-const setSegments = [uploadPath, firstSet.name];
+const setSegments = [path.relative(repoRoot, firstSet.path).split(path.sep).join('/')];
 
 function rawUrl(filename) {
   return `https://raw.githubusercontent.com/${args.owner}/${args.repo}/${args.branch}/${setSegments.join('/')}/${encodeURIComponent(filename)}`;
@@ -570,7 +568,7 @@ return `<!DOCTYPE html>
 <link rel="stylesheet" href="${playerCssUrl}">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
+html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent' : '#050607'}; overflow: hidden; }
 #player { width: 100%; height: 100%; }
 </style>
 </head>
@@ -611,17 +609,18 @@ html, body { width: 100%; height: 100%; background: #050607; overflow: hidden; }
     ${isLegacy ? (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `jsonUrl: '${skeletonRawUrl}'`) : (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `skeleton: '${skeletonRawUrl}'`)},
     ${isLegacy ? `atlasUrl: '${atlasRawUrl}'` : `atlas: '${atlasRawUrl}'`},
     textures: ${JSON.stringify(textureRawUrls)},
-    animation: '${captureAnimation}',
+    animation: ${JSON.stringify(captureAnimation)},
     scenario: ${JSON.stringify(scenarioCycle)},
     __spineScenario: ${JSON.stringify(scenarioCycle)},
 ${skinLine}    showLoading: false,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
     alpha: true,
-    backgroundColor: '#050607',
+    backgroundColor: '${args.alpha ? '#00000000' : '#050607'}',
     viewport: ${hugeScene ? JSON.stringify({ x: -videoWidth / 2, y: -videoHeight / 2, width: videoWidth, height: videoHeight, padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' }) : "{ padLeft: '0%', padRight: '0%', padTop: '0%', padBottom: '0%' }"},
     success: function (p) {
       player = p;
+      window.__exportPlayer = p;
       window.__ready = true;
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
       window.__canvasHeight = player.canvas ? player.canvas.height : 0;
@@ -874,16 +873,9 @@ try {
       continue;
     }
 
-    // Start recording only now, on the settled canvas showing content.
-    const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
-    console.error(`Skin ${label}: recorder ${recState}`);
-    if (recState !== 'recording') {
-      lastCaptureError = `MediaRecorder failed to start (${recState})`;
-      console.error(`Capture with skin ${label} failed: ${lastCaptureError}`);
-      break;
-    }
-
-    // Reset per skin attempt and preserve the source animation's complete duration.\n    captureDuration = effectiveDuration;\n    // A scenario is recorded in full: every step plays once, back to back.
+    // Preserve the full animation duration.
+    captureDuration = effectiveDuration;
+    // A scenario is recorded in full: every step plays once, back to back.
     if (scenarioCycle.length > 1) {
       let scenarioDuration = 0;
       for (const stepName of scenarioCycle) {
@@ -895,7 +887,38 @@ try {
         console.error(`Scenario duration: ${scenarioDuration.toFixed(2)}s (${scenarioCycle.join(' + ')})`);
       }
     }
-    if (!(captureDuration > 0)) throw new Error('Unknown animation duration: refusing to truncate to a guessed one-second clip');
+    if (!(captureDuration > 0) && availableAnimations.includes(targetAnimation)) captureDuration = 1 / args.fps;
+    if (!(captureDuration > 0)) throw new Error('Unknown animation duration');
+    if (args.alpha) {
+      const framesDir = path.join(tempDir, 'alpha-frames');
+      fs.mkdirSync(framesDir, { recursive: true });
+      await page.clock.install();
+      await page.clock.pauseAt(new Date());
+      await page.evaluate(name => {
+        const p = window.__exportPlayer;
+        p.animationState.clearTracks();
+        p.animationState.setAnimation(0, name, true);
+        p.paused = false;
+      }, targetAnimation);
+      const count = Math.max(1, Math.ceil(captureDuration * args.fps));
+      for (let index = 0; index < count; index++) {
+        await page.clock.runFor(1000 / args.fps);
+        const png = await page.evaluate(() => window.__exportPlayer.canvas.toDataURL('image/png').split(',')[1]);
+        fs.writeFileSync(path.join(framesDir, `${String(index).padStart(6, '0')}.png`), Buffer.from(png, 'base64'));
+      }
+      videoDataUrl = 'alpha-frames';
+      chosenSkin = skin;
+      break;
+    }
+    // Start recording only now, on the settled canvas showing content.
+    const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
+    console.error(`Skin ${label}: recorder ${recState}`);
+    if (recState !== 'recording') {
+      lastCaptureError = `MediaRecorder failed to start (${recState})`;
+      console.error(`Capture with skin ${label} failed: ${lastCaptureError}`);
+      break;
+    }
+
     await new Promise((resolve) => setTimeout(resolve, captureDuration * 1000));
 
     await page.evaluate(() => {
@@ -922,11 +945,13 @@ try {
     process.exit(1);
   }
 
-  const base64Data = videoDataUrl.split(',')[1];
-  const webmBuffer = Buffer.from(base64Data, 'base64');
-  
   const videoPath = path.join(tempDir, 'browser-recording.webm');
-  fs.writeFileSync(videoPath, webmBuffer);
+  if (args.alpha) {
+    execFileSync('ffmpeg', ['-y', '-v', 'error', '-framerate', String(args.fps), '-i', path.join(tempDir, 'alpha-frames', '%06d.png'), '-c:v', 'libvpx-vp9', '-pix_fmt', 'yuva420p', '-auto-alt-ref', '0', '-deadline', 'realtime', '-cpu-used', '8', videoPath], { stdio: 'inherit' });
+  } else {
+    fs.writeFileSync(videoPath, Buffer.from(videoDataUrl.split(',')[1], 'base64'));
+  }
+  const webmBuffer = fs.readFileSync(videoPath);
 
   await context.close();
 
@@ -952,13 +977,16 @@ try {
   //
   // This runs before the quality ladder and the posters are generated, so all
   // three WebM variants and all three WebP posters inherit the trimmed start.
-  const leadResult = trimBlackLead(outputPath, {
+  const leadResult = args.alpha ? {} : trimBlackLead(outputPath, {
     label: path.basename(outputPath),
     log: (line) => console.error(line),
   });
   if (leadResult.trimmed) {
     console.error(`Black lead trimmed: ${leadResult.cut} frame(s) removed before export`);
   }
+
+  const qualitySource = path.join(tempDir, 'quality-source.webm');
+  fs.copyFileSync(outputPath, qualitySource);
 
   // Use ffmpeg to generate 3 qualities of WebM and 3 WebP posters
   const baseOutputPath = outputPath.replace(/\.webm$/i, '');
@@ -1015,8 +1043,8 @@ try {
     // deadline=good он часть просто отбрасывает, и анимация идёт рывками.
     // lag-in-frames 0 убирает задержку между кадрами на выходе.
     const vp9 = (dim, bitrate, out) =>
-      `ffmpeg -y -i "${videoPath}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
-      `-pix_fmt yuv420p -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
+      `ffmpeg -y ${args.alpha ? "-c:v libvpx-vp9" : ""} -i "${qualitySource}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
+      `-pix_fmt ${args.alpha ? "yuva420p" : "yuv420p"} -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
       `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 16 "${out}"`;
 
     // High Quality
@@ -1114,13 +1142,17 @@ try {
     // Fallback if ffmpeg fails: copy the capture to the main output. This must be
     // outputPath (post-trim), not videoPath (pre-trim), or the black lead we just
     // removed would come straight back.
-    if (!fs.existsSync(outPaths.webmHigh)) fs.copyFileSync(outputPath, outPaths.webmHigh);
+    throw err;
   }
 
   function getFileSize(filePath) {
     return fs.existsSync(filePath) ? fs.statSync(filePath).size : 0;
   }
 
+  for (const output of [outPaths.webmHigh, outPaths.webmMedium, outPaths.webmLow]) {
+    const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-count_frames', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,nb_read_frames', '-of', 'json', output], { encoding: 'utf8' }));
+    if (!(probe.streams?.[0]?.width > 0) || !(Number(probe.streams[0].nb_read_frames) > 0)) throw new Error(`Invalid rendered video: ${output}`);
+  }
   const finalWebmBuffer = fs.existsSync(outPaths.webmHigh) ? fs.readFileSync(outPaths.webmHigh) : Buffer.from([]);
   
   const widthOf = (dim) => Number(String(dim).split('x')[0]) || 0;
@@ -1131,6 +1163,8 @@ try {
     // Real pixel width of each tier. The download picker labels its buttons
     // with these instead of a fixed "1080p/720p/360p", which only matched the
     // file for a handful of works and was wrong for the rest.
+    animations: availableAnimations,
+    alpha: args.alpha,
     qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
