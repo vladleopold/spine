@@ -621,6 +621,13 @@ ${skinLine}    showLoading: false,
     success: function (p) {
       player = p;
       window.__exportPlayer = p;
+      var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
+      window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
+      if (window.__selectedAnimation && player.animationState) {
+        player.animationState.clearTracks();
+        player.animationState.setAnimation(0, window.__selectedAnimation, true);
+      }
       window.__ready = true;
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
       window.__canvasHeight = player.canvas ? player.canvas.height : 0;
@@ -831,6 +838,9 @@ try {
       break; // player/skeleton broken — another skin will not fix it
     }
 
+    const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
+    if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
+    if (!targetAnimation) targetAnimation = await page.evaluate(() => window.__selectedAnimation || '');
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
     canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
