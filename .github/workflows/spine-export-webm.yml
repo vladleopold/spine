@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     concurrency:
-      group: spine-library-commit
+      group: spine-render-${{ github.event.client_payload.uploadId || inputs.uploadId || github.run_id }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
