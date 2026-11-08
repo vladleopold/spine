@@ -1,3 +1,4 @@
+import {publishLargeDownload} from './publish-large-download.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -84,7 +85,10 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
  execFileSync('zip',['-q',zip,...fs.readdirSync(pngdir)],{cwd:pngdir});
  for(const file of [mp4,mov,gif])probe(file);
  for(const [file,key]of [[opaque,'webmPreview'],[alpha,'webmAlpha'],[mp4,'mp4Preview'],[mov,'movAlpha'],[gif,'gifAlpha'],[zip,'pngAlpha'],[path.join(temp,`preview${suffix}.webp`),'webpPoster']]){
-  const dst=`${workPath}/animations/${safe}/${path.basename(file)}`;add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;
+  const dst=`${workPath}/animations/${safe}/${path.basename(file)}`;
+  if(fs.statSync(file).size>20*1024*1024){
+   downloads[key+cap]=await publishLargeDownload(file,{repository:process.env.GITHUB_REPOSITORY,token:process.env.GITHUB_TOKEN,uploadId:id});
+  }else{add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;}
  }
 }
 fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
