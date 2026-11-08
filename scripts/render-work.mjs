@@ -33,17 +33,35 @@ const add=(src,dst)=>{if(!fs.existsSync(src)||fs.statSync(src).size===0)throw Er
 const workPath=found.entry.previewPath||`${found.basePath}/${id}`;
 // Publish card first so the animation card does not wait for the full matrix.
 for(const suffix of ['','-medium','-low'])for(const ext of ['webm','webp']){const file=path.join(temp,`preview${suffix}.${ext}`);probe(file);add(file,`${workPath}/preview${suffix}.${ext}`);}
+async function pushStaged(message){
+ if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+ run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m',message]);
+ run('git',['-c','http.version=HTTP/1.1','-c','http.postBuffer=524288000','push','origin','HEAD:main']);
+}
 async function publish(update){
+ // Push one media object at a time. Never recreate a multi-hundred-MB pack
+ // after a timeout, and check the remote on retries (a push may have landed).
+ for(const file of pending){
+  for(let attempt=0;attempt<5;attempt++){
+   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
+   run('git',['reset','--hard','origin/main']);
+   fs.mkdirSync(path.dirname(file.dst),{recursive:true});fs.copyFileSync(file.src,file.dst);
+   run('git',['add','--',file.dst]);
+   try{await pushStaged(`Publish rendered asset ${file.dst}`);break;}
+   catch(error){if(attempt===4)throw error;}
+  }
+ }
  for(let attempt=0;attempt<5;attempt++){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);run('git',['reset','--hard','origin/main']);
   const current=entryForUpload(process.cwd(),id);if(!current)throw Error('Upload removed during render');
-  for(const file of pending){fs.mkdirSync(path.dirname(file.dst),{recursive:true});fs.copyFileSync(file.src,file.dst);}
-  const idx=current.index.findIndex(e=>e.id===id);current.index[idx]={...current.index[idx],...update};
+  const idx=current.index.findIndex(e=>e.id===id);
+  const merged={...current.index[idx],...update};
+  if(update.allAnimationPreviews)merged.allAnimationPreviews={...current.index[idx].allAnimationPreviews,...update.allAnimationPreviews};
+  current.index[idx]=merged;
   const indexPath=`${current.basePath}/index.json`;fs.writeFileSync(indexPath,JSON.stringify(current.index,null,2));
-  run('git',['add',indexPath,...pending.map(f=>f.dst)]);
-  if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
-  run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m',`Render verified media for ${id}`]);
-  try{run('git',['push','origin','HEAD:main']);return;}catch(error){if(attempt===4)throw error;}
+  run('git',['add','--',indexPath]);
+  try{await pushStaged(`Publish verified media index for ${id}`);pending.length=0;return;}
+  catch(error){if(attempt===4)throw error;}
  }
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
