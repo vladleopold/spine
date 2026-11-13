@@ -1,5 +1,136 @@
 [
   {
+    "id": "symbols-2026-11-13T10-51-46-098Z",
+    "name": "symbols",
+    "updatedAt": "2026-11-13T10:52:12.927Z",
+    "animation_asset": {
+      "id": "symbols-2026-11-13T10-51-46-098Z",
+      "name": "symbols",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "cherry",
+          "cherry2",
+          "gunslinger"
+        ],
+        "loop_type": [],
+        "state": [
+          "default-cherry"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "symbols-2026-11-13T10-51-46-098Z",
+      "manifestPath": "symbols-2026-11-13T10-51-46-098Z/manifest.json",
+      "files": [
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/symbols/symbols.json",
+          "name": "symbols/symbols.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/symbols/symbols.atlas.txt",
+          "name": "symbols/symbols.atlas.txt",
+          "role": "atlas",
+          "format": "atlas.txt"
+        },
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/symbols/symbols.png",
+          "name": "symbols/symbols.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/cherry-preview.webp",
+          "name": "cherry-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "symbols-2026-11-13T10-51-46-098Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "symbols.json",
+      "atlas": "symbols.atlas.txt",
+      "textures": [
+        "symbols.png"
+      ],
+      "animationCount": 3,
+      "animationNames": [
+        "cherry",
+        "cherry2",
+        "gunslinger"
+      ],
+      "defaultAnimation": "cherry",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "character2-2026-11-01T23-31-46-459Z",
     "name": "character2",
     "updatedAt": "2026-11-01T23:32:04.150Z",
