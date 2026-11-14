@@ -1,5 +1,129 @@
 [
   {
+    "id": "spine-link-directcheck-2026-11-14T08-58-02-742Z",
+    "name": "spine-link-directcheck-2026-11-14T08-58-02-742Z",
+    "updatedAt": "2026-11-14T08:58:04.805Z",
+    "animation_asset": {
+      "id": "spine-link-directcheck-2026-11-14T08-58-02-742Z",
+      "name": "spine-link-directcheck-2026-11-14T08-58-02-742Z",
+      "domain": "gamedev",
+      "asset_category": "fx",
+      "animation_type": "fx",
+      "skeleton_type": "fx",
+      "content_type": "fx",
+      "taxonomy": {
+        "category": "effects",
+        "class": "vfx",
+        "type": "effect",
+        "tags": [
+          "fx"
+        ]
+      },
+      "tags": {
+        "gameplay_role": [
+          "feedback"
+        ],
+        "element": [
+          "energy"
+        ],
+        "loop_type": [
+          "effect"
+        ],
+        "animation_state": [
+          "summon_fx",
+          "summon_fx_reel"
+        ],
+        "state": [
+          "default-summon_fx"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "rig_type": [
+          "spine-json"
+        ],
+        "quality_level": [
+          "auto-tagged"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z",
+      "manifestPath": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z/manifest.json",
+      "files": [
+        {
+          "path": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z/fool_demo_fx.json",
+          "name": "fool_demo_fx.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z/fool_demo_fx.atlas",
+          "name": "fool_demo_fx.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z/fool_demo_fx.png",
+          "name": "fool_demo_fx.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "library_02/spine-link-directcheck-2026-11-14T08-58-02-742Z/upload-audit.json",
+          "name": "upload-audit.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "fool_demo_fx.json",
+      "atlas": "fool_demo_fx.atlas",
+      "textures": [
+        "fool_demo_fx.png"
+      ],
+      "animationCount": 2,
+      "animationNames": [
+        "summon_fx",
+        "summon_fx_reel"
+      ],
+      "defaultAnimation": "summon_fx",
+      "fileCount": 4,
+      "skeletonCount": 2,
+      "atlasCount": 1,
+      "textureCount": 1
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [
+        "fx"
+      ],
+      "confidence": 0.55,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "symbols-2026-11-13T10-51-46-098Z",
     "name": "symbols",
     "updatedAt": "2026-11-13T10:52:12.927Z",
