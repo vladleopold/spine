@@ -5,7 +5,7 @@
     "sourceKind": "spine-project",
     "projectFile": "spineboy-ess.spine",
     "imagesRoot": "images",
-    "conversionStatus": "pending",
+    "conversionStatus": "ready",
     "hiddenFromPublicLibrary": true,
     "files": [
       "spineboy-ess.spine",
@@ -49,21 +49,38 @@
       "images/rear-shin.png",
       "images/rear-thigh.png",
       "images/rear-upper-arm.png",
-      "images/torso.png"
+      "images/torso.png",
+      "export/spineboy-ess.atlas",
+      "export/spineboy-ess.json",
+      "export/spineboy-ess.png"
     ],
     "uploadedAt": "2026-11-14T11:11:48.158Z",
     "previewPath": "library_02/licensed-e2e-2026-11-14T11-11-38-942Z",
-    "webmStatus": "waiting-for-editor",
-    "skeleton": "",
-    "atlas": "",
-    "animations": [],
+    "webmStatus": "pending",
+    "skeleton": "export/spineboy-ess.json",
+    "atlas": "export/spineboy-ess.atlas",
+    "animations": [
+      "aim",
+      "death",
+      "hit",
+      "idle",
+      "jump",
+      "run",
+      "shoot",
+      "walk"
+    ],
     "ownerAnonId": "anon_licensed_e2e_dd5be8dfade6e1",
     "ownerAnonFingerprint": "licensed-e2e",
     "publicOwnerId": "u_gipl3n",
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/licensed-e2e-2026-11-14T11-11-38-942Z/images/crosshair.png?v=2026-11-14T11-11-48.158Z",
     "webmPreview": "",
-    "dispatchStatus": "project-export-pending"
+    "dispatchStatus": "pending",
+    "conversionError": "",
+    "textures": [
+      "export/spineboy-ess.png"
+    ],
+    "defaultAnimation": "aim"
   },
   {
     "id": "spine-link-e2e-2026-11-14T09-30-30-139Z",
