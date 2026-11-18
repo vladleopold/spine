@@ -1196,9 +1196,14 @@ try {
           { stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }
         );
         if (!raw || raw.length < 100) return false;
-        let lit = 0;
-        for (let i = 0; i < raw.length; i++) if (raw[i] > 24) lit++;
-        return lit >= 24 && lit / raw.length >= 0.02;
+        let lit = 0, different = 0;
+        const background = raw[0];
+        for (let i = 0; i < raw.length; i++) {
+          if (raw[i] > 24) lit++;
+          if (Math.abs(raw[i] - background) >= 10) different++;
+        }
+        // Dark but detailed skins are real content, not a black poster.
+        return (lit >= 24 && lit / raw.length >= 0.02) || different >= 12;
       } catch (e) {
         return false;
       }
