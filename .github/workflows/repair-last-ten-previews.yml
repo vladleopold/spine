@@ -71,6 +71,7 @@ jobs:
             sudo apt-get install -y -qq ffmpeg
           fi
       - name: Render and validate actual Spine video + still posters
+        if: matrix.entry.needsRender
         shell: bash
         env:
           ENTRY_ID: ${{ matrix.entry.id }}
@@ -137,6 +138,7 @@ jobs:
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$ENTRY_ID/meta.json"
       - uses: actions/upload-artifact@v4
+        if: matrix.entry.needsRender
         with:
           name: latest10-${{ matrix.entry.id }}
           path: out/${{ matrix.entry.id }}/
