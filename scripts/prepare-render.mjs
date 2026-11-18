@@ -10,7 +10,9 @@ if(work.startsWith('/')||work.split('/').includes('..'))throw Error('Invalid wor
 // Production's synthetic four-file upload verifies storage/deletion only. Its
 // placeholder animation is not a render acceptance test and must not consume
 // a heavy browser/ffmpeg worker or generate a false failed preview.
-const skipRender=found.entry.testOnly===true;
+const skipRender=found.entry.testOnly===true &&
+  found.entry.hiddenFromPublicLibrary===true &&
+  /^spine-link-e2e-\d{4}-/.test(String(config.uploadId||''));
 if(!skipRender) {
   execFileSync('git',['sparse-checkout','add','--skip-checks',`/${work}/`],{stdio:'inherit'});
 } else {
