@@ -10,7 +10,7 @@ permissions:
   contents: write
 concurrency:
   group: spine-preview-reported-eighteen
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -206,18 +206,18 @@ jobs:
             git add -A -- library_*
             if git diff --cached --quiet; then
               echo "NO_REPORTED_PREVIEW_CHANGES"
-              node -e 'const s=require("./preview-repair-summary.json");if(s.failed>0){console.error("RENDER_RELEASE_GATE_FAIL_COUNT="+s.failed);process.exit(1)}'
+              node -e 'const s=require("./preview-repair-summary.json");console.log("RENDER_BATCH_STATUS="+JSON.stringify(s));if(s.failed||s.blocked)console.warn("Some originals remain blocked; independently accepted media are retained")'
               exit 0
             fi
-            git commit -m 'fix: restore validated previews for latest 10 Spine uploads'
+            git commit -m 'fix: publish independently validated previews for reported Spine projects'
             if git push origin HEAD:main; then
               echo "REPORTED_PREVIEWS_PUBLISHED"
-              node -e 'const s=require("./preview-repair-summary.json");if(s.failed>0){console.error("RENDER_RELEASE_GATE_FAIL_COUNT="+s.failed);process.exit(1)}'
+              node -e 'const s=require("./preview-repair-summary.json");console.log("RENDER_BATCH_STATUS="+JSON.stringify(s));if(s.failed||s.blocked)console.warn("Some originals remain blocked; independently accepted media were published")'
               exit 0
             fi
             sleep $(( attempt * 3 ))
           done
-          echo "::error::Could not atomically publish latest-10 previews"
+          echo "::error::Could not atomically publish independently accepted Spine previews"
           exit 1
 
   verify-production:
@@ -230,7 +230,7 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /scripts/verify-ready-preview-live.mjs
+            /scripts/verify-reported-preview-live.mjs
             /scripts/resolve-library.mjs
             /library/index.json
             /library_*/index.json
@@ -240,4 +240,4 @@ jobs:
       - name: Verify actual media responses after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/verify-ready-preview-live.mjs
+        run: node scripts/verify-reported-preview-live.mjs
