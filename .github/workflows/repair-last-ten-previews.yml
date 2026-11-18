@@ -9,6 +9,8 @@ on:
       - scripts/test-atlas-pages.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/spine-version-detect.mjs
+      - scripts/test-spine-version-detect.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/verify-latest-ten-live.mjs
@@ -49,6 +51,7 @@ jobs:
           node --check scripts/recover-recorded-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node scripts/test-spine-version-detect.mjs
           echo "LATEST10_INVENTORY_VALID"
   render:
     needs: inventory
@@ -138,8 +141,8 @@ jobs:
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
             echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
-            echo "::warning::Native Spine rendering failed; no preview will be published"
-            exit 0
+            echo "::error::Native Spine rendering failed; no preview will be published"
+            exit 1
           fi
           for suffix in '' '-medium' '-low'; do
             for ext in webm webp; do
@@ -168,7 +171,7 @@ jobs:
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$ENTRY_ID/meta.json"
       - uses: actions/upload-artifact@v4
-        if: matrix.entry.needsRender
+        if: always() && matrix.entry.needsRender
         with:
           name: latest10-${{ matrix.entry.id }}
           path: out/${{ matrix.entry.id }}/
