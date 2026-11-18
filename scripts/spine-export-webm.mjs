@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages } from "./atlas-pages.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -100,7 +101,9 @@ if (sets.length === 0) {
 const firstSet = sets[0];
 const setFiles = fs.readdirSync(firstSet.path);
 const skeletonFile = setFiles.find(f => /\.json$/i.test(f) && (() => { try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(firstSet.path, f), 'utf8')).bones); } catch { return false; } })()) || setFiles.find(f => /\.skel$/i.test(f));
-const atlasFile = setFiles.find(f => /\.(atlas|atlas\.txt|atlas\.docx)$/i.test(f));
+// A project may include several atlases (e.g. its skeleton and an unrelated
+// character). Taking the first atlas breaks valid animations and preview jobs.
+const atlasFile = chooseAtlasForSkeleton(skeletonFile, setFiles);
 const textureFiles = setFiles.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
 if (!skeletonFile || !atlasFile || textureFiles.length === 0) {
@@ -527,6 +530,9 @@ async function warmUpAnimations() {
 const atlasLocalPath = path.join(firstSet.path, atlasFile);
 let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
+const reconciledAtlas = reconcileDdsAtlasPages(atlasContent,textureFiles);
+atlasContent = reconciledAtlas.text;
+
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
