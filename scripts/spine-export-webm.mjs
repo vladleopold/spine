@@ -987,6 +987,77 @@ try {
   } else {
     fs.writeFileSync(videoPath, Buffer.from(videoDataUrl.split(',')[1], 'base64'));
   }
+  // Headless Chromium may display a nonempty WebGL canvas while
+  // MediaRecorder captures uniform dark frames on legacy Spine 3.8 runtimes.
+  // Sample the ENCODED result, not just a live player pixel, and if it is
+  // effectively blank, capture deterministic PNG frames from the real Spine
+  // runtime and encode those as the WebM source. These temporary frames never
+  // leave the private runner and are not included in any artifact.
+  if (!args.alpha) {
+    const seemsVisible = (data) => {
+      if (!data || data.length < 200) return false;
+      const background = data[0];
+      let differing = 0, lit = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (Math.abs(data[i] - background) >= 10) differing++;
+        if (data[i] > 24) lit++;
+      }
+      return differing >= 12 || lit >= 24;
+    };
+    const encodedHasContent = (filename, duration) => {
+      const seconds = [0,0.18,0.55,1,2];
+      if (duration > 0) for (const part of [0.12,0.32,0.57,0.81,0.94])
+        seconds.push(Math.max(0, duration * part));
+      for (const ss of seconds.filter(x => x < duration || duration <= 0)) {
+        try {
+          const gray = execFileSync('ffmpeg', [
+            '-v','error','-ss',String(ss),'-i',filename,'-frames:v','1',
+            '-vf','scale=48:48,format=gray','-f','rawvideo','-',
+          ], {stdio:['ignore','pipe','ignore'],maxBuffer:100000});
+          if (seemsVisible(gray)) return true;
+        } catch {}
+      }
+      return false;
+    };
+    if (!encodedHasContent(videoPath, captureDuration)) {
+      console.error('RECORDED_WEBM_BLANK: retrying deterministic on-screen Spine rendering');
+      const framesDir = path.join(tempDir,'deterministic-frames');
+      fs.mkdirSync(framesDir,{recursive:true});
+      const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
+      const frameCount = Math.min(420,Math.max(2,Math.ceil(duration*args.fps)));
+      const intervalMs = duration * 1000 / frameCount;
+      await page.clock.install({time:new Date('2020-01-01T00:00:00Z')});
+      await page.clock.pauseAt(new Date('2020-01-01T00:01:00Z'));
+      await page.evaluate(name=>{
+        const player=window.__exportPlayer;
+        if(!player || !player.animationState)throw new Error('No active Spine runtime for deterministic frames');
+        player.animationState.clearTracks();
+        player.animationState.setAnimation(0,name,true);
+        player.paused=false;
+      },targetAnimation);
+      for(let frame=0;frame<frameCount;frame++){
+        await page.clock.runFor(intervalMs);
+        const pngBase64=await page.evaluate(()=>{
+          const canvas=window.__exportPlayer && window.__exportPlayer.canvas;
+          return canvas ? canvas.toDataURL('image/png').split(',')[1] : null;
+        });
+        if(!pngBase64)throw new Error('Deterministic Spine frame unavailable');
+        fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),
+          Buffer.from(pngBase64,'base64'));
+      }
+      const recovered=path.join(tempDir,'deterministic.webm');
+      execFileSync('ffmpeg',[
+        '-y','-v','error','-framerate',String(frameCount/duration),
+        '-i',path.join(framesDir,'%06d.png'),
+        '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
+        '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
+      ],{stdio:'inherit'});
+      if (!encodedHasContent(recovered,duration))
+        throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
+      fs.copyFileSync(recovered,videoPath);
+      console.error('DETERMINISTIC_FRAME_FALLBACK_PASS');
+    }
+  }
   const webmBuffer = fs.readFileSync(videoPath);
 
   await context.close();
