@@ -25,6 +25,20 @@ jobs:
           - Spine-animation-2026-11-17T18-36-51-976Z
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library_02/index.json
+            /package.json
+            /package-lock.json
+      - name: Fetch only this failing project's private source
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          git sparse-checkout add --skip-checks "/library_02/$ENTRY_ID/"
       - uses: actions/setup-node@v4
         with: {node-version: '22', cache: npm}
       - name: Install renderer (no original asset publication)
