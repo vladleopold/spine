@@ -40,5 +40,15 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
     /webp.*failed/i.test(log)?"WEBP_POSTER_FAILURE":
     /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
     "UNCLASSIFIED";
-  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts,stages,distinctError}));
+  const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
+  const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
+    .map(x=>[Number(x[1]),Number(x[2])]).slice(-8);
+  const selectedSkinCount=[...log.matchAll(/Skin candidates:\s*(\[[^\n]*\])/g)]
+    .map(x=>{try{return JSON.parse(x[1]).length;}catch{return 0;}}).at(-1)||0;
+  const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
+    .map(x=>Number(x[1])).at(-1)||0;
+  const sourceSignal=log.includes('NO_VISIBLE_SPINE_FRAME')?'NO_RENDERED_SPINE_PIXELS':
+    log.includes('High quality uses original VP9 recording')?'WEBM_SOURCE_AVAILABLE':'UNKNOWN';
+  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts,
+    stages,distinctError,peaks:peaks.slice(-8),canvasSizes,selectedSkinCount,capturedVp9Bytes,sourceSignal}));
 }
