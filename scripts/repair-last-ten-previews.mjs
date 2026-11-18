@@ -30,13 +30,27 @@ function bundleOk(entry) {
     files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
     files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
 }
+const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
+  "preview.webp","preview-medium.webp","preview-low.webp"];
+function existingMediaOk(entry){
+  const collection=readIndex(root,entry.basePath)||[];
+  const record=collection.find(x=>x.id===entry.id);
+  if(record?.webmStatus!=="ready")return false;
+  return mediaNames.every(name=>{
+    try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
+    catch{return false;}
+  });
+}
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map(e=>({id:e.id,ready:bundleOk(e),
-    animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-      e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""}));
+  const matrix=latest.map(e=>{
+    const ready=bundleOk(e);
+    return {id:e.id,ready,needsRender:ready&&!existingMediaOk(e),
+      animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
+        e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
+  });
   console.log("matrix="+JSON.stringify(matrix));
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
@@ -58,6 +72,17 @@ if(action==="matrix"){
       record.previewStatus="blocked";
       record.previewError="Incomplete skeleton / atlas / texture bundle";
       summary.blocked++;
+      continue;
+    }
+    if(item.needsRender===false){
+      if(existingMediaOk(entryInfo)){
+        summary.ready++;
+        continue;
+      }
+      record.webmStatus="failed";
+      record.previewStatus="failed";
+      record.previewError="Media previously marked ready but expected outputs are missing";
+      summary.failed++;
       continue;
     }
     const artifact=path.join(base,"latest10-"+item.id);
