@@ -19,11 +19,12 @@ try {
   fs.writeFileSync(fakeGit, '#!/bin/sh\nprintf "%s\\n" "$*" >> "$SPINE_TEST_GIT_LOG"\n');
   fs.chmodSync(fakeGit, 0o755);
 
-  function verify({ testOnly, expectedSkip, previewPath = 'library/synthetic' }) {
+  function verify({ testOnly, hidden = true, expectedSkip,
+    id = 'spine-link-e2e-2026-11-18T00-00-00Z', previewPath = 'library/synthetic' }) {
     fs.writeFileSync(path.join(lib, 'index.json'),
-      JSON.stringify([{ id: 'synthetic', testOnly, previewPath }]));
+      JSON.stringify([{ id, testOnly, hiddenFromPublicLibrary: hidden, previewPath }]));
     fs.writeFileSync(eventPath, JSON.stringify({
-      client_payload: { uploadId: 'synthetic' },
+      client_payload: { uploadId: id },
     }));
     fs.writeFileSync(outputPath, '');
     fs.writeFileSync(gitLog, '');
@@ -51,6 +52,8 @@ try {
   }
 
   verify({ testOnly: true, expectedSkip: true });
+  verify({ testOnly: true, hidden: false, expectedSkip: false });
+  verify({ testOnly: true, id: 'normal-work', expectedSkip: false });
   verify({ testOnly: false, expectedSkip: false });
   verify({ testOnly: 'true', expectedSkip: false });
   verify({ testOnly: undefined, expectedSkip: false });
