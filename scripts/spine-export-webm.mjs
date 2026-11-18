@@ -799,14 +799,22 @@ try {
 
   // Serve runtime scripts and styles from the checkout. A transient CDN outage
   // must never stop a deterministic render of already committed Spine assets.
-  for (const [url, filename, type] of (isLegacy || modernRuntime === '4.3' ? [
+  // Fetch the exact 4.0/4.1/4.2 runtime into an isolated CI directory.
+  // A CDN URL is kept as the virtual page URL, but it is fulfilled locally,
+  // avoiding timeout/redirect/CORS failures on the runner.
+  const versionedRuntimeRoot = process.env.SPINE_VERSIONED_PLAYER_DIR || '';
+  const versionedAssets = versionedRuntimeRoot && modernRuntime !== '4.3' && !isLegacy ? [
+    [playerJsUrl, path.join(versionedRuntimeRoot,'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
+    [playerCssUrl, path.join(versionedRuntimeRoot,'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
+  ] : [];
+  for (const [url, filename, type] of [...(isLegacy || modernRuntime === '4.3' ? [
     [playerJsUrl, isLegacy
       ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.js`)
       : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
     [playerCssUrl, isLegacy
       ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.css`)
       : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
-  ] : [])) {
+  ] : []), ...versionedAssets]) {
     if (!fs.existsSync(filename)) {
       console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
       continue;
@@ -815,6 +823,7 @@ try {
       status: 200, contentType: type, body: fs.readFileSync(filename),
     }));
     console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(filename));
+    if(versionedAssets.some(asset=>asset[0]===url)) console.error('VERSIONED_LOCAL_PLAYER_READY '+modernRuntime);
   }
 
   page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));
