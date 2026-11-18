@@ -8,9 +8,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+# Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
 concurrency:
   group: spine-preview-reported-eighteen
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   inventory:
     runs-on: ubuntu-24.04
