@@ -36,6 +36,15 @@ jobs:
           pattern: latest10-*
           path: downloaded-latest10
           merge-multiple: false
+      - name: Install ffprobe for real decoded-frame quality gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          command -v ffprobe
       - name: Validate every submitted frame, SHA-256 and real WebP
         shell: bash
         run: |
