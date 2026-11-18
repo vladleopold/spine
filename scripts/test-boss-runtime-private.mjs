@@ -38,7 +38,7 @@ try{
     window.__playerState={success:false,error:"",runtime:false,version:versions};
     try{
      window.__playerState.runtime=Boolean(window.spine&&window.spine.SpinePlayer);
-     const animation="idle" in versions?versions.idle:versions.first;
+     const animation=versions.idle||versions.first;
      window.__player=new window.spine.SpinePlayer("player",{
       jsonUrl:"/boss.json",atlasUrl:"/boss.atlas",animation,showControls:false,
       premultipliedAlpha:false,
@@ -48,7 +48,7 @@ try{
     }catch(e){window.__playerState.error=String(e?.message||e).slice(0,280);}
     return window.__playerState;
    },{first:Object.keys(json.animations||{})[0]||"",idle:Object.keys(json.animations||{}).find(x=>/idle/i.test(x))});
-   await p.waitForFunction(()=>window.__playerState.success||window.__playerState.error,{timeout:25000}).catch(()=>{});
+   await p.waitForFunction(()=>window.__playerState.success||window.__playerState.error,null,{timeout:25000}).catch(()=>{});
    const summary=await p.evaluate(()=>({state:window.__playerState,
      canvasCount:document.querySelectorAll("canvas").length,
      canvasSize:[...document.querySelectorAll("canvas")].map(c=>[c.width,c.height]).slice(0,2)}));
