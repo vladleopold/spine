@@ -35,7 +35,8 @@ const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map(e=>({id:e.id,ready:bundleOk(e),
-    animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":""}));
+    animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
+      e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""}));
   console.log("matrix="+JSON.stringify(matrix));
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
@@ -113,5 +114,6 @@ if(action==="matrix"){
     summary.ready++;
   }
   for(const [p,a] of indexes)fs.writeFileSync(p,JSON.stringify(a,null,2)+"\n");
+  fs.writeFileSync(path.join(root,"preview-repair-summary.json"), JSON.stringify(summary));
   console.log("PREVIEW_REPAIR_RESULT="+JSON.stringify(summary));
 }else throw new Error("Unsupported action");
