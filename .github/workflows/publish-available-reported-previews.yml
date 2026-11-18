@@ -9,7 +9,7 @@ permissions:
   contents: write
   actions: read
 concurrency:
-  group: spine-library-commit
+  group: spine-verified-preview-fast-publish
   cancel-in-progress: false
 jobs:
   publish:
@@ -36,15 +36,20 @@ jobs:
           pattern: latest10-*
           path: downloaded-latest10
           merge-multiple: false
-      - name: Install ffprobe for real decoded-frame quality gates
+      - name: Prepare portable ffprobe without waiting for apt mirrors
         shell: bash
         run: |
           set -euo pipefail
           if ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq ffmpeg
+            mkdir -p "$RUNNER_TEMP/ffprobe-runtime"
+            timeout 150 npm --prefix "$RUNNER_TEMP/ffprobe-runtime" install --ignore-scripts --no-audit --no-fund --no-save ffprobe-static@3.1.0
+            FFPATH=$(node -e 'console.log(require(process.env.RUNNER_TEMP+"/ffprobe-runtime/node_modules/ffprobe-static").path)')
+            test -x "$FFPATH"
+            ln -sf "$FFPATH" "$RUNNER_TEMP/ffprobe-runtime/ffprobe"
+            echo "$RUNNER_TEMP/ffprobe-runtime" >> "$GITHUB_PATH"
+          else
+            command -v ffprobe
           fi
-          command -v ffprobe
       - name: Validate every submitted frame, SHA-256 and real WebP
         shell: bash
         run: |
