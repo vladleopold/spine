@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
 import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
+import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 
 const args = {
   uploadId: '',
@@ -379,12 +380,11 @@ function sanitizedSkelBuffer(buffer, version = "") {
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
-let targetAnimation = args.animation || entry.defaultAnimation || '';
 const availableAnimations = readAnimationNames(skeletonFilePath);
-if (availableAnimations.length > 0) {
-  if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
-    targetAnimation = availableAnimations[0] || '';
-  }
+let targetAnimation = choosePreviewAnimation(availableAnimations, args.animation || entry.defaultAnimation || '');
+if (skeletonVersion === 'unknown') {
+  console.error('SPINE_VERSION_UNKNOWN: cannot select a compatible player runtime for this skeleton');
+  process.exit(1);
 }
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
