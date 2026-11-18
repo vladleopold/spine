@@ -55,11 +55,17 @@ jobs:
           for attempt in 1 2 3 4 5; do
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
-            node scripts/publish-verified-preview-artifacts.mjs
-            git add -A -- library_02/index.json \
-              library_02/Spine-animation-2026-11-14T22-21-53-616Z/ \
-              library_02/Spine-animation-2026-11-17T18-17-09-503Z/ \
-              library_02/Spine-animation-2026-11-17T18-19-06-491Z/
+            node scripts/publish-verified-preview-artifacts.mjs | tee "$RUNNER_TEMP/verified-previews.log"
+            # The validator may accept more projects as concurrent CI renders
+            # finish. Stage exactly the verified media, never an index whose
+            # matching WebM/WebP assets were omitted from this commit.
+            mapfile -t published_ids < <(sed -n 's/^VERIFIED_PREVIEW_STAGED \([^ ]*\) .*/\1/p' "$RUNNER_TEMP/verified-previews.log")
+            paths=(library_02/index.json)
+            for id in "${published_ids[@]}"; do
+              [[ "$id" =~ ^Spine-animation-[0-9T.Z-]+$ ]] || exit 1
+              paths+=("library_02/$id/")
+            done
+            git add --sparse -A -- "${paths[@]}"
             if git diff --cached --quiet; then
               echo "VERIFIED_MEDIA_ALREADY_PUBLISHED"
               exit 0
@@ -78,11 +84,10 @@ jobs:
         run: |
           set -euo pipefail
           node --input-type=module <<'NODE'
-          const names=[
-            'Spine-animation-2026-11-14T22-21-53-616Z',
-            'Spine-animation-2026-11-17T18-17-09-503Z',
-            'Spine-animation-2026-11-17T18-19-06-491Z',
-          ];
+          const fs=await import('node:fs');
+          const log=fs.readFileSync(process.env.RUNNER_TEMP+'/verified-previews.log','utf8');
+          const names=[...log.matchAll(/^VERIFIED_PREVIEW_STAGED ([^ ]+) /gm)].map(x=>x[1]);
+          if(!names.length)throw Error('No independently validated media to publish');
           for(const id of names)for(const ext of ['webm','webp']){
             const url='https://spine-link.vercel.app/assets/library_02/'+id+'/preview.'+ext+'?e=accepted';
             let valid=false,code=0,bytes=0;
