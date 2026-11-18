@@ -1,0 +1,96 @@
+name: Publish already validated reported Spine previews
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-available-reported-previews.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: spine-library-commit
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library_02/index.json
+            /library_02/Spine-animation-2026-11-14T22-21-53-616Z/
+            /library_02/Spine-animation-2026-11-17T18-17-09-503Z/
+            /library_02/Spine-animation-2026-11-17T18-19-06-491Z/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Retrieve real validated preview artifacts
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 44342128972
+          github-token: ${{ github.token }}
+          pattern: latest10-*
+          path: downloaded-latest10
+          merge-multiple: false
+      - name: Validate every submitted frame, SHA-256 and real WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check scripts/publish-verified-preview-artifacts.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/publish-verified-preview-artifacts.mjs
+            git add -A -- library_02/index.json \
+              library_02/Spine-animation-2026-11-14T22-21-53-616Z/ \
+              library_02/Spine-animation-2026-11-17T18-17-09-503Z/ \
+              library_02/Spine-animation-2026-11-17T18-19-06-491Z/
+            if git diff --cached --quiet; then
+              echo "VERIFIED_MEDIA_ALREADY_PUBLISHED"
+              exit 0
+            fi
+            git commit -m 'fix: publish quality-approved real Spine preview videos and posters'
+            if git push origin HEAD:main; then
+              echo "VERIFIED_PREVIEW_ASSETS_PUBLISHED"
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          echo '::error::Unable to publish verified media after five guarded retries'
+          exit 1
+      - name: Verify live production media signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const names=[
+            'Spine-animation-2026-11-14T22-21-53-616Z',
+            'Spine-animation-2026-11-17T18-17-09-503Z',
+            'Spine-animation-2026-11-17T18-19-06-491Z',
+          ];
+          for(const id of names)for(const ext of ['webm','webp']){
+            const url='https://spine-link.vercel.app/assets/library_02/'+id+'/preview.'+ext+'?e=accepted';
+            let valid=false,code=0,bytes=0;
+            for(let retry=0;retry<5;retry++){
+              try{
+                const r=await fetch(url,{signal:AbortSignal.timeout(15000),cache:'no-store'});
+                code=r.status;
+                if(r.ok){
+                  const data=new Uint8Array(await r.arrayBuffer());bytes=data.length;
+                  valid=ext==='webm'? data[0]===26&&data[1]===69&&data[2]===223&&data[3]===163:
+                    String.fromCharCode(...data.subarray(0,4))==='RIFF'&&String.fromCharCode(...data.subarray(8,12))==='WEBP';
+                  if(valid&&bytes>128)break;
+                }
+              }catch{}
+              await new Promise(resolve=>setTimeout(resolve,3000));
+            }
+            console.log('PUBLISHED_MEDIA_PROOF',id,ext,code,bytes,valid);
+            if(!valid||bytes<=128)process.exitCode=1;
+          }
+          NODE
