@@ -1,0 +1,145 @@
+name: Repair and accept newest 10 Spine preview renders
+on:
+  push:
+    branches: [main, fix/last-ten-preview-generator-20261118]
+    paths:
+      - .github/workflows/repair-last-ten-previews.yml
+      - scripts/repair-last-ten-previews.mjs
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.latest.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Enumerate 10 newest uploads and validate required source file triads
+        id: latest
+        shell: bash
+        run: |
+          node scripts/repair-last-ten-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check scripts/repair-last-ten-previews.mjs
+          node --check scripts/spine-export-webm.mjs
+          echo "LATEST10_INVENTORY_VALID"
+  render:
+    needs: inventory
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install native Chromium renderer and video/poster encoders
+        if: matrix.entry.ready
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.59.1
+          npx playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg webp
+      - name: Render and validate actual Spine video + still posters
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+        run: |
+          set -euo pipefail
+          mkdir -p "out/$ENTRY_ID"
+          if [[ "$ENTRY_READY" != true ]]; then
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
+            exit 0
+          fi
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/$ENTRY_ID-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
+          code=$?
+          set -e
+          if (( code != 0 )); then
+            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
+            echo "::warning::Native Spine rendering failed; no preview will be published"
+            exit 0
+          fi
+          for suffix in '' '-medium' '-low'; do
+            for ext in webm webp; do
+              in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
+              test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
+              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+            done
+            ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
+              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+          done
+          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
+            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
+              throw new Error("Export metadata incomplete");
+            m.ok=true;
+            fs.writeFileSync(p,JSON.stringify(m));
+            console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
+          ' "out/$ENTRY_ID/meta.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: latest10-${{ matrix.entry.id }}
+          path: out/${{ matrix.entry.id }}/
+          if-no-files-found: error
+          retention-days: 1
+  publish:
+    needs: [inventory, render]
+    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: latest10-*
+          path: downloaded-latest10
+          merge-multiple: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Publish verified only, retain source untouched, flag missing and failed
+        shell: bash
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.matrix }}
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/repair-last-ten-previews.mjs merge
+            git add -- library library_* 2>/dev/null || git add -A
+            if git diff --cached --quiet; then echo "NO_PREVIEW_CHANGES"; exit 0; fi
+            git commit -m 'fix: restore validated previews for latest 10 Spine uploads'
+            if git push origin HEAD:main; then
+              echo "LATEST10_REPAIR_PUBLISHED"
+              exit 0
+            fi
+            sleep $(( attempt * 3 ))
+          done
+          echo "::error::Could not atomically publish latest-10 previews"
+          exit 1
