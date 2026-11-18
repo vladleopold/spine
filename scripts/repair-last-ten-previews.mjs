@@ -10,14 +10,18 @@ import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 
 const root=process.cwd();
-const idPattern=/^Spine-animation-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/;
+// Work names include wolf, cherry, characters and user-defined prefixes.
+// Filtering only "Spine-animation-*" silently excluded genuinely new uploads.
+const idPattern=/^[a-z0-9][a-z0-9._-]{0,200}$/i;
 function newestTen() {
   const entries=[];
   for(const folder of listCollectionFolders(root)) {
     for(const entry of readIndex(root,folder)||[]) {
       if(!idPattern.test(entry?.id||""))continue;
+      const timestamp=Date.parse(entry.uploadedAt||"");
+      if(!Number.isFinite(timestamp))continue;
       entries.push({id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+"/"+entry.id,
-        at:Date.parse(entry.uploadedAt||0)||0});
+        at:timestamp});
     }
   }
   return entries.sort((a,b)=>b.at-a.at).slice(0,10);
