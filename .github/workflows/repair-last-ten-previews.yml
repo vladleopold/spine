@@ -1,7 +1,7 @@
 name: Repair and accept newest 10 Spine preview renders
 on:
   push:
-    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118]
+    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118]
     paths:
       - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
@@ -9,6 +9,7 @@ on:
       - scripts/test-atlas-pages.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/install-pinned-spine-players.sh
       - scripts/spine-version-detect.mjs
       - scripts/test-spine-version-detect.mjs
       - scripts/preview-animation-choice.mjs
@@ -56,8 +57,22 @@ jobs:
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
           echo "LATEST10_INVENTORY_VALID"
+  runtime-package-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/install-pinned-spine-players.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all three pinned Spine runtime bundles load from disk
+        run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
   render:
-    needs: inventory
+    needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
@@ -90,6 +105,7 @@ jobs:
         run: |
           set -euo pipefail
           npm install --no-save --no-audit --no-fund playwright@1.59.1
+          bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
           if command -v google-chrome >/dev/null 2>&1; then
             echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
             echo "Using preinstalled Chrome for WebGL preview rendering"
