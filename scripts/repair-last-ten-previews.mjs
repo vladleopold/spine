@@ -60,7 +60,12 @@ if(action==="matrix"){
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
   });
-  console.log("matrix="+JSON.stringify(matrix));
+  const required=matrix.filter(x=>x.needsRender);
+  // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
+  // available clip has already been rendered and independently accepted.
+  console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
+  console.log("allEntries="+JSON.stringify(matrix));
+  console.log("renderCount="+required.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
