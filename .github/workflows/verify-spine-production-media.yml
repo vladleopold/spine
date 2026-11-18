@@ -1,0 +1,29 @@
+name: Verify live Spine media on last ten work pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-spine-production-media.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-live:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/resolve-library.mjs
+            /scripts/verify-ready-preview-live.mjs
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check every ready WebM/WebP via production HTTP and media signatures
+        run: |
+          node --check scripts/verify-ready-preview-live.mjs
+          node scripts/verify-ready-preview-live.mjs
