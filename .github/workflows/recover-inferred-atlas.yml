@@ -1,0 +1,35 @@
+name: Recover missing boss texture atlas privately
+on:
+  push:
+    branches: [fix/atlas-inference-boss-20261118]
+    paths: [lib/atlas-inference.js, scripts/generate-inferred-atlas.mjs, .github/workflows/recover-inferred-atlas.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  infer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/generate-inferred-atlas.mjs
+            lib/atlas-inference.js
+            library_02/boss_1-2026-11-14T20-07-17-943Z
+            package.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: npm install --no-save --ignore-scripts --no-package-lock pngjs@7.0.0
+      - name: Generate inference candidate and check all region bounds
+        run: node scripts/generate-inferred-atlas.mjs
+      - name: Commit atlas candidate to PRIVATE recovery branch only
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add library_02/boss_1-2026-11-14T20-07-17-943Z/boss_1.atlas library_02/boss_1-2026-11-14T20-07-17-943Z/atlas-inference.json
+          git commit -m 'recover: candidate boss_1 Spine atlas from packed image'
+          git push origin HEAD:fix/atlas-inference-boss-20261118
+          echo "PRIVATE_ATLAS_CANDIDATE_COMMITTED"
