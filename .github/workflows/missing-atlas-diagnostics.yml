@@ -2,7 +2,7 @@ name: Private missing-atlas geometry (no images or artifacts)
 on:
   push:
     branches: [fix/atlas-inference-boss-20261118]
-    paths: [scripts/diagnose-missing-atlas.mjs, .github/workflows/missing-atlas-diagnostics.yml]
+    paths: [scripts/diagnose-missing-atlas.mjs, scripts/run-atlas-inference.mjs, lib/atlas-inference.js, .github/workflows/missing-atlas-diagnostics.yml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,6 +15,8 @@ jobs:
         with:
           sparse-checkout: |
             scripts/diagnose-missing-atlas.mjs
+            scripts/run-atlas-inference.mjs
+            lib/atlas-inference.js
             library_02/boss_1-2026-11-14T20-07-17-943Z
             package.json
           sparse-checkout-cone-mode: false
@@ -23,5 +25,5 @@ jobs:
           node-version: '22'
       - name: Install PNG decoder for local memory only
         run: npm install --no-save --ignore-scripts --no-package-lock pngjs@7.0.0
-      - name: Print anonymous component geometry only
-        run: node scripts/diagnose-missing-atlas.mjs
+      - name: Check inferred atlas region coverage and rotations without NDA data
+        run: node scripts/run-atlas-inference.mjs
