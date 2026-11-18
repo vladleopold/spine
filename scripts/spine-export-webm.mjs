@@ -599,14 +599,18 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       if (!g) return -1;
       var w = g.drawingBufferWidth, h = g.drawingBufferHeight;
       if (!w || !h) return -1;
-      var sw = Math.min(w, 160), sh = Math.min(h, 160);
-      var x = (w - sw) >> 1, y = (h - sh) >> 1;
-      var buf = new Uint8Array(sw * sh * 4);
-      g.readPixels(x, y, sw, sh, g.RGBA, g.UNSIGNED_BYTE, buf);
-      var mx = 0;
-      for (var i = 0; i < buf.length; i += 4) {
-        var m = Math.max(buf[i], buf[i + 1], buf[i + 2]);
-        if (m > mx) mx = m;
+      // Check nine locations, not just the center of the game camera.
+      // No pixels are persisted or sent to CI.
+      var sw = Math.min(w, 112), sh = Math.min(h, 112);
+      var buf = new Uint8Array(sw * sh * 4), mx = 0;
+      for (var gy = 0; gy < 3; gy++) for (var gx = 0; gx < 3; gx++) {
+        var x = Math.max(0, Math.round((w - sw) * gx / 2));
+        var y = Math.max(0, Math.round((h - sh) * gy / 2));
+        g.readPixels(x, y, sw, sh, g.RGBA, g.UNSIGNED_BYTE, buf);
+        for (var i = 0; i < buf.length; i += 4) {
+          var m = Math.max(buf[i], buf[i+1], buf[i+2]);
+          if (m > mx) mx = m;
+        }
       }
       return mx;
     } catch (e) { return -1; }
@@ -898,6 +902,11 @@ try {
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {
       console.error(`Skin ${label} rendered no visible content, trying next skin...`);
       continue;
+    }
+    if (framePeak < FRAME_PEAK_MIN && !moreSkins) {
+      lastCaptureError = 'No visible pixels from any available Spine skin';
+      console.error('NO_VISIBLE_SPINE_FRAME');
+      break;
     }
 
     // Preserve the full animation duration.
