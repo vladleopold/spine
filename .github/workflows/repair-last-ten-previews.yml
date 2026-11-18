@@ -132,7 +132,9 @@ jobs:
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
             node scripts/repair-last-ten-previews.mjs merge
-            git add -- library library_* 2>/dev/null || git add -A
+            # Stage ONLY outputs inside library collections; CI artifacts and
+            # temporary source files must never enter the repository.
+            git add -A -- library_*
             if git diff --cached --quiet; then echo "NO_PREVIEW_CHANGES"; exit 0; fi
             git commit -m 'fix: restore validated previews for latest 10 Spine uploads'
             if git push origin HEAD:main; then
