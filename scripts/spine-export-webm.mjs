@@ -461,6 +461,12 @@ const versionMajor = skeletonVersion.split('.')[0] || '4';
 const isLegacy = parseInt(versionMajor, 10) < 4;
 const runtimeMinor = isLegacy ? (skeletonVersion.split('.')[1] || '8') : '';
 const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersion.slice(0,3) : '4.3';
+// Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
+// skeleton/atlas keys were introduced later; passing them leaves a blank canvas.
+const oldPlayerConfig = isLegacy || modernRuntime === '4.0' || modernRuntime === '4.1';
+const skeletonPlayerKey = isLegacy ? (skeletonFile.endsWith('.skel') ? 'skelUrl' : 'jsonUrl')
+  : oldPlayerConfig ? (skeletonFile.endsWith('.skel') ? 'binaryUrl' : 'jsonUrl') : 'skeleton';
+const atlasPlayerKey = oldPlayerConfig ? 'atlasUrl' : 'atlas';
 
 // Use reliable Vercel domain for legacy player assets to avoid DNS resolution issues in GitHub Actions
 const stableOrigin = 'https://spine-link.vercel.app';
@@ -496,7 +502,7 @@ async function warmUpAnimations() {
 
   const page = await browser.newPage();
   try {
-    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${playerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${playerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${legacy ? (skelKey==='skelUrl'?'skelUrl':'jsonUrl')+':\''+skelUrl+'\'' : skelKey+':\''+skelUrl+'\''},${legacy?'atlasUrl':'atlas'}:'${atlasUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:false,preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
+    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${playerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${playerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}+':\''+skelUrl+'\'',${atlasPlayerKey}:'${atlasUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:false,preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
     await page.setContent(warmupHtml, { waitUntil: 'networkidle', timeout: 60000 });
     let names = [];
     for (let i = 0; i < 40; i++) {
@@ -620,8 +626,8 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     } catch (e) { return -1; }
   };
   var config = {
-    ${isLegacy ? (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `jsonUrl: '${skeletonRawUrl}'`) : (skeletonKey === 'skelUrl' ? `skelUrl: '${skeletonRawUrl}'` : `skeleton: '${skeletonRawUrl}'`)},
-    ${isLegacy ? `atlasUrl: '${atlasRawUrl}'` : `atlas: '${atlasRawUrl}'`},
+    ${skeletonPlayerKey}: '${skeletonRawUrl}',
+    ${atlasPlayerKey}: '${atlasRawUrl}',
     textures: ${JSON.stringify(textureRawUrls)},
     animation: ${JSON.stringify(captureAnimation)},
     scenario: ${JSON.stringify(scenarioCycle)},
