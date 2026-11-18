@@ -9,6 +9,8 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
+import { detectSkeletonVersion } from './spine-version-detect.mjs';
+import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 
 const args = {
   uploadId: '',
@@ -110,49 +112,6 @@ const textureFiles = setFiles.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 if (!skeletonFile || !atlasFile || textureFiles.length === 0) {
   console.error(`Set ${firstSet.name} is missing required files`);
   process.exit(1);
-}
-
-function detectSkeletonVersion(filePath) {
-  try {
-    const ext = path.extname(filePath).toLowerCase();
-    if (ext === '.json') {
-      const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      return String(content?.skeleton?.spine || '').trim();
-    }
-    if (ext === '.skel') {
-      const buffer = fs.readFileSync(filePath);
-      const bytes = new Uint8Array(buffer);
-      let idx = 0;
-      function readInt() {
-        let byte = bytes[idx++];
-        let result = byte & 0x7f;
-        if ((byte & 0x80) !== 0) {
-          byte = bytes[idx++]; result |= (byte & 0x7f) << 7;
-          if ((byte & 0x80) !== 0) {
-            byte = bytes[idx++]; result |= (byte & 0x7f) << 14;
-            if ((byte & 0x80) !== 0) {
-              byte = bytes[idx++]; result |= (byte & 0x7f) << 21;
-              if ((byte & 0x80) !== 0) {
-                byte = bytes[idx++]; result |= (byte & 0x7f) << 28;
-              }
-            }
-          }
-        }
-        return result;
-      }
-      function readString() {
-        const byteCount = readInt();
-        if (byteCount <= 1) return '';
-        const start = idx;
-        idx += byteCount - 1;
-        return new TextDecoder().decode(bytes.slice(start, idx));
-      }
-      readString();
-      const version = readString();
-      return version.trim() || '4.0';
-    }
-  } catch { }
-  return '4.0';
 }
 
 /**
@@ -421,12 +380,11 @@ function sanitizedSkelBuffer(buffer, version = "") {
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
-let targetAnimation = args.animation || entry.defaultAnimation || '';
 const availableAnimations = readAnimationNames(skeletonFilePath);
-if (availableAnimations.length > 0) {
-  if (!targetAnimation || !availableAnimations.includes(targetAnimation)) {
-    targetAnimation = availableAnimations[0] || '';
-  }
+let targetAnimation = choosePreviewAnimation(availableAnimations, args.animation || entry.defaultAnimation || '');
+if (skeletonVersion === 'unknown') {
+  console.error('SPINE_VERSION_UNKNOWN: cannot select a compatible player runtime for this skeleton');
+  process.exit(1);
 }
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
