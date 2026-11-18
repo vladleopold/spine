@@ -7,6 +7,7 @@ on:
       - scripts/repair-last-ten-previews.mjs
       - scripts/atlas-pages.mjs
       - scripts/test-atlas-pages.mjs
+      - scripts/renderer-failure-class.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -75,6 +76,7 @@ jobs:
           code=$?
           set -e
           if (( code != 0 )); then
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
             echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
             echo "::warning::Native Spine rendering failed; no preview will be published"
             exit 0
@@ -138,10 +140,15 @@ jobs:
             # Stage ONLY outputs inside library collections; CI artifacts and
             # temporary source files must never enter the repository.
             git add -A -- library_*
-            if git diff --cached --quiet; then echo "NO_PREVIEW_CHANGES"; exit 0; fi
+            if git diff --cached --quiet; then
+              echo "NO_PREVIEW_CHANGES"
+              node -e 'const s=require("./preview-repair-summary.json");if(s.failed>0){console.error("RENDER_RELEASE_GATE_FAIL_COUNT="+s.failed);process.exit(1)}'
+              exit 0
+            fi
             git commit -m 'fix: restore validated previews for latest 10 Spine uploads'
             if git push origin HEAD:main; then
               echo "LATEST10_REPAIR_PUBLISHED"
+              node -e 'const s=require("./preview-repair-summary.json");if(s.failed>0){console.error("RENDER_RELEASE_GATE_FAIL_COUNT="+s.failed);process.exit(1)}'
               exit 0
             fi
             sleep $(( attempt * 3 ))
