@@ -1,0 +1,34 @@
+name: Synthetic WebM render gate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/prepare-render.mjs'
+      - 'scripts/test-synthetic-render-skip.mjs'
+      - '.github/workflows/spine-export-webm.yml'
+      - '.github/workflows/synthetic-webm-render-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/prepare-render.mjs'
+      - 'scripts/test-synthetic-render-skip.mjs'
+      - '.github/workflows/spine-export-webm.yml'
+      - '.github/workflows/synthetic-webm-render-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-render-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify syntax and synthetic-only exclusion
+        run: |
+          node --check scripts/prepare-render.mjs
+          node --check scripts/test-synthetic-render-skip.mjs
+          node scripts/test-synthetic-render-skip.mjs
