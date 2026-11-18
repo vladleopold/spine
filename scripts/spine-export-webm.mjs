@@ -988,6 +988,9 @@ try {
       videoDataUrl = null;
     }
     if (!videoDataUrl) {
+      // Headless MediaRecorder can return no Blob even though the real Spine
+      // canvas is visibly animating. Keep the live page for CDP frame recovery.
+      chosenSkin = skin;
       lastCaptureError = 'No video data captured by MediaRecorder';
       console.error(`Capture with skin ${label} failed: ${lastCaptureError}`);
       break;
@@ -998,14 +1001,23 @@ try {
   }
 
   if (!videoDataUrl) {
-    console.error(`Capture failed: ${lastCaptureError || 'no skin produced visible content'}`);
-    process.exit(1);
+    const peak = await page.evaluate(() =>
+      typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
+    if (!args.alpha && peak >= FRAME_PEAK_MIN &&
+        lastCaptureError === 'No video data captured by MediaRecorder') {
+      // Preserve the selected real Spine runtime canvas and draw frames with
+      // the CDP renderer, instead of exiting before the existing fallback.
+      console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
+      videoDataUrl = 'canvas-fallback';
+    } else {
+      throw new Error(`Capture failed: ${lastCaptureError || 'no skin produced visible content'}`);
+    }
   }
 
   const videoPath = path.join(tempDir, 'browser-recording.webm');
   if (args.alpha) {
     execFileSync('ffmpeg', ['-y', '-v', 'error', '-framerate', String(args.fps), '-i', path.join(tempDir, 'alpha-frames', '%06d.png'), '-c:v', 'libvpx-vp9', '-pix_fmt', 'yuva420p', '-auto-alt-ref', '0', '-deadline', 'realtime', '-cpu-used', '8', videoPath], { stdio: 'inherit' });
-  } else {
+  } else if (videoDataUrl !== 'canvas-fallback') {
     fs.writeFileSync(videoPath, Buffer.from(videoDataUrl.split(',')[1], 'base64'));
   }
   // Headless Chromium may display a nonempty WebGL canvas while
@@ -1046,8 +1058,9 @@ try {
         '-select_streams','v:0','-show_entries','stream=nb_read_frames',
         '-of','default=nw=1:nk=1',videoPath],{encoding:'utf8',timeout:30000}).trim())||0;
     }catch{mediaFrames=0;}
-    const mediaBytes=fs.statSync(videoPath).size;
-    const shortCapture=shouldUseCanvasFallback({bytes:mediaBytes,frames:mediaFrames,
+    const mediaBytes=fs.existsSync(videoPath) ? fs.statSync(videoPath).size : 0;
+    const shortCapture=!fs.existsSync(videoPath) ||
+      shouldUseCanvasFallback({bytes:mediaBytes,frames:mediaFrames,
       duration:captureDuration,fps:args.fps});
     if (shortCapture || !encodedHasContent(videoPath, captureDuration)) {
       console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
