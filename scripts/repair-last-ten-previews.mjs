@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -60,7 +61,7 @@ function existingMediaOk(entry){
   });
 }
 const action=process.argv[2]||"matrix";
-const latest=newestTen();
+const latest=action==="matrix"?newestTen():[];
 if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map(e=>{
@@ -68,7 +69,10 @@ if(action==="matrix"){
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
+    return {id:e.id,basePath:e.basePath,previewPath:rel,
+      uploadedAt:e.at,
+      sourceFingerprint:previewSourceFingerprint((readIndex(root,e.basePath)||[]).find(x=>x.id===e.id)),
+      ready,needsRender:ready&&!existingMediaOk(e),
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
   });
@@ -95,9 +99,13 @@ if(action==="matrix"){
   if(selected.length!==10)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest10");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
+  const folders=listCollectionFolders(root);
+  const seen=new Set();
   for(const item of selected){
-    if(!latest.some(e=>e.id===item.id)) throw new Error("Untrusted repair entry");
-    const entryInfo=latest.find(e=>e.id===item.id);
+    const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
+    const uniqueKey=entryInfo.basePath+"/"+entryInfo.id;
+    if(seen.has(uniqueKey))throw new Error("Duplicate repair entry");
+    seen.add(uniqueKey);
     const indexPath=path.join(root,entryInfo.basePath,"index.json");
     if(!indexes.has(indexPath)) indexes.set(indexPath,readIndex(root,entryInfo.basePath)||[]);
     const entries=indexes.get(indexPath);
