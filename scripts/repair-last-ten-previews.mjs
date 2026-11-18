@@ -6,6 +6,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 
 const root=process.cwd();
@@ -40,6 +41,13 @@ function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   if(record?.webmStatus!=="ready")return false;
+  // A previously published Urka clip was decoded as only 12 frames over
+  // 1.82 seconds. Require real frame-density evidence before treating it as
+  // an accepted final video; leave older previews intact during retries.
+  const f=Number(record?.previewFrameCount||0);
+  const duration=Number(record?.previewDuration||0);
+  if(f>0&&duration>0&&f/duration<15)return false;
+  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
     return Boolean(record?.webmPreview&&record?.webpPoster);
   return mediaNames.every(name=>{
@@ -115,9 +123,32 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    const complete=meta?.ok===true && names.every(n=>
+    let complete=meta?.ok===true && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
+    let mainVideo=null;
+    if(complete) {
+      try {
+        for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]) {
+          const data=JSON.parse(execFileSync("ffprobe", [
+            "-v","error","-count_frames","-select_streams","v:0",
+            "-show_entries","stream=nb_read_frames,width,height:format=duration",
+            "-of","json",path.join(artifact,name),
+          ],{encoding:"utf8",timeout:30000}));
+          const stream=data.streams?.[0],frames=Number(stream?.nb_read_frames),
+            seconds=Number(data.format?.duration);
+          if(!(seconds>=0.5&&frames>=8&&frames/seconds>=15&&stream?.width>0&&stream?.height>0))
+            throw new Error("Video has too few real frames");
+          if(name==="preview.webm")mainVideo={frames,seconds};
+        }
+      }catch{complete=false;}
+    }
     if(!complete) {
+      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
+        // Never replace an existing genuine clip with a failed higher-FPS retry.
+        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
+        summary.ready++;
+        continue;
+      }
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";
@@ -147,7 +178,11 @@ if(action==="matrix"){
     if(animation) record.defaultAnimation=animation;
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
-    if(Number(meta.animationDuration)>0)record.previewDuration=meta.animationDuration;
+    if(mainVideo) {
+      record.previewFrameCount=mainVideo.frames;
+      record.previewDuration=mainVideo.seconds;
+    } else if(Number(meta.animationDuration)>0)record.previewDuration=meta.animationDuration;
+    record.lastPreviewRetryError="";
     const previous=record.allAnimationPreviews && typeof record.allAnimationPreviews==="object"
       ? record.allAnimationPreviews:{};
     if(animation) record.allAnimationPreviews={
