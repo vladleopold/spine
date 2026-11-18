@@ -12,6 +12,12 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/diagnose-missing-atlas.mjs
+            library_02/boss_1-2026-11-14T20-07-17-943Z
+            package.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
