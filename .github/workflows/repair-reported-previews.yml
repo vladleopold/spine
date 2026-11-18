@@ -83,7 +83,7 @@ jobs:
           # from local Playwright routes. CDN redirects are never on the render
           # critical path; 4.0.29 also avoids the known 4.0.28 mismatch.
           minor=$(node scripts/preview-runtime-minor.mjs "$GITHUB_WORKSPACE/${{ matrix.entry.previewPath }}")
-          if [[ "$minor" =~ ^4\\.[012]$ ]]; then
+          if [[ "$minor" =~ ^4\.[012]$ ]]; then
             version="$minor"
             if [[ "$minor" == '4.0' ]]; then version='4.0.29'; fi
             mkdir -p "$RUNNER_TEMP/spine-versioned"
