@@ -1,10 +1,12 @@
 name: Repair and accept newest 10 Spine preview renders
 on:
   push:
-    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118]
+    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118]
     paths:
       - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
+      - scripts/repair-manifest-guard.mjs
+      - scripts/test-repair-manifest-guard.mjs
       - scripts/atlas-pages.mjs
       - scripts/test-atlas-pages.mjs
       - scripts/renderer-failure-class.mjs
@@ -56,6 +58,7 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-repair-manifest-guard.mjs
           echo "LATEST10_INVENTORY_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
