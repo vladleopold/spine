@@ -761,9 +761,12 @@ try {
   // A CDN URL is kept as the virtual page URL, but it is fulfilled locally,
   // avoiding timeout/redirect/CORS failures on the runner.
   const versionedRuntimeRoot = process.env.SPINE_VERSIONED_PLAYER_DIR || '';
-  const versionedAssets = versionedRuntimeRoot && modernRuntime !== '4.3' && !isLegacy ? [
-    [playerJsUrl, path.join(versionedRuntimeRoot,'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
-    [playerCssUrl, path.join(versionedRuntimeRoot,'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
+  // Each Spine minor requires its own installed player. Using one runtime for
+  // 4.0, 4.1 and 4.2 silently misparses valid binary skeletons.
+  const playerRoot = versionedRuntimeRoot ? path.join(versionedRuntimeRoot, 'spine-' + modernRuntime) : '';
+  const versionedAssets = playerRoot && modernRuntime !== '4.3' && !isLegacy ? [
+    [playerJsUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
+    [playerCssUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
   ] : [];
   for (const [url, filename, type] of [...(isLegacy || modernRuntime === '4.3' ? [
     [playerJsUrl, isLegacy
@@ -775,6 +778,11 @@ try {
   ] : []), ...versionedAssets]) {
     if (!fs.existsSync(filename)) {
       console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
+      // CI explicitly requested pinned runtimes. Fail now rather than
+      // silently falling back to a CDN and timing out on a valid skeleton.
+      if (versionedAssets.some(asset => asset[0] === url)) {
+        throw new Error('PINNED_SPINE_PLAYER_ASSET_MISSING_' + modernRuntime);
+      }
       continue;
     }
     await page.route(url, route => route.fulfill({
