@@ -1218,7 +1218,9 @@ try {
           if (Math.abs(raw[i] - background) >= 10) different++;
         }
         // Dark but detailed skins are real content, not a black poster.
-        return (lit >= 24 && lit / raw.length >= 0.02) || different >= 12;
+        // A real small attachment can occupy fewer than 2% of the frame;
+        // match the verified WebM content threshold, not an arbitrary area.
+        return lit >= 24 || different >= 12;
       } catch (e) {
         return false;
       }
