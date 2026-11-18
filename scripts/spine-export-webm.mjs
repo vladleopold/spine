@@ -565,7 +565,7 @@ console.error(`Is default: ${isDefault}`);
 // null the player default is used. Some skeletons draw nothing with the
 // default skin, so the export retries with named skins (see skinCandidates).
 function buildCaptureHtml(activeSkin) {
-const skinLine = activeSkin ? `    skin: '${activeSkin}',\n` : '';
+const skinLine = activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
 return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -629,6 +629,8 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
+      window.__runtimeSkinNames = runtimeData && Array.isArray(runtimeData.skins) ?
+        runtimeData.skins.map(function(s){return s && s.name;}).filter(Boolean) : [];
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
@@ -846,6 +848,15 @@ try {
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
+    // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
+    // runtime exposes them after load: retry named skins instead of recording
+    // a black default skin as a successful clip.
+    const runtimeSkins = await page.evaluate(() => window.__runtimeSkinNames || []);
+    for (const skinName of runtimeSkins.slice(0,24)) {
+      if (typeof skinName === 'string' && skinName &&
+          skinName.toLowerCase() !== 'default' && !skinCandidates.includes(skinName))
+        skinCandidates.push(skinName);
+    }
     if (!targetAnimation) targetAnimation = await page.evaluate(() => window.__selectedAnimation || '');
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
