@@ -32,13 +32,14 @@ jobs:
         with:
           node-version: 22
       - name: Install renderer
-        if: steps.source.outputs.dispatch_only != 'true'
+        if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
         run: |
           npm install --no-save playwright@1.59.1
           npx playwright install chromium
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg webp libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libdbus-1-3 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2t64
       - name: Render, validate and publish card and downloads
+        if: steps.source.outputs.skip_render != 'true'
         run: node scripts/render-work.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
