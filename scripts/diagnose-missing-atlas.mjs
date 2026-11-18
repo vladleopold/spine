@@ -25,8 +25,12 @@ for(let i=0;i<binary.length;i++){
  }
  comps.push({x:xmin,y:ymin,w:xmax-xmin+1,h:ymax-ymin+1,pixels:n});
 }
-let attaches=[];for(const skin of (Array.isArray(sk.skins)?sk.skins:[])){
- for(const [slot,entries] of Object.entries(skin.attachments||{}))
+let attaches=[];
+const skins=Array.isArray(sk.skins)
+  ? sk.skins.map(s=>s.attachments||{})
+  : Object.values(sk.skins||{});
+for(const skin of skins){
+ for(const [slot,entries] of Object.entries(skin))
  for(const [name,a] of Object.entries(entries)){
   if(a.type==="boundingbox")continue;
   attaches.push({type:a.type||"region",name:a.name||name,dimension:[Math.round(a.width||0),Math.round(a.height||0)],uvs:a.uvs?.length||0,vertices:a.vertices?.length||0});
