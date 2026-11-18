@@ -460,15 +460,18 @@ const videoHeight = hugeScene ? (gameCameraHeight & ~1) : (Math.min(MAX_VIDEO_DI
 const versionMajor = skeletonVersion.split('.')[0] || '4';
 const isLegacy = parseInt(versionMajor, 10) < 4;
 const runtimeMinor = isLegacy ? (skeletonVersion.split('.')[1] || '8') : '';
+const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersion.slice(0,3) : '4.3';
 
 // Use reliable Vercel domain for legacy player assets to avoid DNS resolution issues in GitHub Actions
 const stableOrigin = 'https://spine-link.vercel.app';
 const playerJsUrl = isLegacy
   ? `${stableOrigin}/vendor-spine-player-${versionMajor}.${runtimeMinor}.js`
-  : 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/iife/spine-player.js';
+  : modernRuntime === '4.3' ? 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/iife/spine-player.js'
+    : `https://unpkg.com/@esotericsoftware/spine-player@${modernRuntime}.*/dist/iife/spine-player.js`;
 const playerCssUrl = isLegacy
   ? `${stableOrigin}/vendor-spine-player-${versionMajor}.${runtimeMinor}.css`
-  : 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css';
+  : modernRuntime === '4.3' ? 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css'
+    : `https://unpkg.com/@esotericsoftware/spine-player@${modernRuntime}.*/dist/spine-player.css`;
 
 const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'skeleton';
 const atlasKey = 'atlas';
@@ -790,14 +793,14 @@ try {
 
   // Serve runtime scripts and styles from the checkout. A transient CDN outage
   // must never stop a deterministic render of already committed Spine assets.
-  for (const [url, filename, type] of [
+  for (const [url, filename, type] of (isLegacy || modernRuntime === '4.3' ? [
     [playerJsUrl, isLegacy
       ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.js`)
       : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
     [playerCssUrl, isLegacy
       ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.css`)
       : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
-  ]) {
+  ] : [])) {
     if (!fs.existsSync(filename)) {
       console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
       continue;
