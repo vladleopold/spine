@@ -8,6 +8,7 @@ on:
       - scripts/atlas-pages.mjs
       - scripts/test-atlas-pages.mjs
       - scripts/renderer-failure-class.mjs
+      - scripts/spine-export-webm.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -46,7 +47,7 @@ jobs:
         with:
           node-version: '22'
       - name: Install native Chromium renderer and video/poster encoders
-        if: matrix.entry.ready
+        if: matrix.entry.needsRender
         shell: bash
         run: |
           set -euo pipefail
@@ -59,6 +60,7 @@ jobs:
         env:
           ENTRY_ID: ${{ matrix.entry.id }}
           ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
           ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         run: |
           set -euo pipefail
@@ -66,6 +68,11 @@ jobs:
           if [[ "$ENTRY_READY" != true ]]; then
             echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
+            exit 0
+          fi
+          if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
           set +e
