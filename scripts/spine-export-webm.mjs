@@ -780,6 +780,26 @@ try {
   });
   const page = await context.newPage();
 
+  // Serve runtime scripts and styles from the checkout. A transient CDN outage
+  // must never stop a deterministic render of already committed Spine assets.
+  for (const [url, filename, type] of [
+    [playerJsUrl, isLegacy
+      ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.js`)
+      : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
+    [playerCssUrl, isLegacy
+      ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.css`)
+      : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
+  ]) {
+    if (!fs.existsSync(filename)) {
+      console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
+      continue;
+    }
+    await page.route(url, route => route.fulfill({
+      status: 200, contentType: type, body: fs.readFileSync(filename),
+    }));
+    console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(filename));
+  }
+
   page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));
   page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.message}`));
 
