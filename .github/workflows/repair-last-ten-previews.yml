@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
+      allEntries: ${{ steps.latest.outputs.allEntries }}
+      renderCount: ${{ steps.latest.outputs.renderCount }}
       sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
@@ -180,6 +182,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
       - uses: actions/download-artifact@v4
+        if: needs.inventory.outputs.renderCount != '0'
         with:
           pattern: latest10-*
           path: downloaded-latest10
@@ -190,7 +193,7 @@ jobs:
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.matrix }}
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
