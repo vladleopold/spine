@@ -23,13 +23,22 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
+      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Enumerate 10 newest uploads and validate required source file triads
         id: latest
+        env:
+          SPINE_REPAIR_INDEX_ONLY: '1'
         shell: bash
         run: |
           node scripts/repair-last-ten-previews.mjs matrix >> "$GITHUB_OUTPUT"
@@ -51,6 +60,19 @@ jobs:
         entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
+            /library/index.json
+            /library_*/index.json
+            /${{ matrix.entry.previewPath }}/
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -154,6 +176,9 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
       - uses: actions/download-artifact@v4
         with:
           pattern: latest10-*
