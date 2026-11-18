@@ -90,6 +90,19 @@ jobs:
         run: |
           set -euo pipefail
           npm install --no-save --no-audit --no-fund playwright@1.59.1
+          # Pin each runtime to its matching Spine minor version. CI must not
+          # depend on an unpkg/jsdelivr redirect while rendering a skeleton.
+          runtime_root="$RUNNER_TEMP/spine-player-runtimes"
+          for minor_version in 4.0:4.0.31 4.1:4.1.56 4.2:4.2.120; do
+            minor="${minor_version%%:*}"
+            version="${minor_version#*:}"
+            target="$runtime_root/spine-$minor"
+            npm install --prefix "$target" --no-save --no-audit --no-fund "@esotericsoftware/spine-player@$version"
+            test -s "$target/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+            test -s "$target/node_modules/@esotericsoftware/spine-player/dist/spine-player.css"
+            echo "PINNED_SPINE_PLAYER_READY minor=$minor version=$version"
+          done
+          echo "SPINE_VERSIONED_PLAYER_DIR=$runtime_root" >> "$GITHUB_ENV"
           if command -v google-chrome >/dev/null 2>&1; then
             echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
             echo "Using preinstalled Chrome for WebGL preview rendering"
