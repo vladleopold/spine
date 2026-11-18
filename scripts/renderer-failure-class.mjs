@@ -26,5 +26,19 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
   const lastCause=[...log.matchAll(/Capture failed:\s*([^\r\n]+)/g)].at(-1)?.[1]||"";
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
   const attempts=(log.match(/Skin candidates:/g)||[]).length;
-  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts}));
+  const stages={
+    skeletonParsed:/Skeleton:/i.test(log),
+    playerReady:/Skin candidates:/i.test(log),
+    recordingStarted:/recorder recording|recorder recording/i.test(log),
+    webmWritten:/WebM saved:/i.test(log),
+    qualityLadder:/Quality ladder:/i.test(log),
+    posterGeneration:/Poster:|WebP \(high\)|WebP generation failed/i.test(log),
+  };
+  const distinctError=/no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
+    /ffmpeg.*(encoder|unknown|invalid|failed)/i.test(log)?"FFMPEG_ENCODER_OR_INPUT":
+    /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
+    /webp.*failed/i.test(log)?"WEBP_POSTER_FAILURE":
+    /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
+    "UNCLASSIFIED";
+  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts,stages,distinctError}));
 }
