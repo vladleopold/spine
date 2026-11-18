@@ -1,0 +1,55 @@
+name: Probe failed recent Spine renderer (NDA-safe)
+on:
+  push:
+    branches: [fix/retry-legacy-four-preview-renders-20261118]
+    paths:
+      - scripts/renderer-failure-class.mjs
+      - scripts/spine-export-webm.mjs
+      - scripts/atlas-pages.mjs
+      - .github/workflows/probe-failed-previews.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        id:
+          - Spine-animation-2026-11-17T18-45-14-132Z
+          - Spine-animation-2026-11-17T18-44-12-762Z
+          - Spine-animation-2026-11-17T18-39-06-745Z
+          - Spine-animation-2026-11-17T18-36-51-976Z
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22', cache: npm}
+      - name: Install renderer (no original asset publication)
+        run: |
+          npm ci
+          npx playwright install chromium
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Test real source, output ONLY sanitized error code
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.id }}
+        run: |
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/diagnostic.webm" > "$RUNNER_TEMP/renderer-private.log" 2>&1
+          result=$?
+          set -e
+          if [ "$result" = "0" ]; then
+            echo "RENDER_DIAGNOSTIC=PASS"
+            ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames \
+              -of csv=p=0 "$RUNNER_TEMP/diagnostic.webm" | grep -Eq '^[1-9][0-9]*$'
+          else
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer-private.log"
+            echo "RENDER_DIAGNOSTIC=FAIL"
+            exit 1
+          fi
