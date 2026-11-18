@@ -6,8 +6,10 @@
  */
 export function shouldUseCanvasFallback({bytes=0,frames=0,fps=30,duration=0}){
   const size=Number(bytes)||0,count=Number(frames)||0;
-  const expected=Math.max(1,Math.ceil(Math.min(30,Math.max(.25,Number(duration)||.25))*fps));
-  const minimum=Math.max(2,Math.min(10,Math.floor(expected*.2)));
+  const rate=Math.min(120,Math.max(1,Number(fps)||30));
+  const expected=Math.min(900,Math.max(1,Math.ceil(Math.min(30,Math.max(.25,Number(duration)||.25))*rate)));
+  // A 2s recording with only 12 encoded frames is too jerky to publish.
+  const minimum=Math.max(8,Math.ceil(expected*.60));
   return size<10000 || count<minimum;
 }
 export function fallbackFrameCount({fps=30,duration=0}){
