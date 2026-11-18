@@ -15,6 +15,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: spine-preview-latest-ten
+  cancel-in-progress: true
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -32,6 +35,7 @@ jobs:
           node scripts/repair-last-ten-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check scripts/repair-last-ten-previews.mjs
           node --check scripts/spine-export-webm.mjs
+          node --check scripts/recover-recorded-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           echo "LATEST10_INVENTORY_VALID"
@@ -55,10 +59,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npm install --no-save playwright@1.59.1
-          npx playwright install --with-deps chromium
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg webp
+          npm install --no-save --no-audit --no-fund playwright@1.59.1
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            echo "Using preinstalled Chrome for WebGL preview rendering"
+          else
+            npx playwright install chromium
+          fi
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
       - name: Render and validate actual Spine video + still posters
         shell: bash
         env:
@@ -86,6 +97,19 @@ jobs:
             --output="$RUNNER_TEMP/$ENTRY_ID-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
           code=$?
           set -e
+          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/$ENTRY_ID-preview.webm" ]]; then
+            # A genuine recorded WebM may survive even when its secondary
+            # quality ladder/poster encoder fails. Verify real changing frames
+            # and rebuild the missing output files instead of dropping it.
+            if node scripts/recover-recorded-webm.mjs \
+              "$RUNNER_TEMP/$ENTRY_ID-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
+              > "$RUNNER_TEMP/recovery.log" 2>&1; then
+              echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
+              code=0
+            else
+              echo "RECORDED_WEBM_RECOVERY_REJECTED"
+            fi
+          fi
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
             echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
