@@ -149,6 +149,12 @@ jobs:
             done
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
               -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+            video_duration=$(ffprobe -v error -show_entries format=duration \
+              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+            awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
+              echo "::error::Rejected nonplayable short preview video"
+              exit 1
+            }
             file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
           done
           cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"

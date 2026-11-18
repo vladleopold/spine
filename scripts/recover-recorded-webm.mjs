@@ -19,7 +19,7 @@ const stream=info.streams?.[0];
 const width=Number(stream?.width)||0,height=Number(stream?.height)||0;
 const frames=Number(stream?.nb_read_frames)||0;
 const duration=Number(info.format?.duration)||0;
-if(width<2||height<2||frames<8||!Number.isFinite(duration)||duration<=0)throw Error('Recorded WebM lacks a complete real animation');
+if(width<2||height<2||frames<8||!Number.isFinite(duration)||duration<0.5)throw Error('Recorded WebM lacks a complete real animation');
 const positions=[0,0.1,0.2,0.35,0.5,0.65,0.8,0.92].map(x=>Math.min(Math.max(0,duration-0.05),x*duration));
 const samples=new Set();let chosen=null,nonblank=0;
 for(const second of positions){

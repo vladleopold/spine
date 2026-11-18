@@ -669,11 +669,19 @@ ${skinLine}    showLoading: false,
         }
       } catch (e) {}
 
+      // Older runtime TrackEntry implementations may report duration=0
+      // even when the decoded animation has real keyframe timelines.
       try {
         var track = player.animationState ? player.animationState.getCurrent(0) : null;
-        if (track && track.animation && typeof track.animation.duration === 'number') {
-          window.__animDuration = track.animation.duration;
-        }
+        var trackDuration = Number(track && track.animation && track.animation.duration) || 0;
+        var sourceAnimation = runtimeData && Array.isArray(runtimeData.animations)
+          ? runtimeData.animations.find(function(a){ return a && a.name === window.__selectedAnimation; })
+          : null;
+        var skeletonDuration = Number(sourceAnimation && sourceAnimation.duration) || 0;
+        var foundAnimation = runtimeData && typeof runtimeData.findAnimation === 'function'
+          ? runtimeData.findAnimation(window.__selectedAnimation) : null;
+        var foundDuration = Number(foundAnimation && foundAnimation.duration) || 0;
+        window.__animDuration = Math.max(trackDuration, skeletonDuration, foundDuration);
       } catch (e) {}
 
       // Recording is started explicitly via window.__startRecording() AFTER
@@ -944,8 +952,15 @@ try {
         console.error(`Scenario duration: ${scenarioDuration.toFixed(2)}s (${scenarioCycle.join(' + ')})`);
       }
     }
-    if (!(captureDuration > 0) && availableAnimations.includes(targetAnimation)) captureDuration = 1 / args.fps;
-    if (!(captureDuration > 0)) throw new Error('Unknown animation duration');
+    // A 1/30-second fallback produces a technically decodable but invisible
+    // 8-frame clip. When an old binary omits a duration, sample a real 2s
+    // loop of the actual Spine runtime instead. Source duration stays marked
+    // unknown; the resulting preview duration is measured from the recording.
+    if (!(captureDuration >= 0.5) && availableAnimations.includes(targetAnimation)) {
+      captureDuration = 2;
+      console.error('ANIMATION_SOURCE_DURATION_UNKNOWN: capturing 2s live preview loop');
+    }
+    if (!(captureDuration >= 0.5)) throw new Error('Cannot establish playable animation duration');
     if (args.alpha) {
       const framesDir = path.join(tempDir, 'alpha-frames');
       fs.mkdirSync(framesDir, { recursive: true });
@@ -1366,7 +1381,9 @@ try {
   const meta = {
     animation: targetAnimation,
     skin: chosenSkin === null ? 'default' : chosenSkin,
-    animationDuration: effectiveDuration,
+    animationDuration: captureDuration,
+    sourceAnimationDuration: effectiveDuration || null,
+    previewDurationInferred: !(effectiveDuration >= 0.5),
     // Real pixel width of each tier. The download picker labels its buttons
     // with these instead of a fixed "1080p/720p/360p", which only matched the
     // file for a handful of works and was wrong for the rest.
