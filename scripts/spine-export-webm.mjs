@@ -1074,8 +1074,23 @@ try {
       fs.copyFileSync(qualitySource, outPaths.webmHigh);
       console.error('High quality uses original VP9 recording; no redundant encoding');
     }
-    execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
-    execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
+    // Do not lose a verified playable high WebM merely because a legacy
+    // 3.x animation is too resource-heavy for a resized VP9 transcode.
+    // Keep a truthful source-quality fallback for that tier, and record its
+    // actual width in metadata rather than falsely advertising 720p/360p.
+    const encodeTier = (dim, bitrate, output, tier) => {
+      try {
+        execSync(vp9(dim, bitrate, output), { stdio: 'inherit' });
+        return false;
+      } catch (_) {
+        fs.copyFileSync(qualitySource, output);
+        console.error('Encoder fallback for ' + tier + ': using validated original VP9 recording');
+        return true;
+      }
+    };
+    const mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
+    const lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
+    if (mediumFallback || lowFallback) console.error('QUALITY_TIER_FALLBACK_SOURCE');
 
     // WebP poster: a frame that actually has visible content.
     //
@@ -1099,7 +1114,16 @@ try {
     }
 
     function pickPosterFrame(source, pngPath) {
-      for (const ss of [0, 0.15, 0.35, 0.6, 0.9]) {
+      // An animation may have a long dark lead-in; scan real timeline
+      // positions before marking an existing playable video as poster-less.
+      let duration = 0;
+      try { duration = Number(execFileSync('ffprobe', [
+        '-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1', source
+      ], {encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim()) || 0; } catch {}
+      const positions = new Set([0, 0.15, 0.35, 0.6, 0.9]);
+      if(duration>0)for(const frac of [0.08,0.2,0.35,0.5,0.65,0.8,0.92])
+        positions.add(Math.max(0,Math.min(duration-0.04,duration*frac)));
+      for (const ss of [...positions].sort((a,b)=>a-b).filter(v=>v>=0 && (!duration || v<duration))) {
         try {
           execSync(`ffmpeg -y -v error -ss ${ss} -i "${source}" -vframes 1 -c:v png "${pngPath}"`, { stdio: 'inherit' });
         } catch (e) {
@@ -1191,7 +1215,7 @@ try {
     atlas: atlasFile,
     textures: textureFiles,
     alpha: args.alpha,
-    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
+    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(mediumFallback ? dimHigh : dimMedium), low: widthOf(lowFallback ? dimHigh : dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
