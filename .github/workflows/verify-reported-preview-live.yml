@@ -1,0 +1,27 @@
+name: Verify production previews for all 18 reported Spine works
+on:
+  workflow_run:
+    workflows: ["Repair and accept 18 reported Spine preview projects"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  production-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/resolve-library.mjs
+            /scripts/verify-reported-preview-live.mjs
+            /library_02/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify each published WebM/WebP on the live site
+        run: |
+          node --check scripts/verify-reported-preview-live.mjs
+          node scripts/verify-reported-preview-live.mjs
