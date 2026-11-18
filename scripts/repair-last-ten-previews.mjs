@@ -23,9 +23,13 @@ function newestTen() {
 }
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
-  if(!p.startsWith(root+path.sep)||!fs.existsSync(p))return false;
+  if(!p.startsWith(root+path.sep))return false;
   let files=[];
-  try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}catch{return false;}
+  try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
+  catch{
+    // Inventory checks indexes only; the render job validates actual files.
+    files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
+  }
   return files.some(f=>/\.(json|skel)$/i.test(f)) &&
     files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
     files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
@@ -36,6 +40,8 @@ function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   if(record?.webmStatus!=="ready")return false;
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
+    return Boolean(record?.webmPreview&&record?.webpPoster);
   return mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
@@ -47,11 +53,24 @@ if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map(e=>{
     const ready=bundleOk(e);
-    return {id:e.id,ready,needsRender:ready&&!existingMediaOk(e),
+    const rel=String(e.previewPath).replace(/\\/g,"/");
+    if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
+      throw new Error("Unsafe preview path");
+    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
   });
   console.log("matrix="+JSON.stringify(matrix));
+  const sparse=[
+    "/scripts/","/package.json","/package-lock.json",
+    "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
+    "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
+    "/library/index.json","/library_*/index.json",
+    ...matrix.map(x=>"/"+x.previewPath+"/"),
+  ];
+  console.log("sparseCheckout<<SPINE_SPARSE_END");
+  console.log([...new Set(sparse)].join(String.fromCharCode(10)));
+  console.log("SPINE_SPARSE_END");
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
 }else if(action==="merge"){
