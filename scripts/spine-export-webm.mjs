@@ -565,7 +565,7 @@ console.error(`Is default: ${isDefault}`);
 // null the player default is used. Some skeletons draw nothing with the
 // default skin, so the export retries with named skins (see skinCandidates).
 function buildCaptureHtml(activeSkin) {
-const skinLine = activeSkin ? `    skin: '${activeSkin}',\n` : '';
+const skinLine = activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
 return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -599,14 +599,18 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       if (!g) return -1;
       var w = g.drawingBufferWidth, h = g.drawingBufferHeight;
       if (!w || !h) return -1;
-      var sw = Math.min(w, 160), sh = Math.min(h, 160);
-      var x = (w - sw) >> 1, y = (h - sh) >> 1;
-      var buf = new Uint8Array(sw * sh * 4);
-      g.readPixels(x, y, sw, sh, g.RGBA, g.UNSIGNED_BYTE, buf);
-      var mx = 0;
-      for (var i = 0; i < buf.length; i += 4) {
-        var m = Math.max(buf[i], buf[i + 1], buf[i + 2]);
-        if (m > mx) mx = m;
+      // Check nine locations, not just the center of the game camera.
+      // No pixels are persisted or sent to CI.
+      var sw = Math.min(w, 112), sh = Math.min(h, 112);
+      var buf = new Uint8Array(sw * sh * 4), mx = 0;
+      for (var gy = 0; gy < 3; gy++) for (var gx = 0; gx < 3; gx++) {
+        var x = Math.max(0, Math.round((w - sw) * gx / 2));
+        var y = Math.max(0, Math.round((h - sh) * gy / 2));
+        g.readPixels(x, y, sw, sh, g.RGBA, g.UNSIGNED_BYTE, buf);
+        for (var i = 0; i < buf.length; i += 4) {
+          var m = Math.max(buf[i], buf[i+1], buf[i+2]);
+          if (m > mx) mx = m;
+        }
       }
       return mx;
     } catch (e) { return -1; }
@@ -629,6 +633,8 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
+      window.__runtimeSkinNames = runtimeData && Array.isArray(runtimeData.skins) ?
+        runtimeData.skins.map(function(s){return s && s.name;}).filter(Boolean) : [];
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
@@ -846,6 +852,15 @@ try {
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
+    // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
+    // runtime exposes them after load: retry named skins instead of recording
+    // a black default skin as a successful clip.
+    const runtimeSkins = await page.evaluate(() => window.__runtimeSkinNames || []);
+    for (const skinName of runtimeSkins.slice(0,24)) {
+      if (typeof skinName === 'string' && skinName &&
+          skinName.toLowerCase() !== 'default' && !skinCandidates.includes(skinName))
+        skinCandidates.push(skinName);
+    }
     if (!targetAnimation) targetAnimation = await page.evaluate(() => window.__selectedAnimation || '');
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
@@ -887,6 +902,11 @@ try {
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {
       console.error(`Skin ${label} rendered no visible content, trying next skin...`);
       continue;
+    }
+    if (framePeak < FRAME_PEAK_MIN && !moreSkins) {
+      lastCaptureError = 'No visible pixels from any available Spine skin';
+      console.error('NO_VISIBLE_SPINE_FRAME');
+      break;
     }
 
     // Preserve the full animation duration.
@@ -966,6 +986,77 @@ try {
     execFileSync('ffmpeg', ['-y', '-v', 'error', '-framerate', String(args.fps), '-i', path.join(tempDir, 'alpha-frames', '%06d.png'), '-c:v', 'libvpx-vp9', '-pix_fmt', 'yuva420p', '-auto-alt-ref', '0', '-deadline', 'realtime', '-cpu-used', '8', videoPath], { stdio: 'inherit' });
   } else {
     fs.writeFileSync(videoPath, Buffer.from(videoDataUrl.split(',')[1], 'base64'));
+  }
+  // Headless Chromium may display a nonempty WebGL canvas while
+  // MediaRecorder captures uniform dark frames on legacy Spine 3.8 runtimes.
+  // Sample the ENCODED result, not just a live player pixel, and if it is
+  // effectively blank, capture deterministic PNG frames from the real Spine
+  // runtime and encode those as the WebM source. These temporary frames never
+  // leave the private runner and are not included in any artifact.
+  if (!args.alpha) {
+    const seemsVisible = (data) => {
+      if (!data || data.length < 200) return false;
+      const background = data[0];
+      let differing = 0, lit = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (Math.abs(data[i] - background) >= 10) differing++;
+        if (data[i] > 24) lit++;
+      }
+      return differing >= 12 || lit >= 24;
+    };
+    const encodedHasContent = (filename, duration) => {
+      const seconds = [0,0.18,0.55,1,2];
+      if (duration > 0) for (const part of [0.12,0.32,0.57,0.81,0.94])
+        seconds.push(Math.max(0, duration * part));
+      for (const ss of seconds.filter(x => x < duration || duration <= 0)) {
+        try {
+          const gray = execFileSync('ffmpeg', [
+            '-v','error','-ss',String(ss),'-i',filename,'-frames:v','1',
+            '-vf','scale=48:48,format=gray','-f','rawvideo','-',
+          ], {stdio:['ignore','pipe','ignore'],maxBuffer:100000});
+          if (seemsVisible(gray)) return true;
+        } catch {}
+      }
+      return false;
+    };
+    if (!encodedHasContent(videoPath, captureDuration)) {
+      console.error('RECORDED_WEBM_BLANK: retrying deterministic on-screen Spine rendering');
+      const framesDir = path.join(tempDir,'deterministic-frames');
+      fs.mkdirSync(framesDir,{recursive:true});
+      const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
+      const frameCount = Math.min(420,Math.max(2,Math.ceil(duration*args.fps)));
+      const intervalMs = duration * 1000 / frameCount;
+      await page.clock.install({time:new Date('2020-01-01T00:00:00Z')});
+      await page.clock.pauseAt(new Date('2020-01-01T00:01:00Z'));
+      await page.evaluate(name=>{
+        const player=window.__exportPlayer;
+        if(!player || !player.animationState)throw new Error('No active Spine runtime for deterministic frames');
+        player.animationState.clearTracks();
+        player.animationState.setAnimation(0,name,true);
+        player.paused=false;
+      },targetAnimation);
+      for(let frame=0;frame<frameCount;frame++){
+        await page.clock.runFor(intervalMs);
+        const pngBase64=await page.evaluate(()=>{
+          const canvas=window.__exportPlayer && window.__exportPlayer.canvas;
+          return canvas ? canvas.toDataURL('image/png').split(',')[1] : null;
+        });
+        if(!pngBase64)throw new Error('Deterministic Spine frame unavailable');
+        fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),
+          Buffer.from(pngBase64,'base64'));
+      }
+      const recovered=path.join(tempDir,'deterministic.webm');
+      execFileSync('ffmpeg',[
+        '-y','-v','error','-framerate',String(frameCount/duration),
+        '-i',path.join(framesDir,'%06d.png'),
+        '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
+        '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
+      ],{stdio:'inherit'});
+      if (!encodedHasContent(recovered,duration))
+        throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
+      fs.copyFileSync(recovered,videoPath);
+      console.error('DETERMINISTIC_FRAME_FALLBACK_PASS');
+    }
   }
   const webmBuffer = fs.readFileSync(videoPath);
 
@@ -1059,16 +1150,38 @@ try {
     // deadline=good он часть просто отбрасывает, и анимация идёт рывками.
     // lag-in-frames 0 убирает задержку между кадрами на выходе.
     const vp9 = (dim, bitrate, out) =>
-      `ffmpeg -y ${args.alpha ? "-c:v libvpx-vp9" : ""} -i "${qualitySource}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
+      `ffmpeg -y -v error ${args.alpha ? "-c:v libvpx-vp9" : ""} -i "${qualitySource}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
       `-pix_fmt ${args.alpha ? "yuva420p" : "yuv420p"} -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
-      `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 16 "${out}"`;
+      `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 4 "${out}"`;
 
-    // High Quality
-    execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
-    // Medium Quality
-    execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
-    // Low Quality
-    execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
+    // MediaRecorder already produces a VP9 full-resolution source. It was
+    // wastefully transcoded AGAIN with 16 threads even for 1920px/long clips;
+    // that exhausted ffmpeg resources for the four large legacy projects.
+    // Preserve the original validated high-quality VP9 bytes, and encode only
+    // genuinely smaller medium/low variants with bounded thread counts.
+    if (args.alpha) {
+      execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
+    } else {
+      fs.copyFileSync(qualitySource, outPaths.webmHigh);
+      console.error('High quality uses original VP9 recording; no redundant encoding');
+    }
+    // Do not lose a verified playable high WebM merely because a legacy
+    // 3.x animation is too resource-heavy for a resized VP9 transcode.
+    // Keep a truthful source-quality fallback for that tier, and record its
+    // actual width in metadata rather than falsely advertising 720p/360p.
+    const encodeTier = (dim, bitrate, output, tier) => {
+      try {
+        execSync(vp9(dim, bitrate, output), { stdio: 'inherit' });
+        return false;
+      } catch (_) {
+        fs.copyFileSync(qualitySource, output);
+        console.error('Encoder fallback for ' + tier + ': using validated original VP9 recording');
+        return true;
+      }
+    };
+    const mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
+    const lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
+    if (mediumFallback || lowFallback) console.error('QUALITY_TIER_FALLBACK_SOURCE');
 
     // WebP poster: a frame that actually has visible content.
     //
@@ -1083,16 +1196,30 @@ try {
           { stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }
         );
         if (!raw || raw.length < 100) return false;
-        let lit = 0;
-        for (let i = 0; i < raw.length; i++) if (raw[i] > 24) lit++;
-        return lit >= 24 && lit / raw.length >= 0.02;
+        let lit = 0, different = 0;
+        const background = raw[0];
+        for (let i = 0; i < raw.length; i++) {
+          if (raw[i] > 24) lit++;
+          if (Math.abs(raw[i] - background) >= 10) different++;
+        }
+        // Dark but detailed skins are real content, not a black poster.
+        return (lit >= 24 && lit / raw.length >= 0.02) || different >= 12;
       } catch (e) {
         return false;
       }
     }
 
     function pickPosterFrame(source, pngPath) {
-      for (const ss of [0, 0.15, 0.35, 0.6, 0.9]) {
+      // An animation may have a long dark lead-in; scan real timeline
+      // positions before marking an existing playable video as poster-less.
+      let duration = 0;
+      try { duration = Number(execFileSync('ffprobe', [
+        '-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1', source
+      ], {encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim()) || 0; } catch {}
+      const positions = new Set([0, 0.15, 0.35, 0.6, 0.9]);
+      if(duration>0)for(const frac of [0.08,0.2,0.35,0.5,0.65,0.8,0.92])
+        positions.add(Math.max(0,Math.min(duration-0.04,duration*frac)));
+      for (const ss of [...positions].sort((a,b)=>a-b).filter(v=>v>=0 && (!duration || v<duration))) {
         try {
           execSync(`ffmpeg -y -v error -ss ${ss} -i "${source}" -vframes 1 -c:v png "${pngPath}"`, { stdio: 'inherit' });
         } catch (e) {
@@ -1184,7 +1311,7 @@ try {
     atlas: atlasFile,
     textures: textureFiles,
     alpha: args.alpha,
-    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
+    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(mediumFallback ? dimHigh : dimMedium), low: widthOf(lowFallback ? dimHigh : dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
