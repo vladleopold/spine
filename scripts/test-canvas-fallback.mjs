@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import {shouldUseCanvasFallback,fallbackFrameCount} from "./lib/canvas-fallback.mjs";
+assert.equal(shouldUseCanvasFallback({bytes:2743,frames:1,fps:30,duration:2.2}),true);
+assert.equal(shouldUseCanvasFallback({bytes:0,frames:0,fps:30,duration:1}),true);
+assert.equal(shouldUseCanvasFallback({bytes:70000,frames:66,fps:30,duration:2.2}),false);
+assert.equal(shouldUseCanvasFallback({bytes:12000,frames:4,fps:30,duration:8}),true);
+assert.equal(fallbackFrameCount({fps:30,duration:0.3}),9);
+assert.equal(fallbackFrameCount({fps:30,duration:2.2}),66);
+assert.equal(fallbackFrameCount({fps:300,duration:200}),900);
+assert.ok(fallbackFrameCount({fps:30,duration:2.2})>2);
+console.log("PASS tiny MediaRecorder 2.7KB clip triggers frame recovery; real video bypasses recovery");
+console.log("PASS fallback duration cap, frame count and safe bounds");

@@ -2,6 +2,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { chooseAtlasForSkeleton, reconcileDdsAtlasPages } from "./atlas-pages.mjs";
+import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1019,32 +1020,52 @@ try {
       }
       return false;
     };
-    if (!encodedHasContent(videoPath, captureDuration)) {
-      console.error('RECORDED_WEBM_BLANK: retrying deterministic on-screen Spine rendering');
+    let mediaFrames=0;
+    try{
+      mediaFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
+        '-select_streams','v:0','-show_entries','stream=nb_read_frames',
+        '-of','default=nw=1:nk=1',videoPath],{encoding:'utf8',timeout:30000}).trim())||0;
+    }catch{mediaFrames=0;}
+    const mediaBytes=fs.statSync(videoPath).size;
+    const shortCapture=shouldUseCanvasFallback({bytes:mediaBytes,frames:mediaFrames,
+      duration:captureDuration,fps:args.fps});
+    if (shortCapture || !encodedHasContent(videoPath, captureDuration)) {
+      console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
       const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
-      const frameCount = Math.min(420,Math.max(2,Math.ceil(duration*args.fps)));
+      const frameCount = fallbackFrameCount({fps:args.fps,duration});
       const intervalMs = duration * 1000 / frameCount;
-      await page.clock.install({time:new Date('2020-01-01T00:00:00Z')});
-      await page.clock.pauseAt(new Date('2020-01-01T00:01:00Z'));
+      // The browser still renders a visible WebGL scene, but Playwright's
+      // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
+      // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
+      // compositor. All PNGs stay in this private runner's temporary folder.
       await page.evaluate(name=>{
         const player=window.__exportPlayer;
-        if(!player || !player.animationState)throw new Error('No active Spine runtime for deterministic frames');
+        if(!player || !player.canvas || !player.animationState)
+          throw new Error('No active Spine runtime for real-time fallback');
         player.animationState.clearTracks();
         player.animationState.setAnimation(0,name,true);
         player.paused=false;
       },targetAnimation);
+      const canvasHost=page.locator('#player canvas').first();
+      await canvasHost.waitFor({state:'visible',timeout:10000});
+      let visibleFrames=0;
+      const frameHashes=new Set();
       for(let frame=0;frame<frameCount;frame++){
-        await page.clock.runFor(intervalMs);
-        const pngBase64=await page.evaluate(()=>{
-          const canvas=window.__exportPlayer && window.__exportPlayer.canvas;
-          return canvas ? canvas.toDataURL('image/png').split(',')[1] : null;
-        });
-        if(!pngBase64)throw new Error('Deterministic Spine frame unavailable');
-        fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),
-          Buffer.from(pngBase64,'base64'));
+        await new Promise(r=>setTimeout(r,Math.max(10,intervalMs)));
+        const peak=await page.evaluate(()=>typeof window.__framePeak==='function' ? window.__framePeak() : -1);
+        if(peak>=40)visibleFrames++;
+        // CDP screenshot captures the actual composited canvas, including
+        // graphics that do not survive canvas.toDataURL in headless WebGL.
+        const png=await canvasHost.screenshot({type:'png',timeout:15000});
+        if(!png||png.length<100)throw new Error('Real-time canvas screenshot failed');
+        frameHashes.add(createHash('sha256').update(png).digest('hex'));
+        fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),png);
       }
+      if(visibleFrames<2)throw new Error('No visible real-time Spine frames');
+      if(frameHashes.size<2)throw new Error('Selected animation has no changing canvas frames');
+      console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
       const recovered=path.join(tempDir,'deterministic.webm');
       execFileSync('ffmpeg',[
         '-y','-v','error','-framerate',String(frameCount/duration),
@@ -1054,8 +1075,13 @@ try {
       ],{stdio:'inherit'});
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
+      const actualFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
+        '-select_streams','v:0','-show_entries','stream=nb_read_frames',
+        '-of','default=nw=1:nk=1',recovered],{encoding:'utf8',timeout:30000}).trim())||0;
+      if(actualFrames<frameCount-2)throw new Error('Recovered canvas animation is missing encoded frames');
       fs.copyFileSync(recovered,videoPath);
-      console.error('DETERMINISTIC_FRAME_FALLBACK_PASS');
+      fs.rmSync(framesDir,{recursive:true,force:true});
+      console.error('DETERMINISTIC_FRAME_FALLBACK_PASS FRAMES='+actualFrames);
     }
   }
   const webmBuffer = fs.readFileSync(videoPath);
@@ -1203,7 +1229,9 @@ try {
           if (Math.abs(raw[i] - background) >= 10) different++;
         }
         // Dark but detailed skins are real content, not a black poster.
-        return (lit >= 24 && lit / raw.length >= 0.02) || different >= 12;
+        // A real small attachment can occupy fewer than 2% of the frame;
+        // match the verified WebM content threshold, not an arbitrary area.
+        return lit >= 24 || different >= 12;
       } catch (e) {
         return false;
       }

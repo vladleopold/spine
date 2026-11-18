@@ -9,6 +9,9 @@ on:
       - scripts/test-atlas-pages.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/canvas-fallback.mjs
+      - scripts/test-canvas-fallback.mjs
+      - scripts/verify-latest-ten-live.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,6 +32,7 @@ jobs:
           node scripts/repair-last-ten-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check scripts/repair-last-ten-previews.mjs
           node --check scripts/spine-export-webm.mjs
+          node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           echo "LATEST10_INVENTORY_VALID"
   render:
@@ -162,3 +166,22 @@ jobs:
           done
           echo "::error::Could not atomically publish latest-10 previews"
           exit 1
+
+  verify-production:
+    needs: [inventory, render, publish]
+    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/verify-latest-ten-live.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 10 actual public media responses after publication
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/verify-latest-ten-live.mjs

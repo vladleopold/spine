@@ -1,0 +1,97 @@
+name: Verify real canvas fallback for missing recent WebM
+on:
+  push:
+    branches: [fix/mediarecorder-frame-fallback-20261118]
+    paths:
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/canvas-fallback.mjs
+      - scripts/test-canvas-fallback.mjs
+      - .github/workflows/canvas-recovery-e2e.yml
+  pull_request:
+    paths:
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/canvas-fallback.mjs
+      - scripts/test-canvas-fallback.mjs
+      - .github/workflows/canvas-recovery-e2e.yml
+permissions:
+  contents: read
+jobs:
+  validate-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        animation:
+          - "Idle Post Climax Cum"
+          - "Climax 01"
+        include:
+          - animation: "Idle Post Climax Cum"
+            id: "Spine-animation-2026-11-17T18-45-14-132Z"
+          - animation: "Climax 01"
+            id: "Spine-animation-2026-11-17T18-44-12-762Z"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /library_02/index.json
+            /library_02/Spine-animation-2026-11-17T18-45-14-132Z/
+            /library_02/Spine-animation-2026-11-17T18-44-12-762Z/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pure fallback unit gate and code syntax
+        run: |
+          node --check scripts/spine-export-webm.mjs
+          node scripts/test-canvas-fallback.mjs
+          node scripts/test-atlas-pages.mjs
+      - name: Install Chromium and ffmpeg runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.59.1
+          npx playwright install chromium
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          if ! command -v cwebp >/dev/null; then
+            echo "WebP fallback uses FFmpeg's installed libwebp encoder"
+          fi
+      - name: Real proprietary animation, temporary private frames only, strict media acceptance
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.id }}
+          ANIMATION: ${{ matrix.animation }}
+        run: |
+          set -euo pipefail
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --animation="$ANIMATION" \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/private-preview.webm" > "$RUNNER_TEMP/private-render.log" 2>&1
+          code=$?
+          set -e
+          if (( code != 0 )); then
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/private-render.log"
+            exit 1
+          fi
+          ffprobe -v error -count_frames -select_streams v:0 \
+            -show_entries stream=width,height,nb_read_frames \
+            -of json "$RUNNER_TEMP/private-preview.webm" > "$RUNNER_TEMP/private-probe.json"
+          node -e '
+            const p=require(process.argv[1]);const s=p.streams?.[0]||{};
+            if(!(s.width>0&&s.height>0&&Number(s.nb_read_frames)>=8))
+              throw Error("Incomplete actual animation video");
+            console.log("REAL_SPINE_VIDEO_ACCEPTANCE_PASS FRAMES="+s.nb_read_frames);
+          ' "$RUNNER_TEMP/private-probe.json"
+          for f in "$RUNNER_TEMP/private-preview.webp" "$RUNNER_TEMP/private-preview-medium.webm" "$RUNNER_TEMP/private-preview-medium.webp" "$RUNNER_TEMP/private-preview-low.webm" "$RUNNER_TEMP/private-preview-low.webp"; do
+            test -s "$f"
+          done
+          echo "REAL_SPINE_WEBM_WEBP_PREVIEW_PASS"
+          # No source or output images/videos are uploaded, printed or committed.
