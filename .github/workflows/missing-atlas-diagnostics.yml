@@ -1,0 +1,21 @@
+name: Private missing-atlas geometry (no images or artifacts)
+on:
+  push:
+    branches: [fix/atlas-inference-boss-20261118]
+    paths: [scripts/diagnose-missing-atlas.mjs, .github/workflows/missing-atlas-diagnostics.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metadata:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PNG decoder for local memory only
+        run: npm install --no-save --ignore-scripts --no-package-lock pngjs@7.0.0
+      - name: Print anonymous component geometry only
+        run: node scripts/diagnose-missing-atlas.mjs
