@@ -5,6 +5,8 @@ on:
     paths:
       - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
+      - scripts/atlas-pages.mjs
+      - scripts/test-atlas-pages.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -25,6 +27,7 @@ jobs:
           node scripts/repair-last-ten-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check scripts/repair-last-ten-previews.mjs
           node --check scripts/spine-export-webm.mjs
+          node scripts/test-atlas-pages.mjs
           echo "LATEST10_INVENTORY_VALID"
   render:
     needs: inventory
