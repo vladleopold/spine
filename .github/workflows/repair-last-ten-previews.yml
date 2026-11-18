@@ -11,6 +11,8 @@ on:
       - scripts/spine-export-webm.mjs
       - scripts/spine-version-detect.mjs
       - scripts/test-spine-version-detect.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/verify-latest-ten-live.mjs
@@ -52,6 +54,7 @@ jobs:
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-spine-version-detect.mjs
+          node scripts/test-preview-animation-choice.mjs
           echo "LATEST10_INVENTORY_VALID"
   render:
     needs: inventory
