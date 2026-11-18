@@ -1164,6 +1164,9 @@ try {
     webpMedium: `${baseOutputPath}-medium.webp`,
     webpLow: `${baseOutputPath}-low.webp`,
   };
+  // Accessible to the output-metadata builder after the try/catch block.
+  let mediumFallback = false;
+  let lowFallback = false;
 
   // Битрейт считаем от числа пикселей кадра. Раньше стояло фиксированное
   // 1200k, а на кадре 1644x1612 это меньше половины бита на пиксель —
@@ -1238,8 +1241,8 @@ try {
         return true;
       }
     };
-    const mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
-    const lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
+    mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
+    lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
     if (mediumFallback || lowFallback) console.error('QUALITY_TIER_FALLBACK_SOURCE');
 
     // WebP poster: a frame that actually has visible content.
