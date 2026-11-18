@@ -1059,15 +1059,22 @@ try {
     // deadline=good он часть просто отбрасывает, и анимация идёт рывками.
     // lag-in-frames 0 убирает задержку между кадрами на выходе.
     const vp9 = (dim, bitrate, out) =>
-      `ffmpeg -y ${args.alpha ? "-c:v libvpx-vp9" : ""} -i "${qualitySource}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
+      `ffmpeg -y -v error ${args.alpha ? "-c:v libvpx-vp9" : ""} -i "${qualitySource}" -s ${dim} -c:v libvpx-vp9 -b:v ${bitrate} ` +
       `-pix_fmt ${args.alpha ? "yuva420p" : "yuv420p"} -deadline realtime -cpu-used 8 -lag-in-frames 0 ` +
-      `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 16 "${out}"`;
+      `-auto-alt-ref 0 -row-mt 1 -g ${args.fps} -threads 4 "${out}"`;
 
-    // High Quality
-    execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
-    // Medium Quality
+    // MediaRecorder already produces a VP9 full-resolution source. It was
+    // wastefully transcoded AGAIN with 16 threads even for 1920px/long clips;
+    // that exhausted ffmpeg resources for the four large legacy projects.
+    // Preserve the original validated high-quality VP9 bytes, and encode only
+    // genuinely smaller medium/low variants with bounded thread counts.
+    if (args.alpha) {
+      execSync(vp9(dimHigh, bitrates.high, outPaths.webmHigh), { stdio: 'inherit' });
+    } else {
+      fs.copyFileSync(qualitySource, outPaths.webmHigh);
+      console.error('High quality uses original VP9 recording; no redundant encoding');
+    }
     execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
-    // Low Quality
     execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
 
     // WebP poster: a frame that actually has visible content.
