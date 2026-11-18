@@ -100,7 +100,13 @@ if (sets.length === 0) {
 const firstSet = sets[0];
 const setFiles = fs.readdirSync(firstSet.path);
 const skeletonFile = setFiles.find(f => /\.json$/i.test(f) && (() => { try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(firstSet.path, f), 'utf8')).bones); } catch { return false; } })()) || setFiles.find(f => /\.skel$/i.test(f));
-const atlasFile = setFiles.find(f => /\.(atlas|atlas\.txt|atlas\.docx)$/i.test(f));
+// A project may include several atlases (e.g. its skeleton and an unrelated
+// character). Taking the first atlas breaks valid animations and preview jobs.
+const skeletonBase = (skeletonFile || '').replace(/\.(json|skel)$/i, '').toLowerCase();
+const atlasCandidates = setFiles.filter(f => /\.(atlas|atlas\.txt|atlas\.docx)$/i.test(f));
+const atlasFile = atlasCandidates.find(f =>
+  f.replace(/\.atlas(?:\.txt|\.docx)?$/i, '').toLowerCase() === skeletonBase
+) || (atlasCandidates.length === 1 ? atlasCandidates[0] : null);
 const textureFiles = setFiles.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
 if (!skeletonFile || !atlasFile || textureFiles.length === 0) {
@@ -527,6 +533,20 @@ async function warmUpAnimations() {
 const atlasLocalPath = path.join(firstSet.path, atlasFile);
 let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
+// A number of 3.8 game exports retain DXT5 .dds names in the atlas but were
+// uploaded with a same-stem PNG texture. Only rewrite actual PAGE declarations
+// with an exact same-folder PNG match. Never rewrite a region or substitute an
+// unrelated image; source atlas remains unchanged on disk.
+const textureBasenames = new Map(textureFiles.map(name => [name.toLowerCase(), name]));
+const atlasLines = atlasContent.split(/\r?\n/);
+for(let n=0;n+1<atlasLines.length;n++){
+  const page=atlasLines[n].trim();
+  if(!/\.dds$/i.test(page) ||
+     !/^(size|format|filter|repeat|pma)\s*:/i.test(atlasLines[n+1].trim()))continue;
+  const matchingPng = textureBasenames.get(path.basename(page.replace(/\\/g,'/')).replace(/\.dds$/i,'.png').toLowerCase());
+  if(matchingPng) atlasLines[n] = matchingPng;
+}
+atlasContent=atlasLines.join('\n');
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
