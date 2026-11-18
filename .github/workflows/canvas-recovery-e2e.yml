@@ -33,6 +33,15 @@ jobs:
             id: "Spine-animation-2026-11-17T18-44-12-762Z"
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /library_02/index.json
+            /library_02/Spine-animation-2026-11-17T18-45-14-132Z/
+            /library_02/Spine-animation-2026-11-17T18-44-12-762Z/
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
