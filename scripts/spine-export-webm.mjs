@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences } from "./atlas-pages.mjs";
 import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -11,6 +11,7 @@ import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
+import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 
 const args = {
   uploadId: '',
@@ -500,6 +501,28 @@ let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
 const reconciledAtlas = reconcileDdsAtlasPages(atlasContent,textureFiles);
 atlasContent = reconciledAtlas.text;
+const textureMetadata=textureFiles.map(name=>{
+  let width=0,height=0;
+  try{
+    const fd=fs.openSync(path.join(firstSet.path,name),'r');
+    try{
+      const header=Buffer.alloc(24);
+      if(fs.readSync(fd,header,0,24,0)===24&&
+        header.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))){
+        width=header.readUInt32BE(16);
+        height=header.readUInt32BE(20);
+      }
+    }finally{fs.closeSync(fd);}
+  }catch{}
+  return {name,width,height};
+});
+const reconciledPages=reconcileAtlasPageReferences(atlasContent,textureMetadata);
+atlasContent=reconciledPages.text;
+if(reconciledPages.aliases||reconciledPages.unresolved)
+  console.error('ATLAS_PAGE_RESOLUTION_COUNTS='+JSON.stringify({
+    matched:reconciledPages.pages-reconciledPages.unresolved,
+    aliases:reconciledPages.aliases,unresolved:reconciledPages.unresolved
+  }));
 
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
@@ -521,7 +544,7 @@ for (const name of availableAnimations) {
 const scenarioEntry = tokenIndex.has('in') ? tokenIndex.get('in') : tokenIndex.get('begin');
 const scenarioExit = tokenIndex.has('out') ? tokenIndex.get('out') : tokenIndex.get('end');
 const scenarioIdle = tokenIndex.has('idle') ? tokenIndex.get('idle') : tokenIndex.get('loop');
-const scenarioCycle = !args.animation && scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
+const scenarioCycle = !args.animation && !entry.defaultAnimation && scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
 const captureAnimation = scenarioCycle.length > 1 ? scenarioCycle[0] : targetAnimation;
 if (scenarioCycle.length > 1) {
   console.error(`Scenario: ${scenarioCycle.join(' -> ')} (запись превью по кругу)`);
@@ -764,7 +787,7 @@ try {
   // Each Spine minor requires its own installed player. Using one runtime for
   // 4.0, 4.1 and 4.2 silently misparses valid binary skeletons.
   const playerRoot = versionedRuntimeRoot ? path.join(versionedRuntimeRoot, 'spine-' + modernRuntime) : '';
-  const versionedAssets = playerRoot && modernRuntime !== '4.3' && !isLegacy ? [
+  const versionedAssets = playerRoot && !isLegacy ? [
     [playerJsUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
     [playerCssUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
   ] : [];
@@ -847,6 +870,20 @@ try {
   let videoDataUrl = null;
   let lastCaptureError = null;
 
+  // WebGL readPixels sometimes returns an empty back buffer even when the
+  // browser compositor draws the real skeleton. Confirm visible pixels from
+  // a temporary on-screen canvas screenshot before declaring the art blank.
+  async function hasVisibleCompositedCanvas() {
+    try {
+      const png=await page.locator('#player canvas').first().screenshot({type:'png',timeout:15000});
+      const rgb=execFileSync('ffmpeg',[
+        '-v','error','-f','image2pipe','-i','pipe:0',
+        '-vf','scale=32:32','-f','rawvideo','-pix_fmt','rgb24','pipe:1'
+      ],{input:png,timeout:20000,maxBuffer:32768});
+      return hasVisibleScreenshotPixels(rgb);
+    } catch { return false; }
+  }
+
   for (const skin of skinCandidates) {
     const label = skin === null ? '(default)' : `'${skin}'`;
     await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
@@ -864,6 +901,12 @@ try {
     }
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
+    const pinnedAnimation = args.animation || entry.defaultAnimation || '';
+    if (pinnedAnimation && runtimeAnimations.length && !runtimeAnimations.includes(pinnedAnimation)) {
+      lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
+      console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
+      break;
+    }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
     // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
     // runtime exposes them after load: retry named skins instead of recording
@@ -909,7 +952,14 @@ try {
     }
     canvasWidth = canvasSize[0] || videoWidth;
     canvasHeight = canvasSize[1] || videoHeight;
-    const framePeak = await page.evaluate(() => (typeof window.__framePeak === 'function' ? window.__framePeak() : -1));
+    let framePeak = await page.evaluate(() => (typeof window.__framePeak === 'function' ? window.__framePeak() : -1));
+    if(framePeak<FRAME_PEAK_MIN && await hasVisibleCompositedCanvas()) {
+      framePeak=FRAME_PEAK_MIN;
+      console.error('VISIBLE_COMPOSITED_SPINE_CANVAS');
+    }
+    // Never replace a requested/default animation with another animation.
+    // An invisible original is an explicit render failure, not permission to
+    // invent a different visual timeline for the work.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {

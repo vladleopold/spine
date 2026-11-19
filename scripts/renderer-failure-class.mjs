@@ -39,6 +39,14 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
     /webp.*failed/i.test(log)?"WEBP_POSTER_FAILURE":
     /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
+    /No visible real-time Spine frames/i.test(log)?"COMPOSITED_FRAMES_NOT_VISIBLE":
+    /Selected animation has no changing canvas frames/i.test(log)?"COMPOSITED_FRAMES_IDENTICAL":
+    /Spine runtime generated blank deterministic frames/i.test(log)?"DETERMINISTIC_WEBM_BLANK":
+    /Recovered canvas animation is missing encoded frames/i.test(log)?"DETERMINISTIC_WEBM_TRUNCATED":
+    /No video data captured by MediaRecorder/i.test(log)?"MEDIARECORDER_NO_BLOB":
+    /No visible pixels from any available Spine skin/i.test(log)?"RUNTIME_ALL_SKINS_INVISIBLE":
+    /Cannot establish playable animation duration/i.test(log)?"UNKNOWN_ANIMATION_DURATION":
+    /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":
     "UNCLASSIFIED";
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]

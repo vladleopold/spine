@@ -6,7 +6,7 @@ assert.equal(choosePreviewAnimation([
   'blow_loop_landscape', 'popup_loop_landscape'
 ]), 'blow_loop_landscape');
 assert.equal(choosePreviewAnimation(['background', 'Idle', 'Walk'], 'Walk'), 'Walk');
-assert.equal(choosePreviewAnimation(['background', 'Idle', 'Walk'], 'Missing'), 'Idle');
+assert.equal(choosePreviewAnimation(['background', 'Idle', 'Walk'], 'Missing'), 'Missing');
 assert.equal(choosePreviewAnimation(['mask', 'background']), 'mask');
 assert.equal(choosePreviewAnimation([]), '');
 assert.equal(choosePreviewAnimation(['spine_play', 'Idle Post Climax Cum'],

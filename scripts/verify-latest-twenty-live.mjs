@@ -47,6 +47,20 @@ async function checkMedia(mediaUrl,type,prefix){
   }
   return false;
 }
+async function exactMediaFilesExist(work){
+  const dir=work.previewPath.split('/').map(encodeURIComponent).join('/');
+  try{
+    const response=await fetch('https://api.github.com/repos/'+repo+
+      '/contents/'+dir+'?ref=main',{headers,
+      signal:AbortSignal.timeout(30000),cache:'no-store'});
+    if(!response.ok)return false;
+    const body=await response.json();
+    if(!Array.isArray(body))return false;
+    const names=new Set(body.map(x=>x.name));
+    return ['preview.webm','preview-medium.webm','preview-low.webm',
+      'preview.webp','preview-medium.webp','preview-low.webp'].every(x=>names.has(x));
+  }catch{return false;}
+}
 let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0;
 for(const work of snapshot){
   const index=await getIndex(work.basePath);
@@ -63,6 +77,7 @@ for(const work of snapshot){
     continue;
   }
   if(record.webmStatus!=='ready'||fields.some(([key])=>!record[key])){failed++;continue;}
+  if(!await exactMediaFilesExist(work)){failed++;continue;}
   const prefix='/assets/'+work.previewPath+'/';
   const checks=await Promise.all(fields.map(async ([key,type])=>
     checkMedia(record[key],type,prefix)));
