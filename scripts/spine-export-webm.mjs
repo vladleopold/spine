@@ -1205,8 +1205,6 @@ try {
     webpLow: `${baseOutputPath}-low.webp`,
   };
   // Accessible to the output-metadata builder after the try/catch block.
-  let mediumFallback = false;
-  let lowFallback = false;
 
   // Битрейт считаем от числа пикселей кадра. Раньше стояло фиксированное
   // 1200k, а на кадре 1644x1612 это меньше половины бита на пиксель —
@@ -1267,23 +1265,10 @@ try {
       fs.copyFileSync(qualitySource, outPaths.webmHigh);
       console.error('High quality uses original VP9 recording; no redundant encoding');
     }
-    // Do not lose a verified playable high WebM merely because a legacy
-    // 3.x animation is too resource-heavy for a resized VP9 transcode.
-    // Keep a truthful source-quality fallback for that tier, and record its
-    // actual width in metadata rather than falsely advertising 720p/360p.
-    const encodeTier = (dim, bitrate, output, tier) => {
-      try {
-        execSync(vp9(dim, bitrate, output), { stdio: 'inherit' });
-        return false;
-      } catch (_) {
-        fs.copyFileSync(qualitySource, output);
-        console.error('Encoder fallback for ' + tier + ': using validated original VP9 recording');
-        return true;
-      }
-    };
-    mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
-    lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
-    if (mediumFallback || lowFallback) console.error('QUALITY_TIER_FALLBACK_SOURCE');
+    // Never label a copied high-quality source as medium/low. A tier that
+    // cannot be encoded is a failed render, not permission to substitute quality.
+    execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
+    execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
 
     // The WebP is frame zero of this exact quality-tier WebM. A black or
     // transparent opening frame is preserved; no later frame is substituted.
@@ -1344,7 +1329,7 @@ try {
     atlas: atlasFile,
     textures: textureFiles,
     alpha: args.alpha,
-    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(mediumFallback ? dimHigh : dimMedium), low: widthOf(lowFallback ? dimHigh : dimLow) },
+    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
