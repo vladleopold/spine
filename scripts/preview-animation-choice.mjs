@@ -9,7 +9,9 @@ export function choosePreviewAnimation(names, preferred = '') {
   if (preferred) return preferred;
   const auxiliary = /(?:^|[\s_./-])(?:bkg|bg|background|fg|mask|backup)(?:$|[\s_./-])/i;
   const meaningful = available.filter(name => !auxiliary.test(name));
-  const candidates = meaningful.length ? meaningful : available;
+  // Do not turn a skeleton containing only masks/backgrounds into a preview.
+  // With no meaningful default animation, fail closed instead of guessing.
+  if (!meaningful.length) return '';
   const loop = /(?:^|[\s_./-])(?:idle|loop|walk|run|breathe|breath|attack)(?:$|[\s_./-])/i;
-  return candidates.find(name => loop.test(name)) || candidates[0] || '';
+  return meaningful.find(name => loop.test(name)) || meaningful[0] || '';
 }
