@@ -205,7 +205,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest20-"+item.id);
+    const artifact=path.join(base,"latest20-"+item.index);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
@@ -231,6 +231,14 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
+      const blockedReasons=new Set(["ANIMATION_SELECTION_MISSING","ANIMATION_SELECTION","LEGACY_RUNTIME_MISSING","SOURCE_GRAPH_MISSING"]);
+      if(meta?.status==="blocked"||blockedReasons.has(meta?.reason)){
+        record.webmStatus="blocked-preview-prerequisite";
+        record.previewStatus="blocked";
+        record.previewError="Explicit animation selection or compatible renderer runtime is unavailable; no alternate animation was used";
+        summary.blocked++;
+        continue;
+      }
       // A previous completed job may have already published genuine complete
       // media while this older job was rendering. Do not downgrade an
       // independently valid six-file source simply because this attempt failed.
