@@ -39,7 +39,7 @@ try{
       '-c:v','libvpx-vp9','-lossless','1','-deadline','realtime','-cpu-used','8',tier.video]);
   }
   for(const tier of tiers){
-    const poster=tier.video.replace(/\\.webm$/i,'.webp');
+    const poster=tier.video.replace(/\.webm$/i,'.webp');
     const result=generateFirstFrameWebp(tier.video,poster);
     assert.equal(result.width,tier.width);
     assert.equal(result.height,tier.height);
