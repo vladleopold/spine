@@ -62,7 +62,7 @@ on:
       - scripts/test-atlas-source-integrity.mjs
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: false
@@ -272,6 +272,8 @@ jobs:
           retention-days: 1
   publish:
     needs: [inventory, render]
+    permissions:
+      contents: write
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
