@@ -28,6 +28,14 @@ function newestTwenty() {
   }
   return entries.sort((a,b)=>b.at-a.at).slice(0,20);
 }
+function sourceIssue(entry){
+  const p=path.resolve(root,entry.previewPath);
+  if(!p.startsWith(root+path.sep))return 'UNSAFE_PREVIEW_PATH';
+  try{
+    const files=fs.readdirSync(p).filter(x=>fs.statSync(path.join(p,x)).isFile());
+    return inspectAtlasSourceBundle(p,files).reason;
+  }catch{return 'MISSING_SOURCE_TRIAD';}
+}
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
@@ -125,7 +133,9 @@ if(action==="matrix"){
   // Bound concurrent production probes so the gallery is not flooded.
   for(let offset=0;offset<latest.length;offset+=4){
     const batch=await Promise.all(latest.slice(offset,offset+4).map(async e=>{
-    const ready=bundleOk(e);
+    const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
+    const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
+    const ready=!incompatible&&bundleOk(e);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
@@ -174,9 +184,13 @@ if(action==="matrix"){
     const record=entries.find(e=>e.id===item.id);
     if(!record)throw new Error("Index record disappeared before repair");
     if(!bundleOk(entryInfo)){
-      record.webmStatus="blocked-missing-source";
+      const issue=sourceIssue(entryInfo);
+      const unsupported=issue==="UNSUPPORTED_SPINE_EXPORT_3_8_75";
+      record.webmStatus=unsupported?"blocked-incompatible-source-version":"blocked-missing-source";
       record.previewStatus="blocked";
-      record.previewError="Incomplete skeleton, atlas page, or texture bundle";
+      record.previewError=unsupported
+        ?"Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required"
+        :"Incomplete skeleton, atlas page, or texture bundle";
       summary.blocked++;
       continue;
     }
