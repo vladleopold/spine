@@ -27,7 +27,7 @@ assert.match(exporter, /const skinCandidates = \[null\]/,
 assert.match(exporter, /SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
 assert.match(exporter, /NO_SELECTED_SPINE_ANIMATION/);
 
-assert.doesNotMatch(exporter, /choosePreviewAnimation\\(runtimeAnimations/,
+assert.doesNotMatch(exporter, /choosePreviewAnimation\(runtimeAnimations/,
   'runtime metadata must validate, never choose, a preview animation');
 
 console.log('SPINE_PREVIEW_ANIMATION_SELECTION_TESTS_PASSED');
