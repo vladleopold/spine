@@ -20,8 +20,11 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-19T03-01-41-552Z/c20256.png?v=2026-11-19T03-01-41.552Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "failed",
+    "dispatchStatus": "pending",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
+    "previewStatus": "failed",
+    "previewError": "Native preview render did not pass media acceptance"
   },
   {
     "id": "wolf-2026-11-18T17-32-08-569Z",
@@ -51,7 +54,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-18T16-58-40-631Z",
@@ -81,7 +85,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-18T16-54-44-655Z",
@@ -121,7 +126,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-18T16-53-44-355Z",
@@ -157,7 +163,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-18T12-11-23-130Z",
@@ -183,7 +190,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-18T06-31-32-120Z",
@@ -486,7 +494,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-17T18-45-14-132Z",
@@ -907,10 +916,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webp",
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webm",
-    "webmStatus": "ready",
+    "webmStatus": "failed",
     "dispatchStatus": "rendered",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "failed",
+    "previewError": "Native preview render did not pass media acceptance",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webp",
@@ -937,7 +946,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "New version failed frame-density acceptance; previous media retained"
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-17T18-36-51-976Z",
@@ -1138,7 +1147,8 @@
     "webmStatus": "failed",
     "dispatchStatus": "pending",
     "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewError": "Native preview render did not pass media acceptance",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
     "id": "Spine-animation-2026-11-17T18-26-38-201Z",
