@@ -16,7 +16,7 @@ export function previewSourceFingerprint(record) {
 export function repairRecordTimestamp(record) {
   const uploadedAt = Date.parse(record?.uploadedAt || "");
   if (Number.isFinite(uploadedAt)) return uploadedAt;
-  const match = String(record?.id || "").match(/-(\\d{4}-\\d{2}-\\d{2})T(\\d{2})-(\\d{2})-(\\d{2})-(\\d{3})Z$/);
+  const match = String(record?.id || "").match(/-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/);
   if (!match) return NaN;
   return Date.parse(`${match[1]}T${match[2]}:${match[3]}:${match[4]}.${match[5]}Z`);
 }
