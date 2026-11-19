@@ -86,6 +86,7 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /api/github-upload.js
             /scripts/
             /library/index.json
             /library_*/index.json
@@ -117,6 +118,7 @@ jobs:
         shell: bash
         run: |
           node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check api/github-upload.js
           node --check scripts/repair-latest-twenty-previews.mjs
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
