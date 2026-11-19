@@ -9,6 +9,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
+import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -30,15 +31,20 @@ function newestTwenty() {
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
-  let files=[];
+  let files=[],indexOnly=false;
   try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
   catch{
-    // Inventory checks indexes only; the render job validates actual files.
+    // Inventory checks indexes only; the render/publish jobs validate
+    // the authoritative source pages from the sparse-checked-out files.
+    indexOnly=true;
     files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
   }
-  return files.some(f=>/\.(json|skel)$/i.test(f)) &&
+  const triad=files.some(f=>/\.(json|skel)$/i.test(f)) &&
     files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
     files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
+  if(!triad)return false;
+  if(indexOnly)return true;
+  return inspectAtlasSourceBundle(p,files).complete;
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
@@ -170,7 +176,7 @@ if(action==="matrix"){
     if(!bundleOk(entryInfo)){
       record.webmStatus="blocked-missing-source";
       record.previewStatus="blocked";
-      record.previewError="Incomplete skeleton / atlas / texture bundle";
+      record.previewError="Incomplete skeleton, atlas page, or texture bundle";
       summary.blocked++;
       continue;
     }
