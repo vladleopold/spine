@@ -152,14 +152,6 @@ jobs:
         with:
           name: repair-manifest
           path: repair-manifest
-      - name: Add frozen source folders without printing their names
-        run: |
-          node --input-type=module -e '
-            import fs from "node:fs";
-            import {execFileSync} from "node:child_process";
-            const items=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
-            for(const item of items) execFileSync("git",["sparse-checkout","add",item.previewPath],{stdio:"ignore"});
-          '
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -295,6 +287,14 @@ jobs:
         with:
           name: repair-manifest
           path: repair-manifest
+      - name: Add frozen source folders without printing their names
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import {execFileSync} from "node:child_process";
+            const items=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
+            for(const item of items) execFileSync("git",["sparse-checkout","add",item.previewPath],{stdio:"ignore"});
+          '
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
