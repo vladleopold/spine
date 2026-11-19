@@ -30,6 +30,21 @@ export function inspectAtlasSourceBundle(directory, filenames){
       }
     }catch{return false}
   })())||files.find(name=>/\.skel$/i.test(name));
+  // Spine 3.8.75 shipped a deprecated export format that official 3.8
+  // runtimes explicitly reject. Do not forge a different version string
+  // or fabricate video from another animation for an incompatible source.
+  if(skeleton){
+    try{
+      const raw=fs.readFileSync(path.join(directory,skeleton));
+      let version='unknown';
+      if(/\.json$/i.test(skeleton)){
+        try{version=String(JSON.parse(raw.toString('utf8'))?.skeleton?.spine||'unknown');}
+        catch{version=detectBinarySpineVersion(raw.subarray(0,512));}
+      }else version=detectBinarySpineVersion(raw.subarray(0,512));
+      if(version==='3.8.75')
+        return {complete:false,pages:0,unresolved:0,reason:'UNSUPPORTED_SPINE_EXPORT_3_8_75'};
+    }catch{}
+  }
   const atlas=skeleton?chooseAtlasForSkeleton(skeleton,files):'';
   const textures=files.filter(name=>/\.(png|webp|jpe?g|dds)$/i.test(name));
   if(!skeleton||!atlas||textures.length===0)

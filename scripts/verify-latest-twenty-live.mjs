@@ -68,6 +68,11 @@ for(const work of snapshot){
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
+  if(record.webmStatus==='blocked-incompatible-source-version'){
+    if(String(record.previewError||'').includes('Spine 3.8.75'))blocked++;
+    else failed++;
+    continue;
+  }
   if(record.webmStatus==='blocked-missing-source'){
     const source=Array.isArray(record.files)?record.files:[];
     const triad=source.some(x=>/\.(skel|json)$/i.test(x))&&

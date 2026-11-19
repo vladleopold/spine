@@ -5,6 +5,7 @@ import fs from "node:fs";
 
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
+  if(/unsupported_spine_export_3_8_75/.test(x))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
   if (/couldn.t load texture atlas page|couldn.t load image|assets could not be loaded|could not load atlas|failed to fetch atlas|texture atlas page/.test(x)) return "ATLAS_TEXTURE_LOAD";
   if (/unknown format|unsupported .*skeleton|unsupported .*spine|unsupported spine/.test(x)) return "SKELETON_RUNTIME_VERSION";
   if (/skeleton.*not found|no spine sets found|missing required files|atlas file missing/.test(x)) return "SOURCE_GRAPH_MISSING";
