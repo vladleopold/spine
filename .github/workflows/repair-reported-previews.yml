@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+  pull_request:
+    paths:
+      - .github/workflows/repair-reported-previews.yml
+      - scripts/spine-export-webm.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -46,6 +52,7 @@ jobs:
           node --check scripts/preview-runtime-minor.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node scripts/test-preview-animation-choice.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     needs: inventory
