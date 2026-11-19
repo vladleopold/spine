@@ -9,6 +9,8 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/test-first-frame-poster.mjs
       - scripts/test-first-frame-poster-real.mjs
@@ -32,6 +34,8 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/test-first-frame-poster.mjs
       - scripts/test-first-frame-poster-real.mjs
@@ -96,6 +100,8 @@ jobs:
           node scripts/test-atlas-source-integrity.mjs
           node scripts/test-spine-version-detect.mjs
           node scripts/test-spine-binary-json-alias.mjs
+          node scripts/test-source-skeleton-choice.mjs
+          node --check scripts/source-skeleton-choice.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
@@ -197,10 +203,20 @@ jobs:
               code=0
             else
               echo "RECORDED_WEBM_RECOVERY_REJECTED"
+    if [[ -s "$RUNNER_TEMP/recovery.log" ]]; then
+      echo "RECOVERY_DIAGNOSTICS_BEGIN"
+      tail -n 60 "$RUNNER_TEMP/recovery.log"
+      echo "RECOVERY_DIAGNOSTICS_END"
+    fi
             fi
           fi
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
+  if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
+    echo "RENDERER_DIAGNOSTICS_BEGIN"
+    grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
+    echo "RENDERER_DIAGNOSTICS_END"
+  fi
             echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
             echo "::warning::Real render failed acceptance; publish other valid works and report this one"
             exit 0
