@@ -91,6 +91,16 @@ jobs:
               throw Error("Incomplete actual animation video");
             console.log("REAL_SPINE_VIDEO_ACCEPTANCE_PASS FRAMES="+s.nb_read_frames);
           ' "$RUNNER_TEMP/private-probe.json"
+          ffmpeg -v error -i "$RUNNER_TEMP/private-preview.webm" -map 0:v:0 -f framemd5 "$RUNNER_TEMP/private-framemd5.txt"
+          node -e '
+            const fs=require("node:fs");
+            const lines=fs.readFileSync(process.argv[1],"utf8").split(/\r?\n/).filter(line=>line&&!line.startsWith("#"));
+            const hashes=lines.map(line=>line.split(",").at(-1)?.trim()).filter(Boolean);
+            const unique=new Set(hashes);
+            if(hashes.length<8||unique.size<8)
+              throw Error("Animation preview lacks eight distinct decoded frames");
+            console.log("REAL_SPINE_DISTINCT_FRAME_ACCEPTANCE_PASS UNIQUE="+unique.size);
+          ' "$RUNNER_TEMP/private-framemd5.txt"
           for f in "$RUNNER_TEMP/private-preview.webp" "$RUNNER_TEMP/private-preview-medium.webm" "$RUNNER_TEMP/private-preview-medium.webp" "$RUNNER_TEMP/private-preview-low.webm" "$RUNNER_TEMP/private-preview-low.webp"; do
             test -s "$f"
           done
