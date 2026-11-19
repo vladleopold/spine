@@ -143,8 +143,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify all three pinned Spine runtime bundles load from disk
+      - name: Verify all four pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spine-player-runtimes
+          path: ${{ runner.temp }}/spine-player-runtimes/
+          if-no-files-found: error
+          retention-days: 1
   render:
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
@@ -173,13 +179,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: spine-player-runtimes
+          path: ${{ runner.temp }}/spine-player-runtimes
+      - name: Configure shared pinned Spine runtimes
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.0/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.1/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.2/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.3/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          echo "SPINE_VERSIONED_PLAYER_DIR=$RUNNER_TEMP/spine-player-runtimes" >> "$GITHUB_ENV"
       - name: Install native Chromium renderer and video/poster encoders
         if: matrix.entry.needsRender
         shell: bash
         run: |
           set -euo pipefail
           npm install --no-save --no-audit --no-fund playwright@1.59.1
-          bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
           if command -v google-chrome >/dev/null 2>&1; then
             echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
             echo "Using preinstalled Chrome for WebGL preview rendering"
