@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { animationAssetPath, isPublicPreviewRepairCandidate } from './repair-archive-card-previews.mjs';
-import { previewSourceFingerprint, validateFrozenRepairRecord } from './repair-manifest-guard.mjs';
+import { previewSourceFingerprint, repairRecordTimestamp, validateFrozenRepairRecord } from './repair-manifest-guard.mjs';
 import { readFileSync } from 'node:fs';
 
 const entry = { id: 'sp_hyjingx_data-2026-10-03T14-25-07-486Z' };
@@ -47,6 +47,28 @@ test('archive preview repair inventory excludes hidden and test-only works', () 
   assert.equal(isPublicPreviewRepairCandidate({ ...eligible, testOnly: true }), false);
   assert.equal(isPublicPreviewRepairCandidate({ ...eligible, previewStatus: 'ready' }), false);
   assert.equal(isPublicPreviewRepairCandidate({ ...eligible, webmStatus: 'blocked' }), false);
+});
+
+test('legacy archive entries derive a stable timestamp from the ID when uploadedAt is absent', () => {
+  const record = {
+    id: 's200016-2026-07-27T09-53-02-926Z',
+    uploadedAt: '',
+    previewPath: 'library_01/s200016-2026-07-27T09-53-02-926Z',
+    files: [],
+  };
+  const expected = Date.parse('2026-07-27T09:53:02.926Z');
+  assert.equal(repairRecordTimestamp(record), expected);
+  const item = {
+    id: record.id,
+    basePath: 'library_01',
+    previewPath: record.previewPath,
+    uploadedAt: expected,
+    sourceFingerprint: previewSourceFingerprint(record),
+  };
+  assert.equal(
+    validateFrozenRepairRecord('/repo', item, ['library_01'], () => [record]).at,
+    expected,
+  );
 });
 
 test('publish-time source guard rejects works hidden after inventory', () => {
