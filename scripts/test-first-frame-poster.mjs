@@ -12,6 +12,8 @@ assert.match(helper,/verifyPosterFirstFrame\(videoPath, posterPath\)/);
 assert.match(helper,/videoFrame\.equals\(posterFrame\)/);
 assert.doesNotMatch(helper,/-ss|positions|pickPosterFrame|scan real timeline/);
 assert.match(repair,/generateFirstFrameWebp/);
+assert.doesNotMatch(repair,/frames\/seconds>=15|f\/duration<15|18-39-06-745Z/);
+assert.match(repair,/verify-preview-motion\.mjs/);
 assert.match(recovery,/tierDimensions/);
 assert.match(recovery,/Always encode from the same original capture/);
 assert.doesNotMatch(recovery,/fs\.existsSync\(out\).*continue|RECOVERY_SOURCE_QUALITY/);
