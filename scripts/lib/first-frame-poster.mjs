@@ -1,0 +1,77 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+
+const FFMPEG_TIMEOUT_MS = 120000;
+const RAW_FRAME_LIMIT = 256 * 1024 * 1024;
+
+function dimensions(file) {
+  const data = JSON.parse(execFileSync('ffprobe', [
+    '-v', 'error', '-select_streams', 'v:0',
+    '-show_entries', 'stream=width,height', '-of', 'json', file,
+  ], { encoding: 'utf8', timeout: FFMPEG_TIMEOUT_MS, stdio: ['ignore', 'pipe', 'ignore'] }));
+  const stream = data.streams?.[0];
+  const width = Number(stream?.width || 0);
+  const height = Number(stream?.height || 0);
+  if (!(width > 0 && height > 0)) throw new Error('Video/poster has no readable dimensions');
+  return { width, height };
+}
+
+function decodedFirstFrame(file) {
+  return execFileSync('ffmpeg', [
+    '-v', 'error', '-i', file, '-map', '0:v:0', '-frames:v', '1',
+    '-f', 'rawvideo', '-pix_fmt', 'rgba', 'pipe:1',
+  ], {
+    timeout: FFMPEG_TIMEOUT_MS,
+    maxBuffer: RAW_FRAME_LIMIT,
+    stdio: ['ignore', 'pipe', 'ignore'],
+  });
+}
+
+/**
+ * Verify that the WebP pixels are exactly the first decoded frame of this WebM.
+ * No seek, frame scan, alternate still, or later-frame substitution is allowed.
+ */
+export function verifyPosterFirstFrame(videoPath, posterPath) {
+  const videoSize = dimensions(videoPath);
+  const posterSize = dimensions(posterPath);
+  if (videoSize.width !== posterSize.width || videoSize.height !== posterSize.height) {
+    throw new Error('Poster dimensions do not match its WebM');
+  }
+  const videoFrame = decodedFirstFrame(videoPath);
+  const posterFrame = decodedFirstFrame(posterPath);
+  if (!videoFrame.length || !videoFrame.equals(posterFrame)) {
+    throw new Error('WebP is not the exact first frame of its paired WebM');
+  }
+  return { ...videoSize, bytes: fs.statSync(posterPath).size };
+}
+
+/**
+ * Extract frame zero from the supplied WebM and encode only that frame as
+ * lossless WebP. This intentionally preserves a black/transparent first frame
+ * if that is what the original animation actually starts with.
+ */
+export function generateFirstFrameWebp(videoPath, posterPath) {
+  const framePath = path.join(path.dirname(posterPath), path.basename(posterPath) + '.first-frame.png');
+  fs.rmSync(posterPath, { force: true });
+  fs.rmSync(framePath, { force: true });
+  try {
+    execFileSync('ffmpeg', [
+      '-y', '-v', 'error', '-i', videoPath, '-map', '0:v:0',
+      '-frames:v', '1', '-c:v', 'png', framePath,
+    ], { timeout: FFMPEG_TIMEOUT_MS, stdio: 'ignore' });
+    if (!fs.existsSync(framePath) || fs.statSync(framePath).size < 32) {
+      throw new Error('Could not decode the first WebM frame');
+    }
+    execFileSync('ffmpeg', [
+      '-y', '-v', 'error', '-i', framePath, '-frames:v', '1',
+      '-c:v', 'libwebp', '-lossless', '1', '-quality', '100', posterPath,
+    ], { timeout: FFMPEG_TIMEOUT_MS, stdio: 'ignore' });
+    if (!fs.existsSync(posterPath) || fs.statSync(posterPath).size < 32) {
+      throw new Error('Could not encode the first WebM frame as WebP');
+    }
+    return verifyPosterFirstFrame(videoPath, posterPath);
+  } finally {
+    fs.rmSync(framePath, { force: true });
+  }
+}
