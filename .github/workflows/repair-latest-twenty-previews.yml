@@ -1,9 +1,10 @@
 name: Recover newest 20 Spine WebP and WebM previews
 on:
+  schedule:
+    - cron: '17 * * * *'
   push:
     branches: [main]
     paths:
-      - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
