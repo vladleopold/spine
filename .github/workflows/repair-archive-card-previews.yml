@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-archive-card-previews.yml
+      - .github/workflows/spine-export-all.yml
       - scripts/repair-archive-card-previews.mjs
       - scripts/test-repair-archive-card-previews.mjs
       - scripts/lib/first-frame-poster.mjs
@@ -41,6 +42,7 @@ jobs:
             /scripts/test-repair-archive-card-previews.mjs
             /scripts/verify-ready-preview-live.mjs
             /.github/workflows/repair-archive-card-previews.yml
+            /.github/workflows/spine-export-all.yml
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4

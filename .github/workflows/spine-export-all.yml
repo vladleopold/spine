@@ -117,7 +117,7 @@ jobs:
         run: |
           # One job exports the whole batch; a work that fails is recorded in
           # its own artifact so the rest of the batch still lands.
-          echo '${{ matrix.batch }}' > batch.json
+          echo '${{ toJSON(matrix.batch) }}' > batch.json
           node -e "
             const fs = require('fs');
             const ids = JSON.parse(fs.readFileSync('batch.json', 'utf8'));
@@ -221,10 +221,11 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            const { entryForUpload } = await import('./scripts/resolve-library.mjs');
+            const repoRoot = process.cwd();
+            const { pathToFileURL } = require('node:url');
+            const { entryForUpload } = await import(pathToFileURL(path.resolve(repoRoot, 'scripts/resolve-library.mjs')).href);
             
             const origin = 'https://spine-link.vercel.app';
-            const repoRoot = process.cwd();
             // Each work may live in a different library_NN folder, so the folder
             // and its index are resolved per upload and flushed at the end.
             const touchedIndexes = new Map();
