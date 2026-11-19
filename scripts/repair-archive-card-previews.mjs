@@ -46,7 +46,13 @@ export function animationAssetPath(value, entry, previewPath, animation, tier) {
 function sourceSelection(record, basePath) {
   const animation = String(record.defaultAnimation || '').trim();
   if (!animation) return null;
-  const previewPath = safeRelative(record.previewPath || (basePath + '/' + record.id));
+  const rawPreviewPath = safeRelative(record.previewPath || record.id);
+  if (!rawPreviewPath) return null;
+  const hasShardPrefix = /^library(?:_\d+)?\//.test(rawPreviewPath);
+  if (hasShardPrefix && !rawPreviewPath.startsWith(basePath + '/')) return null;
+  const previewPath = rawPreviewPath.startsWith(basePath + '/')
+    ? rawPreviewPath
+    : safeRelative(path.posix.join(basePath, rawPreviewPath));
   if (!previewPath || !previewPath.startsWith(basePath + '/') ||
       previewPath.split('/').includes('..')) return null;
   const selected = record.allAnimationPreviews &&
