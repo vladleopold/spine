@@ -69,14 +69,13 @@ function sourceSelection(record, basePath) {
     uploadedAt: Date.parse(record.uploadedAt || ''),
     sourceFingerprint: previewSourceFingerprint(record),
     sourceKind: hasAnimationPair ? 'animation' : 'root',
-    sourceMediumPath: sourceMedium,
-    sourceLowPath: sourceLow,
-    rootMediumPath: rootMedium,
-    rootLowPath: rootLow,
-    sourceMediumUrl: hasAnimationPair ? selected.webmPreviewMedium : record.webmPreviewMedium,
-    sourceLowUrl: hasAnimationPair ? selected.webmPreviewLow : record.webmPreviewLow,
-    rootMediumUrl: record.webmPreviewMedium || '',
-    rootLowUrl: record.webmPreviewLow || '',
+    sourceMediumSuffix: sourceMedium.slice(previewPath.length + 1),
+    sourceLowSuffix: sourceLow.slice(previewPath.length + 1),
+    rootMediaFingerprint: hashValue([record.webmPreviewMedium || '', record.webmPreviewLow || '']),
+    animationMediaFingerprint: hashValue([
+      selected && selected.webmPreviewMedium || '',
+      selected && selected.webmPreviewLow || '',
+    ]),
   };
 }
 
@@ -94,8 +93,10 @@ function makeBatches(items, size = 12) {
     ]);
     for (const entry of entries) {
       for (const file of [
-        entry.sourceMediumPath, entry.sourceLowPath,
-        entry.rootMediumPath, entry.rootLowPath,
+        path.posix.join(entry.previewPath, entry.sourceMediumSuffix),
+        path.posix.join(entry.previewPath, entry.sourceLowSuffix),
+        entry.previewPath + '/preview-medium.webm',
+        entry.previewPath + '/preview-low.webm',
       ]) paths.add('/' + file);
     }
     batches.push({ entries, sparseCheckout: [...paths].join('\n') });
@@ -105,6 +106,10 @@ function makeBatches(items, size = 12) {
 
 function sha256(file) {
   return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+function hashValue(value) {
+  return createHash('sha256').update(JSON.stringify(value)).digest('hex');
 }
 
 function probeVideo(file) {
@@ -159,20 +164,20 @@ function render() {
     const dir = path.join('out', item.id);
     fs.mkdirSync(dir, { recursive: true });
     try {
-      const rootMedium = resolveInside(ROOT, item.rootMediumPath);
-      const rootLow = resolveInside(ROOT, item.rootLowPath);
-      let sourceMedium = resolveInside(ROOT, item.sourceMediumPath);
-      let sourceLow = resolveInside(ROOT, item.sourceLowPath);
+      const rootMedium = resolveInside(ROOT, item.previewPath + '/preview-medium.webm');
+      const rootLow = resolveInside(ROOT, item.previewPath + '/preview-low.webm');
+      let sourceMedium = resolveInside(ROOT, path.posix.join(item.previewPath, item.sourceMediumSuffix));
+      let sourceLow = resolveInside(ROOT, path.posix.join(item.previewPath, item.sourceLowSuffix));
       let actualSourceKind = item.sourceKind;
-      let actualMediumUrl = item.sourceMediumUrl;
-      let actualLowUrl = item.sourceLowUrl;
+      let actualSourceFingerprint = item.sourceKind === 'animation'
+        ? item.animationMediaFingerprint
+        : item.rootMediaFingerprint;
       if ((!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) &&
           item.sourceKind === 'animation' && fs.existsSync(rootMedium) && fs.existsSync(rootLow)) {
         sourceMedium = rootMedium;
         sourceLow = rootLow;
         actualSourceKind = 'root';
-        actualMediumUrl = item.rootMediumUrl;
-        actualLowUrl = item.rootLowUrl;
+        actualSourceFingerprint = item.rootMediaFingerprint;
       }
       if (!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) {
         throw new Error('selected animation and root WebM pairs are missing');
@@ -193,7 +198,7 @@ function render() {
         id: item.id, ok: true, animation: item.animation,
         manifest: item,
         sourceKind: actualSourceKind,
-        actualMediumUrl, actualLowUrl,
+        actualSourceFingerprint,
         sourceMediumPath: item.sourceMediumPath, sourceLowPath: item.sourceLowPath,
         sourceMediumUrl: item.sourceMediumUrl, sourceLowUrl: item.sourceLowUrl,
         rootMediumUrl: item.rootMediumUrl, rootLowUrl: item.rootLowUrl,
@@ -254,14 +259,18 @@ function merge() {
       typeof record.allAnimationPreviews === 'object'
       ? record.allAnimationPreviews[item.animation] || null
       : null;
-    const currentMediumUrl = meta.sourceKind === 'animation'
-      ? currentSelected && currentSelected.webmPreviewMedium
-      : record.webmPreviewMedium;
-    const currentLowUrl = meta.sourceKind === 'animation'
-      ? currentSelected && currentSelected.webmPreviewLow
-      : record.webmPreviewLow;
-    if (currentMediumUrl !== meta.actualMediumUrl || currentLowUrl !== meta.actualLowUrl ||
-        record.webmPreviewMedium !== item.rootMediumUrl || record.webmPreviewLow !== item.rootLowUrl) {
+    const currentRootFingerprint = hashValue([
+      record.webmPreviewMedium || '', record.webmPreviewLow || '',
+    ]);
+    const currentAnimationFingerprint = hashValue([
+      currentSelected && currentSelected.webmPreviewMedium || '',
+      currentSelected && currentSelected.webmPreviewLow || '',
+    ]);
+    const currentSourceFingerprint = meta.sourceKind === 'animation'
+      ? currentAnimationFingerprint
+      : currentRootFingerprint;
+    if (currentSourceFingerprint !== meta.actualSourceFingerprint ||
+        currentRootFingerprint !== item.rootMediaFingerprint) {
       summary.skipped.push({ id: item.id, reason: 'preview-source-url-changed' });
       continue;
     }
