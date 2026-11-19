@@ -115,3 +115,14 @@ test('live media verifier excludes hidden works and never logs work identifiers'
   assert.match(verifier, /PRODUCTION_MEDIA_EVIDENCE '\+JSON\.stringify\(\{ok:result\.ok,ext:result\.ext/);
   assert.doesNotMatch(verifier, /id:t\.id|entry\.id\}\);|JSON\.stringify\(result\)/);
 });
+
+test('Spine export workflow serializes matrix arrays and imports repository modules from an absolute file URL', () => {
+  const workflow = readFileSync(new URL('../.github/workflows/spine-export-all.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /echo '\$\{\{ toJSON\(matrix\.batch\) \}\}' > batch\.json/);
+  assert.doesNotMatch(workflow, /echo '\$\{\{ matrix\.batch \}\}' > batch\.json/);
+  assert.match(
+    workflow,
+    /const repoRoot = process\.cwd\(\);[\s\S]*?await import\(pathToFileURL\(path\.resolve\(repoRoot, 'scripts\/resolve-library\.mjs'\)\)\.href\)/,
+  );
+  assert.doesNotMatch(workflow, /await import\('\.\/scripts\/resolve-library\.mjs'\)/);
+});
