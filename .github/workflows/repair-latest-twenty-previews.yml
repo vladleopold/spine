@@ -148,11 +148,18 @@ jobs:
             /public/vendor-spine-player-*.css
             /library/index.json
             /library_*/index.json
-            /${{ matrix.entry.previewPath }}/
       - uses: actions/download-artifact@v4
         with:
           name: repair-manifest
           path: repair-manifest
+      - name: Add frozen source folders without printing their names
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import {execFileSync} from "node:child_process";
+            const items=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
+            for(const item of items) execFileSync("git",["sparse-checkout","add",item.previewPath],{stdio:"ignore"});
+          '
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -185,13 +192,15 @@ jobs:
             const rows=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
             const item=rows[Number(process.env.ENTRY_INDEX)];
             if(!item)throw new Error("Repair manifest index missing");
-            process.stdout.write([item.id,String(item.ready),String(item.needsRender),item.animation||""].join("\n"));
+            process.stdout.write([item.id,String(item.ready),String(item.needsRender),item.animation||"",item.previewPath].join("\n"));
           ')
           mapfile -t ENTRY_VALUES <<< "$ENTRY_DATA"
           ENTRY_ID="${ENTRY_VALUES[0]}"
           ENTRY_READY="${ENTRY_VALUES[1]}"
           ENTRY_NEEDS_RENDER="${ENTRY_VALUES[2]}"
           ENTRY_ANIMATION="${ENTRY_VALUES[3]}"
+          ENTRY_PATH="${ENTRY_VALUES[4]}"
+          git sparse-checkout add "$ENTRY_PATH"
           mkdir -p "out/$ENTRY_ID"
           if [[ "$ENTRY_READY" != true ]]; then
             echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
@@ -259,7 +268,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && matrix.entry.needsRender
         with:
-          name: latest20-${{ matrix.entry.id }}
+          name: latest20-${{ matrix.entry.index }}
           path: out/${{ matrix.entry.id }}/
           if-no-files-found: error
           retention-days: 1
