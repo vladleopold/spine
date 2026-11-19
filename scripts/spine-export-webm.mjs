@@ -766,10 +766,17 @@ const browser = await chromium.launch({
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
-    '--use-gl=swiftshader',
+    // Modern headless Chrome requires ANGLE's SwiftShader backend and an
+    // explicit opt-in for software WebGL. Without it, Spine Player can create
+    // a player shell but WebGL VERSION is null and skeleton initialization
+    // fails with `Cannot read properties of null (reading 'indexOf')`.
+    '--use-gl=angle',
+    '--use-angle=swiftshader',
+    '--enable-unsafe-swiftshader',
     '--enable-webgl',
     '--ignore-gpu-blocklist',
     '--disable-gpu-sandbox',
+    '--disable-features=Vulkan',
   ],
 });
 
@@ -779,6 +786,16 @@ try {
     reducedMotion: 'no-preference',
   });
   const page = await context.newPage();
+  const webglProbe = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    if (!gl) return { available: false, version: null };
+    return { available: true, version: gl.getParameter(gl.VERSION),
+      renderer: gl.getParameter(gl.RENDERER) };
+  });
+  if (!webglProbe.available || typeof webglProbe.version !== 'string' || !webglProbe.version)
+    throw new Error('HEADLESS_WEBGL_UNAVAILABLE: ' + JSON.stringify(webglProbe));
+  console.error('HEADLESS_WEBGL_READY ' + JSON.stringify(webglProbe));
 
   // Serve runtime scripts and styles from the checkout. A transient CDN outage
   // must never stop a deterministic render of already committed Spine assets.
@@ -818,7 +835,7 @@ try {
   }
 
   page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));
-  page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.message}`));
+  page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.stack || err.message}`));
 
   await page.route(atlasRawUrl, async route => {
     await route.fulfill({
