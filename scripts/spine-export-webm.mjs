@@ -544,6 +544,15 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   window.__captureError = null;
   window.__animDuration = 0;
   window.__ready = false;
+  window.__captureStage = 'player-constructor';
+  // Emit only a stable stage/type code; raw browser messages stay in the
+  // temporary runner log and are never uploaded or printed to public CI.
+  window.addEventListener('error', function(event) {
+    if (window.__captureError) return;
+    var type = event && event.error && event.error.name === 'TypeError' ? 'TYPE_ERROR' : 'SCRIPT_ERROR';
+    window.__captureError = 'PLAYER_SCRIPT_' + type;
+    console.error('SPINE_PLAYER_SCRIPT_ERROR stage=' + window.__captureStage + ' type=' + type);
+  });
 
   var player;
   // Peak brightness of the currently rendered frame (center sample).
@@ -587,14 +596,27 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     success: function (p) {
       player = p;
       window.__exportPlayer = p;
+      window.__captureStage = 'read-animation-metadata';
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
-      window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
+      var animationData = runtimeData && runtimeData.animations;
+      window.__animationNames = Array.isArray(animationData)
+        ? animationData.map(function(a) { return a && typeof a.name === 'string' ? a.name : ''; }).filter(Boolean)
+        : [];
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
+      var selectedAnimationData = null;
+      try {
+        if (window.__selectedAnimation && runtimeData && typeof runtimeData.findAnimation === 'function') {
+          selectedAnimationData = runtimeData.findAnimation(window.__selectedAnimation);
+        }
+      } catch (e) {}
+      window.__selectedAnimationFound = Boolean(selectedAnimationData) ||
+        window.__animationNames.includes(window.__selectedAnimation);
       if (window.__selectedAnimation) {
-        if (!window.__animationNames.includes(window.__selectedAnimation)) {
+        if (!window.__selectedAnimationFound) {
           window.__captureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
           return;
         }
+        window.__captureStage = 'set-exact-animation';
         if (!player.animationState) {
           window.__captureError = 'SELECTED_SPINE_ANIMATION_STATE_UNAVAILABLE';
           return;
@@ -606,7 +628,9 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
         // metadata is available; clear any implicit player track meanwhile.
         player.animationState.clearTracks();
       }
+      window.__captureStage = 'canvas-ready';
       window.__ready = true;
+      console.log('SPINE_PLAYER_READY');
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
       window.__canvasHeight = player.canvas ? player.canvas.height : 0;
       
@@ -848,9 +872,13 @@ try {
       break; // player/skeleton broken — another skin will not fix it
     }
 
-    const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
+    const runtimeState = await page.evaluate(() => ({
+      names: Array.isArray(window.__animationNames) ? window.__animationNames : [],
+      selectedFound: window.__selectedAnimationFound === true,
+    }));
+    const runtimeAnimations = runtimeState.names;
     const pinnedAnimation = args.animation || entry.defaultAnimation || '';
-    if (pinnedAnimation && runtimeAnimations.length && !runtimeAnimations.includes(pinnedAnimation)) {
+    if (pinnedAnimation && !runtimeAnimations.includes(pinnedAnimation) && !runtimeState.selectedFound) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
       break;
@@ -863,7 +891,7 @@ try {
       console.error(lastCaptureError);
       break;
     }
-    if (!runtimeAnimations.includes(targetAnimation)) {
+    if (!runtimeAnimations.includes(targetAnimation) && !runtimeState.selectedFound) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error(lastCaptureError);
       break;

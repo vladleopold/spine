@@ -15,8 +15,11 @@ export function classifyRendererError(text) {
   if (/no skin produced visible content|frame peak=0|rendered no visible content/.test(x)) return "NO_VISIBLE_PIXEL";
   if (/no video data captured|mediarecorder failed|recorder.*error/.test(x)) return "BROWSER_MEDIA_RECORDER";
   if (/webp generation failed|ffmpeg processing failed|invalid rendered video/.test(x)) return "MEDIA_ENCODING";
-  if (/spineplayer is not a function|player creation failed/.test(x)) return "SPINE_RUNTIME_INITIALIZATION";
-  if (/syntaxerror|unexpected token|referenceerror|typeerror|cannot read properties/.test(x)) return "SCRIPT_RUNTIME";
+  if (/spine_player_load_error|spineplayer is not a function|player creation failed/.test(x)) return "SPINE_RUNTIME_INITIALIZATION";
+  if (/cannot read properties of (?:undefined|null)|cannot set properties of (?:undefined|null)/.test(x)) return "SCRIPT_NULL_PROPERTY_ACCESS";
+  if (/(?:\.map|map) is not a function/.test(x)) return "SCRIPT_COLLECTION_SHAPE";
+  if (/is not a function/.test(x)) return "SCRIPT_METHOD_UNAVAILABLE";
+  if (/player_script_type_error|syntaxerror|unexpected token|referenceerror|typeerror|cannot read properties/.test(x)) return "SCRIPT_RUNTIME";
   return "OTHER_RENDER_FAILURE";
 }
 
@@ -24,18 +27,22 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
   const log=fs.readFileSync(process.argv[2],"utf8");
   const reason=classifyRendererError(log);
   const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
-  const lastCause=[...log.matchAll(/Capture failed:\s*([^\r\n]+)/g)].at(-1)?.[1]||"";
+  const causes=[...log.matchAll(/Capture with skin [^\r\n]*? failed:\s*([^\r\n]+)|\[BROWSER ERROR\]\s*([^\r\n]+)/g)];
+  const lastCause=causes.at(-1)?.[1]||causes.at(-1)?.[2]||"";
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
-  const attempts=(log.match(/Skin candidates:/g)||[]).length;
+  const attempts=(log.match(/Skin selection: source default only/g)||[]).length;
   const stages={
     skeletonParsed:/Skeleton:/i.test(log),
-    playerReady:/Skin candidates:/i.test(log),
+    playerReady:/SPINE_PLAYER_READY/.test(log),
     recordingStarted:/recorder recording|recorder recording/i.test(log),
     webmWritten:/WebM saved:/i.test(log),
     qualityLadder:/Quality ladder:/i.test(log),
     posterGeneration:/Poster:|WebP \(high\)|WebP generation failed/i.test(log),
   };
-  const distinctError=/no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
+  const scriptFailure=log.match(/SPINE_PLAYER_SCRIPT_ERROR stage=([a-z-]+) type=([A-Z_]+)/i);
+  const distinctError=scriptFailure
+    ? "PLAYER_"+scriptFailure[1].toUpperCase().replace(/-/g,"_")+"_"+scriptFailure[2].toUpperCase()
+    : /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /ffmpeg.*(encoder|unknown|invalid|failed)/i.test(log)?"FFMPEG_ENCODER_OR_INPUT":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
     /webp.*failed/i.test(log)?"WEBP_POSTER_FAILURE":
@@ -52,8 +59,7 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
     .map(x=>[Number(x[1]),Number(x[2])]).slice(-8);
-  const selectedSkinCount=[...log.matchAll(/Skin candidates:\s*(\[[^\n]*\])/g)]
-    .map(x=>{try{return JSON.parse(x[1]).length;}catch{return 0;}}).at(-1)||0;
+  const selectedSkinCount=/Skin selection: source default only/.test(log)?1:0;
   const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
     .map(x=>Number(x[1])).at(-1)||0;
   const sourceSignal=log.includes('NO_VISIBLE_SPINE_FRAME')?'NO_RENDERED_SPINE_PIXELS':

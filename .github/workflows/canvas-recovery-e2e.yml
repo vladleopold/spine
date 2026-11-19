@@ -50,6 +50,7 @@ jobs:
           node --check scripts/spine-export-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node scripts/test-renderer-failure-class.mjs
       - name: Install Chromium and ffmpeg runtime
         shell: bash
         run: |

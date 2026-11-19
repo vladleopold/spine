@@ -30,4 +30,12 @@ assert.match(exporter, /NO_SELECTED_SPINE_ANIMATION/);
 assert.doesNotMatch(exporter, /choosePreviewAnimation\(runtimeAnimations/,
   'runtime metadata must validate, never choose, a preview animation');
 
+
+assert.match(exporter, /Array\.isArray\(animationData\)/,
+  'runtime animation metadata must be type-checked before mapping');
+assert.match(exporter, /runtimeData\.findAnimation\(window\.__selectedAnimation\)/,
+  'an exact selected animation may be validated through the runtime without choosing another');
+assert.match(exporter, /window\.__selectedAnimationFound/);
+assert.doesNotMatch(exporter, /choosePreviewAnimation\(runtimeAnimations/);
+
 console.log('SPINE_PREVIEW_ANIMATION_SELECTION_TESTS_PASSED');
