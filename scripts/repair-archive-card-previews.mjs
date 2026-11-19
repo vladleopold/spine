@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { listCollectionFolders, readIndex } from './resolve-library.mjs';
-import { previewSourceFingerprint, validateFrozenRepairRecord } from './repair-manifest-guard.mjs';
+import { previewSourceFingerprint, repairRecordTimestamp, validateFrozenRepairRecord } from './repair-manifest-guard.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 
 const ROOT = process.cwd();
@@ -66,7 +66,7 @@ function sourceSelection(record, basePath) {
     basePath,
     previewPath,
     animation,
-    uploadedAt: Date.parse(record.uploadedAt || ''),
+    uploadedAt: repairRecordTimestamp(record),
     sourceFingerprint: previewSourceFingerprint(record),
     sourceKind: hasAnimationPair ? 'animation' : 'root',
     sourceMediumSuffix: sourceMedium.slice(previewPath.length + 1),

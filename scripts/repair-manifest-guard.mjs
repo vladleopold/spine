@@ -12,6 +12,15 @@ export function previewSourceFingerprint(record) {
   })).digest("hex");
 }
 
+// Older archive IDs embed their upload timestamp even when uploadedAt is blank.
+export function repairRecordTimestamp(record) {
+  const uploadedAt = Date.parse(record?.uploadedAt || "");
+  if (Number.isFinite(uploadedAt)) return uploadedAt;
+  const match = String(record?.id || "").match(/-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/);
+  if (!match) return NaN;
+  return Date.parse(`${match[1]}T${match[2]}:${match[3]}:${match[4]}.${match[5]}Z`);
+}
+
 // Validate an inventory-time snapshot against the current trusted repository.
 // The newest-ten *ranking* may change while long-running render jobs run,
 // but this exact work's source identity, shard and preview path must not.
@@ -41,7 +50,7 @@ export function validateFrozenRepairRecord(root, item, folders, readIndex) {
       !resolvedPath.startsWith(root + path.sep)) {
     throw new Error("Repair path changed or unsafe");
   }
-  const timestamp = Date.parse(record.uploadedAt || "");
+  const timestamp = repairRecordTimestamp(record);
   if (!Number.isFinite(timestamp) || timestamp !== item.uploadedAt) {
     throw new Error("Repair source timestamp changed");
   }
