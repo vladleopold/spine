@@ -236,7 +236,9 @@ jobs:
             node scripts/repair-latest-twenty-previews.mjs merge
             # Stage ONLY outputs inside library collections; CI artifacts and
             # temporary source files must never enter the repository.
-            git add -A -- library library_*
+            # Stage only checked-out shard folders. Including unsparsed
+            # "library" aborts this step and discards verified preview media.
+            git add -A -- library_*
             if git diff --cached --quiet; then
               echo "NO_PREVIEW_CHANGES"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
