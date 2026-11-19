@@ -6,12 +6,16 @@ on:
       - scripts/spine-export-webm.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
       - .github/workflows/canvas-recovery-e2e.yml
   pull_request:
     paths:
       - scripts/spine-export-webm.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
       - .github/workflows/canvas-recovery-e2e.yml
 permissions:
   contents: read
@@ -50,6 +54,8 @@ jobs:
           node --check scripts/spine-export-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node --check scripts/renderer-failure-class.mjs
+          node scripts/test-renderer-failure-class.mjs
       - name: Install Chromium and ffmpeg runtime
         shell: bash
         run: |
