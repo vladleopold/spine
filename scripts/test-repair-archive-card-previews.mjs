@@ -87,11 +87,15 @@ test('accepts the matching shard prefix and rejects a different shard', () => {
     validateFrozenRepairRecord('/repo', item, ['library_02'], () => [record]).previewPath,
     item.previewPath,
   );
+  const mismatchedRecord = {
+    ...record,
+    previewPath: 'library_01/' + record.id,
+  };
   assert.throws(
     () => validateFrozenRepairRecord('/repo', {
       ...item,
-      previewPath: 'library_01/' + record.id,
-    }, ['library_02'], () => [record]),
+      previewPath: mismatchedRecord.previewPath,
+    }, ['library_02'], () => [mismatchedRecord]),
     /shard changed or unsafe/i,
   );
 });
