@@ -8,6 +8,8 @@ on:
       - scripts/test-canvas-fallback.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
       - .github/workflows/canvas-recovery-e2e.yml
   pull_request:
     paths:
@@ -16,6 +18,8 @@ on:
       - scripts/test-canvas-fallback.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
       - .github/workflows/canvas-recovery-e2e.yml
 permissions:
   contents: read
@@ -69,6 +73,8 @@ jobs:
           if ! command -v cwebp >/dev/null; then
             echo "WebP fallback uses FFmpeg's installed libwebp encoder"
           fi
+          node --check scripts/lib/first-frame-poster.mjs
+          node scripts/test-first-frame-poster.mjs
       - name: Real proprietary animation, temporary private frames only, strict media acceptance
         shell: bash
         env:
