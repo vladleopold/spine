@@ -17,7 +17,8 @@ try{
     const id='fixture-'+String(i).padStart(2,'0');
     const date=new Date(Date.UTC(2026,10,17,0,i,0)).toISOString();
     return {id,uploadedAt:date,previewPath:'library_02/'+id,
-      webmStatus:'failed',files:['test.skel','test.atlas','test.png']};
+      webmStatus:'failed',defaultAnimation:i===22?undefined:'idle',
+      files:['test.skel','test.atlas','test.png']};
   });
   records[23].files=['test.skel'];
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
@@ -33,14 +34,18 @@ try{
   const all=JSON.parse(output.allEntries);
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,19);
-  assert.equal(Number(output.renderCount),19);
+  assert.equal(matrix.length,18);
+  assert.equal(Number(output.renderCount),18);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'fixture-23');
   assert.equal(all[19].id,'fixture-04');
   assert.equal(all[0].ready,false);
   assert.equal(all[0].needsRender,false);
-  assert.ok(all.slice(1).every(x=>x.ready&&x.needsRender));
+  assert.equal(all[1].ready,false);
+  assert.equal(all[1].needsRender,false);
+  assert.equal(all[1].blockedReason,'MISSING_DEFAULT_ANIMATION');
+  assert.ok(all.slice(2).every(x=>x.ready&&x.needsRender&&x.animation==='idle'));
+  assert.match(repairSource,/blocked-missing-animation-selection/);
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
