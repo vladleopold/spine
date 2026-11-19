@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
@@ -186,10 +187,18 @@ jobs:
           else
             npx playwright install chromium
           fi
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq ffmpeg
-          fi
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
         shell: bash
@@ -306,11 +315,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install ffmpeg for exact first-frame poster refresh
+      - name: Install pinned FFmpeg binaries for exact first-frame poster refresh
         shell: bash
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Verify real high/medium/low WebP posters against their own WebM frame zero
         run: node scripts/test-first-frame-poster-real.mjs
       - name: Publish verified only, retain source untouched, flag missing and failed
