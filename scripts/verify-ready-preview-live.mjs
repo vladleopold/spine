@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const entries=[];
 for(const folder of listCollectionFolders(process.cwd())){
  for(const entry of readIndex(process.cwd(),folder)||[]){
-  if(/^Spine-animation-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/.test(entry?.id||''))
+  if(entry?.hiddenFromPublicLibrary !== true && entry?.testOnly !== true && /^Spine-animation-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/.test(entry?.id||''))
    entries.push(entry);
  }
 }
@@ -15,9 +15,9 @@ const tasks=[];
 for(const entry of latest.filter(e=>e.webmStatus==='ready')){
  for(const [ext,url] of [['webm',entry.webmPreview],['webp',entry.webpPoster||entry.thumbnailPoster]]){
   if(!/^https:\/\/spine-link\.vercel\.app\/assets\/library_/.test(url||''))
-   throw Error('Invalid production URL for '+entry.id);
-  tasks.push({id:entry.id,ext,url:url+(url.includes('?')?'&':'?')+
-   'v='+encodeURIComponent('verify-'+(entry.webmGeneratedAt||entry.id))});
+   throw Error('Invalid production media URL in public entry');
+  tasks.push({ext,url:url+(url.includes('?')?'&':'?')+
+   'v='+encodeURIComponent('verify-'+(entry.webmGeneratedAt||'public'))});
  }
 }
 let verified=0,errors=0;
@@ -34,18 +34,18 @@ async function inspect(t){
     :String.fromCharCode(...data.slice(0,4))==='RIFF'&&
       String.fromCharCode(...data.slice(8,12))==='WEBP';
    if(valid&&data.length>128&&contentType.includes(t.ext==='webm'?'video/webm':'image/webp')){
-    return {ok:true,id:t.id,ext:t.ext,bytes:data.length};
+    return {ok:true,ext:t.ext,bytes:data.length};
    }
    last='invalid media body or content type';
   }catch(e){last=e?.name||'network error';}
   await new Promise(r=>setTimeout(r,1000));
  }
- return {ok:false,id:t.id,ext:t.ext,error:last};
+ return {ok:false,ext:t.ext,error:last};
 }
 for(let i=0;i<tasks.length;i+=4){
  const batch=await Promise.all(tasks.slice(i,i+4).map(inspect));
  for(const result of batch){
-  console.log('PRODUCTION_MEDIA_EVIDENCE '+JSON.stringify(result));
+  console.log('PRODUCTION_MEDIA_EVIDENCE '+JSON.stringify({ok:result.ok,ext:result.ext,bytes:result.bytes||0,error:result.error||''}));
   if(result.ok)verified++;else errors++;
  }
 }
