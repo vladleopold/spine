@@ -2,6 +2,7 @@
 // Independent verification against the *published* gallery, not CI metadata.
 // Only aggregated counts are emitted: never print original filenames or pixels.
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
+import {classifyBlockedPreview} from './lib/preview-audit-classifier.mjs';
 const repo='vladleopold/spine';
 const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
 if(snapshot.length!==20)throw Error('Expected frozen snapshot of 20 works');
@@ -74,17 +75,10 @@ for(const work of snapshot){
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
-  if(record.webmStatus==='blocked-incompatible-source-version'){
-    if(String(record.previewError||'').includes('Spine 3.8.75'))blocked++;
+  const blockedClass=classifyBlockedPreview(record);
+  if(blockedClass){
+    if(blockedClass==='blocked')blocked++;
     else failed++;
-    continue;
-  }
-  if(record.webmStatus==='blocked-missing-source'){
-    const source=Array.isArray(record.files)?record.files:[];
-    const triad=source.some(x=>/\.(skel|json)$/i.test(x))&&
-      source.some(x=>/\.atlas(?:\.txt|\.docx)?$/i.test(x))&&
-      source.some(x=>/\.(png|jpe?g|dds|webp)$/i.test(x));
-    if(triad)failed++;else blocked++;
     continue;
   }
   if(record.webmStatus!=='ready'||fields.some(([key])=>!record[key])){failed++;continue;}
@@ -96,8 +90,9 @@ for(const work of snapshot){
   if(checks.every(Boolean))ready++;
   else failed++;
 }
+const expectedMedia=ready*fields.length;
 console.log('LATEST20_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({
   total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
-  expectedMedia:snapshot.length*fields.length,mutatedSource
+  expectedMedia,mutatedSource
 }));
-if(failed||ready+blocked!==snapshot.length)process.exitCode=1;
+if(failed||ready+blocked!==snapshot.length||verifiedMedia!==expectedMedia)process.exitCode=1;
