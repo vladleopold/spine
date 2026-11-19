@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
 import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
+import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 
@@ -95,6 +96,10 @@ function findSetDirectories(baseDir, depth = 0) {
 }
 
 const previewDir = path.join(repoRoot, uploadPath);
+// The source upload is immutable. Create a byte-identical temporary .skel
+// alias only when the misnamed .json has a genuine Spine binary header.
+const removeTemporaryBinaryAliases=prepareBinaryJsonSkeletonAliases(previewDir);
+process.once('exit',removeTemporaryBinaryAliases);
 const sets = findSetDirectories(previewDir);
 
 if (sets.length === 0) {
