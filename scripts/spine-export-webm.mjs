@@ -957,9 +957,27 @@ try {
       framePeak=FRAME_PEAK_MIN;
       console.error('VISIBLE_COMPOSITED_SPINE_CANVAS');
     }
+    // Some genuine animations start with hidden/faded attachments. A single
+    // frame at ~1s is not enough to declare the SAME animation invisible.
+    // Sample a bounded section of the existing timeline, never another name.
+    if(framePeak<FRAME_PEAK_MIN) {
+      const probeWindowMs=Math.min(3500,Math.max(1000,
+        Math.round((effectiveDuration>0?effectiveDuration:2)*1000)));
+      let probes=0;
+      for(let sample=0;sample<6&&framePeak<FRAME_PEAK_MIN;sample++) {
+        await new Promise(resolve=>setTimeout(resolve,probeWindowMs/6));
+        probes++;
+        framePeak=await page.evaluate(()=>
+          typeof window.__framePeak==='function'?window.__framePeak():-1).catch(()=>-1);
+        if(framePeak<FRAME_PEAK_MIN&&await hasVisibleCompositedCanvas())
+          framePeak=FRAME_PEAK_MIN;
+      }
+      console.error('SAME_ANIMATION_VISIBILITY_PROBES='+probes+
+        ' VISIBLE='+String(framePeak>=FRAME_PEAK_MIN));
+    }
     // Never replace a requested/default animation with another animation.
-    // An invisible original is an explicit render failure, not permission to
-    // invent a different visual timeline for the work.
+    // An invisible original is a render failure, not permission to invent
+    // a different timeline for the work.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {
@@ -1015,6 +1033,21 @@ try {
       videoDataUrl = 'alpha-frames';
       chosenSkin = skin;
       break;
+    }
+    // Rewind the SAME source animation so the recorded video starts at its
+    // actual first key, rather than in the middle of the visibility probe.
+    if(scenarioCycle.length<=1&&targetAnimation) {
+      const reset=await page.evaluate(name=>{
+        const p=window.__exportPlayer;
+        if(!p?.animationState)return false;
+        try {
+          p.animationState.clearTracks();
+          p.animationState.setAnimation(0,name,true);
+          p.paused=false;
+          return true;
+        }catch{return false;}
+      },targetAnimation);
+      if(!reset)throw new Error('SELECTED_SPINE_ANIMATION_RESET_FAILED');
     }
     // Start recording only now, on the settled canvas showing content.
     const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
