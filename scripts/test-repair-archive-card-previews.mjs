@@ -80,4 +80,16 @@ test('matrix render job names do not expose per-work identifiers', () => {
   const render = workflow.slice(start, end);
   assert.match(render, /^    name: Render archive preview batch \$\{\{ strategy\.job-index \}\}$/m);
   assert.doesNotMatch(render, /name:.*matrix\.batch/);
+  assert.match(workflow, /group: \\\$\\{\\{ github\\.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' \\|\\| 'spine-archive-card-preview-repair' \\}\\}/);
+});
+
+test('live media verifier excludes hidden works and never logs work identifiers', () => {
+  const verifier = readFileSync(new URL('./verify-ready-preview-live.mjs', import.meta.url), 'utf8');
+  assert.match(verifier, /hiddenFromPublicLibrary !== true/);
+  assert.match(verifier, /testOnly !== true/);
+  assert.match(verifier, /Invalid production media URL in public entry/);
+  assert.match(verifier, /return \{ok:true,ext:t\.ext,bytes:data\.length\}/);
+  assert.match(verifier, /return \{ok:false,ext:t\.ext,error:last\}/);
+  assert.match(verifier, /PRODUCTION_MEDIA_EVIDENCE '\+JSON\.stringify\(\{ok:result\.ok,ext:result\.ext/);
+  assert.doesNotMatch(verifier, /id:t\.id|entry\.id\}\);|JSON\.stringify\(result\)/);
 });
