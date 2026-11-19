@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-science.js';
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
+import { hasSpineSourceBundle, normalizeSpineExportEntry } from '../scripts/lib/spine-export-entry.mjs';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -327,18 +328,7 @@ function generatedPreviewWebmUrl(origin, entry) {
 }
 
 function isSpineExportEntry(entry) {
-  const skeleton = String(entry?.skeleton || '');
-  const atlas = String(entry?.atlas || '');
-  const textures = Array.isArray(entry?.textures) ? entry.textures : [];
-  const files = Array.isArray(entry?.files) ? entry.files : [];
-  const hasAnimations = Array.isArray(entry?.animations) && entry.animations.length > 0;
-  const hasSkeleton = /\.(json|skel)$/i.test(skeleton) &&
-    files.some((file) => typeof file === 'string' && /\.(json|skel)$/i.test(file));
-  const hasAtlas = /\.atlas(?:\.txt)?$/i.test(atlas) &&
-    files.some((file) => typeof file === 'string' && /\.atlas(?:\.txt)?$/i.test(file));
-  const hasTexture = textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
-    files.some((file) => typeof file === 'string' && /\.(png|jpe?g|webp)$/i.test(file));
-  return hasSkeleton && hasAtlas && hasTexture && hasAnimations;
+  return hasSpineSourceBundle(entry) && Array.isArray(entry?.animations) && entry.animations.length > 0;
 }
 
 async function dispatchSpineExportWebm(settings, entry, origin) {
@@ -862,7 +852,7 @@ export default async function handler(request, response) {
 
     const files = Array.isArray(body?.files) ? body.files : [];
     const file = body?.file;
-    const entry = body?.entry;
+    let entry = body?.entry;
     const previewHtml = String(body?.previewHtml || '');
     const uploadPath = cleanRepoPath(body?.uploadPath || '');
     const commitPrefix = String(body?.commitPrefix || 'Add Spine preview');
@@ -1108,6 +1098,15 @@ export default async function handler(request, response) {
         }
       }
       entry.files = fixedFiles;
+
+      const normalizedSpineEntry = normalizeSpineExportEntry(entry);
+      if (normalizedSpineEntry.error) {
+        return response.status(422).json({
+          error: normalizedSpineEntry.error,
+          message: 'Select a Spine animation before publishing this skeleton, atlas, and texture bundle.',
+        });
+      }
+      entry = normalizedSpineEntry.entry;
 
       const indexPath = joinRepoPath(settings.basePath, 'index.json');
       const currentIndex = await getGitHubContent(settings, indexPath);
@@ -1605,6 +1604,15 @@ export default async function handler(request, response) {
     }
 
     if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+
+    const normalizedSpineEntry = normalizeSpineExportEntry(entry);
+    if (normalizedSpineEntry.error) {
+      return response.status(422).json({
+        error: normalizedSpineEntry.error,
+        message: 'Select a Spine animation before publishing this skeleton, atlas, and texture bundle.',
+      });
+    }
+    entry = normalizedSpineEntry.entry;
 
     for (const file of files) {
       const filePath = joinRepoPath(uploadPath, file.name);
