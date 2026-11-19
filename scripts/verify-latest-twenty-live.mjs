@@ -2,7 +2,6 @@
 // Independent verification against the *published* gallery, not CI metadata.
 // Only aggregated counts are emitted: never print original filenames or pixels.
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
-import {fetchPublicIndex} from './lib/fetch-public-index.mjs';
 const repo='vladleopold/spine';
 const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
 if(snapshot.length!==20)throw Error('Expected frozen snapshot of 20 works');
@@ -11,7 +10,20 @@ const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Be
 const cache=new Map();
 async function getIndex(collection){
   if(cache.has(collection))return cache.get(collection);
-  const index=await fetchPublicIndex(collection,{timeoutMs:30000});
+  if(!/^library(?:_\d+)?$/.test(collection))throw Error('Unsafe collection');
+  // GitHub's Contents API omits `content` and returns encoding=none for
+  // files larger than 1 MiB. library_02/index.json exceeds that limit, so
+  // parsing body.content produces `Unexpected end of JSON input` after a
+  // successful publication. Read the public raw JSON directly instead.
+  const rawUrl='https://raw.githubusercontent.com/'+repo+'/main/'+
+    collection+'/index.json';
+  const response=await fetch(rawUrl,{
+    signal:AbortSignal.timeout(30000),cache:'no-store',
+    headers:{'Cache-Control':'no-cache'},
+  });
+  if(!response.ok)throw Error('Cannot read current raw index '+response.status);
+  const index=await response.json();
+  if(!Array.isArray(index))throw Error('Invalid published index');
   cache.set(collection,index);
   return index;
 }
