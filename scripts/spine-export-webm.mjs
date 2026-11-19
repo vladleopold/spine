@@ -64,18 +64,18 @@ const found = entryForUpload(repoRoot, args.uploadId);
 const basePath = found ? found.basePath : collectionPathForUpload(repoRoot, args.uploadId, args.basePath);
 const indexPath = path.join(repoRoot, basePath, 'index.json');
 if (!fs.existsSync(indexPath)) {
-  console.error(`Index not found at ${indexPath}`);
+  console.error('SOURCE_INDEX_NOT_FOUND');
   process.exit(1);
 }
 
 const indexEntries = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
 const entry = found ? found.entry : indexEntries.find(e => e.id === args.uploadId);
 if (!entry) {
-  console.error(`Entry ${args.uploadId} not found in index`);
+  console.error('SOURCE_ENTRY_NOT_FOUND');
   process.exit(1);
 }
 
-console.log(`Collection folder for ${args.uploadId}: ${basePath}`);
+console.log('SOURCE_COLLECTION_SELECTED');
 
 const uploadPath = entry.previewPath || path.posix.join(basePath, args.uploadId);
 
@@ -103,7 +103,7 @@ process.once('exit',removeTemporaryBinaryAliases);
 const sets = findSetDirectories(previewDir);
 
 if (sets.length === 0) {
-  console.error(`No Spine sets found in ${previewDir}`);
+  console.error('SOURCE_SKELETON_SET_NOT_FOUND');
   process.exit(1);
 }
 
@@ -116,7 +116,7 @@ const atlasFile = chooseAtlasForSkeleton(skeletonFile, setFiles);
 const textureFiles = setFiles.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
 if (!skeletonFile || !atlasFile || textureFiles.length === 0) {
-  console.error(`Set ${firstSet.name} is missing required files`);
+  console.error('SOURCE_SKELETON_SET_INCOMPLETE');
   process.exit(1);
 }
 
@@ -552,17 +552,17 @@ if(reconciledPages.aliases||reconciledPages.unresolved)
 
 const isDefault = args.animation && args.defaultAnimation && args.animation === args.defaultAnimation;
 
-console.error(`Entry: ${args.uploadId}`);
-console.error(`Set: ${firstSet.name}`);
-console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
+console.error('SOURCE_ENTRY_SELECTED');
+console.error('SOURCE_SET_SELECTED');
+console.error(`SKELETON_RUNTIME_VERSION=${skeletonVersion}`);
 console.error(`Skeleton bounds: ${rawSkelWidth}x${rawSkelHeight}`);
 console.error(`Video dimensions: ${videoWidth}x${videoHeight} (from bounds + ${PAD_RATIO * 100}% padding)`);
-console.error(`Atlas: ${atlasFile}`);
+console.error('SOURCE_ATLAS_PRESENT');
 // Preview rendering is immutable: only the selected/default animation is captured.
 // No begin/idle/end sequence or alternate animation may replace it.
 const scenarioCycle = [];
 const captureAnimation = targetAnimation;
-console.error(`Animation: ${captureAnimation}`);
+console.error('SELECTED_ANIMATION_PRESENT');
 console.error(`Is default: ${isDefault}`);
 
 // Capture page builder. activeSkin selects the Spine skin to render; when
@@ -834,8 +834,8 @@ try {
     if(versionedAssets.some(asset=>asset[0]===url)) console.error('VERSIONED_LOCAL_PLAYER_READY '+modernRuntime);
   }
 
-  page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));
-  page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.message}`));
+  page.on('console', msg => console.error(`[BROWSER ${msg.type()}]`));
+  page.on('pageerror', () => console.error('[BROWSER ERROR]'));
 
   await page.route(atlasRawUrl, async route => {
     await route.fulfill({
@@ -878,7 +878,7 @@ try {
   const FRAME_PEAK_MIN = 40;
   const skinNames = readSkinNames(skeletonFilePath);
   const skinCandidates = [null, ...skinNames.filter((s) => s && s.toLowerCase() !== 'default')];
-  console.error(`Skin candidates: ${JSON.stringify(skinCandidates)}`);
+  console.error(`SKIN_CANDIDATE_COUNT=${skinCandidates.length}`);
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -915,7 +915,7 @@ try {
     const error = ready ? await page.evaluate(() => window.__captureError || null) : 'Timed out waiting for player ready';
     if (error) {
       lastCaptureError = error;
-      console.error(`Capture with skin ${label} failed: ${error}`);
+      console.error('SPINE_CAPTURE_SKIN_FAILED');
       break; // player/skeleton broken — another skin will not fix it
     }
 
@@ -947,7 +947,7 @@ try {
     if (effectiveDuration <= 0 && targetAnimation) {
       const fallbackDuration = readJsonAnimationDuration(skeletonFilePath, targetAnimation);
       if (fallbackDuration > 0) {
-        console.error(`Player reported duration=0, using JSON timeline max time=${fallbackDuration}s for '${targetAnimation}'`);
+        console.error(`PLAYER_DURATION_RECOVERED_FROM_SAME_TIMELINE=${fallbackDuration}s`);
         effectiveDuration = fallbackDuration;
       }
     }
@@ -997,10 +997,10 @@ try {
     // Never replace a requested/default animation with another animation.
     // An invisible original is a render failure, not permission to invent
     // a different timeline for the work.
-    console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
+    console.error(`SKIN_FRAME_METRICS peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
     if (framePeak < FRAME_PEAK_MIN && moreSkins) {
-      console.error(`Skin ${label} rendered no visible content, trying next skin...`);
+      console.error('CURRENT_SKIN_HAS_NO_VISIBLE_CONTENT');
       continue;
     }
     if (framePeak < FRAME_PEAK_MIN && !moreSkins) {
@@ -1070,10 +1070,10 @@ try {
     }
     // Start recording only now, on the settled canvas showing content.
     const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
-    console.error(`Skin ${label}: recorder ${recState}`);
+    console.error(`MEDIA_RECORDER_STATE=${recState}`);
     if (recState !== 'recording') {
       lastCaptureError = `MediaRecorder failed to start (${recState})`;
-      console.error(`Capture with skin ${label} failed: ${lastCaptureError}`);
+      console.error('SPINE_CAPTURE_FAILED');
       break;
     }
 
@@ -1097,7 +1097,7 @@ try {
       break;
     }
     chosenSkin = skin;
-    console.error(`Capture skin: ${label} (peak ${framePeak})`);
+    console.error(`SPINE_CAPTURE_COMPLETE peak=${framePeak}`);
     break;
   }
 
@@ -1223,7 +1223,7 @@ try {
   await context.close();
 
   const videoSize = webmBuffer.length;
-  console.error(`MediaRecorder recording: ${videoPath} (${videoSize} bytes)`);
+  console.error(`RECORDED_WEBM_BYTES=${videoSize}`);
 
   if (videoSize < 100) {
     console.error('Recorded video is too small, possibly empty');
@@ -1234,7 +1234,7 @@ try {
   fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
   fs.copyFileSync(videoPath, outputPath);
 
-  console.error(`WebM saved: ${outputPath} (${webmBuffer.length} bytes, ${canvasWidth}x${canvasHeight})`);
+  console.error(`WEBM_OUTPUT_WRITTEN bytes=${webmBuffer.length} size=${canvasWidth}x${canvasHeight}`);
 
   // MediaRecorder can start before the first real frame lands on the canvas,
   // and the amount of leading black it captures varies per run (7 frames for
@@ -1440,13 +1440,13 @@ try {
       try {
         convertToWebp(webmSrc, webpOut, webpDims[q]);
       } catch (err) {
-        console.error(`WebP (${q}) failed: ${err.message}`);
+        console.error(`WEBP_GENERATION_FAILED_${q.toUpperCase()}`);
         webpOk = false;
       }
     }
     if (webpOk) console.error(`WebP posters generated.`);
   } catch (err) {
-    console.error(`FFmpeg processing failed or skipped: ${err.message}`);
+    console.error('FFMPEG_PROCESSING_FAILED');
     // Fallback if ffmpeg fails: copy the capture to the main output. This must be
     // outputPath (post-trim), not videoPath (pre-trim), or the black lead we just
     // removed would come straight back.
@@ -1499,7 +1499,7 @@ try {
   fs.writeFileSync(outPaths.webmHigh + '.json', JSON.stringify(meta, null, 2));
 
   console.error(`Final High WebM size: ${meta.files.webmHigh} bytes`);
-  console.log(JSON.stringify({ ...meta, ok: true, path: outputPath }));
+  console.log(JSON.stringify({ ok: true, bytes: finalWebmBuffer.length, width: videoWidth, height: videoHeight, duration: captureDuration }));
 
   try { fs.rmSync(tempDir, { recursive: true }); } catch { }
 
