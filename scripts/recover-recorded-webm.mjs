@@ -8,6 +8,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { entryForUpload } from './resolve-library.mjs';
+import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 const video = path.resolve(process.argv[2] || '');
 const record = process.argv[4] ? entryForUpload(process.cwd(),process.argv[4])?.entry : null;
 const animation = String(process.argv[3] || record?.defaultAnimation || record?.animations?.[0] || '').trim();
@@ -45,21 +46,14 @@ for(const [quality,scale] of [['medium',.66],['low',.33]]){
   const [w,h]=dim(scale);
   try{
     run('ffmpeg',['-y','-v','error','-i',video,'-an','-vf',`scale=${w}:${h}`,'-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime','-cpu-used','8','-threads','4','-row-mt','1',out],{stdio:'inherit',timeout:180000});
-  }catch{
-    fs.copyFileSync(video,out);
-    widths[quality]=width;
-    console.error('RECOVERY_SOURCE_QUALITY_FOR_'+quality);
+  }catch(error){
+    throw new Error('Unable to encode the real '+quality+' quality tier; refusing to copy high quality: '+error.message);
   }
 }
-for(const [quality,scale] of [['high',1],['medium',.66],['low',.33]]){
+for(const quality of ['high','medium','low']){
+  const videoForQuality=base+(quality==='high'?'':'-'+quality)+'.webm';
   const out=base+(quality==='high'?'':'-'+quality)+'.webp';
-  if(fs.existsSync(out)&&fs.statSync(out).size>128)continue;
-  const [w,h]=dim(scale);
-  try{
-    run('ffmpeg',['-y','-v','error','-i',video,'-ss',String(chosen),'-frames:v','1','-vf',`scale=${w}:${h}`,'-c:v','libwebp','-quality','90',out],{stdio:'inherit'});
-  }catch{
-    throw Error('Unable to encode real Spine poster: '+quality);
-  }
+  generateFirstFrameWebp(videoForQuality,out);
 }
 const files={webmHigh:video,webmMedium:base+'-medium.webm',webmLow:base+'-low.webm',
 webpHigh:base+'.webp',webpMedium:base+'-medium.webp',webpLow:base+'-low.webp'};
