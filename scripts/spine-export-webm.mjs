@@ -195,33 +195,6 @@ function readAnimationNames(filePath) {
 }
 
 /**
- * Read skin names from a JSON skeleton file. The Spine player renders the
- * 'default' skin when no skin is requested, but some skeletons keep their
- * visible attachments on a named skin only (default renders nothing but the
- * background). Returns [] for binary .skel files or unreadable data.
- */
-function readSkinNames(filePath) {
-  try {
-    const tryParse = (p) => {
-      const content = JSON.parse(fs.readFileSync(p, 'utf8'));
-      const skins = content?.skins;
-      if (Array.isArray(skins)) return skins.map((s) => s && s.name).filter(Boolean);
-      if (skins && typeof skins === 'object') return Object.keys(skins);
-      return [];
-    };
-    const ext = path.extname(filePath).toLowerCase();
-    if (ext === '.json') return tryParse(filePath);
-    if (ext === '.skel') {
-      const dir = path.dirname(filePath);
-      const base = path.basename(filePath, '.skel');
-      const jsonSibling = path.join(dir, base + '.json');
-      if (fs.existsSync(jsonSibling)) return tryParse(jsonSibling);
-    }
-  } catch { }
-  return [];
-}
-
-/**
  * Compute animation duration from JSON skeleton timeline data as a fallback
  * when the player reports duration=0 (Spine 4.2.x JSON exports sometimes
  * omit the top-level 'duration' field on animations).
@@ -650,9 +623,7 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
-      window.__runtimeSkinNames = runtimeData && Array.isArray(runtimeData.skins) ?
-        runtimeData.skins.map(function(s){return s && s.name;}).filter(Boolean) : [];
-      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
         player.animationState.setAnimation(0, window.__selectedAnimation, true);
@@ -871,14 +842,9 @@ try {
       });
     });
   }
-  // Skin fallback: the player default skin sometimes renders nothing but the
-  // background (e.g. a skeleton whose visible attachments live on a named
-  // skin). Capture with the default first to preserve existing renders,
-  // then retry with each named non-default skin until a frame shows content.
+  // Preserve the source skin. An invisible default skin is a blocked preview.
   const FRAME_PEAK_MIN = 40;
-  const skinNames = readSkinNames(skeletonFilePath);
-  const skinCandidates = [null, ...skinNames.filter((s) => s && s.toLowerCase() !== 'default')];
-  console.error(`Skin candidates: ${JSON.stringify(skinCandidates)}`);
+  const skinCandidates = Object.freeze([null]);
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -927,16 +893,6 @@ try {
       break;
     }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
-    // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
-    // runtime exposes them after load: retry named skins instead of recording
-    // a black default skin as a successful clip.
-    const runtimeSkins = await page.evaluate(() => window.__runtimeSkinNames || []);
-    for (const skinName of runtimeSkins.slice(0,24)) {
-      if (typeof skinName === 'string' && skinName &&
-          skinName.toLowerCase() !== 'default' && !skinCandidates.includes(skinName))
-        skinCandidates.push(skinName);
-    }
-
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
     canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
@@ -998,13 +954,8 @@ try {
     // An invisible original is a render failure, not permission to invent
     // a different timeline for the work.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
-    const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
-    if (framePeak < FRAME_PEAK_MIN && moreSkins) {
-      console.error(`Skin ${label} rendered no visible content, trying next skin...`);
-      continue;
-    }
-    if (framePeak < FRAME_PEAK_MIN && !moreSkins) {
-      lastCaptureError = 'No visible pixels from any available Spine skin';
+    if (framePeak < FRAME_PEAK_MIN) {
+      lastCaptureError = 'No visible pixels from the selected default Spine skin';
       console.error('NO_VISIBLE_SPINE_FRAME');
       break;
     }
