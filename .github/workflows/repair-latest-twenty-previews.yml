@@ -9,6 +9,9 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/verify-poster-first-frame.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -28,6 +31,9 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/verify-poster-first-frame.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -77,6 +83,9 @@ jobs:
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
           node scripts/test-repair-latest-twenty.mjs
+          node scripts/test-first-frame-poster.mjs
+          node --check scripts/verify-poster-first-frame.mjs
+          node --check scripts/lib/first-frame-poster.mjs
           node scripts/test-preview-visibility-recovery.mjs
           node --check scripts/spine-export-webm.mjs
           node --check scripts/recover-recorded-webm.mjs
@@ -209,6 +218,7 @@ jobs:
               exit 1
             }
             file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+            node scripts/verify-poster-first-frame.mjs "out/$ENTRY_ID/preview$suffix.webm" "out/$ENTRY_ID/preview$suffix.webp"
           done
           node scripts/verify-preview-motion.mjs "out/$ENTRY_ID/preview.webm"
           cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
@@ -250,6 +260,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install ffmpeg for exact first-frame poster refresh
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         env:
