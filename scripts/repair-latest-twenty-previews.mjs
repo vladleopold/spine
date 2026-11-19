@@ -68,8 +68,24 @@ function refreshStoredPosters(entryInfo, stagingRoot) {
     generateFirstFrameWebp(video,poster);
     generated.push({poster,destination:path.join(destination,"preview"+suffix+".webp")});
   }
-  for(const item of generated)fs.copyFileSync(item.poster,item.destination);
+  let changed=false;
+  for(const item of generated){
+    const next=fs.readFileSync(item.poster);
+    let previous;
+    try{previous=fs.readFileSync(item.destination);}catch{}
+    if(!previous||!previous.equals(next)){
+      fs.copyFileSync(item.poster,item.destination);
+      changed=true;
+    }
+  }
   fs.rmSync(staging,{recursive:true,force:true});
+  return changed;
+}
+function refreshStoredPostersAndTimestamp(record,entryInfo,stagingRoot) {
+  const changed=refreshStoredPosters(entryInfo,stagingRoot);
+  if(changed||!record.posterGeneratedAt)
+    record.posterGeneratedAt=new Date().toISOString();
+  return changed;
 }
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
@@ -240,8 +256,7 @@ if(action==="matrix"){
     if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
       if(existingMediaOk(entryInfo)){
         try{
-          refreshStoredPosters(entryInfo,base);
-          record.posterGeneratedAt=new Date().toISOString();
+          refreshStoredPostersAndTimestamp(record,entryInfo,base);
           summary.ready++;
         }catch{
           record.webmStatus="failed";
@@ -262,8 +277,7 @@ if(action==="matrix"){
         try{
           // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
           // its matching WebP posters from frame zero of each quality tier.
-          refreshStoredPosters(entryInfo,base);
-          record.posterGeneratedAt=new Date().toISOString();
+          refreshStoredPostersAndTimestamp(record,entryInfo,base);
           summary.ready++;
         }catch{
           record.webmStatus="failed";
@@ -324,8 +338,7 @@ if(action==="matrix"){
       if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
          existingMediaOk(entryInfo)) {
         try{
-          refreshStoredPosters(entryInfo,base);
-          record.posterGeneratedAt=new Date().toISOString();
+          refreshStoredPostersAndTimestamp(record,entryInfo,base);
           record.lastPreviewRetryError="Concurrent retry had no accepted media; verified original WebM retained";
           summary.ready++;
         }catch{

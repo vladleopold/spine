@@ -65,7 +65,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.sha }}
+  group: spine-preview-latest-twenty-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   inventory:
