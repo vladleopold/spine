@@ -1,15 +1,5 @@
-// Pick a visually meaningful animation when an upload doesn't specify one.
-// First animations are often pure backgrounds, masks, or transition helpers.
-export function choosePreviewAnimation(names, preferred = '') {
-  const available = Array.isArray(names)
-    ? names.filter(name => typeof name === 'string' && name.trim())
-    : [];
-  // A caller-supplied name is immutable. If absent from the skeleton the
-  // renderer must fail, never silently switch to another timeline.
-  if (preferred) return preferred;
-  const auxiliary = /(?:^|[\s_./-])(?:bkg|bg|background|fg|mask|backup)(?:$|[\s_./-])/i;
-  const meaningful = available.filter(name => !auxiliary.test(name));
-  const candidates = meaningful.length ? meaningful : available;
-  const loop = /(?:^|[\s_./-])(?:idle|loop|walk|run|breathe|breath|attack)(?:$|[\s_./-])/i;
-  return candidates.find(name => loop.test(name)) || candidates[0] || '';
+// Preserve only the animation explicitly selected by the caller or stored as the work default.
+// An absent or invalid selection is a blocked preview, never a reason to choose another timeline.
+export function choosePreviewAnimation(_names, preferred = '') {
+  return typeof preferred === 'string' && preferred.length > 0 ? preferred : '';
 }
