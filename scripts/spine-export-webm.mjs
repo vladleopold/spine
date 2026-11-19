@@ -14,6 +14,7 @@ import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mj
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
+import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 
 const args = {
   uploadId: '',
@@ -108,9 +109,30 @@ if (sets.length === 0) {
   process.exit(1);
 }
 
-const firstSet = sets[0];
+const requestedSkeleton = String(entry.skeleton || entry.skeletonFile || '');
+const requestedStem = path.basename(requestedSkeleton).replace(/\.(?:skel|json)$/i, '').toLowerCase();
+const firstSet = requestedSkeleton
+  ? sets.find(set => fs.readdirSync(set.path).some(file =>
+      path.basename(file).toLowerCase() === path.basename(requestedSkeleton).toLowerCase() ||
+      path.basename(file).replace(/\.(?:skel|json)$/i, '').toLowerCase() === requestedStem))
+  : sets[0];
+if (!firstSet) {
+  console.error(`Requested source skeleton set not found: ${requestedSkeleton || '(no skeleton specified)'}`);
+  process.exit(1);
+}
 const setFiles = fs.readdirSync(firstSet.path);
-const skeletonFile = setFiles.find(f => /\.json$/i.test(f) && (() => { try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(firstSet.path, f), 'utf8')).bones); } catch { return false; } })()) || setFiles.find(f => /\.skel$/i.test(f));
+const isValidJsonSkeleton = file => {
+  if (!/\.json$/i.test(file)) return false;
+  try { return Array.isArray(JSON.parse(fs.readFileSync(path.join(firstSet.path, file), 'utf8')).bones); }
+  catch { return false; }
+};
+let skeletonFile;
+try {
+  skeletonFile = chooseSourceSkeleton(requestedSkeleton, setFiles, isValidJsonSkeleton);
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
 // A project may include several atlases (e.g. its skeleton and an unrelated
 // character). Taking the first atlas breaks valid animations and preview jobs.
 const atlasFile = chooseAtlasForSkeleton(skeletonFile, setFiles);
