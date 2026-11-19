@@ -80,7 +80,7 @@ function sourceSelection(record, basePath) {
   };
 }
 
-function makeBatches(items, size = 8) {
+function makeBatches(items, size = 12) {
   const batches = [];
   for (let i = 0; i < items.length; i += size) {
     const entries = items.slice(i, i + size);
@@ -216,7 +216,6 @@ function render() {
       summary.entries.push({ id: item.id, ok: false });
     }
   }
-  fs.writeFileSync('out/batch-summary.json', JSON.stringify(summary, null, 2));
   console.log('ARCHIVE_PREVIEW_RENDERED=' + summary.rendered + ' SKIPPED=' + summary.skipped);
 }
 
