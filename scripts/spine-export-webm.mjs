@@ -553,9 +553,8 @@ const captureAnimation = targetAnimation;
 console.error(`Animation: ${captureAnimation}`);
 console.error(`Is default: ${isDefault}`);
 
-// Capture page builder. activeSkin selects the Spine skin to render; when
-// null the player default is used. Some skeletons draw nothing with the
-// default skin, so the export retries with named skins (see skinCandidates).
+// Capture page builder. Keep the source/default skin unchanged. If it draws
+// no visible content, the selected preview is blocked rather than relayered.
 function buildCaptureHtml(activeSkin) {
 const skinLine = activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
 return `<!DOCTYPE html>
@@ -582,7 +581,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   var player;
   // Peak brightness of the currently rendered frame (center sample).
   // Used by the exporter to detect "rendered nothing but background" and
-  // fall back to another skin. Requires preserveDrawingBuffer (set below).
+  // mark the selected preview as blocked. Requires preserveDrawingBuffer (set below).
   window.__framePeak = function () {
     try {
       var c = player && player.canvas;
@@ -1050,7 +1049,7 @@ try {
       console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
       videoDataUrl = 'canvas-fallback';
     } else {
-      throw new Error(`Capture failed: ${lastCaptureError || 'no skin produced visible content'}`);
+      throw new Error(`Capture failed: ${lastCaptureError || 'selected default skin produced no visible content'}`);
     }
   }
 
