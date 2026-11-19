@@ -146,8 +146,9 @@ if(action==="matrix"){
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
     }));
-    matrix.push(...batch);
+    matrix.push(...batch.map((item,index)=>({...item,index:matrix.length+index})));
   }
+  fs.writeFileSync(path.join(root,'repair-manifest.json'),JSON.stringify(matrix));
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
   // available clip has already been rendered and independently accepted.
@@ -167,7 +168,8 @@ if(action==="matrix"){
   console.error("AUDIT_LAST20="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
 }else if(action==="merge"){
-  const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
+  const manifestPath=process.env.REPAIR_MANIFEST_PATH||path.join(root,"repair-manifest.json");
+  const selected=JSON.parse(fs.readFileSync(manifestPath,"utf8"));
   if(selected.length!==20)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
