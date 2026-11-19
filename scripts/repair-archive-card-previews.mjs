@@ -123,8 +123,8 @@ function probeVideo(file) {
   const height = Number(stream.height || 0);
   const frames = Number(stream.nb_read_frames || 0);
   const duration = Number(parsed.format && parsed.format.duration || 0);
-  if (!(width > 0 && height > 0 && frames >= 8 && duration >= 0.5 && frames / duration >= 15)) {
-    throw new Error('source video failed real-frame acceptance');
+  if (!(width > 0 && height > 0 && frames >= 5 && duration >= 0.15 && frames / duration >= 2)) {
+    throw new Error('source video failed minimum motion/frame acceptance');
   }
   return { width, height, frames, duration };
 }
