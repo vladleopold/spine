@@ -160,12 +160,23 @@ function render() {
     const dir = path.join('out', item.id);
     fs.mkdirSync(dir, { recursive: true });
     try {
-      const sourceMedium = resolveInside(ROOT, item.sourceMediumPath);
-      const sourceLow = resolveInside(ROOT, item.sourceLowPath);
       const rootMedium = resolveInside(ROOT, item.rootMediumPath);
       const rootLow = resolveInside(ROOT, item.rootLowPath);
+      let sourceMedium = resolveInside(ROOT, item.sourceMediumPath);
+      let sourceLow = resolveInside(ROOT, item.sourceLowPath);
+      let actualSourceKind = item.sourceKind;
+      let actualMediumUrl = item.sourceMediumUrl;
+      let actualLowUrl = item.sourceLowUrl;
+      if ((!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) &&
+          item.sourceKind === 'animation' && fs.existsSync(rootMedium) && fs.existsSync(rootLow)) {
+        sourceMedium = rootMedium;
+        sourceLow = rootLow;
+        actualSourceKind = 'root';
+        actualMediumUrl = item.rootMediumUrl;
+        actualLowUrl = item.rootLowUrl;
+      }
       if (!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) {
-        throw new Error('selected animation/root WebM pair is missing');
+        throw new Error('selected animation and root WebM pairs are missing');
       }
       const mediumInfo = probeVideo(sourceMedium);
       const lowInfo = probeVideo(sourceLow);
@@ -181,7 +192,8 @@ function render() {
       const lowPosterInfo = generateFirstFrameWebp(sourceLow, lowPoster);
       const meta = {
         id: item.id, ok: true, animation: item.animation,
-        sourceKind: item.sourceKind,
+        sourceKind: actualSourceKind,
+        actualMediumUrl, actualLowUrl,
         sourceMediumPath: item.sourceMediumPath, sourceLowPath: item.sourceLowPath,
         sourceMediumUrl: item.sourceMediumUrl, sourceLowUrl: item.sourceLowUrl,
         rootMediumUrl: item.rootMediumUrl, rootLowUrl: item.rootLowUrl,
@@ -225,27 +237,27 @@ function merge() {
       summary.skipped.push({ id: item.id, reason: 'source-selection-changed' });
       continue;
     }
-    const currentSelected = record.allAnimationPreviews &&
-      typeof record.allAnimationPreviews === 'object'
-      ? record.allAnimationPreviews[item.animation] || null
-      : null;
-    const currentMediumUrl = item.sourceKind === 'animation'
-      ? currentSelected && currentSelected.webmPreviewMedium
-      : record.webmPreviewMedium;
-    const currentLowUrl = item.sourceKind === 'animation'
-      ? currentSelected && currentSelected.webmPreviewLow
-      : record.webmPreviewLow;
-    if (currentMediumUrl !== item.sourceMediumUrl || currentLowUrl !== item.sourceLowUrl ||
-        record.webmPreviewMedium !== item.rootMediumUrl || record.webmPreviewLow !== item.rootLowUrl) {
-      summary.skipped.push({ id: item.id, reason: 'preview-source-url-changed' });
-      continue;
-    }
     const artifact = path.join(ROOT, 'downloaded-previews', item.id);
     const metaPath = path.join(artifact, 'meta.json');
     let meta = null;
     try { meta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch {}
     if (!meta || !meta.ok || meta.id !== item.id || meta.animation !== item.animation) {
       summary.skipped.push({ id: item.id, reason: 'render-artifact-unavailable' });
+      continue;
+    }
+    const currentSelected = record.allAnimationPreviews &&
+      typeof record.allAnimationPreviews === 'object'
+      ? record.allAnimationPreviews[item.animation] || null
+      : null;
+    const currentMediumUrl = meta.sourceKind === 'animation'
+      ? currentSelected && currentSelected.webmPreviewMedium
+      : record.webmPreviewMedium;
+    const currentLowUrl = meta.sourceKind === 'animation'
+      ? currentSelected && currentSelected.webmPreviewLow
+      : record.webmPreviewLow;
+    if (currentMediumUrl !== meta.actualMediumUrl || currentLowUrl !== meta.actualLowUrl ||
+        record.webmPreviewMedium !== item.rootMediumUrl || record.webmPreviewLow !== item.rootLowUrl) {
+      summary.skipped.push({ id: item.id, reason: 'preview-source-url-changed' });
       continue;
     }
     const mediumPoster = path.join(artifact, 'preview-medium.webp');
