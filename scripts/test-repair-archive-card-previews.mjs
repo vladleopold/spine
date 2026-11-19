@@ -80,7 +80,7 @@ test('matrix render job names do not expose per-work identifiers', () => {
   const render = workflow.slice(start, end);
   assert.match(render, /^    name: Render archive preview batch \$\{\{ strategy\.job-index \}\}$/m);
   assert.doesNotMatch(render, /name:.*matrix\.batch/);
-  assert.match(workflow, /group: \\\$\\{\\{ github\\.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' \\|\\| 'spine-archive-card-preview-repair' \\}\\}/);
+  assert.ok(workflow.includes("group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}"), 'PR checks must not queue behind the main repair run');
 });
 
 test('live media verifier excludes hidden works and never logs work identifiers', () => {
