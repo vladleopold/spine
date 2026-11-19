@@ -518,8 +518,8 @@ console.error(`Atlas: ${atlasFile}`);
 // Works that ship begin/end (or in/out) plus idle are recorded as a loop of the
 // whole scenario, so the preview video shows the same cycle the player runs.
 let captureAnimation = targetAnimation;
-console.error(\`Animation: \${captureAnimation}\`);
-console.error(\`Is default: \${isDefault}\`);
+console.error(`Animation: ${captureAnimation}`);
+console.error(`Is default: ${isDefault}`);
 
 // The source default skin and one exact animation are immutable during export.
 // An invisible or unavailable selection is a failure, never a reason to switch.
