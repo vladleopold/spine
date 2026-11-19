@@ -1,45 +1,14 @@
-name: Keep pull request list empty
+name: Pull request lifecycle guard (manual only)
 
 on:
-  push:
-    branches: [main]
-  pull_request_target:
-    types: [opened, reopened, synchronize, ready_for_review]
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pull-requests: write
-  issues: write
-
-concurrency:
-  group: close-pull-requests-${{ github.repository }}
-  cancel-in-progress: false
 
 jobs:
-  close-open-pull-requests:
+  safety:
     runs-on: ubuntu-latest
     steps:
-      - name: Close new or outstanding pull requests
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const reason = "This repository is configured to keep the pull request list empty. Work must be validated and published through the repository's direct-to-main automation. This PR is closed automatically; its branch and commits are preserved.";
-            if (context.eventName === "pull_request_target") {
-              const number = context.payload.pull_request.number;
-              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: number });
-              if (pr.state === "open") {
-                await github.rest.issues.createComment({ owner, repo, issue_number: number, body: reason });
-                await github.rest.pulls.update({ owner, repo, pull_number: number, state: "closed" });
-                core.info(`Closed PR #${number}; source branch retained.`);
-              }
-            }
-            const { data: open } = await github.rest.pulls.list({ owner, repo, state: "open", per_page: 100 });
-            for (const pr of open) {
-              await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body: reason });
-              await github.rest.pulls.update({ owner, repo, pull_number: pr.number, state: "closed" });
-              core.info(`Closed PR #${pr.number}; source branch retained.`);
-            }
+      - name: Confirm automatic PR closure is disabled
+        run: echo "Pull requests remain open for review; CI and repository protections control merging."
