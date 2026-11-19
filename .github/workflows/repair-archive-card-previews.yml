@@ -1,6 +1,14 @@
 name: Restore verified archive card previews
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-archive-card-previews.yml
+      - scripts/repair-archive-card-previews.mjs
+      - scripts/test-repair-archive-card-previews.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/repair-manifest-guard.mjs
   push:
     branches: [main]
     paths:
@@ -49,7 +57,7 @@ jobs:
 
   render:
     needs: inventory
-    if: needs.inventory.outputs.candidateCount != '0'
+    if: github.ref == 'refs/heads/main' && needs.inventory.outputs.candidateCount != '0'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
@@ -82,7 +90,7 @@ jobs:
 
   publish:
     needs: [inventory, render]
-    if: always() && needs.inventory.result == 'success' && needs.render.result == 'success'
+    if: github.ref == 'refs/heads/main' && always() && needs.inventory.result == 'success' && needs.render.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     concurrency:
@@ -144,7 +152,7 @@ jobs:
 
   verify-production:
     needs: publish
-    if: needs.publish.result == 'success'
+    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
