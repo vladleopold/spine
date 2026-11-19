@@ -20,7 +20,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: spine-archive-card-preview-repair
+  group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}
   cancel-in-progress: false
 
 jobs:
