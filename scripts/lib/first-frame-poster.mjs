@@ -29,7 +29,7 @@ function decodedFirstFrame(file) {
 }
 
 /**
- * Verify that the WebP pixels are exactly the first decoded frame of this WebM.
+ * Verify that the WebP pixels are the first decoded frame of this WebM, allowing only one 8-bit code value of decoder color-conversion rounding.
  * No seek, frame scan, alternate still, or later-frame substitution is allowed.
  */
 export function verifyPosterFirstFrame(videoPath, posterPath) {
@@ -40,8 +40,15 @@ export function verifyPosterFirstFrame(videoPath, posterPath) {
   }
   const videoFrame = decodedFirstFrame(videoPath);
   const posterFrame = decodedFirstFrame(posterPath);
-  if (!videoFrame.length || !videoFrame.equals(posterFrame)) {
-    throw new Error('WebP is not the exact first frame of its paired WebM');
+  // WebM and WebP decoders can round YUV↔RGB conversion by one 8-bit
+  // code value even when WebP is lossless and was encoded from frame zero.
+  // Permit only that conversion noise; a different/later frame still fails.
+  let sameFrame = videoFrame.length > 0 && videoFrame.length === posterFrame.length;
+  for (let i = 0; sameFrame && i < videoFrame.length; i += 1) {
+    if (Math.abs(videoFrame[i] - posterFrame[i]) > 1) sameFrame = false;
+  }
+  if (!sameFrame) {
+    throw new Error('WebP is not the same first frame of its paired WebM');
   }
   return { ...videoSize, bytes: fs.statSync(posterPath).size };
 }
