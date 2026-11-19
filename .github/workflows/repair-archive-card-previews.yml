@@ -55,6 +55,7 @@ jobs:
           echo "ARCHIVE_PREVIEW_INVENTORY_VALID"
 
   render:
+    name: Render archive preview batch ${{ strategy.job-index }}
     needs: inventory
     if: github.ref == 'refs/heads/main' && needs.inventory.outputs.candidateCount != '0'
     runs-on: ubuntu-24.04
