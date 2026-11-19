@@ -157,8 +157,7 @@ if(action==="matrix"){
   console.log("renderCount="+required.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
-    "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
-    "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
+    "/public/vendor-spine-player-*.js","/public/vendor-spine-player-*.css",
     "/library/index.json","/library_*/index.json",
     ...matrix.map(x=>"/"+x.previewPath+"/"),
   ];
