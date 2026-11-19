@@ -37,5 +37,16 @@ try{
   assert.equal(fs.readFileSync(atlasPath,'utf8'),
     atlas.replace('hero-two.png','exported-incorrect-page.png'),
     'validation must NEVER rewrite source atlas');
+  fs.writeFileSync(atlasPath,atlas);
+  const versionString=s=>Buffer.concat([Buffer.from([s.length+1]),Buffer.from(s)]);
+  const trueBinary=Buffer.concat([versionString('hash'),versionString('3.8.75'),Buffer.alloc(32)]);
+  fs.writeFileSync(path.join(root,'hero.json'),trueBinary);
+  const correctlyRecognized=inspectAtlasSourceBundle(root,
+    ['hero.json','hero.atlas','hero.png','hero-two.png']);
+  assert.equal(correctlyRecognized.complete,true,'Binary Spine mislabeled JSON is a real source');
+  fs.writeFileSync(path.join(root,'hero.json'),'{garbled');
+  const corrupt=inspectAtlasSourceBundle(root,
+    ['hero.json','hero.atlas','hero.png','hero-two.png']);
+  assert.equal(corrupt.complete,false,'Damaged JSON cannot impersonate Spine binary');
   console.log('PASS atlas source integrity: complete, missing, unique dimensions, ambiguous, immutable');
 }finally{fs.rmSync(root,{recursive:true,force:true})}
