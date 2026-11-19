@@ -71,6 +71,10 @@ for(const work of snapshot){
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
+  if(record.webmStatus==='blocked-preview-prerequisite'){
+    blocked++;
+    continue;
+  }
   if(record.webmStatus==='blocked-incompatible-source-version'){
     if(String(record.previewError||'').includes('Spine 3.8.75'))blocked++;
     else failed++;
