@@ -32,6 +32,9 @@ on:
       - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
   pull_request:
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
@@ -61,6 +64,9 @@ on:
       - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
   workflow_dispatch:
 permissions:
   contents: read
@@ -115,6 +121,7 @@ jobs:
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
           node scripts/test-repair-latest-twenty.mjs
+          node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
           node --check scripts/verify-poster-first-frame.mjs
           node --check scripts/lib/first-frame-poster.mjs
