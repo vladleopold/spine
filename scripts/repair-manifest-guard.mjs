@@ -50,7 +50,7 @@ export function validateFrozenRepairRecord(root, item, folders, readIndex) {
       !resolvedPath.startsWith(root + path.sep)) {
     throw new Error("Repair path changed or unsafe");
   }
-  const timestamp = Date.parse(record.uploadedAt || "");
+  const timestamp = repairRecordTimestamp(record);
   if (!Number.isFinite(timestamp) || timestamp !== item.uploadedAt) {
     throw new Error("Repair source timestamp changed");
   }
