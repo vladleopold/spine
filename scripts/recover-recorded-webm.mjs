@@ -39,16 +39,20 @@ for(const second of positions){
 if(nonblank<2||samples.size<2||chosen===null)throw Error('Unverified, blank or static recorded Spine animation');
 const base=video.replace(/\.webm$/i,'');
 const dim=(scale)=>[Math.max(2,(Math.round(width*scale)&~1)),Math.max(2,(Math.round(height*scale)&~1))];
-const widths={high:width,medium:dim(.66)[0],low:dim(.33)[0]};
-for(const [quality,scale] of [['medium',.66],['low',.33]]){
+const tierDimensions={
+  high:{width,height},
+  medium:{width:dim(.66)[0],height:dim(.66)[1]},
+  low:{width:dim(.33)[0],height:dim(.33)[1]},
+};
+const widths=Object.fromEntries(Object.entries(tierDimensions).map(([key,value])=>[key,value.width]));
+if(!(tierDimensions.medium.width<width&&tierDimensions.low.width<tierDimensions.medium.width))
+  throw Error('Source is too small to produce distinct medium and low quality tiers');
+for(const quality of ['medium','low']){
   const out=base+'-'+quality+'.webm';
-  if(fs.existsSync(out)&&fs.statSync(out).size>=1000)continue;
-  const [w,h]=dim(scale);
-  try{
-    run('ffmpeg',['-y','-v','error','-i',video,'-an','-vf',`scale=${w}:${h}`,'-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime','-cpu-used','8','-threads','4','-row-mt','1',out],{stdio:'inherit',timeout:180000});
-  }catch(error){
-    throw new Error('Unable to encode the real '+quality+' quality tier; refusing to copy high quality: '+error.message);
-  }
+  const {width:w,height:h}=tierDimensions[quality];
+  // Always encode from the same original capture. Existing files are not
+  // trusted by filename/size alone and are never relabelled as another tier.
+  run('ffmpeg',['-y','-v','error','-i',video,'-an','-vf',`scale=${w}:${h}`,'-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime','-cpu-used','8','-threads','4','-row-mt','1',out],{stdio:'inherit',timeout:180000});
 }
 for(const quality of ['high','medium','low']){
   const videoForQuality=base+(quality==='high'?'':'-'+quality)+'.webm';
@@ -61,7 +65,11 @@ for(const [key,p] of Object.entries(files)){
   if(!fs.existsSync(p)||fs.statSync(p).size<=128)throw Error('Unverified recovery output '+key);
   if(key.startsWith('webm')){
     const pinfo=inspect(p);
-    if(Number(pinfo.streams?.[0]?.nb_read_frames)<8)throw Error('Insufficient frames in recovered '+key);
+    const stream=pinfo.streams?.[0]||{};
+    if(Number(stream.nb_read_frames)!==frames)throw Error('Frame count changed in recovered '+key);
+    const tier=key.includes('Medium')?'medium':key.includes('Low')?'low':'high';
+    if(Number(stream.width)!==tierDimensions[tier].width||Number(stream.height)!==tierDimensions[tier].height)
+      throw Error('Wrong dimensions for recovered '+key+'; refusing a mislabeled quality tier');
   }
 }
 const media=fs.readFileSync(video);
