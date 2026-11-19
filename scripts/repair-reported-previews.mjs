@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { exactPreviewAnimation } from "./lib/preview-index-preservation.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -185,7 +186,17 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animationCheck=exactPreviewAnimation(item,record,meta);
+    if(!animationCheck.ok){
+      record.webmStatus="failed";
+      record.previewStatus="failed";
+      record.previewError=animationCheck.reason==="missing-index-selection"
+        ? "No exact animation is selected in the source index"
+        : "Rendered animation does not match the exact source-index selection";
+      summary.failed++;
+      continue;
+    }
+    const animation=animationCheck.animation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
@@ -201,8 +212,8 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
-    if(animation) record.defaultAnimation=animation;
+    // Preserve source animation names and the selected default in index.json.
+    // Only generated media metadata is updated; no timeline or display name is rewritten.
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {

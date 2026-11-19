@@ -56,6 +56,7 @@ jobs:
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-preview-index-preservation.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     needs: inventory
