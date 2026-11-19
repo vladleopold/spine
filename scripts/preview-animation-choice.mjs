@@ -1,15 +1,9 @@
-// Pick a visually meaningful animation when an upload doesn't specify one.
-// First animations are often pure backgrounds, masks, or transition helpers.
+// Preserve the source animation order. An explicit selection is immutable;
+// when none is specified, the first original animation is the source default.
 export function choosePreviewAnimation(names, preferred = '') {
   const available = Array.isArray(names)
     ? names.filter(name => typeof name === 'string' && name.trim())
     : [];
-  // A caller-supplied name is immutable. If absent from the skeleton the
-  // renderer must fail, never silently switch to another timeline.
   if (preferred) return preferred;
-  const auxiliary = /(?:^|[\s_./-])(?:bkg|bg|background|fg|mask|backup)(?:$|[\s_./-])/i;
-  const meaningful = available.filter(name => !auxiliary.test(name));
-  const candidates = meaningful.length ? meaningful : available;
-  const loop = /(?:^|[\s_./-])(?:idle|loop|walk|run|breathe|breath|attack)(?:$|[\s_./-])/i;
-  return candidates.find(name => loop.test(name)) || candidates[0] || '';
+  return available[0] || '';
 }

@@ -8,6 +8,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { entryForUpload } from './resolve-library.mjs';
+import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 const video = path.resolve(process.argv[2] || '');
 const record = process.argv[4] ? entryForUpload(process.cwd(),process.argv[4])?.entry : null;
 const animation = String(process.argv[3] || record?.defaultAnimation || record?.animations?.[0] || '').trim();
@@ -38,28 +39,25 @@ for(const second of positions){
 if(nonblank<2||samples.size<2||chosen===null)throw Error('Unverified, blank or static recorded Spine animation');
 const base=video.replace(/\.webm$/i,'');
 const dim=(scale)=>[Math.max(2,(Math.round(width*scale)&~1)),Math.max(2,(Math.round(height*scale)&~1))];
-const widths={high:width,medium:dim(.66)[0],low:dim(.33)[0]};
-for(const [quality,scale] of [['medium',.66],['low',.33]]){
+const tierDimensions={
+  high:{width,height},
+  medium:{width:dim(.66)[0],height:dim(.66)[1]},
+  low:{width:dim(.33)[0],height:dim(.33)[1]},
+};
+const widths=Object.fromEntries(Object.entries(tierDimensions).map(([key,value])=>[key,value.width]));
+if(!(tierDimensions.medium.width<width&&tierDimensions.low.width<tierDimensions.medium.width))
+  throw Error('Source is too small to produce distinct medium and low quality tiers');
+for(const quality of ['medium','low']){
   const out=base+'-'+quality+'.webm';
-  if(fs.existsSync(out)&&fs.statSync(out).size>=1000)continue;
-  const [w,h]=dim(scale);
-  try{
-    run('ffmpeg',['-y','-v','error','-i',video,'-an','-vf',`scale=${w}:${h}`,'-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime','-cpu-used','8','-threads','4','-row-mt','1',out],{stdio:'inherit',timeout:180000});
-  }catch{
-    fs.copyFileSync(video,out);
-    widths[quality]=width;
-    console.error('RECOVERY_SOURCE_QUALITY_FOR_'+quality);
-  }
+  const {width:w,height:h}=tierDimensions[quality];
+  // Always encode from the same original capture. Existing files are not
+  // trusted by filename/size alone and are never relabelled as another tier.
+  run('ffmpeg',['-y','-v','error','-i',video,'-an','-vf',`scale=${w}:${h}`,'-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime','-cpu-used','8','-threads','4','-row-mt','1',out],{stdio:'inherit',timeout:180000});
 }
-for(const [quality,scale] of [['high',1],['medium',.66],['low',.33]]){
+for(const quality of ['high','medium','low']){
+  const videoForQuality=base+(quality==='high'?'':'-'+quality)+'.webm';
   const out=base+(quality==='high'?'':'-'+quality)+'.webp';
-  if(fs.existsSync(out)&&fs.statSync(out).size>128)continue;
-  const [w,h]=dim(scale);
-  try{
-    run('ffmpeg',['-y','-v','error','-i',video,'-ss',String(chosen),'-frames:v','1','-vf',`scale=${w}:${h}`,'-c:v','libwebp','-quality','90',out],{stdio:'inherit'});
-  }catch{
-    throw Error('Unable to encode real Spine poster: '+quality);
-  }
+  generateFirstFrameWebp(videoForQuality,out);
 }
 const files={webmHigh:video,webmMedium:base+'-medium.webm',webmLow:base+'-low.webm',
 webpHigh:base+'.webp',webpMedium:base+'-medium.webp',webpLow:base+'-low.webp'};
@@ -67,7 +65,11 @@ for(const [key,p] of Object.entries(files)){
   if(!fs.existsSync(p)||fs.statSync(p).size<=128)throw Error('Unverified recovery output '+key);
   if(key.startsWith('webm')){
     const pinfo=inspect(p);
-    if(Number(pinfo.streams?.[0]?.nb_read_frames)<8)throw Error('Insufficient frames in recovered '+key);
+    const stream=pinfo.streams?.[0]||{};
+    if(Number(stream.nb_read_frames)!==frames)throw Error('Frame count changed in recovered '+key);
+    const tier=key.includes('Medium')?'medium':key.includes('Low')?'low':'high';
+    if(Number(stream.width)!==tierDimensions[tier].width||Number(stream.height)!==tierDimensions[tier].height)
+      throw Error('Wrong dimensions for recovered '+key+'; refusing a mislabeled quality tier');
   }
 }
 const media=fs.readFileSync(video);

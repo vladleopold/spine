@@ -13,6 +13,7 @@ import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
+import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 
 const args = {
   uploadId: '',
@@ -542,22 +543,8 @@ console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
 console.error(`Skeleton bounds: ${rawSkelWidth}x${rawSkelHeight}`);
 console.error(`Video dimensions: ${videoWidth}x${videoHeight} (from bounds + ${PAD_RATIO * 100}% padding)`);
 console.error(`Atlas: ${atlasFile}`);
-// Works that ship begin/end (or in/out) plus idle are recorded as a loop of the
-// whole scenario, so the preview video shows the same cycle the player runs.
-const animationToken = (name) => String(name || '').trim().toLowerCase().split('/').pop();
-const tokenIndex = new Map();
-for (const name of availableAnimations) {
-  const token = animationToken(name);
-  if (token && !tokenIndex.has(token)) tokenIndex.set(token, name);
-}
-const scenarioEntry = tokenIndex.has('in') ? tokenIndex.get('in') : tokenIndex.get('begin');
-const scenarioExit = tokenIndex.has('out') ? tokenIndex.get('out') : tokenIndex.get('end');
-const scenarioIdle = tokenIndex.has('idle') ? tokenIndex.get('idle') : tokenIndex.get('loop');
-const scenarioCycle = !args.animation && !entry.defaultAnimation && scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
-const captureAnimation = scenarioCycle.length > 1 ? scenarioCycle[0] : targetAnimation;
-if (scenarioCycle.length > 1) {
-  console.error(`Scenario: ${scenarioCycle.join(' -> ')} (запись превью по кругу)`);
-}
+// Record one original Spine animation timeline only.
+const captureAnimation = targetAnimation;
 console.error(`Animation: ${captureAnimation}`);
 console.error(`Is default: ${isDefault}`);
 
@@ -620,8 +607,6 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     ${atlasPlayerKey}: '${atlasRawUrl}',
     textures: ${JSON.stringify(textureRawUrls)},
     animation: ${JSON.stringify(captureAnimation)},
-    scenario: ${JSON.stringify(scenarioCycle)},
-    __spineScenario: ${JSON.stringify(scenarioCycle)},
 ${skinLine}    showLoading: false,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
@@ -644,30 +629,6 @@ ${skinLine}    showLoading: false,
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
       window.__canvasHeight = player.canvas ? player.canvas.height : 0;
       
-      // begin -> idle -> idle -> end, on repeat, so the recorded preview shows the
-      // same loop the player plays on the work page.
-      try {
-        var cycle = Array.isArray(window.__spineScenario) ? window.__spineScenario : [];
-        if (cycle.length > 1 && player.animationState) {
-          var mixed = 0;
-          cycle.forEach(function (name, i) {
-            if (i === 0) player.setAnimation(0, name, true);
-            else player.animationState.addAnimation(0, name, true, mixed);
-          });
-          var state = player.animationState;
-          var originalSetAnimation = state.setAnimation.bind(state);
-          state.setAnimation = function (trackIndex, name, loop) {
-            var entry = originalSetAnimation(trackIndex, name, loop);
-            // Keep the cycle running: when it ends, restart from the first step.
-            var current = state.getCurrent(0);
-            if (current && !current.next) {
-              current.next = { animation: cycle[0], delay: 0, loop: true, mixDuration: mixed, mixTime: mixed };
-            }
-            return entry;
-          };
-        }
-      } catch (e) {}
-
       // Older runtime TrackEntry implementations may report duration=0
       // even when the decoded animation has real keyframe timelines.
       try {
@@ -999,20 +960,8 @@ try {
       break;
     }
 
-    // Preserve the full animation duration.
+    // Preserve only the selected animation's own duration.
     captureDuration = effectiveDuration;
-    // A scenario is recorded in full: every step plays once, back to back.
-    if (scenarioCycle.length > 1) {
-      let scenarioDuration = 0;
-      for (const stepName of scenarioCycle) {
-        const stepDuration = readJsonAnimationDuration(skeletonFilePath, stepName);
-        scenarioDuration += stepDuration > 0 ? stepDuration : effectiveDuration;
-      }
-      if (scenarioDuration > 0) {
-        captureDuration = scenarioDuration;
-        console.error(`Scenario duration: ${scenarioDuration.toFixed(2)}s (${scenarioCycle.join(' + ')})`);
-      }
-    }
     // A 1/30-second fallback produces a technically decodable but invisible
     // 8-frame clip. When an old binary omits a duration, sample a real 2s
     // loop of the actual Spine runtime instead. Source duration stays marked
@@ -1045,7 +994,7 @@ try {
     }
     // Rewind the SAME source animation so the recorded video starts at its
     // actual first key, rather than in the middle of the visibility probe.
-    if(scenarioCycle.length<=1&&targetAnimation) {
+    if(targetAnimation) {
       const reset=await page.evaluate(name=>{
         const p=window.__exportPlayer;
         if(!p?.animationState)return false;
@@ -1256,8 +1205,6 @@ try {
     webpLow: `${baseOutputPath}-low.webp`,
   };
   // Accessible to the output-metadata builder after the try/catch block.
-  let mediumFallback = false;
-  let lowFallback = false;
 
   // Битрейт считаем от числа пикселей кадра. Раньше стояло фиксированное
   // 1200k, а на кадре 1644x1612 это меньше половины бита на пиксель —
@@ -1318,102 +1265,16 @@ try {
       fs.copyFileSync(qualitySource, outPaths.webmHigh);
       console.error('High quality uses original VP9 recording; no redundant encoding');
     }
-    // Do not lose a verified playable high WebM merely because a legacy
-    // 3.x animation is too resource-heavy for a resized VP9 transcode.
-    // Keep a truthful source-quality fallback for that tier, and record its
-    // actual width in metadata rather than falsely advertising 720p/360p.
-    const encodeTier = (dim, bitrate, output, tier) => {
-      try {
-        execSync(vp9(dim, bitrate, output), { stdio: 'inherit' });
-        return false;
-      } catch (_) {
-        fs.copyFileSync(qualitySource, output);
-        console.error('Encoder fallback for ' + tier + ': using validated original VP9 recording');
-        return true;
-      }
-    };
-    mediumFallback = encodeTier(dimMedium, bitrates.medium, outPaths.webmMedium, 'medium');
-    lowFallback = encodeTier(dimLow, bitrates.low, outPaths.webmLow, 'low');
-    if (mediumFallback || lowFallback) console.error('QUALITY_TIER_FALLBACK_SOURCE');
+    // Never label a copied high-quality source as medium/low. A tier that
+    // cannot be encoded is a failed render, not permission to substitute quality.
+    execSync(vp9(dimMedium, bitrates.medium, outPaths.webmMedium), { stdio: 'inherit' });
+    execSync(vp9(dimLow, bitrates.low, outPaths.webmLow), { stdio: 'inherit' });
 
-    // WebP poster: a frame that actually has visible content.
-    //
-    // `-ss` before `-i` is an input seek -- ffmpeg jumps straight to a keyframe
-    // and can emit a frame that is never displayed, which produced fully black
-    // posters. Seeking after `-i` decodes properly, and if the opening frame is
-    // still empty we walk forward through the clip until something is visible.
-    function frameHasContent(pngPath) {
-      try {
-        const raw = execSync(
-          `ffmpeg -y -v error -i "${pngPath}" -vf scale=48:48 -pix_fmt gray -f rawvideo -`,
-          { stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }
-        );
-        if (!raw || raw.length < 100) return false;
-        let lit = 0, different = 0;
-        const background = raw[0];
-        for (let i = 0; i < raw.length; i++) {
-          if (raw[i] > 24) lit++;
-          if (Math.abs(raw[i] - background) >= 10) different++;
-        }
-        // Dark but detailed skins are real content, not a black poster.
-        // A real small attachment can occupy fewer than 2% of the frame;
-        // match the verified WebM content threshold, not an arbitrary area.
-        return lit >= 24 || different >= 12;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    function pickPosterFrame(source, pngPath) {
-      // An animation may have a long dark lead-in; scan real timeline
-      // positions before marking an existing playable video as poster-less.
-      let duration = 0;
-      try { duration = Number(execFileSync('ffprobe', [
-        '-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1', source
-      ], {encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim()) || 0; } catch {}
-      const positions = new Set([0, 0.15, 0.35, 0.6, 0.9]);
-      if(duration>0)for(const frac of [0.08,0.2,0.35,0.5,0.65,0.8,0.92])
-        positions.add(Math.max(0,Math.min(duration-0.04,duration*frac)));
-      for (const ss of [...positions].sort((a,b)=>a-b).filter(v=>v>=0 && (!duration || v<duration))) {
-        try {
-          execSync(`ffmpeg -y -v error -ss ${ss} -i "${source}" -vframes 1 -c:v png "${pngPath}"`, { stdio: 'inherit' });
-        } catch (e) {
-          continue;
-        }
-        if (frameHasContent(pngPath)) return ss;
-        try { fs.rmSync(pngPath, { force: true }); } catch (e) {}
-      }
-      return null;
-    }
-
+    // The WebP is frame zero of this exact quality-tier WebM. A black or
+    // transparent opening frame is preserved; no later frame is substituted.
     function convertToWebp(source, out, dim) {
       try {
-        const pngPath = `${out}.frame.png`;
-        const ss = pickPosterFrame(source, pngPath);
-        if (ss === null) {
-          throw new Error('no frame with visible content in the clip');
-        }
-        if (ss !== 0) {
-          console.error(`  Poster: first frame was empty, using ${ss}s instead.`);
-        }
-        // Posters are optional for playback, so every encoder is tried in turn:
-        // cwebp (webp package), ImageMagick convert, then ffmpeg, which is always
-        // installed and carries libwebp. Without the last one a missing package
-        // silently costs every poster on the site.
-        let encoded = false;
-        for (const attempt of [
-          () => execSync(`cwebp -quiet "${pngPath}" -o "${out}"`, { stdio: 'inherit' }),
-          () => execSync(`convert "${pngPath}" "${out}"`, { stdio: 'inherit' }),
-          () => execSync(`ffmpeg -y -loglevel error -i "${pngPath}" -c:v libwebp -lossless 1 -quality 90 "${out}"`, { stdio: 'inherit' }),
-        ]) {
-          if (fs.existsSync(out) && fs.statSync(out).size > 0) { encoded = true; break; }
-          try {
-            attempt();
-            if (fs.existsSync(out) && fs.statSync(out).size > 0) { encoded = true; break; }
-          } catch (e) { /* try the next encoder */ }
-        }
-        if (!encoded) throw new Error('no WebP encoder available (cwebp, convert, ffmpeg)');
-        fs.rmSync(pngPath, { force: true });
+        generateFirstFrameWebp(source, out);
       } catch (err) {
         throw new Error(`WebP generation failed for ${out}: ${err.message}`);
       }
@@ -1423,23 +1284,16 @@ try {
       medium: dimMedium,
       low: dimLow,
     };
-    let webpOk = true;
     for (const q of ['high', 'medium', 'low']) {
       const webmSrc = outPaths[`webm${q[0].toUpperCase()}${q.slice(1)}`];
       const webpOut = outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`];
-      try {
-        convertToWebp(webmSrc, webpOut, webpDims[q]);
-      } catch (err) {
-        console.error(`WebP (${q}) failed: ${err.message}`);
-        webpOk = false;
-      }
+      convertToWebp(webmSrc, webpOut, webpDims[q]);
     }
-    if (webpOk) console.error(`WebP posters generated.`);
+    console.error(`All three WebP posters verified against their own WebM frame zero.`);
   } catch (err) {
     console.error(`FFmpeg processing failed or skipped: ${err.message}`);
-    // Fallback if ffmpeg fails: copy the capture to the main output. This must be
-    // outputPath (post-trim), not videoPath (pre-trim), or the black lead we just
-    // removed would come straight back.
+    // A failed encoder or poster is a failed render. Never publish a
+    // partial ladder or substitute a different frame/quality.
     throw err;
   }
 
@@ -1468,7 +1322,7 @@ try {
     atlas: atlasFile,
     textures: textureFiles,
     alpha: args.alpha,
-    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(mediumFallback ? dimHigh : dimMedium), low: widthOf(lowFallback ? dimHigh : dimLow) },
+    qualityWidths: { high: widthOf(dimHigh), medium: widthOf(dimMedium), low: widthOf(dimLow) },
     capturedDuration: captureDuration,
     width: videoWidth,
     height: videoHeight,
