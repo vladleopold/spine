@@ -15,6 +15,8 @@ on:
       - scripts/test-atlas-pages.mjs
       - .github/workflows/spine-export-webm.yml
       - scripts/test-preview-visibility-recovery.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/test-atlas-source-integrity.mjs
   pull_request:
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
@@ -29,6 +31,8 @@ on:
       - scripts/test-atlas-pages.mjs
       - .github/workflows/spine-export-webm.yml
       - scripts/test-preview-visibility-recovery.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/test-atlas-source-integrity.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -72,6 +76,7 @@ jobs:
           node --check scripts/recover-recorded-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node scripts/test-atlas-source-integrity.mjs
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-manifest-guard.mjs
