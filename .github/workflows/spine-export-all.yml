@@ -32,7 +32,7 @@ jobs:
           if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
             # Parse comma-separated IDs into JSON array
             IDS="${{ github.event.inputs.filter_ids }}"
-            MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node -e "
+            MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node --input-type=module -e "
               import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
               const root = process.cwd();
               const validIds = new Set();
