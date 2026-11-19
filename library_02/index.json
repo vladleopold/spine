@@ -52,8 +52,11 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-19T08-34-42-243Z/skeleton.png?v=2026-11-19T08-34-42.243Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "failed",
+    "dispatchStatus": "pending",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
+    "previewStatus": "failed",
+    "previewError": "Native preview render did not pass media acceptance"
   },
   {
     "id": "castle_upgrade-2026-11-19T07-33-26-823Z",
@@ -76,10 +79,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-33-26-823Z/castle_upgrade.png?v=2026-11-19T07-33-26.823Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-incompatible-source-version",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -103,10 +106,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/castle_upgrade.png?v=2026-11-19T07-30-55.171Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-incompatible-source-version",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
