@@ -20,10 +20,22 @@ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${config.animation||found.entry.defaultAnimation||''}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
-run('node',['scripts/spine-export-webm.mjs',...flags]);
+// Always emit a non-sensitive failure receipt, including when the initial
+// renderer exits before its metadata exists. Never put source names or paths
+// in the public Actions artifact.
+const report={status:'rendering',formats:[]};
+function writeFailureReceipt(stage){
+ fs.writeFileSync('render-verification.json',JSON.stringify({status:'failed',stage,formats:report.formats},null,2));
+}
+try {
+ run('node',['scripts/spine-export-webm.mjs',...flags]);
+} catch (error) {
+ writeFailureReceipt('initial-render');
+ throw error;
+}
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
-const report={uploadId:id,animation:meta.animation,formats:[]};
-process.on('uncaughtException',error=>{fs.writeFileSync('render-verification.json',JSON.stringify({...report,error:error.message},null,2));console.error(error);process.exit(1);});
+report.status='rendered';
+process.on('uncaughtException',error=>{writeFailureReceipt('post-render');console.error('Render verification failed');process.exit(1);});
 function probe(file){
  const data=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file],{encoding:'utf8'}));
  const s=data.streams[0];if(!s?.width||!Number(s.nb_read_frames))throw Error('Empty render: '+file);
