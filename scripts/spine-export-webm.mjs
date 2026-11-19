@@ -387,7 +387,15 @@ const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
-let targetAnimation = choosePreviewAnimation(availableAnimations, args.animation || entry.defaultAnimation || '');
+let targetAnimation = choosePreviewAnimation(availableAnimations, args.animation || args.defaultAnimation || entry.defaultAnimation || '');
+if (!targetAnimation) {
+  console.error('SELECTED_SPINE_ANIMATION_NOT_SPECIFIED');
+  process.exit(1);
+}
+if (availableAnimations.length > 0 && !availableAnimations.includes(targetAnimation)) {
+  console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
+  process.exit(1);
+}
 if (skeletonVersion === 'unknown') {
   console.error('SPINE_VERSION_UNKNOWN: cannot select a compatible player runtime for this skeleton');
   process.exit(1);
@@ -428,6 +436,14 @@ const videoHeight = hugeScene ? (gameCameraHeight & ~1) : (Math.min(MAX_VIDEO_DI
 const versionMajor = skeletonVersion.split('.')[0] || '4';
 const isLegacy = parseInt(versionMajor, 10) < 4;
 const runtimeMinor = isLegacy ? (skeletonVersion.split('.')[1] || '8') : '';
+if (isLegacy) {
+  const legacyJs = path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.js`);
+  const legacyCss = path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.css`);
+  if (!fs.existsSync(legacyJs) || !fs.existsSync(legacyCss)) {
+    console.error(`SPINE_LEGACY_RUNTIME_UNAVAILABLE_${versionMajor}_${runtimeMinor}`);
+    process.exit(1);
+  }
+}
 const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersion.slice(0,3) : '4.3';
 // Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
 // skeleton/atlas keys were introduced later; passing them leaves a blank canvas.
@@ -542,22 +558,10 @@ console.error(`Skeleton: ${skeletonFile} (v${skeletonVersion})`);
 console.error(`Skeleton bounds: ${rawSkelWidth}x${rawSkelHeight}`);
 console.error(`Video dimensions: ${videoWidth}x${videoHeight} (from bounds + ${PAD_RATIO * 100}% padding)`);
 console.error(`Atlas: ${atlasFile}`);
-// Works that ship begin/end (or in/out) plus idle are recorded as a loop of the
-// whole scenario, so the preview video shows the same cycle the player runs.
-const animationToken = (name) => String(name || '').trim().toLowerCase().split('/').pop();
-const tokenIndex = new Map();
-for (const name of availableAnimations) {
-  const token = animationToken(name);
-  if (token && !tokenIndex.has(token)) tokenIndex.set(token, name);
-}
-const scenarioEntry = tokenIndex.has('in') ? tokenIndex.get('in') : tokenIndex.get('begin');
-const scenarioExit = tokenIndex.has('out') ? tokenIndex.get('out') : tokenIndex.get('end');
-const scenarioIdle = tokenIndex.has('idle') ? tokenIndex.get('idle') : tokenIndex.get('loop');
-const scenarioCycle = !args.animation && !entry.defaultAnimation && scenarioEntry && scenarioExit ? [scenarioEntry, scenarioIdle, scenarioIdle, scenarioExit].filter(Boolean) : [];
-const captureAnimation = scenarioCycle.length > 1 ? scenarioCycle[0] : targetAnimation;
-if (scenarioCycle.length > 1) {
-  console.error(`Scenario: ${scenarioCycle.join(' -> ')} (запись превью по кругу)`);
-}
+// Preview rendering is immutable: only the selected/default animation is captured.
+// No begin/idle/end sequence or alternate animation may replace it.
+const scenarioCycle = [];
+const captureAnimation = targetAnimation;
 console.error(`Animation: ${captureAnimation}`);
 console.error(`Is default: ${isDefault}`);
 
@@ -635,7 +639,13 @@ ${skinLine}    showLoading: false,
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
       window.__runtimeSkinNames = runtimeData && Array.isArray(runtimeData.skins) ?
         runtimeData.skins.map(function(s){return s && s.name;}).filter(Boolean) : [];
-      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
+      if (!window.__animationNames.includes(window.__selectedAnimation)) {
+        window.__captureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
+        if (player.animationState) player.animationState.clearTracks();
+        if (typeof player.pause === 'function') player.pause();
+        return;
+      }
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
         player.animationState.setAnimation(0, window.__selectedAnimation, true);
