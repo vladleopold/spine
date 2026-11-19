@@ -20,6 +20,6 @@ assert.equal(classifyRendererError('[BROWSER error] TypeError: clearTracks is no
 
 const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
 assert.ok(exporter.includes("window.addEventListener('unhandledrejection'"), 'async player rejections must be captured as sanitized failure signals');
-assert.ok(exporter.includes('window.__captureError, null, { timeout: 60000, polling: 200 })', 'player-ready wait must pass Playwright options in the third argument');
-assert.ok(exporter.includes('window.__videoData, null, { timeout: 15000 })', 'video-data wait must pass Playwright options in the third argument');
+assert.ok(exporter.includes('window.__captureError, null, { timeout: 60000, polling: 200 })'), 'player-ready wait must pass Playwright options in the third argument');
+assert.ok(exporter.includes('window.__videoData, null, { timeout: 15000 })'), 'video-data wait must pass Playwright options in the third argument');
 console.log('PASS case-insensitive browser diagnostics, safe method categories and Playwright wait options');
