@@ -171,16 +171,23 @@ if(action==="matrix"){
     const batch=await Promise.all(latest.slice(offset,offset+4).map(async e=>{
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const ready=!incompatible&&bundleOk(e);
+    const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
+      ? record.defaultAnimation : "";
+    // Keep the two explicitly pinned historical selections as a fallback,
+    // but never dispatch a render with an empty/guessed animation name.
+    const animation=indexedAnimation ||
+      (e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
+       e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":"");
+    const ready=!incompatible&&Boolean(animation)&&bundleOk(e);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
-      sourceFingerprint:previewSourceFingerprint((readIndex(root,e.basePath)||[]).find(x=>x.id===e.id)),
+      sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
-      animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-        e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
+      animation,
+      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":""};
     }));
     matrix.push(...batch);
   }
@@ -228,6 +235,26 @@ if(action==="matrix"){
         ?"Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required"
         :"Incomplete skeleton, atlas page, or texture bundle";
       summary.blocked++;
+      continue;
+    }
+    if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
+      if(existingMediaOk(entryInfo)){
+        try{
+          refreshStoredPosters(entryInfo,base);
+          record.posterGeneratedAt=new Date().toISOString();
+          summary.ready++;
+        }catch{
+          record.webmStatus="failed";
+          record.previewStatus="failed";
+          record.previewError="Existing WebM could not produce its exact first-frame WebP poster";
+          summary.failed++;
+        }
+      }else{
+        record.webmStatus="blocked-missing-animation-selection";
+        record.previewStatus="blocked";
+        record.previewError="No explicit default animation is selected; preview rendering will not guess a source animation";
+        summary.blocked++;
+      }
       continue;
     }
     if(item.needsRender===false){
