@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
+import { classifyBlockedPreview } from "./lib/preview-audit-classifier.mjs";
 
 const root="/tmp/spine-preview-test";
 const a={id:"wolf-2026-11-18T17-32-08-569Z",uploadedAt:"2026-11-18T17:32:08.569Z",
@@ -29,4 +30,28 @@ records=[a,a];
 assert.throws(()=>validateFrozenRepairRecord(root,entry,folders,index));
 records=[];
 assert.throws(()=>validateFrozenRepairRecord(root,entry,folders,index));
-console.log("PREVIEW_REPAIR_FROZEN_MANIFEST_TESTS_PASSED");
+
+const blockedAnimation = {
+  webmStatus:"blocked-missing-animation-selection",
+  previewStatus:"blocked",
+  previewError:"No explicit default animation is selected; preview rendering will not guess a source animation",
+  files:["walk.skel","walk.atlas","walk.png"],
+};
+assert.equal(classifyBlockedPreview(blockedAnimation),"blocked");
+assert.equal(classifyBlockedPreview({...blockedAnimation,defaultAnimation:"walk"}),"failed");
+assert.equal(classifyBlockedPreview({...blockedAnimation,webpPoster:"https://example.test/poster.webp"}),"failed");
+assert.equal(classifyBlockedPreview({...blockedAnimation,previewStatus:"failed"}),"failed");
+assert.equal(classifyBlockedPreview({
+  webmStatus:"blocked-missing-source",files:["walk.skel","walk.atlas"],
+}),"blocked");
+assert.equal(classifyBlockedPreview({
+  webmStatus:"blocked-missing-source",files:["walk.skel","walk.atlas","walk.png"],
+}),"failed");
+assert.equal(classifyBlockedPreview({
+  webmStatus:"blocked-incompatible-source-version",
+  previewError:"Spine 3.8.75 export is rejected by official runtimes",
+}),"blocked");
+assert.equal(classifyBlockedPreview({
+  webmStatus:"blocked-incompatible-source-version",previewError:"unknown version",
+}),"failed");
+console.log("PREVIEW_REPAIR_FROZEN_MANIFEST_AND_BLOCKED_AUDIT_TESTS_PASSED");
