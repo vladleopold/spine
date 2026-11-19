@@ -1,0 +1,89 @@
+name: Restore SHA-verified Spine preview from completed native render
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/restore-verified-spine-media.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: spine-library-commit
+  cancel-in-progress: false
+
+jobs:
+  publish-verified:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library_02/index.json
+            /library_02/Spine-animation-2026-11-17T18-27-52-258Z/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download actual verified six-file output from native render
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 44471559970
+          name: latest20-Spine-animation-2026-11-17T18-27-52-258Z
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: downloaded-latest10/latest10-Spine-animation-2026-11-17T18-27-52-258Z
+      - name: Verify exact original source identity and selected animation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import {previewSourceFingerprint} from './scripts/repair-manifest-guard.mjs';
+          const id='Spine-animation-2026-11-17T18-27-52-258Z';
+          const entry=JSON.parse(fs.readFileSync('library_02/index.json','utf8')).find(e=>e.id===id);
+          assert.ok(entry,'Original upload missing');
+          assert.equal(previewSourceFingerprint(entry),'82c38d49300ae0fe1ec0964bf1bb8c7a57ae75ff593bd9257da839898aacdae0',
+            'Original source changed; refuse old render evidence');
+          const meta=JSON.parse(fs.readFileSync('downloaded-latest10/latest10-'+id+'/meta.json','utf8'));
+          assert.equal(meta.ok,true,'Only fully verified render artifacts are accepted');
+          if(entry.defaultAnimation)assert.equal(meta.animation,entry.defaultAnimation,
+            'Do not replace user-selected animation');
+          assert.ok(meta.animation,'Original animation name must be preserved');
+          console.log('SOURCE_FINGERPRINT_AND_SELECTED_ANIMATION_VERIFIED');
+          NODE
+      - name: Publish real media atomically, no substitute animations
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import {previewSourceFingerprint} from './scripts/repair-manifest-guard.mjs';
+          const id='Spine-animation-2026-11-17T18-27-52-258Z';
+          const record=JSON.parse(fs.readFileSync('library_02/index.json','utf8')).find(x=>x.id===id);
+          assert.equal(previewSourceFingerprint(record),'82c38d49300ae0fe1ec0964bf1bb8c7a57ae75ff593bd9257da839898aacdae0');
+          NODE
+            node scripts/publish-verified-preview-artifacts.mjs
+            git add -A -- library_02/index.json library_02/Spine-animation-2026-11-17T18-27-52-258Z/
+            if git diff --cached --quiet; then
+              echo 'NO_VERIFIED_MEDIA_CHANGES'
+              exit 0
+            fi
+            git commit -m 'fix: publish existing quality-verified Spine WebM and WebP without changing animation'
+            if git push origin HEAD:main; then
+              echo 'SIX_REAL_SPINE_MEDIA_FILES_PUBLISHED'
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+          echo '::error::Verified media could not be published without conflict'
+          exit 1
