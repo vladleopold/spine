@@ -94,6 +94,23 @@ async function liveMediaOk(entry){
   }));
   return results.every(Boolean);
 }
+// Vercel may alias a missing low poster to the high-quality one. Require
+// the six ORIGINAL repository assets too, not just six HTTP 200 responses.
+async function originalMediaFilesOk(entry){
+  if(process.env.SPINE_REPAIR_SKIP_LIVE==="1")return true;
+  const repoPath=entry.previewPath.split("/").map(encodeURIComponent).join("/");
+  const token=process.env.GITHUB_TOKEN||"";
+  try{
+    const response=await fetch("https://api.github.com/repos/vladleopold/spine/contents/"+
+      repoPath+"?ref=main",{headers:{Accept:"application/vnd.github+json",
+      ...(token?{Authorization:"Bearer "+token}:{})},signal:AbortSignal.timeout(20000)});
+    if(!response.ok)return false;
+    const items=await response.json();
+    if(!Array.isArray(items))return false;
+    const names=new Set(items.map(x=>x.name));
+    return mediaNames.every(name=>names.has(name));
+  }catch{return false;}
+}
 const action=process.argv[2]||"matrix";
 const latest=action==="matrix"?newestTwenty():[];
 if(action==="matrix"){
@@ -109,7 +126,7 @@ if(action==="matrix"){
     return {id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint((readIndex(root,e.basePath)||[]).find(x=>x.id===e.id)),
-      ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e)),
+      ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
     }));
@@ -194,12 +211,9 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
-        // Never replace an existing genuine clip with a failed higher-FPS retry.
-        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
-        summary.ready++;
-        continue;
-      }
+      // Do not destroy old media bytes, but a URL failing live verification
+      // cannot continue to be advertised as "ready" after this retry fails.
+      record.lastPreviewRetryError="Live media missing or replacement failed real motion acceptance";
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";

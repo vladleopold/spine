@@ -4,7 +4,9 @@ export function choosePreviewAnimation(names, preferred = '') {
   const available = Array.isArray(names)
     ? names.filter(name => typeof name === 'string' && name.trim())
     : [];
-  if (preferred && available.includes(preferred)) return preferred;
+  // A caller-supplied name is immutable. If absent from the skeleton the
+  // renderer must fail, never silently switch to another timeline.
+  if (preferred) return preferred;
   const auxiliary = /(?:^|[\s_./-])(?:bkg|bg|background|fg|mask|backup)(?:$|[\s_./-])/i;
   const meaningful = available.filter(name => !auxiliary.test(name));
   const candidates = meaningful.length ? meaningful : available;

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
+import {choosePreviewAnimation} from './preview-animation-choice.mjs';
+assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexistent');
+assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
+const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
+assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate|SPINE_VISIBLE_ALTERNATE_ANIMATION/);
+assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
+const blank=Buffer.alloc(32*32*3,7);
+assert.equal(hasVisibleScreenshotPixels(blank),false);
+for(let i=0;i<7;i++)blank[i*3]=255;
+assert.equal(hasVisibleScreenshotPixels(blank),false);
+blank[7*3]=255;
+assert.equal(hasVisibleScreenshotPixels(blank),true);
+console.log('PASS Spine preview: no animation substitution; exact selection and real composited pixels');
