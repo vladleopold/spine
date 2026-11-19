@@ -3,6 +3,27 @@
 // or raw browser console messages. Only stable error categories and counts.
 import fs from "node:fs";
 
+export function classifyRendererMethod(text) {
+  const x=String(text||"");
+  const methods=[
+    [/captureStream\s+is not a function/i,"CANVAS_CAPTURE_STREAM"],
+    [/clearTracks\s+is not a function/i,"ANIMATION_STATE_CLEAR_TRACKS"],
+    [/setAnimation\s+is not a function/i,"ANIMATION_STATE_SET_ANIMATION"],
+    [/getCurrent\s+is not a function/i,"ANIMATION_STATE_GET_CURRENT"],
+    [/toDataURL\s+is not a function/i,"CANVAS_TO_DATA_URL"],
+    [/screenshot\s+is not a function/i,"PLAYWRIGHT_SCREENSHOT"],
+    [/\.map\s+is not a function/i,"ARRAY_MAP"],
+    [/\.includes\s+is not a function/i,"ARRAY_INCLUDES"],
+    [/\.find\s+is not a function/i,"ARRAY_FIND"],
+    [/\.filter\s+is not a function/i,"ARRAY_FILTER"],
+    [/\.forEach\s+is not a function/i,"ARRAY_FOREACH"],
+    [/\.push\s+is not a function/i,"ARRAY_PUSH"],
+    [/\.bind\s+is not a function/i,"FUNCTION_BIND"],
+  ];
+  for(const [pattern,code] of methods)if(pattern.test(x))return code;
+  return /is not a function/i.test(x)?"UNKNOWN_METHOD":"NONE";
+}
+
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(/unsupported_spine_export_3_8_75/.test(x))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
@@ -19,7 +40,7 @@ export function classifyRendererError(text) {
   if (/cannot read properties of (?:undefined|null)|cannot set properties of (?:undefined|null)/.test(x)) return "SCRIPT_NULL_PROPERTY_ACCESS";
   if (/(?:\.map|map) is not a function/.test(x)) return "SCRIPT_COLLECTION_SHAPE";
   if (/is not a function/.test(x)) return "SCRIPT_METHOD_UNAVAILABLE";
-  if (/player_script_type_error|syntaxerror|unexpected token|referenceerror|typeerror|cannot read properties/.test(x)) return "SCRIPT_RUNTIME";
+  if (/player_(?:script|promise)_(?:type_error|error)/.test(x)||/syntaxerror|unexpected token|referenceerror|typeerror|cannot read properties/.test(x)) return "SCRIPT_RUNTIME";
   return "OTHER_RENDER_FAILURE";
 }
 
@@ -27,9 +48,10 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
   const log=fs.readFileSync(process.argv[2],"utf8");
   const reason=classifyRendererError(log);
   const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
-  const causes=[...log.matchAll(/Capture with skin [^\r\n]*? failed:\s*([^\r\n]+)|\[BROWSER ERROR\]\s*([^\r\n]+)/g)];
+  const causes=[...log.matchAll(/Capture with skin [^\r\n]*? failed:\s*([^\r\n]+)|\[BROWSER\s+ERROR\]\s*([^\r\n]+)/gi)];
   const lastCause=causes.at(-1)?.[1]||causes.at(-1)?.[2]||"";
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
+  const method=classifyRendererMethod(lastCause||log);
   const attempts=(log.match(/Skin selection: source default only/g)||[]).length;
   const stages={
     skeletonParsed:/Skeleton:/i.test(log),
@@ -39,9 +61,10 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
     qualityLadder:/Quality ladder:/i.test(log),
     posterGeneration:/Poster:|WebP \(high\)|WebP generation failed/i.test(log),
   };
-  const scriptFailure=log.match(/SPINE_PLAYER_SCRIPT_ERROR stage=([a-z-]+) type=([A-Z_]+)/i);
+  const scriptFailure=log.match(/SPINE_PLAYER_(SCRIPT|PROMISE)_ERROR stage=([a-z-]+) type=([A-Z_]+)/i);
   const distinctError=scriptFailure
-    ? "PLAYER_"+scriptFailure[1].toUpperCase().replace(/-/g,"_")+"_"+scriptFailure[2].toUpperCase()
+    ? "PLAYER_"+scriptFailure[1].toUpperCase()+"_"+scriptFailure[2].toUpperCase().replace(/-/g,"_")+"_"+scriptFailure[3].toUpperCase()
+    : method!=="NONE"?"METHOD_"+method
     : /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /ffmpeg.*(encoder|unknown|invalid|failed)/i.test(log)?"FFMPEG_ENCODER_OR_INPUT":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
@@ -64,6 +87,6 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
     .map(x=>Number(x[1])).at(-1)||0;
   const sourceSignal=log.includes('NO_VISIBLE_SPINE_FRAME')?'NO_RENDERED_SPINE_PIXELS':
     log.includes('High quality uses original VP9 recording')?'WEBM_SOURCE_AVAILABLE':'UNKNOWN';
-  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts,
+  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,method,version,attempts,
     stages,distinctError,peaks:peaks.slice(-8),canvasSizes,selectedSkinCount,capturedVp9Bytes,sourceSignal}));
 }

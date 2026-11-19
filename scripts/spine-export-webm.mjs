@@ -553,6 +553,14 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     window.__captureError = 'PLAYER_SCRIPT_' + type;
     console.error('SPINE_PLAYER_SCRIPT_ERROR stage=' + window.__captureStage + ' type=' + type);
   });
+  // Catch rejected Spine Player load/update promises without leaking source data.
+  window.addEventListener('unhandledrejection', function(event) {
+    if (window.__captureError) return;
+    var reason = event && event.reason;
+    var type = reason && reason.name === 'TypeError' ? 'TYPE_ERROR' : 'PROMISE_ERROR';
+    window.__captureError = 'PLAYER_PROMISE_' + type;
+    console.error('SPINE_PLAYER_PROMISE_ERROR stage=' + window.__captureStage + ' type=' + type);
+  });
 
   var player;
   // Peak brightness of the currently rendered frame (center sample).
@@ -861,7 +869,7 @@ try {
     await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
     let ready = true;
     try {
-      await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+      await page.waitForFunction(() => window.__ready === true || window.__captureError, null, { timeout: 60000, polling: 200 });
     } catch {
       ready = false;
     }
@@ -1061,7 +1069,7 @@ try {
     });
 
     try {
-      videoDataUrl = await page.waitForFunction(() => window.__videoData, { timeout: 15000 }).then((h) => h.jsonValue());
+      videoDataUrl = await page.waitForFunction(() => window.__videoData, null, { timeout: 15000 }).then((h) => h.jsonValue());
     } catch {
       videoDataUrl = null;
     }
