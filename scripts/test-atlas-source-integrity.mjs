@@ -44,6 +44,12 @@ try{
   const correctlyRecognized=inspectAtlasSourceBundle(root,
     ['hero.json','hero.atlas','hero.png','hero-two.png']);
   assert.equal(correctlyRecognized.complete,true,'Binary Spine mislabeled JSON is a real source');
+  const unsupported=Buffer.concat([versionString('hash'),versionString('3.8.75'),Buffer.alloc(32)]);
+  fs.writeFileSync(path.join(root,'hero.json'),unsupported);
+  const incompatible=inspectAtlasSourceBundle(root,
+    ['hero.json','hero.atlas','hero.png','hero-two.png']);
+  assert.equal(incompatible.complete,false);
+  assert.equal(incompatible.reason,'UNSUPPORTED_SPINE_EXPORT_3_8_75');
   fs.writeFileSync(path.join(root,'hero.json'),'{garbled');
   const corrupt=inspectAtlasSourceBundle(root,
     ['hero.json','hero.atlas','hero.png','hero-two.png']);
