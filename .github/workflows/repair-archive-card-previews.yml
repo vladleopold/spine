@@ -39,6 +39,8 @@ jobs:
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/first-frame-poster.mjs
             /scripts/test-repair-archive-card-previews.mjs
+            /scripts/verify-ready-preview-live.mjs
+            /.github/workflows/repair-archive-card-previews.yml
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
