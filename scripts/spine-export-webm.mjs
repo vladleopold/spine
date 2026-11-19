@@ -1284,23 +1284,16 @@ try {
       medium: dimMedium,
       low: dimLow,
     };
-    let webpOk = true;
     for (const q of ['high', 'medium', 'low']) {
       const webmSrc = outPaths[`webm${q[0].toUpperCase()}${q.slice(1)}`];
       const webpOut = outPaths[`webp${q[0].toUpperCase()}${q.slice(1)}`];
-      try {
-        convertToWebp(webmSrc, webpOut, webpDims[q]);
-      } catch (err) {
-        console.error(`WebP (${q}) failed: ${err.message}`);
-        webpOk = false;
-      }
+      convertToWebp(webmSrc, webpOut, webpDims[q]);
     }
-    if (webpOk) console.error(`WebP posters generated.`);
+    console.error(`All three WebP posters verified against their own WebM frame zero.`);
   } catch (err) {
     console.error(`FFmpeg processing failed or skipped: ${err.message}`);
-    // Fallback if ffmpeg fails: copy the capture to the main output. This must be
-    // outputPath (post-trim), not videoPath (pre-trim), or the black lead we just
-    // removed would come straight back.
+    // A failed encoder or poster is a failed render. Never publish a
+    // partial ladder or substitute a different frame/quality.
     throw err;
   }
 
