@@ -30,6 +30,8 @@ jobs:
             /scripts/repair-archive-card-previews.mjs
             /scripts/resolve-library.mjs
             /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/test-repair-archive-card-previews.mjs
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -94,6 +96,7 @@ jobs:
             /scripts/repair-archive-card-previews.mjs
             /scripts/resolve-library.mjs
             /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
             /library/index.json
             /library_*/index.json
       - uses: actions/download-artifact@v4
@@ -150,6 +153,9 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
       - uses: actions/download-artifact@v4
         with:
           name: archive-preview-repair-summary
