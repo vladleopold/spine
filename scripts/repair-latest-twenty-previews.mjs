@@ -217,8 +217,17 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      // Do not destroy old media bytes, but a URL failing live verification
-      // cannot continue to be advertised as "ready" after this retry fails.
+      // A previous completed job may have already published genuine complete
+      // media while this older job was rendering. Do not downgrade an
+      // independently valid six-file source simply because this attempt failed.
+      // Local source and frame-density gates remain mandatory.
+      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
+         existingMediaOk(entryInfo)) {
+        record.lastPreviewRetryError="Concurrent retry had no accepted media; verified published media retained";
+        summary.ready++;
+        continue;
+      }
+      // No existing independently validated media: mark failed, never fake it.
       record.lastPreviewRetryError="Live media missing or replacement failed real motion acceptance";
       record.webmStatus="failed";
       record.previewStatus="failed";
