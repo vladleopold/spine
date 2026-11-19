@@ -48,7 +48,7 @@ function sourceSelection(record, basePath) {
   if (!animation) return null;
   const rawPreviewPath = safeRelative(record.previewPath || record.id);
   if (!rawPreviewPath) return null;
-  const hasShardPrefix = /^library(?:_\\d+)?\\//.test(rawPreviewPath);
+  const hasShardPrefix = /^library(?:_\d+)?\//.test(rawPreviewPath);
   if (hasShardPrefix && !rawPreviewPath.startsWith(basePath + '/')) return null;
   const previewPath = rawPreviewPath.startsWith(basePath + '/')
     ? rawPreviewPath
