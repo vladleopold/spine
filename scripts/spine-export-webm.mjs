@@ -392,6 +392,10 @@ if (skeletonVersion === 'unknown') {
   console.error('SPINE_VERSION_UNKNOWN: cannot select a compatible player runtime for this skeleton');
   process.exit(1);
 }
+if (skeletonVersion === '3.8.75') {
+  console.error('UNSUPPORTED_SPINE_EXPORT_3_8_75: official 3.8 runtime rejects this exported skeleton format; source re-export required');
+  process.exit(1);
+}
 
 // --- Calculate dynamic video dimensions from skeleton bounds ---
 const PAD_RATIO = 0.14; // 14% padding on each side
