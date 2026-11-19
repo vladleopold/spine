@@ -10,6 +10,7 @@ import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
+import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -56,6 +57,20 @@ function bundleOk(entry) {
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
+function refreshStoredPosters(entryInfo, stagingRoot) {
+  const destination=path.resolve(root,entryInfo.previewPath);
+  const staging=path.join(stagingRoot,"poster-refresh-"+entryInfo.id);
+  fs.mkdirSync(staging,{recursive:true});
+  const generated=[];
+  for(const suffix of ["","-medium","-low"]){
+    const video=path.join(destination,"preview"+suffix+".webm");
+    const poster=path.join(staging,"preview"+suffix+".webp");
+    generateFirstFrameWebp(video,poster);
+    generated.push({poster,destination:path.join(destination,"preview"+suffix+".webp")});
+  }
+  for(const item of generated)fs.copyFileSync(item.poster,item.destination);
+  fs.rmSync(staging,{recursive:true,force:true});
+}
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
@@ -196,7 +211,18 @@ if(action==="matrix"){
     }
     if(item.needsRender===false){
       if(existingMediaOk(entryInfo)){
-        summary.ready++;
+        try{
+          // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
+          // its matching WebP posters from frame zero of each quality tier.
+          refreshStoredPosters(entryInfo,base);
+          record.posterGeneratedAt=new Date().toISOString();
+          summary.ready++;
+        }catch{
+          record.webmStatus="failed";
+          record.previewStatus="failed";
+          record.previewError="Existing WebM could not produce its exact first-frame WebP poster";
+          summary.failed++;
+        }
         continue;
       }
       record.webmStatus="failed";
@@ -230,6 +256,18 @@ if(action==="matrix"){
         }
       }catch{complete=false;}
     }
+    if(complete){
+      try{
+        // Rebuild each poster from the first frame of its own matching WebM,
+        // even if the renderer artifact carried an older/scanned still.
+        for(const suffix of ["","-medium","-low"]){
+          generateFirstFrameWebp(
+            path.join(artifact,"preview"+suffix+".webm"),
+            path.join(artifact,"preview"+suffix+".webp")
+          );
+        }
+      }catch{complete=false;}
+    }
     if(!complete) {
       // A previous completed job may have already published genuine complete
       // media while this older job was rendering. Do not downgrade an
@@ -237,8 +275,17 @@ if(action==="matrix"){
       // Local source and frame-density gates remain mandatory.
       if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
          existingMediaOk(entryInfo)) {
-        record.lastPreviewRetryError="Concurrent retry had no accepted media; verified published media retained";
-        summary.ready++;
+        try{
+          refreshStoredPosters(entryInfo,base);
+          record.posterGeneratedAt=new Date().toISOString();
+          record.lastPreviewRetryError="Concurrent retry had no accepted media; verified original WebM retained";
+          summary.ready++;
+        }catch{
+          record.webmStatus="failed";
+          record.previewStatus="failed";
+          record.previewError="Retained WebM could not produce its exact first-frame WebP poster";
+          summary.failed++;
+        }
         continue;
       }
       // No existing independently validated media: mark failed, never fake it.
