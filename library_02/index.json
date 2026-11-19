@@ -213,7 +213,7 @@
     "webmStatus": "blocked-missing-source",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "Incomplete skeleton / atlas / texture bundle"
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-11-18T03-38-09-932Z",
@@ -491,10 +491,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-26-20-981Z/019.png?v=2026-11-17T18-26-20.981Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -1148,7 +1148,7 @@
     "dispatchStatus": "rendered",
     "previewStatus": "ready",
     "previewError": "",
-    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
+    "lastPreviewRetryError": "Concurrent retry had no accepted media; verified published media retained",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-27-52-258Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-27-52-258Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-27-52-258Z/preview.webp",
