@@ -32,6 +32,9 @@ on:
       - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
   pull_request:
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
@@ -61,6 +64,9 @@ on:
       - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
   workflow_dispatch:
 permissions:
   contents: read
@@ -80,6 +86,7 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /api/github-upload.js
             /scripts/
             /library/index.json
             /library_*/index.json
@@ -111,10 +118,12 @@ jobs:
         shell: bash
         run: |
           node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check api/github-upload.js
           node --check scripts/repair-latest-twenty-previews.mjs
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
           node scripts/test-repair-latest-twenty.mjs
+          node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
           node --check scripts/verify-poster-first-frame.mjs
           node --check scripts/lib/first-frame-poster.mjs
