@@ -10,10 +10,10 @@ const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),
 assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate|SPINE_VISIBLE_ALTERNATE_ANIMATION/);
 assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
 assert.match(source,/NO_DEFAULT_SPINE_ANIMATION/);
-assert.match(source,/const requestedAnimation = args\\.animation !== '' \\? args\\.animation : indexedAnimation/);
-assert.match(source,/if \\(!runtimeAnimations\\.includes\\(pinnedAnimation\\)\\)/);
-assert.doesNotMatch(source,/if \\(!targetAnimation\\)\\s*targetAnimation\\s*=/);
-assert.doesNotMatch(source,/targetAnimation\\s*=\\s*await page\\.evaluate/);
+assert.ok(source.includes("const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation"));
+assert.ok(source.includes("if (!runtimeAnimations.includes(pinnedAnimation))"));
+assert.ok(!source.includes("if (!targetAnimation) targetAnimation ="));
+assert.ok(!source.includes("targetAnimation = await page.evaluate"));
 const blank=Buffer.alloc(32*32*3,7);
 assert.equal(hasVisibleScreenshotPixels(blank),false);
 for(let i=0;i<7;i++)blank[i*3]=255;
