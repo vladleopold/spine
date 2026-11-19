@@ -1,0 +1,96 @@
+name: Publish completed archive preview batches
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: GitHub Actions run ID that produced archive-card-previews-* artifacts
+        required: true
+        type: string
+        default: '44616967112'
+permissions:
+  actions: read
+  contents: write
+concurrency:
+  group: spine-library-commit
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: archive-card-previews-*
+          path: downloaded-previews
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Merge only completed and verified render artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/repair-archive-card-previews.mjs merge
+            git add --sparse -A -- library*
+            if git diff --cached --quiet; then
+              echo "NO_ARCHIVE_PREVIEW_REPAIR_CHANGES"
+              break
+            fi
+            git commit -m 'fix(previews): publish verified archive card preview batches'
+            if git push origin HEAD:main; then
+              echo "ARCHIVE_PREVIEW_PARTIAL_PUBLISHED"
+              break
+            fi
+            if (( attempt == 4 )); then
+              echo "::error::Could not publish completed archive preview artifacts"
+              exit 1
+            fi
+            sleep $(( attempt * 4 ))
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-preview-repair-summary
+          path: preview-repair-summary.json
+          if-no-files-found: error
+          retention-days: 1
+
+  verify-production:
+    needs: publish
+    if: needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive-preview-repair-summary
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify published WebM and WebP media on production
+        run: node scripts/repair-archive-card-previews.mjs verify
