@@ -235,7 +235,8 @@ function merge() {
     const currentLowUrl = item.sourceKind === 'animation'
       ? currentSelected && currentSelected.webmPreviewLow
       : record.webmPreviewLow;
-    if (currentMediumUrl !== item.sourceMediumUrl || currentLowUrl !== item.sourceLowUrl) {
+    if (currentMediumUrl !== item.sourceMediumUrl || currentLowUrl !== item.sourceLowUrl ||
+        record.webmPreviewMedium !== item.rootMediumUrl || record.webmPreviewLow !== item.rootLowUrl) {
       summary.skipped.push({ id: item.id, reason: 'preview-source-url-changed' });
       continue;
     }
