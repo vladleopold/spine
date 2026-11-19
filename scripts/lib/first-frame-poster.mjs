@@ -52,26 +52,16 @@ export function verifyPosterFirstFrame(videoPath, posterPath) {
  * if that is what the original animation actually starts with.
  */
 export function generateFirstFrameWebp(videoPath, posterPath) {
-  const framePath = path.join(path.dirname(posterPath), path.basename(posterPath) + '.first-frame.png');
   fs.rmSync(posterPath, { force: true });
-  fs.rmSync(framePath, { force: true });
-  try {
-    execFileSync('ffmpeg', [
-      '-y', '-v', 'error', '-i', videoPath, '-map', '0:v:0',
-      '-frames:v', '1', '-c:v', 'png', framePath,
-    ], { timeout: FFMPEG_TIMEOUT_MS, stdio: 'ignore' });
-    if (!fs.existsSync(framePath) || fs.statSync(framePath).size < 32) {
-      throw new Error('Could not decode the first WebM frame');
-    }
-    execFileSync('ffmpeg', [
-      '-y', '-v', 'error', '-i', framePath, '-frames:v', '1',
-      '-c:v', 'libwebp', '-lossless', '1', '-quality', '100', posterPath,
-    ], { timeout: FFMPEG_TIMEOUT_MS, stdio: 'ignore' });
-    if (!fs.existsSync(posterPath) || fs.statSync(posterPath).size < 32) {
-      throw new Error('Could not encode the first WebM frame as WebP');
-    }
-    return verifyPosterFirstFrame(videoPath, posterPath);
-  } finally {
-    fs.rmSync(framePath, { force: true });
+  // FFmpeg decodes the input and sends only frame zero directly to libwebp.
+  // No timestamp seek, scan, intermediate still, or later-frame selection.
+  execFileSync('ffmpeg', [
+    '-y', '-v', 'error', '-i', videoPath, '-map', '0:v:0',
+    '-frames:v', '1', '-c:v', 'libwebp', '-lossless', '1',
+    '-quality', '100', posterPath,
+  ], { timeout: FFMPEG_TIMEOUT_MS, stdio: ['ignore', 'ignore', 'pipe'] });
+  if (!fs.existsSync(posterPath) || fs.statSync(posterPath).size < 32) {
+    throw new Error('Could not encode the first WebM frame as WebP');
   }
+  return verifyPosterFirstFrame(videoPath, posterPath);
 }
