@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import { writeRenderFailureReceipt, classifyRenderFailure } from './lib/render-failure-receipt.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
@@ -11,6 +12,14 @@ if(!/^[\w.-]+$/.test(id)||id.includes('..'))throw Error('Invalid upload ID');
 const origin=new URL(config.origin||'https://spine-link.vercel.app').origin;
 if(origin!=='https://spine-link.vercel.app')throw Error('Unsupported preview origin');
 const found=entryForUpload(process.cwd(),id);if(!found)throw Error('Upload not found');
+const report={formats:[]};
+process.on('uncaughtException',error=>{
+  const receipt=writeRenderFailureReceipt('render-verification.json','render',error,report.formats);
+  console.error('SPINE_RENDER_FAILURE '+classifyRenderFailure(error));
+  process.exit(receipt.status==='blocked'||receipt.status==='failed'?1:0);
+});
+const selectedAnimation=String(config.animation||config.defaultAnimation||found.entry.defaultAnimation||'');
+if(!selectedAnimation.trim())throw new Error('SELECTED_SPINE_ANIMATION_NOT_SPECIFIED');
 if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
   const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:id,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
   if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
@@ -19,15 +28,14 @@ if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
-const flags=[`--upload-id=${id}`,`--animation=${config.animation||found.entry.defaultAnimation||''}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
+const flags=[`--upload-id=${id}`,`--animation=${selectedAnimation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
-const report={uploadId:id,animation:meta.animation,formats:[]};
-process.on('uncaughtException',error=>{fs.writeFileSync('render-verification.json',JSON.stringify({...report,error:error.message},null,2));console.error(error);process.exit(1);});
+
 function probe(file){
  const data=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file],{encoding:'utf8'}));
  const s=data.streams[0];if(!s?.width||!Number(s.nb_read_frames))throw Error('Empty render: '+file);
- report.formats.push({file:path.basename(file),...s,duration:Number(data.format?.duration)});return s;
+ report.formats.push({type:path.extname(file).slice(1),codec:s.codec_name||'',width:Number(s.width)||0,height:Number(s.height)||0,frames:Number(s.nb_read_frames)||0,duration:Number(data.format?.duration)||0});return s;
 }
 const pending=[];
 const add=(src,dst)=>{if(!fs.existsSync(src)||fs.statSync(src).size===0)throw Error('Missing output '+src);pending.push({src,dst});};
@@ -91,10 +99,10 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
   }else{add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;}
  }
 }
-fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
+fs.writeFileSync('render-verification.json',JSON.stringify({status:'passed',stage:'complete',code:null,formats:report.formats},null,2));
 await publish({allAnimationPreviews:{...entryForUpload(process.cwd(),id).entry.allAnimationPreviews,[anim]:downloads},fullExportStatus:(meta.animations.length===1?'ready':'partial'),fullExportGeneratedAt:new Date().toISOString()});
 for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
  const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
  if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
 }
-console.log(JSON.stringify({ok:true,...report}));
+console.log(JSON.stringify({ok:true,status:'passed',formats:report.formats}));
