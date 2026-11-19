@@ -193,14 +193,14 @@ jobs:
           ENTRY_ANIMATION="${ENTRY_VALUES[3]}"
           ENTRY_PATH="${ENTRY_VALUES[4]}"
           git sparse-checkout add "$ENTRY_PATH"
-          mkdir -p "out/$ENTRY_ID"
+          mkdir -p "out/$ENTRY_INDEX"
           if [[ "$ENTRY_READY" != true ]]; then
-            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_INDEX/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
             exit 0
           fi
           if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_INDEX/meta.json"
             echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
@@ -208,15 +208,15 @@ jobs:
           node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
             --repo-path="$GITHUB_WORKSPACE" \
-            --output="$RUNNER_TEMP/$ENTRY_ID-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
+            --output="$RUNNER_TEMP/preview-$ENTRY_INDEX.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
           code=$?
           set -e
-          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/$ENTRY_ID-preview.webm" ]]; then
+          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/preview-$ENTRY_INDEX.webm" ]]; then
             # A genuine recorded WebM may survive even when its secondary
             # quality ladder/poster encoder fails. Verify real changing frames
             # and rebuild the missing output files instead of dropping it.
             if node scripts/recover-recorded-webm.mjs \
-              "$RUNNER_TEMP/$ENTRY_ID-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
+              "$RUNNER_TEMP/preview-$ENTRY_INDEX.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
               > "$RUNNER_TEMP/recovery.log" 2>&1; then
               echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
               code=0
@@ -225,29 +225,39 @@ jobs:
             fi
           fi
           if (( code != 0 )); then
-            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
-            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
-            echo "::warning::Real render failed acceptance; publish other valid works and report this one"
+            classification=$(node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log")
+            reason=$(RENDER_CLASSIFICATION="$classification" node --input-type=module -e '
+              const value=process.env.RENDER_CLASSIFICATION||"";
+              const start=value.indexOf("{");
+              const parsed=JSON.parse(value.slice(start));
+              process.stdout.write(String(parsed.reason||"OTHER_RENDER_FAILURE"));
+            ')
+            status=failed
+            case "$reason" in
+              ANIMATION_SELECTION_MISSING|ANIMATION_SELECTION|LEGACY_RUNTIME_MISSING|SOURCE_GRAPH_MISSING) status=blocked ;;
+            esac
+            printf '{"ok":false,"status":"%s","reason":"%s"}\\n' "$status" "$reason" > "out/$ENTRY_INDEX/meta.json"
+            echo "::warning::Preview acceptance is blocked or failed; no alternate animation was selected"
             exit 0
           fi
           for suffix in '' '-medium' '-low'; do
             for ext in webm webp; do
-              in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
+              in="$RUNNER_TEMP/preview-$ENTRY_INDEX$suffix.$ext"
               test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
-              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+              cp "$in" "out/$ENTRY_INDEX/preview$suffix.$ext"
             done
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
-              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+              -of default=nw=1 "out/$ENTRY_INDEX/preview$suffix.webm" | grep -q '^codec_name='
             video_duration=$(ffprobe -v error -show_entries format=duration \
-              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+              -of default=nw=1:nk=1 "out/$ENTRY_INDEX/preview$suffix.webm")
             awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
               echo "::error::Rejected nonplayable short preview video"
               exit 1
             }
-            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+            file "out/$ENTRY_INDEX/preview$suffix.webp" | grep -q 'Web/P image'
           done
-          node scripts/verify-preview-motion.mjs "out/$ENTRY_ID/preview.webm"
-          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
+          node scripts/verify-preview-motion.mjs "out/$ENTRY_INDEX/preview.webm"
+          cp "$RUNNER_TEMP/preview-$ENTRY_INDEX.webm.json" "out/$ENTRY_INDEX/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
@@ -256,12 +266,12 @@ jobs:
             m.ok=true;
             fs.writeFileSync(p,JSON.stringify(m));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
-          ' "out/$ENTRY_ID/meta.json"
+          ' "out/$ENTRY_INDEX/meta.json"
       - uses: actions/upload-artifact@v4
         if: always() && matrix.entry.needsRender
         with:
           name: latest20-${{ matrix.entry.index }}
-          path: out/${{ matrix.entry.id }}/
+          path: out/${{ matrix.entry.index }}/
           if-no-files-found: error
           retention-days: 1
   publish:
