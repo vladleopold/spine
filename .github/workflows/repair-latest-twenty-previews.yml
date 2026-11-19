@@ -103,6 +103,11 @@ jobs:
           node scripts/test-render-failure-receipt.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repair-manifest
+          path: repair-manifest.json
+          retention-days: 1
   runtime-package-smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
@@ -118,6 +123,7 @@ jobs:
       - name: Verify all three pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
   render:
+    name: render-${{ strategy.job-index }}
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
@@ -140,6 +146,10 @@ jobs:
             /library/index.json
             /library_*/index.json
             /${{ matrix.entry.previewPath }}/
+      - uses: actions/download-artifact@v4
+        with:
+          name: repair-manifest
+          path: repair-manifest
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -164,12 +174,21 @@ jobs:
         if: matrix.entry.needsRender
         shell: bash
         env:
-          ENTRY_ID: ${{ matrix.entry.id }}
-          ENTRY_READY: ${{ matrix.entry.ready }}
-          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+          ENTRY_INDEX: ${{ matrix.entry.index }}
         run: |
           set -euo pipefail
+          ENTRY_DATA=$(node --input-type=module -e '
+            import fs from "node:fs";
+            const rows=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
+            const item=rows[Number(process.env.ENTRY_INDEX)];
+            if(!item)throw new Error("Repair manifest index missing");
+            process.stdout.write([item.id,String(item.ready),String(item.needsRender),item.animation||""].join("\\n"));
+          ')
+          mapfile -t ENTRY_VALUES <<< "$ENTRY_DATA"
+          ENTRY_ID="${ENTRY_VALUES[0]}"
+          ENTRY_READY="${ENTRY_VALUES[1]}"
+          ENTRY_NEEDS_RENDER="${ENTRY_VALUES[2]}"
+          ENTRY_ANIMATION="${ENTRY_VALUES[3]}"
           mkdir -p "out/$ENTRY_ID"
           if [[ "$ENTRY_READY" != true ]]; then
             echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
@@ -260,13 +279,17 @@ jobs:
           pattern: latest20-*
           path: downloaded-latest20
           merge-multiple: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: repair-manifest
+          path: repair-manifest
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+          REPAIR_MANIFEST_PATH: repair-manifest/repair-manifest.json
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
@@ -312,8 +335,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: repair-manifest
+          path: repair-manifest
       - name: Verify 20 actual public media responses after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+          REPAIR_MANIFEST_PATH: repair-manifest/repair-manifest.json
         run: node scripts/verify-latest-twenty-live.mjs
