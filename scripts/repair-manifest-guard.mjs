@@ -42,7 +42,7 @@ export function validateFrozenRepairRecord(root, item, folders, readIndex) {
     throw new Error("Repair record is not public");
   }
   const rawExpectedPath = record.previewPath || item.id;
-  const hasShardPrefix = /^library(?:_\d+)?\//.test(rawPreviewPath);
+  const hasShardPrefix = /^library(?:_\d+)?\//.test(rawExpectedPath);
   if (hasShardPrefix && !rawExpectedPath.startsWith(item.basePath + "/")) {
     throw new Error("Repair path shard changed or unsafe");
   }
