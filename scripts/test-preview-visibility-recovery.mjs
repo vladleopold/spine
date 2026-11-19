@@ -4,9 +4,16 @@ import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs'
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexistent');
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
+assert.equal(choosePreviewAnimation(['idle', 'run'], ''), '',
+  'missing index/default selection must not resolve to the first runtime animation');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate|SPINE_VISIBLE_ALTERNATE_ANIMATION/);
 assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
+assert.match(source,/NO_DEFAULT_SPINE_ANIMATION/);
+assert.match(source,/const requestedAnimation = args\\.animation !== '' \\? args\\.animation : indexedAnimation/);
+assert.match(source,/if \\(!runtimeAnimations\\.includes\\(pinnedAnimation\\)\\)/);
+assert.doesNotMatch(source,/if \\(!targetAnimation\\)\\s*targetAnimation\\s*=/);
+assert.doesNotMatch(source,/targetAnimation\\s*=\\s*await page\\.evaluate/);
 const blank=Buffer.alloc(32*32*3,7);
 assert.equal(hasVisibleScreenshotPixels(blank),false);
 for(let i=0;i<7;i++)blank[i*3]=255;

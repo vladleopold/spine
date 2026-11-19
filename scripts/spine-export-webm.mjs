@@ -410,7 +410,17 @@ const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
-let targetAnimation = choosePreviewAnimation(availableAnimations, args.animation || entry.defaultAnimation || '');
+const indexedAnimation = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
+const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation;
+const targetAnimation = choosePreviewAnimation(availableAnimations, requestedAnimation);
+if (!targetAnimation) {
+  console.error('NO_DEFAULT_SPINE_ANIMATION: refusing to guess a runtime track');
+  process.exit(1);
+}
+if (availableAnimations.length && !availableAnimations.includes(targetAnimation)) {
+  console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
+  process.exit(1);
+}
 if (skeletonVersion === 'unknown') {
   console.error('SPINE_VERSION_UNKNOWN: cannot select a compatible player runtime for this skeleton');
   process.exit(1);
@@ -893,8 +903,8 @@ try {
     }
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
-    const pinnedAnimation = args.animation || entry.defaultAnimation || '';
-    if (pinnedAnimation && runtimeAnimations.length && !runtimeAnimations.includes(pinnedAnimation)) {
+    const pinnedAnimation = requestedAnimation;
+    if (!runtimeAnimations.includes(pinnedAnimation)) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
       break;
@@ -909,7 +919,7 @@ try {
           skinName.toLowerCase() !== 'default' && !skinCandidates.includes(skinName))
         skinCandidates.push(skinName);
     }
-    if (!targetAnimation) targetAnimation = await page.evaluate(() => window.__selectedAnimation || '');
+
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
     canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
