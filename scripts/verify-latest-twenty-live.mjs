@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 // Independent verification against the *published* gallery, not CI metadata.
 // Only aggregated counts are emitted: never print original filenames or pixels.
+import fs from 'node:fs';
+import path from 'node:path';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const repo='vladleopold/spine';
-const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+const manifestPath=process.env.REPAIR_MANIFEST_PATH||path.join(process.cwd(),'repair-manifest.json');
+const snapshot=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
 if(snapshot.length!==20)throw Error('Expected frozen snapshot of 20 works');
 const token=process.env.GITHUB_TOKEN||'';
 const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Bearer '+token}:{})};
