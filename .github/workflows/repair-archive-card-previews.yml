@@ -61,7 +61,7 @@ jobs:
     timeout-minutes: 35
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 8
       matrix:
         batch: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
@@ -74,8 +74,10 @@ jobs:
           node-version: '22'
       - name: Install FFmpeg for native WebM frame verification
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
       - name: Generate each poster from its own selected animation WebM
         env:
           REPAIR_BATCH_JSON: ${{ toJson(matrix.batch.entries) }}
@@ -124,7 +126,7 @@ jobs:
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
             node scripts/repair-archive-card-previews.mjs merge
-            git add -A -- library*
+            git add --sparse -A -- library*
             if git diff --cached --quiet; then
               echo "NO_ARCHIVE_PREVIEW_REPAIR_CHANGES"
               break
