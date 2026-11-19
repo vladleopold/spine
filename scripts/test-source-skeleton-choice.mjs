@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 
-const valid=new Set(['converted.json','wanted.json']);
+const valid=new Set(['converted.json','legacy.json','wanted.json']);
 const isValidJson=name=>valid.has(name);
 assert.equal(
   chooseSourceSkeleton('illust_dating22_2.skel',
