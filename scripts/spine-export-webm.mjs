@@ -645,7 +645,8 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       // Older runtime TrackEntry implementations may report duration=0
       // even when the decoded animation has real keyframe timelines.
       try {
-        var track = player.animationState ? player.animationState.getCurrent(0) : null;
+        var track = player.animationState && typeof player.animationState.getCurrent === 'function'
+          ? player.animationState.getCurrent(0) : null;
         var trackDuration = Number(track && track.animation && track.animation.duration) || 0;
         var sourceAnimation = runtimeData && Array.isArray(runtimeData.animations)
           ? runtimeData.animations.find(function(a){ return a && a.name === window.__selectedAnimation; })
@@ -924,7 +925,8 @@ try {
       window.__selectedAnimation = name;
       const p = window.__exportPlayer;
       const runtimeData = p && (p.skeleton && p.skeleton.data || p.skeletonData);
-      const track = p && p.animationState ? p.animationState.getCurrent(0) : null;
+      const track = p && p.animationState && typeof p.animationState.getCurrent === 'function'
+        ? p.animationState.getCurrent(0) : null;
       const trackDuration = Number(track && track.animation && track.animation.duration) || 0;
       const sourceAnimation = runtimeData && Array.isArray(runtimeData.animations)
         ? runtimeData.animations.find((animation) => animation && animation.name === name) : null;

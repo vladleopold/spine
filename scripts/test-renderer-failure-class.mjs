@@ -34,3 +34,7 @@ assert.equal(skeletonPlayerKeyFor({isLegacy:false,oldPlayerConfig:false,skeleton
 assert.equal(atlasPlayerKeyFor({oldPlayerConfig:true}),'atlasUrl');
 assert.equal(atlasPlayerKeyFor({oldPlayerConfig:false}),'atlas');
 console.log('PASS Spine Player config selects the binary URL key for modern .skel sources');
+
+assert.ok(exporter.includes("typeof player.animationState.getCurrent === 'function'"), 'player-ready callback must tolerate runtimes without AnimationState.getCurrent');
+assert.ok(exporter.includes("typeof p.animationState.getCurrent === 'function'"), 'duration lookup must tolerate runtimes without AnimationState.getCurrent');
+console.log('PASS AnimationState.getCurrent is feature-detected before duration reads');
