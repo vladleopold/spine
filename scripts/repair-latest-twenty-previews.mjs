@@ -399,7 +399,14 @@ if(action==="matrix"){
     };
     summary.ready++;
   }
-  for(const [p,a] of indexes)fs.writeFileSync(p,JSON.stringify(a,null,2)+"\n");
+  for(const [p,a] of indexes){
+    // Do not create a commit for formatting-only differences such as a missing
+    // trailing newline left by an E2E delete. Scheduled recovery must be a no-op
+    // when the published records have not semantically changed.
+    const current=JSON.parse(fs.readFileSync(p,"utf8"));
+    if(JSON.stringify(current)===JSON.stringify(a))continue;
+    fs.writeFileSync(p,JSON.stringify(a,null,2)+"\n");
+  }
   fs.writeFileSync(path.join(root,"preview-repair-summary.json"), JSON.stringify(summary));
   console.log("PREVIEW_REPAIR_RESULT="+JSON.stringify(summary));
 }else throw new Error("Unsupported action");
