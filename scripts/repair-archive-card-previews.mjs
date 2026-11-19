@@ -137,12 +137,20 @@ function resolveInside(root, relative) {
   return resolved;
 }
 
+export function isPublicPreviewRepairCandidate(record) {
+  return Boolean(record &&
+    record.testOnly !== true &&
+    record.hiddenFromPublicLibrary !== true &&
+    record.webmStatus === 'ready' &&
+    record.previewStatus !== 'ready');
+}
+
 function matrix() {
   const folders = listCollectionFolders(ROOT);
   const items = [];
   for (const folder of folders) {
     for (const record of readIndex(ROOT, folder) || []) {
-      if (record && record.webmStatus === 'ready' && record.previewStatus !== 'ready') {
+      if (isPublicPreviewRepairCandidate(record)) {
         const item = sourceSelection(record, folder);
         if (!item || !Number.isFinite(item.uploadedAt) || !/^[a-f0-9]{64}$/.test(item.sourceFingerprint)) continue;
         items.push(item);
@@ -239,7 +247,18 @@ function merge() {
       continue;
     }
     const item = meta.manifest;
-    const info = validateFrozenRepairRecord(ROOT, item, folders, readIndex);
+    let info;
+    try {
+      info = validateFrozenRepairRecord(ROOT, item, folders, readIndex);
+    } catch (error) {
+      // Hidden and test-only records may become ineligible after inventory.
+      // Do not leak their identifiers into the public summary artifact.
+      const reason = /not public/i.test(String(error && error.message || error))
+        ? 'not-public'
+        : 'source-guard-rejected';
+      summary.skipped.push({ reason });
+      continue;
+    }
     const indexPath = path.join(ROOT, info.basePath, 'index.json');
     if (!indexes.has(indexPath)) indexes.set(indexPath, readIndex(ROOT, info.basePath) || []);
     const records = indexes.get(indexPath);

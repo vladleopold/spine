@@ -20,7 +20,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: spine-archive-card-preview-repair
+  group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}
   cancel-in-progress: false
 
 jobs:
@@ -39,6 +39,8 @@ jobs:
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/first-frame-poster.mjs
             /scripts/test-repair-archive-card-previews.mjs
+            /scripts/verify-ready-preview-live.mjs
+            /.github/workflows/repair-archive-card-previews.yml
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -55,6 +57,7 @@ jobs:
           echo "ARCHIVE_PREVIEW_INVENTORY_VALID"
 
   render:
+    name: Render archive preview batch
     needs: inventory
     if: github.ref == 'refs/heads/main' && needs.inventory.outputs.candidateCount != '0'
     runs-on: ubuntu-24.04

@@ -29,6 +29,9 @@ export function validateFrozenRepairRecord(root, item, folders, readIndex) {
   const matches = entries.filter(record => record?.id === item.id);
   if (matches.length !== 1) throw new Error("Repair record missing or duplicated");
   const record = matches[0];
+  if (record.hiddenFromPublicLibrary === true || record.testOnly === true) {
+    throw new Error("Repair record is not public");
+  }
   const expectedPath = record.previewPath || item.basePath + "/" + item.id;
   const resolvedPath = path.resolve(root, expectedPath);
   if (typeof item.previewPath !== "string" ||
