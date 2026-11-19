@@ -15,6 +15,7 @@ on:
       - scripts/renderer-failure-class.mjs
       - scripts/lib/render-failure-receipt.mjs
       - scripts/test-render-failure-receipt.mjs
+      - scripts/test-repair-manifest-privacy.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -40,6 +41,7 @@ on:
       - scripts/renderer-failure-class.mjs
       - scripts/lib/render-failure-receipt.mjs
       - scripts/test-render-failure-receipt.mjs
+      - scripts/test-repair-manifest-privacy.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -101,6 +103,7 @@ jobs:
           node --check scripts/render-work.mjs
           node --check scripts/lib/render-failure-receipt.mjs
           node scripts/test-render-failure-receipt.mjs
+          node scripts/test-repair-manifest-privacy.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
       - uses: actions/upload-artifact@v4
@@ -182,7 +185,7 @@ jobs:
             const rows=JSON.parse(fs.readFileSync("repair-manifest/repair-manifest.json","utf8"));
             const item=rows[Number(process.env.ENTRY_INDEX)];
             if(!item)throw new Error("Repair manifest index missing");
-            process.stdout.write([item.id,String(item.ready),String(item.needsRender),item.animation||""].join("\\n"));
+            process.stdout.write([item.id,String(item.ready),String(item.needsRender),item.animation||""].join("\n"));
           ')
           mapfile -t ENTRY_VALUES <<< "$ENTRY_DATA"
           ENTRY_ID="${ENTRY_VALUES[0]}"
