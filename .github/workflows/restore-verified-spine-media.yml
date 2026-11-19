@@ -10,7 +10,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: spine-library-commit
+  group: spine-verified-artifact-restore-v2
   cancel-in-progress: false
 
 jobs:
