@@ -2,6 +2,7 @@
 // Independent verification against the *published* gallery, not CI metadata.
 // Only aggregated counts are emitted: never print original filenames or pixels.
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
+import {fetchPublicIndex} from './lib/fetch-public-index.mjs';
 const repo='vladleopold/spine';
 const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
 if(snapshot.length!==20)throw Error('Expected frozen snapshot of 20 works');
@@ -10,14 +11,7 @@ const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Be
 const cache=new Map();
 async function getIndex(collection){
   if(cache.has(collection))return cache.get(collection);
-  if(!/^library(?:_\d+)?$/.test(collection))throw Error('Unsafe collection');
-  const response=await fetch('https://api.github.com/repos/'+repo+
-    '/contents/'+collection+'/index.json?ref=main',
-    {headers,signal:AbortSignal.timeout(30000),cache:'no-store'});
-  if(!response.ok)throw Error('Cannot read current index '+response.status);
-  const body=await response.json();
-  const index=JSON.parse(Buffer.from(body.content.replace(/\s/g,''),'base64').toString('utf8'));
-  if(!Array.isArray(index))throw Error('Invalid published index');
+  const index=await fetchPublicIndex(collection,{timeoutMs:30000});
   cache.set(collection,index);
   return index;
 }

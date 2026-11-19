@@ -25,6 +25,10 @@ on:
       - scripts/test-atlas-pages.mjs
       - .github/workflows/spine-export-webm.yml
       - scripts/test-preview-visibility-recovery.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/lib/fetch-public-index.mjs
+      - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
   pull_request:
@@ -50,11 +54,15 @@ on:
       - scripts/test-atlas-pages.mjs
       - .github/workflows/spine-export-webm.yml
       - scripts/test-preview-visibility-recovery.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/lib/fetch-public-index.mjs
+      - scripts/test-public-index-fetch.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: false
@@ -77,6 +85,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for synthetic first-frame poster regression
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Enumerate 20 newest uploads and validate required source file triads
         id: latest
         env:
@@ -104,6 +116,7 @@ jobs:
           node scripts/test-source-skeleton-choice.mjs
           node --check scripts/source-skeleton-choice.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
   runtime-package-smoke:
@@ -259,6 +272,8 @@ jobs:
           retention-days: 1
   publish:
     needs: [inventory, render]
+    permissions:
+      contents: write
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
@@ -332,6 +347,7 @@ jobs:
           sparse-checkout: |
             /scripts/verify-latest-twenty-live.mjs
             /scripts/repair-manifest-guard.mjs
+            /scripts/lib/fetch-public-index.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

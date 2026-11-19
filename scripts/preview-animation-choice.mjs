@@ -1,9 +1,5 @@
-// Preserve the source animation order. An explicit selection is immutable;
-// when none is specified, the first original animation is the source default.
-export function choosePreviewAnimation(names, preferred = '') {
-  const available = Array.isArray(names)
-    ? names.filter(name => typeof name === 'string' && name.trim())
-    : [];
-  if (preferred) return preferred;
-  return available[0] || '';
+// Preserve an explicit/indexed animation verbatim. With no selected/default
+// name, block the preview instead of guessing the first runtime track.
+export function choosePreviewAnimation(_names, preferred = '') {
+  return typeof preferred === 'string' ? preferred : '';
 }

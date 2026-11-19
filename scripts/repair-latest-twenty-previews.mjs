@@ -337,7 +337,7 @@ if(action==="matrix"){
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
     if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
-    if(animation) record.defaultAnimation=animation;
+    // Preserve the source index defaultAnimation; preview publication only adds media metadata.
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {

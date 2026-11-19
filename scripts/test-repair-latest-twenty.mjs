@@ -7,6 +7,9 @@ import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
+const repairSource=fs.readFileSync(script,'utf8');
+assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
+  'publishing a preview must never rewrite the source index default animation');
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'spine-latest20-'));
 try{
   const shard=path.join(root,'library_02');fs.mkdirSync(shard,{recursive:true});
