@@ -766,7 +766,11 @@ const browser = await chromium.launch({
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
-    '--use-gl=swiftshader',
+    // Chrome 139+ no longer enables SwiftShader WebGL fallback implicitly.
+    // Use SwANGLE explicitly so headless Ubuntu runners create a real WebGL context.
+    '--use-gl=angle',
+    '--use-angle=swiftshader-webgl',
+    '--enable-unsafe-swiftshader',
     '--enable-webgl',
     '--ignore-gpu-blocklist',
     '--disable-gpu-sandbox',
@@ -779,6 +783,19 @@ try {
     reducedMotion: 'no-preference',
   });
   const page = await context.newPage();
+
+  // Fail with a precise diagnostic before loading a Spine runtime if Chromium
+  // cannot create WebGL. Chrome 139+ requires the explicit unsafe SwiftShader
+  // opt-in on GPU-less Linux runners.
+  const webglProbe = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    if (!gl) return { ok: false, version: null };
+    const version = gl.getParameter(gl.VERSION);
+    return { ok: typeof version === 'string' && version.length > 0, version };
+  });
+  if (!webglProbe.ok) throw new Error('WEBGL_CONTEXT_UNAVAILABLE: Chromium failed to initialize SwiftShader');
+  console.error('WEBGL_CONTEXT_READY ' + webglProbe.version);
 
   // Serve runtime scripts and styles from the checkout. A transient CDN outage
   // must never stop a deterministic render of already committed Spine assets.
