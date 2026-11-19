@@ -69,6 +69,33 @@ test('legacy preview paths without a shard prefix are normalized inside their in
   );
 });
 
+test('accepts the matching shard prefix and rejects a different shard', () => {
+  const record = {
+    id: 'legacy-path-2026-10-12T11-36-08-123Z',
+    uploadedAt: '2026-10-12T11:36:08.123Z',
+    previewPath: 'library_02/legacy-path-2026-10-12T11-36-08-123Z',
+    files: [],
+  };
+  const item = {
+    id: record.id,
+    basePath: 'library_02',
+    previewPath: record.previewPath,
+    uploadedAt: Date.parse(record.uploadedAt),
+    sourceFingerprint: previewSourceFingerprint(record),
+  };
+  assert.equal(
+    validateFrozenRepairRecord('/repo', item, ['library_02'], () => [record]).previewPath,
+    item.previewPath,
+  );
+  assert.throws(
+    () => validateFrozenRepairRecord('/repo', {
+      ...item,
+      previewPath: 'library_01/' + record.id,
+    }, ['library_02'], () => [record]),
+    /shard changed or unsafe/i,
+  );
+});
+
 test('legacy archive entries derive a stable timestamp from the ID when uploadedAt is absent', () => {
   const record = {
     id: 's200016-2026-07-27T09-53-02-926Z',
