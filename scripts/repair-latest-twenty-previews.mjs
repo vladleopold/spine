@@ -75,19 +75,40 @@ function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   if(record?.webmStatus!=="ready")return false;
-  // A previously published Urka clip was decoded as only 12 frames over
-  // 1.82 seconds. Require real frame-density evidence before treating it as
-  // an accepted final video; leave older previews intact during retries.
-  const f=Number(record?.previewFrameCount||0);
+  const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
-  if(f>0&&duration>0&&f/duration<15)return false;
-  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
+  // A genuinely moving 8+ frame clip is still a usable low-quality preview.
+  // Do not reject an already-installed original merely because its FPS is low.
+  if(frames>0&&frames<8)return false;
+  if(duration>0&&duration<0.5)return false;
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
-  return mediaNames.every(name=>{
+    return Boolean(record?.webmPreview&&record?.webpPoster&&frames>=8&&duration>=0.5);
+  const filesReady=mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
   });
+  if(!filesReady)return false;
+  try{
+    const probes={};
+    for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]){
+      const file=path.join(root,entry.previewPath,name);
+      const data=JSON.parse(execFileSync("ffprobe",[
+        "-v","error","-count_frames","-select_streams","v:0",
+        "-show_entries","stream=width,height,nb_read_frames:format=duration",
+        "-of","json",file,
+      ],{encoding:"utf8",timeout:30000}));
+      const stream=data.streams?.[0]||{};
+      const item={width:Number(stream.width),height:Number(stream.height),
+        frames:Number(stream.nb_read_frames),duration:Number(data.format?.duration)};
+      if(!(item.width>0&&item.height>0&&item.frames>=8&&item.duration>=0.5))return false;
+      probes[name]=item;
+    }
+    if(!(probes["preview-medium.webm"].width<probes["preview.webm"].width&&
+      probes["preview-low.webm"].width<probes["preview-medium.webm"].width))return false;
+    execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
+      path.join(root,entry.previewPath,"preview.webm")],{stdio:"ignore",timeout:120000});
+    return true;
+  }catch{return false;}
 }
 // A green metadata flag is insufficient: check *all six* real media paths.
 const mediaFields=[
@@ -250,7 +271,7 @@ if(action==="matrix"){
           ],{encoding:"utf8",timeout:30000}));
           const stream=data.streams?.[0],frames=Number(stream?.nb_read_frames),
             seconds=Number(data.format?.duration);
-          if(!(seconds>=0.5&&frames>=8&&frames/seconds>=15&&stream?.width>0&&stream?.height>0))
+          if(!(seconds>=0.5&&frames>=8&&stream?.width>0&&stream?.height>0))
             throw new Error("Video has too few real frames");
           if(name==="preview.webm")mainVideo={frames,seconds};
         }
