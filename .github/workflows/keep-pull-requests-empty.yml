@@ -1,6 +1,8 @@
 name: Keep pull request list empty
 
 on:
+  push:
+    branches: [main]
   pull_request_target:
     types: [opened, reopened, synchronize, ready_for_review]
   schedule:
