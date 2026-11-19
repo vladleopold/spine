@@ -13,6 +13,7 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
+      - scripts/spine-player-config.mjs
   workflow_dispatch:
 permissions:
   contents: read

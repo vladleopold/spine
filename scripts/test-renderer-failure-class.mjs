@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { classifyRendererError, classifyRendererMethod } from './renderer-failure-class.mjs';
+import { skeletonPlayerKeyFor, atlasPlayerKeyFor } from './spine-player-config.mjs';
 
 assert.equal(classifyRendererError('TypeError: Cannot read properties of undefined'), 'SCRIPT_NULL_PROPERTY_ACCESS');
 assert.equal(classifyRendererError('TypeError: animationData.map is not a function'), 'SCRIPT_COLLECTION_SHAPE');
@@ -23,3 +24,13 @@ assert.ok(exporter.includes("window.addEventListener('unhandledrejection'"), 'as
 assert.ok(exporter.includes('window.__captureError, null, { timeout: 60000, polling: 200 })'), 'player-ready wait must pass Playwright options in the third argument');
 assert.ok(exporter.includes('window.__videoData, null, { timeout: 15000 })'), 'video-data wait must pass Playwright options in the third argument');
 console.log('PASS case-insensitive browser diagnostics, safe method categories and Playwright wait options');
+
+assert.equal(skeletonPlayerKeyFor({isLegacy:true,oldPlayerConfig:true,skeletonFile:'source.skel'}),'skelUrl');
+assert.equal(skeletonPlayerKeyFor({isLegacy:true,oldPlayerConfig:true,skeletonFile:'source.json'}),'jsonUrl');
+assert.equal(skeletonPlayerKeyFor({isLegacy:false,oldPlayerConfig:true,skeletonFile:'source.skel'}),'binaryUrl');
+assert.equal(skeletonPlayerKeyFor({isLegacy:false,oldPlayerConfig:true,skeletonFile:'source.json'}),'jsonUrl');
+assert.equal(skeletonPlayerKeyFor({isLegacy:false,oldPlayerConfig:false,skeletonFile:'source.skel'}),'skelUrl');
+assert.equal(skeletonPlayerKeyFor({isLegacy:false,oldPlayerConfig:false,skeletonFile:'source.json'}),'skeleton');
+assert.equal(atlasPlayerKeyFor({oldPlayerConfig:true}),'atlasUrl');
+assert.equal(atlasPlayerKeyFor({oldPlayerConfig:false}),'atlas');
+console.log('PASS Spine Player config selects the binary URL key for modern .skel sources');

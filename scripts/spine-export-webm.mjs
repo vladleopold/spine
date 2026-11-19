@@ -13,6 +13,7 @@ import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
+import { skeletonPlayerKeyFor, atlasPlayerKeyFor } from './spine-player-config.mjs';
 
 const args = {
   uploadId: '',
@@ -405,9 +406,8 @@ const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersio
 // Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
 // skeleton/atlas keys were introduced later; passing them leaves a blank canvas.
 const oldPlayerConfig = isLegacy || modernRuntime === '4.0' || modernRuntime === '4.1';
-const skeletonPlayerKey = isLegacy ? (skeletonFile.endsWith('.skel') ? 'skelUrl' : 'jsonUrl')
-  : oldPlayerConfig ? (skeletonFile.endsWith('.skel') ? 'binaryUrl' : 'jsonUrl') : 'skeleton';
-const atlasPlayerKey = oldPlayerConfig ? 'atlasUrl' : 'atlas';
+const skeletonPlayerKey = skeletonPlayerKeyFor({ isLegacy, oldPlayerConfig, skeletonFile });
+const atlasPlayerKey = atlasPlayerKeyFor({ oldPlayerConfig });
 
 // Use reliable Vercel domain for legacy player assets to avoid DNS resolution issues in GitHub Actions
 const stableOrigin = 'https://spine-link.vercel.app';
