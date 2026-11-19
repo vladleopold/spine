@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {chooseAtlasForSkeleton,reconcileAtlasPageReferences} from '../atlas-pages.mjs';
+import {detectBinarySpineVersion} from '../spine-version-detect.mjs';
 
 // Validate the REAL atlas page inventory. A skeleton+atlas+one PNG is not
 // necessarily a complete Spine export: an atlas can demand more image pages.
@@ -18,8 +19,16 @@ function readPngSize(filename){
 export function inspectAtlasSourceBundle(directory, filenames){
   const files=Array.isArray(filenames)?filenames:[];
   const skeleton=files.find(name=>/\.json$/i.test(name)&&(()=>{
-    try{return Array.isArray(JSON.parse(fs.readFileSync(path.join(directory,name),'utf8')).bones)}
-    catch{return false}
+    try{
+      const bytes=fs.readFileSync(path.join(directory,name));
+      // Valid JSON skeleton, or a genuine binary Spine header accidentally
+      // uploaded under a JSON extension. Do not accept damaged JSON.
+      try{return Array.isArray(JSON.parse(bytes.toString('utf8')).bones)}
+      catch{
+        if(/^[\s]*[\[{]/.test(bytes.subarray(0,32).toString('latin1')))return false;
+        return detectBinarySpineVersion(bytes.subarray(0,512))!=='unknown';
+      }
+    }catch{return false}
   })())||files.find(name=>/\.skel$/i.test(name));
   const atlas=skeleton?chooseAtlasForSkeleton(skeleton,files):'';
   const textures=files.filter(name=>/\.(png|webp|jpe?g|dds)$/i.test(name));

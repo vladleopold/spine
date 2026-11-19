@@ -9,6 +9,9 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-binary-json-alias.mjs
+      - scripts/test-spine-binary-json-alias.mjs
+      - scripts/lib/atlas-source-integrity.mjs
       - scripts/install-pinned-spine-players.sh
       - scripts/lib/preview-visibility-recovery.mjs
       - scripts/atlas-pages.mjs
@@ -25,6 +28,9 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-binary-json-alias.mjs
+      - scripts/test-spine-binary-json-alias.mjs
+      - scripts/lib/atlas-source-integrity.mjs
       - scripts/install-pinned-spine-players.sh
       - scripts/lib/preview-visibility-recovery.mjs
       - scripts/atlas-pages.mjs
@@ -78,6 +84,7 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-atlas-source-integrity.mjs
           node scripts/test-spine-version-detect.mjs
+          node scripts/test-spine-binary-json-alias.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
