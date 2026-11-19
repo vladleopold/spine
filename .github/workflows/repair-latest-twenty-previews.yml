@@ -1,0 +1,275 @@
+name: Recover newest 20 Spine WebP and WebM previews
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-latest-twenty-live.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/verify-preview-motion.mjs
+  pull_request:
+    paths:
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-latest-twenty-live.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/verify-preview-motion.mjs
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: spine-preview-latest-twenty-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.latest.outputs.matrix }}
+      allEntries: ${{ steps.latest.outputs.allEntries }}
+      renderCount: ${{ steps.latest.outputs.renderCount }}
+      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Enumerate 20 newest uploads and validate required source file triads
+        id: latest
+        env:
+          SPINE_REPAIR_INDEX_ONLY: '1'
+          SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+        shell: bash
+        run: |
+          node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/verify-latest-twenty-live.mjs
+          node --check scripts/verify-preview-motion.mjs
+          node scripts/test-repair-latest-twenty.mjs
+          node --check scripts/spine-export-webm.mjs
+          node --check scripts/recover-recorded-webm.mjs
+          node scripts/test-canvas-fallback.mjs
+          node scripts/test-atlas-pages.mjs
+          node scripts/test-spine-version-detect.mjs
+          node scripts/test-preview-animation-choice.mjs
+          node scripts/test-repair-manifest-guard.mjs
+          echo "LATEST20_INVENTORY_VALID"
+  runtime-package-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/install-pinned-spine-players.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all three pinned Spine runtime bundles load from disk
+        run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+  render:
+    needs: [inventory, runtime-package-smoke]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
+            /library/index.json
+            /library_*/index.json
+            /${{ matrix.entry.previewPath }}/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install native Chromium renderer and video/poster encoders
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund playwright@1.59.1
+          bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            echo "Using preinstalled Chrome for WebGL preview rendering"
+          else
+            npx playwright install chromium
+          fi
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Render and validate actual Spine video + still posters
+        if: matrix.entry.needsRender
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+        run: |
+          set -euo pipefail
+          mkdir -p "out/$ENTRY_ID"
+          if [[ "$ENTRY_READY" != true ]]; then
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
+            exit 0
+          fi
+          if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
+            exit 0
+          fi
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/$ENTRY_ID-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
+          code=$?
+          set -e
+          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/$ENTRY_ID-preview.webm" ]]; then
+            # A genuine recorded WebM may survive even when its secondary
+            # quality ladder/poster encoder fails. Verify real changing frames
+            # and rebuild the missing output files instead of dropping it.
+            if node scripts/recover-recorded-webm.mjs \
+              "$RUNNER_TEMP/$ENTRY_ID-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
+              > "$RUNNER_TEMP/recovery.log" 2>&1; then
+              echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
+              code=0
+            else
+              echo "RECORDED_WEBM_RECOVERY_REJECTED"
+            fi
+          fi
+          if (( code != 0 )); then
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
+            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
+            echo "::warning::Real render failed acceptance; publish other valid works and report this one"
+            exit 0
+          fi
+          for suffix in '' '-medium' '-low'; do
+            for ext in webm webp; do
+              in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
+              test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
+              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+            done
+            ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
+              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+            video_duration=$(ffprobe -v error -show_entries format=duration \
+              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+            awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
+              echo "::error::Rejected nonplayable short preview video"
+              exit 1
+            }
+            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+          done
+          node scripts/verify-preview-motion.mjs "out/$ENTRY_ID/preview.webm"
+          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
+            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
+              throw new Error("Export metadata incomplete");
+            m.ok=true;
+            fs.writeFileSync(p,JSON.stringify(m));
+            console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
+          ' "out/$ENTRY_ID/meta.json"
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.entry.needsRender
+        with:
+          name: latest20-${{ matrix.entry.id }}
+          path: out/${{ matrix.entry.id }}/
+          if-no-files-found: error
+          retention-days: 1
+  publish:
+    needs: [inventory, render]
+    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
+      - uses: actions/download-artifact@v4
+        if: needs.inventory.outputs.renderCount != '0'
+        with:
+          pattern: latest20-*
+          path: downloaded-latest20
+          merge-multiple: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Publish verified only, retain source untouched, flag missing and failed
+        shell: bash
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/repair-latest-twenty-previews.mjs merge
+            # Stage ONLY outputs inside library collections; CI artifacts and
+            # temporary source files must never enter the repository.
+            git add -A -- library library_*
+            if git diff --cached --quiet; then
+              echo "NO_PREVIEW_CHANGES"
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              exit 0
+            fi
+            git commit -m 'fix: restore validated previews for latest 20 Spine uploads'
+            if git push origin HEAD:main; then
+              echo "LATEST20_REPAIR_PUBLISHED"
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              exit 0
+            fi
+            sleep $(( attempt * 3 ))
+          done
+          echo "::error::Could not atomically publish latest-20 previews"
+          exit 1
+
+  verify-production:
+    needs: [inventory, render, publish]
+    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/verify-latest-twenty-live.mjs
+            /scripts/repair-manifest-guard.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 20 actual public media responses after publication
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+        run: node scripts/verify-latest-twenty-live.mjs
