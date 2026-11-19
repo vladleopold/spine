@@ -7,6 +7,10 @@ on:
         required: true
         type: string
         default: '44616967112'
+  push:
+    branches: [main]
+    paths:
+      - .github/publish-existing-archive-preview-artifacts.trigger
 permissions:
   actions: read
   contents: write
@@ -31,7 +35,7 @@ jobs:
             /library_*/index.json
       - uses: actions/download-artifact@v4
         with:
-          run-id: ${{ inputs.source_run_id }}
+          run-id: ${{ inputs.source_run_id || '44616967112' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: archive-card-previews-*
           path: downloaded-previews
