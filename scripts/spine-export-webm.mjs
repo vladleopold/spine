@@ -589,7 +589,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
-      window.__selectedAnimation = \${JSON.stringify(captureAnimation)};
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
       if (window.__selectedAnimation) {
         if (!window.__animationNames.includes(window.__selectedAnimation)) {
           window.__captureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
@@ -856,9 +856,9 @@ try {
       break;
     }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
-    // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
-    // runtime exposes them after load: retry named skins instead of recording
-    // a black default skin as a successful clip.
+    // Runtime metadata is authoritative for the exact animation. If none was
+    // supplied by the source index, choose one initial default only; never retry
+    // another timeline after selection or visibility failure.
     const requestedAnimation = args.animation || entry.defaultAnimation || '';
     if (!targetAnimation && !requestedAnimation) {
       targetAnimation = choosePreviewAnimation(runtimeAnimations, '');
@@ -889,7 +889,21 @@ try {
       }
       captureAnimation = targetAnimation;
     }
-    animDuration = await page.evaluate(() => window.__animDuration || 0);
+    animDuration = await page.evaluate((name) => {
+      window.__selectedAnimation = name;
+      const p = window.__exportPlayer;
+      const runtimeData = p && (p.skeleton && p.skeleton.data || p.skeletonData);
+      const track = p && p.animationState ? p.animationState.getCurrent(0) : null;
+      const trackDuration = Number(track && track.animation && track.animation.duration) || 0;
+      const sourceAnimation = runtimeData && Array.isArray(runtimeData.animations)
+        ? runtimeData.animations.find((animation) => animation && animation.name === name) : null;
+      const skeletonDuration = Number(sourceAnimation && sourceAnimation.duration) || 0;
+      const foundAnimation = runtimeData && typeof runtimeData.findAnimation === 'function'
+        ? runtimeData.findAnimation(name) : null;
+      const foundDuration = Number(foundAnimation && foundAnimation.duration) || 0;
+      window.__animDuration = Math.max(trackDuration, skeletonDuration, foundDuration);
+      return window.__animDuration;
+    }, targetAnimation);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
     canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
 
