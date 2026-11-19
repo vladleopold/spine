@@ -159,7 +159,6 @@ if(action==="matrix"){
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-*.js","/public/vendor-spine-player-*.css",
     "/library/index.json","/library_*/index.json",
-    ...matrix.map(x=>"/"+x.previewPath+"/"),
   ];
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
