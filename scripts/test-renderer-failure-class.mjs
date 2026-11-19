@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { classifyRendererError, classifyRendererMethod } from './renderer-failure-class.mjs';
 
