@@ -14,8 +14,14 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Checkout
+      - name: Checkout indexes and scripts only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
       - name: Generate matrix
         id: set-matrix
         run: |
@@ -81,30 +87,31 @@ jobs:
       matrix:
         batch: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     steps:
-      - name: Checkout
+      - name: Checkout indexes and scripts only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Install Playwright with Chromium
+      - name: Install Playwright and static FFmpeg tools
         run: |
           npm init -y
-          npm install playwright@1.59.1
+          npm install --no-save playwright@1.59.1 ffmpeg-static ffprobe-static
+          mkdir -p "$HOME/.local/bin"
+          ln -sf "$(node -e "process.stdout.write(require('ffmpeg-static'))")" "$HOME/.local/bin/ffmpeg"
+          ln -sf "$(node -e "process.stdout.write(require('ffprobe-static').path)")" "$HOME/.local/bin/ffprobe"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
           npx playwright install chromium --with-deps
-
-      - name: Install system dependencies (GPU + media)
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq \
-            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
-            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
-            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
-            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 webp \
-            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
-            libwayland-egl1 ffmpeg
 
       - name: Run Export Script
         run: |
@@ -118,6 +125,19 @@ jobs:
             // that has no terminator, which would drop one work per batch.
             fs.writeFileSync('batch-ids.txt', ids.map((id) => id + '\n').join(''));
           "
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          import { entryForUpload } from './scripts/resolve-library.mjs';
+          for (const uploadId of fs.readFileSync('batch-ids.txt', 'utf8').split(/\r?\n/).filter(Boolean)) {
+            const found = entryForUpload(process.cwd(), uploadId);
+            if (!found) throw new Error('Upload not found in collection index: ' + uploadId);
+            const raw = String(found.entry.previewPath || uploadId);
+            const work = raw.startsWith(found.basePath + '/') ? raw : found.basePath + '/' + raw;
+            if (work.startsWith('/') || work.split('/').includes('..')) throw new Error('Unsafe work path for ' + uploadId);
+            execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', '/' + work + '/'], { stdio: 'inherit' });
+          }
+          NODE
           while IFS= read -r uploadId; do
             [ -z "$uploadId" ] && continue
             echo "=== Exporting $uploadId ==="
@@ -174,8 +194,14 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - name: Checkout
+      - name: Checkout indexes and merge script only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/resolve-library.mjs
+            /library/index.json
+            /library_*/index.json
       
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -418,7 +444,7 @@ jobs:
             "
             
             # 3. Stage changes
-            git add library_*/ library/
+            git add --sparse -A -- library*
             
             if git diff-index --quiet HEAD --; then
               echo "No changes to commit."
