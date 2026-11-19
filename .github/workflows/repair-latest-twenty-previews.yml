@@ -51,7 +51,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: spine-preview-latest-twenty-${{ github.ref }}
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: false
 jobs:
   inventory:
@@ -108,22 +108,11 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/install-pinned-spine-players.sh
-            /scripts/lib/first-frame-poster.mjs
-            /scripts/test-first-frame-poster-real.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install ffmpeg for real first-frame media regression
-        shell: bash
-        run: |
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq ffmpeg
-          fi
       - name: Verify all three pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
-      - name: Verify actual high/medium/low WebP pixels match frame zero of each WebM
-        run: node scripts/test-first-frame-poster-real.mjs
   render:
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
@@ -278,6 +267,8 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
+      - name: Verify real high/medium/low WebP posters against their own WebM frame zero
+        run: node scripts/test-first-frame-poster-real.mjs
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         env:
