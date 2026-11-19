@@ -9,6 +9,12 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/render-work.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/lib/render-failure-receipt.mjs
+      - scripts/test-render-failure-receipt.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -28,6 +34,12 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/render-work.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/lib/render-failure-receipt.mjs
+      - scripts/test-render-failure-receipt.mjs
       - scripts/lib/spine-binary-json-alias.mjs
       - scripts/test-spine-binary-json-alias.mjs
       - scripts/lib/atlas-source-integrity.mjs
@@ -86,6 +98,9 @@ jobs:
           node scripts/test-spine-version-detect.mjs
           node scripts/test-spine-binary-json-alias.mjs
           node scripts/test-preview-animation-choice.mjs
+          node --check scripts/render-work.mjs
+          node --check scripts/lib/render-failure-receipt.mjs
+          node scripts/test-render-failure-receipt.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
   runtime-package-smoke:
@@ -120,10 +135,8 @@ jobs:
             /scripts/
             /package.json
             /package-lock.json
-            /public/vendor-spine-player-3.7.js
-            /public/vendor-spine-player-3.7.css
-            /public/vendor-spine-player-3.8.js
-            /public/vendor-spine-player-3.8.css
+            /public/vendor-spine-player-*.js
+            /public/vendor-spine-player-*.css
             /library/index.json
             /library_*/index.json
             /${{ matrix.entry.previewPath }}/
