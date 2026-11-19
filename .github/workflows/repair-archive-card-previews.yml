@@ -28,7 +28,6 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
-      allEntries: ${{ steps.plan.outputs.allEntries }}
       candidateCount: ${{ steps.plan.outputs.candidateCount }}
     steps:
       - uses: actions/checkout@v4
@@ -116,8 +115,6 @@ jobs:
         with:
           node-version: '22'
       - name: Publish only verified media and frozen metadata
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         shell: bash
         run: |
           set -euo pipefail
