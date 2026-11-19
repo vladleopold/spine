@@ -41,7 +41,14 @@ export function validateFrozenRepairRecord(root, item, folders, readIndex) {
   if (record.hiddenFromPublicLibrary === true || record.testOnly === true) {
     throw new Error("Repair record is not public");
   }
-  const expectedPath = record.previewPath || item.basePath + "/" + item.id;
+  const rawExpectedPath = record.previewPath || item.id;
+  const hasShardPrefix = /^library(?:_\\d+)?\\//.test(rawExpectedPath);
+  if (hasShardPrefix && !rawExpectedPath.startsWith(item.basePath + "/")) {
+    throw new Error("Repair path shard changed or unsafe");
+  }
+  const expectedPath = rawExpectedPath.startsWith(item.basePath + "/")
+    ? rawExpectedPath
+    : path.posix.join(item.basePath, rawExpectedPath);
   const resolvedPath = path.resolve(root, expectedPath);
   if (typeof item.previewPath !== "string" ||
       expectedPath !== item.previewPath ||
