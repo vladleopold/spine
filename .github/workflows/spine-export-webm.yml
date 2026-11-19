@@ -25,8 +25,8 @@ jobs:
           sparse-checkout: |
             /scripts/
             /library*/index.json
-            /public/vendor-spine-player-3.8.js
-            /public/vendor-spine-player-3.8.css
+            /public/vendor-spine-player-*.js
+            /public/vendor-spine-player-*.css
       - name: Checkout only this work
         id: source
         run: node scripts/prepare-render.mjs
