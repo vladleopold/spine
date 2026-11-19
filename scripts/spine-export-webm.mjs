@@ -856,13 +856,8 @@ try {
       break;
     }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
-    // Runtime metadata is authoritative for the exact animation. If none was
-    // supplied by the source index, choose one initial default only; never retry
-    // another timeline after selection or visibility failure.
-    const requestedAnimation = args.animation || entry.defaultAnimation || '';
-    if (!targetAnimation && !requestedAnimation) {
-      targetAnimation = choosePreviewAnimation(runtimeAnimations, '');
-    }
+    // Runtime metadata validates only the exact CLI/index selection. An absent
+    // selection is blocked; it is never inferred from runtime animation names.
     if (!targetAnimation) {
       lastCaptureError = 'NO_SELECTED_SPINE_ANIMATION';
       console.error(lastCaptureError);
