@@ -49,6 +49,26 @@ test('archive preview repair inventory excludes hidden and test-only works', () 
   assert.equal(isPublicPreviewRepairCandidate({ ...eligible, webmStatus: 'blocked' }), false);
 });
 
+test('legacy preview paths without a shard prefix are normalized inside their index shard', () => {
+  const record = {
+    id: 'wild_1x3-2026-10-12T11-36-08-123Z',
+    uploadedAt: '2026-10-12T11:36:08.123Z',
+    previewPath: 'wild_1x3-2026-10-12T11-36-08-123Z',
+    files: [],
+  };
+  const item = {
+    id: record.id,
+    basePath: 'library_02',
+    previewPath: 'library_02/' + record.previewPath,
+    uploadedAt: Date.parse(record.uploadedAt),
+    sourceFingerprint: previewSourceFingerprint(record),
+  };
+  assert.equal(
+    validateFrozenRepairRecord('/repo', item, ['library_02'], () => [record]).previewPath,
+    item.previewPath,
+  );
+});
+
 test('legacy archive entries derive a stable timestamp from the ID when uploadedAt is absent', () => {
   const record = {
     id: 's200016-2026-07-27T09-53-02-926Z',
