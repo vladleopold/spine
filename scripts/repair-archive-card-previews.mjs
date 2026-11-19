@@ -146,7 +146,6 @@ function matrix() {
   }
   const batches = makeBatches(items);
   console.log('matrix=' + JSON.stringify(batches));
-  console.log('allEntries=' + JSON.stringify(items));
   console.log('candidateCount=' + items.length);
   console.error('ARCHIVE_PREVIEW_CANDIDATES=' + items.length + ' BATCHES=' + batches.length);
 }
@@ -192,6 +191,7 @@ function render() {
       const lowPosterInfo = generateFirstFrameWebp(sourceLow, lowPoster);
       const meta = {
         id: item.id, ok: true, animation: item.animation,
+        manifest: item,
         sourceKind: actualSourceKind,
         actualMediumUrl, actualLowUrl,
         sourceMediumPath: item.sourceMediumPath, sourceLowPath: item.sourceLowPath,
@@ -221,13 +221,23 @@ function render() {
 }
 
 function merge() {
-  const items = JSON.parse(process.env.REPAIR_IDS_JSON || '[]');
-  if (!Array.isArray(items)) throw new Error('invalid frozen repair manifest');
+  const artifactRoot = path.join(ROOT, 'downloaded-previews');
   const folders = listCollectionFolders(ROOT);
   const indexes = new Map();
   const summary = { restored: [], skipped: [] };
   const now = new Date().toISOString();
-  for (const item of items) {
+  const artifactDirs = fs.existsSync(artifactRoot)
+    ? fs.readdirSync(artifactRoot, { withFileTypes: true }).filter(entry => entry.isDirectory())
+    : [];
+  for (const artifactDir of artifactDirs) {
+    const artifact = path.join(artifactRoot, artifactDir.name);
+    let meta = null;
+    try { meta = JSON.parse(fs.readFileSync(path.join(artifact, 'meta.json'), 'utf8')); } catch {}
+    if (!meta || !meta.ok || !meta.manifest || meta.id !== artifactDir.name) {
+      summary.skipped.push({ id: artifactDir.name, reason: 'render-artifact-unavailable' });
+      continue;
+    }
+    const item = meta.manifest;
     const info = validateFrozenRepairRecord(ROOT, item, folders, readIndex);
     const indexPath = path.join(ROOT, info.basePath, 'index.json');
     if (!indexes.has(indexPath)) indexes.set(indexPath, readIndex(ROOT, info.basePath) || []);
@@ -237,12 +247,8 @@ function merge() {
       summary.skipped.push({ id: item.id, reason: 'source-selection-changed' });
       continue;
     }
-    const artifact = path.join(ROOT, 'downloaded-previews', item.id);
-    const metaPath = path.join(artifact, 'meta.json');
-    let meta = null;
-    try { meta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch {}
-    if (!meta || !meta.ok || meta.id !== item.id || meta.animation !== item.animation) {
-      summary.skipped.push({ id: item.id, reason: 'render-artifact-unavailable' });
+    if (meta.animation !== item.animation) {
+      summary.skipped.push({ id: item.id, reason: 'render-animation-mismatch' });
       continue;
     }
     const currentSelected = record.allAnimationPreviews &&
