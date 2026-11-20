@@ -53,7 +53,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "14505-1-2026-11-20T04-20-07-885Z",
@@ -83,7 +83,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "Spine-animation-2026-11-20T03-59-57-922Z",
@@ -115,7 +115,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "Spine-animation-2026-11-19T20-40-20-819Z",
@@ -141,7 +141,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "spine-link-e2e-2026-11-19T13-06-53-148Z",
@@ -196,7 +196,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation",
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -223,7 +223,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation",
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -259,7 +259,7 @@
     "dispatchStatus": "pending",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "castle_upgrade-2026-11-19T07-33-26-823Z",
@@ -340,7 +340,7 @@
     "dispatchStatus": "pending",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation"
   },
   {
     "id": "wolf-2026-11-18T17-32-08-569Z",
@@ -370,7 +370,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation",
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -401,7 +401,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation",
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -442,7 +442,7 @@
     "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation",
+    "previewError": "No explicit default animation is selected; preview rendering will not guess a source animation",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -617,7 +617,7 @@
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-37-48-529Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-37-48-529Z/preview-low.webp",
     "previewStatus": "failed",
-    "previewError": "Media previously marked ready but expected outputs are missing",
+    "previewError": "Native preview render did not pass media acceptance",
     "webmGeneratedAt": "2026-11-19T20:48:06.556Z",
     "posterGeneratedAt": "2026-11-19T20:52:21.653Z",
     "animations": [
@@ -637,7 +637,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-37-48-529Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewFrameCount": 98
   },
   {
@@ -669,7 +669,7 @@
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-35-35-972Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-35-35-972Z/preview-low.webp",
     "previewStatus": "failed",
-    "previewError": "Media previously marked ready but expected outputs are missing",
+    "previewError": "Native preview render did not pass media acceptance",
     "webmGeneratedAt": "2026-11-19T20:48:09.901Z",
     "posterGeneratedAt": "2026-11-19T20:52:24.443Z",
     "animations": [
@@ -689,7 +689,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-35-35-972Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewFrameCount": 111
   },
   {
