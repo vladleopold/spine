@@ -70,6 +70,20 @@ test('HTTP failures and invalid media bytes fail closed',async()=>{
   }),false);
 });
 
+test('both production verifiers require the decoded pair gate and install FFmpeg',()=>{
+  const latestTen=fs.readFileSync(new URL('./lib/latest-ten-live-audit.mjs',import.meta.url),'utf8');
+  const latestTwenty=fs.readFileSync(new URL('./verify-latest-twenty-live.mjs',import.meta.url),'utf8');
+  const workflowTen=fs.readFileSync(new URL('../.github/workflows/repair-last-ten-previews.yml',import.meta.url),'utf8');
+  const workflowTwenty=fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml',import.meta.url),'utf8');
+  assert.match(latestTen,/verifyPublishedPreviewPair/);
+  assert.match(latestTwenty,/verifyPublishedPreviewPair/);
+  assert.match(latestTwenty,/decodedPairs/);
+  assert.match(workflowTen,/Decode 10 actual published WebM\\/WebP pairs/);
+  assert.match(workflowTwenty,/Decode 20 actual published WebM\\/WebP pairs/);
+  assert.match(workflowTen,/@ffmpeg-installer\\/ffmpeg/);
+  assert.match(workflowTwenty,/@ffmpeg-installer\\/ffmpeg/);
+});
+
 test('decode or exact first-frame mismatch cannot be marked ready',async()=>{
   const {fetchImpl}=fetchFor();
   assert.equal(await verifyPublishedPreviewPair({
