@@ -13,13 +13,13 @@ const missing = normalizeSpineExportEntry(sourceBundle);
 assert.equal(missing.error, 'DEFAULT_ANIMATION_REQUIRED');
 assert.equal(missing.entry, null);
 
-const firstAnimationDefault = normalizeSpineExportEntry({
+const animationListWithoutSelection = normalizeSpineExportEntry({
   ...sourceBundle,
   animations: ['walk', 'idle'],
 });
-assert.equal(firstAnimationDefault.error, null);
-assert.equal(firstAnimationDefault.entry.defaultAnimation, 'walk');
-assert.deepEqual(firstAnimationDefault.entry.animations, ['walk', 'idle']);
+assert.equal(animationListWithoutSelection.error, 'DEFAULT_ANIMATION_REQUIRED',
+  'a source animation list is not permission to choose its first animation');
+assert.equal(animationListWithoutSelection.entry, null);
 
 const explicitDefault = normalizeSpineExportEntry({
   ...sourceBundle,
@@ -29,12 +29,22 @@ const explicitDefault = normalizeSpineExportEntry({
 assert.equal(explicitDefault.error, null);
 assert.equal(explicitDefault.entry.defaultAnimation, 'idle');
 
+const unavailableExplicitDefault = normalizeSpineExportEntry({
+  ...sourceBundle,
+  animations: ['walk', 'idle'],
+  defaultAnimation: 'not-in-source-list',
+});
+assert.equal(unavailableExplicitDefault.error, null);
+assert.equal(unavailableExplicitDefault.entry.defaultAnimation, 'not-in-source-list');
+assert.deepEqual(unavailableExplicitDefault.entry.animations, ['walk', 'idle'],
+  'preserve an explicit name without injecting it into the source animation list');
+
 const defaultOnly = normalizeSpineExportEntry({
   ...sourceBundle,
   defaultAnimation: 'idle',
 });
 assert.equal(defaultOnly.error, null);
-assert.deepEqual(defaultOnly.entry.animations, ['idle']);
+assert.deepEqual(defaultOnly.entry.animations, [], 'do not synthesize a runtime animation list from the selected name');
 
 const generic = { id: 'generic', files: ['poster.webp'] };
 assert.deepEqual(normalizeSpineExportEntry(generic), { entry: generic, error: null });
