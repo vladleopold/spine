@@ -3,7 +3,6 @@ on:
   push:
     branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118, fix/latest10-explicit-animation-guard-20261120, fix/latest10-public-only-inventory-20261120, fix/latest10-preserve-source-blockers-20261120, fix/render-blocked-report-20261120]
     paths:
-      - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
       - scripts/repair-manifest-guard.mjs
       - scripts/test-repair-manifest-guard.mjs
@@ -29,7 +28,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: spine-preview-latest-ten-${{ github.event_name }}-${{ github.ref }}
+  group: spine-preview-repair-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   inventory:
@@ -90,13 +89,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      ENTRY_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-      ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -117,18 +109,31 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask private source metadata and hydrate exact source
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_PATH: ${{ matrix.entry.previewPath }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+          ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+          REPAIR_IDS_JSON: ${{ toJson(matrix.entry) }}
         shell: bash
         run: |
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
-          for value in "$ENTRY_ID" "$ENTRY_PATH" "$ENTRY_ANIMATION"; do
-            [[ -z "$value" ]] || printf '::add-mask::%s\n' "$value"
-          done
+          {
+            printf 'ENTRY_ID=%s\n' "$ENTRY_ID"
+            printf 'ENTRY_PATH=%s\n' "$ENTRY_PATH"
+            printf 'ENTRY_ANIMATION=%s\n' "$ENTRY_ANIMATION"
+            printf 'ENTRY_READY=%s\n' "$ENTRY_READY"
+            printf 'ENTRY_NEEDS_RENDER=%s\n' "$ENTRY_NEEDS_RENDER"
+            printf 'REPAIR_SLOT=%s\n' "$REPAIR_SLOT"
+          } >> "$GITHUB_ENV"
           if [[ "$ENTRY_PATH" = /* || "$ENTRY_PATH" == *..* ]]; then
             echo "Invalid source path"
             exit 1
           fi
-          git sparse-checkout add "$ENTRY_PATH/"
+          git sparse-checkout add "$ENTRY_PATH/" >/dev/null 2>&1
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -236,8 +241,6 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -247,10 +250,13 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask and hydrate exact source directories
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         shell: bash
         run: |
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
+          printf 'REPAIR_IDS_JSON=%s\n' "$REPAIR_IDS_JSON" >> "$GITHUB_ENV"
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
@@ -314,8 +320,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -327,7 +331,11 @@ jobs:
             /scripts/lib/preview-manifest-redaction.mjs
             /scripts/lib/export-log-redaction.mjs
       - name: Mask exact production audit manifest
-        run: node scripts/mask-preview-manifest.mjs
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+        run: |
+          node scripts/mask-preview-manifest.mjs
+          printf 'REPAIR_IDS_JSON=%s\n' "$REPAIR_IDS_JSON" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
