@@ -83,10 +83,10 @@ jobs:
   inventory:
     runs-on: ubuntu-24.04
     outputs:
-      matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
-      renderCount: ${{ steps.latest.outputs.renderCount }}
-      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
+      matrix: ${{ steps.verified.outputs.matrix }}
+      allEntries: ${{ steps.verified.outputs.allEntries }}
+      renderCount: ${{ steps.verified.outputs.renderCount }}
+      sparseCheckout: ${{ steps.verified.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -115,11 +115,21 @@ jobs:
           export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
-      - name: Enumerate 20 newest uploads and validate required source file triads
+      - name: Freeze the latest 20 source paths from index metadata
         id: latest
         env:
           SPINE_REPAIR_INDEX_ONLY: '1'
-          SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+          SPINE_REPAIR_SKIP_LIVE: '1'
+        run: node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
+      - name: Check out the frozen source bundles for real media decoding
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: ${{ steps.latest.outputs.sparseCheckout }}
+      - name: Decode existing WebM tiers and verify exact WebP frame-zero pairs
+        id: verified
+        env:
+          SPINE_REPAIR_SKIP_LIVE: '1'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
@@ -133,6 +143,7 @@ jobs:
           node scripts/test-repair-latest-twenty.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
+          node scripts/test-first-frame-poster-real.mjs
           node --check scripts/verify-poster-first-frame.mjs
           node --check scripts/lib/first-frame-poster.mjs
           node scripts/test-preview-visibility-recovery.mjs
@@ -148,7 +159,7 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
-          echo "LATEST20_INVENTORY_VALID"
+          echo "LATEST20_DECODED_MEDIA_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
@@ -407,19 +418,37 @@ jobs:
     needs: [inventory, render, publish]
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/verify-latest-twenty-live.mjs
+            /scripts/verify-preview-motion.mjs
             /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
             /scripts/lib/fetch-public-index.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify 20 actual public media responses after publication
+      - name: Install pinned FFmpeg for full production media decoding
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Decode 20 actual public WebM/WebP pairs after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
