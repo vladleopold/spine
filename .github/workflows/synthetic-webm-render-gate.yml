@@ -6,6 +6,7 @@ on:
       - 'scripts/prepare-render.mjs'
       - 'scripts/test-synthetic-render-skip.mjs'
       - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/lib/export-log-redaction.mjs'
       - 'scripts/spine-export-matrix.mjs'
       - 'scripts/resolve-export-animation.mjs'
       - 'scripts/test-spine-export-matrix.mjs'
@@ -18,6 +19,7 @@ on:
       - 'scripts/prepare-render.mjs'
       - 'scripts/test-synthetic-render-skip.mjs'
       - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/lib/export-log-redaction.mjs'
       - 'scripts/spine-export-matrix.mjs'
       - 'scripts/resolve-export-animation.mjs'
       - 'scripts/test-spine-export-matrix.mjs'
@@ -41,6 +43,7 @@ jobs:
             /scripts/resolve-library.mjs
             /scripts/test-synthetic-render-skip.mjs
             /scripts/lib/spine-export-matrix.mjs
+            /scripts/lib/export-log-redaction.mjs
             /scripts/spine-export-matrix.mjs
             /scripts/resolve-export-animation.mjs
             /scripts/test-spine-export-matrix.mjs
@@ -56,6 +59,7 @@ jobs:
           node --check scripts/prepare-render.mjs
           node --check scripts/test-synthetic-render-skip.mjs
           node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/lib/export-log-redaction.mjs
           node --check scripts/spine-export-matrix.mjs
           node --check scripts/resolve-export-animation.mjs
           node scripts/test-synthetic-render-skip.mjs

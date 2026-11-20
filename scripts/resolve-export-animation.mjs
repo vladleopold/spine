@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { entryForUpload } from './resolve-library.mjs';
 import { resolveAnimationIndex } from './lib/spine-export-matrix.mjs';
+import { escapeWorkflowCommandValue } from './lib/export-log-redaction.mjs';
 
 const uploadId = String(process.env.UPLOAD_ID || '');
 const indexValue = process.env.ANIMATION_INDEX;
@@ -19,6 +20,8 @@ if (!process.env.GITHUB_ENV || !process.env.GITHUB_OUTPUT) {
   process.exit(1);
 }
 
+process.stdout.write('::add-mask::' + escapeWorkflowCommandValue(uploadId) + '\n');
+process.stdout.write('::add-mask::' + escapeWorkflowCommandValue(selection.animation) + '\n');
 const encodedAnimation = Buffer.from(selection.animation, 'utf8').toString('base64');
 fs.appendFileSync(
   process.env.GITHUB_ENV,

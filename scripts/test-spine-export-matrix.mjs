@@ -5,7 +5,39 @@ import {
   mergeFullExportMetadata,
   resolveAnimationIndex,
 } from './lib/spine-export-matrix.mjs';
+import {collectSensitiveExportValues,escapeWorkflowCommandValue} from './lib/export-log-redaction.mjs';
 import { listCollectionFolders, readIndex } from './resolve-library.mjs';
+
+const redactionFixture = {
+  id: 'private-upload-1234',
+  previewPath: 'library_02/private-work',
+  skeleton: 'sets/private-skeleton.skel',
+  atlas: 'sets/private.atlas',
+  textures: ['textures/private-page.png'],
+  files: [{ name: 'private-file.png', path: 'sets/private-file.png' }],
+  animations: ['private animation'],
+  defaultAnimation: 'private animation',
+  allAnimationPreviews: {
+    'private animation': { webmPreview: 'https://private.example/private-work/preview.webm' },
+  },
+  previewStatus: 'ready',
+};
+const redactedValues = new Set(collectSensitiveExportValues(redactionFixture));
+for (const value of [
+  'private-upload-1234', 'private-work', 'private-skeleton.skel',
+  'private.atlas', 'private-page.png', 'private-file.png',
+  'private animation', 'https://private.example/private-work/preview.webm',
+]) {
+  assert.equal(redactedValues.has(value), true,
+    'sensitive export metadata must be masked before renderer diagnostics');
+}
+assert.equal(redactedValues.has('ready'), false,
+  'public status codes remain visible for useful diagnostics');
+assert.equal(
+  escapeWorkflowCommandValue('private%value\r\nnext'),
+  'private%25value%0D%0Anext',
+  'workflow command values must be escaped safely',
+);
 
 const source = {
   skeleton: 'source.skel',
@@ -105,6 +137,9 @@ assert.match(matrixScript, /matrix=\$\{JSON\.stringify\(result\.matrix\)\}/);
 assert.doesNotMatch(matrixScript, /matrix:\s*entry\.animations\s*[,}]/);
 assert.match(resolverScript, /resolveAnimationIndex/);
 assert.match(resolverScript, /SPINE_ANIMATION_B64/);
+assert.ok(resolverScript.includes('escapeWorkflowCommandValue(selection.animation)'));
+assert.ok(prepareRender.includes('collectSensitiveExportValues'));
+assert.ok(prepareRender.includes('escapeWorkflowCommandValue'));
 assert.doesNotMatch(resolverScript, /console\.log\([^\n]*selection\.animation/);
 
 assert.match(workflow, /validate-contract:/);
@@ -120,5 +155,28 @@ assert.doesNotMatch(workflow, /Automatic preview fallback|effectiveDefault|animO
   'full export must never switch the indexed/default animation');
 assert.doesNotMatch(workflow, /Animations exported:[^\n]*join\(/,
   'workflow logs must not print source animation names');
+assert.match(workflow, /scripts\/lib\/export-log-redaction\.mjs/);
+assert.match(workflow, /scripts\/prepare-render\.mjs/);
+assert.ok(workflow.includes('needs: [generate-matrix, export-opaque, export-alpha]'));
+assert.ok(workflow.includes("needs.generate-matrix.outputs.has-items == 'true'"));
+const uploadIdExpression = '
+
+console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
+ + '{{ github.event.client_payload.uploadId }}';
+const runIdExpression = '
+
+console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
+ + '{{ github.run_id }}';
+assert.ok(!workflow.includes('full-opaque-' + uploadIdExpression));
+assert.ok(!workflow.includes('full-alpha-' + uploadIdExpression));
+assert.ok(workflow.includes('full-opaque-' + runIdExpression));
+assert.ok(workflow.includes('full-alpha-' + runIdExpression));
+assert.ok(!workflow.includes('Full export: all animations + alpha for ' + '
+
+console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
+ + '{UPLOAD_ID}'));
+assert.ok(!workflow.includes('Upload ID |'));
+assert.ok(!workflow.includes('ls -lah "$DIR/"'));
+assert.match(workflow, /ARTIFACT_FILE_COUNT/);
 
 console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');

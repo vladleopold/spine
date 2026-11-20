@@ -10,6 +10,8 @@ on:
       - .github/workflows/spine-export-full.yml
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
   pull_request:
@@ -17,6 +19,8 @@ on:
       - .github/workflows/spine-export-full.yml
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
 
@@ -36,6 +40,8 @@ jobs:
       - name: Run numeric matrix and no-fallback regressions
         run: |
           node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/lib/export-log-redaction.mjs
+          node --check scripts/prepare-render.mjs
           node --check scripts/spine-export-matrix.mjs
           node --check scripts/resolve-export-animation.mjs
           node scripts/test-spine-export-matrix.mjs
@@ -160,7 +166,7 @@ jobs:
               ffmpeg -y -i "$SRC" \
                 -c:v libx264 -preset fast -crf 23 \
                 -movflags +faststart -pix_fmt yuv420p \
-                "$DST" && echo "MP4 ready: $DST" || exit 1
+                "$DST" && echo "MP4 rendition ready" || exit 1
             fi
           done
 
@@ -170,7 +176,7 @@ jobs:
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           ANIMATION_INDEX="${{ matrix.animation_index }}"
           SAFE="${{ steps.export-webm.outputs.safe_name }}"
-          DIR="artifact_opaque_${UPLOAD_ID}_${SAFE}"
+          DIR="artifact_opaque_${GITHUB_RUN_ID}_${SAFE}"
           mkdir -p "$DIR"
 
           # WebM files
@@ -194,13 +200,13 @@ jobs:
           echo "$SAFE" > "$DIR/safe-name.txt"
           echo "type=opaque" > "$DIR/export-type.txt"
 
-          ls -lah "$DIR/"
+          echo "ARTIFACT_FILE_COUNT=$(find "$DIR" -maxdepth 1 -type f | wc -l)"
 
       - name: Upload opaque artifact
         uses: actions/upload-artifact@v4
         with:
-          name: full-opaque-${{ github.event.client_payload.uploadId }}-${{ steps.export-webm.outputs.safe_name }}
-          path: artifact_opaque_${{ github.event.client_payload.uploadId }}_${{ steps.export-webm.outputs.safe_name }}/*
+          name: full-opaque-${{ github.run_id }}-${{ steps.export-webm.outputs.safe_name }}
+          path: artifact_opaque_${{ github.run_id }}_${{ steps.export-webm.outputs.safe_name }}/*
           retention-days: 1
           overwrite: true
 
@@ -289,12 +295,12 @@ jobs:
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           ANIMATION_INDEX="${{ matrix.animation_index }}"
           SAFE="${{ steps.export-alpha.outputs.safe_name }}"
-          DIR="artifact_alpha_${UPLOAD_ID}_${SAFE}"
+          DIR="artifact_alpha_${GITHUB_RUN_ID}_${SAFE}"
           mkdir -p "$DIR"
 
           for suffix in "" "-medium" "-low"; do
             SRC="${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.webm"
-            [ -f "$SRC" ] && mv "$SRC" "$DIR/" || echo "No alpha file: $SRC"
+            [ -f "$SRC" ] && mv "$SRC" "$DIR/" || echo "Missing alpha rendition for requested quality"
           done
 
           echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
@@ -342,13 +348,13 @@ jobs:
             fi
           done
 
-          ls -lah "$DIR/"
+          echo "ARTIFACT_FILE_COUNT=$(find "$DIR" -maxdepth 1 -type f | wc -l)"
 
       - name: Upload alpha artifact
         uses: actions/upload-artifact@v4
         with:
-          name: full-alpha-${{ github.event.client_payload.uploadId }}-${{ steps.export-alpha.outputs.safe_name }}
-          path: artifact_alpha_${{ github.event.client_payload.uploadId }}_${{ steps.export-alpha.outputs.safe_name }}/*
+          name: full-alpha-${{ github.run_id }}-${{ steps.export-alpha.outputs.safe_name }}
+          path: artifact_alpha_${{ github.run_id }}_${{ steps.export-alpha.outputs.safe_name }}/*
           retention-days: 1
           overwrite: true
 
@@ -358,8 +364,8 @@ jobs:
 # ═══════════════════════════════════════════════════════════════════════════
   commit-all:
     name: 💾 Commit all to repository
-    needs: [export-opaque, export-alpha]
-    if: always() && github.event_name == 'repository_dispatch'
+    needs: [generate-matrix, export-opaque, export-alpha]
+    if: always() && github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -391,14 +397,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: downloaded-artifacts/opaque
-          pattern: full-opaque-${{ github.event.client_payload.uploadId }}-*
+          pattern: full-opaque-${{ github.run_id }}-*
           merge-multiple: false
 
       - name: Download alpha artifacts
         uses: actions/download-artifact@v4
         with:
           path: downloaded-artifacts/alpha
-          pattern: full-alpha-${{ github.event.client_payload.uploadId }}-*
+          pattern: full-alpha-${{ github.run_id }}-*
           merge-multiple: false
 
       - name: Commit and push atomically (fetch-reset-apply loop)
@@ -544,7 +550,7 @@ jobs:
             fi
 
             # 4. Commit
-            git commit -m "Full export: all animations + alpha for ${UPLOAD_ID}"
+            git commit -m "Full export: verified preview media"
 
             # 5. Push — retry if rejected by another concurrent push
             if git push origin main; then
@@ -565,6 +571,6 @@ jobs:
           echo "### Full Export Summary" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Upload ID | ${{ github.event.client_payload.uploadId }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Run ID | ${{ github.run_id }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Opaque jobs | ${{ needs.export-opaque.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Alpha jobs  | ${{ needs.export-alpha.result }} |" >> $GITHUB_STEP_SUMMARY
