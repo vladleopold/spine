@@ -66,7 +66,7 @@ export async function auditLatestTen(items,fetchImpl=globalThis.fetch,options={}
       else failed++;
       continue;
     }
-    if(typeof item.animation!=="string"||!item.animation.trim()){
+    if(typeof item.animation!=="string"||item.animation.length===0){
       failed++;
       continue;
     }
