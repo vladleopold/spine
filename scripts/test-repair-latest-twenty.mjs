@@ -10,33 +10,33 @@ const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.
 const repairSource=fs.readFileSync(script,'utf8');
 const liveVerifier=fs.readFileSync(fileURLToPath(new URL('./verify-latest-twenty-live.mjs',import.meta.url)),'utf8');
 const workflow=fs.readFileSync(fileURLToPath(new URL('../.github/workflows/repair-latest-twenty-previews.yml',import.meta.url)),'utf8');
-assert.match(repairSource,/for\\(const suffix of \["","-medium","-low"\]\\)/,
+assert.ok(repairSource.includes('for(const suffix of ["","-medium","-low"])'),
   'all three WebM tiers must be decoded before existing media is accepted');
-assert.match(repairSource,/verify-preview-motion\\.mjs/,
+assert.ok(repairSource.includes('verify-preview-motion.mjs'),
   'each existing quality tier must have eight distinct visible frames');
-assert.match(repairSource,/verifyPosterFirstFrame\\(video,poster\\)/,
+assert.ok(repairSource.includes('verifyPosterFirstFrame(video,poster)'),
   'each stored WebP must match frame zero of its paired WebM');
-assert.match(liveVerifier,/verify-preview-motion\\.mjs/);
-assert.match(liveVerifier,/verifyPosterFirstFrame/);
-assert.match(liveVerifier,/arrayBuffer\\(\\)/,
+assert.ok(liveVerifier.includes('verify-preview-motion.mjs'));
+assert.ok(liveVerifier.includes('verifyPosterFirstFrame'));
+assert.ok(liveVerifier.includes('response.arrayBuffer()'),
   'production verification must download full media bodies, not a range prefix');
-assert.doesNotMatch(liveVerifier,/Range:\\s*\\{\\s*bytes=0-16383/,
+assert.ok(!liveVerifier.includes("Range:'bytes=0-16383'"),
   'a 16 KiB signature probe is not a decoded-media verification');
-assert.match(liveVerifier,/frames>=8/);
-assert.match(liveVerifier,/contentType/);
-assert.match(workflow,/sparse-checkout: \\$\\{\\{ steps\\.latest\\.outputs\\.sparseCheckout \\}\\}/,
+assert.ok(liveVerifier.includes('frames>=8'));
+assert.ok(liveVerifier.includes('contentType'));
+assert.ok(workflow.includes('sparse-checkout: ${{ steps.latest.outputs.sparseCheckout }}'),
   'the full source bundle checkout must use the frozen manifest paths');
-assert.match(workflow,/matrix: \\$\\{\\{ steps\\.verified\\.outputs\\.matrix \\}\\}/,
+assert.ok(workflow.includes('matrix: ${{ steps.verified.outputs.matrix }}'),
   'render decisions must come from the decoded-media verification pass');
-const verifiedStep=workflow.slice(workflow.indexOf('id: verified'),workflow.indexOf('\\n  render:'));
+const verifiedStep=workflow.slice(workflow.indexOf('id: verified'),workflow.indexOf('\n  render:'));
 assert.ok(verifiedStep.includes('id: verified'));
-assert.doesNotMatch(verifiedStep,/SPINE_REPAIR_INDEX_ONLY/,
+assert.ok(!verifiedStep.includes('SPINE_REPAIR_INDEX_ONLY'),
   'the second pass must not trust index-only preview metadata');
-assert.match(verifiedStep,/node scripts\\/repair-latest-twenty-previews\\.mjs matrix/);
-assert.match(workflow,/Decode 20 actual public WebM\\/WebP pairs after publication/);
-assert.match(workflow,/\\/scripts\\/verify-preview-motion\\.mjs/);
-assert.match(workflow,/\\/scripts\\/lib\\/first-frame-poster\\.mjs/);
-assert.ok(!liveVerifier.includes('console.log(JSON.stringify(work))',
+assert.ok(verifiedStep.includes('node scripts/repair-latest-twenty-previews.mjs matrix'));
+assert.ok(workflow.includes('Decode 20 actual public WebM/WebP pairs after publication'));
+assert.ok(workflow.includes('/scripts/verify-preview-motion.mjs'));
+assert.ok(workflow.includes('/scripts/lib/first-frame-poster.mjs'));
+assert.ok(!liveVerifier.includes('console.log(JSON.stringify(work))'),
   'production evidence must not log private source records');
 assert.ok(!liveVerifier.includes('work.id'),
   'production logs must never print work identifiers');
