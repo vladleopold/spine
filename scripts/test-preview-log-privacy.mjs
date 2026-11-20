@@ -79,6 +79,8 @@ assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
 assert.match(reportedRepair, /const selectedAnimation=String\(item\.animation\|\|record\.defaultAnimation\|\|""\)\.trim\(\)/);
 assert.match(reportedRepair, /existingMediaOk\(entryInfo,selectedAnimation\)/);
 assert.match(reportedRepair, /blocked-missing-animation/);
+assert.match(reportedRepair, /BLOCKED_SOURCE_BUNDLE=/);
+assert.match(reportedRepair, /BLOCKED_MISSING_ANIMATION=/);
 assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest20-"\+item\.repairSlot/);
 assert.doesNotMatch(reportedRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);

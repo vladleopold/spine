@@ -114,8 +114,12 @@ if(action==="matrix"){
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
   console.log("SPINE_SPARSE_END");
-  console.error("AUDIT_REQUESTED_PREVIEWS="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
-    " BLOCKED="+matrix.filter(x=>!x.ready).length);
+  console.error("AUDIT_REQUESTED_PREVIEWS="+matrix.length+
+    " SOURCE_READY="+matrix.filter(x=>x.ready).length+
+    " BLOCKED_SOURCE_BUNDLE="+matrix.filter(x=>x.blockedReason==="MISSING_SOURCE_BUNDLE").length+
+    " BLOCKED_MISSING_ANIMATION="+matrix.filter(x=>x.blockedReason==="MISSING_DEFAULT_ANIMATION").length+
+    " NEEDS_RENDER="+required.length+
+    " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
