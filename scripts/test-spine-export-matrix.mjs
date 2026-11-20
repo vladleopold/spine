@@ -162,7 +162,11 @@ assert.match(workflow, /scripts\/prepare-render\.mjs/);
 assert.ok(validationJob.includes('sparse-checkout-cone-mode: false'));
 assert.ok(validationJob.includes('/scripts/'));
 assert.ok(validationJob.includes('/.github/workflows/spine-export-full.yml'));
-assert.ok(!validationJob.includes('/library'), 'contract-only validation must not fetch library media');
+const validationLibraryPaths = validationJob.split('\n')
+  .map((line) => line.trim())
+  .filter((line) => line.startsWith('/library'));
+assert.deepEqual(validationLibraryPaths, ['/library_02/index.json'],
+  'contract validation may fetch the public index but never media directories');
 assert.ok(workflow.includes('needs: [generate-matrix, export-opaque, export-alpha]'));
 assert.ok(workflow.includes("needs.generate-matrix.outputs.has-items == 'true'"));
 const uploadIdExpression = String.fromCharCode(36) + '{{ github.event.client_payload.uploadId }}';
