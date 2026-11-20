@@ -47,4 +47,6 @@ assert.match(verifyWorkflow, /\/scripts\/verify-poster-first-frame\.mjs/);
 assert.match(verifyWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/);
 assert.match(repairWorkflow, /pull_request:/);
 assert.match(repairWorkflow, /test-reported-preview-live\.mjs/);
+assert.match(verifyWorkflow, /workflow_run\.event != 'pull_request'/,
+  'do not launch a duplicate live audit after the pull-request inventory run');
 console.log('PASS reported-preview audit: same-work pairs, real decode/motion, first-frame match, hourly schedule, privacy-safe logs');
