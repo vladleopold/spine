@@ -42,10 +42,12 @@ function bundleOk(entry) {
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
-function existingMediaOk(entry){
+function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   if(record?.webmStatus!=="ready")return false;
+  const selected=String(animation||record?.defaultAnimation||"").trim();
+  if(!selected||selected!==String(record?.defaultAnimation||"").trim())return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -65,16 +67,19 @@ const latest=action==="matrix"?newestTen():[];
 if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map(e=>{
-    const ready=bundleOk(e);
+    const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
+    const animation=typeof record?.defaultAnimation==="string"?record.defaultAnimation.trim():"";
+    const sourceReady=bundleOk(e);
+    const ready=Boolean(animation)&&sourceReady;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
-      sourceFingerprint:previewSourceFingerprint((readIndex(root,e.basePath)||[]).find(x=>x.id===e.id)),
-      ready,needsRender:ready&&!existingMediaOk(e),
-      animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-        e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":""};
+      sourceFingerprint:previewSourceFingerprint(record),
+      ready,needsRender:ready&&!existingMediaOk(e,animation),
+      animation,
+      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -118,8 +123,16 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
+    const expectedAnimation=String(record.defaultAnimation||"").trim();
+    if(!expectedAnimation||String(item.animation||"").trim()!==expectedAnimation){
+      record.webmStatus="blocked-missing-animation-selection";
+      record.previewStatus="blocked";
+      record.previewError="No exact default animation is selected; preview rendering will not guess or substitute an animation";
+      summary.blocked++;
+      continue;
+    }
     if(item.needsRender===false){
-      if(existingMediaOk(entryInfo)){
+      if(existingMediaOk(entryInfo,expectedAnimation)){
         summary.ready++;
         continue;
       }
@@ -135,7 +148,7 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && names.every(n=>
+    let complete=meta?.ok===true && String(meta?.animation||"").trim()===expectedAnimation && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -155,7 +168,8 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
+      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
+         existingMediaOk(entryInfo,expectedAnimation)) {
         // Never replace an existing genuine clip with a failed higher-FPS retry.
         record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
         summary.ready++;
@@ -170,7 +184,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animation=expectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
@@ -187,7 +201,7 @@ if(action==="matrix"){
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
     if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
-    if(animation) record.defaultAnimation=animation;
+
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {
