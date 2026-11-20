@@ -18,7 +18,7 @@ function newestTen() {
   const entries=[];
   for(const folder of listCollectionFolders(root)) {
     for(const entry of readIndex(root,folder)||[]) {
-      if(!idPattern.test(entry?.id||""))continue;
+      if(!idPattern.test(entry?.id||"") || entry.testOnly===true || entry.hiddenFromPublicLibrary===true)continue;
       const timestamp=Date.parse(entry.uploadedAt||"");
       if(!Number.isFinite(timestamp))continue;
       entries.push({id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+"/"+entry.id,
