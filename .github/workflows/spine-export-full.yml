@@ -34,6 +34,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library_02/index.json
+            /.github/workflows/spine-export-full.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22

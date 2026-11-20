@@ -129,6 +129,7 @@ for (let index = 0; index < realEntry.animations.length; index += 1) {
 }
 
 const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-full.yml', import.meta.url), 'utf8');
+const validationJob = workflow.split('  validate-contract:')[1]?.split('  generate-matrix:')[0] || '';
 const prepareRender = fs.readFileSync(new URL('./prepare-render.mjs', import.meta.url), 'utf8');
 const matrixScript = fs.readFileSync(new URL('./spine-export-matrix.mjs', import.meta.url), 'utf8');
 const resolverScript = fs.readFileSync(new URL('./resolve-export-animation.mjs', import.meta.url), 'utf8');
@@ -158,6 +159,14 @@ assert.doesNotMatch(workflow, /Animations exported:[^\n]*join\(/,
   'workflow logs must not print source animation names');
 assert.match(workflow, /scripts\/lib\/export-log-redaction\.mjs/);
 assert.match(workflow, /scripts\/prepare-render\.mjs/);
+assert.ok(validationJob.includes('sparse-checkout-cone-mode: false'));
+assert.ok(validationJob.includes('/scripts/'));
+assert.ok(validationJob.includes('/.github/workflows/spine-export-full.yml'));
+const validationLibraryPaths = validationJob.split('\n')
+  .map((line) => line.trim())
+  .filter((line) => line.startsWith('/library'));
+assert.deepEqual(validationLibraryPaths, ['/library_02/index.json'],
+  'contract validation may fetch the public index but never media directories');
 assert.ok(workflow.includes('needs: [generate-matrix, export-opaque, export-alpha]'));
 assert.ok(workflow.includes("needs.generate-matrix.outputs.has-items == 'true'"));
 const uploadIdExpression = String.fromCharCode(36) + '{{ github.event.client_payload.uploadId }}';
