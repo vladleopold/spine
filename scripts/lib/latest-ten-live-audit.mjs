@@ -1,3 +1,4 @@
+import { verifyPublishedPreviewPair } from './published-media-acceptance.mjs';
 const blockedReasons=new Set([
   "MISSING_DEFAULT_ANIMATION",
   "MISSING_SOURCE_TRIAD",
@@ -52,7 +53,8 @@ export async function auditLatestTen(items,fetchImpl=globalThis.fetch,options={}
   if(typeof fetchImpl!=="function")throw new Error("Media fetch is unavailable");
   const retries=Number.isInteger(options.retries)&&options.retries>0?options.retries:4;
   const delayMs=Number.isFinite(options.delayMs)&&options.delayMs>=0?options.delayMs:3000;
-  let ready=0,blocked=0,failed=0;
+  const verifyPair=typeof options.verifyPair==='function'?options.verifyPair:verifyPublishedPreviewPair;
+  let ready=0,blocked=0,failed=0,decodedPairs=0;
   for(const item of items){
     const parts=safePreviewPath(item?.previewPath);
     if(!item||typeof item.id!=="string"||
@@ -74,8 +76,17 @@ export async function auditLatestTen(items,fetchImpl=globalThis.fetch,options={}
       parts.map(encodeURIComponent).join("/")+"/";
     const checks=await Promise.all(media.map(asset=>
       probe(fetchImpl,prefix+asset.name,asset.kind,retries,delayMs)));
-    if(checks.every(Boolean))ready++;
-    else failed++;
+    if(checks.every(Boolean)){
+      const decoded=await verifyPair({
+        videoUrl:prefix+'preview.webm',
+        posterUrl:prefix+'preview.webp',
+        expectedOrigin:'https://spine-link.vercel.app',
+        expectedPrefix:new URL(prefix).pathname,
+        fetchImpl,
+      });
+      if(decoded){ready++;decodedPairs++;}
+      else failed++;
+    }else failed++;
   }
-  return {total:items.length,ready,blocked,failed};
+  return {total:items.length,ready,blocked,failed,decodedPairs};
 }
