@@ -1,4 +1,4 @@
-const SENSITIVE_KEY = /(^|_)(?:ids?|paths?|files?|names?|animations?|skeletons?|atlases?|textures?|sources?|urls?|owners?|repos?|origins?|branches?)(_|$)/i;
+const SENSITIVE_KEY = /(^|_)(?:ids?|paths?|files?|names?|animations?|skeletons?|atlas(?:es)?|textures?|sources?|urls?|owners?|repos?|origins?|branch(?:es)?)(_|$)/i;
 
 function normalizeKey(key) {
   return String(key).replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
