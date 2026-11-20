@@ -5,6 +5,13 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - scripts/repair-reported-previews.mjs
+      - scripts/lib/reported-preview-acceptance.mjs
+      - scripts/test-reported-preview-acceptance.mjs
+      - scripts/verify-reported-preview-live.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/first-frame-poster.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -41,6 +48,8 @@ jobs:
         run: |
           node scripts/repair-reported-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check scripts/repair-reported-previews.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node scripts/test-reported-preview-acceptance.mjs
           node --check scripts/spine-export-webm.mjs
           node --check scripts/recover-recorded-webm.mjs
           node --check scripts/preview-runtime-minor.mjs
@@ -48,6 +57,7 @@ jobs:
           node scripts/test-atlas-pages.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
+    name: Render reported preview slot ${{ matrix.entry.slot }}
     needs: inventory
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
@@ -75,6 +85,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Mask private source identifiers
+        if: matrix.entry.needsRender
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+        run: |
+          echo "::add-mask::$ENTRY_ID"
+          if [ -n "$ENTRY_ANIMATION" ]; then echo "::add-mask::$ENTRY_ANIMATION"; fi
       - name: Install native Chromium renderer and video/poster encoders
         if: matrix.entry.needsRender
         shell: bash
@@ -109,19 +127,21 @@ jobs:
         shell: bash
         env:
           ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_SLOT: ${{ matrix.entry.slot }}
           ENTRY_READY: ${{ matrix.entry.ready }}
           ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
           ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         run: |
           set -euo pipefail
-          mkdir -p "out/$ENTRY_ID"
+          OUT_DIR="out/slot-$ENTRY_SLOT"
+          mkdir -p "$OUT_DIR"
           if [[ "$ENTRY_READY" != true ]]; then
-            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"incomplete-source"}' > "$OUT_DIR/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
             exit 0
           fi
           if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "$OUT_DIR/meta.json"
             echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
@@ -147,7 +167,7 @@ jobs:
           fi
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
-            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"render-failed"}' > "$OUT_DIR/meta.json"
             echo "::warning::Native Spine rendering failed; no preview will be published"
             exit 0
           fi
@@ -155,33 +175,52 @@ jobs:
             for ext in webm webp; do
               in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
               test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
-              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+              cp "$in" "$OUT_DIR/preview$suffix.$ext"
             done
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
-              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+              -of default=nw=1 "$OUT_DIR/preview$suffix.webm" | grep -q '^codec_name='
             video_duration=$(ffprobe -v error -show_entries format=duration \
-              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+              -of default=nw=1:nk=1 "$OUT_DIR/preview$suffix.webm")
             awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
               echo "::error::Rejected nonplayable short preview video"
               exit 1
             }
-            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+            file "$OUT_DIR/preview$suffix.webp" | grep -q 'Web/P image'
           done
-          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
-            const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
-              throw new Error("Export metadata incomplete");
-            m.ok=true;
-            fs.writeFileSync(p,JSON.stringify(m));
+            const [src,dst,expected]=process.argv.slice(1);
+            const m=JSON.parse(fs.readFileSync(src,"utf8"));
+            const selected=String(expected||"");
+            if(!selected||String(m.animation||"")!==selected)
+              throw new Error("Exact selected animation was not rendered");
+            if(Array.isArray(m.animations)&&m.animations.length&&!m.animations.includes(selected))
+              throw new Error("Exact selected animation is absent from the source list");
+            const widths=m.qualityWidths&&typeof m.qualityWidths==="object"?m.qualityWidths:{};
+            const safe={
+              ok:true,
+              selectedAnimationVerified:true,
+              sha256:String(m.sha256||""),
+              bytes:Number(m.bytes)||0,
+              width:Number(m.width)||0,
+              height:Number(m.height)||0,
+              animationDuration:Number(m.animationDuration)||0,
+              qualityWidths:{
+                high:Number(widths.high)||0,
+                medium:Number(widths.medium)||0,
+                low:Number(widths.low)||0
+              }
+            };
+            if(!safe.sha256||!safe.bytes||!safe.width||!safe.height||!safe.animationDuration)
+              throw new Error("Sanitized export metadata incomplete");
+            fs.writeFileSync(dst,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
-          ' "out/$ENTRY_ID/meta.json"
+          ' "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "$OUT_DIR/meta.json" "$ENTRY_ANIMATION"
       - uses: actions/upload-artifact@v4
         if: matrix.entry.needsRender
         with:
-          name: latest10-${{ matrix.entry.id }}
-          path: out/${{ matrix.entry.id }}/
+          name: latest10-${{ matrix.entry.slot }}
+          path: out/slot-${{ matrix.entry.slot }}/
           if-no-files-found: error
           retention-days: 1
   publish:
@@ -206,6 +245,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for existing-media verification
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         env:
@@ -248,13 +293,23 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/verify-reported-preview-live.mjs
+            /scripts/lib/reported-preview-acceptance.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
             /scripts/resolve-library.mjs
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for decoded production media acceptance
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
       - name: Verify actual media responses after publication
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/verify-reported-preview-live.mjs
+        run: |
+          node --check scripts/verify-reported-preview-live.mjs
+          node scripts/verify-reported-preview-live.mjs
