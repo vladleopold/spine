@@ -1103,10 +1103,18 @@
     "skeleton": "Wolf Pack.skel",
     "atlas": "Wolf Pack.atlas",
     "textures": [
+      "Wolf Pack.png",
+      "Wolf Pack_10.png",
+      "Wolf Pack_11.png",
+      "Wolf Pack_12.png",
+      "Wolf Pack_13.png",
+      "Wolf Pack_14.png",
+      "Wolf Pack_15.png",
       "Wolf Pack_16.png",
       "Wolf Pack_17.png",
       "Wolf Pack_18.png",
       "Wolf Pack_19.png",
+      "Wolf Pack_2.png",
       "Wolf Pack_20.png",
       "Wolf Pack_21.png",
       "Wolf Pack_22.png",
@@ -1114,8 +1122,6 @@
       "Wolf Pack_24.png",
       "Wolf Pack_25.png",
       "Wolf Pack_26.png",
-      "Wolf Pack.png",
-      "Wolf Pack_2.png",
       "Wolf Pack_3.png",
       "Wolf Pack_4.png",
       "Wolf Pack_5.png",
@@ -1123,12 +1129,9 @@
       "Wolf Pack_7.png",
       "Wolf Pack_8.png",
       "Wolf Pack_9.png",
-      "Wolf Pack_10.png",
-      "Wolf Pack_11.png",
-      "Wolf Pack_12.png",
-      "Wolf Pack_13.png",
-      "Wolf Pack_14.png",
-      "Wolf Pack_15.png"
+      "preview-low.webp",
+      "preview-medium.webp",
+      "preview.webp"
     ],
     "ownerAnonId": "anon_9fniyp9g_d9un7nduz6",
     "ownerAnonFingerprint": "n8124dcfdplmwkzmi2r",
@@ -1136,7 +1139,7 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webp",
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webm",
-    "webmStatus": "failed",
+    "webmStatus": "ready",
     "dispatchStatus": "rendered",
     "previewStatus": "failed",
     "previewError": "Media previously marked ready but expected outputs are missing",
@@ -1145,7 +1148,7 @@
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview-low.webp",
-    "webmGeneratedAt": "2026-11-19T20:48:18.629Z",
+    "webmGeneratedAt": "2026-11-20T18:12:44.565Z",
     "posterGeneratedAt": "2026-11-19T20:52:31.551Z",
     "animations": [
       "Climax",
@@ -1255,7 +1258,7 @@
     "defaultAnimation": "Idle Post Climax Cum",
     "previewWidth": 960,
     "previewHeight": 720,
-    "previewDuration": 1.895761,
+    "previewDuration": 2,
     "allAnimationPreviews": {
       "Idle Post Climax Cum": {
         "webmPreview": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webm",
@@ -1267,7 +1270,14 @@
       }
     },
     "lastPreviewRetryError": "",
-    "previewFrameCount": 58
+    "previewFrameCount": 58,
+    "webmError": null,
+    "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webm",
+    "qualityWidths": {
+      "high": 960,
+      "medium": 634,
+      "low": 316
+    }
   },
   {
     "id": "Spine-animation-2026-11-17T18-44-12-762Z",
