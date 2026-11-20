@@ -10,7 +10,9 @@ export function buildVerifiedPreviewMetadata({ meta, highWebm, highPoster, origi
   if (Number(highPoster.width) !== width || Number(highPoster.height) !== height) throw new Error('PREVIEW_WEBP_POSTER_DIMENSIONS_INVALID');
   const animation = String(meta?.animation || '').trim();
   if (!animation) throw new Error('PREVIEW_ANIMATION_METADATA_MISSING');
-  const base = String(origin).replace(/\\/$/, '') + '/assets/' + String(workPath).replace(/^\\/+|\\/+$/g, '') + '/';
+  const cleanOrigin = String(origin).endsWith('/') ? String(origin).slice(0, -1) : String(origin);
+  const cleanWorkPath = String(workPath).split('/').filter(Boolean).join('/');
+  const base = cleanOrigin + '/assets/' + cleanWorkPath + '/';
   const url = file => base + file;
   return {
     webmStatus: 'ready',
@@ -22,7 +24,7 @@ export function buildVerifiedPreviewMetadata({ meta, highWebm, highPoster, origi
     webmPreview: url('preview.webm'),
     webmPreviewMedium: url('preview-medium.webm'),
     webmPreviewLow: url('preview-low.webm'),
-    webmPreviewPath: String(workPath).replace(/^\\/+|\\/+$/g, '') + '/preview.webm',
+    webmPreviewPath: cleanWorkPath + '/preview.webm',
     webpPoster: url('preview.webp'),
     webpPosterMedium: url('preview-medium.webp'),
     webpPosterLow: url('preview-low.webp'),
