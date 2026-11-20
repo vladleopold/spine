@@ -328,7 +328,7 @@ function generatedPreviewWebmUrl(origin, entry) {
 }
 
 function isSpineExportEntry(entry) {
-  return hasSpineSourceBundle(entry) && Array.isArray(entry?.animations) && entry.animations.length > 0;
+  return hasSpineSourceBundle(entry) && Boolean(String(entry?.defaultAnimation || '').trim());
 }
 
 async function dispatchSpineExportWebm(settings, entry, origin) {
@@ -338,7 +338,8 @@ async function dispatchSpineExportWebm(settings, entry, origin) {
     console.log(`[UPLOAD] skipping WebM export for ${id}: missing Spine skeleton, atlas, or texture files`);
     return { status: 'skipped', reason: 'missing-spine-assets' };
   }
-  const defaultAnimation = String(entry?.defaultAnimation || (Array.isArray(entry?.animations) ? entry.animations[0] : '') || '').trim();
+  const defaultAnimation = String(entry?.defaultAnimation || '').trim();
+  if (!defaultAnimation) return { status: 'blocked', reason: 'NO_DEFAULT_SPINE_ANIMATION' };
   const animations = Array.isArray(entry?.animations) ? entry.animations : [];
   try {
     const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/dispatches`, {
