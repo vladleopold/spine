@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
-import {resolveRenderSelection} from './lib/render-selection.mjs';
+import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
@@ -25,7 +25,7 @@ const report={
  code:selection.code||null,
  formats:[],
 };
-const writeReport=()=>fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
+const writeReport=()=>writeRenderVerification('render-verification.json',report);
 process.on('uncaughtException',error=>{
  report.status='failed';
  report.code=report.code||'RENDER_FAILED';
