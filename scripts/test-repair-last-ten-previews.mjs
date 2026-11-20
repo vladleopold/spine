@@ -9,6 +9,16 @@ import {fileURLToPath} from "node:url";
 
 const script=fileURLToPath(new URL("./repair-last-ten-previews.mjs",import.meta.url));
 const source=fs.readFileSync(script,"utf8");
+const workflowPath=fileURLToPath(new URL("../.github/workflows/repair-last-ten-previews.yml",import.meta.url));
+const workflow=fs.readFileSync(workflowPath,"utf8");
+assert.match(workflow,/group:\s*spine-preview-latest-ten-\$\{\{\s*github\.event_name\s*\}\}-\$\{\{\s*github\.ref\s*\}\}/,
+  "PR and main repair runs must use separate concurrency groups");
+assert.match(workflow,/cancel-in-progress:\s*false/,
+  "a read-only PR check must never cancel an active main repair");
+assert.match(workflow,/branches:.*fix\/latest10-explicit-animation-guard-20261120/,
+  "the exact feature branch must run the read-only inventory check");
+assert.doesNotMatch(workflow,/^\s+pull_request:/m,
+  "use one push-triggered feature-branch check, not duplicate push and pull_request runs");
 assert.ok(!source.includes("record.defaultAnimation=animation"),
   "preview repair must not rewrite the source index default animation");
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"spine-latest10-animation-"));
