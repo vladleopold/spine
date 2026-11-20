@@ -28,7 +28,7 @@ export function resolveLocalSpinePlayerAssets({
     ];
   }
 
-  if (!versionedRuntimeRoot || !/^4\\.\\d+$/.test(String(modernRuntime))) return [];
+  if (!versionedRuntimeRoot || !/^4\.\d+$/.test(String(modernRuntime))) return [];
   const playerRoot = path.join(versionedRuntimeRoot, 'spine-' + modernRuntime);
   return [
     {
