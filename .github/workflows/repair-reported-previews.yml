@@ -20,9 +20,8 @@ permissions:
   contents: write
 # Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
 concurrency:
-  group: spine-preview-reported-eighteen
-  # A source fix must not discard already-rendered artifacts mid-batch.
-  # Publish verified results first, then run the newer version.
+  group: spine-preview-repair-${{ github.ref }}
+  # Serialize overlapping latest-20 and reported-18 source repairs.
   cancel-in-progress: false
 jobs:
   inventory:
