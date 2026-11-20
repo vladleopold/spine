@@ -38,7 +38,7 @@ try{
     const incompatible=i===2;
     const publicIndex=i-3;
     const id=hidden?"fixture-hidden":testOnly?"fixture-test-only":incompatible?incompatibleId:publicIndex===0?targetId:publicIndex===1?missingId:"fixture-"+String(publicIndex).padStart(2,"0");
-    const defaultAnimation=hidden||testOnly||incompatible?"idle":publicIndex===0?"Idle Post Climax Cum":publicIndex===1?undefined:"idle";
+    const defaultAnimation=hidden||testOnly||incompatible?"idle":publicIndex===0?"Idle Post Climax Cum":publicIndex===1?undefined:publicIndex===2?" Walk ":"idle";
     const uploadedAt=new Date(Date.UTC(2026,10,20,0,12-i,0)).toISOString();
     const previewPath="library_02/"+id;
     const webmPreview="https://spine-link.vercel.app/assets/"+previewPath+"/preview.webm";
@@ -98,6 +98,9 @@ try{
   assert.equal(target.ready,true);
   assert.equal(target.animation,"Idle Post Climax Cum");
   assert.equal(target.needsRender,false);
+  const exact=all.find(x=>x.id==="fixture-02");
+  assert.equal(exact.animation," Walk ","leading/trailing whitespace is part of the exact selected animation name");
+  assert.equal(exact.ready,true);
 
   const publish=spawnSync(process.execPath,[script,"merge"],{
     cwd:root,encoding:"utf8",
@@ -117,6 +120,8 @@ try{
   const savedTarget=saved.find(x=>x.id===targetId);
   assert.equal(savedTarget.defaultAnimation,"Idle Post Climax Cum");
   assert.equal(savedTarget.webmStatus,"ready");
+  const savedExact=saved.find(x=>x.id==="fixture-02");
+  assert.equal(savedExact.defaultAnimation," Walk ","publishing media must not normalize the index animation name");
   console.log("PASS latest10: missing default stays blocked, incompatible Spine source keeps its specific blocker, no animation substitution");
 }finally{
   fs.rmSync(root,{recursive:true,force:true});

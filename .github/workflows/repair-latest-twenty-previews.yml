@@ -175,10 +175,18 @@ jobs:
           if-no-files-found: error
           retention-days: 1
   render:
+    name: validate-latest20-${{ matrix.entry.repairSlot }}
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
+    env:
+      ENTRY_ID: ${{ matrix.entry.id }}
+      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
+      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+      ENTRY_READY: ${{ matrix.entry.ready }}
+      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -198,7 +206,12 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-            /${{ matrix.entry.previewPath }}/
+      - name: Mask private metadata and hydrate exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
+          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -243,21 +256,16 @@ jobs:
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
         shell: bash
-        env:
-          ENTRY_ID: ${{ matrix.entry.id }}
-          ENTRY_READY: ${{ matrix.entry.ready }}
-          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         run: |
           set -euo pipefail
-          mkdir -p "out/$ENTRY_ID"
+          mkdir -p "out/$REPAIR_SLOT"
           if [[ "$ENTRY_READY" != true ]]; then
-            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
             exit 0
           fi
           if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
@@ -265,15 +273,15 @@ jobs:
           node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
             --repo-path="$GITHUB_WORKSPACE" \
-            --output="$RUNNER_TEMP/$ENTRY_ID-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
+            --output="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
           code=$?
           set -e
-          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/$ENTRY_ID-preview.webm" ]]; then
+          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" ]]; then
             # A genuine recorded WebM may survive even when its secondary
             # quality ladder/poster encoder fails. Verify real changing frames
             # and rebuild the missing output files instead of dropping it.
             if node scripts/recover-recorded-webm.mjs \
-              "$RUNNER_TEMP/$ENTRY_ID-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
+              "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
               > "$RUNNER_TEMP/recovery.log" 2>&1; then
               echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
               code=0
@@ -293,43 +301,45 @@ jobs:
               grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
               echo "RENDERER_DIAGNOSTICS_END"
             fi
-            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
             echo "::warning::Real render failed acceptance; publish other valid works and report this one"
             exit 0
           fi
           for suffix in '' '-medium' '-low'; do
             for ext in webm webp; do
-              in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
+              in="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview$suffix.$ext"
               test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
-              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+              cp "$in" "out/$REPAIR_SLOT/preview$suffix.$ext"
             done
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
-              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+              -of default=nw=1 "out/$REPAIR_SLOT/preview$suffix.webm" | grep -q '^codec_name='
             video_duration=$(ffprobe -v error -show_entries format=duration \
-              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+              -of default=nw=1:nk=1 "out/$REPAIR_SLOT/preview$suffix.webm")
             awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
               echo "::error::Rejected nonplayable short preview video"
               exit 1
             }
-            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
-            node scripts/verify-poster-first-frame.mjs "out/$ENTRY_ID/preview$suffix.webm" "out/$ENTRY_ID/preview$suffix.webp"
+            file "out/$REPAIR_SLOT/preview$suffix.webp" | grep -q 'Web/P image'
+            node scripts/verify-poster-first-frame.mjs "out/$REPAIR_SLOT/preview$suffix.webm" "out/$REPAIR_SLOT/preview$suffix.webp"
           done
-          node scripts/verify-preview-motion.mjs "out/$ENTRY_ID/preview.webm"
-          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
+          node scripts/verify-preview-motion.mjs "out/$REPAIR_SLOT/preview.webm"
+          cp "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
-              throw new Error("Export metadata incomplete");
-            m.ok=true;
-            fs.writeFileSync(p,JSON.stringify(m));
+            const animationMatches=typeof process.env.ENTRY_ANIMATION==="string"&&m.animation===process.env.ENTRY_ANIMATION;
+            if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
+              throw new Error("Export metadata incomplete or selected animation mismatch");
+            const safe={ok:true,animationMatches:true,width:m.width,height:m.height,
+              animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
+            fs.writeFileSync(p,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
-          ' "out/$ENTRY_ID/meta.json"
+          ' "out/$REPAIR_SLOT/meta.json"
       - uses: actions/upload-artifact@v4
         if: always() && matrix.entry.needsRender
         with:
-          name: latest20-${{ matrix.entry.id }}
-          path: out/${{ matrix.entry.id }}/
+          name: latest20-${{ matrix.entry.repairSlot }}
+          path: out/${{ matrix.entry.repairSlot }}/
           if-no-files-found: error
           retention-days: 1
   publish:
@@ -342,11 +352,32 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
+      - name: Mask and hydrate exact latest-20 source directories
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
+          node --input-type=module <<'NODE'
+          import { execFileSync } from 'node:child_process';
+          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+          if(selected.length!==20)throw new Error('Missing exact repair manifest');
+          const paths=new Set();
+          for(const item of selected){
+            const source=String(item.previewPath||'');
+            if(!source||source.startsWith('/')||source.split('/').includes('..')||
+              !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
+            paths.add(source);
+          }
+          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
+          console.log('SOURCE_PATHS_HYDRATED');
+          NODE
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
@@ -376,8 +407,6 @@ jobs:
         run: node scripts/test-first-frame-poster-real.mjs
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
@@ -413,6 +442,8 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -421,11 +452,15 @@ jobs:
             /scripts/verify-latest-twenty-live.mjs
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/fetch-public-index.mjs
+            /scripts/mask-preview-manifest.mjs
+            /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/lib/export-log-redaction.mjs
+      - name: Mask exact production audit manifest
+        run: node scripts/mask-preview-manifest.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Verify 20 actual public media responses after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: node scripts/verify-latest-twenty-live.mjs

@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
@@ -184,11 +185,11 @@ if(action==="matrix"){
   const matrix=[];
   // Bound concurrent production probes so the gallery is not flooded.
   for(let offset=0;offset<latest.length;offset+=4){
-    const batch=await Promise.all(latest.slice(offset,offset+4).map(async e=>{
+    const batch=await Promise.all(latest.slice(offset,offset+4).map(async (e,batchIndex)=>{
+     const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
-      ? record.defaultAnimation : "";
+    const indexedAnimation=choosePreviewAnimation([],record?.defaultAnimation);
     // Only the exact index-selected animation is eligible for preview rendering.
     // A missing default remains blocked; historical names are never inferred.
     const animation=indexedAnimation;
@@ -197,7 +198,7 @@ if(action==="matrix"){
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,
+    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
@@ -217,7 +218,6 @@ if(action==="matrix"){
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
     "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
     "/library/index.json","/library_*/index.json",
-    ...matrix.map(x=>"/"+x.previewPath+"/"),
   ];
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
@@ -230,8 +230,11 @@ if(action==="matrix"){
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
-  const seen=new Set();
+  const seen=new Set(),seenSlots=new Set();
   for(const item of selected){
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=20||seenSlots.has(item.repairSlot))
+      throw new Error("Invalid artifact slot");
+    seenSlots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
     const uniqueKey=entryInfo.basePath+"/"+entryInfo.id;
     if(seen.has(uniqueKey))throw new Error("Duplicate repair entry");
@@ -252,7 +255,9 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
+    const selectedAnimation=choosePreviewAnimation([],item.animation);
+    const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
+    if(!selectedAnimation||selectedAnimation!==indexedAnimation){
       // Without an exact selected/default timeline, even an older installed
       // WebM cannot be proven to represent the requested animation. Preserve
       // the media bytes, but never advertise them as accepted or refresh posters.
@@ -283,13 +288,14 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest20-"+item.id);
+    const artifact=path.join(base,"latest20-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true &&
+      choosePreviewAnimation([],meta?.animation)===choosePreviewAnimation([],item.animation) && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -350,7 +356,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animation=choosePreviewAnimation([],meta.animation);
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
@@ -366,7 +372,6 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
     // Preserve the source index defaultAnimation; preview publication only adds media metadata.
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;

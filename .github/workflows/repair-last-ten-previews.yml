@@ -90,6 +90,13 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
+    env:
+      ENTRY_ID: ${{ matrix.entry.id }}
+      ENTRY_PATH: ${{ matrix.entry.previewPath }}
+      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+      ENTRY_READY: ${{ matrix.entry.ready }}
+      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -110,13 +117,10 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask private source metadata and hydrate exact source
-        env:
-          ENTRY_ID: ${{ matrix.entry.id }}
-          ENTRY_PATH: ${{ matrix.entry.previewPath }}
-          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         shell: bash
         run: |
           set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
           for value in "$ENTRY_ID" "$ENTRY_PATH" "$ENTRY_ANIMATION"; do
             [[ -z "$value" ]] || printf '::add-mask::%s\n' "$value"
           done
@@ -148,12 +152,6 @@ jobs:
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
         shell: bash
-        env:
-          ENTRY_ID: ${{ matrix.entry.id }}
-          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
-          ENTRY_READY: ${{ matrix.entry.ready }}
-          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         run: |
           set -euo pipefail
           mkdir -p "out/$REPAIR_SLOT"
@@ -238,6 +236,8 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -247,11 +247,10 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask and hydrate exact source directories
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         shell: bash
         run: |
           set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
@@ -283,8 +282,6 @@ jobs:
           node-version: '22'
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
@@ -317,6 +314,8 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -324,10 +323,13 @@ jobs:
           sparse-checkout: |
             /scripts/verify-latest-ten-live.mjs
             /scripts/lib/latest-ten-live-audit.mjs
+            /scripts/mask-preview-manifest.mjs
+            /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/lib/export-log-redaction.mjs
+      - name: Mask exact production audit manifest
+        run: node scripts/mask-preview-manifest.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Verify 10 actual public media responses after publication
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: node scripts/verify-latest-ten-live.mjs
