@@ -22,6 +22,12 @@ on:
       - scripts/lib/latest-ten-live-audit.mjs
       - scripts/test-latest-ten-live-audit.mjs
       - scripts/test-repair-last-ten-previews.mjs
+  pull_request:
+    paths:
+      - .github/workflows/repair-last-ten-previews.yml
+      - scripts/render-work.mjs
+      - scripts/lib/render-selection.mjs
+      - scripts/test-render-selection.mjs
   workflow_dispatch:
 permissions:
   contents: read
@@ -62,6 +68,7 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-render-selection.mjs
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-latest-ten-live-audit.mjs
