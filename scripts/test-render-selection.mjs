@@ -81,3 +81,22 @@ test('WebM exporter never substitutes an alternate or candidate animation', () =
   assert.match(selector, /return typeof preferred === 'string' \? preferred : ''/,
     'an unavailable explicit name must remain unchanged so the render can fail/ block');
 });
+
+
+test('latest-ten recovery exposes only numeric slots and sanitized metadata publicly', () => {
+  const workflow = fs.readFileSync(new URL('../.github/workflows/repair-last-ten-previews.yml', import.meta.url), 'utf8');
+  const repair = fs.readFileSync(new URL('./repair-last-ten-previews.mjs', import.meta.url), 'utf8');
+  assert.match(workflow, /name: validate-recovery-\\$\\{\\{ matrix\\.entry\\.repairSlot \\}\\}/);
+  assert.match(workflow, /name: latest10-\\$\\{\\{ matrix\\.entry\\.repairSlot \\}\\}/);
+  assert.match(workflow, /path: out\\/\\$\\{\\{ matrix\\.entry\\.repairSlot \\}\\}\\//);
+  assert.doesNotMatch(workflow, /name:.*matrix\\.entry\\.(?:id|animation|previewPath)/);
+  assert.doesNotMatch(workflow, /sparse-checkout:[\\s\\S]{0,500}matrix\\.entry\\.previewPath/);
+  assert.match(workflow, /animationMatches:true/);
+  assert.match(workflow, /Mask private source metadata and hydrate exact source/);
+  assert.match(workflow, /Mask and hydrate exact source directories/);
+  assert.match(repair, /latest\\.map\\(\\(e,repairSlot\\)=>/);
+  assert.match(repair, /latest10-"\\+item\\.repairSlot/);
+  assert.match(repair, /meta\\?\\.animationMatches===true/);
+  assert.doesNotMatch(repair, /meta\\.animations/,
+    'render artifacts must not overwrite original animation names in index metadata');
+});
