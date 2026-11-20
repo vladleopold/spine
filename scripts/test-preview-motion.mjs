@@ -11,7 +11,7 @@ function render(name,source,filter){
   const output=join(dir,name+'.nut');
   const args=['-v','error','-f','lavfi','-i',source];
   if(filter)args.push('-vf',filter);
-  args.push('-c:v','rawvideo','-pix_fmt','gray','-f','nut','-y',output);
+  args.push('-c:v','rawvideo','-pix_fmt','rgb24','-f','nut','-y',output);
   execFileSync('ffmpeg',args,{stdio:'ignore',timeout:30000});
   return output;
 }
@@ -28,11 +28,16 @@ try{
     "format=gray,geq=lum='if(lt(N,7)*lt(abs(X-(mod(N*5,48)+6)),6)*lt(abs(Y-32),6),255,0)'");
   const staticClip=render('static','color=c=white:s=64x64:r=10:d=1',null);
   const blank=render('blank','color=c=black:s=64x64:r=10:d=1',null);
+  const region='lt(abs(X-32),16)*lt(abs(Y-32),16)';
+  const chroma='if('+region+',mod(N*32,256),128)';
+  const colorOnly=render('color-only','color=c=black:s=64x64:r=8:d=1',
+    "format=yuv444p,geq=lum='if("+region+",76,0)':cb='"+chroma+"':cr='"+chroma+"'");
   passes(moving);
+  passes(colorOnly);
   rejects(seven);
   rejects(staticClip);
   rejects(blank);
-  console.log('PASS preview motion: >=8 nonzero distinct frames; static and blank clips rejected');
+  console.log('PASS preview motion: >=8 nonzero distinct RGB frames; color-only motion accepted; static and blank clips rejected');
 }finally{
   rmSync(dir,{recursive:true,force:true});
 }
