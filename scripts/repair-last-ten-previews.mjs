@@ -9,6 +9,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
+import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -40,6 +41,14 @@ function bundleOk(entry) {
     files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
     files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
 }
+function sourceIssue(entry){
+  const p=path.resolve(root,entry.previewPath);
+  if(!p.startsWith(root+path.sep))return "UNSAFE_PREVIEW_PATH";
+  try{
+    const files=fs.readdirSync(p).filter(name=>fs.statSync(path.join(p,name)).isFile());
+    return inspectAtlasSourceBundle(p,files).reason;
+  }catch{return "MISSING_SOURCE_TRIAD";}
+}
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
 function existingMediaOk(entry,animation){
@@ -69,8 +78,9 @@ if(action==="matrix"){
   const matrix=latest.map(e=>{
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const animation=typeof record?.defaultAnimation==="string"?record.defaultAnimation.trim():"";
+    const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const sourceReady=bundleOk(e);
-    const ready=Boolean(animation)&&sourceReady;
+    const ready=Boolean(animation)&&sourceReady&&!incompatible;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
@@ -79,7 +89,7 @@ if(action==="matrix"){
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready&&!existingMediaOk(e,animation),
       animation,
-      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
+      blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":!animation?"MISSING_DEFAULT_ANIMATION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -116,6 +126,14 @@ if(action==="matrix"){
     const entries=indexes.get(indexPath);
     const record=entries.find(e=>e.id===item.id);
     if(!record)throw new Error("Index record disappeared before repair");
+    const sourceProblem=sourceIssue(entryInfo);
+    if(sourceProblem==="UNSUPPORTED_SPINE_EXPORT_3_8_75"){
+      record.webmStatus="blocked-incompatible-source-version";
+      record.previewStatus="blocked";
+      record.previewError="Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required";
+      summary.blocked++;
+      continue;
+    }
     if(!bundleOk(entryInfo)){
       record.webmStatus="blocked-missing-source";
       record.previewStatus="blocked";
