@@ -14,10 +14,16 @@ assert.ok(repairSource.includes('for(const suffix of ["","-medium","-low"])'),
   'all three WebM tiers must be decoded before existing media is accepted');
 assert.ok(repairSource.includes('verify-preview-motion.mjs'),
   'each existing quality tier must have eight distinct visible frames');
+assert.ok(repairSource.includes('const selected=record.allAnimationPreviews?.[record.defaultAnimation]'),
+  'existing media must be associated with the exact indexed default animation');
+assert.ok(repairSource.includes('selected.webmPreviewMedium!==record.webmPreviewMedium'));
+assert.ok(liveVerifier.includes('const selected=record.allAnimationPreviews?.[work.animation]'));
+assert.ok(liveVerifier.includes('selected.webpPosterLow!==record.webpPosterLow'));
 assert.ok(repairSource.includes('record?.previewStatus!=="ready"'),
   'stale or failed preview metadata must be repaired, not accepted');
 assert.ok(repairSource.includes('"/api/github-upload.js"'));
 assert.ok(repairSource.includes('"/.github/workflows/repair-latest-twenty-previews.yml"'));
+assert.ok(repairSource.includes('"/api/github-upload.js"'));
 assert.ok(repairSource.includes('verifyPosterFirstFrame(video,poster)'),
   'each stored WebP must match frame zero of its paired WebM');
 assert.ok(liveVerifier.includes('verify-preview-motion.mjs'));
