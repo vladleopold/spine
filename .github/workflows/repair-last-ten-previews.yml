@@ -20,6 +20,11 @@ on:
       - scripts/test-canvas-fallback.mjs
       - scripts/verify-latest-ten-live.mjs
       - scripts/lib/latest-ten-live-audit.mjs
+      - scripts/lib/published-media-acceptance.mjs
+      - scripts/test-published-media-acceptance.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/first-frame-poster.mjs
       - scripts/test-latest-ten-live-audit.mjs
       - scripts/test-repair-last-ten-previews.mjs
   workflow_dispatch:
@@ -65,6 +70,7 @@ jobs:
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-latest-ten-live-audit.mjs
+          node scripts/test-published-media-acceptance.mjs
           echo "LATEST10_INVENTORY_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
@@ -272,10 +278,30 @@ jobs:
           sparse-checkout: |
             /scripts/verify-latest-ten-live.mjs
             /scripts/lib/latest-ten-live-audit.mjs
+            /scripts/lib/published-media-acceptance.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
+            /scripts/lib/first-frame-poster.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify 10 actual public media responses after publication
+      - name: Install pinned FFmpeg tools for live media decoding
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Decode 10 actual published WebM/WebP pairs after publication
         env:
           REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: node scripts/verify-latest-ten-live.mjs
