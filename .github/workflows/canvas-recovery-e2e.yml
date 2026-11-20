@@ -10,6 +10,8 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/test-first-frame-poster.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
       - .github/workflows/canvas-recovery-e2e.yml
   pull_request:
     paths:
@@ -20,6 +22,8 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/test-first-frame-poster.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
       - .github/workflows/canvas-recovery-e2e.yml
 permissions:
   contents: read
@@ -75,6 +79,7 @@ jobs:
           fi
           node --check scripts/lib/first-frame-poster.mjs
           node scripts/test-first-frame-poster.mjs
+          node scripts/test-preview-motion.mjs
       - name: Real proprietary animation, temporary private frames only, strict media acceptance
         shell: bash
         env:
@@ -102,6 +107,7 @@ jobs:
               throw Error("Incomplete actual animation video");
             console.log("REAL_SPINE_VIDEO_ACCEPTANCE_PASS FRAMES="+s.nb_read_frames);
           ' "$RUNNER_TEMP/private-probe.json"
+          node scripts/verify-preview-motion.mjs "$RUNNER_TEMP/private-preview.webm"
           for f in "$RUNNER_TEMP/private-preview.webp" "$RUNNER_TEMP/private-preview-medium.webm" "$RUNNER_TEMP/private-preview-medium.webp" "$RUNNER_TEMP/private-preview-low.webm" "$RUNNER_TEMP/private-preview-low.webp"; do
             test -s "$f"
           done
