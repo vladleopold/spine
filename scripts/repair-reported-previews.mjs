@@ -6,6 +6,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
@@ -66,7 +67,7 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
+  if(!["ready","pending-live"].includes(record?.webmStatus)||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -121,7 +122,7 @@ if(action==="matrix"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-reported18");
-  const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
+  const indexes=new Map(),summary={ready:0,pendingLive:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
     if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
       throw new Error("Invalid artifact slot");
@@ -158,7 +159,15 @@ if(action==="matrix"){
     }
     if(item.needsRender===false){
       if(existingMediaOk(entryInfo,selectedAnimation)){
-        summary.ready++;
+        const destination=path.resolve(root,entryInfo.previewPath);
+        record.previewAssetHashes=Object.fromEntries(mediaNames.map(name=>{
+          const bytes=fs.readFileSync(path.join(destination,name));
+          return [name,{sha256:createHash("sha256").update(bytes).digest("hex"),bytes:bytes.length}];
+        }));
+        record.webmStatus="pending-live";
+        record.previewStatus="pending";
+        record.previewError="Awaiting production media verification";
+        summary.pendingLive++;
         continue;
       }
       record.webmStatus="failed";
@@ -194,10 +203,13 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
+      if(["ready","pending-live"].includes(record.webmStatus) && record.webmPreview && record.webpPoster) {
         // Never replace an existing genuine clip with a failed higher-FPS retry.
         record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
-        summary.ready++;
+        record.webmStatus="pending-live";
+        record.previewStatus="pending";
+        record.previewError="Awaiting production media verification";
+        summary.pendingLive++;
         continue;
       }
       record.webmStatus="failed";
@@ -208,6 +220,10 @@ if(action==="matrix"){
     }
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
+    record.previewAssetHashes=Object.fromEntries(names.map(name=>{
+      const bytes=fs.readFileSync(path.join(destination,name));
+      return [name,{sha256:createHash("sha256").update(bytes).digest("hex"),bytes:bytes.length}];
+    }));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
     const animation=selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
@@ -218,10 +234,10 @@ if(action==="matrix"){
     record.webpPoster=poster;
     record.webpPosterMedium=prefix+"preview-medium.webp";
     record.webpPosterLow=prefix+"preview-low.webp";
-    record.webmStatus="ready";
-    record.previewStatus="ready";
-    record.dispatchStatus="rendered";
-    record.previewError="";
+    record.webmStatus="pending-live";
+    record.previewStatus="pending";
+    record.dispatchStatus="rendered-awaiting-live";
+    record.previewError="Awaiting production media verification";
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
@@ -244,7 +260,7 @@ if(action==="matrix"){
         webpPosterLow:record.webpPosterLow,
       },
     };
-    summary.ready++;
+    summary.pendingLive++;
   }
   for(const [p,a] of indexes)fs.writeFileSync(p,JSON.stringify(a,null,2)+"\n");
   fs.writeFileSync(path.join(root,"preview-repair-summary.json"), JSON.stringify(summary));
