@@ -14,6 +14,11 @@ on:
       - scripts/test-preview-motion.mjs
       - scripts/verify-poster-first-frame.mjs
       - scripts/test-canvas-recovery-workflow.mjs
+      - scripts/prepare-render.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/lib/source-preservation-case.mjs
+      - scripts/resolve-source-preservation-case.mjs
+      - scripts/test-source-preservation-case.mjs
       - .github/workflows/canvas-recovery-e2e.yml
   pull_request:
     paths:
@@ -28,6 +33,11 @@ on:
       - scripts/test-preview-motion.mjs
       - scripts/verify-poster-first-frame.mjs
       - scripts/test-canvas-recovery-workflow.mjs
+      - scripts/prepare-render.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/lib/source-preservation-case.mjs
+      - scripts/resolve-source-preservation-case.mjs
+      - scripts/test-source-preservation-case.mjs
       - .github/workflows/canvas-recovery-e2e.yml
 permissions:
   contents: read
@@ -39,14 +49,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        animation:
-          - "Idle Post Climax Cum"
-          - "Climax 01"
-        include:
-          - animation: "Idle Post Climax Cum"
-            id: "Spine-animation-2026-11-17T18-45-14-132Z"
-          - animation: "Climax 01"
-            id: "Spine-animation-2026-11-17T18-44-12-762Z"
+        case_index: [0, 1]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,11 +60,13 @@ jobs:
             /package.json
             /package-lock.json
             /library_02/index.json
-            /library_02/Spine-animation-2026-11-17T18-45-14-132Z/
-            /library_02/Spine-animation-2026-11-17T18-44-12-762Z/
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Resolve exact source-preserving case
+        env:
+          CASE_INDEX: ${{ matrix.case_index }}
+        run: node scripts/resolve-source-preservation-case.mjs
       - name: Pure fallback unit gate and code syntax
         run: |
           node --check scripts/spine-export-webm.mjs
@@ -72,6 +77,10 @@ jobs:
           node --check scripts/verify-poster-first-frame.mjs
           node --check scripts/test-canvas-recovery-workflow.mjs
           node scripts/test-canvas-recovery-workflow.mjs
+          node --check scripts/lib/source-preservation-case.mjs
+          node --check scripts/resolve-source-preservation-case.mjs
+          node --check scripts/test-source-preservation-case.mjs
+          node scripts/test-source-preservation-case.mjs
       - name: Install Chromium and ffmpeg runtime
         shell: bash
         run: |
@@ -91,11 +100,9 @@ jobs:
       - name: Fingerprint original source files before rendering
         id: source_fingerprint
         shell: bash
-        env:
-          ENTRY_ID: ${{ matrix.id }}
         run: |
           set -euo pipefail
-          SOURCE_DIR="library_02/$ENTRY_ID"
+          SOURCE_DIR="$SOURCE_DIR"
           test -d "$SOURCE_DIR"
           if [[ -n "$(git status --porcelain -- "$SOURCE_DIR")" ]]; then
             echo "SOURCE_PRESERVATION_PRECONDITION_FAILED"
@@ -109,9 +116,6 @@ jobs:
           echo "SOURCE_PRESERVATION_BASELINE_CAPTURED"
       - name: Real proprietary animation, temporary private frames only, strict media acceptance
         shell: bash
-        env:
-          ENTRY_ID: ${{ matrix.id }}
-          ANIMATION: ${{ matrix.animation }}
         run: |
           set -euo pipefail
           set +e
@@ -148,11 +152,9 @@ jobs:
       - name: Verify original source files remain byte-identical
         if: always() && steps.source_fingerprint.outputs.captured == 'true'
         shell: bash
-        env:
-          ENTRY_ID: ${{ matrix.id }}
         run: |
           set -euo pipefail
-          SOURCE_DIR="library_02/$ENTRY_ID"
+          SOURCE_DIR="$SOURCE_DIR"
           if [[ ! -s "$RUNNER_TEMP/source-files.before" || ! -s "$RUNNER_TEMP/source-hashes.before" ]]; then
             echo "SOURCE_PRESERVATION_BASELINE_MISSING"
             exit 1

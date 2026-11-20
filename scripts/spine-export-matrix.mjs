@@ -1,32 +1,25 @@
-// Builds the animation matrix for spine-export-full directly into
-// $GITHUB_OUTPUT. The old approach captured `node -e` stdout into a shell
-// variable and re-parsed it twice: a stray console.log line broke the first
-// parse ("Unexpected token 'C'"), and a silent failure left the variable
-// empty ("Unexpected end of JSON input"). Writing the output file ourselves
-// removes the shell from the data path entirely.
+// Builds a numeric animation-index matrix for spine-export-full.
+// Animation names stay inside each worker and never cross GitHub job outputs.
 import fs from 'node:fs';
 import { entryForUpload } from './resolve-library.mjs';
+import { buildAnimationIndexMatrix } from './lib/spine-export-matrix.mjs';
 
 const uploadId = process.argv[2];
 const outputFile = process.env.GITHUB_OUTPUT;
-
 const found = entryForUpload(process.cwd(), uploadId);
-const entry = found ? found.entry : null;
-
-const hasSkeleton = /\.(json|skel)$/i.test(String(entry?.skeleton || ''));
-const hasAtlas = /\.atlas(?:\.txt)?$/i.test(String(entry?.atlas || ''));
-const hasTextures = Array.isArray(entry?.textures) &&
-  entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file)));
-const result = !entry || !hasSkeleton || !hasAtlas || !hasTextures ||
-  !Array.isArray(entry.animations) || entry.animations.length === 0
-  ? { matrix: [], has_items: false, reason: 'missing-spine-assets-or-animations' }
-  : { matrix: entry.animations, has_items: true };
+const result = buildAnimationIndexMatrix(found?.entry);
 
 if (outputFile) {
   const lines = [
     `matrix=${JSON.stringify(result.matrix)}`,
-    `has_items=${String(result.has_items)}`,
+    `has_items=${String(result.hasItems)}`,
   ].join('\n') + '\n';
   fs.appendFileSync(outputFile, lines);
 }
-process.stdout.write(JSON.stringify(result));
+
+// Only aggregate counts are printed. Never emit source animation names.
+process.stdout.write(JSON.stringify({
+  animationCount: result.matrix.length,
+  has_items: result.hasItems,
+  ...(result.reason ? { reason: result.reason } : {}),
+}));
