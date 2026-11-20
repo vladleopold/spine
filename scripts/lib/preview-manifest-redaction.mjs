@@ -7,13 +7,16 @@ function normalizeKey(key) {
 }
 
 function addValue(values, value) {
-  if (typeof value !== 'string') return;
-  const text = value.trim();
-  if (text.length < 4 || /[\r\n]/.test(text)) return;
-  values.add(text);
-  if (!/^https?:/i.test(text) && text.includes('/')) {
-    for (const part of text.split('/')) {
-      if (part.length >= 4) values.add(part);
+  if (typeof value !== 'string' || /[\r\n]/.test(value) || value.length === 0) return;
+  values.add(value);
+  const trimmed = value.trim();
+  if (trimmed && trimmed !== value) values.add(trimmed);
+  if (!/^https?:/i.test(value) && value.includes('/')) {
+    for (const part of value.split('/')) {
+      if (!part) continue;
+      values.add(part);
+      const normalized = part.trim();
+      if (normalized && normalized !== part) values.add(normalized);
     }
   }
 }
@@ -40,6 +43,7 @@ export function collectPreviewManifestSecrets(manifest, rawManifest = '', enviro
   for (const key of [
     'ENTRY_ID', 'UPLOAD_ID', 'ENTRY_PATH', 'PREVIEW_PATH',
     'ENTRY_ANIMATION', 'ANIMATION', 'SOURCE_PATH',
+    'ORIGIN', 'OWNER', 'REPO', 'BRANCH', 'SPINE_ANIMATION_SAFE',
   ]) addValue(values, environment[key]);
 
   return [...values];
