@@ -5,6 +5,7 @@ import {
   mergeFullExportMetadata,
   resolveAnimationIndex,
 } from './lib/spine-export-matrix.mjs';
+import { listCollectionFolders, readIndex } from './resolve-library.mjs';
 
 const source = {
   skeleton: 'source.skel',
@@ -71,6 +72,29 @@ const noDefault = mergeFullExportMetadata({
 }, previews, '2026-11-20T00:00:00.000Z');
 assert.equal(noDefault.defaultAnimation, undefined);
 assert.equal(noDefault.previewDuration, undefined);
+
+// Exercise the numeric matrix against the repository's real public indexes without logging
+// any work IDs or animation names. Each index must resolve back to its exact source string.
+const realEntries = listCollectionFolders(process.cwd())
+  .flatMap((folder) => readIndex(process.cwd(), folder) || []);
+const realEntry = realEntries.find((entry) =>
+  Array.isArray(entry?.animations) &&
+  entry.animations.length > 0 &&
+  typeof entry.skeleton === 'string' &&
+  typeof entry.atlas === 'string' &&
+  Array.isArray(entry.textures) &&
+  entry.textures.length > 0,
+);
+assert.ok(realEntry, 'a source-backed archive entry is required for the matrix integration test');
+const realMatrix = buildAnimationIndexMatrix(realEntry);
+assert.equal(realMatrix.hasItems, true);
+assert.deepEqual(realMatrix.matrix, realEntry.animations.map((_, index) => index));
+for (let index = 0; index < realEntry.animations.length; index += 1) {
+  const resolved = resolveAnimationIndex(realEntry, index);
+  assert.equal(resolved.status, 'ready');
+  assert.equal(resolved.animation, realEntry.animations[index]);
+  assert.equal(resolved.safeName, `animation-${index}`);
+}
 
 const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-full.yml', import.meta.url), 'utf8');
 const matrixScript = fs.readFileSync(new URL('./spine-export-matrix.mjs', import.meta.url), 'utf8');
