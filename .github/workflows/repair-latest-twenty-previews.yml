@@ -81,7 +81,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: spine-preview-latest-twenty-${{ github.ref }}
+  group: spine-preview-repair-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   inventory:
@@ -180,13 +180,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-      ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -207,11 +200,27 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask private metadata and hydrate exact source
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          PREVIEW_PATH: ${{ matrix.entry.previewPath }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+          ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+          REPAIR_IDS_JSON: ${{ toJson(matrix.entry) }}
         shell: bash
         run: |
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
-          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
+          {
+            printf 'ENTRY_ID=%s\n' "$ENTRY_ID"
+            printf 'PREVIEW_PATH=%s\n' "$PREVIEW_PATH"
+            printf 'ENTRY_ANIMATION=%s\n' "$ENTRY_ANIMATION"
+            printf 'ENTRY_READY=%s\n' "$ENTRY_READY"
+            printf 'ENTRY_NEEDS_RENDER=%s\n' "$ENTRY_NEEDS_RENDER"
+            printf 'REPAIR_SLOT=%s\n' "$REPAIR_SLOT"
+          } >> "$GITHUB_ENV"
+          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null 2>&1
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -352,18 +361,19 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
       - name: Mask and hydrate exact latest-20 source directories
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         shell: bash
         run: |
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
+          printf 'REPAIR_IDS_JSON=%s\n' "$REPAIR_IDS_JSON" >> "$GITHUB_ENV"
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
@@ -442,8 +452,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -456,7 +464,11 @@ jobs:
             /scripts/lib/preview-manifest-redaction.mjs
             /scripts/lib/export-log-redaction.mjs
       - name: Mask exact production audit manifest
-        run: node scripts/mask-preview-manifest.mjs
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+        run: |
+          node scripts/mask-preview-manifest.mjs
+          printf 'REPAIR_IDS_JSON=%s\n' "$REPAIR_IDS_JSON" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
