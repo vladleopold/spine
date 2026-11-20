@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { resolveRenderSelection, writeRenderVerification } from './lib/render-selection.mjs';
+import { resolveRenderSelection, shouldDispatchFullExport, writeRenderVerification } from './lib/render-selection.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 test('missing explicit and indexed animation is reported as blocked', () => {
@@ -115,4 +115,31 @@ test('published preview commits use generic messages without private IDs or sour
   ]);
   assert.ok(!renderWork.includes('Publish rendered asset'));
   assert.ok(!renderWork.includes('Publish verified media index for'));
+});
+
+
+test('preview-only repair never dispatches a full export for other animations', () => {
+  assert.equal(shouldDispatchFullExport({ previewOnly: true }), false);
+  assert.equal(shouldDispatchFullExport({ previewOnly: false }), true);
+  assert.equal(shouldDispatchFullExport({}), true);
+  const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+  assert.match(renderWork, /if\\(shouldDispatchFullExport\\(config\\)\\)\\s*\\{/);
+  assert.match(renderWork, /SPINE_FULL_EXPORT_DISPATCH_SKIPPED_PREVIEW_ONLY/);
+});
+
+test('pinned recovery config selects only the exact requested animation and preview-only mode', () => {
+  const config = JSON.parse(fs.readFileSync(new URL('./render-check.json', import.meta.url), 'utf8'));
+  assert.equal(config.animation, 'Idle Post Climax Cum');
+  assert.equal(config.previewOnly, true);
+  const selected = resolveRenderSelection(config, { defaultAnimation: 'different-source-default' });
+  assert.deepEqual(selected, {
+    status: 'selected', code: null, animation: 'Idle Post Climax Cum',
+  });
+});
+
+test('the export workflow runs only on main pushes and never exports from a pull request', () => {
+  const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-webm.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /push:\\s*\\n\\s+branches:\\s*\\[main\\]/);
+  assert.match(workflow, /if:\\s*github\\.ref\\s*==\\s*'refs\\/heads\\/main'\\s*&&\\s*github\\.event_name\\s*!=\\s*'pull_request'/);
+  assert.match(workflow, /validate-selection:/);
 });
