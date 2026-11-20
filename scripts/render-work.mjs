@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import {resolveRenderSelection} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
@@ -16,14 +17,37 @@ if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
   if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
   console.log('Full export verification dispatched');process.exit(0);
 }
+const selection=resolveRenderSelection(config,found.entry);
+const report={
+ uploadId:id,
+ animation:selection.animation||null,
+ status:selection.status==='blocked'?'blocked':'rendering',
+ code:selection.code||null,
+ formats:[],
+};
+const writeReport=()=>fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
+process.on('uncaughtException',error=>{
+ report.status='failed';
+ report.code=report.code||'RENDER_FAILED';
+ report.error=error.message;
+ writeReport();
+ console.error(error);
+ process.exit(1);
+});
+if(selection.status==='blocked'){
+ writeReport();
+ console.error('SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION');
+ process.exit(1);
+}
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
-const flags=[`--upload-id=${id}`,`--animation=${config.animation||found.entry.defaultAnimation||''}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
+const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
-const report={uploadId:id,animation:meta.animation,formats:[]};
-process.on('uncaughtException',error=>{fs.writeFileSync('render-verification.json',JSON.stringify({...report,error:error.message},null,2));console.error(error);process.exit(1);});
+report.animation=meta.animation;
+report.status='rendering';
+report.code=null;
 function probe(file){
  const data=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file],{encoding:'utf8'}));
  const s=data.streams[0];if(!s?.width||!Number(s.nb_read_frames))throw Error('Empty render: '+file);
@@ -91,8 +115,10 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
   }else{add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;}
  }
 }
-fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
 await publish({allAnimationPreviews:{...entryForUpload(process.cwd(),id).entry.allAnimationPreviews,[anim]:downloads},fullExportStatus:(meta.animations.length===1?'ready':'partial'),fullExportGeneratedAt:new Date().toISOString()});
+report.status='ready';
+report.code=null;
+writeReport();
 for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
  const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
  if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
