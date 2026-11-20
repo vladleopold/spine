@@ -14,6 +14,10 @@ assert.ok(repairSource.includes('for(const suffix of ["","-medium","-low"])'),
   'all three WebM tiers must be decoded before existing media is accepted');
 assert.ok(repairSource.includes('verify-preview-motion.mjs'),
   'each existing quality tier must have eight distinct visible frames');
+assert.ok(repairSource.includes('record?.previewStatus!=="ready"'),
+  'stale or failed preview metadata must be repaired, not accepted');
+assert.ok(repairSource.includes('"/api/github-upload.js"'));
+assert.ok(repairSource.includes('"/.github/workflows/repair-latest-twenty-previews.yml"'));
 assert.ok(repairSource.includes('verifyPosterFirstFrame(video,poster)'),
   'each stored WebP must match frame zero of its paired WebM');
 assert.ok(liveVerifier.includes('verify-preview-motion.mjs'));
@@ -22,6 +26,8 @@ assert.ok(liveVerifier.includes('response.arrayBuffer()'),
   'production verification must download full media bodies, not a range prefix');
 assert.ok(!liveVerifier.includes("Range:'bytes=0-16383'"),
   'a 16 KiB signature probe is not a decoded-media verification');
+assert.ok(liveVerifier.includes("record.previewStatus!=='ready'"));
+assert.ok(liveVerifier.includes('record.defaultAnimation!==work.animation'));
 assert.ok(liveVerifier.includes('frames>=8'));
 assert.ok(liveVerifier.includes('contentType'));
 assert.ok(workflow.includes('sparse-checkout: ${{ steps.latest.outputs.sparseCheckout }}'),
