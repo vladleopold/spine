@@ -4,12 +4,44 @@ name: Spine Export Full (All Animations · Parallel)
 on:
   repository_dispatch:
     types: [spine-export-full]
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/spine-export-full.yml
+      - scripts/spine-export-matrix.mjs
+      - scripts/lib/spine-export-matrix.mjs
+      - scripts/resolve-export-animation.mjs
+      - scripts/test-spine-export-matrix.mjs
+  pull_request:
+    paths:
+      - .github/workflows/spine-export-full.yml
+      - scripts/spine-export-matrix.mjs
+      - scripts/lib/spine-export-matrix.mjs
+      - scripts/resolve-export-animation.mjs
+      - scripts/test-spine-export-matrix.mjs
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  STAGE 1 — Read index.json and produce the animation matrix
 # ═══════════════════════════════════════════════════════════════════════════
 jobs:
+  validate-contract:
+    name: Validate full-export privacy and selection contract
+    if: github.event_name != 'repository_dispatch'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run numeric matrix and no-fallback regressions
+        run: |
+          node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/spine-export-matrix.mjs
+          node --check scripts/resolve-export-animation.mjs
+          node scripts/test-spine-export-matrix.mjs
+
   generate-matrix:
+    if: github.event_name == 'repository_dispatch'
     name: 📋 Build animation matrix
     runs-on: ubuntu-24.04
     outputs:
@@ -31,26 +63,24 @@ jobs:
         with:
           node-version: 22
 
-      - name: Read animations from index.json
+      - name: Read numeric animation indexes from index.json
         id: set-matrix
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
-          echo "=== Reading animations for: $UPLOAD_ID ==="
           node scripts/spine-export-matrix.mjs "$UPLOAD_ID"
-          echo "=== Matrix done ==="
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  STAGE 2a — Export OPAQUE WebM + WebP + MP4  (one job per animation)
 # ═══════════════════════════════════════════════════════════════════════════
   export-opaque:
-    name: 🎬 Opaque · ${{ matrix.animation }}
+    name: 🎬 Opaque · #${{ matrix.animation_index }}
     needs: generate-matrix
-    if: needs.generate-matrix.outputs.has-items == 'true'
+    if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        animation: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        animation_index: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     steps:
       - name: Checkout repository
@@ -67,6 +97,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Resolve exact animation by numeric index
+        id: resolve-animation
+        env:
+          UPLOAD_ID: ${{ github.event.client_payload.uploadId }}
+          ANIMATION_INDEX: ${{ matrix.animation_index }}
+        run: node scripts/resolve-export-animation.mjs
 
       - name: Install Playwright + Chromium
         run: |
@@ -89,9 +126,9 @@ jobs:
         id: export-webm
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
-          ANIM="${{ matrix.animation }}"
-          SAFE=$(echo "$ANIM" | sed 's/[^a-zA-Z0-9_-]/_/g')
-          echo "=== Exporting opaque WebM: $ANIM ($SAFE) ==="
+          ANIM="$(printf '%s' "$SPINE_ANIMATION_B64" | base64 --decode)"
+          SAFE="$SPINE_ANIMATION_SAFE"
+          echo "=== Exporting opaque WebM for animation index ${{ matrix.animation_index }} ==="
 
           node scripts/spine-export-webm.mjs \
             --upload-id="$UPLOAD_ID" \
@@ -131,7 +168,7 @@ jobs:
         id: collect-opaque
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
-          ANIM="${{ matrix.animation }}"
+          ANIMATION_INDEX="${{ matrix.animation_index }}"
           SAFE="${{ steps.export-webm.outputs.safe_name }}"
           DIR="artifact_opaque_${UPLOAD_ID}_${SAFE}"
           mkdir -p "$DIR"
@@ -148,8 +185,8 @@ jobs:
           META="${UPLOAD_ID}-anim-${SAFE}-preview.webm.json"
           [ -f "$META" ] && mv "$META" "$DIR/meta.json" || echo '{}' > "$DIR/meta.json"
 
-          # Animation name mapping
-          echo "$ANIM" > "$DIR/anim-name.txt"
+          # Store only the numeric source index; resolve the exact name from index.json at commit time.
+          echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
           echo "$SAFE" > "$DIR/safe-name.txt"
           echo "type=opaque" > "$DIR/export-type.txt"
 
@@ -168,14 +205,14 @@ jobs:
 #             Runs IN PARALLEL with export-opaque — no dependencies between them
 # ═══════════════════════════════════════════════════════════════════════════
   export-alpha:
-    name: 🌀 Alpha · ${{ matrix.animation }}
+    name: 🌀 Alpha · #${{ matrix.animation_index }}
     needs: generate-matrix
-    if: needs.generate-matrix.outputs.has-items == 'true'
+    if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        animation: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        animation_index: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     steps:
       - name: Checkout repository
@@ -192,6 +229,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Resolve exact animation by numeric index
+        id: resolve-animation
+        env:
+          UPLOAD_ID: ${{ github.event.client_payload.uploadId }}
+          ANIMATION_INDEX: ${{ matrix.animation_index }}
+        run: node scripts/resolve-export-animation.mjs
 
       - name: Install Playwright + Chromium
         run: |
@@ -214,9 +258,9 @@ jobs:
         id: export-alpha
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
-          ANIM="${{ matrix.animation }}"
-          SAFE=$(echo "$ANIM" | sed 's/[^a-zA-Z0-9_-]/_/g')
-          echo "=== Exporting alpha WebM: $ANIM ($SAFE) ==="
+          ANIM="$(printf '%s' "$SPINE_ANIMATION_B64" | base64 --decode)"
+          SAFE="$SPINE_ANIMATION_SAFE"
+          echo "=== Exporting alpha WebM for animation index ${{ matrix.animation_index }} ==="
 
           node scripts/spine-export-webm.mjs \
             --upload-id="$UPLOAD_ID" \
@@ -239,7 +283,7 @@ jobs:
       - name: Collect alpha artifacts
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
-          ANIM="${{ matrix.animation }}"
+          ANIMATION_INDEX="${{ matrix.animation_index }}"
           SAFE="${{ steps.export-alpha.outputs.safe_name }}"
           DIR="artifact_alpha_${UPLOAD_ID}_${SAFE}"
           mkdir -p "$DIR"
@@ -249,7 +293,7 @@ jobs:
             [ -f "$SRC" ] && mv "$SRC" "$DIR/" || echo "No alpha file: $SRC"
           done
 
-          echo "$ANIM" > "$DIR/anim-name.txt"
+          echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
           echo "$SAFE" > "$DIR/safe-name.txt"
           echo "type=alpha" > "$DIR/export-type.txt"
 
@@ -311,7 +355,7 @@ jobs:
   commit-all:
     name: 💾 Commit all to repository
     needs: [export-opaque, export-alpha]
-    if: always()
+    if: always() && github.event_name == 'repository_dispatch'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -357,15 +401,7 @@ jobs:
         run: |
           UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
           ORIGIN="${{ github.event.client_payload.origin }}"
-          # The work may live in any library_NN collection, and the active one
-          # moves as the library rotates, so the folder is resolved by upload id.
-          BASE_PATH=$(node --input-type=module -e "
-            import { collectionPathForUpload } from './scripts/resolve-library.mjs';
-            console.log(collectionPathForUpload(process.cwd(), process.argv[1]));
-          " "$UPLOAD_ID")
-          INDEX_PATH="${BASE_PATH}/index.json"
-          WORK_PATH=$(node --input-type=module -e "import {entryForUpload} from './scripts/resolve-library.mjs'; console.log(entryForUpload(process.cwd(), process.argv[1]).entry.previewPath)" "$UPLOAD_ID")
-          echo "Collection folder for $UPLOAD_ID: $BASE_PATH"
+          # Resolve collection and work paths from the fresh main HEAD inside each retry.
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -380,172 +416,121 @@ jobs:
             # stale HEAD and the push was rejected all the same.
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
+            BASE_PATH=$(node --input-type=module -e "
+              import { collectionPathForUpload } from './scripts/resolve-library.mjs';
+              console.log(collectionPathForUpload(process.cwd(), process.argv[1]));
+            " "$UPLOAD_ID")
+            INDEX_PATH="${BASE_PATH}/index.json"
+            WORK_PATH=$(node --input-type=module -e "import {entryForUpload} from './scripts/resolve-library.mjs'; console.log(entryForUpload(process.cwd(), process.argv[1]).entry.previewPath)" "$UPLOAD_ID")
+            git sparse-checkout add --skip-checks "/${WORK_PATH}/"
 
             # 2. Process all downloaded artifacts and update index.json
-            node -e "
-              const fs = require('fs');
-              const path = require('path');
+            UPLOAD_ID="$UPLOAD_ID" ORIGIN="$ORIGIN" BASE_PATH="$BASE_PATH" INDEX_PATH="$INDEX_PATH" node --input-type=module <<'NODE'
+            import fs from 'node:fs';
+            import path from 'node:path';
+            import {
+              mergeFullExportMetadata,
+              resolveAnimationIndex,
+            } from './scripts/lib/spine-export-matrix.mjs';
 
-              const uploadId = '$UPLOAD_ID';
-              const origin = '$ORIGIN';
-              const basePath = '$BASE_PATH';
-              const indexPath = '$INDEX_PATH';
+            const uploadId = process.env.UPLOAD_ID;
+            const origin = String(process.env.ORIGIN || '').replace(/\\/+$/, '');
+            const basePath = process.env.BASE_PATH;
+            const indexPath = process.env.INDEX_PATH;
+            const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+            const entryIndex = indexData.findIndex((entry) => entry.id === uploadId);
+            if (entryIndex === -1) throw new Error('UPLOAD_INDEX_ENTRY_MISSING');
 
-              const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
-              const entryIndex = indexData.findIndex(e => e.id === uploadId);
-              if (entryIndex === -1) {
-                console.log('Entry not found, nothing to do.');
-                process.exit(0);
-              }
+            const entry = indexData[entryIndex];
+            const allAnimPreviews = { ...(entry.allAnimationPreviews || {}) };
 
-              const allAnimPreviews = indexData[entryIndex].allAnimationPreviews || {};
+            for (const type of ['opaque', 'alpha']) {
+              const artifactsDir = path.join('downloaded-artifacts', type);
+              if (!fs.existsSync(artifactsDir)) continue;
 
-              // Process all artifact types
-              for (const type of ['opaque', 'alpha']) {
-                const artifactsDir = path.join('downloaded-artifacts', type);
-                if (!fs.existsSync(artifactsDir)) continue;
+              for (const dir of fs.readdirSync(artifactsDir)) {
+                const sourceDir = path.join(artifactsDir, dir);
+                if (!fs.statSync(sourceDir).isDirectory()) continue;
 
-                const dirs = fs.readdirSync(artifactsDir);
-                for (const dir of dirs) {
-                  const sourceDir = path.join(artifactsDir, dir);
-                  if (!fs.statSync(sourceDir).isDirectory()) continue;
+                const indexFile = path.join(sourceDir, 'animation-index.txt');
+                const safeNameFile = path.join(sourceDir, 'safe-name.txt');
+                if (!fs.existsSync(indexFile) || !fs.existsSync(safeNameFile)) continue;
 
-                  const animNameFile = path.join(sourceDir, 'anim-name.txt');
-                  const safeNameFile = path.join(sourceDir, 'safe-name.txt');
-                  if (!fs.existsSync(animNameFile) || !fs.existsSync(safeNameFile)) continue;
+                const animationIndex = Number(fs.readFileSync(indexFile, 'utf8').trim());
+                const selection = resolveAnimationIndex(entry, animationIndex);
+                if (selection.status !== 'ready') throw new Error('INVALID_ANIMATION_INDEX');
+                const animName = selection.animation;
+                const safeName = fs.readFileSync(safeNameFile, 'utf8').trim();
+                if (safeName !== selection.safeName) throw new Error('INVALID_ANIMATION_ARTIFACT_NAME');
 
-                  const animName = fs.readFileSync(animNameFile, 'utf8').trim();
-                  const safeName = fs.readFileSync(safeNameFile, 'utf8').trim();
-                  const animTargetDir = path.join(String(indexData[entryIndex].previewPath || path.join(basePath, uploadId)), 'animations', safeName);
-                  fs.mkdirSync(animTargetDir, { recursive: true });
+                const workPath = String(entry.previewPath || path.join(basePath, uploadId))
+                  .replace(/^\\/+|\\/+$/g, '');
+                const animTargetDir = path.join(workPath, 'animations', safeName);
+                fs.mkdirSync(animTargetDir, { recursive: true });
+                if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
 
-                  if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
-
-                  // Per-animation preview duration, read from the meta.json the
-                  // exporter writes next to every WebM. This is the single source
-                  // of truth for is this animation's preview long enough to show
-                  // as a moving thumbnail - without it the site cannot tell a
-                  // 1-frame clip (idle) from a 2-second clip (win).
-                  const metaFile = path.join(sourceDir, 'meta.json');
-                  if (fs.existsSync(metaFile)) {
-                    try {
-                      const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
-                      const animDur = Number(meta?.animationDuration);
-                      if (Number.isFinite(animDur) && animDur > 0) {
-                        allAnimPreviews[animName].previewDuration = animDur;
-                      }
-                      // Real pixel width per tier, so the site can label the
-                      // size buttons honestly instead of claiming a fixed
-                      // 1080p/720p/360p that only some clips actually match.
-                      const widths = meta?.qualityWidths;
-                      if (widths && typeof widths === 'object') {
-                        allAnimPreviews[animName].qualityWidths = {
-                          high: Number(widths.high) || 0,
-                          medium: Number(widths.medium) || 0,
-                          low: Number(widths.low) || 0,
-                        };
-                      }
-                    } catch (e) { /* meta parse failed — skip */ }
-                  }
-
-                  const files = fs.readdirSync(sourceDir);
-                  for (const file of files) {
-                    if (['anim-name.txt', 'safe-name.txt', 'export-type.txt', 'meta.json'].includes(file)) continue;
-                    const src = path.join(sourceDir, file);
-                    const dst = path.join(animTargetDir, file);
-                    fs.copyFileSync(src, dst);
-
-                    // Derive the URL from previewPath in the entry itself rather
-                    // than from basePath: previewPath is the folder the work
-                    // actually lives in right now. If the library rotated while
-                    // this job ran, basePath can already point at the previous
-                    // collection and every URL written here would 404.
-                    const workPath = String(indexData[entryIndex]?.previewPath || (basePath + '/' + uploadId)).replace(/^\/+|\/+$/g, '');
-                    const url = origin + '/assets/' + workPath + '/animations/' + safeName + '/' + file;
-                    const prefix = uploadId + '-anim-' + safeName + '-';
-
-                    // Opaque WebM
-                    if (file === prefix + 'preview.webm')          allAnimPreviews[animName].webmPreview = url;
-                    else if (file === prefix + 'preview-medium.webm') allAnimPreviews[animName].webmPreviewMedium = url;
-                    else if (file === prefix + 'preview-low.webm')    allAnimPreviews[animName].webmPreviewLow = url;
-                    // WebP poster
-                    else if (file === prefix + 'preview.webp')        allAnimPreviews[animName].webpPoster = url;
-                    else if (file === prefix + 'preview-medium.webp') allAnimPreviews[animName].webpPosterMedium = url;
-                    else if (file === prefix + 'preview-low.webp')    allAnimPreviews[animName].webpPosterLow = url;
-                    // MP4
-                    else if (file === prefix + 'preview.mp4')         allAnimPreviews[animName].mp4Preview = url;
-                    else if (file === prefix + 'preview-medium.mp4')  allAnimPreviews[animName].mp4PreviewMedium = url;
-                    else if (file === prefix + 'preview-low.mp4')     allAnimPreviews[animName].mp4PreviewLow = url;
-                    // Alpha WebM (transparent VP9)
-                    else if (file === prefix + 'alpha.webm')          allAnimPreviews[animName].webmAlpha = url;
-                    else if (file === prefix + 'alpha-medium.webm')   allAnimPreviews[animName].webmAlphaMedium = url;
-                    else if (file === prefix + 'alpha-low.webm')      allAnimPreviews[animName].webmAlphaLow = url;
-                    // MOV with alpha (ProRes 4444)
-                    else if (file === prefix + 'alpha.mov')            allAnimPreviews[animName].movAlpha = url;
-                    else if (file === prefix + 'alpha-medium.mov')    allAnimPreviews[animName].movAlphaMedium = url;
-                    else if (file === prefix + 'alpha-low.mov')       allAnimPreviews[animName].movAlphaLow = url;
-                    // GIF (derived from the alpha WebM)
-                    else if (file === prefix + 'alpha.gif')            allAnimPreviews[animName].gifAlpha = url;
-                    else if (file === prefix + 'alpha-medium.gif')    allAnimPreviews[animName].gifAlphaMedium = url;
-                    else if (file === prefix + 'alpha-low.gif')       allAnimPreviews[animName].gifAlphaLow = url;
-                    // PNG sequence (one PNG per frame, zip-packed)
-                    else if (file === prefix + 'alpha.png.zip')        allAnimPreviews[animName].pngAlpha = url;
-                    else if (file === prefix + 'alpha-medium.png.zip') allAnimPreviews[animName].pngAlphaMedium = url;
-                    else if (file === prefix + 'alpha-low.png.zip')    allAnimPreviews[animName].pngAlphaLow = url;
+                const metaFile = path.join(sourceDir, 'meta.json');
+                if (fs.existsSync(metaFile)) {
+                  try {
+                    const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
+                    const duration = Number(meta?.animationDuration);
+                    if (Number.isFinite(duration) && duration > 0) {
+                      allAnimPreviews[animName].previewDuration = duration;
+                    }
+                    const widths = meta?.qualityWidths;
+                    if (widths && typeof widths === 'object') {
+                      allAnimPreviews[animName].qualityWidths = {
+                        high: Number(widths.high) || 0,
+                        medium: Number(widths.medium) || 0,
+                        low: Number(widths.low) || 0,
+                      };
+                    }
+                  } catch {
+                    // Invalid metadata is ignored; no alternate animation is selected.
                   }
                 }
-              }
 
-              const requiredKeys = ['webmPreview','mp4Preview','movAlpha','gifAlpha','pngAlpha'].flatMap(key => ['', 'Medium', 'Low'].map(suffix => key + suffix));
-              const expected = Array.isArray(indexData[entryIndex].animations) ? indexData[entryIndex].animations : Object.keys(allAnimPreviews);
-              const hasExports = expected.length > 0 && expected.every(name => requiredKeys.every(key => typeof allAnimPreviews[name]?.[key] === 'string' && allAnimPreviews[name][key]));
+                for (const file of fs.readdirSync(sourceDir)) {
+                  if (['animation-index.txt', 'safe-name.txt', 'export-type.txt', 'meta.json'].includes(file)) continue;
+                  const src = path.join(sourceDir, file);
+                  const dst = path.join(animTargetDir, file);
+                  fs.copyFileSync(src, dst);
+                  const url = origin + '/assets/' + workPath + '/animations/' + safeName + '/' + file;
+                  const prefix = uploadId + '-anim-' + safeName + '-';
 
-              // Work-level preview duration: the duration of the animation the
-              // work is currently presenting (defaultAnimation). The page
-              // renderer uses this to decide whether the chosen preview is
-              // long enough, or whether to fall back to another animation's
-              // preview that is.
-              const chosenAnim = String(indexData[entryIndex]?.defaultAnimation || '').trim();
-              const chosenPreview = allAnimPreviews[chosenAnim];
-              const chosenDuration = chosenPreview ? Number(chosenPreview.previewDuration) : NaN;
-
-              // Automatic preview fallback — runs after every full export, so
-              // it works for both freshly created pages and existing ones.
-              // A work's main preview is the one for defaultAnimation. When
-              // that animation's preview is a 1–3 frame clip (an idle that is
-              // a single held frame) the moving thumbnail is effectively a
-              // still image, so the site silently re-points defaultAnimation at
-              // the first animation whose preview is long enough (>= 2 s).
-              // Declaration order is preserved; the first long-enough win.
-              const animOrder = Array.isArray(indexData[entryIndex]?.animations) && indexData[entryIndex].animations.length
-                ? indexData[entryIndex].animations
-                : Object.keys(allAnimPreviews);
-              let effectiveDefault = chosenAnim && animOrder.includes(chosenAnim) ? chosenAnim : (animOrder[0] || '');
-              if (effectiveDefault) {
-                const effDur = allAnimPreviews[effectiveDefault] ? Number(allAnimPreviews[effectiveDefault].previewDuration) : NaN;
-                if (!(Number.isFinite(effDur) && effDur >= 2)) {
-                  for (const a of animOrder) {
-                    const d = allAnimPreviews[a] ? Number(allAnimPreviews[a].previewDuration) : NaN;
-                    if (Number.isFinite(d) && d >= 2) { effectiveDefault = a; break; }
-                  }
+                  if (file === prefix + 'preview.webm') allAnimPreviews[animName].webmPreview = url;
+                  else if (file === prefix + 'preview-medium.webm') allAnimPreviews[animName].webmPreviewMedium = url;
+                  else if (file === prefix + 'preview-low.webm') allAnimPreviews[animName].webmPreviewLow = url;
+                  else if (file === prefix + 'preview.webp') allAnimPreviews[animName].webpPoster = url;
+                  else if (file === prefix + 'preview-medium.webp') allAnimPreviews[animName].webpPosterMedium = url;
+                  else if (file === prefix + 'preview-low.webp') allAnimPreviews[animName].webpPosterLow = url;
+                  else if (file === prefix + 'preview.mp4') allAnimPreviews[animName].mp4Preview = url;
+                  else if (file === prefix + 'preview-medium.mp4') allAnimPreviews[animName].mp4PreviewMedium = url;
+                  else if (file === prefix + 'preview-low.mp4') allAnimPreviews[animName].mp4PreviewLow = url;
+                  else if (file === prefix + 'alpha.webm') allAnimPreviews[animName].webmAlpha = url;
+                  else if (file === prefix + 'alpha-medium.webm') allAnimPreviews[animName].webmAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.webm') allAnimPreviews[animName].webmAlphaLow = url;
+                  else if (file === prefix + 'alpha.mov') allAnimPreviews[animName].movAlpha = url;
+                  else if (file === prefix + 'alpha-medium.mov') allAnimPreviews[animName].movAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.mov') allAnimPreviews[animName].movAlphaLow = url;
+                  else if (file === prefix + 'alpha.gif') allAnimPreviews[animName].gifAlpha = url;
+                  else if (file === prefix + 'alpha-medium.gif') allAnimPreviews[animName].gifAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.gif') allAnimPreviews[animName].gifAlphaLow = url;
+                  else if (file === prefix + 'alpha.png.zip') allAnimPreviews[animName].pngAlpha = url;
+                  else if (file === prefix + 'alpha-medium.png.zip') allAnimPreviews[animName].pngAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.png.zip') allAnimPreviews[animName].pngAlphaLow = url;
                 }
               }
-              const effectivePreview = allAnimPreviews[effectiveDefault] || chosenPreview;
-              const effectiveDuration = effectivePreview ? Number(effectivePreview.previewDuration) : NaN;
+            }
 
-              indexData[entryIndex] = {
-                ...indexData[entryIndex],
-                allAnimationPreviews: allAnimPreviews,
-                ...(effectiveDefault && effectiveDefault !== chosenAnim ? { defaultAnimation: effectiveDefault } : {}),
-                previewDuration: Number.isFinite(effectiveDuration) && effectiveDuration > 0 ? effectiveDuration : undefined,
-                fullExportStatus: hasExports ? 'ready' : 'partial',
-                fullExportGeneratedAt: new Date().toISOString(),
-              };
-
-              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
-              console.log('index.json updated with all animation previews.');
-              console.log('Animations exported:', Object.keys(allAnimPreviews).join(', '));
-            "
+            indexData[entryIndex] = mergeFullExportMetadata(
+              entry,
+              allAnimPreviews,
+              new Date().toISOString(),
+            );
+            fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+            console.log('FULL_EXPORT_INDEX_UPDATED', Object.keys(allAnimPreviews).length);
+            NODE
 
             # 3. Stage everything
             git add "$BASE_PATH" "$WORK_PATH/animations"
