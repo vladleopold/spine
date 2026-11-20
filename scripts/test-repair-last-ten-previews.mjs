@@ -17,6 +17,8 @@ assert.match(workflow,/cancel-in-progress:\s*false/,
   "a read-only PR check must never cancel an active main repair");
 assert.match(workflow,/branches:.*fix\/latest10-explicit-animation-guard-20261120/,
   "the exact feature branch must run the read-only inventory check");
+assert.match(workflow,/branches:.*fix\/latest10-public-only-inventory-20261120/,
+  "the public-only inventory regression branch must run the read-only check");
 assert.doesNotMatch(workflow,/^\s+pull_request:/m,
   "use one push-triggered feature-branch check, not duplicate push and pull_request runs");
 assert.ok(!source.includes("record.defaultAnimation=animation"),
@@ -27,15 +29,20 @@ try{
   fs.mkdirSync(shard,{recursive:true});
   const targetId="Spine-animation-2026-11-17T18-45-14-132Z";
   const missingId="fixture-no-default";
-  const records=Array.from({length:10},(_,i)=>{
-    const id=i===0?targetId:i===1?missingId:"fixture-"+String(i).padStart(2,"0");
-    const defaultAnimation=i===0?"Idle Post Climax Cum":i===1?undefined:"idle";
-    const uploadedAt=new Date(Date.UTC(2026,10,20,0,10-i,0)).toISOString();
+  const records=Array.from({length:12},(_,i)=>{
+    const hidden=i===0;
+    const testOnly=i===1;
+    const publicIndex=i-2;
+    const id=hidden?"fixture-hidden":testOnly?"fixture-test-only":publicIndex===0?targetId:publicIndex===1?missingId:"fixture-"+String(publicIndex).padStart(2,"0");
+    const defaultAnimation=hidden||testOnly?"idle":publicIndex===0?"Idle Post Climax Cum":publicIndex===1?undefined:"idle";
+    const uploadedAt=new Date(Date.UTC(2026,10,20,0,12-i,0)).toISOString();
     const previewPath="library_02/"+id;
     const webmPreview="https://spine-link.vercel.app/assets/"+previewPath+"/preview.webm";
     const webpPoster="https://spine-link.vercel.app/assets/"+previewPath+"/preview.webp";
     const record={
       id,uploadedAt,previewPath,
+      ...(hidden?{hiddenFromPublicLibrary:true}:{}),
+      ...(testOnly?{testOnly:true}:{}),
       ...(defaultAnimation?{defaultAnimation}:{}),
       animations:defaultAnimation?[defaultAnimation]:["idle"],
       webmStatus:"ready",previewStatus:"ready",
@@ -65,6 +72,8 @@ try{
   const all=JSON.parse(output.allEntries);
   const render=JSON.parse(output.matrix);
   assert.equal(all.length,10);
+  assert.ok(!all.some(x=>x.id==="fixture-hidden"||x.id==="fixture-test-only"),
+    "hidden and test-only records must never enter the public repair snapshot");
   const missing=all.find(x=>x.id===missingId);
   assert.equal(missing.ready,false);
   assert.equal(missing.needsRender,false);
