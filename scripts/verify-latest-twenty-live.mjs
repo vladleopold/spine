@@ -1,3 +1,4 @@
+import { verifyPublishedPreviewPair } from './lib/published-media-acceptance.mjs';
 #!/usr/bin/env node
 // Independent verification against the *published* gallery, not CI metadata.
 // Only aggregated counts are emitted: never print original filenames or pixels.
@@ -67,7 +68,7 @@ async function exactMediaFilesExist(work){
       'preview.webp','preview-medium.webp','preview-low.webp'].every(x=>names.has(x));
   }catch{return false;}
 }
-let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0;
+let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0,decodedPairs=0;
 for(const work of snapshot){
   const index=await getIndex(work.basePath);
   const matching=index.filter(e=>e.id===work.id);
@@ -97,11 +98,19 @@ for(const work of snapshot){
   const checks=await Promise.all(fields.map(async ([key,type])=>
     checkMedia(record[key],type,prefix)));
   verifiedMedia+=checks.filter(Boolean).length;
-  if(checks.every(Boolean))ready++;
-  else failed++;
+  if(checks.every(Boolean)){
+    const decoded=await verifyPublishedPreviewPair({
+      videoUrl:record.webmPreview,
+      posterUrl:record.webpPoster,
+      expectedOrigin:'https://spine-link.vercel.app',
+      expectedPrefix:prefix,
+    });
+    if(decoded){ready++;decodedPairs++;}
+    else failed++;
+  }else failed++;
 }
 console.log('LATEST20_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({
   total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
-  expectedMedia:snapshot.length*fields.length,mutatedSource
+  expectedMedia:snapshot.length*fields.length,decodedPairs,mutatedSource
 }));
 if(failed||ready+blocked!==snapshot.length)process.exitCode=1;
