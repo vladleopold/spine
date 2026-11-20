@@ -6,6 +6,9 @@ on:
     paths:
       - .github/workflows/repair-reported-previews.yml
       - scripts/preview-runtime-minor.mjs
+      - scripts/lib/preview-runtime-minor.mjs
+      - scripts/test-preview-runtime-minor.mjs
+      - scripts/test-pinned-spine-player-install.mjs
       - scripts/install-pinned-spine-players.sh
       - scripts/repair-reported-previews.mjs
       - scripts/spine-export-webm.mjs
