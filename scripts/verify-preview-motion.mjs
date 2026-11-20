@@ -8,7 +8,7 @@ if(!file)throw Error('Missing preview candidate');
 const width=48,height=48,frameBytes=width*height;
 const raw=execFileSync('ffmpeg',[
   '-v','error','-i',file,'-map','0:v:0',
-  '-vf',\`scale=\${width}:\${height},format=gray\`,
+  '-vf','scale='+width+':'+height+',format=gray',
   '-frames:v','180','-f','rawvideo','-pix_fmt','gray','-'
 ],{timeout:120000,maxBuffer:2*1024*1024});
 if(raw.length%frameBytes)throw Error('Decoded preview has an incomplete frame');
