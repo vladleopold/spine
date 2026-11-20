@@ -16,6 +16,8 @@ assert.match(workflow, /SOURCE_PRESERVATION_PASS/);
 assert.match(workflow, /sha256sum -c/);
 assert.match(workflow, /cmp -s/);
 assert.match(workflow, /source-files\.before/);
+assert.match(workflow, /source_fingerprint\.outputs\.captured/);
+assert.match(workflow, /\\/.github\\/workflows\\/canvas-recovery-e2e\\.yml/);
 assert.match(workflow, /source-hashes\.before/);
 assert.doesNotMatch(workflow, /actions\/upload-artifact@/,
   'private render outputs must stay in the ephemeral runner');
