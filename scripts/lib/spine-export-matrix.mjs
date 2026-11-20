@@ -23,9 +23,12 @@ export function buildAnimationIndexMatrix(entry) {
 }
 
 export function resolveAnimationIndex(entry, indexValue) {
+  const validIndexValue = typeof indexValue === 'number'
+    ? Number.isSafeInteger(indexValue)
+    : typeof indexValue === 'string' && /^(?:0|[1-9]\\d*)$/.test(indexValue);
   const index = typeof indexValue === 'number' ? indexValue : Number(indexValue);
   const animations = Array.isArray(entry?.animations) ? entry.animations : [];
-  if (!Number.isSafeInteger(index) || index < 0 || index >= animations.length) {
+  if (!validIndexValue || index < 0 || index >= animations.length) {
     return { status: 'blocked', reason: 'animation-index-unavailable' };
   }
 
