@@ -1091,6 +1091,24 @@ try {
       }
       return false;
     };
+    // A decodable, nonblank MediaRecorder clip can still contain almost no
+    // changing frames when headless WebGL stalls. Reuse the exact strict motion
+    // gate before accepting it; a failure routes through the same-animation
+    // real-canvas capture below rather than weakening the acceptance threshold.
+    const hasSufficientMotion = (filename) => {
+      try {
+        const output = execFileSync(process.execPath, [
+          path.join(repoRoot, 'scripts/verify-preview-motion.mjs'), filename,
+        ], { encoding: 'utf8', timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
+        if (output.trim()) console.error(output.trim());
+        return true;
+      } catch (error) {
+        const detail = [error.stdout, error.stderr].map(value => String(value || '').trim())
+          .filter(Boolean).join(' ');
+        console.error('RECORDED_WEBM_MOTION_INCOMPLETE ' + detail);
+        return false;
+      }
+    };
     let mediaFrames=0;
     try{
       mediaFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
@@ -1101,7 +1119,7 @@ try {
     const shortCapture=!fs.existsSync(videoPath) ||
       shouldUseCanvasFallback({bytes:mediaBytes,frames:mediaFrames,
       duration:captureDuration,fps:args.fps});
-    if (shortCapture || !encodedHasContent(videoPath, captureDuration)) {
+    if (shortCapture || !encodedHasContent(videoPath, captureDuration) || !hasSufficientMotion(videoPath)) {
       console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
@@ -1147,6 +1165,8 @@ try {
       ],{stdio:'inherit'});
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
+      if (!hasSufficientMotion(recovered))
+        throw new Error('Selected Spine animation still has insufficient distinct motion after real-canvas recovery');
       const actualFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
         '-select_streams','v:0','-show_entries','stream=nb_read_frames',
         '-of','default=nw=1:nk=1',recovered],{encoding:'utf8',timeout:30000}).trim())||0;
