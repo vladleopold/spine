@@ -5,6 +5,16 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+  pull_request:
+    paths:
+      - .github/workflows/repair-reported-previews.yml
+      - .github/workflows/verify-reported-preview-live.yml
+      - scripts/verify-reported-preview-live.mjs
+      - scripts/lib/reported-preview-media.mjs
+      - scripts/test-reported-preview-live.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/first-frame-poster.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -28,6 +38,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/verify-reported-preview-live.yml
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -46,6 +58,8 @@ jobs:
           node --check scripts/preview-runtime-minor.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node scripts/test-reported-preview-live.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     needs: inventory
