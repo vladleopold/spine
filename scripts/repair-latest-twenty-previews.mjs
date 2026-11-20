@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
@@ -188,8 +189,7 @@ if(action==="matrix"){
      const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
-      ? record.defaultAnimation : "";
+    const indexedAnimation=choosePreviewAnimation([],record?.defaultAnimation);
     // Only the exact index-selected animation is eligible for preview rendering.
     // A missing default remains blocked; historical names are never inferred.
     const animation=indexedAnimation;
@@ -255,7 +255,9 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
+    const selectedAnimation=choosePreviewAnimation([],item.animation);
+    const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
+    if(!selectedAnimation||selectedAnimation!==indexedAnimation){
       // Without an exact selected/default timeline, even an older installed
       // WebM cannot be proven to represent the requested animation. Preserve
       // the media bytes, but never advertise them as accepted or refresh posters.
@@ -292,7 +294,8 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && meta?.animationMatches===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true &&
+      choosePreviewAnimation([],meta?.animation)===choosePreviewAnimation([],item.animation) && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -353,7 +356,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animation=choosePreviewAnimation([],meta.animation);
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
