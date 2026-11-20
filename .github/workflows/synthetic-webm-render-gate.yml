@@ -5,6 +5,11 @@ on:
     paths:
       - 'scripts/prepare-render.mjs'
       - 'scripts/test-synthetic-render-skip.mjs'
+      - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/spine-export-matrix.mjs'
+      - 'scripts/resolve-export-animation.mjs'
+      - 'scripts/test-spine-export-matrix.mjs'
+      - '.github/workflows/spine-export-full.yml'
       - '.github/workflows/spine-export-webm.yml'
       - '.github/workflows/synthetic-webm-render-gate.yml'
   push:
@@ -12,6 +17,11 @@ on:
     paths:
       - 'scripts/prepare-render.mjs'
       - 'scripts/test-synthetic-render-skip.mjs'
+      - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/spine-export-matrix.mjs'
+      - 'scripts/resolve-export-animation.mjs'
+      - 'scripts/test-spine-export-matrix.mjs'
+      - '.github/workflows/spine-export-full.yml'
       - '.github/workflows/spine-export-webm.yml'
       - '.github/workflows/synthetic-webm-render-gate.yml'
 
@@ -30,6 +40,11 @@ jobs:
             /scripts/prepare-render.mjs
             /scripts/resolve-library.mjs
             /scripts/test-synthetic-render-skip.mjs
+            /scripts/lib/spine-export-matrix.mjs
+            /scripts/spine-export-matrix.mjs
+            /scripts/resolve-export-animation.mjs
+            /scripts/test-spine-export-matrix.mjs
+            /.github/workflows/spine-export-full.yml
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -37,4 +52,8 @@ jobs:
         run: |
           node --check scripts/prepare-render.mjs
           node --check scripts/test-synthetic-render-skip.mjs
+          node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/spine-export-matrix.mjs
+          node --check scripts/resolve-export-animation.mjs
           node scripts/test-synthetic-render-skip.mjs
+          node scripts/test-spine-export-matrix.mjs
