@@ -12,7 +12,7 @@ export function classifyRendererError(text) {
   if (x.includes("animation")&&(x.includes("not found")||x.includes("invalid"))) return "ANIMATION_SELECTION";
   if (x.includes("net::err_")||x.includes("failed to load resource")||x.includes("networkidle")||x.includes("could not resolve host")) return "NETWORK_ASSET";
   if (x.includes("timed out waiting for player ready")||x.includes("waiting for player ready")||x.includes("waitforfunction")&&x.includes("timeout")) return "PLAYER_INITIALIZATION_TIMEOUT";
-  if (x.includes("no skin produced visible content")||x.includes("frame peak=0")||x.includes("rendered no visible content")) return "NO_VISIBLE_PIXEL";
+  if (x.includes("no skin produced visible content")||x.includes("no visible real-time spine frames")||x.includes("no visible pixels from the selected default spine skin")||x.includes("frame peak=0")||x.includes("rendered no visible content")) return "NO_VISIBLE_PIXEL";
   if (x.includes("no video data captured")||x.includes("mediarecorder failed")||x.includes("recorder")&&x.includes("error")) return "BROWSER_MEDIA_RECORDER";
   if (x.includes("webp generation failed")||x.includes("ffmpeg processing failed")||x.includes("invalid rendered video")) return "MEDIA_ENCODING";
   if (x.includes("spineplayer is not a function")||x.includes("player creation failed")) return "SPINE_RUNTIME_INITIALIZATION";
@@ -39,20 +39,25 @@ export function classifyFfmpegFailure(text) {
   return "NONE";
 }
 
-if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
-  const log=fs.readFileSync(process.argv[2],"utf8");
+export function summarizeRendererLog(text) {
+  const log=String(text||"");
   const reason=classifyRendererError(log);
   const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
   const lastCause=[...log.matchAll(/Capture failed:\s*([^\r\n]+)/g)].at(-1)?.[1]||"";
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
-  const attempts=(log.match(/Skin candidates:/g)||[]).length;
+  const sourceDefaultSkin=/SOURCE_SKIN_MODE=default|Skin \(default\):/i.test(log);
+  const recordingStarted=/RECORDER_STATE=recording|recorder recording/i.test(log);
+  const attempts=sourceDefaultSkin?1:(log.match(/Skin candidates:/g)||[]).length;
   const stages={
     skeletonParsed:/Skeleton:/i.test(log),
-    playerReady:/Skin candidates:/i.test(log),
-    recordingStarted:/recorder recording|recorder recording/i.test(log),
+    // Recording starts only after the player success callback has completed.
+    playerReady:/PLAYER_READY=1|Skin candidates:/i.test(log)||recordingStarted,
+    recordingStarted,
     webmWritten:/WebM saved:/i.test(log),
     qualityLadder:/Quality ladder:/i.test(log),
     posterGeneration:/Poster:|WebP \(high\)|WebP generation failed/i.test(log),
+    canvasFallbackAttempted:/CANVAS_FALLBACK_CAPTURE=started|REALTIME_CANVAS_CAPTURE_PASS|No visible real-time Spine frames/i.test(log),
+    canvasFallbackPassed:/CANVAS_FALLBACK_CAPTURE=passed|REALTIME_CANVAS_CAPTURE_PASS/i.test(log),
   };
   const ffmpegFailure=classifyFfmpegFailure(log);
   const distinctError=ffmpegFailure!=="NONE"?ffmpegFailure:
@@ -71,12 +76,17 @@ if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
     .map(x=>[Number(x[1]),Number(x[2])]).slice(-8);
-  const selectedSkinCount=[...log.matchAll(/Skin candidates:\s*(\[[^\n]*\])/g)]
-    .map(x=>{try{return JSON.parse(x[1]).length;}catch{return 0;}}).at(-1)||0;
   const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
     .map(x=>Number(x[1])).at(-1)||0;
+  const skinSelectionMode=sourceDefaultSkin?"source-default":"unknown";
   const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
+    /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
-  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify({ok:false,reason,secondary,version,attempts,
-    stages,distinctError,ffmpegFailure,peaks:peaks.slice(-8),canvasSizes,selectedSkinCount,capturedVp9Bytes,sourceSignal}));
+  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,
+    peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
+}
+
+if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
+  const log=fs.readFileSync(process.argv[2],"utf8");
+  console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
 }
