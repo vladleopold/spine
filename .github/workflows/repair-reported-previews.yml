@@ -5,6 +5,20 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - scripts/preview-runtime-minor.mjs
+      - scripts/lib/preview-runtime-minor.mjs
+      - scripts/test-preview-runtime-minor.mjs
+      - scripts/test-pinned-spine-player-install.mjs
+      - scripts/install-pinned-spine-players.sh
+      - scripts/repair-reported-previews.mjs
+      - scripts/spine-export-webm.mjs
+  pull_request:
+    paths:
+      - .github/workflows/repair-reported-previews.yml
+      - scripts/preview-runtime-minor.mjs
+      - scripts/install-pinned-spine-players.sh
+      - scripts/test-preview-runtime-minor.mjs
+      - scripts/test-pinned-spine-player-install.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -44,6 +58,10 @@ jobs:
           node --check scripts/spine-export-webm.mjs
           node --check scripts/recover-recorded-webm.mjs
           node --check scripts/preview-runtime-minor.mjs
+          node --check scripts/lib/preview-runtime-minor.mjs
+          bash -n scripts/install-pinned-spine-players.sh
+          node scripts/test-preview-runtime-minor.mjs
+          node scripts/test-pinned-spine-player-install.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
@@ -81,17 +99,12 @@ jobs:
         run: |
           set -euo pipefail
           npm install --no-save --no-audit --no-fund playwright@1.59.1
-          # Pin the Web Player to the skeleton's own major.minor and serve it
-          # from local Playwright routes. CDN redirects are never on the render
-          # critical path; 4.0.29 also avoids the known 4.0.28 mismatch.
+          # Install the exact pinned package into spine-<minor>, matching the
+          # renderer's isolated local route. This includes 4.3 and never mixes
+          # a versioned CDN URL with an unversioned root node_modules path.
           minor=$(node scripts/preview-runtime-minor.mjs "$GITHUB_WORKSPACE/${{ matrix.entry.previewPath }}")
-          if [[ "$minor" =~ ^4\.[012]$ ]]; then
-            version="$minor"
-            if [[ "$minor" == '4.0' ]]; then version='4.0.29'; fi
-            mkdir -p "$RUNNER_TEMP/spine-versioned"
-            npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/spine-versioned" "@esotericsoftware/spine-player@$version"
-            test -s "$RUNNER_TEMP/spine-versioned/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
-            echo "SPINE_VERSIONED_PLAYER_DIR=$RUNNER_TEMP/spine-versioned" >> "$GITHUB_ENV"
+          if [[ "$minor" =~ ^4\.[0-3]$ ]]; then
+            bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-versioned" "$minor"
             echo "MATCHED_SPINE_RUNTIME_READY $minor"
           fi
           if command -v google-chrome >/dev/null 2>&1; then
