@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { collectPreviewManifestSecrets, previewManifestMaskCommands } from './lib/preview-manifest-redaction.mjs';
 import { escapeWorkflowCommandValue } from './lib/export-log-redaction.mjs';
+import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 
 const sample = [{
   repairSlot: 0,
@@ -12,6 +13,12 @@ const sample = [{
   sourceFingerprint: 'f'.repeat(64),
 }];
 const raw = JSON.stringify(sample);
+for (const selected of ['Walk', 'Missing', ' Walk ', ' ']) {
+  assert.equal(choosePreviewAnimation(['Walk'], selected), selected,
+    'explicit animation names, including unavailable and whitespace-padded names, must remain byte-for-byte unchanged');
+}
+assert.equal(choosePreviewAnimation(['Walk']), '',
+  'no selection must not infer the first animation');
 const environment = {
   ENTRY_ID: 'private-render-002',
   ENTRY_PATH: 'library_03/private-render-002',
@@ -46,6 +53,7 @@ const latestTen = fs.readFileSync(new URL('../.github/workflows/repair-last-ten-
 const latestTwenty = fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml', import.meta.url), 'utf8');
 const reportedRepair = fs.readFileSync(new URL('./repair-reported-previews.mjs', import.meta.url), 'utf8');
 const latestTwentyRepair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
+const latestTenRepair = fs.readFileSync(new URL('./repair-last-ten-previews.mjs', import.meta.url), 'utf8');
 
 assert.match(reported, /pull_request:/);
 assert.match(reported, /  inventory:\n    permissions:\n      contents: read/);
@@ -74,15 +82,29 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
-assert.match(reportedRepair, /String\(entry\.defaultAnimation\|\|""\)\.trim\(\)/);
+assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
 assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
-assert.match(reportedRepair, /const selectedAnimation=String\(item\.animation\|\|record\.defaultAnimation\|\|""\)\.trim\(\)/);
+assert.match(reportedRepair, /const animation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
+assert.match(reportedRepair, /const selectedAnimation=choosePreviewAnimation\(\[\],item\.animation\)/);
+assert.doesNotMatch(reportedRepair, /e\.id==="[^"]+"\?"[^"]+"/,
+  'reported repair must not inject per-work alternate animation names');
+assert.doesNotMatch(reportedRepair, /\.trim\(\)/,
+  'reported repair must not trim selected animation names');
+assert.doesNotMatch(reportedRepair, /record\.defaultAnimation\s*=\s*animation/,
+  'preview publication must not rewrite defaultAnimation');
+assert.doesNotMatch(reportedRepair, /record\.animations\s*=\s*meta\.animations/,
+  'preview publication must not rewrite source animation names');
 assert.match(reportedRepair, /existingMediaOk\(entryInfo,selectedAnimation\)/);
 assert.match(reportedRepair, /blocked-missing-animation/);
 assert.match(reportedRepair, /BLOCKED_SOURCE_BUNDLE=/);
 assert.match(reportedRepair, /BLOCKED_MISSING_ANIMATION=/);
 assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest20-"\+item\.repairSlot/);
+assert.doesNotMatch(latestTwentyRepair, /record\.defaultAnimation\.trim\(\)/);
+assert.match(latestTwentyRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
+assert.match(latestTenRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
+assert.doesNotMatch(latestTenRepair, /String\(record\?\.defaultAnimation\|\|""\)\.trim\(\)/);
+assert.doesNotMatch(latestTenRepair, /String\(animation\|\|record\?\.defaultAnimation\|\|""\)\.trim\(\)/);
 assert.doesNotMatch(reportedRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.doesNotMatch(latestTwentyRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.match(latestTwenty, /animationMatches:true/);
