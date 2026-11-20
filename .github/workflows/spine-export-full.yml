@@ -53,6 +53,11 @@ jobs:
           node --check scripts/prepare-render.mjs
           node --check scripts/spine-export-matrix.mjs
           node --check scripts/resolve-export-animation.mjs
+          node --check scripts/repair-reported-previews.mjs
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/mask-preview-manifest.mjs
+          node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
 

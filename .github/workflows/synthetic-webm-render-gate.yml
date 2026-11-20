@@ -48,6 +48,7 @@ jobs:
             /scripts/resolve-export-animation.mjs
             /scripts/test-spine-export-matrix.mjs
             /scripts/test-preview-log-privacy.mjs
+            /scripts/mask-preview-manifest.mjs
             /scripts/lib/preview-manifest-redaction.mjs
             /scripts/verify-reported-preview-live.mjs
             /scripts/repair-reported-previews.mjs
@@ -70,6 +71,11 @@ jobs:
           node --check scripts/lib/export-log-redaction.mjs
           node --check scripts/spine-export-matrix.mjs
           node --check scripts/resolve-export-animation.mjs
+          node --check scripts/repair-reported-previews.mjs
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/mask-preview-manifest.mjs
+          node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-synthetic-render-skip.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
