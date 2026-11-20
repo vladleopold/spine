@@ -28,6 +28,8 @@ assert.deepEqual(resolveAnimationIndex(source, 1), {
 assert.equal(resolveAnimationIndex(source, '0').animation, 'walk');
 assert.equal(resolveAnimationIndex(source, -1).status, 'blocked');
 assert.equal(resolveAnimationIndex(source, 2).status, 'blocked');
+assert.equal(resolveAnimationIndex(source, '').status, 'blocked');
+assert.equal(resolveAnimationIndex(source, ' ').status, 'blocked');
 assert.equal(resolveAnimationIndex(source, 'not-an-index').status, 'blocked');
 
 const whitespaceSelection = resolveAnimationIndex({
