@@ -217,6 +217,7 @@ if(action==="matrix"){
   console.log("allEntries="+JSON.stringify(matrix));
   console.log("renderCount="+required.length);
   const sparse=[
+    "/api/github-upload.js","/.github/workflows/repair-latest-twenty-previews.yml",
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
     "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
