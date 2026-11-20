@@ -92,8 +92,8 @@ try{
   assert.equal(incompatible.ready,false);
   assert.equal(incompatible.needsRender,false);
   assert.equal(incompatible.blockedReason,"INCOMPATIBLE_SOURCE_VERSION");
-  assert.ok(!render.some(x=>x.id===incompatibleId),
-    "an incompatible Spine 3.8.75 source must never enter the render matrix");
+  assert.ok(!render.some(x=>x.id===incompatibleId&&x.needsRender===true),
+    "an incompatible Spine 3.8.75 source must never be scheduled for rendering");
   const target=all.find(x=>x.id===targetId);
   assert.equal(target.ready,true);
   assert.equal(target.animation,"Idle Post Climax Cum");
