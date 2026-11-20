@@ -66,19 +66,35 @@ export function classifyPublishedPreview(record) {
     return { status: 'failed', reason: 'selected-preview-missing' };
   }
 
-  const webmUrl = hasPerAnimationMap ? selectedPreview.webmPreview : record.webmPreview;
-  const posterUrl = hasPerAnimationMap
-    ? selectedPreview.webpPoster
-    : (record.webpPoster || record.thumbnailPoster);
+  const source = hasPerAnimationMap ? selectedPreview : record;
+  const tiers = [
+    {
+      name: 'high',
+      webmUrl: source.webmPreview,
+      posterUrl: hasPerAnimationMap ? source.webpPoster : (source.webpPoster || source.thumbnailPoster),
+    },
+    {
+      name: 'medium',
+      webmUrl: source.webmPreviewMedium,
+      posterUrl: source.webpPosterMedium,
+    },
+    {
+      name: 'low',
+      webmUrl: source.webmPreviewLow,
+      posterUrl: source.webpPosterLow,
+    },
+  ];
 
-  if (!productionAsset(webmUrl, 'webm') || !productionAsset(posterUrl, 'webp')) {
-    return { status: 'failed', reason: 'exact-webm-webp-pair-missing' };
-  }
-  if (parentPath(webmUrl) !== parentPath(posterUrl)) {
-    return { status: 'failed', reason: 'webm-webp-pair-path-mismatch' };
+  for (const tier of tiers) {
+    if (!productionAsset(tier.webmUrl, 'webm') || !productionAsset(tier.posterUrl, 'webp')) {
+      return { status: 'failed', reason: 'incomplete-quality-ladder' };
+    }
+    if (parentPath(tier.webmUrl) !== parentPath(tier.posterUrl)) {
+      return { status: 'failed', reason: 'webm-webp-pair-path-mismatch' };
+    }
   }
 
-  return { status: 'ready', selectedAnimation: selected, webmUrl, posterUrl };
+  return { status: 'ready', selectedAnimation: selected, tiers };
 }
 
 export function validateDecodedVideo(stream, duration) {
