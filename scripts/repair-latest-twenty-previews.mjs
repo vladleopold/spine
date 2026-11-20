@@ -192,7 +192,8 @@ if(action==="matrix"){
     // Only the exact index-selected animation is eligible for preview rendering.
     // A missing default remains blocked; historical names are never inferred.
     const animation=indexedAnimation;
-    const ready=!incompatible&&Boolean(animation)&&bundleOk(e);
+    const sourceReady=bundleOk(e);
+    const ready=!incompatible&&Boolean(animation)&&sourceReady;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
