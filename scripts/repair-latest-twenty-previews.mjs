@@ -253,22 +253,13 @@ if(action==="matrix"){
       continue;
     }
     if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
-      if(existingMediaOk(entryInfo)){
-        try{
-          refreshStoredPostersAndTimestamp(record,entryInfo,base);
-          summary.ready++;
-        }catch{
-          record.webmStatus="failed";
-          record.previewStatus="failed";
-          record.previewError="Existing WebM could not produce its exact first-frame WebP poster";
-          summary.failed++;
-        }
-      }else{
-        record.webmStatus="blocked-missing-animation-selection";
-        record.previewStatus="blocked";
-        record.previewError="No explicit default animation is selected; preview rendering will not guess a source animation";
-        summary.blocked++;
-      }
+      // Without an exact selected/default timeline, even an older installed
+      // WebM cannot be proven to represent the requested animation. Preserve
+      // the media bytes, but never advertise them as accepted or refresh posters.
+      record.webmStatus="blocked-missing-animation-selection";
+      record.previewStatus="blocked";
+      record.previewError="No explicit default animation is selected; existing media cannot be attributed to an exact source animation";
+      summary.blocked++;
       continue;
     }
     if(item.needsRender===false){

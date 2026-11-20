@@ -67,6 +67,14 @@ try{
   assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
     'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
+  const missingSelectionBranch=repairSource.match(
+    /if\(!item\.animation && !\(typeof record\.defaultAnimation==="string"&&record\.defaultAnimation\.trim\(\)\)\)\{([\s\S]*?)\n\s*\}/
+  )?.[1]||"";
+  assert.match(missingSelectionBranch,/record\.webmStatus="blocked-missing-animation-selection"/,
+    "missing exact selection must remain blocked even if a previous WebM exists");
+  assert.match(missingSelectionBranch,/record\.previewStatus="blocked"/);
+  assert.doesNotMatch(missingSelectionBranch,/existingMediaOk|refreshStoredPostersAndTimestamp/,
+    "unattributed old media cannot be reaccepted or used to regenerate a poster");
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
