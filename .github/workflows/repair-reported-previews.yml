@@ -17,7 +17,7 @@ on:
       - scripts/lib/first-frame-poster.mjs
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 # Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
 concurrency:
   group: spine-preview-reported-eighteen
@@ -199,6 +199,8 @@ jobs:
           if-no-files-found: error
           retention-days: 1
   publish:
+    permissions:
+      contents: write
     needs: [inventory, render]
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
     runs-on: ubuntu-24.04
