@@ -29,6 +29,18 @@ export function resolveSpineExportDispatch(entry) {
   };
 }
 
+// Do not leave an unselected upload in a misleading pending state. Preserve
+// source files and any existing media bytes, but make the missing selection explicit.
+export function missingAnimationPreviewMetadata(entry) {
+  if (resolveSpineExportDispatch(entry).status !== 'blocked') return null;
+  return {
+    webmStatus: 'blocked-missing-animation-selection',
+    previewStatus: 'blocked',
+    previewError: 'No explicit default animation is selected; existing media cannot be attributed to an exact source animation',
+    dispatchStatus: 'blocked',
+  };
+}
+
 export function normalizeSpineExportEntry(entry) {
   if (!hasSpineSourceBundle(entry)) return { entry, error: null };
 
