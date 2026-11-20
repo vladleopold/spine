@@ -123,7 +123,7 @@ test('preview-only repair never dispatches a full export for other animations', 
   assert.equal(shouldDispatchFullExport({ previewOnly: false }), true);
   assert.equal(shouldDispatchFullExport({}), true);
   const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
-  assert.match(renderWork, /if\\(shouldDispatchFullExport\\(config\\)\\)\\s*\\{/);
+  assert.match(renderWork, /if\(shouldDispatchFullExport\(config\)\)\s*\{/);
   assert.match(renderWork, /SPINE_FULL_EXPORT_DISPATCH_SKIPPED_PREVIEW_ONLY/);
 });
 
@@ -139,7 +139,7 @@ test('pinned recovery config selects only the exact requested animation and prev
 
 test('the export workflow runs only on main pushes and never exports from a pull request', () => {
   const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-webm.yml', import.meta.url), 'utf8');
-  assert.match(workflow, /push:\\s*\\n\\s+branches:\\s*\\[main\\]/);
-  assert.match(workflow, /if:\\s*github\\.ref\\s*==\\s*'refs\\/heads\\/main'\\s*&&\\s*github\\.event_name\\s*!=\\s*'pull_request'/);
+  assert.match(workflow, /push:\s*\n\s+branches:\s*\[main\]/);
+  assert.match(workflow, /if:\s*github\.ref\s*==\s*'refs\/heads\/main'\s*&&\s*github\.event_name\s*!=\s*'pull_request'/);
   assert.match(workflow, /validate-selection:/);
 });
