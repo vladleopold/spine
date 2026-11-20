@@ -10,7 +10,7 @@ import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
-import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
+import { generateFirstFrameWebp, verifyPosterFirstFrame } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -106,23 +106,27 @@ function existingMediaOk(entry){
   if(!filesReady)return false;
   try{
     const probes={};
-    for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]){
-      const file=path.join(root,entry.previewPath,name);
+    for(const suffix of ["","-medium","-low"]){
+      const video=path.join(root,entry.previewPath,"preview"+suffix+".webm");
+      const poster=path.join(root,entry.previewPath,"preview"+suffix+".webp");
       const data=JSON.parse(execFileSync("ffprobe",[
         "-v","error","-count_frames","-select_streams","v:0",
         "-show_entries","stream=width,height,nb_read_frames:format=duration",
-        "-of","json",file,
-      ],{encoding:"utf8",timeout:30000}));
+        "-of","json",video,
+      ],{encoding:"utf8",timeout:30000,stdio:["ignore","pipe","ignore"]}));
       const stream=data.streams?.[0]||{};
       const item={width:Number(stream.width),height:Number(stream.height),
         frames:Number(stream.nb_read_frames),duration:Number(data.format?.duration)};
       if(!(item.width>0&&item.height>0&&item.frames>=8&&item.duration>=0.5))return false;
-      probes[name]=item;
+      probes[suffix]=item;
+      // Every quality tier must contain eight visibly distinct decoded frames,
+      // and its WebP must be the exact frame zero of that same WebM.
+      execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),video],
+        {stdio:"ignore",timeout:120000});
+      verifyPosterFirstFrame(video,poster);
     }
-    if(!(probes["preview-medium.webm"].width<probes["preview.webm"].width&&
-      probes["preview-low.webm"].width<probes["preview-medium.webm"].width))return false;
-    execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
-      path.join(root,entry.previewPath,"preview.webm")],{stdio:"ignore",timeout:120000});
+    if(!(probes[""].width>probes["-medium"].width&&
+      probes["-medium"].width>probes["-low"].width))return false;
     return true;
   }catch{return false;}
 }
