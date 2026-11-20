@@ -8,7 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
-import { sourceBlocker } from "./lib/reported-preview-acceptance.mjs";
+import { classifyPublishedPreview, sourceBlocker } from "./lib/reported-preview-acceptance.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -71,26 +71,8 @@ const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
 function existingMediaOk(entry){
   const record=recordFor(entry);
-  if(record?.previewStatus!=="ready"||record?.webmStatus!=="ready")return false;
-  const animation=typeof record.defaultAnimation==="string"?record.defaultAnimation:"";
-  if(!animation||!Array.isArray(record.animations)||!record.animations.includes(animation))return false;
-  const map=record.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
-    ?record.allAnimationPreviews:{};
-  const hasMap=Object.keys(map).length>0;
-  const selected=hasMap?map[animation]:record;
-  if(hasMap&&!selected)return false;
-
-  const fields=[
-    ["webmPreview","webpPoster"],
-    ["webmPreviewMedium","webpPosterMedium"],
-    ["webmPreviewLow","webpPosterLow"],
-  ];
-  const pairs=fields.map(([videoKey,posterKey])=>({
-    video:selected[videoKey],
-    poster:selected[posterKey]||(videoKey==="webmPreview"&&!hasMap?record.thumbnailPoster:""),
-  }));
-  if(pairs.some(pair=>typeof pair.video!=="string"||!pair.video||
-    typeof pair.poster!=="string"||!pair.poster))return false;
+  const acceptance=classifyPublishedPreview(record);
+  if(acceptance.status!=="ready")return false;
 
   // A previously published clip must meet the same frame-density gate before
   // it can suppress a retry. The exact default animation is never substituted.
@@ -112,12 +94,10 @@ function existingMediaOk(entry){
       return resolved.startsWith(root+path.sep)?resolved:null;
     }catch{return null;}
   };
-  const videoPaths=pairs.map(pair=>localPath(pair.video));
-  const posterPaths=pairs.map(pair=>localPath(pair.poster));
-  if(videoPaths.some(p=>!p)||posterPaths.some(p=>!p))return false;
-
-  for(let i=0;i<videoPaths.length;i++){
-    const video=videoPaths[i],poster=posterPaths[i];
+  for(const tier of acceptance.tiers){
+    const video=localPath(tier.webmUrl);
+    const poster=localPath(tier.posterUrl);
+    if(!video||!poster)return false;
     try{
       if(fs.statSync(video).size<=128||fs.statSync(poster).size<=128)return false;
       const data=JSON.parse(execFileSync("ffprobe",[
