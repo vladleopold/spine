@@ -75,7 +75,7 @@ const action=process.argv[2]||"matrix";
 const latest=action==="matrix"?newestTen():[];
 if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map(e=>{
+  const matrix=latest.map((e,repairSlot)=>{
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const animation=typeof record?.defaultAnimation==="string"?record.defaultAnimation.trim():"";
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
@@ -84,7 +84,7 @@ if(action==="matrix"){
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,
+    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready&&!existingMediaOk(e,animation),
@@ -97,16 +97,6 @@ if(action==="matrix"){
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
   console.log("allEntries="+JSON.stringify(matrix));
   console.log("renderCount="+required.length);
-  const sparse=[
-    "/scripts/","/package.json","/package-lock.json",
-    "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
-    "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
-    "/library/index.json","/library_*/index.json",
-    ...matrix.map(x=>"/"+x.previewPath+"/"),
-  ];
-  console.log("sparseCheckout<<SPINE_SPARSE_END");
-  console.log([...new Set(sparse)].join(String.fromCharCode(10)));
-  console.log("SPINE_SPARSE_END");
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
 }else if(action==="merge"){
@@ -115,8 +105,11 @@ if(action==="matrix"){
   const base=path.resolve(root,"downloaded-latest10");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
-  const seen=new Set();
+  const seen=new Set(),slots=new Set();
   for(const item of selected){
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=10||slots.has(item.repairSlot))
+      throw new Error("Invalid artifact slot");
+    slots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
     const uniqueKey=entryInfo.basePath+"/"+entryInfo.id;
     if(seen.has(uniqueKey))throw new Error("Duplicate repair entry");
@@ -160,13 +153,13 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest10-"+item.id);
+    const artifact=path.join(base,"latest10-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && String(meta?.animation||"").trim()===expectedAnimation && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -218,8 +211,6 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
-
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {
