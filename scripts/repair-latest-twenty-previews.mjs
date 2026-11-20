@@ -189,12 +189,11 @@ if(action==="matrix"){
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
       ? record.defaultAnimation : "";
-    // Keep the two explicitly pinned historical selections as a fallback,
-    // but never dispatch a render with an empty/guessed animation name.
-    const animation=indexedAnimation ||
-      (e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-       e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":"");
-    const ready=!incompatible&&Boolean(animation)&&bundleOk(e);
+    // Only the exact index-selected animation is eligible for preview rendering.
+    // A missing default remains blocked; historical names are never inferred.
+    const animation=indexedAnimation;
+    const sourceReady=bundleOk(e);
+    const ready=!incompatible&&Boolean(animation)&&sourceReady;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
@@ -203,7 +202,7 @@ if(action==="matrix"){
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
-      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":""};
+      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
     }));
     matrix.push(...batch);
   }
@@ -254,22 +253,13 @@ if(action==="matrix"){
       continue;
     }
     if(!item.animation && !(typeof record.defaultAnimation==="string"&&record.defaultAnimation.trim())){
-      if(existingMediaOk(entryInfo)){
-        try{
-          refreshStoredPostersAndTimestamp(record,entryInfo,base);
-          summary.ready++;
-        }catch{
-          record.webmStatus="failed";
-          record.previewStatus="failed";
-          record.previewError="Existing WebM could not produce its exact first-frame WebP poster";
-          summary.failed++;
-        }
-      }else{
-        record.webmStatus="blocked-missing-animation-selection";
-        record.previewStatus="blocked";
-        record.previewError="No explicit default animation is selected; preview rendering will not guess a source animation";
-        summary.blocked++;
-      }
+      // Without an exact selected/default timeline, even an older installed
+      // WebM cannot be proven to represent the requested animation. Preserve
+      // the media bytes, but never advertise them as accepted or refresh posters.
+      record.webmStatus="blocked-missing-animation-selection";
+      record.previewStatus="blocked";
+      record.previewError="No explicit default animation is selected; existing media cannot be attributed to an exact source animation";
+      summary.blocked++;
       continue;
     }
     if(item.needsRender===false){

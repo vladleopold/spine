@@ -20,7 +20,15 @@ try{
       webmStatus:'failed',defaultAnimation:i===22?undefined:'idle',
       files:['test.skel','test.atlas','test.png']};
   });
-  records[23].files=['test.skel'];
+  // These historical records previously received hard-coded animation
+  // names when defaultAnimation was absent. They must now remain blocked.
+  records[23].id='Spine-animation-2026-11-17T18-44-12-762Z';
+  records[23].previewPath='library_02/'+records[23].id;
+  records[23].defaultAnimation=undefined;
+  records[22].id='Spine-animation-2026-11-17T18-45-14-132Z';
+  records[22].previewPath='library_02/'+records[22].id;
+  records[22].defaultAnimation=undefined;
+  records[21].files=['test.skel'];
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -34,18 +42,39 @@ try{
   const all=JSON.parse(output.allEntries);
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,18);
-  assert.equal(Number(output.renderCount),18);
+  assert.equal(matrix.length,17);
+  assert.equal(Number(output.renderCount),17);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
-  assert.equal(all[0].id,'fixture-23');
+  assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
+  assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
   assert.equal(all[19].id,'fixture-04');
-  assert.equal(all[0].ready,false);
-  assert.equal(all[0].needsRender,false);
-  assert.equal(all[1].ready,false);
-  assert.equal(all[1].needsRender,false);
-  assert.equal(all[1].blockedReason,'MISSING_DEFAULT_ANIMATION');
-  assert.ok(all.slice(2).every(x=>x.ready&&x.needsRender&&x.animation==='idle'));
+  for(const id of [
+    'Spine-animation-2026-11-17T18-44-12-762Z',
+    'Spine-animation-2026-11-17T18-45-14-132Z',
+  ]){
+    const item=all.find(x=>x.id===id);
+    assert.ok(item);
+    assert.equal(item.animation,'','missing default must not be filled from a historical name');
+    assert.equal(item.ready,false);
+    assert.equal(item.needsRender,false);
+    assert.equal(item.blockedReason,'MISSING_DEFAULT_ANIMATION');
+    assert.ok(!matrix.some(x=>x.id===id),'a record without a selected animation must never enter render matrix');
+  }
+  assert.equal(all[2].ready,false);
+  assert.equal(all[2].needsRender,false);
+  assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
+  assert.ok(all.slice(3).every(x=>x.ready&&x.needsRender&&x.animation==='idle'));
+  assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
+    'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
+  const missingSelectionBranch=repairSource.match(
+    /if\(!item\.animation && !\(typeof record\.defaultAnimation==="string"&&record\.defaultAnimation\.trim\(\)\)\)\{([\s\S]*?)\n\s*\}/
+  )?.[1]||"";
+  assert.match(missingSelectionBranch,/record\.webmStatus="blocked-missing-animation-selection"/,
+    "missing exact selection must remain blocked even if a previous WebM exists");
+  assert.match(missingSelectionBranch,/record\.previewStatus="blocked"/);
+  assert.doesNotMatch(missingSelectionBranch,/existingMediaOk|refreshStoredPostersAndTimestamp/,
+    "unattributed old media cannot be reaccepted or used to regenerate a poster");
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
