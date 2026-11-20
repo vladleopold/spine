@@ -53,6 +53,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /.github/workflows/canvas-recovery-e2e.yml
             /package.json
             /package-lock.json
             /library_02/index.json
@@ -88,6 +89,7 @@ jobs:
           node scripts/test-first-frame-poster.mjs
           node scripts/test-preview-motion.mjs
       - name: Fingerprint original source files before rendering
+        id: source_fingerprint
         shell: bash
         env:
           ENTRY_ID: ${{ matrix.id }}
@@ -103,6 +105,7 @@ jobs:
           test -s "$RUNNER_TEMP/source-files.before"
           xargs -0 -r sha256sum < "$RUNNER_TEMP/source-files.before" > "$RUNNER_TEMP/source-hashes.before"
           test -s "$RUNNER_TEMP/source-hashes.before"
+          echo "captured=true" >> "$GITHUB_OUTPUT"
           echo "SOURCE_PRESERVATION_BASELINE_CAPTURED"
       - name: Real proprietary animation, temporary private frames only, strict media acceptance
         shell: bash
@@ -143,7 +146,7 @@ jobs:
           # No source or output images/videos are uploaded, printed or committed.
 
       - name: Verify original source files remain byte-identical
-        if: always()
+        if: always() && steps.source_fingerprint.outputs.captured == 'true'
         shell: bash
         env:
           ENTRY_ID: ${{ matrix.id }}
