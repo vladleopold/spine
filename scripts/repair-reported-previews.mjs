@@ -120,7 +120,7 @@ const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map(e=>{
+  const matrix=latest.map((e,slotIndex)=>{
     const record=recordFor(e);
     const explicitAnimation=e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
       e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
@@ -137,7 +137,7 @@ if(action==="matrix"){
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,
+    return {slot:slotIndex+1,id:e.id,basePath:e.basePath,previewPath:rel,ready,
       needsRender:ready&&!existingMediaOk(e),animation,blockedReason};
   });
   const required=matrix.filter(x=>x.needsRender);
@@ -192,13 +192,14 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest10-"+item.id);
+    if(!Number.isSafeInteger(Number(item.slot))||Number(item.slot)<1)throw new Error("Invalid repair slot");
+    const artifact=path.join(base,"latest10-"+Number(item.slot));
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.selectedAnimationVerified===true && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -242,17 +243,10 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(meta.animation&&String(meta.animation)!==animation){
+    if(meta.selectedAnimationVerified!==true){
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Rendered animation did not match the exact selection";
-      summary.failed++;
-      continue;
-    }
-    if(Array.isArray(meta.animations)&&meta.animations.length&&!meta.animations.includes(animation)){
-      record.webmStatus="failed";
-      record.previewStatus="failed";
-      record.previewError="Selected animation was unavailable in the rendered source";
       summary.failed++;
       continue;
     }
@@ -271,7 +265,6 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
     if(animation) record.defaultAnimation=animation;
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
