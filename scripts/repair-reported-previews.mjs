@@ -225,7 +225,7 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-reported remove index animation mutations    if(Number(meta.width)>0)record.previewWidth=meta.width;
+    if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {
       record.previewFrameCount=mainVideo.frames;
