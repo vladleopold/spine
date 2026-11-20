@@ -19,6 +19,8 @@ assert.match(workflow,/branches:.*fix\/latest10-explicit-animation-guard-2026112
   "the exact feature branch must run the read-only inventory check");
 assert.match(workflow,/branches:.*fix\/latest10-public-only-inventory-20261120/,
   "the public-only inventory regression branch must run the read-only check");
+assert.match(workflow,/branches:.*fix\/latest10-preserve-source-blockers-20261120/,
+  "the source-blocker preservation regression branch must run the read-only check");
 assert.doesNotMatch(workflow,/^\s+pull_request:/m,
   "use one push-triggered feature-branch check, not duplicate push and pull_request runs");
 assert.ok(!source.includes("record.defaultAnimation=animation"),
@@ -29,12 +31,14 @@ try{
   fs.mkdirSync(shard,{recursive:true});
   const targetId="Spine-animation-2026-11-17T18-45-14-132Z";
   const missingId="fixture-no-default";
-  const records=Array.from({length:12},(_,i)=>{
+  const incompatibleId="fixture-incompatible";
+  const records=Array.from({length:13},(_,i)=>{
     const hidden=i===0;
     const testOnly=i===1;
-    const publicIndex=i-2;
-    const id=hidden?"fixture-hidden":testOnly?"fixture-test-only":publicIndex===0?targetId:publicIndex===1?missingId:"fixture-"+String(publicIndex).padStart(2,"0");
-    const defaultAnimation=hidden||testOnly?"idle":publicIndex===0?"Idle Post Climax Cum":publicIndex===1?undefined:"idle";
+    const incompatible=i===2;
+    const publicIndex=i-3;
+    const id=hidden?"fixture-hidden":testOnly?"fixture-test-only":incompatible?incompatibleId:publicIndex===0?targetId:publicIndex===1?missingId:"fixture-"+String(publicIndex).padStart(2,"0");
+    const defaultAnimation=hidden||testOnly||incompatible?"idle":publicIndex===0?"Idle Post Climax Cum":publicIndex===1?undefined:"idle";
     const uploadedAt=new Date(Date.UTC(2026,10,20,0,12-i,0)).toISOString();
     const previewPath="library_02/"+id;
     const webmPreview="https://spine-link.vercel.app/assets/"+previewPath+"/preview.webm";
@@ -45,17 +49,20 @@ try{
       ...(testOnly?{testOnly:true}:{}),
       ...(defaultAnimation?{defaultAnimation}:{}),
       animations:defaultAnimation?[defaultAnimation]:["idle"],
-      webmStatus:"ready",previewStatus:"ready",
+      webmStatus:incompatible?"blocked-incompatible-source-version":"ready",
+      previewStatus:incompatible?"blocked":"ready",
+      ...(incompatible?{previewError:"Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required"}:{}),
       webmPreview,webpPoster,
       previewFrameCount:60,previewDuration:2,
-      files:["source.skel","source.atlas","source.png"],
+      files:[incompatible?"source.json":"source.skel","source.atlas","source.png"],
       allAnimationPreviews:defaultAnimation?{
         [defaultAnimation]:{webmPreview,webpPoster}
       }:{},
     };
     const folder=path.join(root,previewPath);
     fs.mkdirSync(folder,{recursive:true});
-    fs.writeFileSync(path.join(folder,"source.skel"),"fixture");
+    if(incompatible)fs.writeFileSync(path.join(folder,"source.json"),JSON.stringify({skeleton:{spine:"3.8.75"},bones:[]}));
+    else fs.writeFileSync(path.join(folder,"source.skel"),"fixture");
     fs.writeFileSync(path.join(folder,"source.atlas"),"fixture");
     fs.writeFileSync(path.join(folder,"source.png"),"fixture");
     return record;
@@ -81,6 +88,12 @@ try{
   assert.equal(missing.blockedReason,"MISSING_DEFAULT_ANIMATION");
   assert.ok(!render.some(x=>x.id===missingId),
     "an entry without an explicit default animation must never enter the render matrix");
+  const incompatible=all.find(x=>x.id===incompatibleId);
+  assert.equal(incompatible.ready,false);
+  assert.equal(incompatible.needsRender,false);
+  assert.equal(incompatible.blockedReason,"INCOMPATIBLE_SOURCE_VERSION");
+  assert.ok(!render.some(x=>x.id===incompatibleId),
+    "an incompatible Spine 3.8.75 source must never enter the render matrix");
   const target=all.find(x=>x.id===targetId);
   assert.equal(target.ready,true);
   assert.equal(target.animation,"Idle Post Climax Cum");
@@ -97,10 +110,14 @@ try{
   assert.equal(blocked.previewStatus,"blocked");
   assert.equal(Object.hasOwn(blocked,"defaultAnimation"),false,
     "the blocked record must not acquire a guessed default");
+  const savedIncompatible=saved.find(x=>x.id===incompatibleId);
+  assert.equal(savedIncompatible.webmStatus,"blocked-incompatible-source-version");
+  assert.equal(savedIncompatible.previewStatus,"blocked");
+  assert.match(savedIncompatible.previewError,/Spine 3\.8\.75/);
   const savedTarget=saved.find(x=>x.id===targetId);
   assert.equal(savedTarget.defaultAnimation,"Idle Post Climax Cum");
   assert.equal(savedTarget.webmStatus,"ready");
-  console.log("PASS latest10: missing default is blocked, explicit target preserved, no animation substitution");
+  console.log("PASS latest10: missing default stays blocked, incompatible Spine source keeps its specific blocker, no animation substitution");
 }finally{
   fs.rmSync(root,{recursive:true,force:true});
 }
