@@ -1,5 +1,12 @@
 name: Spine Export WebM
 on:
+  pull_request:
+    paths:
+      - scripts/render-work.mjs
+      - scripts/lib/render-selection.mjs
+      - scripts/test-render-selection.mjs
+      - scripts/render-check.json
+      - .github/workflows/spine-export-webm.yml
   repository_dispatch:
     types: [spine-export-webm]
   workflow_dispatch:
@@ -8,11 +15,29 @@ on:
         required: true
         type: string
   push:
+    branches: [main]
     paths: ['scripts/render-check.json']
 permissions:
   contents: write
 jobs:
+  validate-selection:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate exact animation selection and preview-only dispatch guard
+        run: |
+          node --check scripts/lib/render-selection.mjs
+          node --check scripts/render-work.mjs
+          node scripts/test-render-selection.mjs
+
   export:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     concurrency:
