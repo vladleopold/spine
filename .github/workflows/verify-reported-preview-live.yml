@@ -1,27 +1,41 @@
-name: Verify production previews for all 18 reported Spine works
+name: Manual live acceptance for reported Spine previews
+
 on:
-  workflow_run:
-    workflows: ["Repair and accept 18 reported Spine preview projects"]
-    types: [completed]
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
-  production-audit:
+  verify-production:
+    name: Decode exact selected previews
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/resolve-library.mjs
             /scripts/verify-reported-preview-live.mjs
+            /scripts/test-reported-preview-acceptance.mjs
+            /scripts/lib/reported-preview-acceptance.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
             /library_02/index.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify each published WebM/WebP on the live site
+      - name: Install FFmpeg for real decode and frame checks
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+      - name: Run acceptance unit tests
         run: |
           node --check scripts/verify-reported-preview-live.mjs
-          node scripts/verify-reported-preview-live.mjs
+          node scripts/test-reported-preview-acceptance.mjs
+      - name: Verify actual production bytes, decoded motion and exact posters
+        run: node scripts/verify-reported-preview-live.mjs
