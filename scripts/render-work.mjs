@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
-import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
+import {resolveRenderSelection,shouldDispatchFullExport,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
@@ -124,8 +124,13 @@ await publish({allAnimationPreviews:{...entryForUpload(process.cwd(),id).entry.a
 report.status='ready';
 report.code=null;
 writeReport();
-for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
- const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
- if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
+if(shouldDispatchFullExport(config)) {
+  for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
+   const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
+   if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
+  }
+  
+} else {
+  console.log('SPINE_FULL_EXPORT_DISPATCH_SKIPPED_PREVIEW_ONLY');
 }
 console.log(JSON.stringify({ok:true,...report}));
