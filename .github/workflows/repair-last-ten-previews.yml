@@ -19,9 +19,15 @@ on:
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/verify-latest-ten-live.mjs
+      - scripts/test-repair-last-ten-previews.mjs
+  pull_request:
+    paths:
+      - .github/workflows/repair-last-ten-previews.yml
+      - scripts/repair-last-ten-previews.mjs
+      - scripts/test-repair-last-ten-previews.mjs
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: spine-preview-latest-ten
   cancel-in-progress: true
@@ -59,6 +65,7 @@ jobs:
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-manifest-guard.mjs
+          node scripts/test-repair-last-ten-previews.mjs
           echo "LATEST10_INVENTORY_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
@@ -202,6 +209,8 @@ jobs:
   publish:
     needs: [inventory, render]
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     concurrency:
