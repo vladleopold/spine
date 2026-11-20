@@ -74,7 +74,8 @@ for(const work of snapshot){
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
-  if(record.webmStatus==='blocked-missing-animation-selection'&&record.previewStatus==='blocked'&&!String(record.defaultAnimation||'').trim()){
+  const hasExactDefaultAnimation=typeof record.defaultAnimation==='string'&&record.defaultAnimation.length>0;
+  if(record.webmStatus==='blocked-missing-animation-selection'&&record.previewStatus==='blocked'&&!hasExactDefaultAnimation){
     blocked++;
     continue;
   }
