@@ -36,6 +36,18 @@ for (const value of [
   'Private Run',
 ]) assert.ok(secrets.includes(value), 'missing sensitive manifest value');
 
+const shortSample = [{ id: 'x1', basePath: 'library_02', previewPath: 'library_02/x', animation: 'Run' }];
+const shortEnvironment = { ENTRY_ID: 'y2', ENTRY_ANIMATION: 'Run' };
+const shortSecrets = collectPreviewManifestSecrets(shortSample, JSON.stringify(shortSample), shortEnvironment);
+for (const value of ['x1', 'x', 'Run', 'y2']) {
+  assert.ok(shortSecrets.includes(value), 'short private metadata values must be masked');
+}
+const shortCommands = previewManifestMaskCommands(shortSample, JSON.stringify(shortSample), shortEnvironment);
+for (const value of shortSecrets) {
+  assert.ok(shortCommands.includes('::add-mask::' + escapeWorkflowCommandValue(value) + '\n'),
+    'short values must receive add-mask commands');
+}
+
 const commands = previewManifestMaskCommands(sample, raw, environment);
 for (const value of secrets) {
   assert.ok(commands.includes('::add-mask::' + escapeWorkflowCommandValue(value) + '\n'),
@@ -54,6 +66,26 @@ const latestTwenty = fs.readFileSync(new URL('../.github/workflows/repair-latest
 const reportedRepair = fs.readFileSync(new URL('./repair-reported-previews.mjs', import.meta.url), 'utf8');
 const latestTwentyRepair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
 const latestTenRepair = fs.readFileSync(new URL('./repair-last-ten-previews.mjs', import.meta.url), 'utf8');
+const latestTenAudit = fs.readFileSync(new URL('./lib/latest-ten-live-audit.mjs', import.meta.url), 'utf8');
+const latestTwentyAudit = fs.readFileSync(new URL('./verify-latest-twenty-live.mjs', import.meta.url), 'utf8');
+
+function jobLevelSensitiveEnvKeys(source) {
+  const sensitive = new Set(['ENTRY_ID', 'ENTRY_PATH', 'PREVIEW_PATH', 'ENTRY_ANIMATION', 'REPAIR_IDS_JSON', 'UPLOAD_ID']);
+  const leaks = [];
+  let inJobEnv = false;
+  for (const line of source.split(/\r?\n/)) {
+    if (/^    env:\s*$/.test(line)) {
+      inJobEnv = true;
+      continue;
+    }
+    if (inJobEnv && /^\s{0,4}\S/.test(line)) inJobEnv = false;
+    if (inJobEnv) {
+      const match = line.match(/^\s{6}([A-Z0-9_]+):/);
+      if (match && sensitive.has(match[1])) leaks.push(match[1]);
+    }
+  }
+  return leaks;
+}
 
 assert.match(reported, /pull_request:/);
 assert.match(reported, /  inventory:\n    permissions:\n      contents: read/);
@@ -61,26 +93,38 @@ assert.match(reported, /  inventory:\n    permissions:\n      contents: read/);
 for (const workflow of [reported, latestTen, latestTwenty]) {
   assert.ok(workflow.includes('node scripts/mask-preview-manifest.mjs'),
     'every manifest-consuming workflow must mask before use');
-  assert.doesNotMatch(workflow, /^        env:\n          REPAIR_IDS_JSON:/m,
-    'sensitive manifests must not be step-level env values printed before masking');
-  assert.ok(workflow.includes('    env:\n      REPAIR_IDS_JSON:'),
-    'manifest must be job-scoped so the first step can mask it');
+  assert.deepEqual(jobLevelSensitiveEnvKeys(workflow), [],
+    'private IDs, paths, animation names, and manifests must never be job-level env');
+  const stepManifests = workflow.match(/^ {8}env:\s*\n(?:^ {10}[^\n]*\n)*^ {10}REPAIR_IDS_JSON:/gm) || [];
+  assert.ok(stepManifests.length >= 2,
+    'render/publish/verify manifests must be supplied only to masking steps');
+  assert.ok(workflow.includes('>> "$GITHUB_ENV"'),
+    'masked values needed by later steps must be persisted only after add-mask commands');
+  assert.match(workflow, /group: spine-preview-repair-\$\{\{ github\.ref \}\}/,
+    'overlapping repair workflows must serialize on the same branch-scoped lock');
 }
 
 const reportedRender = reported.slice(reported.indexOf('  render:'), reported.indexOf('  publish:'));
 assert.match(reportedRender, /name: validate-reported-preview-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRender, /name: reported18-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(reportedRender, /name: Mask private metadata and hydrate exact source\n\s+env:\n\s+ENTRY_ID:/);
 assert.doesNotMatch(reportedRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(reportedRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
 const latestTwentyRender = latestTwenty.slice(latestTwenty.indexOf('  render:'), latestTwenty.indexOf('  publish:'));
 assert.match(latestTwentyRender, /name: validate-latest20-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTwentyRender, /name: latest20-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(latestTwentyRender, /name: Mask private metadata and hydrate exact source\n\s+env:\n\s+ENTRY_ID:/);
 assert.doesNotMatch(latestTwentyRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
+const latestTenPush = latestTen.slice(latestTen.indexOf('  push:'), latestTen.indexOf('  workflow_dispatch:'));
+assert.doesNotMatch(latestTenPush, /repair-last-ten-previews\.yml/,
+  'latest-ten must not auto-run alongside the superset latest-twenty workflow on the same merge');
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(latestTen, /name: Mask private source metadata and hydrate exact source\n\s+env:\n\s+ENTRY_ID:/);
+
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
 assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
 assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
@@ -114,5 +158,10 @@ assert.match(latestTwentyRepair, /meta\?\.animationMatches===true/);
 assert.ok(latestTen.includes('/scripts/lib/export-log-redaction.mjs'));
 assert.ok(latestTwenty.includes('/scripts/lib/export-log-redaction.mjs'));
 assert.doesNotMatch(latestTwenty, /m\.ok=true;\s*fs\.writeFileSync\(p,JSON\.stringify\(m\)\)/);
+assert.doesNotMatch(latestTenAudit, /item\.animation\.trim\(\)/,
+  'live audit must not normalize the exact animation string');
+assert.doesNotMatch(latestTwentyAudit, /record\.defaultAnimation.*\.trim\(\)/,
+  'live audit must not normalize the exact default animation');
+assert.match(latestTwentyAudit, /hasExactDefaultAnimation/);
 
-console.log('PASS preview audit privacy: masked manifests, opaque matrix slots, and ID-free diagnostics');
+console.log('PASS preview audit privacy: masked manifests, step-scoped secrets, serialized repair batches, and exact animation identity');
