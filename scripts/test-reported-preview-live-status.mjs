@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import {
   classifyOriginHttpStatus,
   classifyPreviewHttpStatus,
@@ -30,3 +31,18 @@ for (const status of [0, 401, 402, 403, 408, 425, 429, 500, 503]) {
 }
 
 console.log("REPORTED_PREVIEW_LIVE_STATUS_REGRESSION_PASS");
+
+const repairWorkflow = fs.readFileSync(
+  new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url),
+  "utf8",
+);
+const verifyStart = repairWorkflow.indexOf("  verify-production:");
+const verifyJob = repairWorkflow.slice(verifyStart);
+const checkoutStart = verifyJob.indexOf("sparse-checkout: |");
+const checkoutEnd = verifyJob.indexOf("      - uses: actions/setup-node@v4", checkoutStart);
+assert.ok(verifyStart >= 0 && checkoutStart >= 0 && checkoutEnd > checkoutStart);
+assert.ok(
+  verifyJob.slice(checkoutStart, checkoutEnd).includes("/scripts/lib/reported-preview-live-status.mjs"),
+  "the production verification job must sparse-checkout its imported status classifier",
+);
+console.log("REPORTED_PREVIEW_LIVE_AUDIT_CHECKOUT_REGRESSION_PASS");
