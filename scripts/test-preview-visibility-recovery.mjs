@@ -8,6 +8,13 @@ assert.equal(choosePreviewAnimation(['idle', 'run'], ''), '',
   'missing index/default selection must not resolve to the first runtime animation');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate|SPINE_VISIBLE_ALTERNATE_ANIMATION/);
+assert.doesNotMatch(source,/__animationNames\s*\[\s*0\s*\]/,
+  'never choose the first runtime animation when the selected name is empty');
+assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureAnimation\)\};/);
+assert.match(source,/const skinCandidates = Object\.freeze\(\[null\]\);/,
+  'render only the source default skin; do not switch to another skin');
+assert.doesNotMatch(source,/skinCandidates\.push|runtimeSkins|readSkinNames|skinNames\.filter/,
+  'do not substitute alternate source skins or layers');
 assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
 assert.match(source,/NO_DEFAULT_SPINE_ANIMATION/);
 assert.ok(source.includes("const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation"));

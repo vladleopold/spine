@@ -195,33 +195,6 @@ function readAnimationNames(filePath) {
 }
 
 /**
- * Read skin names from a JSON skeleton file. The Spine player renders the
- * 'default' skin when no skin is requested, but some skeletons keep their
- * visible attachments on a named skin only (default renders nothing but the
- * background). Returns [] for binary .skel files or unreadable data.
- */
-function readSkinNames(filePath) {
-  try {
-    const tryParse = (p) => {
-      const content = JSON.parse(fs.readFileSync(p, 'utf8'));
-      const skins = content?.skins;
-      if (Array.isArray(skins)) return skins.map((s) => s && s.name).filter(Boolean);
-      if (skins && typeof skins === 'object') return Object.keys(skins);
-      return [];
-    };
-    const ext = path.extname(filePath).toLowerCase();
-    if (ext === '.json') return tryParse(filePath);
-    if (ext === '.skel') {
-      const dir = path.dirname(filePath);
-      const base = path.basename(filePath, '.skel');
-      const jsonSibling = path.join(dir, base + '.json');
-      if (fs.existsSync(jsonSibling)) return tryParse(jsonSibling);
-    }
-  } catch { }
-  return [];
-}
-
-/**
  * Compute animation duration from JSON skeleton timeline data as a fallback
  * when the player reports duration=0 (Spine 4.2.x JSON exports sometimes
  * omit the top-level 'duration' field on animations).
@@ -580,9 +553,8 @@ const captureAnimation = targetAnimation;
 console.error(`Animation: ${captureAnimation}`);
 console.error(`Is default: ${isDefault}`);
 
-// Capture page builder. activeSkin selects the Spine skin to render; when
-// null the player default is used. Some skeletons draw nothing with the
-// default skin, so the export retries with named skins (see skinCandidates).
+// Capture page builder. Keep the source/default skin unchanged. If it draws
+// no visible content, the selected preview is blocked rather than relayered.
 function buildCaptureHtml(activeSkin) {
 const skinLine = activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
 return `<!DOCTYPE html>
@@ -609,7 +581,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   var player;
   // Peak brightness of the currently rendered frame (center sample).
   // Used by the exporter to detect "rendered nothing but background" and
-  // fall back to another skin. Requires preserveDrawingBuffer (set below).
+  // mark the selected preview as blocked. Requires preserveDrawingBuffer (set below).
   window.__framePeak = function () {
     try {
       var c = player && player.canvas;
@@ -650,9 +622,7 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
-      window.__runtimeSkinNames = runtimeData && Array.isArray(runtimeData.skins) ?
-        runtimeData.skins.map(function(s){return s && s.name;}).filter(Boolean) : [];
-      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} || window.__animationNames[0] || '';
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
         player.animationState.setAnimation(0, window.__selectedAnimation, true);
@@ -871,14 +841,9 @@ try {
       });
     });
   }
-  // Skin fallback: the player default skin sometimes renders nothing but the
-  // background (e.g. a skeleton whose visible attachments live on a named
-  // skin). Capture with the default first to preserve existing renders,
-  // then retry with each named non-default skin until a frame shows content.
+  // Preserve the source skin. An invisible default skin is a blocked preview.
   const FRAME_PEAK_MIN = 40;
-  const skinNames = readSkinNames(skeletonFilePath);
-  const skinCandidates = [null, ...skinNames.filter((s) => s && s.toLowerCase() !== 'default')];
-  console.error(`Skin candidates: ${JSON.stringify(skinCandidates)}`);
+  const skinCandidates = Object.freeze([null]);
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -927,16 +892,6 @@ try {
       break;
     }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
-    // Binary .skel has no JSON sibling to list skins from. The active 3.8/4.x
-    // runtime exposes them after load: retry named skins instead of recording
-    // a black default skin as a successful clip.
-    const runtimeSkins = await page.evaluate(() => window.__runtimeSkinNames || []);
-    for (const skinName of runtimeSkins.slice(0,24)) {
-      if (typeof skinName === 'string' && skinName &&
-          skinName.toLowerCase() !== 'default' && !skinCandidates.includes(skinName))
-        skinCandidates.push(skinName);
-    }
-
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
     canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
@@ -998,13 +953,8 @@ try {
     // An invisible original is a render failure, not permission to invent
     // a different timeline for the work.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
-    const moreSkins = skinCandidates.indexOf(skin) < skinCandidates.length - 1;
-    if (framePeak < FRAME_PEAK_MIN && moreSkins) {
-      console.error(`Skin ${label} rendered no visible content, trying next skin...`);
-      continue;
-    }
-    if (framePeak < FRAME_PEAK_MIN && !moreSkins) {
-      lastCaptureError = 'No visible pixels from any available Spine skin';
+    if (framePeak < FRAME_PEAK_MIN) {
+      lastCaptureError = 'No visible pixels from the selected default Spine skin';
       console.error('NO_VISIBLE_SPINE_FRAME');
       break;
     }
@@ -1099,7 +1049,7 @@ try {
       console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
       videoDataUrl = 'canvas-fallback';
     } else {
-      throw new Error(`Capture failed: ${lastCaptureError || 'no skin produced visible content'}`);
+      throw new Error(`Capture failed: ${lastCaptureError || 'selected default skin produced no visible content'}`);
     }
   }
 
@@ -1141,6 +1091,24 @@ try {
       }
       return false;
     };
+    // A decodable, nonblank MediaRecorder clip can still contain almost no
+    // changing frames when headless WebGL stalls. Reuse the exact strict motion
+    // gate before accepting it; a failure routes through the same-animation
+    // real-canvas capture below rather than weakening the acceptance threshold.
+    const hasSufficientMotion = (filename) => {
+      try {
+        const output = execFileSync(process.execPath, [
+          path.join(repoRoot, 'scripts/verify-preview-motion.mjs'), filename,
+        ], { encoding: 'utf8', timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
+        if (output.trim()) console.error(output.trim());
+        return true;
+      } catch (error) {
+        const detail = [error.stdout, error.stderr].map(value => String(value || '').trim())
+          .filter(Boolean).join(' ');
+        console.error('RECORDED_WEBM_MOTION_INCOMPLETE ' + detail);
+        return false;
+      }
+    };
     let mediaFrames=0;
     try{
       mediaFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
@@ -1151,7 +1119,7 @@ try {
     const shortCapture=!fs.existsSync(videoPath) ||
       shouldUseCanvasFallback({bytes:mediaBytes,frames:mediaFrames,
       duration:captureDuration,fps:args.fps});
-    if (shortCapture || !encodedHasContent(videoPath, captureDuration)) {
+    if (shortCapture || !encodedHasContent(videoPath, captureDuration) || !hasSufficientMotion(videoPath)) {
       console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
@@ -1197,6 +1165,8 @@ try {
       ],{stdio:'inherit'});
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
+      if (!hasSufficientMotion(recovered))
+        throw new Error('Selected Spine animation still has insufficient distinct motion after real-canvas recovery');
       const actualFrames=Number(execFileSync('ffprobe',['-v','error','-count_frames',
         '-select_streams','v:0','-show_entries','stream=nb_read_frames',
         '-of','default=nw=1:nk=1',recovered],{encoding:'utf8',timeout:30000}).trim())||0;

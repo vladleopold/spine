@@ -10,6 +10,7 @@ on:
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
@@ -42,6 +43,7 @@ on:
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
@@ -122,6 +124,7 @@ jobs:
           node --check scripts/repair-latest-twenty-previews.mjs
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
+          node scripts/test-preview-motion.mjs
           node scripts/test-repair-latest-twenty.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
