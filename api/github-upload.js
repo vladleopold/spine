@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-science.js';
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
-import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch } from '../scripts/lib/spine-export-entry.mjs';
+import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch, missingAnimationPreviewMetadata } from '../scripts/lib/spine-export-entry.mjs';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -1636,6 +1636,7 @@ export default async function handler(request, response) {
     const currentIndex = await getGitHubContent(settings, indexPath);
     const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
     const existingEntry = currentEntries.find((c) => c.id === entry.id);
+    const blockedAnimationMetadata = missingAnimationPreviewMetadata(entry);
     const nextEntry = {
       ...entry,
       ...(googlePayload?.email ? { ownerEmail: googlePayload.email } : {}),
@@ -1645,7 +1646,7 @@ export default async function handler(request, response) {
       publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
       showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
       portfolioMode: Boolean(entry?.portfolioMode),
-      ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' }),
+      ...(blockedAnimationMetadata || (existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' })),
     };
     const nextEntries = [...currentEntries, nextEntry];
 
