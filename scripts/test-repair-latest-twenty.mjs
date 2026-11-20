@@ -8,6 +8,38 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
+const liveVerifier=fs.readFileSync(fileURLToPath(new URL('./verify-latest-twenty-live.mjs',import.meta.url)),'utf8');
+const workflow=fs.readFileSync(fileURLToPath(new URL('../.github/workflows/repair-latest-twenty-previews.yml',import.meta.url)),'utf8');
+assert.match(repairSource,/for\\(const suffix of \["","-medium","-low"\]\\)/,
+  'all three WebM tiers must be decoded before existing media is accepted');
+assert.match(repairSource,/verify-preview-motion\\.mjs/,
+  'each existing quality tier must have eight distinct visible frames');
+assert.match(repairSource,/verifyPosterFirstFrame\\(video,poster\\)/,
+  'each stored WebP must match frame zero of its paired WebM');
+assert.match(liveVerifier,/verify-preview-motion\\.mjs/);
+assert.match(liveVerifier,/verifyPosterFirstFrame/);
+assert.match(liveVerifier,/arrayBuffer\\(\\)/,
+  'production verification must download full media bodies, not a range prefix');
+assert.doesNotMatch(liveVerifier,/Range:\\s*\\{\\s*bytes=0-16383/,
+  'a 16 KiB signature probe is not a decoded-media verification');
+assert.match(liveVerifier,/frames>=8/);
+assert.match(liveVerifier,/contentType/);
+assert.match(workflow,/sparse-checkout: \\$\\{\\{ steps\\.latest\\.outputs\\.sparseCheckout \\}\\}/,
+  'the full source bundle checkout must use the frozen manifest paths');
+assert.match(workflow,/matrix: \\$\\{\\{ steps\\.verified\\.outputs\\.matrix \\}\\}/,
+  'render decisions must come from the decoded-media verification pass');
+const verifiedStep=workflow.slice(workflow.indexOf('id: verified'),workflow.indexOf('\\n  render:'));
+assert.ok(verifiedStep.includes('id: verified'));
+assert.doesNotMatch(verifiedStep,/SPINE_REPAIR_INDEX_ONLY/,
+  'the second pass must not trust index-only preview metadata');
+assert.match(verifiedStep,/node scripts\\/repair-latest-twenty-previews\\.mjs matrix/);
+assert.match(workflow,/Decode 20 actual public WebM\\/WebP pairs after publication/);
+assert.match(workflow,/\\/scripts\\/verify-preview-motion\\.mjs/);
+assert.match(workflow,/\\/scripts\\/lib\\/first-frame-poster\\.mjs/);
+assert.ok(!liveVerifier.includes('console.log(JSON.stringify(work))',
+  'production evidence must not log private source records');
+assert.ok(!liveVerifier.includes('work.id'),
+  'production logs must never print work identifiers');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'spine-latest20-'));
