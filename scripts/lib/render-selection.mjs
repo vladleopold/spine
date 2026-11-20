@@ -1,5 +1,6 @@
 // Resolve one exact requested/default animation. Never inspect the animation list
 // to choose a substitute; the renderer owns availability validation.
+import { writeFileSync } from 'node:fs';
 export function resolveRenderSelection(config = {}, entry = {}) {
   const requested = typeof config?.animation === 'string' ? config.animation : '';
   const indexed = typeof entry?.defaultAnimation === 'string' ? entry.defaultAnimation : '';
@@ -8,4 +9,8 @@ export function resolveRenderSelection(config = {}, entry = {}) {
     return { status: 'blocked', code: 'NO_DEFAULT_SPINE_ANIMATION', animation: '' };
   }
   return { status: 'selected', code: null, animation };
+}
+
+export function writeRenderVerification(path, report) {
+  writeFileSync(path, JSON.stringify(report, null, 2));
 }
