@@ -8,6 +8,10 @@ on:
       - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
+      - scripts/lib/published-media-acceptance.mjs
+      - scripts/test-published-media-acceptance.mjs
+      - scripts/lib/latest-ten-live-audit.mjs
+      - scripts/test-latest-ten-live-audit.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/test-preview-motion.mjs
@@ -41,6 +45,10 @@ on:
       - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
+      - scripts/lib/published-media-acceptance.mjs
+      - scripts/test-published-media-acceptance.mjs
+      - scripts/lib/latest-ten-live-audit.mjs
+      - scripts/test-latest-ten-live-audit.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/test-preview-motion.mjs
@@ -142,6 +150,8 @@ jobs:
           node --check scripts/source-skeleton-choice.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-public-index-fetch.mjs
+          node scripts/test-published-media-acceptance.mjs
+          node scripts/test-latest-ten-live-audit.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
   runtime-package-smoke:
@@ -402,19 +412,39 @@ jobs:
     needs: [inventory, render, publish]
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/verify-latest-twenty-live.mjs
+            /scripts/lib/published-media-acceptance.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
+            /scripts/lib/first-frame-poster.mjs
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/fetch-public-index.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify 20 actual public media responses after publication
+      - name: Install pinned FFmpeg tools for live media decoding
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Decode 20 actual published WebM/WebP pairs after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
