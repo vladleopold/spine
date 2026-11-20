@@ -64,3 +64,4 @@ jobs:
           node --check scripts/resolve-export-animation.mjs
           node scripts/test-synthetic-render-skip.mjs
           node scripts/test-spine-export-matrix.mjs
+          node scripts/test-preview-log-privacy.mjs

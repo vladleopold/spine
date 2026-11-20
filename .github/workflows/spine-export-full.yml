@@ -40,6 +40,9 @@ jobs:
             /scripts/
             /library_02/index.json
             /.github/workflows/spine-export-full.yml
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
+            /.github/workflows/repair-reported-previews.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -51,6 +54,7 @@ jobs:
           node --check scripts/spine-export-matrix.mjs
           node --check scripts/resolve-export-animation.mjs
           node scripts/test-spine-export-matrix.mjs
+          node scripts/test-preview-log-privacy.mjs
 
   generate-matrix:
     if: github.event_name == 'repository_dispatch'

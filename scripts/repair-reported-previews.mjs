@@ -82,12 +82,12 @@ const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map(e=>{
+  const matrix=latest.map((e,repairSlot)=>{
     const ready=bundleOk(e);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
+    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
       animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
         e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
         e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
@@ -106,7 +106,6 @@ if(action==="matrix"){
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
     "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
     "/library/index.json","/library_*/index.json",
-    ...matrix.map(x=>"/"+x.previewPath+"/"),
   ];
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
@@ -116,9 +115,12 @@ if(action==="matrix"){
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-latest10");
-  const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
+  const base=path.resolve(root,"downloaded-reported18");
+  const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
+      throw new Error("Invalid artifact slot");
+    seenSlots.add(item.repairSlot);
     if(!latest.some(e=>e.id===item.id)) throw new Error("Untrusted repair entry");
     const entryInfo=latest.find(e=>e.id===item.id);
     const indexPath=path.join(root,entryInfo.basePath,"index.json");
@@ -144,7 +146,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest10-"+item.id);
+    const artifact=path.join(base,"reported18-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}

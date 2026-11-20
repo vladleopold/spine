@@ -184,7 +184,8 @@ if(action==="matrix"){
   const matrix=[];
   // Bound concurrent production probes so the gallery is not flooded.
   for(let offset=0;offset<latest.length;offset+=4){
-    const batch=await Promise.all(latest.slice(offset,offset+4).map(async e=>{
+    const batch=await Promise.all(latest.slice(offset,offset+4).map(async (e,batchIndex)=>{
+     const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
@@ -197,7 +198,7 @@ if(action==="matrix"){
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,
+    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
@@ -217,7 +218,6 @@ if(action==="matrix"){
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
     "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
     "/library/index.json","/library_*/index.json",
-    ...matrix.map(x=>"/"+x.previewPath+"/"),
   ];
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
@@ -230,8 +230,11 @@ if(action==="matrix"){
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
-  const seen=new Set();
+  const seen=new Set(),seenSlots=new Set();
   for(const item of selected){
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=20||seenSlots.has(item.repairSlot))
+      throw new Error("Invalid artifact slot");
+    seenSlots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
     const uniqueKey=entryInfo.basePath+"/"+entryInfo.id;
     if(seen.has(uniqueKey))throw new Error("Duplicate repair entry");
@@ -283,7 +286,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest20-"+item.id);
+    const artifact=path.join(base,"latest20-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
