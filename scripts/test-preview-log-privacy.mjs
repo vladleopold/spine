@@ -121,6 +121,8 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 const latestTenPush = latestTen.slice(latestTen.indexOf('  push:'), latestTen.indexOf('  workflow_dispatch:'));
 assert.doesNotMatch(latestTenPush, /repair-last-ten-previews\.yml/,
   'latest-ten must not auto-run alongside the superset latest-twenty workflow on the same merge');
+assert.doesNotMatch(latestTenPush, /latest-ten-live-audit\.mjs/,
+  'latest-ten must not auto-run when the hourly latest-twenty live audit changes');
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: Mask private source metadata and hydrate exact source\n\s+env:\n\s+ENTRY_ID:/);
