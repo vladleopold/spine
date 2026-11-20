@@ -1,7 +1,7 @@
 name: Repair and accept newest 10 Spine preview renders
 on:
   push:
-    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118, fix/latest10-explicit-animation-guard-20261120, fix/latest10-public-only-inventory-20261120, fix/latest10-preserve-source-blockers-20261120]
+    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118, fix/latest10-explicit-animation-guard-20261120, fix/latest10-public-only-inventory-20261120, fix/latest10-preserve-source-blockers-20261120, fix/render-blocked-report-20261120]
     paths:
       - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
@@ -21,13 +21,10 @@ on:
       - scripts/verify-latest-ten-live.mjs
       - scripts/lib/latest-ten-live-audit.mjs
       - scripts/test-latest-ten-live-audit.mjs
-      - scripts/test-repair-last-ten-previews.mjs
-  pull_request:
-    paths:
-      - .github/workflows/repair-last-ten-previews.yml
       - scripts/render-work.mjs
       - scripts/lib/render-selection.mjs
       - scripts/test-render-selection.mjs
+      - scripts/test-repair-last-ten-previews.mjs
   workflow_dispatch:
 permissions:
   contents: read
