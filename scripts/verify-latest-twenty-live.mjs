@@ -142,6 +142,13 @@ try{
       if(record.webmStatus!=='ready'||record.previewStatus!=='ready'||
          !String(record.defaultAnimation||'').trim()||
          record.defaultAnimation!==work.animation){failed++;continue;}
+      const selected=record.allAnimationPreviews?.[work.animation];
+      if(!selected||selected.webmPreview!==record.webmPreview||
+         selected.webmPreviewMedium!==record.webmPreviewMedium||
+         selected.webmPreviewLow!==record.webmPreviewLow||
+         selected.webpPoster!==record.webpPoster||
+         selected.webpPosterMedium!==record.webpPosterMedium||
+         selected.webpPosterLow!==record.webpPosterLow){failed++;continue;}
       if(!await exactMediaFilesExist(work)){failed++;continue;}
       const prefix='/assets/'+work.previewPath+'/';
       const dir=path.join(tempRoot,'slot-'+String(slot).padStart(2,'0'));
