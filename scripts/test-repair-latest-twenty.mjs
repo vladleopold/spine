@@ -64,7 +64,7 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   assert.ok(all.slice(3).every(x=>x.ready&&x.needsRender&&x.animation==='idle'));
-  assert.doesNotMatch(repairSource,/indexedAnimation\\s*\\|\\|\\s*\\(/,
+  assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
     'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
