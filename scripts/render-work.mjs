@@ -4,9 +4,11 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
+if(id)console.log(`::add-mask::${id}`);
 if(!/^[\w.-]+$/.test(id)||id.includes('..'))throw Error('Invalid upload ID');
 const origin=new URL(config.origin||'https://spine-link.vercel.app').origin;
 if(origin!=='https://spine-link.vercel.app')throw Error('Unsupported preview origin');
@@ -16,14 +18,42 @@ if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
   if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
   console.log('Full export verification dispatched');process.exit(0);
 }
+const selection=resolveRenderSelection(config,found.entry);
+const workPath=found.entry.previewPath||`${found.basePath}/${id}`;
+const privateValues=[workPath,found.entry.previewPath,found.entry.skeleton,found.entry.atlas,
+  selection.animation,...(Array.isArray(found.entry.files)?found.entry.files:[]),
+  ...(Array.isArray(found.entry.animations)?found.entry.animations:[])];
+for(const value of new Set(privateValues.map(value=>String(value||'').trim())
+  .filter(value=>value.length>=4&&!/[\\r\\n]/.test(value))))
+ console.log(`::add-mask::${value}`);
+const report={
+ status:selection.status==='blocked'?'blocked':'rendering',
+ code:selection.code||null,
+ formats:[],
+};
+const writeReport=()=>writeRenderVerification('render-verification.json',report);
+process.on('uncaughtException',error=>{
+ report.status='failed';
+ report.code=report.code||'RENDER_FAILED';
+ const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
+ report.code=safeCode;
+ writeReport();
+ console.error(`SPINE_RENDER_FAILED=${safeCode}`);
+ process.exit(1);
+});
+if(selection.status==='blocked'){
+ writeReport();
+ console.error('SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION');
+ process.exit(1);
+}
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
-const flags=[`--upload-id=${id}`,`--animation=${config.animation||found.entry.defaultAnimation||''}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
+const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
-const report={uploadId:id,animation:meta.animation,formats:[]};
-process.on('uncaughtException',error=>{fs.writeFileSync('render-verification.json',JSON.stringify({...report,error:error.message},null,2));console.error(error);process.exit(1);});
+report.status='rendering';
+report.code=null;
 function probe(file){
  const data=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file],{encoding:'utf8'}));
  const s=data.streams[0];if(!s?.width||!Number(s.nb_read_frames))throw Error('Empty render: '+file);
@@ -31,7 +61,6 @@ function probe(file){
 }
 const pending=[];
 const add=(src,dst)=>{if(!fs.existsSync(src)||fs.statSync(src).size===0)throw Error('Missing output '+src);pending.push({src,dst});};
-const workPath=found.entry.previewPath||`${found.basePath}/${id}`;
 // Publish card first so the animation card does not wait for the full matrix.
 for(const suffix of ['','-medium','-low'])for(const ext of ['webm','webp']){const file=path.join(temp,`preview${suffix}.${ext}`);probe(file);add(file,`${workPath}/preview${suffix}.${ext}`);}
 async function pushStaged(message){
@@ -48,7 +77,7 @@ async function publish(update){
    run('git',['reset','--hard','origin/main']);
    fs.mkdirSync(path.dirname(file.dst),{recursive:true});fs.copyFileSync(file.src,file.dst);
    run('git',['add','--',file.dst]);
-   try{await pushStaged(`Publish rendered asset ${file.dst}`);break;}
+   try{await pushStaged('Publish verified Spine preview media asset');break;}
    catch(error){if(attempt===4)throw error;}
   }
  }
@@ -61,7 +90,7 @@ async function publish(update){
   current.index[idx]=merged;
   const indexPath=`${current.basePath}/index.json`;fs.writeFileSync(indexPath,JSON.stringify(current.index,null,2));
   run('git',['add','--',indexPath]);
-  try{await pushStaged(`Publish verified media index for ${id}`);pending.length=0;return;}
+  try{await pushStaged('Publish verified Spine preview index metadata');pending.length=0;return;}
   catch(error){if(attempt===4)throw error;}
  }
 }
@@ -91,8 +120,10 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
   }else{add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;}
  }
 }
-fs.writeFileSync('render-verification.json',JSON.stringify(report,null,2));
 await publish({allAnimationPreviews:{...entryForUpload(process.cwd(),id).entry.allAnimationPreviews,[anim]:downloads},fullExportStatus:(meta.animations.length===1?'ready':'partial'),fullExportGeneratedAt:new Date().toISOString()});
+report.status='ready';
+report.code=null;
+writeReport();
 for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
  const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
  if(!response.ok)throw Error('Full export dispatch failed: '+response.status);

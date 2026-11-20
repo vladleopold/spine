@@ -15,6 +15,7 @@ import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
+import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 const args = {
   uploadId: '',
@@ -400,6 +401,12 @@ if (skeletonVersion === 'unknown') {
 }
 if (skeletonVersion === '3.8.75') {
   console.error('UNSUPPORTED_SPINE_EXPORT_3_8_75: official 3.8 runtime rejects this exported skeleton format; source re-export required');
+  process.exit(1);
+}
+
+const sourceBlocker = spinePlayerSourceBlocker(skeletonVersion, skeletonFile);
+if (sourceBlocker) {
+  console.error(`${sourceBlocker.code}: ${sourceBlocker.message}`);
   process.exit(1);
 }
 

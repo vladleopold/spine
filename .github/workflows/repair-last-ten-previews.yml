@@ -1,7 +1,7 @@
 name: Repair and accept newest 10 Spine preview renders
 on:
   push:
-    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118, fix/latest10-explicit-animation-guard-20261120, fix/latest10-public-only-inventory-20261120, fix/latest10-preserve-source-blockers-20261120]
+    branches: [main, fix/last-ten-preview-generator-20261118, fix/spine-binary-version-header-20261118, fix/pinned-native-spine-players-20261118, fix/latest10-publish-snapshot-20261118, fix/latest10-explicit-animation-guard-20261120, fix/latest10-public-only-inventory-20261120, fix/latest10-preserve-source-blockers-20261120, fix/render-blocked-report-20261120]
     paths:
       - .github/workflows/repair-last-ten-previews.yml
       - scripts/repair-last-ten-previews.mjs
@@ -21,6 +21,9 @@ on:
       - scripts/verify-latest-ten-live.mjs
       - scripts/lib/latest-ten-live-audit.mjs
       - scripts/test-latest-ten-live-audit.mjs
+      - scripts/render-work.mjs
+      - scripts/lib/render-selection.mjs
+      - scripts/test-render-selection.mjs
       - scripts/test-repair-last-ten-previews.mjs
   workflow_dispatch:
 permissions:
@@ -62,6 +65,7 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-spine-version-detect.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-render-selection.mjs
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-latest-ten-live-audit.mjs
@@ -81,6 +85,7 @@ jobs:
       - name: Verify all three pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
   render:
+    name: validate-recovery-${{ matrix.entry.repairSlot }}
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
@@ -104,7 +109,22 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-            /${{ matrix.entry.previewPath }}/
+      - name: Mask private source metadata and hydrate exact source
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_PATH: ${{ matrix.entry.previewPath }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for value in "$ENTRY_ID" "$ENTRY_PATH" "$ENTRY_ANIMATION"; do
+            [[ -z "$value" ]] || printf '::add-mask::%s\n' "$value"
+          done
+          if [[ "$ENTRY_PATH" = /* || "$ENTRY_PATH" == *..* ]]; then
+            echo "Invalid source path"
+            exit 1
+          fi
+          git sparse-checkout add "$ENTRY_PATH/"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -130,19 +150,20 @@ jobs:
         shell: bash
         env:
           ENTRY_ID: ${{ matrix.entry.id }}
+          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
           ENTRY_READY: ${{ matrix.entry.ready }}
           ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
           ENTRY_ANIMATION: ${{ matrix.entry.animation }}
         run: |
           set -euo pipefail
-          mkdir -p "out/$ENTRY_ID"
+          mkdir -p "out/$REPAIR_SLOT"
           if [[ "$ENTRY_READY" != true ]]; then
-            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
             exit 0
           fi
           if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
@@ -168,7 +189,7 @@ jobs:
           fi
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
-            echo '{"ok":false,"reason":"render-failed"}' > "out/$ENTRY_ID/meta.json"
+            echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
             echo "::error::Native Spine rendering failed; no preview will be published"
             exit 1
           fi
@@ -176,33 +197,35 @@ jobs:
             for ext in webm webp; do
               in="$RUNNER_TEMP/$ENTRY_ID-preview$suffix.$ext"
               test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
-              cp "$in" "out/$ENTRY_ID/preview$suffix.$ext"
+              cp "$in" "out/$REPAIR_SLOT/preview$suffix.$ext"
             done
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
-              -of default=nw=1 "out/$ENTRY_ID/preview$suffix.webm" | grep -q '^codec_name='
+              -of default=nw=1 "out/$REPAIR_SLOT/preview$suffix.webm" | grep -q '^codec_name='
             video_duration=$(ffprobe -v error -show_entries format=duration \
-              -of default=nw=1:nk=1 "out/$ENTRY_ID/preview$suffix.webm")
+              -of default=nw=1:nk=1 "out/$REPAIR_SLOT/preview$suffix.webm")
             awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
               echo "::error::Rejected nonplayable short preview video"
               exit 1
             }
-            file "out/$ENTRY_ID/preview$suffix.webp" | grep -q 'Web/P image'
+            file "out/$REPAIR_SLOT/preview$suffix.webp" | grep -q 'Web/P image'
           done
-          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$ENTRY_ID/meta.json"
+          cp "$RUNNER_TEMP/$ENTRY_ID-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
-              throw new Error("Export metadata incomplete");
-            m.ok=true;
-            fs.writeFileSync(p,JSON.stringify(m));
+            const animationMatches=typeof process.env.ENTRY_ANIMATION==="string"&&m.animation===process.env.ENTRY_ANIMATION;
+            if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
+              throw new Error("Export metadata incomplete or selected animation mismatch");
+            const safe={ok:true,animationMatches:true,width:m.width,height:m.height,
+              animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
+            fs.writeFileSync(p,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
-          ' "out/$ENTRY_ID/meta.json"
+          ' "out/$REPAIR_SLOT/meta.json"
       - uses: actions/upload-artifact@v4
         if: always() && matrix.entry.needsRender
         with:
-          name: latest10-${{ matrix.entry.id }}
-          path: out/${{ matrix.entry.id }}/
+          name: latest10-${{ matrix.entry.repairSlot }}
+          path: out/${{ matrix.entry.repairSlot }}/
           if-no-files-found: error
           retention-days: 1
   publish:
@@ -219,7 +242,36 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
-          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - name: Mask and hydrate exact source directories
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import { execFileSync } from 'node:child_process';
+          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+          if(selected.length!==10)throw new Error('Missing exact repair manifest');
+          for(const item of selected){
+            for(const value of [item.id,item.previewPath,item.animation]){
+              const secret=String(value||'');
+              if(secret.length>=4)process.stdout.write('::add-mask::'+secret+'\n');
+            }
+          }
+          const paths=new Set();
+          for(const item of selected){
+            const source=String(item.previewPath||'');
+            if(!source||source.startsWith('/')||source.split('/').includes('..')||
+              !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
+            paths.add(source);
+          }
+          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
+          console.log('SOURCE_PATHS_HYDRATED');
+          NODE
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
