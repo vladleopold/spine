@@ -12,6 +12,8 @@ on:
       - scripts/test-first-frame-poster.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/test-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/test-canvas-recovery-workflow.mjs
       - .github/workflows/canvas-recovery-e2e.yml
   pull_request:
     paths:
@@ -24,6 +26,8 @@ on:
       - scripts/test-first-frame-poster.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/test-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/test-canvas-recovery-workflow.mjs
       - .github/workflows/canvas-recovery-e2e.yml
 permissions:
   contents: read
@@ -64,6 +68,9 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node --check scripts/renderer-failure-class.mjs
           node scripts/test-renderer-failure-class.mjs
+          node --check scripts/verify-poster-first-frame.mjs
+          node --check scripts/test-canvas-recovery-workflow.mjs
+          node scripts/test-canvas-recovery-workflow.mjs
       - name: Install Chromium and ffmpeg runtime
         shell: bash
         run: |
@@ -80,6 +87,23 @@ jobs:
           node --check scripts/lib/first-frame-poster.mjs
           node scripts/test-first-frame-poster.mjs
           node scripts/test-preview-motion.mjs
+      - name: Fingerprint original source files before rendering
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="library_02/$ENTRY_ID"
+          test -d "$SOURCE_DIR"
+          if [[ -n "$(git status --porcelain -- "$SOURCE_DIR")" ]]; then
+            echo "SOURCE_PRESERVATION_PRECONDITION_FAILED"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.before"
+          test -s "$RUNNER_TEMP/source-files.before"
+          xargs -0 -r sha256sum < "$RUNNER_TEMP/source-files.before" > "$RUNNER_TEMP/source-hashes.before"
+          test -s "$RUNNER_TEMP/source-hashes.before"
+          echo "SOURCE_PRESERVATION_BASELINE_CAPTURED"
       - name: Real proprietary animation, temporary private frames only, strict media acceptance
         shell: bash
         env:
@@ -98,18 +122,49 @@ jobs:
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/private-render.log"
             exit 1
           fi
-          ffprobe -v error -count_frames -select_streams v:0 \
-            -show_entries stream=width,height,nb_read_frames \
-            -of json "$RUNNER_TEMP/private-preview.webm" > "$RUNNER_TEMP/private-probe.json"
-          node -e '
-            const p=require(process.argv[1]);const s=p.streams?.[0]||{};
-            if(!(s.width>0&&s.height>0&&Number(s.nb_read_frames)>=8))
-              throw Error("Incomplete actual animation video");
-            console.log("REAL_SPINE_VIDEO_ACCEPTANCE_PASS FRAMES="+s.nb_read_frames);
-          ' "$RUNNER_TEMP/private-probe.json"
-          node scripts/verify-preview-motion.mjs "$RUNNER_TEMP/private-preview.webm"
-          for f in "$RUNNER_TEMP/private-preview.webp" "$RUNNER_TEMP/private-preview-medium.webm" "$RUNNER_TEMP/private-preview-medium.webp" "$RUNNER_TEMP/private-preview-low.webm" "$RUNNER_TEMP/private-preview-low.webp"; do
-            test -s "$f"
+          for suffix in '' '-medium' '-low'; do
+            video="$RUNNER_TEMP/private-preview${suffix}.webm"
+            poster="$RUNNER_TEMP/private-preview${suffix}.webp"
+            probe="$RUNNER_TEMP/private-probe${suffix}.json"
+            test -s "$video" && test -s "$poster"
+            ffprobe -v error -count_frames -select_streams v:0 \
+              -show_entries stream=width,height,nb_read_frames \
+              -of json "$video" > "$probe"
+            node -e '
+              const p=require(process.argv[1]);const s=p.streams?.[0]||{};
+              if(!(s.width>0&&s.height>0&&Number(s.nb_read_frames)>=8))
+                throw Error("Incomplete actual animation video");
+            ' "$probe"
+            node scripts/verify-preview-motion.mjs "$video" > "$RUNNER_TEMP/motion${suffix}.log" 2>&1
+            node scripts/verify-poster-first-frame.mjs "$video" "$poster" > "$RUNNER_TEMP/poster${suffix}.log" 2>&1
+            echo "QUALITY_TIER_ACCEPTED"
           done
           echo "REAL_SPINE_WEBM_WEBP_PREVIEW_PASS"
           # No source or output images/videos are uploaded, printed or committed.
+
+      - name: Verify original source files remain byte-identical
+        if: always()
+        shell: bash
+        env:
+          ENTRY_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="library_02/$ENTRY_ID"
+          if [[ ! -s "$RUNNER_TEMP/source-files.before" || ! -s "$RUNNER_TEMP/source-hashes.before" ]]; then
+            echo "SOURCE_PRESERVATION_BASELINE_MISSING"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.after"
+          if ! cmp -s "$RUNNER_TEMP/source-files.before" "$RUNNER_TEMP/source-files.after"; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if ! sha256sum -c "$RUNNER_TEMP/source-hashes.before" >/dev/null 2>&1; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if [[ -n "$(git status --porcelain -- "$SOURCE_DIR")" ]]; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          echo "SOURCE_PRESERVATION_PASS"
