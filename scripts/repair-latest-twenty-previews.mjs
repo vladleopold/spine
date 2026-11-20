@@ -201,7 +201,7 @@ if(action==="matrix"){
       sourceFingerprint:previewSourceFingerprint(record),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
-      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":""};
+      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
     }));
     matrix.push(...batch);
   }
