@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { sourceBlocker } from "./lib/reported-preview-acceptance.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -45,55 +46,119 @@ function newestTen() {
   if(missing.length)throw new Error('Requested Spine works missing from source indexes: '+missing.length);
   return requestedIds.map(id=>byId.get(id));
 }
-function bundleOk(entry) {
-  const p=path.resolve(root,entry.previewPath);
-  if(!p.startsWith(root+path.sep))return false;
-  let files=[];
-  try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
-  catch{
-    // Inventory checks indexes only; the render job validates actual files.
-    files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
+function recordFor(entry) {
+  return (readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)||null;
+}
+function bundleBlocker(entry, requestedAnimation="", record=recordFor(entry)) {
+  if(!record)return "missing-source";
+  let availableFiles=null;
+  if(process.env.SPINE_REPAIR_INDEX_ONLY!=="1") {
+    const p=path.resolve(root,entry.previewPath);
+    if(!p.startsWith(root+path.sep))return "missing-source";
+    try {
+      availableFiles=new Map();
+      for(const file of fs.readdirSync(p)) {
+        const full=path.join(p,file);
+        if(fs.statSync(full).isFile())availableFiles.set(file,fs.statSync(full).size);
+      }
+    } catch {
+      return "missing-source";
+    }
   }
-  return files.some(f=>/\.(json|skel)$/i.test(f)) &&
-    files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
-    files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
+  return sourceBlocker(record,requestedAnimation,availableFiles);
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
 function existingMediaOk(entry){
-  const collection=readIndex(root,entry.basePath)||[];
-  const record=collection.find(x=>x.id===entry.id);
-  if(record?.webmStatus!=="ready")return false;
-  // A previously published Urka clip was decoded as only 12 frames over
-  // 1.82 seconds. Require real frame-density evidence before treating it as
-  // an accepted final video; leave older previews intact during retries.
-  const f=Number(record?.previewFrameCount||0);
-  const duration=Number(record?.previewDuration||0);
-  if(f>0&&duration>0&&f/duration<15)return false;
-  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
-  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
-  return mediaNames.every(name=>{
-    try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
-    catch{return false;}
-  });
+  const record=recordFor(entry);
+  if(record?.previewStatus!=="ready"||record?.webmStatus!=="ready")return false;
+  const animation=typeof record.defaultAnimation==="string"?record.defaultAnimation:"";
+  if(!animation||!Array.isArray(record.animations)||!record.animations.includes(animation))return false;
+  const map=record.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
+    ?record.allAnimationPreviews:{};
+  const hasMap=Object.keys(map).length>0;
+  const selected=hasMap?map[animation]:record;
+  if(hasMap&&!selected)return false;
+
+  const fields=[
+    ["webmPreview","webpPoster"],
+    ["webmPreviewMedium","webpPosterMedium"],
+    ["webmPreviewLow","webpPosterLow"],
+  ];
+  const pairs=fields.map(([videoKey,posterKey])=>({
+    video:selected[videoKey],
+    poster:selected[posterKey]||(videoKey==="webmPreview"&&!hasMap?record.thumbnailPoster:""),
+  }));
+  if(pairs.some(pair=>typeof pair.video!=="string"||!pair.video||
+    typeof pair.poster!=="string"||!pair.poster))return false;
+
+  // A previously published clip must meet the same frame-density gate before
+  // it can suppress a retry. The exact default animation is never substituted.
+  const frameCount=Number(record.previewFrameCount||0);
+  const duration=Number(record.previewDuration||0);
+  if(frameCount>0&&duration>0&&frameCount/duration<15)return false;
+  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&
+    !(frameCount>0&&duration>0&&frameCount/duration>=15))return false;
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
+
+  const localPath=url=>{
+    try{
+      const pathname=new URL(url).pathname;
+      const marker="/assets/";
+      const offset=pathname.indexOf(marker);
+      if(offset<0)return null;
+      const relative=pathname.slice(offset+marker.length);
+      const resolved=path.resolve(root,relative);
+      return resolved.startsWith(root+path.sep)?resolved:null;
+    }catch{return null;}
+  };
+  const videoPaths=pairs.map(pair=>localPath(pair.video));
+  const posterPaths=pairs.map(pair=>localPath(pair.poster));
+  if(videoPaths.some(p=>!p)||posterPaths.some(p=>!p))return false;
+
+  for(let i=0;i<videoPaths.length;i++){
+    const video=videoPaths[i],poster=posterPaths[i];
+    try{
+      if(fs.statSync(video).size<=128||fs.statSync(poster).size<=128)return false;
+      const data=JSON.parse(execFileSync("ffprobe",[
+        "-v","error","-count_frames","-select_streams","v:0",
+        "-show_entries","stream=nb_read_frames,width,height:format=duration",
+        "-of","json",video,
+      ],{encoding:"utf8",timeout:30000,stdio:["ignore","pipe","ignore"]}));
+      const stream=data.streams?.[0]||{};
+      const frames=Number(stream.nb_read_frames),seconds=Number(data.format?.duration);
+      if(!(frames>=8&&seconds>0&&stream.width>0&&stream.height>0))return false;
+      execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),video],
+        {stdio:"ignore",timeout:120000});
+      execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),video,poster],
+        {stdio:"ignore",timeout:120000});
+    }catch{return false;}
+  }
+  return true;
 }
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map(e=>{
-    const ready=bundleOk(e);
+    const record=recordFor(e);
+    const explicitAnimation=e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
+      e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
+      e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
+      e.id==="Spine-animation-2026-11-17T18-17-09-503Z"?"Brows Crazed":
+      e.id==="Spine-animation-2026-11-17T18-19-06-491Z"?"Camera Idle":
+      e.id==="Spine-animation-2026-11-17T18-39-06-745Z"?"animation":"";
+    // Existing default selection always wins. An explicit manifest selection is
+    // used only when the record has no default; no first/alternate track is tried.
+    const animation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.length
+      ?record.defaultAnimation:explicitAnimation;
+    const blockedReason=bundleBlocker(e,animation,record);
+    const ready=!blockedReason;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
-      animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-        e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
-        e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
-        e.id==="Spine-animation-2026-11-17T18-17-09-503Z"?"Brows Crazed":
-        e.id==="Spine-animation-2026-11-17T18-19-06-491Z"?"Camera Idle":
-        e.id==="Spine-animation-2026-11-17T18-39-06-745Z"?"animation":""};
+    return {id:e.id,basePath:e.basePath,previewPath:rel,ready,
+      needsRender:ready&&!existingMediaOk(e),animation,blockedReason};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -126,10 +191,13 @@ if(action==="matrix"){
     const entries=indexes.get(indexPath);
     const record=entries.find(e=>e.id===item.id);
     if(!record)throw new Error("Index record disappeared before repair");
-    if(!bundleOk(entryInfo)){
-      record.webmStatus="blocked-missing-source";
+    const blocker=item.blockedReason||bundleBlocker(entryInfo,item.animation,record);
+    if(blocker){
+      record.webmStatus=blocker==="missing-animation-selection"
+        ?"blocked-missing-animation-selection":"blocked-missing-source";
       record.previewStatus="blocked";
-      record.previewError="Incomplete skeleton / atlas / texture bundle";
+      record.previewError=blocker==="missing-animation-selection"
+        ?"No exact animation was selected":"Incomplete skeleton / atlas / texture bundle";
       summary.blocked++;
       continue;
     }
@@ -185,7 +253,29 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animation=typeof record.defaultAnimation==="string"&&record.defaultAnimation.length
+      ?record.defaultAnimation:String(item.animation||"");
+    if(!animation){
+      record.webmStatus="blocked-missing-animation-selection";
+      record.previewStatus="blocked";
+      record.previewError="No exact animation was selected";
+      summary.blocked++;
+      continue;
+    }
+    if(meta.animation&&String(meta.animation)!==animation){
+      record.webmStatus="failed";
+      record.previewStatus="failed";
+      record.previewError="Rendered animation did not match the exact selection";
+      summary.failed++;
+      continue;
+    }
+    if(Array.isArray(meta.animations)&&meta.animations.length&&!meta.animations.includes(animation)){
+      record.webmStatus="failed";
+      record.previewStatus="failed";
+      record.previewError="Selected animation was unavailable in the rendered source";
+      summary.failed++;
+      continue;
+    }
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
