@@ -891,6 +891,10 @@ try {
       break; // player/skeleton broken — another skin will not fix it
     }
 
+    // Stable, non-sensitive stage markers distinguish startup from later visibility failure.
+    console.error('PLAYER_READY=1');
+    console.error('SOURCE_SKIN_MODE=default');
+
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
     const pinnedAnimation = requestedAnimation;
     if (!runtimeAnimations.includes(pinnedAnimation)) {
@@ -1022,6 +1026,7 @@ try {
       break;
     }
 
+    console.error('RECORDER_STATE=recording');
     await new Promise((resolve) => setTimeout(resolve, captureDuration * 1000));
 
     await page.evaluate(() => {
@@ -1145,6 +1150,7 @@ try {
         player.animationState.setAnimation(0,name,true);
         player.paused=false;
       },targetAnimation);
+      console.error('CANVAS_FALLBACK_CAPTURE=started');
       const canvasHost=page.locator('#player canvas').first();
       await canvasHost.waitFor({state:'visible',timeout:10000});
       let visibleFrames=0;
@@ -1163,6 +1169,7 @@ try {
       if(visibleFrames<2)throw new Error('No visible real-time Spine frames');
       if(frameHashes.size<2)throw new Error('Selected animation has no changing canvas frames');
       console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
+      console.error('CANVAS_FALLBACK_CAPTURE=passed');
       const recovered=path.join(tempDir,'deterministic.webm');
       execFileSync('ffmpeg',[
         '-y','-v','error','-framerate',String(frameCount/duration),
