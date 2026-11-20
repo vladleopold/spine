@@ -47,6 +47,9 @@ const latestTwenty = fs.readFileSync(new URL('../.github/workflows/repair-latest
 const reportedRepair = fs.readFileSync(new URL('./repair-reported-previews.mjs', import.meta.url), 'utf8');
 const latestTwentyRepair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
 
+assert.match(reported, /pull_request:/);
+assert.match(reported, /  inventory:\\n    permissions:\\n      contents: read/);
+
 for (const workflow of [reported, latestTen, latestTwenty]) {
   assert.ok(workflow.includes('node scripts/mask-preview-manifest.mjs'),
     'every manifest-consuming workflow must mask before use');
