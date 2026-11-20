@@ -66,7 +66,7 @@ function computeDuration(entry) {
   if (jsonFiles.length === 0) return 0;
 
   const skeletonPath = path.join(setPath, jsonFiles[0]);
-  const targetAnim = entry.defaultAnimation || (Array.isArray(entry.animations) ? entry.animations[0] : '');
+  const targetAnim = String(entry.defaultAnimation || '').trim();
 
   try {
     const data = JSON.parse(fs.readFileSync(skeletonPath, 'utf8'));
@@ -91,15 +91,19 @@ function computeDuration(entry) {
 
 let successCount = 0;
 let failCount = 0;
+let blockedCount = 0;
 
 for (let i = 0; i < targetEntries.length; i++) {
   const entry = targetEntries[i];
   console.log(`\n[${i + 1}/${targetEntries.length}] Processing ${entry.id} (${entry.title || 'untitled'})...`);
 
-  const animName = entry.defaultAnimation || (Array.isArray(entry.animations) ? entry.animations[0] : '');
+  const animName = String(entry.defaultAnimation || '').trim();
   if (!animName) {
-    console.error(`  Skipping ${entry.id}: no animations defined.`);
-    failCount++;
+    console.error('  BLOCKED: NO_DEFAULT_SPINE_ANIMATION; refusing to select another track.');
+    entry.webmStatus = 'blocked';
+    entry.webmError = 'NO_DEFAULT_SPINE_ANIMATION';
+    blockedCount++;
+    fs.writeFileSync(indexPath, JSON.stringify(entries, null, 2) + '\\n');
     continue;
   }
 
@@ -181,3 +185,4 @@ console.log(`\n=== BATCH EXPORT FINISHED ===`);
 console.log(`Processed: ${targetEntries.length}`);
 console.log(`Success: ${successCount}`);
 console.log(`Failed: ${failCount}`);
+console.log(`Blocked: ${blockedCount}`);
