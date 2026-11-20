@@ -129,6 +129,7 @@ for (let index = 0; index < realEntry.animations.length; index += 1) {
 }
 
 const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-full.yml', import.meta.url), 'utf8');
+const prepareRender = fs.readFileSync(new URL('./prepare-render.mjs', import.meta.url), 'utf8');
 const matrixScript = fs.readFileSync(new URL('./spine-export-matrix.mjs', import.meta.url), 'utf8');
 const resolverScript = fs.readFileSync(new URL('./resolve-export-animation.mjs', import.meta.url), 'utf8');
 
@@ -159,22 +160,14 @@ assert.match(workflow, /scripts\/lib\/export-log-redaction\.mjs/);
 assert.match(workflow, /scripts\/prepare-render\.mjs/);
 assert.ok(workflow.includes('needs: [generate-matrix, export-opaque, export-alpha]'));
 assert.ok(workflow.includes("needs.generate-matrix.outputs.has-items == 'true'"));
-const uploadIdExpression = '
-
-console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
- + '{{ github.event.client_payload.uploadId }}';
-const runIdExpression = '
-
-console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
- + '{{ github.run_id }}';
+const uploadIdExpression = String.fromCharCode(36) + '{{ github.event.client_payload.uploadId }}';
+const runIdExpression = String.fromCharCode(36) + '{{ github.run_id }}';
 assert.ok(!workflow.includes('full-opaque-' + uploadIdExpression));
 assert.ok(!workflow.includes('full-alpha-' + uploadIdExpression));
 assert.ok(workflow.includes('full-opaque-' + runIdExpression));
 assert.ok(workflow.includes('full-alpha-' + runIdExpression));
-assert.ok(!workflow.includes('Full export: all animations + alpha for ' + '
-
-console.log('PASS full-export matrix uses numeric indexes and preserves the exact selected animation');
- + '{UPLOAD_ID}'));
+const rawUploadCommit = 'Full export: all animations + alpha for ' + String.fromCharCode(36) + '{UPLOAD_ID}';
+assert.ok(!workflow.includes(rawUploadCommit));
 assert.ok(!workflow.includes('Upload ID |'));
 assert.ok(!workflow.includes('ls -lah "$DIR/"'));
 assert.match(workflow, /ARTIFACT_FILE_COUNT/);

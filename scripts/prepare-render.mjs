@@ -5,7 +5,7 @@ import {collectSensitiveExportValues,escapeWorkflowCommandValue} from './lib/exp
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const uploadId=String(config.uploadId||'');
-if(uploadId)console.log(`::add-mask::${uploadId}`);
+if(uploadId)console.log('::add-mask::'+escapeWorkflowCommandValue(uploadId));
 const found=entryForUpload(process.cwd(),uploadId);
 if(!found)throw Error('Upload not found');
 const work=String(found.entry.previewPath||`${found.basePath}/${uploadId}`);
