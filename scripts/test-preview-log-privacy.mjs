@@ -73,12 +73,17 @@ assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
 assert.match(reportedRepair, /String\(entry\.defaultAnimation\|\|""\)\.trim\(\)/);
 assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
+assert.match(reportedRepair, /const selectedAnimation=String\(item\.animation\|\|record\.defaultAnimation\|\|""\)\.trim\(\)/);
+assert.match(reportedRepair, /existingMediaOk\(entryInfo,selectedAnimation\)/);
 assert.match(reportedRepair, /blocked-missing-animation/);
 assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest20-"\+item\.repairSlot/);
 assert.doesNotMatch(reportedRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.doesNotMatch(latestTwentyRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.match(latestTwenty, /animationMatches:true/);
+assert.match(latestTwentyRepair, /meta\?\.animationMatches===true/);
+assert.ok(latestTen.includes('/scripts/lib/export-log-redaction.mjs'));
+assert.ok(latestTwenty.includes('/scripts/lib/export-log-redaction.mjs'));
 assert.doesNotMatch(latestTwenty, /m\.ok=true;\s*fs\.writeFileSync\(p,JSON\.stringify\(m\)\)/);
 
 console.log('PASS preview audit privacy: masked manifests, opaque matrix slots, and ID-free diagnostics');

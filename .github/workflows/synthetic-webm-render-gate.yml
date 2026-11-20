@@ -47,6 +47,14 @@ jobs:
             /scripts/spine-export-matrix.mjs
             /scripts/resolve-export-animation.mjs
             /scripts/test-spine-export-matrix.mjs
+            /scripts/test-preview-log-privacy.mjs
+            /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/verify-reported-preview-live.mjs
+            /scripts/repair-reported-previews.mjs
+            /scripts/repair-latest-twenty-previews.mjs
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
+            /.github/workflows/repair-reported-previews.yml
             /scripts/resolve-library.mjs
             /library/index.json
             /library_*/index.json

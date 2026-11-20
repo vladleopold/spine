@@ -139,8 +139,8 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    const animation=String(item.animation||record.defaultAnimation||"").trim();
-    if(!animation){
+    const selectedAnimation=String(item.animation||record.defaultAnimation||"").trim();
+    if(!selectedAnimation){
       record.webmStatus="blocked-missing-animation";
       record.previewStatus="blocked";
       record.previewError="No exact selected/default animation is available";
@@ -148,7 +148,7 @@ if(action==="matrix"){
       continue;
     }
     if(item.needsRender===false){
-      if(existingMediaOk(entryInfo,animation)){
+      if(existingMediaOk(entryInfo,selectedAnimation)){
         summary.ready++;
         continue;
       }
@@ -199,7 +199,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||item.animation||record.defaultAnimation||"");
+    const animation=String(meta.animation||selectedAnimation||record.defaultAnimation||"");
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
