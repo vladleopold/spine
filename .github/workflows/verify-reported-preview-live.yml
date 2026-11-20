@@ -8,8 +8,12 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: reported-preview-production-audit
+  cancel-in-progress: false
 jobs:
   production-audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.event != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
@@ -17,6 +21,8 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/verify-reported-preview-live.yml
             /scripts/resolve-library.mjs
             /scripts/verify-reported-preview-live.mjs
             /scripts/lib/reported-preview-media.mjs
