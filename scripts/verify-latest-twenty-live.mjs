@@ -32,7 +32,7 @@ const tiers=[
 ];
 async function getIndex(collection){
   if(cache.has(collection))return cache.get(collection);
-  if(!/^library(?:_\\d+)?$/.test(collection))throw Error('Unsafe collection');
+  if(!/^library(?:_\d+)?$/.test(collection))throw Error('Unsafe collection');
   // The Contents API omits content for indexes larger than 1 MiB. Read the
   // public raw JSON directly so a large shard cannot become an empty snapshot.
   const rawUrl='https://raw.githubusercontent.com/'+repo+'/main/'+collection+'/index.json';
@@ -133,9 +133,9 @@ try{
       }
       if(record.webmStatus==='blocked-missing-source'){
         const source=Array.isArray(record.files)?record.files:[];
-        const triad=source.some(name=>/\\.(skel|json)$/i.test(name))&&
-          source.some(name=>/\\.atlas(?:\\.txt|\\.docx)?$/i.test(name))&&
-          source.some(name=>/\\.(png|jpe?g|dds|webp)$/i.test(name));
+        const triad=source.some(name=>/\.(skel|json)$/i.test(name))&&
+          source.some(name=>/\.atlas(?:\.txt|\.docx)?$/i.test(name))&&
+          source.some(name=>/\.(png|jpe?g|dds|webp)$/i.test(name));
         if(triad)failed++;else blocked++;
         continue;
       }
