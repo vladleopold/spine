@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { resolveRenderSelection, writeRenderVerification } from './lib/render-selection.mjs';
+import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 test('missing explicit and indexed animation is reported as blocked', () => {
   assert.deepEqual(resolveRenderSelection({}, { animations: ['idle', 'run'] }), {
@@ -46,4 +47,18 @@ test('blocked status is written as a diagnostic artifact before the workflow exi
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }
+});
+
+
+test('Spine 3.7 binary .skel is blocked before player creation; same-version JSON remains usable', () => {
+  assert.deepEqual(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), {
+    code: 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
+    message: 'Spine Player 3.7 requires jsonUrl; binary .skel cannot be loaded without a same-work JSON skeleton.',
+  });
+  assert.equal(spinePlayerSourceBlocker('3.7.93', 'skeleton.json'), null);
+  assert.equal(spinePlayerSourceBlocker('3.8.99', 'skeleton.skel'), null);
+  assert.equal(spinePlayerSourceBlocker('4.3.26', 'skeleton.skel'), null);
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  assert.match(exporter, /const sourceBlocker = spinePlayerSourceBlocker\(skeletonVersion, skeletonFile\)/);
+  assert.match(exporter, /if \(sourceBlocker\) \{[\s\S]*?process\.exit\(1\);[\s\S]*?\}/);
 });
