@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -37,7 +38,7 @@ function newestTen() {
     for(const entry of readIndex(root,folder)||[]) {
       if(!requestedSet.has(entry?.id))continue;
       if(byId.has(entry.id))throw new Error('Duplicate work across archive collections');
-      const defaultAnimation=String(entry.defaultAnimation||"").trim();
+      const defaultAnimation=choosePreviewAnimation([],entry.defaultAnimation);
       byId.set(entry.id,{id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+'/'+entry.id,
         at:Date.parse(entry.uploadedAt||0)||0,defaultAnimation});
     }
@@ -64,7 +65,8 @@ const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
 function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  if(record?.webmStatus!=="ready"||!animation||String(record?.defaultAnimation||"")!==String(animation))return false;
+  const selected=choosePreviewAnimation([],animation);
+  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -85,12 +87,7 @@ if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
-    const animation=e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-      e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
-      e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
-      e.id==="Spine-animation-2026-11-17T18-17-09-503Z"?"Brows Crazed":
-      e.id==="Spine-animation-2026-11-17T18-19-06-491Z"?"Camera Idle":
-      e.id==="Spine-animation-2026-11-17T18-39-06-745Z"?"animation":String(e.defaultAnimation||"").trim();
+    const animation=choosePreviewAnimation([],e.defaultAnimation);
     const ready=sourceReady&&Boolean(animation);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
@@ -143,11 +140,19 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    const selectedAnimation=String(item.animation||record.defaultAnimation||"").trim();
+    const selectedAnimation=choosePreviewAnimation([],item.animation);
+    const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
     if(!selectedAnimation){
       record.webmStatus="blocked-missing-animation";
       record.previewStatus="blocked";
       record.previewError="No exact selected/default animation is available";
+      summary.blocked++;
+      continue;
+    }
+    if(selectedAnimation!==indexedAnimation){
+      record.webmStatus="blocked-animation-selection-mismatch";
+      record.previewStatus="blocked";
+      record.previewError="Selected animation does not match the unchanged index default";
       summary.blocked++;
       continue;
     }
@@ -168,7 +173,8 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && meta?.animationMatches===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true &&
+      choosePreviewAnimation([],meta?.animation)===selectedAnimation && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -203,7 +209,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=String(meta.animation||selectedAnimation||record.defaultAnimation||"");
+    const animation=selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
@@ -219,9 +225,7 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
-    if(animation) record.defaultAnimation=animation;
-    if(Number(meta.width)>0)record.previewWidth=meta.width;
+reported remove index animation mutations    if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
     if(mainVideo) {
       record.previewFrameCount=mainVideo.frames;
