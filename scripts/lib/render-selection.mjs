@@ -11,6 +11,11 @@ export function resolveRenderSelection(config = {}, entry = {}) {
   return { status: 'selected', code: null, animation };
 }
 
+// Preview-only recovery must not fan out into a full export of other animations.
+export function shouldDispatchFullExport(config = {}) {
+  return config?.previewOnly !== true;
+}
+
 export function writeRenderVerification(path, report) {
   writeFileSync(path, JSON.stringify(report, null, 2));
 }
