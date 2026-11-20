@@ -77,7 +77,7 @@ async function publish(update){
    run('git',['reset','--hard','origin/main']);
    fs.mkdirSync(path.dirname(file.dst),{recursive:true});fs.copyFileSync(file.src,file.dst);
    run('git',['add','--',file.dst]);
-   try{await pushStaged(`Publish rendered asset ${file.dst}`);break;}
+   try{await pushStaged('Publish verified Spine preview media asset');break;}
    catch(error){if(attempt===4)throw error;}
   }
  }
@@ -90,7 +90,7 @@ async function publish(update){
   current.index[idx]=merged;
   const indexPath=`${current.basePath}/index.json`;fs.writeFileSync(indexPath,JSON.stringify(current.index,null,2));
   run('git',['add','--',indexPath]);
-  try{await pushStaged(`Publish verified media index for ${id}`);pending.length=0;return;}
+  try{await pushStaged('Publish verified Spine preview index metadata');pending.length=0;return;}
   catch(error){if(attempt===4)throw error;}
  }
 }

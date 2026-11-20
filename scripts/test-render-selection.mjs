@@ -103,3 +103,16 @@ test('latest-ten recovery exposes only numeric slots and sanitized metadata publ
   assert.ok(!repair.includes('meta.animations'),
     'render artifacts must not overwrite original animation names in index metadata');
 });
+
+
+test('published preview commits use generic messages without private IDs or source paths',()=>{
+  const renderWork=fs.readFileSync(new URL('./render-work.mjs',import.meta.url),'utf8');
+  const calls=renderWork.split(String.fromCharCode(10))
+    .filter(line=>line.includes('pushStaged(')&&!line.includes('async function pushStaged'));
+  assert.deepEqual(calls.map(line=>line.trim()),[
+    "try{await pushStaged('Publish verified Spine preview media asset');break;}",
+    "try{await pushStaged('Publish verified Spine preview index metadata');pending.length=0;return;}",
+  ]);
+  assert.ok(!renderWork.includes('Publish rendered asset'));
+  assert.ok(!renderWork.includes('Publish verified media index for'));
+});
