@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { classifyFfmpegFailure } from "./renderer-failure-class.mjs";
+import fs from "node:fs";
+import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog } from "./renderer-failure-class.mjs";
 
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libwebp'"), "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libvpx-vp9'"), "FFMPEG_VP9_ENCODER_UNAVAILABLE");
@@ -21,3 +22,58 @@ const safeCategory = classifyFfmpegFailure(syntheticPrivateLog);
 assert.equal(safeCategory, "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
 assert.equal(JSON.stringify({ffmpegFailure:safeCategory}).includes("secret-character"), false);
 console.log("PASS sanitized FFmpeg failure classification; no raw paths or asset names emitted");
+
+
+const privateRenderLog=[
+  "Skeleton: /private/source/secret-character/source.skel (v3.8.59)",
+  "Animation: private-animation-name",
+  "PLAYER_READY=1",
+  "SOURCE_SKIN_MODE=default",
+  "Skin (default): recorder recording",
+  "RECORDER_STATE=recording",
+  "CANVAS_FALLBACK_CAPTURE=started",
+  "Error: No visible real-time Spine frames",
+].join(String.fromCharCode(10));
+const summary=summarizeRendererLog(privateRenderLog);
+assert.equal(classifyRendererError(privateRenderLog),"NO_VISIBLE_PIXEL");
+assert.equal(summary.reason,"NO_VISIBLE_PIXEL");
+assert.equal(summary.distinctError,"COMPOSITED_FRAMES_NOT_VISIBLE");
+assert.equal(summary.version,"3.8.59");
+assert.equal(summary.attempts,1,"only the source default skin is attempted");
+assert.equal(summary.skinSelectionMode,"source-default");
+assert.equal(summary.stages.skeletonParsed,true);
+assert.equal(summary.stages.playerReady,true,
+  "a recording stage proves the player success callback completed");
+assert.equal(summary.stages.recordingStarted,true);
+assert.equal(summary.stages.canvasFallbackAttempted,true);
+assert.equal(summary.stages.canvasFallbackPassed,false);
+assert.equal(summary.sourceSignal,"CANVAS_FALLBACK_NO_VISIBLE_FRAMES");
+assert.equal("selectedSkinCount" in summary,false,
+  "do not report a fabricated zero when the exporter never enumerated skins");
+assert.doesNotMatch(JSON.stringify(summary),/secret-character|private-animation-name|private\/source/,
+  "sanitized diagnostics must not expose source paths or animation names");
+
+const startupFailure=summarizeRendererLog(
+  "Skeleton: source (v3.8.59)\nCapture with skin (default) failed: Timed out waiting for player ready"
+);
+assert.equal(startupFailure.stages.playerReady,false);
+assert.equal(startupFailure.stages.recordingStarted,false);
+assert.equal(startupFailure.skinSelectionMode,"unknown");
+assert.equal(startupFailure.reason,"PLAYER_INITIALIZATION_TIMEOUT");
+
+const canvasPass=summarizeRendererLog(
+  "PLAYER_READY=1\nSOURCE_SKIN_MODE=default\nCANVAS_FALLBACK_CAPTURE=started\nREALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES=12 DISTINCT=12"
+);
+assert.equal(canvasPass.stages.canvasFallbackAttempted,true);
+assert.equal(canvasPass.stages.canvasFallbackPassed,true);
+
+const exporter=fs.readFileSync(new URL("./spine-export-webm.mjs",import.meta.url),"utf8");
+assert.match(exporter,/console\.error\('PLAYER_READY=1'\)/);
+assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
+assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
+assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
+assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
+assert.match(exporter,/const skinCandidates = Object\.freeze\(\[null\]\)/,
+  "diagnostic markers must not enable alternate source skins");
+assert.doesNotMatch(exporter,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);
+console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas without leaking source metadata");
