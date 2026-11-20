@@ -69,3 +69,15 @@ test('Spine 3.7 binary .skel is blocked before player creation; same-version JSO
   assert.match(exporter, /const sourceBlocker = spinePlayerSourceBlocker\(skeletonVersion, skeletonFile\)/);
   assert.match(exporter, /if \(sourceBlocker\) \{[\s\S]*?process\.exit\(1\);[\s\S]*?\}/);
 });
+
+
+test('WebM exporter never substitutes an alternate or candidate animation', () => {
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  const selector = fs.readFileSync(new URL('./preview-animation-choice.mjs', import.meta.url), 'utf8');
+  assert.match(exporter, /const targetAnimation = choosePreviewAnimation\(availableAnimations, requestedAnimation\)/,
+    'the renderer must receive only the exact requested/indexed animation');
+  assert.doesNotMatch(exporter, /alternatePreviewAnimations|targetAnimation\\s*=\\s*candidate/,
+    'no alternate timeline or candidate retry may replace the selected animation');
+  assert.match(selector, /return typeof preferred === 'string' \? preferred : ''/,
+    'an unavailable explicit name must remain unchanged so the render can fail/ block');
+});
