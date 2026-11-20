@@ -189,11 +189,9 @@ if(action==="matrix"){
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const indexedAnimation=typeof record?.defaultAnimation==="string"&&record.defaultAnimation.trim()
       ? record.defaultAnimation : "";
-    // Keep the two explicitly pinned historical selections as a fallback,
-    // but never dispatch a render with an empty/guessed animation name.
-    const animation=indexedAnimation ||
-      (e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-       e.id==="Spine-animation-2026-11-17T18-45-14-132Z"?"Idle Post Climax Cum":"");
+    // Only the exact index-selected animation is eligible for preview rendering.
+    // A missing default remains blocked; historical names are never inferred.
+    const animation=indexedAnimation;
     const ready=!incompatible&&Boolean(animation)&&bundleOk(e);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
