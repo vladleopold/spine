@@ -372,7 +372,6 @@ if(action==="matrix"){
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
-    if(Array.isArray(meta.animations)&&meta.animations.length)record.animations=meta.animations;
     // Preserve the source index defaultAnimation; preview publication only adds media metadata.
     if(Number(meta.width)>0)record.previewWidth=meta.width;
     if(Number(meta.height)>0)record.previewHeight=meta.height;
