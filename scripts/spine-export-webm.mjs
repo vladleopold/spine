@@ -13,6 +13,7 @@ import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
+import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
@@ -774,41 +775,30 @@ try {
     throw new Error('HEADLESS_WEBGL_UNAVAILABLE: ' + JSON.stringify(webglProbe));
   console.error('HEADLESS_WEBGL_READY ' + JSON.stringify(webglProbe));
 
-  // Serve runtime scripts and styles from the checkout. A transient CDN outage
-  // must never stop a deterministic render of already committed Spine assets.
-  // Fetch the exact 4.0/4.1/4.2 runtime into an isolated CI directory.
-  // A CDN URL is kept as the virtual page URL, but it is fulfilled locally,
-  // avoiding timeout/redirect/CORS failures on the runner.
+  // Serve the exact matching runtime from the isolated pinned package. Never
+  // mix a 4.3 runtime with the unversioned root node_modules path.
   const versionedRuntimeRoot = process.env.SPINE_VERSIONED_PLAYER_DIR || '';
-  // Each Spine minor requires its own installed player. Using one runtime for
-  // 4.0, 4.1 and 4.2 silently misparses valid binary skeletons.
-  const playerRoot = versionedRuntimeRoot ? path.join(versionedRuntimeRoot, 'spine-' + modernRuntime) : '';
-  const versionedAssets = playerRoot && !isLegacy ? [
-    [playerJsUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
-    [playerCssUrl, path.join(playerRoot,'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
-  ] : [];
-  for (const [url, filename, type] of [...(isLegacy || modernRuntime === '4.3' ? [
-    [playerJsUrl, isLegacy
-      ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.js`)
-      : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js'), 'application/javascript'],
-    [playerCssUrl, isLegacy
-      ? path.join(repoRoot, 'public', `vendor-spine-player-${versionMajor}.${runtimeMinor}.css`)
-      : path.join(repoRoot, 'node_modules/@esotericsoftware/spine-player/dist/spine-player.css'), 'text/css'],
-  ] : []), ...versionedAssets]) {
+  const localPlayerAssets = resolveLocalSpinePlayerAssets({
+    isLegacy,
+    versionedRuntimeRoot,
+    modernRuntime,
+    repoRoot,
+    versionMajor,
+    runtimeMinor,
+    playerJsUrl,
+    playerCssUrl,
+  });
+  for (const { url, filename, type, required } of localPlayerAssets) {
     if (!fs.existsSync(filename)) {
       console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
-      // CI explicitly requested pinned runtimes. Fail now rather than
-      // silently falling back to a CDN and timing out on a valid skeleton.
-      if (versionedAssets.some(asset => asset[0] === url)) {
-        throw new Error('PINNED_SPINE_PLAYER_ASSET_MISSING_' + modernRuntime);
-      }
+      if (required) throw new Error('PINNED_SPINE_PLAYER_ASSET_MISSING_' + modernRuntime);
       continue;
     }
     await page.route(url, route => route.fulfill({
       status: 200, contentType: type, body: fs.readFileSync(filename),
     }));
     console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(filename));
-    if(versionedAssets.some(asset=>asset[0]===url)) console.error('VERSIONED_LOCAL_PLAYER_READY '+modernRuntime);
+    if (required) console.error('VERSIONED_LOCAL_PLAYER_READY ' + modernRuntime);
   }
 
   page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));

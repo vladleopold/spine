@@ -33,6 +33,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validate exact animation and pinned runtime selection
+        if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
+        run: node scripts/test-spine-player-runtime-assets.mjs
       - name: Install renderer
         if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
         run: |
