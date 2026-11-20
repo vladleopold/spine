@@ -33,17 +33,24 @@ test('blocked status is written as a diagnostic artifact before the workflow exi
   try {
     const selection = resolveRenderSelection({}, {});
     const report = {
-      uploadId: 'test-only',
-      animation: selection.animation || null,
       status: selection.status === 'blocked' ? 'blocked' : 'rendering',
       code: selection.code || null,
       formats: [],
     };
     const target = path.join(directory, 'render-verification.json');
     writeRenderVerification(target, report);
-    assert.deepEqual(JSON.parse(fs.readFileSync(target, 'utf8')), report);
+    const written = JSON.parse(fs.readFileSync(target, 'utf8'));
+    assert.deepEqual(written, report);
+    assert.deepEqual(Object.keys(written).sort(), ['code', 'formats', 'status'],
+      'public diagnostic artifacts must not expose work IDs or animation names');
     const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+    const prepareRender = fs.readFileSync(new URL('./prepare-render.mjs', import.meta.url), 'utf8');
     assert.match(renderWork, /if\(selection\.status==='blocked'\)\s*\{\s*writeReport\(\);[\s\S]*?process\.exit\(1\);\s*\}/);
+    assert.match(renderWork, /::add-mask::/);
+    assert.match(prepareRender, /::add-mask::/);
+    assert.doesNotMatch(renderWork, /report\.(?:uploadId|animation|error)|console\.error\(error\)/,
+      'public logs and artifacts must not expose private IDs, animation names, or raw renderer errors');
+    assert.match(renderWork, /SPINE_RENDER_FAILED=/);
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }

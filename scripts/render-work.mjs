@@ -8,6 +8,7 @@ import {resolveRenderSelection,writeRenderVerification} from './lib/render-selec
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const id=String(config.uploadId||'');
+if(id)console.log(`::add-mask::${id}`);
 if(!/^[\w.-]+$/.test(id)||id.includes('..'))throw Error('Invalid upload ID');
 const origin=new URL(config.origin||'https://spine-link.vercel.app').origin;
 if(origin!=='https://spine-link.vercel.app')throw Error('Unsupported preview origin');
@@ -18,9 +19,14 @@ if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
   console.log('Full export verification dispatched');process.exit(0);
 }
 const selection=resolveRenderSelection(config,found.entry);
+const workPath=found.entry.previewPath||`${found.basePath}/${id}`;
+const privateValues=[workPath,found.entry.previewPath,found.entry.skeleton,found.entry.atlas,
+  selection.animation,...(Array.isArray(found.entry.files)?found.entry.files:[]),
+  ...(Array.isArray(found.entry.animations)?found.entry.animations:[])];
+for(const value of new Set(privateValues.map(value=>String(value||'').trim())
+  .filter(value=>value.length>=4&&!/[\\r\\n]/.test(value))))
+ console.log(`::add-mask::${value}`);
 const report={
- uploadId:id,
- animation:selection.animation||null,
  status:selection.status==='blocked'?'blocked':'rendering',
  code:selection.code||null,
  formats:[],
@@ -29,9 +35,10 @@ const writeReport=()=>writeRenderVerification('render-verification.json',report)
 process.on('uncaughtException',error=>{
  report.status='failed';
  report.code=report.code||'RENDER_FAILED';
- report.error=error.message;
+ const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
+ report.code=safeCode;
  writeReport();
- console.error(error);
+ console.error(`SPINE_RENDER_FAILED=${safeCode}`);
  process.exit(1);
 });
 if(selection.status==='blocked'){
@@ -45,7 +52,6 @@ const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
-report.animation=meta.animation;
 report.status='rendering';
 report.code=null;
 function probe(file){
@@ -55,7 +61,6 @@ function probe(file){
 }
 const pending=[];
 const add=(src,dst)=>{if(!fs.existsSync(src)||fs.statSync(src).size===0)throw Error('Missing output '+src);pending.push({src,dst});};
-const workPath=found.entry.previewPath||`${found.basePath}/${id}`;
 // Publish card first so the animation card does not wait for the full matrix.
 for(const suffix of ['','-medium','-low'])for(const ext of ['webm','webp']){const file=path.join(temp,`preview${suffix}.${ext}`);probe(file);add(file,`${workPath}/preview${suffix}.${ext}`);}
 async function pushStaged(message){
