@@ -25,11 +25,10 @@ export function normalizeSpineExportEntry(entry) {
     return { entry: null, error: 'DEFAULT_ANIMATION_INVALID' };
   }
 
-  const defaultAnimation = requestedDefault || animations[0] || '';
+  const defaultAnimation = requestedDefault;
   if (!defaultAnimation) {
     return { entry: null, error: 'DEFAULT_ANIMATION_REQUIRED' };
   }
-  if (!animations.includes(defaultAnimation)) animations.unshift(defaultAnimation);
 
   return {
     entry: { ...entry, animations, defaultAnimation },
