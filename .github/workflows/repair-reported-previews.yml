@@ -12,6 +12,9 @@ on:
       - scripts/install-pinned-spine-players.sh
       - scripts/repair-reported-previews.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/render-work.mjs
+      - scripts/lib/render-work-metadata.mjs
+      - scripts/test-render-work-metadata.mjs
   pull_request:
     paths:
       - .github/workflows/repair-reported-previews.yml
@@ -62,6 +65,7 @@ jobs:
           bash -n scripts/install-pinned-spine-players.sh
           node scripts/test-preview-runtime-minor.mjs
           node scripts/test-pinned-spine-player-install.mjs
+          node scripts/test-render-work-metadata.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
