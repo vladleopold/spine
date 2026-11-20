@@ -94,6 +94,8 @@ assert.doesNotMatch(reportedRepair, /record\.defaultAnimation\s*=\s*animation/,
   'preview publication must not rewrite defaultAnimation');
 assert.doesNotMatch(reportedRepair, /record\.animations\s*=\s*meta\.animations/,
   'preview publication must not rewrite source animation names');
+assert.doesNotMatch(latestTwentyRepair, /record\.animations\s*=\s*meta\.animations/,
+  'latest-twenty publication must not rewrite source animation names');
 assert.match(reportedRepair, /existingMediaOk\(entryInfo,selectedAnimation\)/);
 assert.match(reportedRepair, /blocked-missing-animation/);
 assert.match(reportedRepair, /BLOCKED_SOURCE_BUNDLE=/);
