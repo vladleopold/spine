@@ -3,25 +3,67 @@ on:
   workflow_run:
     workflows: ["Repair and accept 18 reported Spine preview projects"]
     types: [completed]
+    branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: spine-library-commit
+  cancel-in-progress: false
 jobs:
   production-audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/resolve-library.mjs
+            /scripts/preview-animation-choice.mjs
             /scripts/verify-reported-preview-live.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/lib/reported-preview-live-status.mjs
+            /scripts/test-reported-preview-live-status.mjs
             /library_02/index.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify each published WebM/WebP on the live site
+      - name: Install media verification tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Verify every public WebM/WebP and exact animation
+        id: audit
+        continue-on-error: true
         run: |
           node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/verify-preview-motion.mjs
+          node --check scripts/verify-poster-first-frame.mjs
+          node scripts/test-reported-preview-live-status.mjs
           node scripts/verify-reported-preview-live.mjs
+      - name: Publish live verification status without changing animation metadata
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add library_02/index.json
+          if git diff --cached --quiet; then
+            echo "NO_LIVE_STATUS_CHANGES"
+            exit 0
+          fi
+          git commit -m "fix(preview): reconcile reported live media status"
+          git push origin HEAD:main
+      - name: Enforce production acceptance
+        if: always()
+        run: |
+          if [[ "${{ steps.audit.outcome }}" != "success" ]]; then
+            echo "::error::Reported preview production acceptance failed; records remain failed or blocked"
+            exit 1
+          fi
+          echo "REPORTED_PREVIEW_PRODUCTION_ACCEPTANCE_PASS"
