@@ -181,9 +181,13 @@ jobs:
             done
           done
 
-          # Meta JSON
+          # Keep only non-identifying render metadata in the public artifact.
           META="${UPLOAD_ID}-anim-${SAFE}-preview.webm.json"
-          [ -f "$META" ] && mv "$META" "$DIR/meta.json" || echo '{}' > "$DIR/meta.json"
+          if [ -s "$META" ]; then
+            node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));const w=m?.qualityWidths&&typeof m.qualityWidths==='object'?m.qualityWidths:{};fs.writeFileSync(process.argv[2],JSON.stringify({animationDuration:Number(m?.animationDuration)||0,qualityWidths:{high:Number(w.high)||0,medium:Number(w.medium)||0,low:Number(w.low)||0}}))" "$META" "$DIR/meta.json"
+          else
+            echo '{}' > "$DIR/meta.json"
+          fi
 
           # Store only the numeric source index; resolve the exact name from index.json at commit time.
           echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
@@ -434,7 +438,7 @@ jobs:
             } from './scripts/lib/spine-export-matrix.mjs';
 
             const uploadId = process.env.UPLOAD_ID;
-            const origin = String(process.env.ORIGIN || '').replace(/\\/+$/, '');
+            const origin = String(process.env.ORIGIN || '').replace(/\/+$/, '');
             const basePath = process.env.BASE_PATH;
             const indexPath = process.env.INDEX_PATH;
             const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
@@ -464,7 +468,7 @@ jobs:
                 if (safeName !== selection.safeName) throw new Error('INVALID_ANIMATION_ARTIFACT_NAME');
 
                 const workPath = String(entry.previewPath || path.join(basePath, uploadId))
-                  .replace(/^\\/+|\\/+$/g, '');
+                  .replace(/^\/+|\/+$/g, '');
                 const animTargetDir = path.join(workPath, 'animations', safeName);
                 fs.mkdirSync(animTargetDir, { recursive: true });
                 if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
@@ -530,7 +534,7 @@ jobs:
             );
             fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
             console.log('FULL_EXPORT_INDEX_UPDATED', Object.keys(allAnimPreviews).length);
-            NODE
+          NODE
 
             # 3. Stage everything
             git add "$BASE_PATH" "$WORK_PATH/animations"
