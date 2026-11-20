@@ -29,6 +29,7 @@ try{
   records[22].previewPath='library_02/'+records[22].id;
   records[22].defaultAnimation=undefined;
   records[21].files=['test.skel'];
+  records[20].defaultAnimation=' Walk ';
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -63,12 +64,17 @@ try{
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
-  assert.ok(all.slice(3).every(x=>x.ready&&x.needsRender&&x.animation==='idle'));
+  assert.ok(all.slice(3).every(x=>x.ready&&x.needsRender));
+  assert.equal(all[3].animation,' Walk ','the exact index animation string must pass through unchanged');
+  assert.ok(all.slice(4).every(x=>x.animation==='idle'));
+  assert.doesNotMatch(repairSource,/record\.defaultAnimation\.trim\(\)/,
+    'selection presence must not normalize the exact animation name');
+  assert.match(repairSource,/choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
   assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
     'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
   const missingSelectionBranch=repairSource.match(
-    /if\(!item\.animation && !\(typeof record\.defaultAnimation==="string"&&record\.defaultAnimation\.trim\(\)\)\)\{([\s\S]*?)\n\s*\}/
+    /if\(!selectedAnimation\|\|selectedAnimation!==indexedAnimation\)\{([\s\S]*?)\n\s*\}/
   )?.[1]||"";
   assert.match(missingSelectionBranch,/record\.webmStatus="blocked-missing-animation-selection"/,
     "missing exact selection must remain blocked even if a previous WebM exists");
