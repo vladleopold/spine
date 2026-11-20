@@ -15,7 +15,7 @@ on:
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
-      - scripts/test-render-selection.mjs
+      - scripts/test-spine-player-runtime-assets.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/first-frame-poster.mjs
@@ -52,7 +52,7 @@ on:
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
-      - scripts/test-render-selection.mjs
+      - scripts/test-spine-player-runtime-assets.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/first-frame-poster.mjs
@@ -150,7 +150,7 @@ jobs:
           node scripts/test-source-skeleton-choice.mjs
           node --check scripts/source-skeleton-choice.mjs
           node scripts/test-preview-animation-choice.mjs
-          node scripts/test-render-selection.mjs
+          node scripts/test-spine-player-runtime-assets.mjs
           node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
           echo "LATEST20_INVENTORY_VALID"
