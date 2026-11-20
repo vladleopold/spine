@@ -2,6 +2,7 @@
 // Inspect only the source header to select a matching Spine Web Player.
 import fs from 'node:fs';
 import path from 'node:path';
+import { previewRuntimeMinor } from './lib/preview-runtime-minor.mjs';
 const dir=path.resolve(process.argv[2]||'');
 const names=fs.readdirSync(dir);
 const candidates=names.filter(n=>/\.(json|skel)$/i.test(n));
@@ -19,5 +20,4 @@ for(const name of candidates){
   }catch{}
  }
 }
-const match=version.match(/^4\.([012])(?:\.|$)/);
-console.log(match?'4.'+match[1]:'');
+console.log(previewRuntimeMinor(version));
