@@ -16,9 +16,14 @@ const ready = {
   webmStatus: 'ready',
   webmPreview: 'https://spine-link.vercel.app/assets/work/preview.webm',
   webpPoster: 'https://spine-link.vercel.app/assets/work/preview.webp',
+  webmPreviewMedium: 'https://spine-link.vercel.app/assets/work/preview-medium.webm',
+  webpPosterMedium: 'https://spine-link.vercel.app/assets/work/preview-medium.webp',
+  webmPreviewLow: 'https://spine-link.vercel.app/assets/work/preview-low.webm',
+  webpPosterLow: 'https://spine-link.vercel.app/assets/work/preview-low.webp',
 };
 
 assert.equal(sourceBlocker(ready), '');
+assert.equal(classifyPublishedPreview(ready).tiers.length, 3);
 assert.equal(sourceBlocker(ready, 'Idle', new Map([
   ['source.skel', 128],
   ['source.atlas', 128],
@@ -81,7 +86,7 @@ const pngPoster = classifyPublishedPreview({
 });
 assert.deepEqual(pngPoster, {
   status: 'failed',
-  reason: 'exact-webm-webp-pair-missing',
+  reason: 'incomplete-quality-ladder',
 });
 
 const mismatchedPair = classifyPublishedPreview({
@@ -91,6 +96,15 @@ const mismatchedPair = classifyPublishedPreview({
 assert.deepEqual(mismatchedPair, {
   status: 'failed',
   reason: 'webm-webp-pair-path-mismatch',
+});
+
+const incompleteQuality = classifyPublishedPreview({
+  ...ready,
+  webmPreviewLow: undefined,
+});
+assert.deepEqual(incompleteQuality, {
+  status: 'failed',
+  reason: 'incomplete-quality-ladder',
 });
 
 assert.equal(validateDecodedVideo({ width: 960, height: 540, nb_read_frames: 8 }, 1.5), true);
