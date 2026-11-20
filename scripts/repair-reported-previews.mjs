@@ -37,8 +37,9 @@ function newestTen() {
     for(const entry of readIndex(root,folder)||[]) {
       if(!requestedSet.has(entry?.id))continue;
       if(byId.has(entry.id))throw new Error('Duplicate work across archive collections');
+      const defaultAnimation=String(entry.defaultAnimation||"").trim();
       byId.set(entry.id,{id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+'/'+entry.id,
-        at:Date.parse(entry.uploadedAt||0)||0});
+        at:Date.parse(entry.uploadedAt||0)||0,defaultAnimation});
     }
   }
   const missing=requestedIds.filter(id=>!byId.has(id));
@@ -60,10 +61,10 @@ function bundleOk(entry) {
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
-function existingMediaOk(entry){
+function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  if(record?.webmStatus!=="ready")return false;
+  if(record?.webmStatus!=="ready"||!animation||String(record?.defaultAnimation||"")!==String(animation))return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -83,17 +84,20 @@ const latest=newestTen();
 if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map((e,repairSlot)=>{
-    const ready=bundleOk(e);
+    const sourceReady=bundleOk(e);
+    const animation=e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
+      e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
+      e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
+      e.id==="Spine-animation-2026-11-17T18-17-09-503Z"?"Brows Crazed":
+      e.id==="Spine-animation-2026-11-17T18-19-06-491Z"?"Camera Idle":
+      e.id==="Spine-animation-2026-11-17T18-39-06-745Z"?"animation":String(e.defaultAnimation||"").trim();
+    const ready=sourceReady&&Boolean(animation);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
-    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,needsRender:ready&&!existingMediaOk(e),
-      animation:e.id==="Spine-animation-2026-11-17T18-44-12-762Z"?"Climax 01":
-        e.id==="wolf-2026-11-17T07-14-36-248Z"?"bkg_landscape":
-        e.id==="wolf_v13-2026-11-17T15-57-55-338Z"?"bkg_landscape":
-        e.id==="Spine-animation-2026-11-17T18-17-09-503Z"?"Brows Crazed":
-        e.id==="Spine-animation-2026-11-17T18-19-06-491Z"?"Camera Idle":
-        e.id==="Spine-animation-2026-11-17T18-39-06-745Z"?"animation":""};
+    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
+      needsRender:ready&&!existingMediaOk(e,animation),animation,
+      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -135,8 +139,16 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
+    const animation=String(item.animation||record.defaultAnimation||"").trim();
+    if(!animation){
+      record.webmStatus="blocked-missing-animation";
+      record.previewStatus="blocked";
+      record.previewError="No exact selected/default animation is available";
+      summary.blocked++;
+      continue;
+    }
     if(item.needsRender===false){
-      if(existingMediaOk(entryInfo)){
+      if(existingMediaOk(entryInfo,animation)){
         summary.ready++;
         continue;
       }
@@ -152,7 +164,7 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {

@@ -454,6 +454,7 @@ jobs:
             /scripts/lib/fetch-public-index.mjs
             /scripts/mask-preview-manifest.mjs
             /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/lib/export-log-redaction.mjs
       - name: Mask exact production audit manifest
         run: node scripts/mask-preview-manifest.mjs
       - uses: actions/setup-node@v4

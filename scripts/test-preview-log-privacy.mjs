@@ -71,6 +71,10 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
+assert.match(reportedRepair, /String\(entry\.defaultAnimation\|\|""\)\.trim\(\)/);
+assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
+assert.match(reportedRepair, /blocked-missing-animation/);
+assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest20-"\+item\.repairSlot/);
 assert.doesNotMatch(reportedRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.doesNotMatch(latestTwentyRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
