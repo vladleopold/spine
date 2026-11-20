@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-science.js';
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
-import { hasSpineSourceBundle, normalizeSpineExportEntry } from '../scripts/lib/spine-export-entry.mjs';
+import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch } from '../scripts/lib/spine-export-entry.mjs';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -328,18 +328,23 @@ function generatedPreviewWebmUrl(origin, entry) {
 }
 
 function isSpineExportEntry(entry) {
-  return hasSpineSourceBundle(entry) && Array.isArray(entry?.animations) && entry.animations.length > 0;
+  return hasSpineSourceBundle(entry) && resolveSpineExportDispatch(entry).status === 'ready';
 }
 
 async function dispatchSpineExportWebm(settings, entry, origin) {
   const id = String(entry?.id || '').trim();
   if (!id) return null;
-  if (!isSpineExportEntry(entry)) {
-    console.log(`[UPLOAD] skipping WebM export for ${id}: missing Spine skeleton, atlas, or texture files`);
+  if (!hasSpineSourceBundle(entry)) {
+    console.log('[UPLOAD] skipping WebM export: missing Spine skeleton, atlas, or texture files');
     return { status: 'skipped', reason: 'missing-spine-assets' };
   }
-  const defaultAnimation = String(entry?.defaultAnimation || (Array.isArray(entry?.animations) ? entry.animations[0] : '') || '').trim();
-  const animations = Array.isArray(entry?.animations) ? entry.animations : [];
+  const selection = resolveSpineExportDispatch(entry);
+  if (selection.status !== 'ready') {
+    console.log('[UPLOAD] skipping WebM export: explicit default animation is missing');
+    return { status: 'blocked', reason: selection.reason };
+  }
+  const defaultAnimation = selection.animation;
+  const animations = selection.animations;
   try {
     const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/dispatches`, {
       method: 'POST',
