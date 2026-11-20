@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
+import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 
@@ -55,8 +56,8 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   if(record?.webmStatus!=="ready")return false;
-  const selected=String(animation||record?.defaultAnimation||"").trim();
-  if(!selected||selected!==String(record?.defaultAnimation||"").trim())return false;
+  const selected=choosePreviewAnimation([],typeof animation==="string"?animation:record?.defaultAnimation);
+  if(!selected||selected!==choosePreviewAnimation([],record?.defaultAnimation))return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -77,7 +78,7 @@ if(action==="matrix"){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map((e,repairSlot)=>{
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
-    const animation=typeof record?.defaultAnimation==="string"?record.defaultAnimation.trim():"";
+    const animation=choosePreviewAnimation([],record?.defaultAnimation);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const sourceReady=bundleOk(e);
     const ready=Boolean(animation)&&sourceReady&&!incompatible;
@@ -134,8 +135,8 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    const expectedAnimation=String(record.defaultAnimation||"").trim();
-    if(!expectedAnimation||String(item.animation||"").trim()!==expectedAnimation){
+    const expectedAnimation=choosePreviewAnimation([],record.defaultAnimation);
+    if(!expectedAnimation||choosePreviewAnimation([],item.animation)!==expectedAnimation){
       record.webmStatus="blocked-missing-animation-selection";
       record.previewStatus="blocked";
       record.previewError="No exact default animation is selected; preview rendering will not guess or substitute an animation";
