@@ -20,8 +20,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/sabrinaBedSide-2026-11-20T07-06-45-002Z/sabrinaBedSide.png?v=2026-11-20T07-06-45.002Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-incompatible-source-version",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required"
   },
   {
     "id": "wolf-2026-11-20T05-12-56-813Z",
@@ -48,8 +50,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/wolf_3.webp?v=2026-11-20T05-12-56.813Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-animation-selection",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
   },
   {
     "id": "14505-1-2026-11-20T04-20-07-885Z",
@@ -76,8 +80,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/14505-1-2026-11-20T04-20-07-885Z/14505-1.png?v=2026-11-20T04-20-07.885Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-animation-selection",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
   },
   {
     "id": "Spine-animation-2026-11-20T03-59-57-922Z",
@@ -106,8 +112,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-20T03-59-57-922Z/700890013.png?v=2026-11-20T03-59-57.922Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-animation-selection",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "No exact default animation is selected; preview rendering will not guess or substitute an animation"
   },
   {
     "id": "Spine-animation-2026-11-19T20-40-20-819Z",
