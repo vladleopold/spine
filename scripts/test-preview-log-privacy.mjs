@@ -48,7 +48,7 @@ const reportedRepair = fs.readFileSync(new URL('./repair-reported-previews.mjs',
 const latestTwentyRepair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
 
 assert.match(reported, /pull_request:/);
-assert.match(reported, /  inventory:\\n    permissions:\\n      contents: read/);
+assert.match(reported, /  inventory:\n    permissions:\n      contents: read/);
 
 for (const workflow of [reported, latestTen, latestTwenty]) {
   assert.ok(workflow.includes('node scripts/mask-preview-manifest.mjs'),
