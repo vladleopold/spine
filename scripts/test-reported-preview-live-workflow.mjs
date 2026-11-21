@@ -120,7 +120,6 @@ const repairVerifySparse = sparseCheckoutPaths(repairVerifyJob, 'post-publish ve
 const entrypoints = [
   'scripts/verify-reported-preview-live.mjs',
   'scripts/test-reported-preview-live.mjs',
-  'scripts/test-reported-preview-live-workflow.mjs',
   'scripts/verify-preview-motion.mjs',
   'scripts/verify-poster-first-frame.mjs',
 ];
