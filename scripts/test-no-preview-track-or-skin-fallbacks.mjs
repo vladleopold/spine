@@ -193,8 +193,10 @@ assert.ok(playerStart >= 0 && playerEnd > playerStart,
 const playerCode = preview.slice(playerStart, playerEnd);
 assert.match(playerCode, /if \(!activeSet\.value\) \{ markPreviewBlocked\(\); return; \}/,
   'a missing selected set must be blocked');
-assert.match(playerCode, /if \(!activeAnimation\.name \|\| !filteredNames\.includes\(activeAnimation\.name\)\) \{\s*markPreviewBlocked\(\);\s*return;/,
-  'player startup must block an absent selected animation');
+assert.match(playerCode, /if \(!activeAnimation\.name\) \{\s*markPreviewNeedsSelection\(\);\s*return;/,
+  'an empty selection must remain unselected');
+assert.match(playerCode, /if \(!filteredNames\.includes\(activeAnimation\.name\)\) \{\s*const box = document\.getElementById\("player"\);\s*markPreviewBlocked\(Boolean\(box\?\.querySelector\("\.preview-fallback-video"\)\)\);\s*return;/,
+  'player startup must block an absent selected animation and retain only its exact same-animation video');
 assert.doesNotMatch(playerCode, /filteredNames\s*\[\s*0\s*\]|activeSet\.value\?\.animation\s*&&\s*filteredNames/,
   'player startup must not choose the first runtime track or replace the requested name');
 assert.match(playerCode, /const fallback = box\?\.querySelector\("\.preview-fallback-video"\) \|\| showPreviewVideoFallback\(\);/,
