@@ -38,8 +38,8 @@ assert.equal(classifyOriginHttpStatus(200), 'ok');
 assert.equal(classifyOriginHttpStatus(402), 'blocked');
 assert.equal(classifyPreviewHttpStatus(402), 'blocked');
 assert.equal(classifyPreviewHttpStatus(404), 'failed');
-assert.equal(classifyReportedPreviewEntry({webmStatus: 'ready'}), 'ready',
-  'legacy accepted entries without previewStatus must remain compatible');
+assert.equal(classifyReportedPreviewEntry({webmStatus: 'ready'}), 'blocked',
+  'a legacy record without previewStatus must remain blocked until exact media is revalidated');
 assert.equal(classifyReportedPreviewEntry({webmStatus: 'ready', previewStatus: 'ready'}), 'ready');
 assert.equal(classifyReportedPreviewEntry({webmStatus: 'ready', previewStatus: 'pending'}), 'blocked');
 assert.equal(classifyReportedPreviewEntry({webmStatus: 'ready', previewStatus: 'blocked'}), 'blocked');
@@ -58,7 +58,7 @@ assert.match(verifier, /classifyOriginHttpStatus\(originStatus\)/,
 assert.match(verifier, /classifyPreviewHttpStatus\(response\.status\)/,
   'temporary asset HTTP responses must be classified as blocked, not broken media');
 assert.match(verifier, /classifyReportedPreviewEntry\(entry\)/,
-  'source statuses must use the canonical legacy-compatible classifier');
+  'source statuses must use the canonical strict classifier');
 assert.match(verifier, /verify-preview-motion\.mjs/,
   'decode and compare real moving frames');
 assert.match(verifier, /verify-poster-first-frame\.mjs/,
