@@ -2,8 +2,21 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import { previewManifestMaskCommands } from './preview-manifest-redaction.mjs';
 
+function manifestIdentity(entries) {
+  return entries.map((entry) => ({
+    repairSlot: entry.repairSlot,
+    id: entry.id,
+    basePath: entry.basePath,
+    previewPath: entry.previewPath,
+    uploadedAt: entry.uploadedAt ?? null,
+    sourceFingerprint: entry.sourceFingerprint ?? null,
+    animation: entry.animation ?? '',
+    needsRender: Boolean(entry.needsRender),
+  }));
+}
+
 export function previewManifestDigest(entries) {
-  return createHash('sha256').update(JSON.stringify(entries)).digest('hex');
+  return createHash('sha256').update(JSON.stringify(manifestIdentity(entries))).digest('hex');
 }
 
 export function applyFrozenRenderSlots(entries, rawSlots = '[]') {
