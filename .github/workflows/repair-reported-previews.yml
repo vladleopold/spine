@@ -12,6 +12,8 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/lib/source-set-choice.mjs
       - scripts/test-source-set-choice.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/reported-preview-repair-status.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/lib/recovered-animation-choice.mjs
@@ -24,6 +26,8 @@ on:
       - scripts/spine-export-webm.mjs
       - scripts/lib/source-set-choice.mjs
       - scripts/test-source-set-choice.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/reported-preview-repair-status.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/verify-reported-preview-live.mjs
@@ -110,6 +114,7 @@ jobs:
           node scripts/test-renderer-failure-class.mjs
           node --check scripts/lib/source-set-choice.mjs
           node scripts/test-source-set-choice.mjs
+          node scripts/test-source-skeleton-choice.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-recovered-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
