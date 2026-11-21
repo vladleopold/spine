@@ -1,5 +1,5 @@
-# Run with version-matched 4.0/4.1/4.2/4.3 Web Players for all 18 source projects.
-name: Repair and accept 18 reported Spine preview projects
+## Run version-matched Spine renderers for the 18 reported works plus the separately prioritized preview.
+name: Repair and accept 18 reported + priority Spine preview projects
 on:
   push:
     branches: [main]
@@ -18,11 +18,17 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/lib/reported-preview-live-status.mjs
       - scripts/test-reported-preview-live-status.mjs
+      - scripts/test-repair-reported-previews.mjs
+      - scripts/test-reported-preview-live.mjs
+      - scripts/lib/reported-preview-media.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/first-frame-poster.mjs
 permissions:
   contents: write
 # Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
 concurrency:
-  group: spine-preview-reported-eighteen
+  group: spine-preview-reported-nineteen
   # A source fix must not discard already-rendered artifacts mid-batch.
   # Publish verified results first, then run the newer version.
   cancel-in-progress: false
@@ -64,6 +70,8 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
+          node scripts/test-repair-reported-previews.mjs
+          node scripts/test-reported-preview-live.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
@@ -192,6 +200,8 @@ jobs:
               exit 1
             }
             file "out/$REPAIR_SLOT/preview$suffix.webp" | grep -q 'Web/P image'
+            node scripts/verify-preview-motion.mjs "out/$REPAIR_SLOT/preview$suffix.webm" > "$RUNNER_TEMP/motion-$REPAIR_SLOT$suffix.log" 2>&1
+            node scripts/verify-poster-first-frame.mjs "out/$REPAIR_SLOT/preview$suffix.webm" "out/$REPAIR_SLOT/preview$suffix.webp" > "$RUNNER_TEMP/poster-$REPAIR_SLOT$suffix.log" 2>&1
           done
           cp "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
           node --input-type=module -e '
@@ -206,7 +216,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: matrix.entry.needsRender
         with:
-          name: reported18-${{ matrix.entry.repairSlot }}
+          name: reported19-${{ matrix.entry.repairSlot }}
           path: out/${{ matrix.entry.repairSlot }}/
           if-no-files-found: error
           retention-days: 1
@@ -233,7 +243,7 @@ jobs:
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-          if(selected.length!==18)throw new Error('Missing exact repair manifest');
+          if(selected.length!==19)throw new Error('Missing exact repair manifest');
           const paths=new Set();
           for(const item of selected){
             const source=String(item.previewPath||'');
@@ -247,8 +257,8 @@ jobs:
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
-          pattern: reported18-*
-          path: downloaded-reported18
+          pattern: reported19-*
+          path: downloaded-reported19
           merge-multiple: false
       - uses: actions/setup-node@v4
         with:
@@ -282,25 +292,3 @@ jobs:
           echo "::error::Could not atomically publish independently accepted Spine previews"
           exit 1
 
-  verify-production:
-    needs: [inventory, render, publish]
-    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /scripts/verify-reported-preview-live.mjs
-            /scripts/lib/reported-preview-live-status.mjs
-            /scripts/resolve-library.mjs
-            /library/index.json
-            /library_*/index.json
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Verify actual media responses after publication
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/verify-reported-preview-live.mjs
