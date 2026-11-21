@@ -38,7 +38,6 @@ assert.ok(previewTargetStart >= 0 && previewTargetEnd > previewTargetStart,
 const previewTarget = preview.slice(previewTargetStart, previewTargetEnd);
 assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
   'the work page may resolve only the exact indexed default animation');
-assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
   'the work page may resolve only the exact indexed default animation');
 assert.match(previewTarget, /isFallback: false/,
   'the resolver must never report or produce a substitute animation');
@@ -59,11 +58,11 @@ assert.doesNotMatch(preview, /target\.url\s*\|\|\s*repairEntryAssetUrl\(entry, e
   'a missing selected preview must not borrow a generic or alternate animation asset');
 
 const fallbackPageStart = preview.indexOf('function createVideoFallbackHtml(');
-const fallbackPageEnd = preview.indexOf('// Finds the folder of a work by id', fallbackPageStart);
+const fallbackPageEnd = preview.indexOf('async function createDynamicPreview(', fallbackPageStart);
 assert.ok(fallbackPageStart >= 0 && fallbackPageEnd > fallbackPageStart,
   'the no-set fallback page must exist');
 const fallbackPage = preview.slice(fallbackPageStart, fallbackPageEnd);
-assert.match(fallbackPage, /const poster = videoSeo\\?\\.thumbnailUrl \\|\\| '';/,
+assert.match(fallbackPage, /const poster = videoSeo\?\.thumbnailUrl \|\| '';/,
   'the fallback page must use only a verified selected-animation poster');
 assert.doesNotMatch(fallbackPage, /generatedThumbnailUrl|entry\\?\\.thumbnailPoster/,
   'the fallback page must not disguise missing selected media with a generic poster');
