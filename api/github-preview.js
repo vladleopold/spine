@@ -2452,12 +2452,16 @@ async function createDynamicPreview(settings, uploadPath, origin) {
     const animations = animationNamesFromJson(skeletonJson);
     const skinNames = skinNamesFromSkeletonJson(skeletonJson);
     const atlasPages = extractAtlasPages(atlasText);
-    const textureUrls = atlasPages.map((pageName) => {
-      const matchedTexture =
-        textures.find((texture) => imageMatchesAtlasPage(texture.name, pageName)) ??
-        (textures.length === 1 ? textures[0] : null);
-      return matchedTexture ? versionedAssetUrl(origin, matchedTexture, matchedTexture.sha) : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO5U9WcAAAAASUVORK5CYII=';
-    });
+    const matchedTextures = atlasPages.map((pageName) =>
+      textures.find((texture) => imageMatchesAtlasPage(texture.name, pageName)) ??
+      (textures.length === 1 && atlasPages.length === 1 ? textures[0] : null)
+    );
+    // A missing atlas page is a blocked source bundle, not permission to
+    // inject a 1x1 placeholder or reuse one texture for several pages.
+    if (atlasPages.length === 0 || matchedTextures.some((texture) => !texture)) continue;
+    const textureUrls = matchedTextures.map((texture) =>
+      versionedAssetUrl(origin, texture, texture.sha)
+    );
     const defaultAnimation = typeof entry?.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 
     const assetVersion = [skeleton.sha, atlas.sha, ...textures.map((texture) => texture.sha)].filter(Boolean).join('-');
