@@ -159,9 +159,9 @@ assert.equal(explicitMissingList.shouldDispatch, true,
 const generic = { id: 'generic', files: ['poster.webp'] };
 assert.deepEqual(normalizeSpineExportEntry(generic), { entry: generic, error: null });
 
-const apiSource = fs.readFileSync(new URL('../../api/github-upload.js', import.meta.url), 'utf8');
-const renderWorkSource = fs.readFileSync(new URL('../render-work.mjs', import.meta.url), 'utf8');
-const exporterSource = fs.readFileSync(new URL('../spine-export-webm.mjs', import.meta.url), 'utf8');
+const apiSource = fs.readFileSync(new URL('../api/github-upload.js', import.meta.url), 'utf8');
+const renderWorkSource = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+const exporterSource = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
 assert.match(apiSource, /resolveSpineExportDispatch\(entry\)/);
 assert.match(apiSource, /const defaultAnimation = selection\.animation/);
 assert.match(apiSource, /mergeSpineExportPreviewState\(entry, existingEntry\)/);
