@@ -7,6 +7,9 @@ on:
       - .github/workflows/repair-reported-previews.yml
       - scripts/recover-recorded-webm.mjs
       - scripts/repair-reported-previews.mjs
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/source-set-choice.mjs
+      - scripts/test-source-set-choice.mjs
       - scripts/lib/reported-preview-repair-status.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/lib/recovered-animation-choice.mjs
@@ -16,6 +19,9 @@ on:
     paths:
       - .github/workflows/repair-reported-previews.yml
       - scripts/repair-reported-previews.mjs
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/source-set-choice.mjs
+      - scripts/test-source-set-choice.mjs
       - scripts/lib/reported-preview-repair-status.mjs
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/verify-reported-preview-live.mjs
@@ -98,6 +104,8 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-no-preview-track-or-skin-fallbacks.mjs
+          node --check scripts/lib/source-set-choice.mjs
+          node scripts/test-source-set-choice.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-recovered-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
