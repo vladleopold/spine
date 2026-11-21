@@ -47,3 +47,13 @@ test('rejects upload filenames that can escape the project directory', async () 
   assert.equal(isAllowedSpineUploadFileName('nested\\hero.json'), false);
   assert.equal(isAllowedSpineUploadFileName('..'), false);
 });
+
+test('keeps all project artifact writes inside a validated project folder', async () => {
+  const { isAllowedSpineProjectFilePath } = await import('../lib/spine-upload-path.js');
+  assert.equal(isAllowedSpineProjectFilePath('library/hero/hero.json'), true);
+  assert.equal(isAllowedSpineProjectFilePath('library_02/hero/source/hero.psd'), true);
+  assert.equal(isAllowedSpineProjectFilePath('README.md'), false);
+  assert.equal(isAllowedSpineProjectFilePath('library/../README.md'), false);
+  assert.equal(isAllowedSpineProjectFilePath('library/hero/../../README.md'), false);
+  assert.equal(isAllowedSpineProjectFilePath('library_backup/hero/file.json'), false);
+});
