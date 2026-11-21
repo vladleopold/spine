@@ -36,8 +36,8 @@ The two remaining directories, `cb13003_3-2026-10-30T20-34-24-748Z` and `cg10201
 | `321-spine-2025-2026-10-25T16-58-09-052Z` | Referenced | project folder, source proof, blockchain anchor, preview |
 | `big_win-2026-10-26T22-02-37-490Z` | Referenced | project folder, source proof, blockchain anchor, preview |
 | `build_char_377_gdglow-2026-10-31T01-59-20-411Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `cb13003_3-2026-10-30T20-34-24-748Z` | No index match found | two nested project directories; no root-level source-proof or anchor file observed |
-| `cg10201_01-2026-10-20T18-12-37-496Z` | No index match found | one nested project directory; no root-level source-proof or anchor file observed |
+| `cb13003_3-2026-10-30T20-34-24-748Z` | No index match found | two project subdirectories with PNG chunk remnants; one .skel and one .atlas are present; no source proof, anchor, or completed PNG was observed |
+| `cg10201_01-2026-10-20T18-12-37-496Z` | No index match found | one project subdirectory with three PNG chunk-fragment groups (7 chunk files total); no source proof, anchor, or completed PNG was observed |
 | `character_front-2026-10-12T03-05-59-750Z` | Referenced | project folder, source proof, blockchain anchor, preview |
 | `character_right-2026-10-12T02-51-35-323Z` | Referenced | project folder, source proof, blockchain anchor, preview |
 | `character1-2026-11-01T23-28-46-401Z` | Referenced | project folder, source proof, blockchain anchor |
@@ -68,3 +68,16 @@ The two remaining directories, `cb13003_3-2026-10-30T20-34-24-748Z` and `cg10201
 4. Produce a proposed path map only. Do not execute moves until every reference and integrity check is accounted for.
 
 This document is an inventory, not authorization to migrate or delete historical project data.
+
+## Additional structural findings
+
+### 321-Spine snapshots are not exact duplicate projects
+
+The ten root-level `321-spine-2025` snapshots share the exact Git blob SHA for the same skeleton JSON (`d758e7e3764d9da98f9a5821a854adc2f0665a37`, 91,034 bytes) and atlas (`10ed45db215778ee3f359c975df962f238c139bf`, 2,132 bytes). Their texture PNG blob SHAs and byte sizes differ between snapshots. They are therefore not byte-identical project copies. Git already stores identical blobs once internally, while each directory retains its own path and proof/anchor context. Removing repeated JSON/atlas paths would break individual project bundles and is not a safe deduplication.
+
+### Two unindexed folders contain unfinished chunk uploads
+
+- `cb13003_3-2026-10-30T20-34-24-748Z` contains two project subdirectories, one `.skel`, one `.atlas`, and two PNG chunk groups with two chunks each. It has no root-level `source-proof.json` or `blockchain-anchor.json`.
+- `cg10201_01-2026-10-20T18-12-37-496Z` contains three PNG chunk groups with 2, 3, and 2 chunks respectively. No completed PNG, source proof, or blockchain anchor was observed.
+
+These are recovery candidates, not confirmed valid Spine projects. The chunk files were not reassembled or modified. Their original byte lengths, base64 continuity, PNG signatures, dimensions, atlas references, and skeleton compatibility remain unverified. Keep them intact until a separate recovery pass can reconstruct copies into a temporary area and validate them without altering the originals.
