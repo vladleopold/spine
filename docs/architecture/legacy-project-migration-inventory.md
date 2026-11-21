@@ -2,82 +2,44 @@
 
 Audit snapshot: 2026-11-21  
 Repository ref: `chore/repository-layout-and-upload-guard`  
-Purpose: establish reference dependencies before any legacy project is moved, renamed, or deleted.
+Purpose: record migration dependencies without exposing project identifiers, private asset names, or content hashes.
 
-## Scope and method
+## Aggregate scope
 
-The repository root contains **28 timestamped Spine project directories**. The following GitHub Contents API indexes were inspected:
+The audit found 28 timestamped root-level Spine project directories. Four metadata indexes were inspected:
 
-| Index | Records | Root-project path matches |
+| Index | Records | References to root-level projects |
 |---|---:|---:|
-| `index.json` (root) | 1 | 0 |
+| Root index | 1 | 0 |
 | `library_01/index.json` | 403 | 0 |
 | `library_02/index.json` | 185 | 26 |
 | `data-science/index.json` | 496 | 26 |
 
-The 26 matching project IDs occur in both `library_02/index.json` and `data-science/index.json`. Their `previewPath` values still point to the root-level project directory. The data-science records also contain project-identifying references. This is a direct dependency, not merely a similarly named directory.
+Twenty-six opaque project records are referenced by both the published library index and the data-science catalog. Their concrete directory names and item identifiers are intentionally omitted from this public document.
 
-The two remaining directories, `cb13003_3-2026-10-30T20-34-24-748Z` and `cg10201_01-2026-10-20T18-12-37-496Z`, were not found by exact directory-name matching in those four indexes. Their absence from these indexes does **not** prove they are unused: nested manifests, external URLs, historical proofs, workflow artifacts, or cached/public links may still refer to them.
+Two additional root-level directories were not found by exact-name matching in those indexes. They contain incomplete chunk-upload remnants, including partial image data and some Spine source components. Their absence from the inspected indexes does not prove that they are unused.
 
-## Root project inventory
+## Structural findings
 
-| Root project directory | Index status | Initial structure observation |
-|---|---|---|
-| `276-spine-2014-2026-10-24T21-47-41-860Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-24T21-48-38-912Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-24T22-17-53-463Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-24T23-08-19-870Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-24T23-10-28-743Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-11-53-127Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-16-11-083Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-18-51-649Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-27-47-511Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-42-41-493Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `321-spine-2025-2026-10-25T16-58-09-052Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `big_win-2026-10-26T22-02-37-490Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `build_char_377_gdglow-2026-10-31T01-59-20-411Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `cb13003_3-2026-10-30T20-34-24-748Z` | No index match found | two project subdirectories with PNG chunk remnants; one .skel and one .atlas are present; no source proof, anchor, or completed PNG was observed |
-| `cg10201_01-2026-10-20T18-12-37-496Z` | No index match found | one project subdirectory with three PNG chunk-fragment groups (7 chunk files total); no source proof, anchor, or completed PNG was observed |
-| `character_front-2026-10-12T03-05-59-750Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `character_right-2026-10-12T02-51-35-323Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `character1-2026-11-01T23-28-46-401Z` | Referenced | project folder, source proof, blockchain anchor |
-| `character2-2026-11-01T23-31-46-459Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `cherry-2026-10-30T11-24-57-053Z` | Referenced | animation folder, project folder, source proof, anchor, WebP/WebM previews |
-| `jp_major-2026-10-12T04-25-44-534Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `mo_event21_01-2026-10-11T11-18-20-009Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `symbols-2026-10-11T09-54-25-272Z` | Referenced | project folder, source proof, blockchain anchor |
-| `turret_grave-2026-10-28T16-07-13-274Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `wild_1x1-2026-10-12T11-03-58-484Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `wild_1x3-2026-10-12T11-36-08-123Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `wins-2026-10-22T10-56-30-508Z` | Referenced | project folder, source proof, blockchain anchor, preview |
-| `yuuka_home-2026-10-30T05-22-48-582Z` | Referenced | project folder, source proof, blockchain anchor, preview |
+- Ten historical snapshots share some skeleton/atlas Git blobs but have different texture payloads. They are not byte-identical projects and must not be deduplicated by directory name or partial blob equality.
+- The two unindexed directories contain incomplete chunk groups. Their original byte lengths, base64 continuity, image signatures, dimensions, atlas references, and skeleton compatibility have not been verified.
+- Source-proof and blockchain-anchor artifacts are integrity-sensitive. Git blob identity alone does not validate embedded hashes or external anchor state.
 
 ## Migration decision
 
-- **Do not move or delete any of the 26 referenced directories.** Their current index records depend on the root paths.
-- **Do not delete the two unindexed directories.** They need a broader reference and content-integrity audit first.
-- The 26 referenced records include source-proof and blockchain-anchor material. These are integrity-sensitive artifacts; Git blob identity alone is not a substitute for validating the proof's embedded hashes and external anchor state.
-- The current audit matched exact directory names inside four indexes. It did not yet exhaustively scan every nested file, all source code, workflows, external public URLs, deployment caches, or historical Git commits.
-- A migration may proceed only after a complete reference closure, byte-for-byte copy, independent SHA-256 verification of every file, proof/anchor validation, index updates, and live old/new URL checks.
+- Do not move or delete any referenced project directory.
+- Do not delete the two unindexed recovery candidates.
+- Do not reassemble chunk fragments in place.
+- Do not infer that two projects are duplicates from shared JSON/atlas blobs while their textures or proof context differ.
+- This audit matched exact references in four indexes only. It did not exhaustively scan every nested manifest, source file, workflow artifact, historical commit, external URL, or deployment cache.
 
-## Next safe migration work
+## Required gates before any future migration
 
-1. Enumerate every file recursively under all 28 directories and record path, byte length, Git blob SHA, and independently computed SHA-256.
-2. Parse each `source-proof.json` and `blockchain-anchor.json`; verify every declared file path, size, digest, and external anchor reference.
-3. Search all indexes, data-science item records, manifests, source files, workflows, sitemap documents, and Vercel rewrites for each root path and project ID.
-4. Produce a proposed path map only. Do not execute moves until every reference and integrity check is accounted for.
+1. Enumerate every file recursively and record path, byte length, Git blob SHA, and independently computed SHA-256 in a private audit artifact.
+2. Parse source proofs and blockchain anchors; verify each declared path, size, digest, and external reference.
+3. Search every index, data-science record, manifest, source file, workflow, sitemap, and deployment rewrite for references to the affected project.
+4. Prepare a path map without executing moves.
+5. Copy to a temporary destination, verify every byte independently, validate proofs/anchors, update indexes, and test old/new public URLs.
+6. Keep private project names, asset identifiers, and content hashes out of public logs, PR descriptions, and committed migration reports.
 
-This document is an inventory, not authorization to migrate or delete historical project data.
-
-## Additional structural findings
-
-### 321-Spine snapshots are not exact duplicate projects
-
-The ten root-level `321-spine-2025` snapshots share the exact Git blob SHA for the same skeleton JSON (`d758e7e3764d9da98f9a5821a854adc2f0665a37`, 91,034 bytes) and atlas (`10ed45db215778ee3f359c975df962f238c139bf`, 2,132 bytes). Their texture PNG blob SHAs and byte sizes differ between snapshots. They are therefore not byte-identical project copies. Git already stores identical blobs once internally, while each directory retains its own path and proof/anchor context. Removing repeated JSON/atlas paths would break individual project bundles and is not a safe deduplication.
-
-### Two unindexed folders contain unfinished chunk uploads
-
-- `cb13003_3-2026-10-30T20-34-24-748Z` contains two project subdirectories, one `.skel`, one `.atlas`, and two PNG chunk groups with two chunks each. It has no root-level `source-proof.json` or `blockchain-anchor.json`.
-- `cg10201_01-2026-10-20T18-12-37-496Z` contains three PNG chunk groups with 2, 3, and 2 chunks respectively. No completed PNG, source proof, or blockchain anchor was observed.
-
-These are recovery candidates, not confirmed valid Spine projects. The chunk files were not reassembled or modified. Their original byte lengths, base64 continuity, PNG signatures, dimensions, atlas references, and skeleton compatibility remain unverified. Keep them intact until a separate recovery pass can reconstruct copies into a temporary area and validate them without altering the originals.
+This document is an aggregate safety summary, not authorization to migrate or delete historical project data.
