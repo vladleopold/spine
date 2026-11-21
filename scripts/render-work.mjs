@@ -48,6 +48,7 @@ async function markPreviewBlocked(expectedAnimation, reason='render-failed'){
   const currentAnimation=typeof record.defaultAnimation==='string'?record.defaultAnimation:'';
   const sameSelection=expectedAnimation===''?!currentAnimation.trim():currentAnimation===expectedAnimation;
   if(!sameSelection)return false;
+  for(const key of ['webmPreview','webmPreviewMedium','webmPreviewLow','webmPreviewFull','webpPoster','webpPosterMedium','webpPosterLow','webmPreviewPath','previewWidth','previewHeight','previewDuration','qualityWidths','webmGeneratedAt'])delete record[key];
   const blocked=missingAnimationPreviewMetadata(record)||{
    webmStatus:'blocked-render-failed',
    previewStatus:'blocked',
