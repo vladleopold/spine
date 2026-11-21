@@ -72,6 +72,13 @@ test("repair workflow validates existing bytes before it can classify media as r
   const workflow = readFileSync(new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url), "utf8");
   assert.match(repair, /const validationCandidates=matrix\.filter\(x=>x\.ready\)/);
   assert.match(repair, /meta\?\.existingVerified===true/);
+  const merge = repair.slice(repair.indexOf('}else if(action==="merge")'));
+  assert.match(repair, /const mediaNames=\[/);
+  assert.doesNotMatch(merge, /const names=/,
+    "merge must not shadow the initialized media tier list in a temporal dead zone");
+  assert.match(merge, /fingerprintPreviewMedia\(mediaNames\.map/,
+    "existing verified media must fingerprint all six initialized tier files before publish");
+  assert.match(merge, /mediaNames\.every/);
   assert.doesNotMatch(repair, /previous media retained/);
   assert.match(workflow, /Validate existing selected animation media before render/);
   assert.match(workflow, /--preview-path="\$PREVIEW_PATH"/);
