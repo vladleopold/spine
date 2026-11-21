@@ -13,6 +13,7 @@ on:
       - scripts/verify-reported-preview-live.mjs
       - scripts/mask-preview-manifest.mjs
       - scripts/lib/preview-manifest-redaction.mjs
+      - scripts/lib/preview-manifest-transport.mjs
       - scripts/test-preview-log-privacy.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
@@ -40,9 +41,9 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
+      renderSlots: ${{ steps.latest.outputs.renderSlots }}
+      manifestSha256: ${{ steps.latest.outputs.manifestSha256 }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
-      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -74,6 +75,7 @@ jobs:
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
+          node scripts/test-preview-log-privacy.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
@@ -82,12 +84,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-      ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
       REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+      EXPECTED_MANIFEST_SHA256: ${{ needs.inventory.outputs.manifestSha256 }}
+      RENDER_SLOTS_JSON: ${{ needs.inventory.outputs.renderSlots }}
+      SPINE_REPAIR_INDEX_ONLY: '1'
+      SPINE_REPAIR_SKIP_LIVE: '1'
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -107,11 +108,19 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-      - name: Mask private metadata and hydrate exact source
+      - name: Prepare and mask the frozen source slot
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
+          node scripts/repair-reported-previews.mjs prepare-slot
+      - name: Hydrate exact source after metadata masking
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PREVIEW_PATH" = /* || "$PREVIEW_PATH" == *..* ]]; then
+            echo "Invalid source path"
+            exit 1
+          fi
           git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
       - uses: actions/setup-node@v4
         with:
@@ -231,17 +240,27 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+      EXPECTED_MANIFEST_SHA256: ${{ needs.inventory.outputs.manifestSha256 }}
+      RENDER_SLOTS_JSON: ${{ needs.inventory.outputs.renderSlots }}
+      SPINE_REPAIR_INDEX_ONLY: '1'
+      SPINE_REPAIR_SKIP_LIVE: '1'
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
-          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
-      - name: Mask and hydrate exact reported source directories
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - name: Prepare and mask the frozen reported manifest
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
+          node scripts/repair-reported-previews.mjs prepare-manifest
+      - name: Hydrate exact reported source directories
+        shell: bash
+        run: |
+          set -euo pipefail
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
