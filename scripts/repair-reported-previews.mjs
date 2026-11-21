@@ -167,15 +167,13 @@ if(action==="matrix"){
     if(meta?.ok===true && meta?.existingVerified===true && meta?.animationMatches===true &&
       meta?.animationHash===animationHash && Number(meta?.tierCount)===3){
       let currentFingerprint="";
-      try { currentFingerprint=fingerprintPreviewMedia(names.map(name=>[name,fs.readFileSync(path.join(root,entryInfo.previewPath,name))])); } catch {}
+      try { currentFingerprint=fingerprintPreviewMedia(mediaNames.map(name=>[name,fs.readFileSync(path.join(root,entryInfo.previewPath,name))])); } catch {}
       if(currentFingerprint && currentFingerprint===meta.mediaFingerprint){summary.ready++;continue;}
       record.webmStatus="failed";record.previewStatus="failed";
       record.previewError="Media changed after byte-level verification";summary.failed++;continue;
     }
-    const names=["preview.webm","preview-medium.webm","preview-low.webm",
-      "preview.webp","preview-medium.webp","preview-low.webp"];
     let complete=meta?.ok===true && meta?.animationMatches===true &&
-      meta?.animationHash===animationHash && names.every(n=>
+      meta?.animationHash===animationHash && mediaNames.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -218,7 +216,7 @@ if(action==="matrix"){
       continue;
     }
     const destination=path.resolve(root,entryInfo.previewPath);
-    for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
+    for(const name of mediaNames)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
     const animation=selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
