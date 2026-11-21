@@ -46,9 +46,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan sa-reference-index
-          git sparse-checkout disable
           git rm -rf . >/dev/null 2>&1 || true
           cp /tmp/sa-reference/sa-reference-index.json ./sa-reference-index.json
-          git add sa-reference-index.json
+          git add --sparse sa-reference-index.json
           git commit -m "chore(library): publish sanitized SA reference index"
           git push --force origin HEAD:refs/heads/sa-reference-index
