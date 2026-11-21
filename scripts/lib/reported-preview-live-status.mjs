@@ -12,20 +12,36 @@ export function classifyPreviewHttpStatus(status) {
   return "failed";
 }
 
+export function hasExactPreviewAnimation(entry) {
+  const selected = typeof entry?.defaultAnimation === "string" ? entry.defaultAnimation : "";
+  const animations = Array.isArray(entry?.animations) ? entry.animations : [];
+  return Boolean(selected) &&
+    animations.includes(selected) &&
+    entry?.webmAnimation === selected;
+}
+
 export function classifyReportedPreviewEntry(entry) {
   const webmStatus = typeof entry?.webmStatus === "string" ? entry.webmStatus : "";
   const previewStatus = typeof entry?.previewStatus === "string" ? entry.previewStatus : "";
+  const selected = typeof entry?.defaultAnimation === "string" ? entry.defaultAnimation : "";
+  const animations = Array.isArray(entry?.animations) ? entry.animations : [];
+  const webmAnimation = typeof entry?.webmAnimation === "string" ? entry.webmAnimation : "";
 
-  if (webmStatus === "failed" || previewStatus === "failed") return "failed";
+  if (
+    webmStatus === "failed" ||
+    previewStatus === "failed" ||
+    (webmAnimation && selected && webmAnimation !== selected) ||
+    (selected && animations.length > 0 && !animations.includes(selected))
+  ) return "failed";
+
   if (
     webmStatus.startsWith("blocked-") ||
     previewStatus === "blocked" ||
     webmStatus === "pending" ||
-    previewStatus === "pending"
+    previewStatus === "pending" ||
+    !hasExactPreviewAnimation(entry)
   ) return "blocked";
 
-  // Older accepted records may predate previewStatus. A ready WebM remains
-  // eligible only when the newer field is absent or explicitly ready.
   if (webmStatus === "ready" && (!previewStatus || previewStatus === "ready")) return "ready";
   return "blocked";
 }
