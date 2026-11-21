@@ -79,3 +79,10 @@ export function resolveStoredPreviewMediaFiles(entry, record, selectedAnimation)
   }
   return { directory, files };
 }
+
+
+// Backward-compatible directory view for existing callers; the authoritative
+// result is the exact six-file map above.
+export function resolveStoredPreviewMediaDirectory(entry, record, selectedAnimation) {
+  return resolveStoredPreviewMediaFiles(entry, record, selectedAnimation)?.directory || "";
+}

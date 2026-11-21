@@ -81,9 +81,9 @@ function bundleOk(entry) {
       try{return fs.statSync(target).isFile();}catch{return false;}
     });
   }
-  const triad=files.some(f=>/\\.(json|skel)$/i.test(f)) &&
-    files.some(f=>/\\.atlas(?:\\.txt|\\.docx)?$/i.test(f)) &&
-    files.some(f=>/\\.(png|jpe?g|webp|dds)$/i.test(f));
+  const triad=files.some(f=>/\.(json|skel)$/i.test(f)) &&
+    files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
+    files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
   if(!triad)return false;
   // Indexed paths may be nested (legacy exports). The hydrated render job
   // checks every listed source file and every atlas page against real texture dimensions.

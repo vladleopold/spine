@@ -14,7 +14,8 @@ assert.equal(classifyReportedPreviewEntry({webmStatus:"ready",previewStatus:"blo
 assert.equal(classifyReportedPreviewEntry({webmStatus:"ready",previewStatus:"failed"}), "failed");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"failed",previewStatus:"ready"}), "failed");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"pending",previewStatus:"pending"}), "blocked");
-assert.equal(classifyReportedPreviewEntry({webmStatus:"ready"}), "ready");
+assert.equal(classifyReportedPreviewEntry({webmStatus:"ready"}), "blocked",
+  "a ready WebM with missing previewStatus is not yet visible or accepted by the archive");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"ready",previewStatus:"ready"}), "ready");
 assert.equal(classifyReportedPreviewEntry({}), "blocked");
 
@@ -29,8 +30,11 @@ assert.equal(storedPreviewStatusAllowsReuse(
   { ...exactReady, previewStatus: "failed" }, "Different", { allowFailedStatus: true }), false);
 assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "blocked" }, "Exact"), false);
 assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "pending" }, "Exact"), false);
-assert.equal(storedPreviewStatusAllowsReuse({ webmStatus: "ready", defaultAnimation: "Exact" }, "Exact"), true,
-  "legacy records without previewStatus remain eligible for independent byte/decode checks");
+assert.equal(storedPreviewStatusAllowsReuse({ webmStatus: "ready", defaultAnimation: "Exact" }, "Exact"), false,
+  "legacy records without previewStatus must be independently revalidated before they can be accepted");
+assert.equal(storedPreviewStatusAllowsReuse(
+  { webmStatus: "ready", defaultAnimation: "Exact" }, "Exact", { allowFailedStatus: true }), true,
+  "only the explicit validation path may inspect a legacy record without previewStatus");
 assert.equal(storedPreviewStatusAllowsReuse(exactReady, "Different"), false,
   "stored media may only be reused for the exact indexed animation");
 

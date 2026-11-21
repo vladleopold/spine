@@ -24,8 +24,8 @@ export function classifyReportedPreviewEntry(entry) {
     previewStatus === "pending"
   ) return "blocked";
 
-  // Older accepted records may predate previewStatus. A ready WebM remains
-  // eligible only when the newer field is absent or explicitly ready.
-  if (webmStatus === "ready" && (!previewStatus || previewStatus === "ready")) return "ready";
+  // The archive card is visible only when both independent status fields are ready.
+  // A missing previewStatus is stale metadata and must be revalidated, not accepted. 
+  if (webmStatus === "ready" && previewStatus === "ready") return "ready";
   return "blocked";
 }
