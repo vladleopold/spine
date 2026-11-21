@@ -7,6 +7,7 @@ import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-s
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
 import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch, missingAnimationPreviewMetadata } from '../scripts/lib/spine-export-entry.mjs';
+import { isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -1609,6 +1610,13 @@ export default async function handler(request, response) {
     }
 
     if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
+
+    if (!isAllowedSpineUploadPath(uploadPath, settings.basePath)) {
+      return response.status(400).json({
+        error: 'Invalid upload destination',
+        message: `New Spine projects must be written as a single project folder inside ${settings.basePath} or one of its numbered library collections.`,
+      });
+    }
 
     const normalizedSpineEntry = normalizeSpineExportEntry(entry);
     if (normalizedSpineEntry.error) {
