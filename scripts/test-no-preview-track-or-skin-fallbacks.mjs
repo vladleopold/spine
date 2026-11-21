@@ -144,11 +144,11 @@ assert.equal(resolveIndexedPreviewSet(indexedSets, {
 }), null, 'a missing indexed source set must not borrow another set');
 assert.equal(resolveIndexedPreviewSet(indexedSets, { defaultAnimation: 'Exact' }), null,
   'animation metadata alone must not identify an unrelated skeleton set');
-assert.match(preview, /indexedSelection = resolveIndexedPreviewSet\\(sets, entry\\)/,
+assert.match(preview, /indexedSelection = resolveIndexedPreviewSet\(sets, entry\)/,
   'the dynamic preview must bind the source index to its exact set');
-assert.match(preview, /activeLabel: indexedSelection\\?\\.set\\?\\.label \\|\\| ''/,
+assert.match(preview, /activeLabel: indexedSelection\?\.set\?\.label \|\| ''/,
   'the browser must start from the indexed set when it is unambiguous');
-assert.match(preview, /requireIndexedSet: Boolean\\(entry\\?\\.skeleton \\|\\| entry\\?\\.atlas\\)/,
+assert.match(preview, /requireIndexedSet: Boolean\(entry\?\.skeleton \|\| entry\?\.atlas\)/,
   'a missing indexed set must prevent single-set fallback');
 
 const scenarioStart = preview.indexOf('function syncScenario() {}');
