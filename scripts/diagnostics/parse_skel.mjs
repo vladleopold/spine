@@ -1,25 +1,33 @@
-import fs from 'fs';
-const buf = fs.readFileSync('library/bg_for_spine_05.04.2026_002-2026-05-05T21-32-51-474Z/bg_for_spine_05.04.2026_002/BG_For_Spine_05.04.2026_002.skel');
-function readString(b, offset) {
-  const len = b.readUInt8(offset);
+import fs from 'node:fs';
+
+const inputPath = process.argv[2];
+if (!inputPath) {
+  console.error('Usage: node scripts/diagnostics/parse_skel.mjs <local-skel-path>');
+  process.exit(2);
+}
+
+const buf = fs.readFileSync(inputPath);
+
+function readString(buffer, offset) {
+  const len = buffer.readUInt8(offset);
   if (len === 0) return { val: null, next: offset + 1 };
   let actualLen = len - 1;
   if (len & 0x80) {
-    actualLen = ((len & 0x7F) | (b.readUInt8(offset+1) << 7));
-    return { val: b.toString('utf8', offset+2, offset+2+actualLen), next: offset+2+actualLen };
+    actualLen = (len & 0x7F) | (buffer.readUInt8(offset + 1) << 7);
+    return { val: buffer.toString('utf8', offset + 2, offset + 2 + actualLen), next: offset + 2 + actualLen };
   }
-  return { val: b.toString('utf8', offset+1, offset+1+actualLen), next: offset+1+actualLen };
+  return { val: buffer.toString('utf8', offset + 1, offset + 1 + actualLen), next: offset + 1 + actualLen };
 }
-let { val: hash, next: n1 } = readString(buf, 0);
-let { val: ver, next: n2 } = readString(buf, n1);
-console.log("Hash:", hash, "Ver:", ver);
 
-const w3 = buf.readFloatLE(n2);
-const h3 = buf.readFloatLE(n2+4);
-console.log("3.8 parse -> w:", w3, "h:", h3);
+const { next: stringEnd } = readString(buf, 0);
+const { next: headerEnd } = readString(buf, stringEnd);
+const legacyWidth = buf.readFloatLE(headerEnd);
+const legacyHeight = buf.readFloatLE(headerEnd + 4);
+const x = buf.readFloatLE(headerEnd);
+const y = buf.readFloatLE(headerEnd + 4);
+const width = buf.readFloatLE(headerEnd + 8);
+const height = buf.readFloatLE(headerEnd + 12);
 
-const x = buf.readFloatLE(n2);
-const y = buf.readFloatLE(n2+4);
-const w = buf.readFloatLE(n2+8);
-const h = buf.readFloatLE(n2+12);
-console.log("4.x parse -> x:", x, "y:", y, "w:", w, "h:", h);
+console.log('Binary skeleton header parsed.');
+console.log('Legacy dimensions:', legacyWidth, legacyHeight);
+console.log('Bounds:', x, y, width, height);
