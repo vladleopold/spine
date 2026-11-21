@@ -88,7 +88,7 @@ try{
   });
   assert.equal(prepare.status,0,prepare.stderr);
   const envText=fs.readFileSync(envPath,"utf8");
-  const manifestMatch=envText.match(/^REPAIR_IDS_JSON<<([^\\n]+)\\n([\\s\\S]*?)\\n\\1$/m);
+  const manifestMatch=envText.match(/^REPAIR_IDS_JSON<<([^\n]+)\n([\s\S]*?)\n\1$/m);
   assert.ok(manifestMatch,"masked manifest must be transported through GITHUB_ENV, not a step/job env expression");
   const all=JSON.parse(manifestMatch[2]);
   assert.equal(all.length,10);
