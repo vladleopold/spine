@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
@@ -32,22 +33,67 @@ const report={
  formats:[],
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
-process.on('uncaughtException',error=>{
+const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
+async function markPreviewBlocked(expectedAnimation, reason='render-failed'){
+ for(let attempt=0;attempt<5;attempt++){
+  run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
+  run('git',['reset','--hard','origin/main']);
+  const current=entryForUpload(process.cwd(),id);
+  if(!current||!Array.isArray(current.index))throw Error('Upload index unavailable');
+  const index=current.index;
+  const indexPosition=index.findIndex(entry=>entry?.id===id);
+  if(indexPosition<0)throw Error('Upload removed before blocked status update');
+  const record=index[indexPosition];
+  const currentAnimation=typeof record.defaultAnimation==='string'?record.defaultAnimation:'';
+  const sameSelection=expectedAnimation===''?!currentAnimation.trim():currentAnimation===expectedAnimation;
+  if(!sameSelection)return false;
+  const blocked=missingAnimationPreviewMetadata(record)||{
+   webmStatus:'blocked-render-failed',
+   previewStatus:'blocked',
+   dispatchStatus:'blocked',
+   webmError:reason,
+   previewError:reason,
+  };
+  Object.assign(record,blocked);
+  const indexPath=path.join(current.basePath,'index.json');
+  fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
+  run('git',['add','--',indexPath]);
+  if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return true;
+  run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m','Mark unaccepted Spine preview as blocked']);
+  try{
+   run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
+   return true;
+  }catch(error){
+   if(attempt===4)throw error;
+  }
+ }
+ return false;
+}
+process.on('uncaughtException',async error=>{
  report.status='failed';
  report.code=report.code||'RENDER_FAILED';
  const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
  report.code=safeCode;
  writeReport();
+ try{
+  await markPreviewBlocked(selection.animation,'render-failed');
+ }catch{
+  console.error('SPINE_BLOCKED_STATUS_PUBLISH_FAILED');
+ }
  console.error(`SPINE_RENDER_FAILED=${safeCode}`);
  process.exit(1);
 });
 if(selection.status==='blocked'){
  writeReport();
+ try{
+  await markPreviewBlocked(selection.animation,'missing-default-animation');
+ }catch{
+  console.error('SPINE_BLOCKED_STATUS_PUBLISH_FAILED');
+ }
  console.error('SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION');
  process.exit(1);
 }
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
-const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
@@ -95,7 +141,7 @@ async function publish(update){
  }
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
-await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,defaultAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
+await publish({webmStatus:'ready',previewStatus:'ready',dispatchStatus:'ready',webmError:null,previewError:null,dispatchError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,defaultAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
 // Verify every Download format and size on the requested animation. Remaining
 // animations are handled by the existing full-export workflow after this run.
 run('node',['scripts/spine-export-webm.mjs',...flags.filter(f=>!f.startsWith('--output=')),'--alpha',`--output=${path.join(temp,'alpha.webm')}`]);
