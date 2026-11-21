@@ -1,6 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
+const INDEX_URL='https://raw.githubusercontent.com/vladleopold/spine/sa-reference-index/sa-reference-index.json';
+let cachedIndex=null,cachedAt=0;
 const ALLOWED_ORIGINS=new Set([
  'https://spineanimator.github.io','https://spineanimator.dev',
  'https://www.spineanimator.dev','https://spine-link.vercel.app'
@@ -29,10 +28,17 @@ export default async function handler(request,response){
   return response.status(204).end();
  }
  if(!['GET','HEAD'].includes(request.method)){response.setHeader('Allow','GET, HEAD, OPTIONS');return response.status(405).json({error:'METHOD_NOT_ALLOWED'});}
- const indexPath=path.join(process.cwd(),'public','sa-reference-index.json');
- if(!fs.existsSync(indexPath))return response.status(503).json({error:'REFERENCE_INDEX_NOT_BUILT'});
- let index;
- try{index=JSON.parse(fs.readFileSync(indexPath,'utf8'));}catch{return response.status(503).json({error:'REFERENCE_INDEX_INVALID'});}
+ let index=cachedIndex;
+ if(!index||Date.now()-cachedAt>300000){
+  try{
+   const remote=await fetch(INDEX_URL,{method:'GET',headers:{accept:'application/json'},redirect:'error'});
+   if(!remote.ok)return response.status(503).json({error:'REFERENCE_INDEX_NOT_BUILT'});
+   index=await remote.json();
+   if(index?.schema!=='sa.reference-library-index'||index.version!==1||!Array.isArray(index.projects))
+    return response.status(503).json({error:'REFERENCE_INDEX_INVALID'});
+   cachedIndex=index;cachedAt=Date.now();
+  }catch{return response.status(503).json({error:'REFERENCE_INDEX_UNAVAILABLE'});}
+ }
  if(index?.schema!=='sa.reference-library-index'||index.version!==1||!Array.isArray(index.projects))
   return response.status(503).json({error:'REFERENCE_INDEX_INVALID'});
  const q=String(request.query?.q||'').trim().toLowerCase().slice(0,180);
