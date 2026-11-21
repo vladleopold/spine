@@ -38,7 +38,6 @@ assert.ok(previewTargetStart >= 0 && previewTargetEnd > previewTargetStart,
 const previewTarget = preview.slice(previewTargetStart, previewTargetEnd);
 assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
   'the work page may resolve only the exact indexed default animation');
-  'the work page may resolve only the exact indexed default animation');
 assert.match(previewTarget, /isFallback: false/,
   'the resolver must never report or produce a substitute animation');
 assert.doesNotMatch(previewTarget, /for \(const a of animations\)|candidates\.find|fallback \|\| first|target\.name !== chosen/,
