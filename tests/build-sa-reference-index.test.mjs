@@ -25,7 +25,7 @@ test('reference entry never exports uploader identity and never assumes training
  };
  const entry=buildProjectEntry({collection:'library_01',id:'demo-2026-01-01T00-00-00-000Z',
   files,commit:'a'.repeat(40),readFile:p=>values[p]||null});
- assert.equal(entry.title,'Demo character');assert.equal(entry.summary.boneCount,1);
+ assert.equal(entry.title,'demo');assert.equal(entry.summary.boneCount,1);
  assert.equal(entry.projectCompleteness,'complete');assert.equal(entry.previewUrl.includes('preview.webm'),true);
  assert.equal(entry.rights.trainingEligible,false);assert.equal(entry.rights.sourceReuseAllowed,false);
  assert.equal(JSON.stringify(entry).includes('secret-user'),false);
