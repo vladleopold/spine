@@ -1028,8 +1028,7 @@ function skinNamesFromSkeletonJson(skeletonJson: unknown) {
 }
 
 function preferredSkinName(skinNames: string[]) {
-  if (!skinNames.length) return "";
-  return skinNames.includes("default") ? "default" : skinNames[0] || "";
+  return Array.isArray(skinNames) && skinNames.includes("default") ? "default" : "";
 }
 
 function sanitizeSkeletonData(json: unknown): unknown {
@@ -3317,13 +3316,18 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
   }, []);
 
   const playActiveAnimationFromStart = useCallback(() => {
-    const animationName = activeAnimationRef.current || preparedSpineRef.current?.defaultAnimation || animationsRef.current[0] || "";
+    const animationName = activeAnimationRef.current || preparedSpineRef.current?.defaultAnimation || "";
+    if (!animationName) {
+      setError("No exact animation is selected; preview is blocked.");
+      setStatus("Select an animation explicitly.");
+      return;
+    }
     if (playAnimationWithLoopMode(playerRef.current, animationName, loopEnabledRef.current, () => loopEnabledRef.current)) {
       setActiveAnimation(animationName);
       setError("");
     } else if (animationName) {
       setError(`Animation bounds are invalid: ${animationName}.`);
-      setStatus("Choose another animation.");
+      setStatus("Selected animation is unavailable; preview is blocked.");
     }
   }, []);
 
@@ -3401,8 +3405,8 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
           const nextSpineOptions = await loadFiles(Array.from(fileList));
           const nextSpine = chooseInitialSet(nextSpineOptions);
           if (!nextSpine) throw new Error("Could not create an extra player from these files.");
-          const nextAnimations = nextSpine.animations.length ? nextSpine.animations : [nextSpine.defaultAnimation || "animation"].filter(Boolean);
-          const nextActiveAnimation = nextSpine.defaultAnimation && nextAnimations.includes(nextSpine.defaultAnimation) ? nextSpine.defaultAnimation : nextAnimations[0] || "";
+          const nextAnimations = Array.isArray(nextSpine.animations) ? nextSpine.animations : [];
+          const nextActiveAnimation = typeof nextSpine.defaultAnimation === "string" ? nextSpine.defaultAnimation : "";
           setExtraSpineSets((currentSets) => [
             ...currentSets,
             {
