@@ -42,8 +42,22 @@ try{
   assert.equal(result.status,0,result.stderr);
   const output=Object.fromEntries(result.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
-  const all=JSON.parse(output.allEntries);
   const matrix=JSON.parse(output.matrix);
+  const renderSlots=JSON.parse(output.renderSlots);
+  assert.ok(matrix.every(item=>Number.isInteger(item.repairSlot)&&Object.keys(item).every(key=>key==="repairSlot"||key==="needsRender")),
+    "render matrix must expose only opaque numeric slots");
+  const envPath=path.join(root,"prepared-manifest.env");
+  const prepare=spawnSync(process.execPath,[script,"prepare-manifest"],{
+    cwd:root,encoding:"utf8",
+    env:{...process.env,SPINE_REPAIR_INDEX_ONLY:"1",SPINE_REPAIR_SKIP_LIVE:"1",
+      GITHUB_ENV:envPath,EXPECTED_MANIFEST_SHA256:output.manifestSha256,
+      RENDER_SLOTS_JSON:output.renderSlots}
+  });
+  assert.equal(prepare.status,0,prepare.stderr);
+  const envText=fs.readFileSync(envPath,"utf8");
+  const manifestMatch=envText.match(/^REPAIR_IDS_JSON<<([^\\n]+)\\n([\\s\\S]*?)\\n\\1$/m);
+  assert.ok(manifestMatch,"masked manifest must be transported through GITHUB_ENV, not a step/job env expression");
+  const all=JSON.parse(manifestMatch[2]);
   assert.equal(all.length,20);
   assert.equal(matrix.length,17);
   assert.equal(Number(output.renderCount),17);
