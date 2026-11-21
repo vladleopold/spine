@@ -9,6 +9,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { applyFrozenRenderSlots, previewManifestDigest, preparePreviewManifest, preparePreviewSlot, writePreparedPreviewEnvironment } from "./lib/preview-manifest-transport.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -83,41 +84,46 @@ function existingMediaOk(entry,animation){
 }
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
-if(action==="matrix"){
-  if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map((e,repairSlot)=>{
+function buildMatrix(){
+  if(latest.length!==requestedIds.length)throw new Error("Cannot find all reported entries");
+  return latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
     const ready=sourceReady&&Boolean(animation);
-    const rel=String(e.previewPath).replace(/\\/g,"/");
+    const rel=String(e.previewPath).replace(/\\\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
       needsRender:ready&&!existingMediaOk(e,animation),animation,
       blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
   });
+}
+const matrix=action==="merge"?[]:buildMatrix();
+if(action==="matrix"){
   const required=matrix.filter(x=>x.needsRender);
-  // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
-  // available clip has already been rendered and independently accepted.
-  console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
-  console.log("allEntries="+JSON.stringify(matrix));
+  const renderSlots=required.map(x=>x.repairSlot);
+  const renderMatrix=renderSlots.length
+    ? renderSlots.map(repairSlot=>({repairSlot,needsRender:true}))
+    : [{repairSlot:0,needsRender:false}];
+  console.log("matrix="+JSON.stringify(renderMatrix));
+  console.log("renderSlots="+JSON.stringify(renderSlots));
+  console.log("manifestSha256="+previewManifestDigest(matrix));
   console.log("renderCount="+required.length);
-  const sparse=[
-    "/scripts/","/package.json","/package-lock.json",
-    "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
-    "/public/vendor-spine-player-3.8.js","/public/vendor-spine-player-3.8.css",
-    "/library/index.json","/library_*/index.json",
-  ];
-  console.log("sparseCheckout<<SPINE_SPARSE_END");
-  console.log([...new Set(sparse)].join(String.fromCharCode(10)));
-  console.log("SPINE_SPARSE_END");
   console.error("AUDIT_REQUESTED_PREVIEWS="+matrix.length+
     " SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED_SOURCE_BUNDLE="+matrix.filter(x=>x.blockedReason==="MISSING_SOURCE_BUNDLE").length+
     " BLOCKED_MISSING_ANIMATION="+matrix.filter(x=>x.blockedReason==="MISSING_DEFAULT_ANIMATION").length+
     " NEEDS_RENDER="+required.length+
     " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
-}else if(action==="merge"){
+}else if(action==="prepare-manifest"||action==="prepare-slot"){
+  const frozen=applyFrozenRenderSlots(matrix,process.env.RENDER_SLOTS_JSON||"[]");
+  const expected=process.env.EXPECTED_MANIFEST_SHA256||"";
+  const prepared=action==="prepare-manifest"
+    ? preparePreviewManifest(frozen,expected)
+    : preparePreviewSlot(frozen,process.env.REPAIR_SLOT,expected);
+  writePreparedPreviewEnvironment(prepared,process.env.GITHUB_ENV);
+  console.log(action==="prepare-manifest"?"REPORTED_PREVIEW_MANIFEST_PREPARED":"REPORTED_PREVIEW_SLOT_PREPARED");
+}else else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-reported18");
