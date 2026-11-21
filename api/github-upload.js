@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-science.js';
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
-import { hasSpineSourceBundle, normalizeSpineExportEntry } from '../scripts/lib/spine-export-entry.mjs';
+import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch, mergeSpineExportPreviewState } from '../scripts/lib/spine-export-entry.mjs';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -328,18 +328,23 @@ function generatedPreviewWebmUrl(origin, entry) {
 }
 
 function isSpineExportEntry(entry) {
-  return hasSpineSourceBundle(entry) && Array.isArray(entry?.animations) && entry.animations.length > 0;
+  return hasSpineSourceBundle(entry) && resolveSpineExportDispatch(entry).status === 'ready';
 }
 
 async function dispatchSpineExportWebm(settings, entry, origin) {
   const id = String(entry?.id || '').trim();
   if (!id) return null;
-  if (!isSpineExportEntry(entry)) {
-    console.log(`[UPLOAD] skipping WebM export for ${id}: missing Spine skeleton, atlas, or texture files`);
+  if (!hasSpineSourceBundle(entry)) {
+    console.log('[UPLOAD] skipping WebM export: missing Spine source bundle');
     return { status: 'skipped', reason: 'missing-spine-assets' };
   }
-  const defaultAnimation = String(entry?.defaultAnimation || (Array.isArray(entry?.animations) ? entry.animations[0] : '') || '').trim();
-  const animations = Array.isArray(entry?.animations) ? entry.animations : [];
+  const selection = resolveSpineExportDispatch(entry);
+  if (selection.status !== 'ready') {
+    console.log('[UPLOAD] skipping WebM export: explicit default animation is missing');
+    return { status: 'blocked', reason: selection.reason };
+  }
+  const defaultAnimation = selection.animation;
+  const animations = selection.animations;
   try {
     const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/dispatches`, {
       method: 'POST',
@@ -1112,8 +1117,9 @@ export default async function handler(request, response) {
       const currentIndex = await getGitHubContent(settings, indexPath);
       const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
       const existingEntry = currentEntries.find((c) => c.id === entry.id);
+      const previewState = mergeSpineExportPreviewState(entry, existingEntry);
       const nextEntry = {
-        ...entry,
+        ...previewState.entry,
         ...(googlePayload?.email ? { ownerEmail: googlePayload.email } : {}),
         ...(entry?.ownerName || googlePayload?.name ? { ownerName: cleanPublicProfileText(entry?.ownerName || googlePayload?.name) } : {}),
         ...(entry?.ownerPicture || googlePayload?.picture ? { ownerPicture: cleanPublicProfileImage(entry?.ownerPicture || googlePayload?.picture) } : {}),
@@ -1121,15 +1127,17 @@ export default async function handler(request, response) {
         publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
         showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
         portfolioMode: Boolean(entry?.portfolioMode),
-        ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: isSpineExportEntry(entry) ? 'pending' : 'skipped' }),
       };
-       const nextEntries = existingEntry
-         ? currentEntries.map((e) => (e.id === entry.id ? nextEntry : e))
-         : [...currentEntries, nextEntry];
+      const nextEntries = existingEntry
+        ? currentEntries.map((e) => (e.id === entry.id ? nextEntry : e))
+        : [...currentEntries, nextEntry];
       await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
       const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
-      const isNewUpload = !existingEntry || existingEntry.webmStatus !== 'ready';
-      const dispatch = isNewUpload ? await dispatchSpineExportWebm(settings, nextEntry, origin) : null;
+      const dispatch = previewState.shouldDispatch
+        ? await dispatchSpineExportWebm(settings, nextEntry, origin)
+        : nextEntry.webmStatus === 'blocked-missing-animation-selection'
+          ? { status: 'blocked', reason: 'missing-default-animation' }
+          : null;
       return response.status(200).json({ ok: true, indexed: nextEntries.length, dataScience, dispatch });
     }
 
@@ -1631,8 +1639,9 @@ export default async function handler(request, response) {
     const currentIndex = await getGitHubContent(settings, indexPath);
     const currentEntries = currentIndex?.content && currentIndex.encoding === 'base64' ? JSON.parse(base64ToText(currentIndex.content)) : [];
     const existingEntry = currentEntries.find((c) => c.id === entry.id);
+    const previewState = mergeSpineExportPreviewState(entry, existingEntry);
     const nextEntry = {
-      ...entry,
+      ...previewState.entry,
       ...(googlePayload?.email ? { ownerEmail: googlePayload.email } : {}),
       ...(entry?.ownerName || googlePayload?.name ? { ownerName: cleanPublicProfileText(entry?.ownerName || googlePayload?.name) } : {}),
       ...(entry?.ownerPicture || googlePayload?.picture ? { ownerPicture: cleanPublicProfileImage(entry?.ownerPicture || googlePayload?.picture) } : {}),
@@ -1640,13 +1649,18 @@ export default async function handler(request, response) {
       publicOwnerId: publicOwnerIdFor(googlePayload, anonymousAccount, entry?.publicOwnerId),
       showOwnerLibrary: Boolean(entry?.showOwnerLibrary),
       portfolioMode: Boolean(entry?.portfolioMode),
-      ...(existingEntry?.webmStatus === 'ready' ? { webmStatus: 'ready' } : { webmStatus: 'pending' }),
     };
-    const nextEntries = [...currentEntries, nextEntry];
+    const nextEntries = existingEntry
+      ? currentEntries.map((e) => (e.id === entry.id ? nextEntry : e))
+      : [...currentEntries, nextEntry];
 
     await putGitHubContent(settings, indexPath, textToBase64(JSON.stringify(nextEntries, null, 2)), `${commitPrefix}: update library index`, currentIndex?.sha, origin);
     const dataScience = await updateDataScienceCatalog(settings, body, nextEntry, commitPrefix, origin);
-    const dispatch = existingEntry?.webmStatus === 'ready' ? null : await dispatchSpineExportWebm(settings, nextEntry, origin);
+    const dispatch = previewState.shouldDispatch
+      ? await dispatchSpineExportWebm(settings, nextEntry, origin)
+      : nextEntry.webmStatus === 'blocked-missing-animation-selection'
+        ? { status: 'blocked', reason: 'missing-default-animation' }
+        : null;
 
     return response.status(200).json({
       ok: true,
