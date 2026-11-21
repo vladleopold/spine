@@ -123,7 +123,7 @@ if(action==="matrix"){
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-reported18");
+  const base=path.resolve(root,"downloaded-reported19");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
     if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
@@ -159,7 +159,7 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    const artifact=path.join(base,"reported18-"+item.repairSlot);
+    const artifact=path.join(base,"reported19-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
