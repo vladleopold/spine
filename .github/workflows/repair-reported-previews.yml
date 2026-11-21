@@ -203,7 +203,8 @@ jobs:
           node scripts/verify-existing-preview-media.mjs \
             --upload-id="$ENTRY_ID" --base-path="$ENTRY_BASE_PATH" \
             --animation="$ENTRY_ANIMATION" --repo-path="$GITHUB_WORKSPACE" \
-            --slot="$REPAIR_SLOT" --output="out/$REPAIR_SLOT/meta.json" \
+            --slot="$REPAIR_SLOT" --preview-path="$PREVIEW_PATH" \
+            --output="out/$REPAIR_SLOT/meta.json" \
             > "$RUNNER_TEMP/existing-media.log" 2>&1
           code=$?
           set -e

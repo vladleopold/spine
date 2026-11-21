@@ -57,6 +57,6 @@ export function previewUrlMatches(value, previewPath, fileName) {
 
 export function fingerprintPreviewMedia(entries) {
   const hash = createHash("sha256");
-  for (const [name, bytes] of entries) hash.update(String(name)).update(bytes);
+  for (const [name, bytes] of [...entries].sort((a, b) => String(a[0]).localeCompare(String(b[0])))) hash.update(String(name)).update(bytes);
   return hash.digest("hex");
 }

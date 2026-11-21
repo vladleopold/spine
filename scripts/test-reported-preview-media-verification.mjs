@@ -42,6 +42,8 @@ test("media fingerprint detects any byte change between verification and publish
   const a = fingerprintPreviewMedia([["preview.webm", Buffer.from("a")], ["preview.webp", Buffer.from("b")]]);
   const b = fingerprintPreviewMedia([["preview.webm", Buffer.from("a")], ["preview.webp", Buffer.from("c")]]);
   assert.notEqual(a, b);
+  const reordered = fingerprintPreviewMedia([["preview.webp", Buffer.from("b")], ["preview.webm", Buffer.from("a")]]);
+  assert.equal(a, reordered);
 });
 
 test("repair workflow validates existing bytes before it can classify media as ready", () => {
@@ -51,6 +53,7 @@ test("repair workflow validates existing bytes before it can classify media as r
   assert.match(repair, /meta\?\.existingVerified===true/);
   assert.doesNotMatch(repair, /previous media retained/);
   assert.match(workflow, /Validate existing selected animation media before render/);
+  assert.match(workflow, /--preview-path="\\$PREVIEW_PATH"/);
   assert.match(workflow, /github\.event_name == 'pull_request'/);
   assert.match(workflow, /verify-preview-motion\.mjs/);
   assert.match(workflow, /verify-poster-first-frame\.mjs/);
