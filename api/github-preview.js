@@ -3,6 +3,7 @@ import { metricCountsForId, parseMetricsJson } from '../lib/spine-metrics.js';
 import { cacheProfiles, setCacheHeaders, setNoStoreHeaders } from '../lib/cache-headers.js';
 import { appendAssetVersion, assetVersionForEntry } from '../lib/asset-version.js';
 import { cachedGithubText } from '../lib/github-content-cache.js';
+import { resolveIndexedPreviewSet } from '../scripts/lib/preview-set-selection.mjs';
 
 const defaultOwner = 'vladleopold';
 const defaultRepo = 'spine';
@@ -1385,9 +1386,13 @@ function createHtml(config) {
         const querySet = queryValue("set");
         const queryAnimation = queryValue("animation");
         if (querySet) return sets.find((set) => set.label === querySet) || null;
-        if (queryAnimation) return sets.find((set) => setHasAnimation(set, queryAnimation)) || null;
-        const indexedSet = sets.find((set) => set.label === config.activeLabel);
+        const indexedSet = sets.find((set) => set.label === config.activeLabel) || null;
         if (indexedSet) return indexedSet;
+        if (config.requireIndexedSet) return null;
+        if (queryAnimation) {
+          const matches = sets.filter((set) => setHasAnimation(set, queryAnimation));
+          return matches.length === 1 ? matches[0] : null;
+        }
         return sets.length === 1 ? sets[0] : null;
       }
       function initialAnimation(set) {
@@ -2548,6 +2553,7 @@ async function createDynamicPreview(settings, uploadPath, origin, requestedAnima
   const entryId = uploadId || uploadPath;
   let entries = [];
   let metrics = {};
+  let indexedSelection = null;
 
   for (const directory of setDirectories) {
     const items = await githubList(settings, directory.path);
@@ -2629,6 +2635,8 @@ async function createDynamicPreview(settings, uploadPath, origin, requestedAnima
     entry = Array.isArray(entries)
       ? entries.find((item) => item?.id === uploadId || cleanRepoPath(item?.previewPath || '') === cleanRepoPath(uploadPath))
       : null;
+    indexedSelection = resolveIndexedPreviewSet(sets, entry);
+    if (indexedSelection) indexedSelection.set.animation = indexedSelection.animation;
     note = String(entry?.note || '').trim();
     if (entry?.showOwnerLibrary) {
       const ownerEmail = String(entry?.ownerEmail || '').toLowerCase();
@@ -2689,7 +2697,11 @@ async function createDynamicPreview(settings, uploadPath, origin, requestedAnima
     };
   }
   return {
-    html: createHtml({ sets, note, ownerProfile, entryId, entry, origin, video, metrics, robots, playerUrl, archiveUrl }),
+    html: createHtml({
+      sets, note, ownerProfile, entryId, entry, origin, video, metrics, robots, playerUrl, archiveUrl,
+      activeLabel: indexedSelection?.set?.label || '',
+      requireIndexedSet: Boolean(entry?.skeleton || entry?.atlas),
+    }),
     robots,
   };
 }
