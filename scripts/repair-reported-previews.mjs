@@ -42,7 +42,8 @@ function newestTen() {
       if(byId.has(entry.id))throw new Error('Duplicate work across archive collections');
       const defaultAnimation=choosePreviewAnimation([],entry.defaultAnimation);
       byId.set(entry.id,{id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+'/'+entry.id,
-        at:Date.parse(entry.uploadedAt||0)||0,defaultAnimation});
+        at:Date.parse(entry.uploadedAt||0)||0,defaultAnimation,
+        animations:Array.isArray(entry.animations)?entry.animations:[]});
     }
   }
   const missing=requestedIds.filter(id=>!byId.has(id));
@@ -91,13 +92,14 @@ if(action==="matrix"){
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
-    const ready=sourceReady&&Boolean(animation);
+    const hasExactAnimation=Boolean(animation)&&Array.isArray(e.animations)&&e.animations.includes(animation);
+    const ready=sourceReady&&hasExactAnimation;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
       needsRender:ready&&!existingMediaOk(e,animation),animation,
-      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
+      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":!hasExactAnimation?"MISSING_SELECTED_ANIMATION":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
