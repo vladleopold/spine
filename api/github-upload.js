@@ -7,7 +7,7 @@ import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-s
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
 import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch, missingAnimationPreviewMetadata } from '../scripts/lib/spine-export-entry.mjs';
-import { isAllowedSpineCollectionBasePath, isAllowedSpineUploadFileName, isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
+import { isAllowedSpineCollectionBasePath, isAllowedSpineProjectFilePath, isAllowedSpineUploadFileName, isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -680,7 +680,7 @@ function isSameLibraryOwner(entry, targetEntry) {
   return Boolean(samePublicOwner || sameEmail || sameAnon);
 }
 
-function dataScienceBasePathFor(body) {
+function dataScienceBasePathFor() {
   const basePath = cleanRepoPath(process.env.DATA_SCIENCE_BASE_PATH || 'data-science');
   if (!basePath || basePath.includes('/') || basePath === '.' || basePath === '..') {
     throw new Error('DATA_SCIENCE_BASE_PATH must be one safe repository directory');
@@ -690,7 +690,7 @@ function dataScienceBasePathFor(body) {
 
 async function updateDataScienceCatalog(settings, body, entry, commitPrefix, origin) {
   if (body?.dataScience?.enabled === false) return null;
-  const basePath = dataScienceBasePathFor(body);
+  const basePath = dataScienceBasePathFor();
   if (!basePath) return null;
 
   const metadata = inferDataScienceMetadata(entry, settings);
@@ -986,7 +986,7 @@ export default async function handler(request, response) {
       const sourceProof = body?.sourceProof && typeof body.sourceProof === 'object' ? body.sourceProof : null;
       if (!sourceProof) return response.status(400).json({ error: 'Invalid source proof payload' });
       const anchorPath = cleanRepoPath(body?.anchorPath || joinRepoPath(body?.uploadPath || sourceProof?.github?.previewPath || '', 'blockchain-anchor.json'));
-      if (!anchorPath) return response.status(400).json({ error: 'Invalid blockchain anchor path' });
+      if (!isAllowedSpineProjectFilePath(anchorPath, settings.basePath)) return response.status(400).json({ error: 'Invalid blockchain anchor path' });
 
       const anchor = await createBlockchainAnchor({
         sourceProof,
@@ -1026,6 +1026,7 @@ export default async function handler(request, response) {
     if (action === 'put-file') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       const path = cleanRepoPath(file?.path || body?.path || '');
+      if (!isAllowedSpineProjectFilePath(path, settings.basePath)) return response.status(400).json({ error: 'Invalid project file destination' });
       const contentBase64 = String(file?.contentBase64 || body?.contentBase64 || '');
       const message = String(body?.message || `${commitPrefix}: ${path.split('/').pop() || 'file'}`);
       if (!path || !contentBase64) return response.status(400).json({ error: 'Invalid file payload' });
@@ -1043,6 +1044,7 @@ export default async function handler(request, response) {
     if (action === 'multipart-upload-chunk') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       const filePath = cleanRepoPath(body?.path || '');
+      if (!isAllowedSpineProjectFilePath(filePath, settings.basePath)) return response.status(400).json({ error: 'Invalid project chunk destination' });
       const chunkIndex = Number(body?.chunkIndex);
       const contentBase64 = String(body?.contentBase64 || '');
       const message = `${commitPrefix}: chunk ${chunkIndex} of ${filePath.split('/').pop() || 'file'}`;
@@ -1067,6 +1069,7 @@ export default async function handler(request, response) {
     if (action === 'reassemble-file') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       const filePath = cleanRepoPath(body?.path || '');
+      if (!isAllowedSpineProjectFilePath(filePath, settings.basePath)) return response.status(400).json({ error: 'Invalid project reassembly destination' });
       const chunkCount = Number(body?.chunkCount);
       if (!filePath || !Number.isFinite(chunkCount) || chunkCount < 1) {
         return response.status(400).json({ error: 'Invalid reassembly payload' });
@@ -1102,6 +1105,7 @@ export default async function handler(request, response) {
     if (action === 'update-index') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       if (!entry) return response.status(400).json({ error: 'Invalid index payload' });
+      if (entry.previewPath && !isAllowedSpineUploadPath(entry.previewPath, settings.basePath)) return response.status(400).json({ error: 'Invalid index project path' });
 
       const files = Array.isArray(entry.files) ? [...entry.files] : [];
       const skelName = basename(entry.skeleton || '');
@@ -1116,12 +1120,7 @@ export default async function handler(request, response) {
       }
       entry.files = fixedFiles;
 
-      const invalidFile = files.find((item) => !isAllowedSpineUploadFileName(item?.name));
-    if (invalidFile) {
-      return response.status(400).json({ error: 'Invalid project filename', message: 'Uploaded files must use a single safe filename without path separators.' });
-    }
-
-    const normalizedSpineEntry = normalizeSpineExportEntry(entry);
+      const normalizedSpineEntry = normalizeSpineExportEntry(entry);
       if (normalizedSpineEntry.error) {
         return response.status(422).json({
           error: normalizedSpineEntry.error,
@@ -1632,6 +1631,11 @@ export default async function handler(request, response) {
         error: 'Invalid upload destination',
         message: `New Spine projects must be written as a single project folder inside ${settings.basePath} or one of its numbered library collections.`,
       });
+    }
+
+    const invalidFile = files.find((item) => !isAllowedSpineUploadFileName(item?.name));
+    if (invalidFile) {
+      return response.status(400).json({ error: 'Invalid project filename', message: 'Uploaded files must use a single safe filename without path separators.' });
     }
 
     const normalizedSpineEntry = normalizeSpineExportEntry(entry);
