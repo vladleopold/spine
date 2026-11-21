@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fail-closed 10-most-recent Spine preview repair.
- * Runs only on authenticated private Github Actions workers.
+ * Fail-closed repair for the 18 reported Spine previews plus the exact priority work.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
 import fs from "node:fs";
@@ -9,6 +8,8 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
+import { storedPreviewStatusAllowsReuse } from "./lib/reported-preview-repair-status.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -29,10 +30,11 @@ const requestedIds=[
   "Spine-animation-2026-11-17T18-26-38-201Z",
   "Spine-animation-2026-11-17T18-27-52-258Z",
   "Spine-animation-2026-11-17T18-36-51-976Z",
-  "Spine-animation-2026-11-17T18-39-06-745Z"
+  "Spine-animation-2026-11-17T18-39-06-745Z",
+  "Spine-animation-2026-11-17T18-45-14-132Z"
 ];
 const requestedSet=new Set(requestedIds);
-function newestTen() {
+function resolveRequestedEntries() {
   const byId=new Map();
   for(const folder of listCollectionFolders(root)) {
     for(const entry of readIndex(root,folder)||[]) {
@@ -50,15 +52,20 @@ function newestTen() {
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
-  let files=[];
+  let files=[],indexOnly=false;
   try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
   catch{
-    // Inventory checks indexes only; the render job validates actual files.
+    indexOnly=true;
     files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
   }
-  return files.some(f=>/\.(json|skel)$/i.test(f)) &&
+  const triad=files.some(f=>/\.(json|skel)$/i.test(f)) &&
     files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
     files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
+  if(!triad)return false;
+  // The sparse inventory can prove the triad exists; the render job checks
+  // every atlas page against the actual source texture dimensions.
+  if(indexOnly)return true;
+  return inspectAtlasSourceBundle(p,files).complete;
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
@@ -66,25 +73,49 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
-  // A previously published Urka clip was decoded as only 12 frames over
-  // 1.82 seconds. Require real frame-density evidence before treating it as
-  // an accepted final video; leave older previews intact during retries.
-  const f=Number(record?.previewFrameCount||0);
+  if(!storedPreviewStatusAllowsReuse(record,selected))return false;
+  const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
-  if(f>0&&duration>0&&f/duration<15)return false;
-  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
+  if(!(frames>=8&&duration>=0.5&&frames/duration>=15))return false;
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
     return Boolean(record?.webmPreview&&record?.webpPoster);
-  return mediaNames.every(name=>{
+  if(!mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
-  });
+  }))return false;
+  try{
+    const probes={};
+    for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]){
+      const file=path.join(root,entry.previewPath,name);
+      const data=JSON.parse(execFileSync("ffprobe",[
+        "-v","error","-count_frames","-select_streams","v:0",
+        "-show_entries","stream=width,height,nb_read_frames:format=duration",
+        "-of","json",file,
+      ],{encoding:"utf8",timeout:30000}));
+      const stream=data.streams?.[0]||{};
+      const item={width:Number(stream.width),height:Number(stream.height),
+        frames:Number(stream.nb_read_frames),duration:Number(data.format?.duration)};
+      if(!(item.width>0&&item.height>0&&item.frames>=8&&item.duration>=0.5&&item.frames/item.duration>=15))return false;
+      probes[name]=item;
+    }
+    if(!(probes["preview-medium.webm"].width<probes["preview.webm"].width&&
+      probes["preview-low.webm"].width<probes["preview-medium.webm"].width))return false;
+    for(const suffix of ["","-medium","-low"]){
+      execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
+        path.join(root,entry.previewPath,"preview"+suffix+".webm")],
+        {stdio:"ignore",timeout:120000});
+      execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
+        path.join(root,entry.previewPath,"preview"+suffix+".webm"),
+        path.join(root,entry.previewPath,"preview"+suffix+".webp")],
+        {stdio:"ignore",timeout:60000});
+    }
+    return true;
+  }catch{return false;}
 }
 const action=process.argv[2]||"matrix";
-const latest=newestTen();
+const latest=resolveRequestedEntries();
 if(action==="matrix"){
-  if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
+  if(latest.length!==requestedIds.length)throw new Error("Cannot find all requested reported entries");
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
@@ -120,7 +151,7 @@ if(action==="matrix"){
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-reported18");
+  const base=path.resolve(root,"downloaded-reported19");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
     if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
@@ -167,7 +198,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"reported18-"+item.repairSlot);
+    const artifact=path.join(base,"reported19-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
@@ -194,9 +225,10 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
-        // Never replace an existing genuine clip with a failed higher-FPS retry.
-        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
+      if(existingMediaOk(entryInfo,selectedAnimation)) {
+        // Retain a previous clip only after its exact animation, all three
+        // renditions, eight distinct frames and matching posters are rechecked.
+        record.lastPreviewRetryError="New version failed acceptance; independently verified previous media retained";
         summary.ready++;
         continue;
       }
