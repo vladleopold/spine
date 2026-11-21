@@ -52,3 +52,17 @@ Before adding a new root-level file, determine whether it is:
 - better placed under `docs/`, `diagnostics/`, `scripts/`, `assets/`, or the library data tree.
 
 This policy is enforced for new upload writes by the API guard. Historical content is migrated separately and conservatively.
+
+
+## Complete upload API write boundary
+
+The upload handler has several write modes in addition to the primary project publish action. All client-directed artifact paths must resolve below a validated collection/project directory:
+
+- `put-file` validates the complete destination path.
+- `multipart-upload-chunk` validates the original project file path before creating chunk objects.
+- `reassemble-file` validates the destination before writing the reconstructed file.
+- `anchor-source-proof` validates the blockchain-anchor destination.
+- The primary project publish action validates the project directory and every uploaded filename before its first file write.
+- `update-index` may update only the configured collection index and rejects a supplied project path outside the collection.
+
+The collection root is server configuration (`GITHUB_BASE_PATH`, default `library`), never a request-body override. It must be `library` or a numbered `library_N` collection. The data-science catalog root is likewise server-configured and cannot be selected by a client request. This keeps legacy root-level projects readable while preventing new generic upload actions from writing arbitrary root files.
