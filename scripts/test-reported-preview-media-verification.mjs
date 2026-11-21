@@ -53,7 +53,7 @@ test("repair workflow validates existing bytes before it can classify media as r
   assert.match(repair, /meta\?\.existingVerified===true/);
   assert.doesNotMatch(repair, /previous media retained/);
   assert.match(workflow, /Validate existing selected animation media before render/);
-  assert.match(workflow, /--preview-path="\\$PREVIEW_PATH"/);
+  assert.match(workflow, /--preview-path="\$PREVIEW_PATH"/);
   assert.match(workflow, /github\.event_name == 'pull_request'/);
   assert.match(workflow, /verify-preview-motion\.mjs/);
   assert.match(workflow, /verify-poster-first-frame\.mjs/);
