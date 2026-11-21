@@ -58,14 +58,23 @@ const latestTenRepair = fs.readFileSync(new URL('./repair-last-ten-previews.mjs'
 assert.match(reported, /pull_request:/);
 assert.match(reported, /  inventory:\n    permissions:\n      contents: read/);
 
-for (const workflow of [reported, latestTen, latestTwenty]) {
+// The latest-ten/latest-twenty workflows still use the legacy manifest mask path;
+// the reported batch below has been migrated to numeric slots and masked env exports.
+for (const workflow of [latestTen, latestTwenty]) {
   assert.ok(workflow.includes('node scripts/mask-preview-manifest.mjs'),
-    'every manifest-consuming workflow must mask before use');
-  assert.doesNotMatch(workflow, /^        env:\n          REPAIR_IDS_JSON:/m,
-    'sensitive manifests must not be step-level env values printed before masking');
-  assert.ok(workflow.includes('    env:\n      REPAIR_IDS_JSON:'),
-    'manifest must be job-scoped so the first step can mask it');
+    'legacy repair workflows retain their manifest mask step');
 }
+assert.ok(!reported.includes('REPAIR_IDS_JSON'));
+for (const value of [
+  'ENTRY_ID: ${{ matrix.entry.id }}',
+  'ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}',
+  'PREVIEW_PATH: ${{ matrix.entry.previewPath }}',
+  'ENTRY_ANIMATION: ${{ matrix.entry.animation }}',
+]) assert.ok(!reported.includes(value), 'reported workflow must not expose source metadata in job env');
+assert.ok(reported.includes('node scripts/repair-reported-previews.mjs prepare "$REPAIR_SLOT"'));
+assert.ok(reported.includes('node scripts/repair-reported-previews.mjs prepare-all'));
+assert.ok(reportedRepair.includes('::add-mask::'));
+assert.ok(reportedRepair.includes('process.env.GITHUB_ENV'));
 
 const reportedRender = reported.slice(reported.indexOf('  render:'), reported.indexOf('  publish:'));
 assert.match(reportedRender, /name: validate-reported-preview-\$\{\{ matrix\.entry\.repairSlot \}\}/);

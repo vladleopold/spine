@@ -69,7 +69,6 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
       sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
@@ -149,10 +148,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
-      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
       ENTRY_READY: ${{ matrix.entry.ready }}
       REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
@@ -179,8 +174,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
-          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
+          node scripts/repair-reported-previews.mjs prepare "$REPAIR_SLOT"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -379,8 +373,6 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -390,21 +382,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
-          node --input-type=module <<'NODE'
-          import { execFileSync } from 'node:child_process';
-          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-          if(selected.length!==19)throw new Error('Missing exact repair manifest');
-          const paths=new Set();
-          for(const item of selected){
-            const source=String(item.previewPath||'');
-            if(!source||source.startsWith('/')||source.split('/').includes('..')||
-              !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
-            paths.add(source);
-          }
-          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
-          console.log('SOURCE_PATHS_HYDRATED');
-          NODE
+          node scripts/repair-reported-previews.mjs prepare-all
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:

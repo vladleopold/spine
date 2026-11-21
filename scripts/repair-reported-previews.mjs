@@ -11,6 +11,7 @@ import { createHash } from "node:crypto";
 import { fingerprintPreviewMedia, previewRenderDisposition } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { escapeWorkflowCommandValue } from "./lib/export-log-redaction.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -84,6 +85,36 @@ function existingMediaOk(entry,animation){
     catch{return false;}
   });
 }
+function emitPreviewMask(value) {
+  const text=String(value??"");
+  if(!text || /[\r\n]/.test(text))return;
+  process.stdout.write("::add-mask::"+escapeWorkflowCommandValue(text)+"\n");
+}
+function appendMaskedEnvironment(name,value) {
+  const target=process.env.GITHUB_ENV;
+  if(!target)throw new Error("Missing GitHub environment file");
+  const text=String(value??"");
+  const delimiter="SPINE_PREVIEW_"+createHash("sha256").update(name+"\0"+text).digest("hex").slice(0,20);
+  if(text.includes(delimiter))throw new Error("Unsafe environment delimiter");
+  fs.appendFileSync(target,name+"<<"+delimiter+"\n"+text+"\n"+delimiter+"\n");
+}
+function prepareEntry(entry,exportEnvironment=false) {
+  const base=String(entry.basePath||"");
+  const rel=String(entry.previewPath||"").replace(/\\/g,"/");
+  if(!base||!rel.startsWith(base+"/")||rel.split("/").includes(".."))
+    throw new Error("Unsafe preview path");
+  const values={
+    ENTRY_ID:String(entry.id||""),
+    ENTRY_BASE_PATH:base,
+    PREVIEW_PATH:rel,
+    ENTRY_ANIMATION:String(entry.defaultAnimation??""),
+  };
+  for(const [key,value] of Object.entries(values)) {
+    emitPreviewMask(value);
+    if(exportEnvironment)appendMaskedEnvironment(key,value);
+  }
+  execFileSync("git",["sparse-checkout","add",rel+"/"],{stdio:"ignore"});
+}
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
@@ -102,8 +133,10 @@ if(action==="matrix"){
   const validationCandidates=matrix.filter(x=>x.ready);
   // Every source-ready entry is checked against real local media bytes, even
   // when index metadata already claims that its preview is ready.
-  console.log("matrix="+JSON.stringify(validationCandidates.length?validationCandidates:[matrix[0]]));
-  console.log("allEntries="+JSON.stringify(matrix));
+  const safeMatrix=validationCandidates.length
+    ? validationCandidates.map(({repairSlot,ready})=>({repairSlot,ready}))
+    : [{repairSlot:0,ready:false}];
+  console.log("matrix="+JSON.stringify(safeMatrix));
   console.log("renderCount="+validationCandidates.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
@@ -120,8 +153,19 @@ if(action==="matrix"){
     " BLOCKED_MISSING_ANIMATION="+matrix.filter(x=>x.blockedReason==="MISSING_DEFAULT_ANIMATION").length+
     " VALIDATION_CANDIDATES="+validationCandidates.length+
     " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
+}else if(action==="prepare"){
+  const slot=Number(process.argv[3]);
+  if(!Number.isInteger(slot)||slot<0||slot>=latest.length)throw new Error("Invalid reported preview slot");
+  prepareEntry(latest[slot],true);
+  console.log("PREVIEW_METADATA_MASKED");
+}else if(action==="prepare-all"){
+  for(const entry of latest)prepareEntry(entry,false);
+  console.log("PREVIEW_METADATA_MASKED");
 }else if(action==="merge"){
-  const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
+  const selected=latest.map((entry,repairSlot)=>({
+    repairSlot,id:entry.id,basePath:entry.basePath,previewPath:entry.previewPath,
+    animation:entry.defaultAnimation,
+  }));
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-reported19");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();

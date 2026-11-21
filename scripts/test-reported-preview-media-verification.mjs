@@ -80,7 +80,6 @@ test("merge reuses byte-verified existing media from the same reported19 artifac
   assert.equal(ids.length, 19);
   const root = mkdtempSync(path.join(os.tmpdir(), "spine-reported19-"));
   try {
-    const selected = [];
     const records = [];
     const mediaNames = ["preview.webm", "preview-medium.webm", "preview-low.webm",
       "preview.webp", "preview-medium.webp", "preview-low.webp"];
@@ -112,7 +111,6 @@ test("merge reuses byte-verified existing media from the same reported19 artifac
         webmPreview: urls.webmPreview, webpPoster: urls.webpPoster,
         allAnimationPreviews: { "Exact Animation": urls },
       });
-      selected.push({ repairSlot, id, basePath: "library_02", previewPath, animation: "Exact Animation" });
       const artifactDir = path.join(root, "downloaded-reported19", "reported19-" + repairSlot);
       mkdirSync(artifactDir, { recursive: true });
       writeFileSync(path.join(artifactDir, "meta.json"), JSON.stringify({
@@ -127,7 +125,7 @@ test("merge reuses byte-verified existing media from the same reported19 artifac
     const script = fileURLToPath(new URL("./repair-reported-previews.mjs", import.meta.url));
     const result = spawnSync(process.execPath, [script, "merge"], {
       cwd: root, encoding: "utf8", timeout: 30000,
-      env: { ...process.env, REPAIR_IDS_JSON: JSON.stringify(selected) },
+      env: { ...process.env },
     });
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const summary = JSON.parse(readFileSync(path.join(root, "preview-repair-summary.json"), "utf8"));
@@ -236,7 +234,7 @@ test("the priority publication is included in the same exact-source repair and l
   assert.equal(ids.length, 19);
   assert.ok(ids.includes(priority[1]), "the priority work must be rendered/validated, not only checked after publish");
   assert.match(live, /const allIds = \[\.\.\.reportedIds, priorityId\]/);
-  assert.match(workflow, /selected\.length!==19/);
+  assert.match(repair, /if\(selected\.length!==requestedIds\.length\)/);
   assert.match(workflow, /reported19-/);
   assert.match(workflow, /downloaded-reported19/);
   assert.match(workflow, /node scripts\/verify-reported-preview-live\.mjs/);
