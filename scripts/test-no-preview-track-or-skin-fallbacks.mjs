@@ -167,8 +167,8 @@ assert.match(playbackCode, /setPreviewStatus\("blocked", "Selected animation is 
   'an unavailable selected animation must be visibly marked blocked');
 assert.match(playbackCode, /const exactAnimation = player\?\.skeleton\?\.data\?\.findAnimation\?\.\(name\);/,
   'playback must resolve the exact requested animation from the loaded skeleton');
-assert.match(playbackCode, /if \(!exactAnimation\) \{ markPreviewBlocked\(\); return; \}/,
-  'a missing animation must stop instead of continuing the previous or first track');
+assert.match(playbackCode, /if \(!exactAnimation\) \{\s*const box = document\.getElementById\("player"\);\s*markPreviewBlocked\(Boolean\(box\?\.querySelector\("\.preview-fallback-video"\)\)\);\s*return;\s*\}/,
+  'a missing animation must stop and may retain only its exact same-animation WebM');
 assert.doesNotMatch(playbackCode, /playNextScenarioStep|scenarioStep/,
   'playback completion must not switch to an auxiliary track');
 assert.match(playbackCode, /function markPreviewNeedsSelection\(\)/,
