@@ -136,6 +136,7 @@ jobs:
     env:
       ENTRY_ID: ${{ matrix.entry.id }}
       PREVIEW_PATH: ${{ matrix.entry.previewPath }}
+      ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
       ENTRY_ANIMATION: ${{ matrix.entry.animation }}
       ENTRY_READY: ${{ matrix.entry.ready }}
       ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
@@ -165,6 +166,28 @@ jobs:
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
           git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
+      - name: Fingerprint original source and index before rendering
+        id: source_fingerprint
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="$GITHUB_WORKSPACE/$PREVIEW_PATH"
+          INDEX_FILE="$GITHUB_WORKSPACE/$ENTRY_BASE_PATH/index.json"
+          test -d "$SOURCE_DIR"
+          test -s "$INDEX_FILE"
+          if [[ -n "$(git status --porcelain -- "$PREVIEW_PATH" "$ENTRY_BASE_PATH/index.json")" ]]; then
+            echo "SOURCE_PRESERVATION_PRECONDITION_FAILED"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.before"
+          test -s "$RUNNER_TEMP/source-files.before"
+          xargs -0 -r sha256sum < "$RUNNER_TEMP/source-files.before" > "$RUNNER_TEMP/source-hashes.before"
+          test -s "$RUNNER_TEMP/source-hashes.before"
+          sha256sum "$INDEX_FILE" > "$RUNNER_TEMP/index-hash.before"
+          test -s "$RUNNER_TEMP/index-hash.before"
+          echo "captured=true" >> "$GITHUB_OUTPUT"
+          echo "SOURCE_PRESERVATION_BASELINE_CAPTURED"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -276,6 +299,35 @@ jobs:
             fs.writeFileSync(p,JSON.stringify(m));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$REPAIR_SLOT/meta.json"
+      - name: Verify original source and index remain byte-identical
+        if: always() && steps.source_fingerprint.outputs.captured == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="$GITHUB_WORKSPACE/$PREVIEW_PATH"
+          INDEX_FILE="$GITHUB_WORKSPACE/$ENTRY_BASE_PATH/index.json"
+          if [[ ! -s "$RUNNER_TEMP/source-files.before" || ! -s "$RUNNER_TEMP/source-hashes.before" || ! -s "$RUNNER_TEMP/index-hash.before" ]]; then
+            echo "SOURCE_PRESERVATION_BASELINE_MISSING"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.after"
+          if ! cmp -s "$RUNNER_TEMP/source-files.before" "$RUNNER_TEMP/source-files.after"; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if ! sha256sum -c "$RUNNER_TEMP/source-hashes.before" >/dev/null 2>&1; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if ! sha256sum -c "$RUNNER_TEMP/index-hash.before" >/dev/null 2>&1; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if [[ -n "$(git status --porcelain -- "$PREVIEW_PATH" "$ENTRY_BASE_PATH/index.json")" ]]; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          echo "SOURCE_PRESERVATION_PASS"
       - uses: actions/upload-artifact@v4
         if: matrix.entry.needsRender && github.ref == 'refs/heads/main'
         with:

@@ -210,4 +210,22 @@ const repairVerify = repairVerifyJob.indexOf('node scripts/verify-reported-previ
 assert.ok(repairTest >= 0 && repairVerify > repairTest,
   'media acceptance regression must run before post-publish live verification');
 
+
+assert.match(renderJob, /ENTRY_BASE_PATH: \\$\\{\\{ matrix\\.entry\\.basePath \\}\\}/,
+  'each render job must fingerprint the exact collection index');
+assert.match(renderJob, /id: source_fingerprint/);
+assert.match(renderJob, /source-files\\.before/);
+assert.match(renderJob, /source-hashes\\.before/);
+assert.match(renderJob, /index-hash\\.before/);
+assert.match(renderJob, /sha256sum -c/);
+assert.match(renderJob, /cmp -s/);
+assert.match(renderJob, /SOURCE_PRESERVATION_PASS/);
+assert.match(renderJob, /if: always\\(\\) && steps\\.source_fingerprint\\.outputs\\.captured == 'true'/);
+const fingerprintPosition = renderJob.indexOf('name: Fingerprint original source and index before rendering');
+const nativeRenderPosition = renderJob.indexOf('name: Render and validate actual Spine video + still posters');
+const preservationPosition = renderJob.indexOf('name: Verify original source and index remain byte-identical');
+assert.ok(fingerprintPosition >= 0 && nativeRenderPosition > fingerprintPosition &&
+  preservationPosition > nativeRenderPosition,
+  'the source and index must be fingerprinted before, then verified after every exact-source render');
+
 console.log('PASS reported-preview audit dependency closure, including multiline imports and the historical omission fixture');
