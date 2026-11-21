@@ -414,9 +414,8 @@ function isPublicArchiveEntry(entry, exclusions) {
 
 function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '') {
   const id = String(entry?.id || entryId || '').trim();
-  // Prefer the preview of an animation that is actually long enough to show as
-  // a moving clip. A 1-frame `idle` preview is a still image, so the video-watch
-  // panel and the SEO metadata would otherwise surface a zero-length video.
+  // Use only the exact indexed default animation. Short, static or missing
+  // selections stay unavailable; they never authorize another track.
   const target = resolvePreviewTarget(entry, origin);
   const contentUrl = entryVideoAsset(target.url, entry, 'webm');
   const poster = entryImageAsset(target.poster, entry, 'poster');
@@ -722,10 +721,8 @@ async function findSpineSetDirectories(settings, uploadPath, maxDepth = 3) {
 // moving.
 //
 // This resolver checks the chosen animation's preview duration. If it is too
-// short (< 2 s) it walks the remaining animations in declaration order and
-// returns the first one whose preview is long enough. The returned object
-// carries the URL, the poster and the duration so every consumer (owner card,
-// video-watch panel, SEO metadata) renders the same moving clip.
+// Resolve only the exact indexed default animation. The returned object carries
+// that animation's URL, poster and duration to every page consumer.
 function resolvePreviewTarget(entry, origin = '') {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
@@ -2273,7 +2270,7 @@ function jsonScript(value) {
 function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, metrics, videoSeo, robots, playerUrl, archiveUrl }) {
   const title = cleanPublicText(entry?.title || entryId || 'Spine preview');
   const poster = videoSeo?.thumbnailUrl || '';
-  const video = entryVideoAsset(entry?.webmPreview || '', entry, 'webm');
+  const video = videoSeo?.contentUrl || '';
   const ownerUrl = ownerProfile?.url || (entry?.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '/');
   const metricId = String(entryId || title);
   const metric = metricCountsForId(metrics, metricId);
@@ -2282,13 +2279,16 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
   const currentEntryId = String(entry?.id || entryId || '');
   const authorWorks = (Array.isArray(ownerProfile?.library) ? ownerProfile.library : [])
     .filter((item) => String(item?.url || '') !== `${origin}/p/${encodeURIComponent(currentEntryId)}`)
-    .map((item) => ({
-      title: cleanPublicText(item?.title || 'Spine preview', 80),
-      url: String(item?.url || '/'),
-      poster: item?.thumbnailPoster || item?.thumbnail || '',
-      video: item?.webmPreview || '',
-      animations: Number(item?.animations) || 0,
-    }))
+    .map((item) => {
+      const target = resolvePreviewTarget(item, origin);
+      return {
+        title: cleanPublicText(item?.title || 'Spine preview', 80),
+        url: String(item?.url || '/'),
+        poster: entryImageAsset(target.poster, item, 'poster'),
+        video: entryVideoAsset(target.lowUrl || target.url, item, 'webm'),
+        animations: Number(item?.animations) || 0,
+      };
+    })
     .filter((item) => item.video || item.poster);
   const authorWorksJson = jsonScript({ works: authorWorks });
   return `<!doctype html>
