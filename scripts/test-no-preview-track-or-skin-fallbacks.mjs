@@ -127,6 +127,10 @@ assert.match(playerCode, /if \(!activeAnimation\.name \|\| !filteredNames\.inclu
   'player startup must block an absent selected animation');
 assert.doesNotMatch(playerCode, /filteredNames\s*\[\s*0\s*\]|activeSet\.value\?\.animation\s*&&\s*filteredNames/,
   'player startup must not choose the first runtime track or replace the requested name');
+assert.match(playerCode, /const fallback = box\?\.querySelector\("\.preview-fallback-video"\) \|\| showPreviewVideoFallback\(\);/,
+  'runtime failure may retain only the already-gated same-animation WebM');
+assert.match(playerCode, /if \(fallback\) \{\s*fallback\.controls = true;\s*return;/,
+  'the exact same-animation WebM remains available when Spine runtime cannot initialize');
 
 const videoFallbackStart = preview.indexOf('function showPreviewVideoFallback()');
 const videoFallbackEnd = preview.indexOf('function clearPreviewVideoFallback()', videoFallbackStart);
