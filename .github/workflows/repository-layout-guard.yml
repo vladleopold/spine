@@ -7,7 +7,7 @@ on:
       - "lib/spine-upload-path.js"
       - "tests/spine-upload-path.test.mjs"
       - "package.json"
-      - "docs/architecture/repository-layout.md"
+      - "docs/architecture/**"
       - ".github/workflows/repository-layout-guard.yml"
   push:
     branches: [main]
