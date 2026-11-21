@@ -67,6 +67,56 @@ const canvasPass=summarizeRendererLog(
 assert.equal(canvasPass.stages.canvasFallbackAttempted,true);
 assert.equal(canvasPass.stages.canvasFallbackPassed,true);
 
+
+const noTimeline = summarizeRendererLog(
+  'PLAYER_READY=1\\nRECORDER_STATE=recording\\nCANVAS_FALLBACK_CAPTURE=started\\n' +
+  'Selected animation has no changing canvas frames\\n' +
+  'CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+    samples:8,trackTimeDistinct:1,trackTimeRange:0,timelineCount:0,
+    animationDuration:0,pausedSamples:0,visibleFrames:8,distinctFrames:1,
+    canvasWidth:960,canvasHeight:720,selectedAnimation:'private-animation-name'
+  })
+);
+assert.equal(noTimeline.distinctError,"SELECTED_ANIMATION_HAS_NO_TIMELINES");
+assert.equal(noTimeline.sourceSignal,"SELECTED_ANIMATION_HAS_NO_TIMELINES");
+assert.equal(noTimeline.canvasProgress.timelineCount,0);
+
+const pausedCapture = summarizeRendererLog(
+  'PLAYER_READY=1\\nRECORDER_STATE=recording\\nCANVAS_FALLBACK_CAPTURE=started\\n' +
+  'Selected animation has no changing canvas frames\\n' +
+  'CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+    samples:8,trackTimeDistinct:1,trackTimeRange:0,timelineCount:4,
+    animationDuration:1.5,pausedSamples:8,visibleFrames:8,distinctFrames:1,
+    canvasWidth:960,canvasHeight:720
+  })
+);
+assert.equal(pausedCapture.distinctError,"PLAYER_PAUSED_DURING_CAPTURE");
+
+const stalledTrack = summarizeRendererLog(
+  'PLAYER_READY=1\\nRECORDER_STATE=recording\\nCANVAS_FALLBACK_CAPTURE=started\\n' +
+  'Selected animation has no changing canvas frames\\n' +
+  'CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+    samples:8,trackTimeDistinct:1,trackTimeRange:0,timelineCount:4,
+    animationDuration:1.5,pausedSamples:0,visibleFrames:8,distinctFrames:1,
+    canvasWidth:960,canvasHeight:720
+  })
+);
+assert.equal(stalledTrack.distinctError,"ANIMATION_TRACK_TIME_STALLED");
+
+const advancedStatic = summarizeRendererLog(
+  'PLAYER_READY=1\\nRECORDER_STATE=recording\\nCANVAS_FALLBACK_CAPTURE=started\\n' +
+  'Selected animation has no changing canvas frames\\n' +
+  'CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+    samples:8,trackTimeDistinct:8,trackTimeRange:0.875,timelineCount:6,
+    animationDuration:1.5,pausedSamples:0,visibleFrames:8,distinctFrames:1,
+    canvasWidth:960,canvasHeight:720
+  })
+);
+assert.equal(advancedStatic.distinctError,"ANIMATION_TIME_ADVANCED_WITH_STATIC_PIXELS");
+assert.equal(advancedStatic.canvasProgress.trackTimeDistinct,8);
+assert.doesNotMatch(JSON.stringify(noTimeline),/private-animation-name/,
+  "sanitized diagnostics must never return animation names or arbitrary metadata");
+
 const exporter=fs.readFileSync(new URL("./spine-export-webm.mjs",import.meta.url),"utf8");
 assert.match(exporter,/console\.error\('PLAYER_READY=1'\)/);
 assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
