@@ -195,8 +195,8 @@ assert.ok(existingValidation >= 0 && nativeRender > existingValidation,
   'failed stored status must be revalidated from the exact source before a same-animation rerender');
 const publishJob = repairWorkflow.slice(publishStart);
 assert.match(publishJob, /selected\.length!==19/,
-  'the repair publisher must require the 18 reported projects plus the exact priority work');
-assert.match(publishJob, /pattern: reported19-\*/);
+  'the repair publisher must require the 18 reported projects, the exact priority work, and one legacy record');
+assert.match(publishJob, /pattern: reported20-\*/);
 assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
   'workflow-wide permissions must be read-only');
 assert.match(publishJob, /^    permissions:\s*\n\s+contents:\s+write/m,

@@ -69,7 +69,7 @@ for (const workflow of [reported, latestTen, latestTwenty]) {
 
 const reportedRender = reported.slice(reported.indexOf('  render:'), reported.indexOf('  publish:'));
 assert.match(reportedRender, /name: validate-reported-preview-\$\{\{ matrix\.entry\.repairSlot \}\}/);
-assert.match(reportedRender, /name: reported19-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(reportedRender, /name: reported20-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRender,
   /if: github\.ref == 'refs\/heads\/main' \|\| github\.event_name == 'pull_request'/,
   'pull requests must run the private source render gate');
@@ -87,7 +87,7 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
-assert.match(reportedRepair, /reported19-"\+item\.repairSlot/);
+assert.match(reportedRepair, /reported20-"\+item\.repairSlot/);
 assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
 assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
 assert.match(reportedRepair, /const animation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
