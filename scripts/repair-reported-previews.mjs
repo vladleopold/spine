@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fail-closed 10-most-recent Spine preview repair.
+ * Fail-closed repair for the 18 reported works plus the separately prioritized preview.
  * Runs only on authenticated private Github Actions workers.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
@@ -9,6 +9,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { classifyReportedPreviewEntry } from "./lib/reported-preview-live-status.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -29,7 +30,8 @@ const requestedIds=[
   "Spine-animation-2026-11-17T18-26-38-201Z",
   "Spine-animation-2026-11-17T18-27-52-258Z",
   "Spine-animation-2026-11-17T18-36-51-976Z",
-  "Spine-animation-2026-11-17T18-39-06-745Z"
+  "Spine-animation-2026-11-17T18-39-06-745Z",
+  "Spine-animation-2026-11-17T18-45-14-132Z"
 ];
 const requestedSet=new Set(requestedIds);
 function newestTen() {
@@ -66,7 +68,8 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
+  if(classifyReportedPreviewEntry(record)!=="ready"||!selected||
+    choosePreviewAnimation([],record?.defaultAnimation)!==selected||record?.webmAnimation!==selected)return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -84,7 +87,7 @@ function existingMediaOk(entry,animation){
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
 if(action==="matrix"){
-  if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
+  if(latest.length!==requestedIds.length)throw new Error("Cannot find every requested Spine work");
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
@@ -120,7 +123,7 @@ if(action==="matrix"){
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-reported18");
+  const base=path.resolve(root,"downloaded-reported19");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
     if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
@@ -156,6 +159,14 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
+    const sourceAnimations=Array.isArray(record.animations)?record.animations:[];
+    if(!sourceAnimations.includes(selectedAnimation)){
+      record.webmStatus="blocked-missing-animation";
+      record.previewStatus="blocked";
+      record.previewError="Exact selected animation is absent from the source animation list";
+      summary.blocked++;
+      continue;
+    }
     if(item.needsRender===false){
       if(existingMediaOk(entryInfo,selectedAnimation)){
         summary.ready++;
@@ -167,7 +178,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"reported18-"+item.repairSlot);
+    const artifact=path.join(base,"reported19-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
@@ -218,6 +229,7 @@ if(action==="matrix"){
     record.webpPoster=poster;
     record.webpPosterMedium=prefix+"preview-medium.webp";
     record.webpPosterLow=prefix+"preview-low.webp";
+    record.webmAnimation=animation;
     record.webmStatus="ready";
     record.previewStatus="ready";
     record.dispatchStatus="rendered";
