@@ -189,8 +189,7 @@ function skinNamesFromSkeletonJson(skeletonJson) {
 }
 
 function preferredSkinName(skinNames) {
-  if (!skinNames.length) return '';
-  return skinNames.includes('default') ? 'default' : skinNames[0] || '';
+  return Array.isArray(skinNames) && skinNames.includes('default') ? 'default' : '';
 }
 
 function extractAtlasPages(atlasText = '') {
@@ -1866,7 +1865,7 @@ const pinchDistance = { value: null };
         const p = targetPlayer || player;
         if (!p?.skeleton?.data) return false;
         const names = p.skeleton.data.animations.map((a) => a.name);
-        const active = activeAnimation.name && names.includes(activeAnimation.name) ? activeAnimation.name : names[0];
+        const active = activeAnimation.name && names.includes(activeAnimation.name) ? activeAnimation.name : '';
         if (!active) return false;
         try {
           p.setViewport(active);
@@ -1887,7 +1886,7 @@ const pinchDistance = { value: null };
         const p = targetPlayer || player;
         const skeleton = p?.skeleton;
         if (!skeleton?.data) return null;
-        const animation = skeleton.data.findAnimation(activeAnimation.name) || skeleton.data.animations[0];
+        const animation = activeAnimation.name ? skeleton.data.findAnimation(activeAnimation.name) : null;
         if (!animation) return null;
         const ns = window.spine || {};
         const MixFrom = ns.MixFrom || p.constructor?.MixFrom;
@@ -2459,11 +2458,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         (textures.length === 1 ? textures[0] : null);
       return matchedTexture ? versionedAssetUrl(origin, matchedTexture, matchedTexture.sha) : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO5U9WcAAAAASUVORK5CYII=';
     });
-    const defaultAnimation =
-      animations.find((name) => name.toLowerCase() === 'idle') ??
-      animations.find((name) => name.toLowerCase().includes('idle')) ??
-      animations[0] ??
-      '';
+    const defaultAnimation = typeof entry?.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 
     const assetVersion = [skeleton.sha, atlas.sha, ...textures.map((texture) => texture.sha)].filter(Boolean).join('-');
 
