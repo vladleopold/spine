@@ -76,6 +76,17 @@ export function shouldPreserveAcceptedPreview(existingEntry, nextEntry) {
 // changed source or animation selection. Per-animation records remain intact;
 // only the selected work-level media is invalidated.
 export function mergeSpineExportPreviewState(entry, existingEntry = null) {
+  if (!hasSpineSourceBundle(entry)) {
+    const next = { ...(existingEntry || {}), ...entry };
+    if (existingEntry?.webmStatus === 'ready') next.webmStatus = 'ready';
+    else if (!next.webmStatus) next.webmStatus = 'skipped';
+    return {
+      entry: next,
+      preserveAcceptedPreview: existingEntry?.webmStatus === 'ready',
+      shouldDispatch: false,
+    };
+  }
+
   const next = { ...entry };
   const allAnimationPreviews = {
     ...(existingEntry?.allAnimationPreviews && typeof existingEntry.allAnimationPreviews === 'object'
