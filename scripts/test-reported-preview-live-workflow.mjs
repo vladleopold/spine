@@ -98,7 +98,7 @@ assert.ok(hourlyTest >= 0 && hourlyVerify > hourlyTest,
 
 assert.match(repairWorkflow, /pull_request:/,
   'the repair workflow must validate pull-request changes');
-assert.match(repairWorkflow, /node scripts/test-reported-preview-live.mjs/,
+assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
   'repair inventory must run the media acceptance regression');
 assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
   'post-publish audit must install a real media decoder');
