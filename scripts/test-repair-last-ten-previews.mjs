@@ -99,13 +99,13 @@ try{
   assert.equal(missing.needsRender,false);
   assert.equal(missing.animation,"");
   assert.equal(missing.blockedReason,"MISSING_DEFAULT_ANIMATION");
-  assert.ok(!render.some(x=>x.id===missingId),
+  assert.ok(!renderSlots.includes(missing.repairSlot),
     "an entry without an explicit default animation must never enter the render matrix");
   const incompatible=all.find(x=>x.id===incompatibleId);
   assert.equal(incompatible.ready,false);
   assert.equal(incompatible.needsRender,false);
   assert.equal(incompatible.blockedReason,"INCOMPATIBLE_SOURCE_VERSION");
-  assert.ok(!render.some(x=>x.id===incompatibleId&&x.needsRender===true),
+  assert.ok(!renderSlots.includes(incompatible.repairSlot),
     "an incompatible Spine 3.8.75 source must never be scheduled for rendering");
   const target=all.find(x=>x.id===targetId);
   assert.equal(target.ready,true);
