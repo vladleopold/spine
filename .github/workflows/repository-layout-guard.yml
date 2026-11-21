@@ -30,6 +30,7 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             package.json
+            api/github-upload.js
             lib/spine-upload-path.js
             tests/spine-upload-path.test.mjs
       - uses: actions/setup-node@v4
