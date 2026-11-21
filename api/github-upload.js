@@ -7,7 +7,7 @@ import { dataScienceSchema, inferDataScienceMetadata } from '../lib/spine-data-s
 import { metricCountsForIds, parseMetricsJson, sanitizeMetricId, sanitizeMetricIds } from '../lib/spine-metrics.js';
 import { appendAssetVersion, assetVersionForEntry, assetVersionForWebm } from '../lib/asset-version.js';
 import { hasSpineSourceBundle, normalizeSpineExportEntry, resolveSpineExportDispatch, missingAnimationPreviewMetadata } from '../scripts/lib/spine-export-entry.mjs';
-import { isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
+import { isAllowedSpineCollectionBasePath, isAllowedSpineUploadFileName, isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
 
 // ═══════════════ SECURITY: Rate Limiter ═══════════════
 const rateLimitMap = new Map();
@@ -681,7 +681,11 @@ function isSameLibraryOwner(entry, targetEntry) {
 }
 
 function dataScienceBasePathFor(body) {
-  return cleanRepoPath(process.env.DATA_SCIENCE_BASE_PATH || body?.dataScience?.basePath || 'data-science');
+  const basePath = cleanRepoPath(process.env.DATA_SCIENCE_BASE_PATH || 'data-science');
+  if (!basePath || basePath.includes('/') || basePath === '.' || basePath === '..') {
+    throw new Error('DATA_SCIENCE_BASE_PATH must be one safe repository directory');
+  }
+  return basePath;
 }
 
 async function updateDataScienceCatalog(settings, body, entry, commitPrefix, origin) {
@@ -692,6 +696,9 @@ async function updateDataScienceCatalog(settings, body, entry, commitPrefix, ori
   const metadata = inferDataScienceMetadata(entry, settings);
   const animationAsset = metadata.animation_asset || {};
   const itemId = String(animationAsset.id || entry?.id || '');
+  if (!SAFE_ID_REGEX.test(itemId) || itemId === '.' || itemId === '..') {
+    throw new Error('Invalid data-science item id');
+  }
   const itemPath = joinRepoPath(basePath, 'items', `${itemId}.json`);
   const indexPath = joinRepoPath(basePath, 'index.json');
   const schemaPath = joinRepoPath(basePath, 'schema.json');
@@ -852,7 +859,7 @@ export default async function handler(request, response) {
       owner: process.env.GITHUB_OWNER || body?.settings?.owner || defaultOwner,
       repo: process.env.GITHUB_REPO || body?.settings?.repo || defaultRepo,
       branch: process.env.GITHUB_BRANCH || body?.settings?.branch || defaultBranch,
-      basePath: cleanRepoPath(process.env.GITHUB_BASE_PATH || body?.settings?.basePath || defaultBasePath),
+      basePath: cleanRepoPath(process.env.GITHUB_BASE_PATH || defaultBasePath),
       token,
     };
 
@@ -863,6 +870,10 @@ export default async function handler(request, response) {
     const uploadPath = cleanRepoPath(body?.uploadPath || '');
     const commitPrefix = String(body?.commitPrefix || 'Add Spine preview');
     const action = String(body?.action || '');
+
+    if (!isAllowedSpineCollectionBasePath(settings.basePath)) {
+      throw new Error('GITHUB_BASE_PATH must be library or a numbered library collection');
+    }
 
     if (action === 'get-metrics') {
       const ids = sanitizeMetricIds(body?.ids);
@@ -1105,7 +1116,12 @@ export default async function handler(request, response) {
       }
       entry.files = fixedFiles;
 
-      const normalizedSpineEntry = normalizeSpineExportEntry(entry);
+      const invalidFile = files.find((item) => !isAllowedSpineUploadFileName(item?.name));
+    if (invalidFile) {
+      return response.status(400).json({ error: 'Invalid project filename', message: 'Uploaded files must use a single safe filename without path separators.' });
+    }
+
+    const normalizedSpineEntry = normalizeSpineExportEntry(entry);
       if (normalizedSpineEntry.error) {
         return response.status(422).json({
           error: normalizedSpineEntry.error,
