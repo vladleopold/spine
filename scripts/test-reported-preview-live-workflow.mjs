@@ -199,8 +199,6 @@ assert.match(publishJob, /selected\.length!==19/,
 assert.match(publishJob, /pattern: reported19-\*/);
 assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
   'workflow-wide permissions must be read-only');
-const publishStart = repairWorkflow.indexOf('  publish:');
-const publishJob = repairWorkflow.slice(publishStart);
 assert.match(publishJob, /^    permissions:\s*\n\s+contents:\s+write/m,
   'only the publisher may write source changes');
 assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
