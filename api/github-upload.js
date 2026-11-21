@@ -1105,7 +1105,7 @@ export default async function handler(request, response) {
     if (action === 'update-index') {
       if (!googlePayload && !anonymousAccount) throw unauthorized('Anonymous account is required');
       if (!entry) return response.status(400).json({ error: 'Invalid index payload' });
-      if (entry.previewPath && !isAllowedSpineUploadPath(entry.previewPath, settings.basePath)) return response.status(400).json({ error: 'Invalid index project path' });
+      if (!isAllowedSpineUploadPath(entry.previewPath, settings.basePath)) return response.status(400).json({ error: 'Invalid index project path' });
 
       const files = Array.isArray(entry.files) ? [...entry.files] : [];
       const skelName = basename(entry.skeleton || '');
