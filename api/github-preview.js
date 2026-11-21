@@ -733,8 +733,11 @@ function resolvePreviewTarget(entry, origin = '') {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
     : null;
-  const animations = Array.isArray(entry?.animations) ? entry.animations : (previews ? Object.keys(previews) : []);
-  const chosen = String(entry?.defaultAnimation || '').trim();
+  // Preserve the exact indexed default. A short, static, missing, or failed
+  // preview is not permission to substitute another animation.
+  const chosen = typeof entry?.defaultAnimation === 'string' && entry.defaultAnimation.trim()
+    ? entry.defaultAnimation
+    : '';
 
   const fix = origin ? (value) => repairAnimationAssetUrl(entry, value, origin) : (value) => value;
   const pick = (name) => {
@@ -748,21 +751,33 @@ function resolvePreviewTarget(entry, origin = '') {
     };
   };
 
-  const order = [];
-  if (chosen && animations.includes(chosen)) order.push(chosen);
-  for (const a of animations) if (!order.includes(a)) order.push(a);
-
-  const candidates = order.map(pick).filter(Boolean);
-  const first = candidates[0] || null;
-  const fallback = candidates.find((c) => Number.isFinite(c.duration) && c.duration >= 2) || null;
-  const target = fallback || first;
+  const selected = chosen ? pick(chosen) : null;
+  // Legacy single-preview entries are usable only when an exact default is
+  // recorded and no per-animation map exists. Once a map exists, a missing
+  // selected entry stays blocked rather than borrowing another map item.
+  const legacyDefault = Boolean(chosen && !previews);
+  const url = selected
+    ? selected.url
+    : legacyDefault && typeof entry?.webmPreview === 'string'
+      ? fix(entry.webmPreview.trim())
+      : '';
+  const poster = selected
+    ? selected.poster
+    : legacyDefault
+      ? String(entry?.webpPoster || entry?.thumbnailPoster || '')
+      : '';
+  const durationValue = selected
+    ? selected.duration
+    : legacyDefault
+      ? Number(entry?.previewDuration || 0)
+      : 0;
 
   return {
-    name: target ? target.name : chosen,
-    url: target ? target.url : (typeof entry?.webmPreview === 'string' ? entry.webmPreview.trim() : ''),
-    poster: target ? target.poster : '',
-    duration: target ? target.duration : Number(entry?.previewDuration || 0),
-    isFallback: Boolean(target && fallback && target.name !== chosen),
+    name: chosen,
+    url,
+    poster,
+    duration: Number.isFinite(durationValue) ? durationValue : 0,
+    isFallback: false,
   };
 }
 
