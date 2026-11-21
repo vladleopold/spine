@@ -38,6 +38,9 @@ on:
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
       - api/github-upload.js
+      - api/github-preview.js
+      - lib/exact-animation-selection.mjs
+      - scripts/test-preview-page-exact-animation.mjs
       - scripts/lib/spine-export-entry.mjs
       - scripts/test-upload-default-animation.mjs
   pull_request:
@@ -75,6 +78,9 @@ on:
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/test-atlas-source-integrity.mjs
       - api/github-upload.js
+      - api/github-preview.js
+      - lib/exact-animation-selection.mjs
+      - scripts/test-preview-page-exact-animation.mjs
       - scripts/lib/spine-export-entry.mjs
       - scripts/test-upload-default-animation.mjs
   workflow_dispatch:
@@ -97,6 +103,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /api/github-upload.js
+            /api/github-preview.js
+            /lib/exact-animation-selection.mjs
             /scripts/
             /library/index.json
             /library_*/index.json
@@ -129,6 +137,8 @@ jobs:
         run: |
           node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check api/github-upload.js
+          node --check api/github-preview.js
+          node scripts/test-preview-page-exact-animation.mjs
           node --check scripts/repair-latest-twenty-previews.mjs
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
