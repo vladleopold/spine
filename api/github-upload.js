@@ -1635,7 +1635,7 @@ export default async function handler(request, response) {
 
     const invalidFile = files.find((item) => !isAllowedSpineUploadFileName(item?.name));
     if (invalidFile) {
-      return response.status(400).json({ error: 'Invalid project filename', message: 'Uploaded files must use a single safe filename without path separators.' });
+      return response.status(400).json({ error: 'Invalid project filename', message: 'Uploaded files must use a safe relative project path without traversal segments.' });
     }
 
     const normalizedSpineEntry = normalizeSpineExportEntry(entry);
