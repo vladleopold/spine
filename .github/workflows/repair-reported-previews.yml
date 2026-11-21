@@ -18,6 +18,8 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/lib/reported-preview-live-status.mjs
       - scripts/test-reported-preview-live-status.mjs
+      - .github/workflows/verify-reported-preview-live.yml
+      - scripts/test-reported-preview-live-workflow.mjs
 permissions:
   contents: write
 # Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
@@ -64,6 +66,7 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
+          node scripts/test-reported-preview-live-workflow.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
