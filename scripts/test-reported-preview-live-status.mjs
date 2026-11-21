@@ -5,6 +5,7 @@ import {
   classifyPreviewHttpStatus,
   classifyReportedPreviewEntry,
 } from "./lib/reported-preview-live-status.mjs";
+import { storedPreviewStatusAllowsReuse } from "./lib/reported-preview-repair-status.mjs";
 
 assert.equal(classifyReportedPreviewEntry({webmStatus:"blocked-missing-source",previewStatus:"blocked"}), "blocked");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"blocked-missing-animation",previewStatus:"blocked"}), "blocked");
@@ -16,6 +17,27 @@ assert.equal(classifyReportedPreviewEntry({webmStatus:"pending",previewStatus:"p
 assert.equal(classifyReportedPreviewEntry({webmStatus:"ready"}), "ready");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"ready",previewStatus:"ready"}), "ready");
 assert.equal(classifyReportedPreviewEntry({}), "blocked");
+
+const exactReady = { webmStatus: "ready", previewStatus: "ready", defaultAnimation: "Exact" };
+assert.equal(storedPreviewStatusAllowsReuse(exactReady, "Exact"), true);
+assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "failed" }, "Exact"), false,
+  "a failed poster/video status must force revalidation even when the work-level WebM flag is ready");
+assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "blocked" }, "Exact"), false);
+assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "pending" }, "Exact"), false);
+assert.equal(storedPreviewStatusAllowsReuse({ webmStatus: "ready", defaultAnimation: "Exact" }, "Exact"), true,
+  "legacy records without previewStatus remain eligible for independent byte/decode checks");
+assert.equal(storedPreviewStatusAllowsReuse(exactReady, "Different"), false,
+  "stored media may only be reused for the exact indexed animation");
+assert.equal(storedPreviewStatusAllowsReuse(exactReady, ""), false);
+
+const repairScript = fs.readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");
+assert.ok(repairScript.includes("Spine-animation-2026-11-17T18-45-14-132Z"),
+  "the exact priority work must be part of the source repair matrix");
+assert.match(repairScript, /storedPreviewStatusAllowsReuse\(record,selected\)/);
+assert.match(repairScript, /inspectAtlasSourceBundle\(p,files\)\.complete/,
+  "a complete source bundle must reconcile every atlas page");
+assert.match(repairScript, /verify-preview-motion\.mjs/);
+assert.match(repairScript, /verify-poster-first-frame\.mjs/);
 
 assert.equal(classifyOriginHttpStatus(200), "ok");
 assert.equal(classifyOriginHttpStatus(206), "ok");
