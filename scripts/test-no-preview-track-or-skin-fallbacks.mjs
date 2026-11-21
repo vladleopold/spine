@@ -96,7 +96,7 @@ assert.match(selectionCode, /return queryAnimation \|\| set\?\.animation \|\| ""
   'the exact URL animation name must be preserved even when it is not in the list');
 
 const scenarioStart = preview.indexOf('function syncScenario() {}');
-const scenarioEnd = preview.indexOf('function markPreviewBlocked()', scenarioStart);
+const scenarioEnd = preview.indexOf('function markPreviewBlocked(', scenarioStart);
 assert.ok(scenarioStart >= 0 && scenarioEnd > scenarioStart,
   'automatic track sequencing must be disabled');
 assert.doesNotMatch(preview.slice(scenarioStart, scenarioEnd), /scenarioState|lookup\.has|idle|loop|playNextScenarioStep/,
