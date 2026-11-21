@@ -51,7 +51,7 @@ const verifyWorkflow = fs.readFileSync(
   new URL("../.github/workflows/verify-reported-preview-live.yml", import.meta.url),
   "utf8",
 );
-assert.match(verifyWorkflow, /schedule:\s*\n\s+- cron: '\\d+ \\* \\* \\* \\*'/);
+assert.match(verifyWorkflow, /schedule:\s*\n\s+- cron: '\d+ \* \* \* \*'/);
 assert.match(verifyWorkflow, /workflow_run:/);
 assert.match(verifyWorkflow, /workflow_run\.conclusion == 'success'/);
 console.log("REPORTED_PREVIEW_SINGLE_HOURLY_AUDIT_REGRESSION_PASS");
