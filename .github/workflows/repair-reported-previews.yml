@@ -214,6 +214,14 @@ jobs:
             exit 0
           fi
           set +e
+          OUTPUT_META="out/$REPAIR_SLOT/meta.json" node scripts/repair-reported-previews.mjs validate-existing > "$RUNNER_TEMP/existing-media.log" 2>&1
+          reuse_code=$?
+          set -e
+          if (( reuse_code == 0 )); then
+            echo "ACCEPTANCE_EXISTING_MEDIA_REVALIDATED"
+            exit 0
+          fi
+          set +e
           node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
             --repo-path="$GITHUB_WORKSPACE" \
