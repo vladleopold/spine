@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - .github/workflows/verify-reported-preview-live.yml
       - scripts/repair-reported-previews.mjs
       - scripts/verify-reported-preview-live.mjs
       - scripts/mask-preview-manifest.mjs
@@ -48,6 +49,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/verify-reported-preview-live.yml
             /scripts/
             /library/index.json
             /library_*/index.json
