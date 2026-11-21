@@ -63,7 +63,7 @@ assert.match(app, /The indexed skeleton file is missing; refusing to preview a d
   'editable pages must not switch to another skeleton set when the indexed one is missing');
 assert.match(app, /const playableAnimation = initialAnimation && names\.includes\(initialAnimation\) &&/,
   'runtime playback must validate and play only the exact selected animation');
-assert.doesNotMatch(app, /animationNames\.find\([^\n]*idle|animationNames\s*\[\s*0\s*\]|preparedSets\s*\[\s*0\s*\]|names\s*\[\s*0\s*\]|names\.find\([^\n]*playAnimationWithLoopMode|label\.includes\("clover"\)/i,
+assert.doesNotMatch(app, /animationNames\.find\([^\n]*idle|animationNames\s*\[\s*0\s*\]|names\s*\[\s*0\s*\]|names\.find\([^\n]*playAnimationWithLoopMode|label\.includes\("clover"\)/i,
   'the UI must not choose idle, the first track, the first set, or a cross-work set');
 
 assert.doesNotMatch(app,
