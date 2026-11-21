@@ -140,15 +140,8 @@ export function buildProjectEntry({ collection, id, files, commit, readFile }) {
   }));
   const sourceProofPath = projectFiles.find(file => path.posix.basename(file).toLowerCase()==='source-proof.json');
   const anchorPath = projectFiles.find(file => path.posix.basename(file).toLowerCase()==='blockchain-anchor.json');
-  let proof = null;
-  if (sourceProofPath) {
-    const parsed = safeJson(readFile(sourceProofPath));
-    if (parsed && typeof parsed === 'object') proof = {
-      title:typeof parsed.title==='string'?parsed.title.slice(0,180):'',
-      uploadedAt:typeof parsed.uploadedAt==='string'?parsed.uploadedAt:'',
-      proofPresent:true
-    };
-  }
+  // Source-proof payloads may contain uploader IDs, browser fingerprints or other
+  // personal metadata. Index only the fact that a proof file exists; never parse or publish it.
   const summary = chosen?.summary || null;
   const webm = previews.find(x=>x.kind==='video'&&x.format==='webm');
   const poster = previews.find(x=>x.kind==='poster'&&x.format==='webp') || previews.find(x=>x.kind==='poster');
@@ -157,8 +150,8 @@ export function buildProjectEntry({ collection, id, files, commit, readFile }) {
   const skeletonHash = chosen ? sha256(chosen.raw) : null;
   const atlasHash = atlasText ? sha256(atlasText) : null;
   return {
-    id, title:proof?.title||titleFromFolder(id), collection, projectPath,
-    uploadedAt:proof?.uploadedAt||dateFromFolder(id)||null,
+    id, title:titleFromFolder(id), collection, projectPath,
+    uploadedAt:dateFromFolder(id)||null,
     sourceRepository:'vladleopold/spine', sourceCommit:commit,
     skeletonPath:chosen?.file||null, atlasPath, texturePaths:texturePaths.filter(Boolean),
     atlasPageCount:atlasPages.length, hasAllAtlasTextures:atlasPages.length>0&&texturePaths.length===atlasPages.length&&texturePaths.every(Boolean),
