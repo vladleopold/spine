@@ -28,6 +28,7 @@ try {
     const missingSelected=index===1;
     const mismatched=index===2;
     const accepted=index===3;
+    const missingTier=index===4;
     const animation=isTarget?"Idle Post Climax Cum":missingDefault?"":missingSelected?"walk":"idle";
     const animations=missingSelected?["idle"]:animation?[animation]:["idle"];
     const record={
@@ -40,7 +41,11 @@ try {
       webmStatus:"ready",
       previewStatus:isTarget?"failed":"ready",
       webmPreview:"https://spine-link.vercel.app/assets/library_02/"+id+"/preview.webm",
+      webmPreviewMedium:"https://spine-link.vercel.app/assets/library_02/"+id+"/preview-medium.webm",
+      webmPreviewLow:"https://spine-link.vercel.app/assets/library_02/"+id+"/preview-low.webm",
       webpPoster:"https://spine-link.vercel.app/assets/library_02/"+id+"/preview.webp",
+      webpPosterMedium:missingTier?"":"https://spine-link.vercel.app/assets/library_02/"+id+"/preview-medium.webp",
+      webpPosterLow:"https://spine-link.vercel.app/assets/library_02/"+id+"/preview-low.webp",
       ...(accepted?{webmAnimation:"idle"}:{}),
       ...(mismatched?{webmAnimation:"other"}:{}),
       ...(!isTarget&&!missingDefault&&!missingSelected&&!mismatched&&!accepted?{webmAnimation:"idle"}:{}),
@@ -84,7 +89,9 @@ try {
   assert.equal(mismatch.needsRender,true,"a preview rendered from another animation must be regenerated");
   assert.ok(render.some(x=>x.id===mismatchedPreviewId&&x.needsRender===true));
   const accepted=all.find(x=>x.id===acceptedId);
-  assert.equal(accepted.needsRender,false,"a verified exact-identity preview must not be rendered twice");
+  assert.equal(accepted.needsRender,false,"a verified exact-identity preview with all tiers must not be rendered twice");
+  const missingTier=all.find(x=>x.id===ids[4]);
+  assert.equal(missingTier.needsRender,true,"a missing responsive poster tier must trigger repair");
   assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);
   assert.match(source,/record\.webmAnimation=animation/);
   console.log("PASS priority repair matrix: exact target retried, absent/mismatched animations blocked, accepted media skipped");
