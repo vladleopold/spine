@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "progress_bar-2026-09-11T08-41-25-831Z",
+  "title": "progress_bar",
+  "uploadedAt": "2026-09-11T08:41:25.831Z",
+  "proofPath": "library/progress_bar-2026-09-11T08-41-25-831Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/progress_bar-2026-09-11T08-41-25-831Z/source-proof.json?v=2026-09-11T08-41-25.831Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1qafm8d_c88pua",
+    "anonymousFingerprint": "1qafm8d",
+    "browserFingerprintSha256": "7cb96cd91611fd3564fa886e7f69d89db06982c920e595e94cee3e5a9b89be66",
+    "browserEnvironmentHashSha256": "9ac89a8afbcda3e76d451c3916322b2320f458935ca298df0d46417dd8fd3784",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1440,
+        "height": 900,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Vilnius",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/progress_bar-2026-09-11T08-41-25-831Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a481f5634e229374eab5f950213d2f4fbc241d71bae17d6f2d054d2e7b493438",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "progress_bar/Progress_bar.atlas",
+      "bytes": 764,
+      "sha256": "6e99b767154e13b9f76fe66d7c01624ddb3b8bd3a5d5783ddd3b5156937c2132"
+    },
+    {
+      "name": "progress_bar/Progress_bar.json",
+      "bytes": 13530,
+      "sha256": "e5145eb2b06732132629fe419de57140ab228786a368da1b750b6edbcf23196a"
+    },
+    {
+      "name": "progress_bar/Progress_bar.png",
+      "bytes": 920325,
+      "sha256": "ab73edb344356eb178a0f17f8100d14e36c31f0b8c9c204658574d3ac645af53"
+    }
+  ],
+  "proofHash": "a481f5634e229374eab5f950213d2f4fbc241d71bae17d6f2d054d2e7b493438"
+}

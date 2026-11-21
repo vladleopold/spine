@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-08T06:28:48.468Z",
+  "updatedAt": "2026-10-08T06:29:08.640Z",
+  "animation_asset": {
+    "id": "free_spins_intro-2026-10-08T06-28-48-468Z",
+    "name": "free_spins_intro",
+    "domain": "gamedev",
+    "asset_category": "background",
+    "animation_type": "background",
+    "skeleton_type": "background",
+    "content_type": "background",
+    "taxonomy": {
+      "category": "environment",
+      "class": "background",
+      "type": "animated-background",
+      "tags": [
+        "landscape"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "scene-background"
+      ],
+      "perspective": [
+        "2d"
+      ],
+      "animation_state": [
+        "landscape_layout",
+        "portait_layout",
+        "transition_splash_begin",
+        "transition_splash_end",
+        "transition_splash_idle",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-transition_splash_idle",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z",
+    "manifestPath": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/manifest.json",
+    "files": [
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/free_spins_intro/free_spins_intro.json",
+        "name": "free_spins_intro/free_spins_intro.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/free_spins_intro/win_sequence.atlas.txt",
+        "name": "free_spins_intro/win_sequence.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/free_spins_intro/win_sequence.png",
+        "name": "free_spins_intro/win_sequence.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/transition_splash_idle-preview.webp",
+        "name": "transition_splash_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/free_spins_intro-2026-10-08T06-28-48-468Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "free_spins_intro.json",
+    "atlas": "win_sequence.atlas.txt",
+    "textures": [
+      "win_sequence.png"
+    ],
+    "animationCount": 5,
+    "animationNames": [
+      "landscape_layout",
+      "portait_layout",
+      "transition_splash_begin",
+      "transition_splash_end",
+      "transition_splash_idle"
+    ],
+    "defaultAnimation": "transition_splash_idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "landscape"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "unique_30113_02-2026-08-08T21-17-41-601Z",
+  "title": "unique_30113_02",
+  "uploadedAt": "2026-08-08T21:17:41.601Z",
+  "proofPath": "library/unique_30113_02-2026-08-08T21-17-41-601Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/unique_30113_02-2026-08-08T21-17-41-601Z/source-proof.json?v=2026-08-08T21-17-41.601Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1njd8ke_14o0wbx",
+    "anonymousFingerprint": "1njd8ke",
+    "browserFingerprintSha256": "8352c8205741398d65b2dd5f68945a95a7e501ced2a10ec9dfb95bbe6c7e0d67",
+    "browserEnvironmentHashSha256": "5fb4e80a146e08999894533f49317cba9296782a80bb27c94c83bbac824442fb",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Berlin",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/unique_30113_02-2026-08-08T21-17-41-601Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d7cbebdd47b219a9ce09b43986366581e7131a6a8addb74d9c9b0eabf9c83a80",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 1422,
+      "sha256": "08ddc35cc77753f87ff19ac3cc9016b947798a7180d9c87393f8fd048c9d0052"
+    },
+    {
+      "name": "unique_30113_02/unique_30113_02.atlas",
+      "bytes": 5059,
+      "sha256": "af62e7f72c1d8380b9b076e51cc864c9d6012ccdb5ed69010942c38ed433b194"
+    },
+    {
+      "name": "unique_30113_02/unique_30113_02.json",
+      "bytes": 905263,
+      "sha256": "815254807cf37ff0b95a02460b23aeafc8db6cf167a6305b53b458e46cc7c54d"
+    },
+    {
+      "name": "unique_30113_02/unique_30113_02.png",
+      "bytes": 964457,
+      "sha256": "0ff74218cd9685e73a6d68d8b93f84f6f93f1ed5e455364be24dcbad610294e5"
+    }
+  ],
+  "proofHash": "d7cbebdd47b219a9ce09b43986366581e7131a6a8addb74d9c9b0eabf9c83a80"
+}

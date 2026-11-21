@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "win_animations_720p-2026-09-29T08-43-56-653Z",
+  "title": "win_animations_720p",
+  "uploadedAt": "2026-09-29T08:43:56.653Z",
+  "proofPath": "library/win_animations_720p-2026-09-29T08-43-56-653Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/win_animations_720p-2026-09-29T08-43-56-653Z/source-proof.json?v=2026-09-29T08-43-56.653Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_kdrsxm_itwa7m",
+    "anonymousFingerprint": "kdrsxm",
+    "browserFingerprintSha256": "09baa66e58f776dd7c1a1af7d80472a7fc5721941131d88e8efd43c11e7c90bd",
+    "browserEnvironmentHashSha256": "a0dee6ea13579826f3fdaa09dc07b00f6c8196e86e099e61cf967479637da665",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Belgrade",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/win_animations_720p-2026-09-29T08-43-56-653Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:414b8537fa91cf1a0ce271889f90b307495ed721d8f372b96ce3e4a0de96ed22",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "bell-preview.webp",
+      "bytes": 712,
+      "sha256": "ceb04c28c918e8403a9c528e1bf766e0e1a428813077631fa23a74dfb10885b0"
+    },
+    {
+      "name": "win_animations_720p/win_animations_2.webp",
+      "bytes": 68,
+      "sha256": "846d81c0c0c3c26c0b250cdf77b5cc602dbb0e8a0b780a9b2d8eb4db8502ab6a"
+    },
+    {
+      "name": "win_animations_720p/win_animations_720p.atlas",
+      "bytes": 13391,
+      "sha256": "43fdaacac5b20eb70a44bab20d707a3c4094a12d55695460de1b4a0095215d40"
+    },
+    {
+      "name": "win_animations_720p/win_animations_720p.json",
+      "bytes": 157464,
+      "sha256": "0daf904295d4f6cb4c23f3a308dadee933039d3f00edea4e5a2195cef909da19"
+    },
+    {
+      "name": "win_animations_720p/win_animations_720p.webp",
+      "bytes": 4708556,
+      "sha256": "0c51ba82876af55fa9f1eaf95f32659a53c5aefe70b4561961ecd489f3626719"
+    }
+  ],
+  "proofHash": "414b8537fa91cf1a0ce271889f90b307495ed721d8f372b96ce3e4a0de96ed22"
+}

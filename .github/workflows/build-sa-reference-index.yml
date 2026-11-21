@@ -1,0 +1,53 @@
+name: Build SA reference library index
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'library/**'
+      - 'library_*/**'
+      - 'scripts/build-sa-reference-index.mjs'
+      - 'tests/build-sa-reference-index.test.mjs'
+      - '.github/workflows/build-sa-reference-index.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sa-reference-library-index
+  cancel-in-progress: true
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/build-sa-reference-index.mjs
+            /tests/build-sa-reference-index.test.mjs
+            /public/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test reference metadata extraction
+        run: node --test tests/build-sa-reference-index.test.mjs
+      - name: Build sanitized structural index from all library shards
+        run: node scripts/build-sa-reference-index.mjs
+      - name: Publish index to isolated generated branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/sa-reference
+          cp public/sa-reference-index.json /tmp/sa-reference/sa-reference-index.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan sa-reference-index
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/sa-reference/sa-reference-index.json ./sa-reference-index.json
+          git add --sparse sa-reference-index.json
+          git commit -m "chore(library): publish sanitized SA reference index"
+          git push --force origin HEAD:refs/heads/sa-reference-index

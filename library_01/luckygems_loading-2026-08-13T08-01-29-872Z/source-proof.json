@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "luckygems_loading-2026-08-13T08-01-29-872Z",
+  "title": "luckygems_loading",
+  "uploadedAt": "2026-08-13T08:01:29.872Z",
+  "proofPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json?v=2026-08-13T08-01-29.872Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_bvkuc7_73mtn",
+    "anonymousFingerprint": "bvkuc7",
+    "browserFingerprintSha256": "951a905c562e1f222a32ab5e48fd1b13d1ec40650ac855c9a7a711227a2b16a5",
+    "browserEnvironmentHashSha256": "bc7824a54f63cef38f23b14cdbdf9891f269b8c6601ca904f401a8bb3a6aaabf",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 14,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:aba0a43c3686df22a6dd7bf26e49c0d6e2dbf265ac06aa9dc28100f9e9e034cb",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "luckygems_loading/LuckyGems_Loading.atlas",
+      "bytes": 5302,
+      "sha256": "eabd4ae7fe2acf998af13569821e4bf6c62149770729a82d387e65f3f7126502"
+    },
+    {
+      "name": "luckygems_loading/LuckyGems_Loading.png",
+      "bytes": 208095,
+      "sha256": "d83153a372a2eb7c3e20216dafa395923f084dab0266a7fadd789589988cba97"
+    },
+    {
+      "name": "luckygems_loading/LuckyGems_Loading.skel",
+      "bytes": 31378,
+      "sha256": "213e6dd823ac0832181bea1b387083ac12f9dfc118e74b95a5c8a7b602ad1ba0"
+    },
+    {
+      "name": "page_01-preview.webp",
+      "bytes": 1544,
+      "sha256": "44711ea07f87591230b85224202ec241013606196083e8f1f54026048596e9c8"
+    }
+  ],
+  "proofHash": "aba0a43c3686df22a6dd7bf26e49c0d6e2dbf265ac06aa9dc28100f9e9e034cb"
+}

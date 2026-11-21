@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-24T13:15:35.773Z",
+  "updatedAt": "2026-07-24T13:15:51.665Z",
+  "animation_asset": {
+    "id": "cauldron_coals-2026-07-24T13-15-35-773Z",
+    "name": "cauldron_coals",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "impact"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop"
+      ],
+      "animation_state": [
+        "idle_cauldron_coals",
+        "impact_cauldron",
+        "idle"
+      ],
+      "state": [
+        "default-idle_cauldron_coals"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z",
+    "manifestPath": "library/cauldron_coals-2026-07-24T13-15-35-773Z/manifest.json",
+    "files": [
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.json",
+        "name": "cauldron_coals/cauldron_coals.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.atlas.txt",
+        "name": "cauldron_coals/cauldron_coals.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/cauldron_coals/cauldron_coals.png",
+        "name": "cauldron_coals/cauldron_coals.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webm",
+        "name": "idle_cauldron_coals-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/idle_cauldron_coals-preview.webp",
+        "name": "idle_cauldron_coals-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cauldron_coals-2026-07-24T13-15-35-773Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cauldron_coals.json",
+    "atlas": "cauldron_coals.atlas.txt",
+    "textures": [
+      "cauldron_coals.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "idle_cauldron_coals",
+      "impact_cauldron"
+    ],
+    "defaultAnimation": "idle_cauldron_coals",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "impact"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

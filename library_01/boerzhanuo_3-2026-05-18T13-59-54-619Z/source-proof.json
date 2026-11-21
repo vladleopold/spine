@@ -1,0 +1,70 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "boerzhanuo_3-2026-05-18T13-59-54-619Z",
+  "title": "boerzhanuo_3",
+  "uploadedAt": "2026-05-18T13:59:54.619Z",
+  "proofPath": "library/boerzhanuo_3-2026-05-18T13-59-54-619Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/boerzhanuo_3-2026-05-18T13-59-54-619Z/source-proof.json?v=2026-05-18T13-59-54.619Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/boerzhanuo_3-2026-05-18T13-59-54-619Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:fe31d4e03d87987b12b33b28a9d56f9a076c02d1f8f4c75463d04b948ca93d4f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "boerzhanuo_3/boerzhanuo_3.atlas",
+      "bytes": 7845,
+      "sha256": "d7d587f8aa4036726411242e947bf859e0679ca43aaf271cd50f128afb8baa29"
+    },
+    {
+      "name": "boerzhanuo_3/boerzhanuo_3.png",
+      "bytes": 265603,
+      "sha256": "2417807d69b9eed39ed513de3aafdeb9160c0e8fab056c433286933a691f2426"
+    },
+    {
+      "name": "boerzhanuo_3/boerzhanuo_3.skel",
+      "bytes": 357426,
+      "sha256": "bf8bc1b8aac0f1923bf84e01893143cfbbe9ed0bf9b4a4c31dafd88984220f88"
+    }
+  ],
+  "proofHash": "fe31d4e03d87987b12b33b28a9d56f9a076c02d1f8f4c75463d04b948ca93d4f"
+}

@@ -1,0 +1,231 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-16T00:42:43.328Z",
+  "updatedAt": "2026-08-16T00:42:55.091Z",
+  "animation_asset": {
+    "id": "jester-2026-08-16T00-42-43-328Z",
+    "name": "jester",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "dick erect",
+        "dick flaccid",
+        "dick semi erect in",
+        "dick semi erect out",
+        "eyebrows angry",
+        "eyebrows base",
+        "eyebrows concern",
+        "eyebrows low",
+        "eyebrows one raised",
+        "eyebrows raised",
+        "eyelids base",
+        "eyelids closed",
+        "eyelids narrow",
+        "eyelids round",
+        "eyelids smile",
+        "eyelids squint",
+        "eyelids uneven",
+        "eyelids wide",
+        "eyelids wink",
+        "eyes base",
+        "eyes big pupil",
+        "eyes check out 1",
+        "eyes crazy",
+        "eyes look down",
+        "eyes look right",
+        "eyes rolled",
+        "jump",
+        "mouth base",
+        "mouth closed",
+        "mouth frown",
+        "mouth open",
+        "mouth purse",
+        "mouth smile",
+        "mouth smile closed",
+        "mouth sneer",
+        "mouth stupid smirk",
+        "mouth tongue",
+        "stance lean 01",
+        "stance shake 01",
+        "stance shake 02",
+        "stance squat",
+        "stance up and down",
+        "stance upright 01",
+        "stance upright 02",
+        "stance upright 03",
+        "stance upright 04",
+        "try"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-dick erect"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "direction": [
+        "right",
+        "up",
+        "down"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/jester-2026-08-16T00-42-43-328Z",
+    "manifestPath": "library/jester-2026-08-16T00-42-43-328Z/manifest.json",
+    "files": [
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/jester/Jester.skel",
+        "name": "jester/Jester.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/jester/Jester.atlas",
+        "name": "jester/Jester.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/jester/Jester.png",
+        "name": "jester/Jester.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/dick-erect-preview.webp",
+        "name": "dick-erect-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/jester-2026-08-16T00-42-43-328Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Jester.skel",
+    "atlas": "Jester.atlas",
+    "textures": [
+      "Jester.png"
+    ],
+    "animationCount": 47,
+    "animationNames": [
+      "Dick Erect",
+      "Dick Flaccid",
+      "Dick Semi Erect In",
+      "Dick Semi Erect Out",
+      "Eyebrows Angry",
+      "Eyebrows Base",
+      "Eyebrows Concern",
+      "Eyebrows Low",
+      "Eyebrows One Raised",
+      "Eyebrows Raised",
+      "Eyelids Base",
+      "Eyelids Closed",
+      "Eyelids Narrow",
+      "Eyelids Round",
+      "Eyelids Smile",
+      "Eyelids Squint",
+      "Eyelids Uneven",
+      "Eyelids Wide",
+      "Eyelids Wink",
+      "Eyes Base",
+      "Eyes Big Pupil",
+      "Eyes Check Out 1",
+      "Eyes Crazy",
+      "Eyes Look Down",
+      "Eyes Look Right",
+      "Eyes Rolled",
+      "Jump",
+      "Mouth Base",
+      "Mouth Closed",
+      "Mouth Frown",
+      "Mouth Open",
+      "Mouth Purse",
+      "Mouth Smile",
+      "Mouth Smile Closed",
+      "Mouth Sneer",
+      "Mouth Stupid Smirk",
+      "Mouth Tongue",
+      "Stance Lean 01",
+      "Stance Shake 01",
+      "Stance Shake 02",
+      "Stance Squat",
+      "Stance Up and Down",
+      "Stance Upright 01",
+      "Stance Upright 02",
+      "Stance Upright 03",
+      "Stance Upright 04",
+      "Try"
+    ],
+    "defaultAnimation": "Dick Erect",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

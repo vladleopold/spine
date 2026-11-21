@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z",
+  "title": "akayuki_devil_ghost_front",
+  "uploadedAt": "2026-08-31T21:01:11.724Z",
+  "proofPath": "library/akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z/source-proof.json?v=2026-08-31T21-01-11.724Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:2fac98c9bd5c871dc2edddc0c88da87f25ea5c8408197bd7419d936f63992d7c",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "akayuki_devil_ghost_front/akayuki_devil_ghost_front.skel",
+      "bytes": 233178,
+      "sha256": "bf668abc56bb13a89fcfb1e048be08b92dbfaa0d62b3d15f71af0b4dc34d6676"
+    },
+    {
+      "name": "akayuki_devil_ghost_front/akayuki_devil_ghost.atlas",
+      "bytes": 7781,
+      "sha256": "913d033e7c6d74dc745fd963d14765733d70cfaf3642b41bf8dce8ac716727a2"
+    },
+    {
+      "name": "akayuki_devil_ghost_front/akayuki_devil_ghost.png",
+      "bytes": 10259,
+      "sha256": "9ffb85c3eb367b47f44dd10a5e2ef87c08aa18b5eae01de4ec921a6192d444cf"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1468,
+      "sha256": "b9cf2f869b2f0b7445105f65ca3e6a9016d6d3b4914298e5f33eed126560f101"
+    }
+  ],
+  "proofHash": "2fac98c9bd5c871dc2edddc0c88da87f25ea5c8408197bd7419d936f63992d7c"
+}

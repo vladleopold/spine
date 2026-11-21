@@ -1,0 +1,29 @@
+name: Verify restored Spine WebM and WebP on production
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-restored-preview-live.yml
+      - scripts/verify-restored-preview-live.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-restored-media:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /library_02/index.json
+            /scripts/verify-restored-preview-live.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate the real asset endpoint for the restored work
+        run: node scripts/verify-restored-preview-live.mjs

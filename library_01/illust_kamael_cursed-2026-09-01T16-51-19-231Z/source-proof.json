@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "illust_kamael_cursed-2026-09-01T16-51-19-231Z",
+  "title": "illust_kamael_cursed",
+  "uploadedAt": "2026-09-01T16:51:19.231Z",
+  "proofPath": "library/illust_kamael_cursed-2026-09-01T16-51-19-231Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/illust_kamael_cursed-2026-09-01T16-51-19-231Z/source-proof.json?v=2026-09-01T16-51-19.231Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_2kr0qa_mw5e1p",
+    "anonymousFingerprint": "2kr0qa",
+    "browserFingerprintSha256": "52f5eab0d8df22ef177cd8b02917bc50c161ad50c945d74b06d87bda0cfe7d24",
+    "browserEnvironmentHashSha256": "8f31cd7f77e4ee5ac05ae327c3ecdeec0bfd3ccc67d2d6d8206f21cd204cb24c",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "id-ID",
+        "id",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 360,
+        "height": 806,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Jakarta",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/illust_kamael_cursed-2026-09-01T16-51-19-231Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:2ec927aafe8fc10c3b2500de2e0a37d69f2c879ad15595b004420416a61d5e05",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "entrance-preview.webp",
+      "bytes": 2172,
+      "sha256": "3a2bcb956ba8784867f08fb31210b81df44d39a02f72253190655fb12719043a"
+    },
+    {
+      "name": "illust_kamael_cursed/illust_kamael_cursed.atlas",
+      "bytes": 16260,
+      "sha256": "d37745da9a3cad73af69b2db8cfcde3cf38b0ee5909c2f787321deb3509b0ff5"
+    },
+    {
+      "name": "illust_kamael_cursed/illust_kamael_cursed.png",
+      "bytes": 1942647,
+      "sha256": "c5999be2d0b1dde316669e8b66cf0b59bc4dbc9ebb2d4e2dd3b89bccbe03d37f"
+    },
+    {
+      "name": "illust_kamael_cursed/illust_kamael_cursed.skel",
+      "bytes": 723723,
+      "sha256": "501f8c8ab5366e7f4b2565f42fb9ff514577aab5a909a2454cce5db2b79751bf"
+    }
+  ],
+  "proofHash": "2ec927aafe8fc10c3b2500de2e0a37d69f2c879ad15595b004420416a61d5e05"
+}

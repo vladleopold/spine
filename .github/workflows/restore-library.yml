@@ -1,0 +1,74 @@
+name: Restore library folder
+
+# Откат переименования library -> library_01.
+#
+# Исходная схема: все работы в library, и все записанные ссылки
+# /assets/library/<работа>/... ведут на место. Переименование сломало их, и
+# поисковые индексы увидели 404 у каждой работы.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: restore-library
+
+jobs:
+  restore:
+    # Renaming 996 works in a 6 GB repository needs well past the default 6 minutes.
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rename library_01 back to library
+        run: |
+          set -euo pipefail
+          if [ -d library_01 ] && [ ! -d library ]; then
+            git mv library_01 library
+            echo "library_01 -> library"
+          fi
+
+      - name: Restore index paths
+        run: node scripts/fix-library-index-paths.mjs library/index.json
+
+      - name: Remove empty collection folders
+        run: |
+          set -euo pipefail
+          for dir in library_*; do
+            [ -d "$dir" ] || continue
+            if [ -z "$(find "$dir" -mindepth 1 -maxdepth 1 -type d -print -quit)" ]; then
+              git rm -r -q "$dir"
+              echo "удалено: $dir"
+            fi
+          done
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Изменений не требуется."
+            exit 0
+          fi
+          git commit -m "Вернуть прежнюю схему: все работы снова в library"
+
+      - name: Push
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then echo "Pushed on attempt $i"; exit 0; fi
+            echo "push отклонён (попытка $i)"
+            sleep $((RANDOM % 5 + 3))
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo "Could not push after 5 attempts."
+          exit 1

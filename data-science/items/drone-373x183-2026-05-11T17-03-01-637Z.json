@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-11T17:03:01.637Z",
+  "updatedAt": "2026-05-11T17:03:14.841Z",
+  "animation_asset": {
+    "id": "drone-373x183-2026-05-11T17-03-01-637Z",
+    "name": "drone 373x183",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "dead_04",
+        "fly_03",
+        "starter_01",
+        "starter_to_fly_02"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-dead_04",
+        "lose"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/drone-373x183-2026-05-11T17-03-01-637Z",
+    "manifestPath": "library/drone-373x183-2026-05-11T17-03-01-637Z/manifest.json",
+    "files": [
+      {
+        "path": "library/drone-373x183-2026-05-11T17-03-01-637Z/drone 373x183/drone 373x183.skel",
+        "name": "drone 373x183/drone 373x183.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/drone-373x183-2026-05-11T17-03-01-637Z/drone 373x183/drone1.atlas",
+        "name": "drone 373x183/drone1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/drone-373x183-2026-05-11T17-03-01-637Z/drone 373x183/drone1.png",
+        "name": "drone 373x183/drone1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/drone-373x183-2026-05-11T17-03-01-637Z/dead_04-preview.webm",
+        "name": "dead_04-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/drone-373x183-2026-05-11T17-03-01-637Z/dead_04-preview.webp",
+        "name": "dead_04-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "drone 373x183.skel",
+    "atlas": "drone1.atlas",
+    "textures": [
+      "drone1.png"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "Dead_04",
+      "Fly_03",
+      "Starter_01",
+      "Starter_To_Fly_02"
+    ],
+    "defaultAnimation": "Dead_04",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

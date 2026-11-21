@@ -1,0 +1,14 @@
+name: Pull request lifecycle guard (manual only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm automatic PR closure is disabled
+        run: echo "Pull requests remain open for review; CI and repository protections control merging."

@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "admiral_test_front-2026-08-31T21-14-04-455Z",
+  "title": "admiral_test_front",
+  "uploadedAt": "2026-08-31T21:14:04.455Z",
+  "proofPath": "library/admiral_test_front-2026-08-31T21-14-04-455Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/admiral_test_front-2026-08-31T21-14-04-455Z/source-proof.json?v=2026-08-31T21-14-04.455Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/admiral_test_front-2026-08-31T21-14-04-455Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d48ac548d4671f890ce22adc89510313a1f438b19d434f4b62cc6c5e106f2ef5",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "admiral_test_front/admiral_test_front.skel",
+      "bytes": 200844,
+      "sha256": "cf05ff1a8b52565cc23123b9a60a7523e76401877d98ede108926de4a8c9919e"
+    },
+    {
+      "name": "admiral_test_front/admiral_test.atlas",
+      "bytes": 7132,
+      "sha256": "e7cbf0c2557fb5cd6b56d76d4718f2a5f362d1619d719e26ffad99d0e163e59a"
+    },
+    {
+      "name": "admiral_test_front/admiral_test.png",
+      "bytes": 29700,
+      "sha256": "34fc0fbc75cd82413bb2da09a9975e1dd2bd345a55be3668d369c51e9feb6ce0"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1492,
+      "sha256": "a1a213dedc96baa031a43551cd4de20d4f308f48c378bc5f9c39521fe2f58927"
+    }
+  ],
+  "proofHash": "d48ac548d4671f890ce22adc89510313a1f438b19d434f4b62cc6c5e106f2ef5"
+}

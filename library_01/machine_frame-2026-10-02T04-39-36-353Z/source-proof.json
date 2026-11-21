@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "machine_frame-2026-10-02T04-39-36-353Z",
+  "title": "machine_frame",
+  "uploadedAt": "2026-10-02T04:39:36.353Z",
+  "proofPath": "library/machine_frame-2026-10-02T04-39-36-353Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/machine_frame-2026-10-02T04-39-36-353Z/source-proof.json?v=2026-10-02T04-39-36.353Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_107c1u1_88qh5g",
+    "anonymousFingerprint": "107c1u1",
+    "browserFingerprintSha256": "d1b82e0b126ec4d44e4e52df6621524523e7f6596b3bf8af9e0398fd06c560a3",
+    "browserEnvironmentHashSha256": "721d1fe6526b5e5f667cc2d859171a904c7d215fa530f9a14b49d31750737d80",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en",
+        "zh-CN",
+        "ja"
+      ],
+      "hardwareConcurrency": 6,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1344,
+        "height": 840,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/machine_frame-2026-10-02T04-39-36-353Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a316e34533d98b9b3d6478cb7a5219502510ee4a3c9231fd9e439ca8f14136ca",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "machine_frame_bonus-preview.webp",
+      "bytes": 694,
+      "sha256": "68464a98a26421bb8d7f55734a70fb2507d40c14ca0044bacdce995c26d75b79"
+    },
+    {
+      "name": "machine_frame/machine_frame.atlas.txt",
+      "bytes": 568,
+      "sha256": "2b44c126fa8346bfbf292a1798ed1df7a63a807bd2af523474ebf76f2ae156ca"
+    },
+    {
+      "name": "machine_frame/machine_frame.json",
+      "bytes": 6648,
+      "sha256": "950c3fb83b9b9392c42afccf625850e8a81397fc6aa54778309e857872c6d00a"
+    },
+    {
+      "name": "machine_frame/machine_frame.png",
+      "bytes": 386978,
+      "sha256": "6383c5f3229d81a7420895f4ab71acea0f1a4d58e21c07b1d55ff6a30d93145b"
+    }
+  ],
+  "proofHash": "a316e34533d98b9b3d6478cb7a5219502510ee4a3c9231fd9e439ca8f14136ca"
+}

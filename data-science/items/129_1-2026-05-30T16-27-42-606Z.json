@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-30T16:27:42.606Z",
+  "updatedAt": "2026-05-30T16:29:09.393Z",
+  "animation_asset": {
+    "id": "129_1-2026-05-30T16-27-42-606Z",
+    "name": "129_1",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "animation",
+        "kaishi"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/129_1-2026-05-30T16-27-42-606Z",
+    "manifestPath": "library/129_1-2026-05-30T16-27-42-606Z/manifest.json",
+    "files": [
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/129_1/129_1.json",
+        "name": "129_1/129_1.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/129_1/129_1.atlas",
+        "name": "129_1/129_1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/129_1/129_1.png",
+        "name": "129_1/129_1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/129_1/129_12.png",
+        "name": "129_1/129_12.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/129_1/129_13.png",
+        "name": "129_1/129_13.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/129_1-2026-05-30T16-27-42-606Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "129_1.json",
+    "atlas": "129_1.atlas",
+    "textures": [
+      "129_1.png",
+      "129_12.png",
+      "129_13.png"
+    ],
+    "animationCount": 2,
+    "animationNames": [
+      "animation",
+      "kaishi"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

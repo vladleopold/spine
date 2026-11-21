@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "143301-2026-07-27T09-54-38-131Z",
+  "title": "143301",
+  "uploadedAt": "2026-07-27T09:54:38.131Z",
+  "proofPath": "library/143301-2026-07-27T09-54-38-131Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/143301-2026-07-27T09-54-38-131Z/source-proof.json?v=2026-07-27T09-54-38.131Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/143301-2026-07-27T09-54-38-131Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:20dd01c96e18f4f40d105e4790075285a40ecf0d416006aa021a8e24efce655d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "143301/143301.atlas",
+      "bytes": 6295,
+      "sha256": "b5598bd142c8f2e069b2508a5bf5420db828b3706cc76f5aec06ca2416abb3c9"
+    },
+    {
+      "name": "143301/143301.json",
+      "bytes": 254065,
+      "sha256": "662bea506fcc0cf18b226f11b1851ad8087177177b78243e9610f6a4c60e3dbe"
+    },
+    {
+      "name": "143301/143301.png",
+      "bytes": 1129253,
+      "sha256": "53a565f3dbe08079c06c8a93e082f2a049d23388a1be7faa70d5da43b5e32da6"
+    },
+    {
+      "name": "damagein-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    }
+  ],
+  "proofHash": "20dd01c96e18f4f40d105e4790075285a40ecf0d416006aa021a8e24efce655d"
+}

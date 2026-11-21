@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "badan_2-2026-05-18T13-58-31-422Z",
+  "title": "badan_2",
+  "uploadedAt": "2026-05-18T13:58:31.422Z",
+  "proofPath": "library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/badan_2-2026-05-18T13-58-31-422Z/source-proof.json?v=2026-05-18T13-58-31.422Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/badan_2-2026-05-18T13-58-31-422Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:1fd725e34135fc74d501987b8ac33b7afc058ddb7fe527bcdd239d8b379a31b5",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "attack-preview.webm",
+      "bytes": 64656,
+      "sha256": "419b4a4ac55e9ab2c8886ac143f1fb425bdcc2e4a570ad318611b5765956c945"
+    },
+    {
+      "name": "attack-preview.webp",
+      "bytes": 66644,
+      "sha256": "3ea54bf317f70f8ed88c0ae9fb976083c767c96853d8c9757a154e6d8dc3ffeb"
+    },
+    {
+      "name": "badan_2/badan_2.atlas",
+      "bytes": 6601,
+      "sha256": "cfbd0f14b9356a2c7e92e13bb8eeaf5b15e54039cf0a0d141af70eac63ee9485"
+    },
+    {
+      "name": "badan_2/badan_2.png",
+      "bytes": 195500,
+      "sha256": "4e9dbeb98c21cb917465b1eecba03288e0fd68839e7dca6b7fd98ac9a97652da"
+    },
+    {
+      "name": "badan_2/badan_2.skel",
+      "bytes": 154170,
+      "sha256": "41d91bea064239cddc748faeb735eaa56f63171b8e549274a52a028d7302dca3"
+    }
+  ],
+  "proofHash": "1fd725e34135fc74d501987b8ac33b7afc058ddb7fe527bcdd239d8b379a31b5"
+}

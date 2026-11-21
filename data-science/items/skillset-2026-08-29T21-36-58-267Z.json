@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T21:36:58.267Z",
+  "updatedAt": "2026-08-29T21:37:14.675Z",
+  "animation_asset": {
+    "id": "skillset-2026-08-29T21-36-58-267Z",
+    "name": "skillset",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "ui",
+    "skeleton_type": "ui",
+    "content_type": "ui",
+    "taxonomy": {
+      "category": "ui",
+      "class": "interface",
+      "type": "panel",
+      "tags": [
+        "panel"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "interface"
+      ],
+      "interaction_type": [
+        "clickable",
+        "state"
+      ],
+      "style": [
+        "game-ui"
+      ],
+      "animation_state": [
+        "skill_panel_idle",
+        "skill_select_start",
+        "skill_select_start_slow",
+        "skill_select_stop_01_scatter",
+        "skill_select_stop_01_scatter_hit",
+        "skill_select_stop_02_random_wild",
+        "skill_select_stop_02_random_wild_hit",
+        "skill_select_stop_03_premium_2x2",
+        "skill_select_stop_03_premium_2x3_hit",
+        "skill_select_stop_04_epic",
+        "skill_select_stop_04_epic_hit",
+        "skill_panel_idle_upgrade",
+        "skill_select_start_upgrade",
+        "skill_select_start_slow_upgrade",
+        "skill_select_stop_01_scatter_upgrade",
+        "skill_select_stop_01_scatter_hit_upgrade",
+        "skill_select_stop_02_random_wild_upgrade",
+        "skill_select_stop_02_random_wild_hit_upgrade",
+        "skill_select_stop_03_premium_2x2_upgrade",
+        "skill_select_stop_03_premium_2x3_hit_upgrade",
+        "skill_select_stop_04_epic_upgrade",
+        "skill_select_stop_04_epic_hit_upgrade",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-skill_panel_idle"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/skillset-2026-08-29T21-36-58-267Z",
+    "manifestPath": "library/skillset-2026-08-29T21-36-58-267Z/manifest.json",
+    "files": [
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/skillset/skillset.json",
+        "name": "skillset/skillset.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/skillset/skillset.atlas",
+        "name": "skillset/skillset.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/skillset/skillset.webp",
+        "name": "skillset/skillset.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/skillset/skillset-upgrade.webp",
+        "name": "skillset/skillset-upgrade.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/skill_panel_idle-preview.webp",
+        "name": "skill_panel_idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skillset-2026-08-29T21-36-58-267Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "skillset.json",
+    "atlas": "skillset.atlas",
+    "textures": [
+      "skillset.webp",
+      "skillset-upgrade.webp"
+    ],
+    "animationCount": 22,
+    "animationNames": [
+      "skill_panel_idle",
+      "skill_select_start",
+      "skill_select_start_Slow",
+      "skill_select_stop_01_scatter",
+      "skill_select_stop_01_scatter_Hit",
+      "skill_select_stop_02_random_wild",
+      "skill_select_stop_02_random_wild_Hit",
+      "skill_select_stop_03_premium_2x2",
+      "skill_select_stop_03_premium_2x3_Hit",
+      "skill_select_stop_04_epic",
+      "skill_select_stop_04_epic_Hit",
+      "skill_panel_idle_upgrade",
+      "skill_select_start_upgrade",
+      "skill_select_start_Slow_upgrade",
+      "skill_select_stop_01_scatter_upgrade",
+      "skill_select_stop_01_scatter_Hit_upgrade",
+      "skill_select_stop_02_random_wild_upgrade",
+      "skill_select_stop_02_random_wild_Hit_upgrade",
+      "skill_select_stop_03_premium_2x2_upgrade",
+      "skill_select_stop_03_premium_2x3_Hit_upgrade",
+      "skill_select_stop_04_epic_upgrade",
+      "skill_select_stop_04_epic_Hit_upgrade"
+    ],
+    "defaultAnimation": "skill_panel_idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "panel"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

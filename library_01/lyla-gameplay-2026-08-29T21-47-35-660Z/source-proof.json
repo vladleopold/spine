@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "lyla-gameplay-2026-08-29T21-47-35-660Z",
+  "title": "lyla-gameplay",
+  "uploadedAt": "2026-08-29T21:47:35.660Z",
+  "proofPath": "library/lyla-gameplay-2026-08-29T21-47-35-660Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/lyla-gameplay-2026-08-29T21-47-35-660Z/source-proof.json?v=2026-08-29T21-47-35.660Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/lyla-gameplay-2026-08-29T21-47-35-660Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c3cc0cddf20b84848ff41db77dbf9edc06d9965a942b90f2662085e225c393d9",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 704,
+      "sha256": "52163e43eb285805fe629a53d66aeca7f0cf8fe52fd051e2fac6a3303186193c"
+    },
+    {
+      "name": "lyla-gameplay/lyla-gameplay.atlas",
+      "bytes": 2228,
+      "sha256": "d07b23c615dfc78fa7cf50a101cfbeacbe0597e0728b8537b02bc25ecf8fc91c"
+    },
+    {
+      "name": "lyla-gameplay/lyla-gameplay.json",
+      "bytes": 34651,
+      "sha256": "8c461dc6de4e2329847d6ceac666fb8bb59f3031e6dda7e146dff524ded55a0a"
+    },
+    {
+      "name": "lyla-gameplay/lyla-gameplay.png",
+      "bytes": 65482,
+      "sha256": "215bef1822a2a905d6da06122ee239b78cebc54e2a28c078139d470f65a4fceb"
+    }
+  ],
+  "proofHash": "c3cc0cddf20b84848ff41db77dbf9edc06d9965a942b90f2662085e225c393d9"
+}

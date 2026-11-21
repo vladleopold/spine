@@ -1,0 +1,466 @@
+name: Recover newest 20 Spine WebP and WebM previews
+on:
+  schedule:
+    - cron: '17 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-latest-twenty-live.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
+      - scripts/test-preview-motion.mjs
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-player-runtime-assets.mjs
+      - scripts/test-spine-player-runtime-assets.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/test-first-frame-poster-real.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/spine-binary-json-alias.mjs
+      - scripts/test-spine-binary-json-alias.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/install-pinned-spine-players.sh
+      - scripts/lib/preview-visibility-recovery.mjs
+      - scripts/atlas-pages.mjs
+      - scripts/test-atlas-pages.mjs
+      - .github/workflows/spine-export-webm.yml
+      - scripts/test-preview-visibility-recovery.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/lib/fetch-public-index.mjs
+      - scripts/test-public-index-fetch.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
+  pull_request:
+    paths:
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-latest-twenty-live.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
+      - scripts/test-preview-motion.mjs
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-player-runtime-assets.mjs
+      - scripts/test-spine-player-runtime-assets.mjs
+      - scripts/source-skeleton-choice.mjs
+      - scripts/test-source-skeleton-choice.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/test-first-frame-poster-real.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/spine-binary-json-alias.mjs
+      - scripts/test-spine-binary-json-alias.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/install-pinned-spine-players.sh
+      - scripts/lib/preview-visibility-recovery.mjs
+      - scripts/atlas-pages.mjs
+      - scripts/test-atlas-pages.mjs
+      - .github/workflows/spine-export-webm.yml
+      - scripts/test-preview-visibility-recovery.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/lib/fetch-public-index.mjs
+      - scripts/test-public-index-fetch.mjs
+      - scripts/lib/atlas-source-integrity.mjs
+      - scripts/test-atlas-source-integrity.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/test-upload-default-animation.mjs
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: spine-preview-latest-twenty-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.latest.outputs.matrix }}
+      allEntries: ${{ steps.latest.outputs.allEntries }}
+      renderCount: ${{ steps.latest.outputs.renderCount }}
+      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /api/github-upload.js
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned FFmpeg binaries for synthetic first-frame poster regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Enumerate 20 newest uploads and validate required source file triads
+        id: latest
+        env:
+          SPINE_REPAIR_INDEX_ONLY: '1'
+          SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check api/github-upload.js
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/verify-latest-twenty-live.mjs
+          node --check scripts/verify-preview-motion.mjs
+          node scripts/test-preview-motion.mjs
+          node scripts/test-renderer-failure-class.mjs
+          node scripts/test-repair-latest-twenty.mjs
+          node scripts/test-upload-default-animation.mjs
+          node scripts/test-first-frame-poster.mjs
+          node --check scripts/verify-poster-first-frame.mjs
+          node --check scripts/lib/first-frame-poster.mjs
+          node scripts/test-preview-visibility-recovery.mjs
+          node --check scripts/spine-export-webm.mjs
+          node --check scripts/recover-recorded-webm.mjs
+          node scripts/test-canvas-fallback.mjs
+          node scripts/test-atlas-pages.mjs
+          node scripts/test-atlas-source-integrity.mjs
+          node scripts/test-spine-version-detect.mjs
+          node scripts/test-spine-binary-json-alias.mjs
+          node scripts/test-source-skeleton-choice.mjs
+          node --check scripts/source-skeleton-choice.mjs
+          node scripts/test-preview-animation-choice.mjs
+          node scripts/test-spine-player-runtime-assets.mjs
+          node scripts/test-public-index-fetch.mjs
+          node scripts/test-repair-manifest-guard.mjs
+          echo "LATEST20_INVENTORY_VALID"
+  runtime-package-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/install-pinned-spine-players.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all four pinned Spine runtime bundles load from disk
+        run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spine-player-runtimes
+          path: ${{ runner.temp }}/spine-player-runtimes/
+          if-no-files-found: error
+          retention-days: 1
+  render:
+    name: validate-latest20-${{ matrix.entry.repairSlot }}
+    needs: [inventory, runtime-package-smoke]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      ENTRY_ID: ${{ matrix.entry.id }}
+      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
+      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+      ENTRY_READY: ${{ matrix.entry.ready }}
+      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
+            /library/index.json
+            /library_*/index.json
+      - name: Mask private metadata and hydrate exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
+          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: spine-player-runtimes
+          path: ${{ runner.temp }}/spine-player-runtimes
+      - name: Configure shared pinned Spine runtimes
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.0/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.1/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.2/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.3/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          echo "SPINE_VERSIONED_PLAYER_DIR=$RUNNER_TEMP/spine-player-runtimes" >> "$GITHUB_ENV"
+      - name: Install native Chromium renderer and video/poster encoders
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund playwright@1.59.1
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            echo "Using preinstalled Chrome for WebGL preview rendering"
+          else
+            npx playwright install chromium
+          fi
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Render and validate actual Spine video + still posters
+        if: matrix.entry.needsRender
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "out/$REPAIR_SLOT"
+          if [[ "$ENTRY_READY" != true ]]; then
+            echo '{"ok":false,"reason":"incomplete-source"}' > "out/$REPAIR_SLOT/meta.json"
+            echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
+            exit 0
+          fi
+          if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
+            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$REPAIR_SLOT/meta.json"
+            echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
+            exit 0
+          fi
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
+          code=$?
+          set -e
+          if (( code != 0 )) && [[ -s "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" ]]; then
+            # A genuine recorded WebM may survive even when its secondary
+            # quality ladder/poster encoder fails. Verify real changing frames
+            # and rebuild the missing output files instead of dropping it.
+            if node scripts/recover-recorded-webm.mjs \
+              "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
+              > "$RUNNER_TEMP/recovery.log" 2>&1; then
+              echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
+              code=0
+            else
+              echo "RECORDED_WEBM_RECOVERY_REJECTED"
+              if [[ -s "$RUNNER_TEMP/recovery.log" ]]; then
+                echo "RECOVERY_DIAGNOSTICS_BEGIN"
+                tail -n 60 "$RUNNER_TEMP/recovery.log"
+                echo "RECOVERY_DIAGNOSTICS_END"
+              fi
+            fi
+          fi
+          if (( code != 0 )); then
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
+            if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
+              echo "RENDERER_DIAGNOSTICS_BEGIN"
+              grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
+              echo "RENDERER_DIAGNOSTICS_END"
+            fi
+            echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
+            echo "::warning::Real render failed acceptance; publish other valid works and report this one"
+            exit 0
+          fi
+          for suffix in '' '-medium' '-low'; do
+            for ext in webm webp; do
+              in="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview$suffix.$ext"
+              test -s "$in" || { echo "::error::Missing output $ext"; exit 1; }
+              cp "$in" "out/$REPAIR_SLOT/preview$suffix.$ext"
+            done
+            ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height \
+              -of default=nw=1 "out/$REPAIR_SLOT/preview$suffix.webm" | grep -q '^codec_name='
+            video_duration=$(ffprobe -v error -show_entries format=duration \
+              -of default=nw=1:nk=1 "out/$REPAIR_SLOT/preview$suffix.webm")
+            awk -v seconds="$video_duration" 'BEGIN { exit !(seconds >= 0.5) }' || {
+              echo "::error::Rejected nonplayable short preview video"
+              exit 1
+            }
+            file "out/$REPAIR_SLOT/preview$suffix.webp" | grep -q 'Web/P image'
+            node scripts/verify-poster-first-frame.mjs "out/$REPAIR_SLOT/preview$suffix.webm" "out/$REPAIR_SLOT/preview$suffix.webp"
+          done
+          node scripts/verify-preview-motion.mjs "out/$REPAIR_SLOT/preview.webm"
+          cp "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
+            const animationMatches=typeof process.env.ENTRY_ANIMATION==="string"&&m.animation===process.env.ENTRY_ANIMATION;
+            if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
+              throw new Error("Export metadata incomplete or selected animation mismatch");
+            const safe={ok:true,animationMatches:true,width:m.width,height:m.height,
+              animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
+            fs.writeFileSync(p,JSON.stringify(safe));
+            console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
+          ' "out/$REPAIR_SLOT/meta.json"
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.entry.needsRender
+        with:
+          name: latest20-${{ matrix.entry.repairSlot }}
+          path: out/${{ matrix.entry.repairSlot }}/
+          if-no-files-found: error
+          retention-days: 1
+  publish:
+    needs: [inventory, render]
+    permissions:
+      contents: write
+    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
+      - name: Mask and hydrate exact latest-20 source directories
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/mask-preview-manifest.mjs
+          node --input-type=module <<'NODE'
+          import { execFileSync } from 'node:child_process';
+          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+          if(selected.length!==20)throw new Error('Missing exact repair manifest');
+          const paths=new Set();
+          for(const item of selected){
+            const source=String(item.previewPath||'');
+            if(!source||source.startsWith('/')||source.split('/').includes('..')||
+              !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
+            paths.add(source);
+          }
+          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
+          console.log('SOURCE_PATHS_HYDRATED');
+          NODE
+      - uses: actions/download-artifact@v4
+        if: needs.inventory.outputs.renderCount != '0'
+        with:
+          pattern: latest20-*
+          path: downloaded-latest20
+          merge-multiple: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned FFmpeg binaries for exact first-frame poster refresh
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Verify real high/medium/low WebP posters against their own WebM frame zero
+        run: node scripts/test-first-frame-poster-real.mjs
+      - name: Publish verified only, retain source untouched, flag missing and failed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/repair-latest-twenty-previews.mjs merge
+            # Stage ONLY outputs inside library collections; CI artifacts and
+            # temporary source files must never enter the repository.
+            # The sparse checkout contains the selected library_NN entries.
+            # Stage only checked-out shard folders. Including unsparsed
+            # "library" aborts this step and discards verified preview media.
+            git add -A -- library_*
+            if git diff --cached --quiet; then
+              echo "NO_PREVIEW_CHANGES"
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              exit 0
+            fi
+            git commit -m 'fix: restore validated previews for latest 20 Spine uploads'
+            if git push origin HEAD:main; then
+              echo "LATEST20_REPAIR_PUBLISHED"
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              exit 0
+            fi
+            sleep $(( attempt * 3 ))
+          done
+          echo "::error::Could not atomically publish latest-20 previews"
+          exit 1
+
+  verify-production:
+    needs: [inventory, render, publish]
+    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/verify-latest-twenty-live.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/fetch-public-index.mjs
+            /scripts/mask-preview-manifest.mjs
+            /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/lib/export-log-redaction.mjs
+      - name: Mask exact production audit manifest
+        run: node scripts/mask-preview-manifest.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 20 actual public media responses after publication
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/verify-latest-twenty-live.mjs

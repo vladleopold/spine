@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "symbols-2026-10-11T09-54-25-272Z",
+  "title": "symbols",
+  "uploadedAt": "2026-10-11T09:54:25.272Z",
+  "proofPath": "symbols-2026-10-11T09-54-25-272Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/symbols-2026-10-11T09-54-25-272Z/source-proof.json?v=2026-10-11T09-54-25.272Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_5z2n9z_1aikvj8",
+    "anonymousFingerprint": "5z2n9z",
+    "browserFingerprintSha256": "cdb18dfed2336d5179d6a9a67f94c55de48354031323e7f9eb4b985542d99c9e",
+    "browserEnvironmentHashSha256": "fbcf18710a6457eab60e88c0d7f4d3d4949d811b82b4a11e6946c0023e46e2dd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Jerusalem",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "symbols-2026-10-11T09-54-25-272Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:11966d37bd0b8be1b0c382acb7f398f570686d078ab1421f3746c2ea2a517a00",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "symbols/symbols_2.webp",
+      "bytes": 3075333,
+      "sha256": "fda3f41bd6de2029f7bc79647dac822c1a0c20f8c29d2d5f136010020c5df227"
+    },
+    {
+      "name": "symbols/symbols_3.webp",
+      "bytes": 1394419,
+      "sha256": "4d95c0a5abaff60fcc79abfd8183afdc9d8c1da66b146d3bd9326fab6632a6fa"
+    },
+    {
+      "name": "symbols/symbols.atlas",
+      "bytes": 12037,
+      "sha256": "cf767b112c73f823f86bded08755babf6c838ffd39ee0a87bb0b96b61bd7c7f8"
+    },
+    {
+      "name": "symbols/symbols.json",
+      "bytes": 507370,
+      "sha256": "b743b21df77ddf7088ee73af8847119018f47284c9897caef4b5315b2ac38d97"
+    },
+    {
+      "name": "symbols/symbols.webp",
+      "bytes": 4717466,
+      "sha256": "8c22119a86e3ad21920ad4872bc1e2075762c93424f2d589f9abc6859e953e1d"
+    }
+  ],
+  "proofHash": "11966d37bd0b8be1b0c382acb7f398f570686d078ab1421f3746c2ea2a517a00"
+}

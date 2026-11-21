@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "huge_win-2026-09-07T13-23-37-955Z",
+  "title": "huge_win",
+  "uploadedAt": "2026-09-07T13:23:37.955Z",
+  "proofPath": "library/huge_win-2026-09-07T13-23-37-955Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/huge_win-2026-09-07T13-23-37-955Z/source-proof.json?v=2026-09-07T13-23-37.955Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_6ygmc6_19wrnio",
+    "anonymousFingerprint": "6ygmc6",
+    "browserFingerprintSha256": "c21c4792842474a4784a30fc6c6d5500e1f0c398abf0158f8a304159e73a193f",
+    "browserEnvironmentHashSha256": "7fc9113be6710a89ed8289c606cc885482ea60190d957d87af53ddb33f39ed13",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 10,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1728,
+        "height": 1117,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/huge_win-2026-09-07T13-23-37-955Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:b1841902d579145c83c2cef0c1939feed1ced6f260d09d5e9d794e8072936fd2",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "huge_win-preview.webp",
+      "bytes": 694,
+      "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+    },
+    {
+      "name": "huge_win/huge_win-webp.atlas",
+      "bytes": 686,
+      "sha256": "6601f2544f1b1051c65faea2e796d2ecda37b651748509eedc78ed83d7512098"
+    },
+    {
+      "name": "huge_win/huge_win.json",
+      "bytes": 41204,
+      "sha256": "5357666cf6edba5613ef4d113777ff018dcf1f2414f703839292eff8916e9d61"
+    },
+    {
+      "name": "huge_win/huge_win.webp",
+      "bytes": 1055035,
+      "sha256": "3383f329a3049a99497f7d15387f305652cde5b3d3eccf23ef92c243817682bc"
+    }
+  ],
+  "proofHash": "b1841902d579145c83c2cef0c1939feed1ced6f260d09d5e9d794e8072936fd2"
+}

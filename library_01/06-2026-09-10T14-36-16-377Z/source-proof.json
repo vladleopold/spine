@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "06-2026-09-10T14-36-16-377Z",
+  "title": "06",
+  "uploadedAt": "2026-09-10T14:36:16.377Z",
+  "proofPath": "library/06-2026-09-10T14-36-16-377Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/06-2026-09-10T14-36-16-377Z/source-proof.json?v=2026-09-10T14-36-16.377Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1q0a03u_i09ljs",
+    "anonymousFingerprint": "1q0a03u",
+    "browserFingerprintSha256": "a8984eee8e70a652008b3d9b8c9c0f2cdbaaa08f86e53c43f69885ad391b246b",
+    "browserEnvironmentHashSha256": "5d43bdfc7f49b5f9af7bd09dd30d407de9baa9b2eaba2af4870d4b6ecaf245b5",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1440,
+        "height": 900,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/06-2026-09-10T14-36-16-377Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ade7ba1b3ae6bdaa0113fc225961644d6e13ff9d71c6cda8032cd83cd083d42f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "06/06.atlas",
+      "bytes": 568,
+      "sha256": "bb8122a55471fb9c35c472eb2d25eadb5d2f54bfe8d4d36d477bbfa68c4391e1"
+    },
+    {
+      "name": "06/06.json",
+      "bytes": 29479,
+      "sha256": "40d5adf392a965630c7a489f2189e9a4c5cbbfa4d8d4f16b2b05546cb5f2fc26"
+    },
+    {
+      "name": "06/06.png",
+      "bytes": 1387297,
+      "sha256": "5e6eb6dc13a144be7953919927329da543f3dfbf142bdd215d67b00716df958e"
+    },
+    {
+      "name": "animation2-preview.webp",
+      "bytes": 694,
+      "sha256": "5b1eee045dfac197c5eb309b6eadb6478cebb8d14a1e24823ef0df78a9df3407"
+    }
+  ],
+  "proofHash": "ade7ba1b3ae6bdaa0113fc225961644d6e13ff9d71c6cda8032cd83cd083d42f"
+}

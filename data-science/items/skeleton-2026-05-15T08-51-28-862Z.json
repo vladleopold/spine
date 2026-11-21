@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-15T08:51:28.862Z",
+  "updatedAt": "2026-05-15T08:51:40.452Z",
+  "animation_asset": {
+    "id": "skeleton-2026-05-15T08-51-28-862Z",
+    "name": "skeleton",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "animation"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-05-15T08-51-28-862Z",
+    "manifestPath": "library/skeleton-2026-05-15T08-51-28-862Z/manifest.json",
+    "files": [
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/skeleton/skeleton.json",
+        "name": "skeleton/skeleton.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/skeleton/skeleton.atlas",
+        "name": "skeleton/skeleton.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/skeleton/skeleton.png",
+        "name": "skeleton/skeleton.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/animation-preview.webm",
+        "name": "animation-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-05-15T08-51-28-862Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "skeleton.json",
+    "atlas": "skeleton.atlas",
+    "textures": [
+      "skeleton.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

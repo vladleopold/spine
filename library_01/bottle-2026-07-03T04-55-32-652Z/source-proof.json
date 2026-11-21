@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "bottle-2026-07-03T04-55-32-652Z",
+  "title": "bottle",
+  "uploadedAt": "2026-07-03T04:55:32.652Z",
+  "proofPath": "library/bottle-2026-07-03T04-55-32-652Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bottle-2026-07-03T04-55-32-652Z/source-proof.json?v=2026-07-03T04-55-32.652Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1dm7ftn_bub7q",
+    "anonymousFingerprint": "1dm7ftn",
+    "browserFingerprintSha256": "54f4a9973750a6adae34d6eb7d18aaa4d607de7e6b86818ad448a2fc7aa2cab9",
+    "browserEnvironmentHashSha256": "d890dad8592af3d53b539b8b886c1d2a5ed9a549562aa1cff5d6ac31af60270a",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 7,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1680,
+        "height": 1050,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Saigon",
+      "timezoneOffset": -420,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/bottle-2026-07-03T04-55-32-652Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:fded35abf19747b71efb0cb421cdfb9f3306032cace3551124daaaef66f08635",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "bottle/Bottle.atlas",
+      "bytes": 1746,
+      "sha256": "d3fdd719ffb9ef55cb56b1f92f35544c58040ec99eb469b829e3d2e9fd70a145"
+    },
+    {
+      "name": "bottle/Bottle.json",
+      "bytes": 30497,
+      "sha256": "72a5a7855fa9c60ff39a59a30f1d2df0beb6a00776a864189b6e260abb0931e1"
+    },
+    {
+      "name": "bottle/Bottle.png",
+      "bytes": 258554,
+      "sha256": "c48dedb8a555a30a0d2f429722e512a932dba287990a83b1cf6706564c3ca889"
+    },
+    {
+      "name": "wave_idle-preview.webm",
+      "bytes": 29178,
+      "sha256": "613faae45778859ba18827808b67e2639cee011f24339ad3cd50f5ef4b77652a"
+    },
+    {
+      "name": "wave_idle-preview.webp",
+      "bytes": 21554,
+      "sha256": "c11c25058e43056b7e05a99772b15945da8e885cf4652ebeed9c6141168e2c39"
+    }
+  ],
+  "proofHash": "fded35abf19747b71efb0cb421cdfb9f3306032cace3551124daaaef66f08635"
+}

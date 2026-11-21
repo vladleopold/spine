@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-28T16:30:11.428Z",
+  "updatedAt": "2026-08-28T15:34:28.095Z",
+  "animation_asset": {
+    "id": "cat-2026-08-28T16-30-11-428Z",
+    "name": "cat",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "final/attack",
+        "final/attack_2",
+        "final/bikini",
+        "final/brushing_teeth",
+        "final/idle",
+        "final/money eyes",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-final/idle"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/cat-2026-08-28T16-30-11-428Z",
+    "manifestPath": "library/cat-2026-08-28T16-30-11-428Z/manifest.json",
+    "files": [
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/cat/cat.json",
+        "name": "cat/cat.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/cat/cat.atlas",
+        "name": "cat/cat.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/cat/cat.png",
+        "name": "cat/cat.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/cat/cat_2.png",
+        "name": "cat/cat_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/final-idle-preview.webp",
+        "name": "final-idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/cat-2026-08-28T16-30-11-428Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cat.json",
+    "atlas": "cat.atlas",
+    "textures": [
+      "cat.png",
+      "cat_2.png"
+    ],
+    "animationCount": 6,
+    "animationNames": [
+      "final/Attack",
+      "final/Attack_2",
+      "final/Bikini",
+      "final/Brushing_Teeth",
+      "final/Idle",
+      "final/Money Eyes"
+    ],
+    "defaultAnimation": "final/Idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

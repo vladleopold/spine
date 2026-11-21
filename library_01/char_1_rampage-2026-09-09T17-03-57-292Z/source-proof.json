@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "char_1_rampage-2026-09-09T17-03-57-292Z",
+  "title": "char_1_rampage",
+  "uploadedAt": "2026-09-09T17:03:57.292Z",
+  "proofPath": "library/char_1_rampage-2026-09-09T17-03-57-292Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/char_1_rampage-2026-09-09T17-03-57-292Z/source-proof.json?v=2026-09-09T17-03-57.292Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_6qkfbo_12pcg5r",
+    "anonymousFingerprint": "6qkfbo",
+    "browserFingerprintSha256": "0d20c4be4c99f9027c19a0b3c8583b6fa4769a59d119b7b0b1e92fb9d830808b",
+    "browserEnvironmentHashSha256": "21623c3086ac12eeda1aea16f26b34d3f9e213d514bfad08ae0fc5789acb5e7c",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ru",
+      "languages": [
+        "ru",
+        "ru-RU",
+        "uk",
+        "de",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Europe/Berlin",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/char_1_rampage-2026-09-09T17-03-57-292Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:b465fa8096485bf0729ba74ab0ef9b56581f5021ade8ff80381a10587a719c27",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "air_hit_great_1-preview.webp",
+      "bytes": 1600,
+      "sha256": "445e200e0215868e03c53c270c326b7a77be8b5f7d6d86c16b1664578bc8e475"
+    },
+    {
+      "name": "char_1_rampage/char_1_rampage.atlas",
+      "bytes": 5752,
+      "sha256": "23e640f7eccc3cdc960820147a8f070227b4e576734fb1ed02d6904d730792dc"
+    },
+    {
+      "name": "char_1_rampage/char_1_rampage.png",
+      "bytes": 352318,
+      "sha256": "f148eb3cf9fd877d9082ec658b46925ad1a25704209ff6401d79226f6d6a9488"
+    },
+    {
+      "name": "char_1_rampage/char_1_rampage.skel",
+      "bytes": 152168,
+      "sha256": "51bed6f03a51d9b49dd0e25cbca40c158d626ea3cb6a72ae2bde4fae8125952c"
+    }
+  ],
+  "proofHash": "b465fa8096485bf0729ba74ab0ef9b56581f5021ade8ff80381a10587a719c27"
+}

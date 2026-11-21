@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-11-01T23:28:46.401Z",
+  "updatedAt": "2026-11-01T23:29:13.622Z",
+  "animation_asset": {
+    "id": "character1-2026-11-01T23-28-46-401Z",
+    "name": "character1",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "action1",
+        "action2",
+        "action3",
+        "action4",
+        "action5",
+        "idle",
+        "idle_to_action1_to_idle",
+        "idle_to_action2_to_idle",
+        "idle_to_action3_to_idle",
+        "idle_to_action4_to_idle",
+        "idle_to_action5_to_idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "character1-2026-11-01T23-28-46-401Z",
+    "manifestPath": "character1-2026-11-01T23-28-46-401Z/manifest.json",
+    "files": [
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1.json",
+        "name": "character1/character1.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1.atlas",
+        "name": "character1/character1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1.png",
+        "name": "character1/character1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_2.png",
+        "name": "character1/character1_2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_3.png",
+        "name": "character1/character1_3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_4.png",
+        "name": "character1/character1_4.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_5.png",
+        "name": "character1/character1_5.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_6.png",
+        "name": "character1/character1_6.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_7.png",
+        "name": "character1/character1_7.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "character1-2026-11-01T23-28-46-401Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "character1.json",
+    "atlas": "character1.atlas",
+    "textures": [
+      "character1.png",
+      "character1_2.png",
+      "character1_3.png",
+      "character1_4.png",
+      "character1_5.png",
+      "character1_6.png",
+      "character1_7.png"
+    ],
+    "animationCount": 11,
+    "animationNames": [
+      "action1",
+      "action2",
+      "action3",
+      "action4",
+      "action5",
+      "idle",
+      "idle_to_action1_to_idle",
+      "idle_to_action2_to_idle",
+      "idle_to_action3_to_idle",
+      "idle_to_action4_to_idle",
+      "idle_to_action5_to_idle"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 11,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 7
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

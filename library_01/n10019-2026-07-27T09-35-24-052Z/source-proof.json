@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "n10019-2026-07-27T09-35-24-052Z",
+  "title": "n10019",
+  "uploadedAt": "2026-07-27T09:35:24.052Z",
+  "proofPath": "library/n10019-2026-07-27T09-35-24-052Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/n10019-2026-07-27T09-35-24-052Z/source-proof.json?v=2026-07-27T09-35-24.052Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/n10019-2026-07-27T09-35-24-052Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:8b81105a7f2086acf44de6f10bd6bd6c0026dfa75663f4f731b36ff35ca488d9",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "damagein-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "n10019/n10019.atlas",
+      "bytes": 6086,
+      "sha256": "0dd47b57d2878a9088628c581d1ec32aa44f2a641ca4add27bd110f96ff76822"
+    },
+    {
+      "name": "n10019/n10019.json",
+      "bytes": 321509,
+      "sha256": "166c2bc2317d3aa28bd9166e12775b8a865e5864bb0ab9ef43b41ecc8849e335"
+    },
+    {
+      "name": "n10019/n10019.png",
+      "bytes": 1514523,
+      "sha256": "10dcf0b892aedc2effb99defc1db1372ed6ecde0160b7c1393d5e439913840df"
+    }
+  ],
+  "proofHash": "8b81105a7f2086acf44de6f10bd6bd6c0026dfa75663f4f731b36ff35ca488d9"
+}

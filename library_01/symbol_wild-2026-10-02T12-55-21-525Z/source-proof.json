@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "symbol_wild-2026-10-02T12-55-21-525Z",
+  "title": "symbol_wild",
+  "uploadedAt": "2026-10-02T12:55:21.525Z",
+  "proofPath": "library/symbol_wild-2026-10-02T12-55-21-525Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/symbol_wild-2026-10-02T12-55-21-525Z/source-proof.json?v=2026-10-02T12-55-21.525Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_107c1u1_88qh5g",
+    "anonymousFingerprint": "107c1u1",
+    "browserFingerprintSha256": "d1b82e0b126ec4d44e4e52df6621524523e7f6596b3bf8af9e0398fd06c560a3",
+    "browserEnvironmentHashSha256": "721d1fe6526b5e5f667cc2d859171a904c7d215fa530f9a14b49d31750737d80",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en",
+        "zh-CN",
+        "ja"
+      ],
+      "hardwareConcurrency": 6,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1344,
+        "height": 840,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/symbol_wild-2026-10-02T12-55-21-525Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:0349f2d14d7eaf72015b6fc33419ee29fef4ab78ee449f03c7ada029b2df7bf1",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "symbol_idle-preview.webp",
+      "bytes": 704,
+      "sha256": "658b40fb5a0d787812dad3f7380198f2f909eb47ba0230b82cc6192415348aa3"
+    },
+    {
+      "name": "symbol_wild/symbol_wild.json",
+      "bytes": 22305,
+      "sha256": "851ca0497068dc99ba774a6c306d19140f00035d87c93d203f777c113ea974b9"
+    },
+    {
+      "name": "symbol_wild/symbols.atlas.txt",
+      "bytes": 3932,
+      "sha256": "4b1191291ffec1e2b91bc91a04e19261c2f9246650b75f8134ff09a1d1a96b54"
+    },
+    {
+      "name": "symbol_wild/symbols.png",
+      "bytes": 1156775,
+      "sha256": "93280a803978e1f821daaa78a6bc3b9294215f4e6a8a6ea11b25c9a0190c7989"
+    }
+  ],
+  "proofHash": "0349f2d14d7eaf72015b6fc33419ee29fef4ab78ee449f03c7ada029b2df7bf1"
+}

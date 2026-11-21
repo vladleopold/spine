@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-08T17:18:43.338Z",
+  "updatedAt": "2026-09-08T17:18:52.106Z",
+  "animation_asset": {
+    "id": "animlogo-2026-09-08T17-18-43-338Z",
+    "name": "animlogo",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "logo",
+    "skeleton_type": "logo",
+    "content_type": "logo",
+    "taxonomy": {
+      "category": "branding",
+      "class": "logo",
+      "type": "logo-animation",
+      "tags": [
+        "logo"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "branding"
+      ],
+      "style": [
+        "logo"
+      ],
+      "animation_state": [
+        "animation"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-animation"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/animlogo-2026-09-08T17-18-43-338Z",
+    "manifestPath": "library/animlogo-2026-09-08T17-18-43-338Z/manifest.json",
+    "files": [
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/animlogo/animLogo.json",
+        "name": "animlogo/animLogo.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/animlogo/animLogo.atlas",
+        "name": "animlogo/animLogo.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/animlogo/animLogo.png",
+        "name": "animlogo/animLogo.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/animation-preview.webp",
+        "name": "animation-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/animlogo-2026-09-08T17-18-43-338Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "animLogo.json",
+    "atlas": "animLogo.atlas",
+    "textures": [
+      "animLogo.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "animation"
+    ],
+    "defaultAnimation": "animation",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "logo"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

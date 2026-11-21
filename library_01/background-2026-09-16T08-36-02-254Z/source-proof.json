@@ -1,0 +1,90 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "background-2026-09-16T08-36-02-254Z",
+  "title": "background",
+  "uploadedAt": "2026-09-16T08:36:02.254Z",
+  "proofPath": "library/background-2026-09-16T08-36-02-254Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/background-2026-09-16T08-36-02-254Z/source-proof.json?v=2026-09-16T08-36-02.254Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1qbnpyz_qfftgn",
+    "anonymousFingerprint": "1qbnpyz",
+    "browserFingerprintSha256": "e1628988e5252e57f48ae28d8f2a7ec273b51fb323611709aa161e0c8f112c38",
+    "browserEnvironmentHashSha256": "084256d1e50219c07c944737d1abfc56c8e98ce91c6c1a67e8fc943f2b66db29",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru",
+        "de"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 10,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/background-2026-09-16T08-36-02-254Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a50e6edfa922d1b82b166a418a5ead331f63e41bb8f8043ced097649256f8c77",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "background/background_2.png",
+      "bytes": 109885,
+      "sha256": "11a1d05f771b369a5fbfcaa97b74e65dddca5d9c65dacdb2789c51efd8bbfd71"
+    },
+    {
+      "name": "background/background_3.png",
+      "bytes": 328145,
+      "sha256": "4e45224e91325eebf86f4b545ff2a3065a90dac5a4930d196ceb83ecf3ff93e5"
+    },
+    {
+      "name": "background/background_4.png",
+      "bytes": 160765,
+      "sha256": "b1f550d98237186f974dec093983cc22ebf9f119d53189fd6d16accbe810bc33"
+    },
+    {
+      "name": "background/background.atlas",
+      "bytes": 785,
+      "sha256": "b8001044943025382098992bebb8b81a8d63b8dafc8c30a466330f8d3dcdae10"
+    },
+    {
+      "name": "background/background.json",
+      "bytes": 134650,
+      "sha256": "5660aba1fcf35d16190256ed64368ff354aab3d3febf3e9980d42c77a63ea35e"
+    },
+    {
+      "name": "background/background.png",
+      "bytes": 989874,
+      "sha256": "04b8896ac9272bf5b6e5a24b2fd3bfc3ebacd8d239b3a1f49809bed163fe4efc"
+    },
+    {
+      "name": "portrait-preview.webp",
+      "bytes": 9354,
+      "sha256": "fa79bfbf990291313d81d05e9654e4ccf02d4866fb6748ceb4b296f312a8b035"
+    }
+  ],
+  "proofHash": "a50e6edfa922d1b82b166a418a5ead331f63e41bb8f8043ced097649256f8c77"
+}

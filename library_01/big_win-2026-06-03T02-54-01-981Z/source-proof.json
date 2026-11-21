@@ -1,0 +1,90 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "big_win-2026-06-03T02-54-01-981Z",
+  "title": "big_win",
+  "uploadedAt": "2026-06-03T02:55:08.679Z",
+  "proofPath": "library/big_win-2026-06-03T02-54-01-981Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/big_win-2026-06-03T02-54-01-981Z/source-proof.json?v=2026-06-03T02-55-08.679Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_r5bhfn_158byx9",
+    "anonymousFingerprint": "r5bhfn",
+    "browserFingerprintSha256": "4fcc8d042752f77f04a15eb29902b3aebafec2153f01d7fa31b1e5727e33f4d6",
+    "browserEnvironmentHashSha256": "dba811057bafa381b6c40857fa3de706fc3db06df42b2734f8876daaea335a76",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/big_win-2026-06-03T02-54-01-981Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c2f2de480f0ee2853453b11b96a152b5c077421a93ff603f7d91ddead4c941ba",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "big_win/big_win.atlas",
+      "bytes": 5536,
+      "sha256": "2e1e1603d6345acb98ec02729056e328090ba24b3cd5d72875659dbe28ed7ec9"
+    },
+    {
+      "name": "big_win/big_win.json",
+      "bytes": 278730,
+      "sha256": "7e21d17bebc3d2ff95fc6f2397a91b3f5d65f29478ca6b81225b421de43a7fb4"
+    },
+    {
+      "name": "big_win/big_win.png",
+      "bytes": 897244,
+      "sha256": "950dea37f79a122129d43f8a6611369a4bb2522ae44fda60ed64b78eddb080d2"
+    },
+    {
+      "name": "big_win/big_win2.png",
+      "bytes": 387255,
+      "sha256": "817196191ae6bbb99c7b8e6d3ba6c593c8efe48c519418b32bd36146ac016569"
+    },
+    {
+      "name": "big_win/big_win3.png",
+      "bytes": 682488,
+      "sha256": "4bdd5a68ed35b2a53f0df0c5f065b287453373af68f41aca002583b79d336b59"
+    },
+    {
+      "name": "lvl_8_start-preview.webm",
+      "bytes": 40830,
+      "sha256": "23b356ee3854297366eee730fe9d761f3cc9d744f85a0e3c6f032b2452a53694"
+    },
+    {
+      "name": "lvl_8_start-preview.webp",
+      "bytes": 64360,
+      "sha256": "cdfb7f87476d4b6280b2ae2f0da6082ea51233149c3b5407e33abffdca8a116e"
+    }
+  ],
+  "proofHash": "c2f2de480f0ee2853453b11b96a152b5c077421a93ff603f7d91ddead4c941ba"
+}

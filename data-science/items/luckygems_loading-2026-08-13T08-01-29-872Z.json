@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-13T08:01:29.872Z",
+  "updatedAt": "2026-08-13T08:01:42.678Z",
+  "animation_asset": {
+    "id": "luckygems_loading-2026-08-13T08-01-29-872Z",
+    "name": "luckygems_loading",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "loader",
+    "skeleton_type": "ui",
+    "content_type": "loader",
+    "taxonomy": {
+      "category": "ui",
+      "class": "feedback",
+      "type": "loader",
+      "tags": [
+        "loading"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "loading-feedback"
+      ],
+      "loop_type": [
+        "loop"
+      ],
+      "animation_state": [
+        "page_01"
+      ],
+      "state": [
+        "default-page_01"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z",
+    "manifestPath": "library/luckygems_loading-2026-08-13T08-01-29-872Z/manifest.json",
+    "files": [
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.skel",
+        "name": "luckygems_loading/LuckyGems_Loading.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.atlas",
+        "name": "luckygems_loading/LuckyGems_Loading.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/luckygems_loading/LuckyGems_Loading.png",
+        "name": "luckygems_loading/LuckyGems_Loading.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/page_01-preview.webp",
+        "name": "page_01-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/luckygems_loading-2026-08-13T08-01-29-872Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "LuckyGems_Loading.skel",
+    "atlas": "LuckyGems_Loading.atlas",
+    "textures": [
+      "LuckyGems_Loading.png"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "Page_01"
+    ],
+    "defaultAnimation": "Page_01",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "loading"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

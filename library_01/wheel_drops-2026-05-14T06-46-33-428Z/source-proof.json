@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "wheel_drops-2026-05-14T06-46-33-428Z",
+  "title": "wheel_drops",
+  "uploadedAt": "2026-05-14T06:46:33.428Z",
+  "proofPath": "library/wheel_drops-2026-05-14T06-46-33-428Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/wheel_drops-2026-05-14T06-46-33-428Z/source-proof.json?v=2026-05-14T06-46-33.428Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+    "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+    "anonymousFingerprint": "1kaqmj9",
+    "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+    "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk-UA",
+      "languages": [
+        "uk-UA",
+        "uk",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/wheel_drops-2026-05-14T06-46-33-428Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:65b783c00458b2736bf37cc0eaf2a34f2c6d4e949204a92c41098a090f540a76",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "2_1_in-preview.webm",
+      "bytes": 7793,
+      "sha256": "7e08ea96f95e28913f8faca6b6e6017a1cf59594c2eb504bdc5e3ec6fba6a018"
+    },
+    {
+      "name": "2_1_in-preview.webp",
+      "bytes": 4334,
+      "sha256": "f7b6a8f6ae362fca6bee3141a5b773b4a14d32880899b1533b2b1e4a44d411c2"
+    },
+    {
+      "name": "wheel_drops/wheel_drops_Material.png",
+      "bytes": 485477,
+      "sha256": "0a9271ee803255b7c4991495310bd92623f976e26eae7e32ba097ce7b9cfa9f9"
+    },
+    {
+      "name": "wheel_drops/wheel_drops.atlas",
+      "bytes": 4552,
+      "sha256": "a14362d310307196edd39a2e45d2f5f790623e7d514c52095364d4149b823238"
+    },
+    {
+      "name": "wheel_drops/wheel_drops.json",
+      "bytes": 484091,
+      "sha256": "73d0f9de1c2ea4944efc51682aa45052f0997235762305d9eb0254632d3b364e"
+    }
+  ],
+  "proofHash": "65b783c00458b2736bf37cc0eaf2a34f2c6d4e949204a92c41098a090f540a76"
+}

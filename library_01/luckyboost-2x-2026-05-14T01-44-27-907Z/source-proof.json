@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "luckyboost-2x-2026-05-14T01-44-27-907Z",
+  "title": "luckyboost@2x",
+  "uploadedAt": "2026-05-14T01:44:27.907Z",
+  "proofPath": "library/luckyboost-2x-2026-05-14T01-44-27-907Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/luckyboost-2x-2026-05-14T01-44-27-907Z/source-proof.json?v=2026-05-14T01-44-27.907Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "19c8a74c47354fe0b1666588408ec18899271e038279bccddd8f7b0a69f42e25",
+    "anonymousAccountId": "anon_1kaqmj9_1ta1udm",
+    "anonymousFingerprint": "1kaqmj9",
+    "browserFingerprintSha256": "24ab5e19850226b3d98ca8c9598927ca32bd25b075c678c6350c5378d2148adf",
+    "browserEnvironmentHashSha256": "5c8690e6d925fba7805b21e8deeee12fdf8b199bd45ba1ef13c10b1410cf3760",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk-UA",
+      "languages": [
+        "uk-UA",
+        "uk",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/luckyboost-2x-2026-05-14T01-44-27-907Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c6a10de11ba81beb7fabb4e4b5f103914c6401b525835fe970f2ef31c5c57470",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "luckyboost@2x/luckyboost@2x.atlas",
+      "bytes": 2286,
+      "sha256": "db56b80f9ee190ff758753b52db8da579a7e541311d4e8b9f5956397600d921b"
+    },
+    {
+      "name": "luckyboost@2x/luckyboost@2x.json",
+      "bytes": 825891,
+      "sha256": "8a3c332a8143973d953aa6c4612669e0ee17929c27487e48b8b517bd1a36a050"
+    },
+    {
+      "name": "luckyboost@2x/luckyboost@2x.webp",
+      "bytes": 335404,
+      "sha256": "621a6503f657afcf0ef81f226d857ccaec52dd755f960b7ced16617a984a5e62"
+    },
+    {
+      "name": "n_expandedwild_idle-preview.webm",
+      "bytes": 224193,
+      "sha256": "d73dac98d82f9a187dfc77e891241e1c806daf17aacacf683151cf2f4f9aa1ba"
+    },
+    {
+      "name": "n_expandedwild_idle-preview.webp",
+      "bytes": 16452,
+      "sha256": "6b3d546b8cf7b40e0ec110fe9032efe66e315478ce514faf8dc2d8c59f4b9e42"
+    }
+  ],
+  "proofHash": "c6a10de11ba81beb7fabb4e4b5f103914c6401b525835fe970f2ef31c5c57470"
+}

@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "n10022-2026-07-27T09-37-41-737Z",
+  "title": "n10022",
+  "uploadedAt": "2026-07-27T09:37:41.737Z",
+  "proofPath": "library/n10022-2026-07-27T09-37-41-737Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/n10022-2026-07-27T09-37-41-737Z/source-proof.json?v=2026-07-27T09-37-41.737Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1120rdv_bj72ux",
+    "anonymousFingerprint": "1120rdv",
+    "browserFingerprintSha256": "79cf820a85e4074bce2be9e43363dff8400716ca005389e9c112e74427014883",
+    "browserEnvironmentHashSha256": "37388ee1518f98f6c84861754d0419005bf097e730ad83b5682ef7159a06103f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "ja",
+      "languages": [
+        "ja"
+      ],
+      "hardwareConcurrency": 13,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Tokyo",
+      "timezoneOffset": -540,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/n10022-2026-07-27T09-37-41-737Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:974993ab123e1763f169f8f2ed6407d0968bf95ad797a3483cd707b1626c4d83",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "damagein-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "n10022/n10022.atlas",
+      "bytes": 3749,
+      "sha256": "f130485004c9d813fa6ed1ed6e60ba7925a8d77b42b124e12c6e25c99fa80dea"
+    },
+    {
+      "name": "n10022/n10022.json",
+      "bytes": 276364,
+      "sha256": "64266415e8d145c8f870c6d9530056fecfe12ea36133611b5ad1a234b5d250c6"
+    },
+    {
+      "name": "n10022/n10022.png",
+      "bytes": 1539371,
+      "sha256": "bfa66738f54e3a26eb9e466739db006d8968d8af9540258805f4e1715b57c6b4"
+    }
+  ],
+  "proofHash": "974993ab123e1763f169f8f2ed6407d0968bf95ad797a3483cd707b1626c4d83"
+}

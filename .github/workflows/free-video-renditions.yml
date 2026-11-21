@@ -1,0 +1,42 @@
+name: Free Video Renditions (All Tiers)
+on:
+  workflow_dispatch:
+    inputs:
+      source_path:
+        description: 'Repository-relative path to an existing video (WebM/MP4)'
+        required: true
+      hevc:
+        description: 'Also encode Apple HEVC'
+        type: boolean
+        default: true
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate source
+        env:
+          SOURCE: ${{ inputs.source_path }}
+        run: |
+          case "$SOURCE" in /*|*../*|../*|*\\*) echo 'Invalid path'; exit 1;; esac
+          test -f "$SOURCE"
+      - name: Install FFmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Generate all free tiers
+        env:
+          SOURCE: ${{ inputs.source_path }}
+          HEVC: ${{ inputs.hevc }}
+        run: |
+          if [ "$HEVC" = true ]; then
+            node scripts/export-free-video-ladder.mjs "$SOURCE" output-renditions --hevc
+          else
+            node scripts/export-free-video-ladder.mjs "$SOURCE" output-renditions
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: free-video-renditions
+          path: output-renditions/
+          retention-days: 7

@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "catch-2026-08-01T00-31-42-839Z",
+  "title": "catch",
+  "uploadedAt": "2026-08-01T00:32:06.112Z",
+  "proofPath": "library/catch-2026-08-01T00-31-42-839Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/catch-2026-08-01T00-31-42-839Z/source-proof.json?v=2026-08-01T00-32-06.112Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_1l7idal_1prc0gb",
+    "anonymousFingerprint": "1l7idal",
+    "browserFingerprintSha256": "a63f804d00cb3aec7ae3e227e4fa904ba1b1fc93c07c9cb8d5dd425ac27de653",
+    "browserEnvironmentHashSha256": "dec66001495598648a6308cc10175c7f3adac31c17fc56993324221c7595165f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/catch-2026-08-01T00-31-42-839Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ee0b04b8a6008de924cf3e41cd5740e9eef3ebd1807087160524a1e544eb514a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "catch/catch.atlas",
+      "bytes": 445,
+      "sha256": "cdc4ce883db1f984804f5a89430434ea29b94823dd775e3593d31a6dfd6d693f"
+    },
+    {
+      "name": "catch/catch.json",
+      "bytes": 15809,
+      "sha256": "8bff611b7a676621cc79aa1ef5fc36b4cc62085c750bc7cc4afcc338d6a3339a"
+    },
+    {
+      "name": "catch/catch.png",
+      "bytes": 17490,
+      "sha256": "26bfce124d965fe341a8f7f0cfe93205fa611f9dbaf385c95c1ac32479791a59"
+    },
+    {
+      "name": "up3-preview.webp",
+      "bytes": 708,
+      "sha256": "b3930a051665ede43823fe8d78bdb423f924e8f7f8453993b9b63ffa93749cce"
+    }
+  ],
+  "proofHash": "ee0b04b8a6008de924cf3e41cd5740e9eef3ebd1807087160524a1e544eb514a"
+}

@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "eagle-2026-08-05T14-02-37-245Z",
+  "title": "eagle",
+  "uploadedAt": "2026-08-05T14:02:37.245Z",
+  "proofPath": "library/eagle-2026-08-05T14-02-37-245Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/eagle-2026-08-05T14-02-37-245Z/source-proof.json?v=2026-08-05T14-02-37.245Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vdt6za_1wt7ep3",
+    "anonymousFingerprint": "1vdt6za",
+    "browserFingerprintSha256": "79dfb0a9ccb9bf3368e3fef09d0a804ab190d5c86ef68e987ee1664ab7fd874c",
+    "browserEnvironmentHashSha256": "1249cf0ea313a2dcee5b470a849cd4986d98374d0828be99f5dacfd9b71c2fc9",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Calcutta",
+      "timezoneOffset": -330,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/eagle-2026-08-05T14-02-37-245Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:f64cc1f3ae4ecbb76cc9d9814c362071f4910c990752c55d0cae8a4f7e89dc51",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "eagle_idle-preview.webp",
+      "bytes": 696,
+      "sha256": "0372f1abd18348bb7130828f7bbe237b281ec94c4bd6f45e73bf303755f82771"
+    },
+    {
+      "name": "eagle/Eagle.atlas",
+      "bytes": 409,
+      "sha256": "37c762716dbfb2734f209fbf322dce4267f379a221ee66cdad7b89753e87b620"
+    },
+    {
+      "name": "eagle/Eagle.json",
+      "bytes": 52952,
+      "sha256": "9eafac2a65d4fc7d3fc22acb3ce396baa542f53398011653ab331c2fc821edac"
+    },
+    {
+      "name": "eagle/Eagle.png",
+      "bytes": 297344,
+      "sha256": "19859156a51fcace995037c6c52e56aaa30ee77e663f6bc504e27c19f6ffdb82"
+    }
+  ],
+  "proofHash": "f64cc1f3ae4ecbb76cc9d9814c362071f4910c990752c55d0cae8a4f7e89dc51"
+}

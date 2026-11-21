@@ -1,0 +1,469 @@
+name: Spine Export All (Matrix)
+
+on:
+  workflow_dispatch:
+    inputs:
+      filter_ids:
+        description: 'Comma-separated IDs to filter (leave blank for all)'
+        required: false
+        default: ''
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout indexes and scripts only
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          # The library now spans several library_NN folders and holds more works
+          # than GitHub's 256-job matrix limit, so ids are grouped into batches
+          # and each matrix job exports its whole batch.
+          BATCH_SIZE=4
+          if [ -n "${{ github.event.inputs.filter_ids }}" ]; then
+            # Parse comma-separated IDs into JSON array
+            IDS="${{ github.event.inputs.filter_ids }}"
+            MATRIX_JSON=$(IDS="$IDS" BATCH_SIZE="$BATCH_SIZE" node --input-type=module -e "
+              import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
+              const root = process.cwd();
+              const validIds = new Set();
+              const isExportable = (entry) =>
+                entry && entry.id &&
+                /\.(json|skel)$/i.test(String(entry.skeleton || '')) &&
+                /\.atlas(?:\.txt)?$/i.test(String(entry.atlas || '')) &&
+                Array.isArray(entry.textures) &&
+                entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
+                Array.isArray(entry.animations) && entry.animations.length > 0;
+              for (const folder of listCollectionFolders(root)) {
+                const index = readIndex(root, folder) || [];
+                for (const entry of index) if (isExportable(entry)) validIds.add(entry.id);
+              }
+              const ids = process.env.IDS.split(',').map(s => s.trim()).filter(id => validIds.has(id));
+              const size = Number(process.env.BATCH_SIZE) || 1;
+              const batches = [];
+              for (let i = 0; i < ids.length; i += size) batches.push(ids.slice(i, i + size));
+              console.log(JSON.stringify(batches));
+            ")
+            echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+          else
+            MATRIX_JSON=$(node --input-type=module -e "
+              import { listCollectionFolders, readIndex } from './scripts/resolve-library.mjs';
+              const root = process.cwd();
+              const ids = [];
+              const isExportable = (entry) =>
+                entry && entry.id &&
+                /\.(json|skel)$/i.test(String(entry.skeleton || '')) &&
+                /\.atlas(?:\.txt)?$/i.test(String(entry.atlas || '')) &&
+                Array.isArray(entry.textures) &&
+                entry.textures.some((file) => /\.(png|jpe?g|webp)$/i.test(String(file))) &&
+                Array.isArray(entry.animations) && entry.animations.length > 0;
+              for (const folder of listCollectionFolders(root)) {
+                const index = readIndex(root, folder);
+                if (!index) continue;
+                for (const entry of index) if (isExportable(entry)) ids.push(entry.id);
+              }
+              const size = Number(process.env.BATCH_SIZE) || 1;
+              const batches = [];
+              for (let i = 0; i < ids.length; i += size) batches.push(ids.slice(i, i + size));
+              console.log(JSON.stringify(batches));
+            ")
+            echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+          fi
+
+  export:
+    needs: generate-matrix
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    steps:
+      - name: Checkout indexes and scripts only
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright and static FFmpeg tools
+        run: |
+          npm init -y
+          npm install --no-save playwright@1.59.1 ffmpeg-static ffprobe-static
+          mkdir -p "$HOME/.local/bin"
+          ln -sf "$(node -e "process.stdout.write(require('ffmpeg-static'))")" "$HOME/.local/bin/ffmpeg"
+          ln -sf "$(node -e "process.stdout.write(require('ffprobe-static').path)")" "$HOME/.local/bin/ffprobe"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+          npx playwright install chromium --with-deps
+
+      - name: Run Export Script
+        run: |
+          # One job exports the whole batch; a work that fails is recorded in
+          # its own artifact so the rest of the batch still lands.
+          echo '${{ toJSON(matrix.batch) }}' > batch.json
+          node -e "
+            const fs = require('fs');
+            const ids = JSON.parse(fs.readFileSync('batch.json', 'utf8'));
+            // Trailing newline matters: `read` silently skips a last line
+            // that has no terminator, which would drop one work per batch.
+            fs.writeFileSync('batch-ids.txt', ids.map((id) => id + '\n').join(''));
+          "
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          import { entryForUpload } from './scripts/resolve-library.mjs';
+          for (const uploadId of fs.readFileSync('batch-ids.txt', 'utf8').split(/\r?\n/).filter(Boolean)) {
+            const found = entryForUpload(process.cwd(), uploadId);
+            if (!found) throw new Error('Upload not found in collection index: ' + uploadId);
+            const raw = String(found.entry.previewPath || uploadId);
+            const work = raw.startsWith(found.basePath + '/') ? raw : found.basePath + '/' + raw;
+            if (work.startsWith('/') || work.split('/').includes('..')) throw new Error('Unsafe work path for ' + uploadId);
+            execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', '/' + work + '/'], { stdio: 'inherit' });
+          }
+          NODE
+          while IFS= read -r uploadId; do
+            [ -z "$uploadId" ] && continue
+            echo "=== Exporting $uploadId ==="
+            node scripts/spine-export-webm.mjs \
+              --upload-id="$uploadId" \
+              --repo-path="${{ github.workspace }}" \
+              --output="${{ github.workspace }}/$uploadId-preview.webm" || echo "Export failed for $uploadId (recorded as error)"
+          done < batch-ids.txt
+
+      - name: Prepare Artifacts
+        run: |
+          while IFS= read -r uploadId; do
+            [ -z "$uploadId" ] && continue
+            mkdir -p "batch/$uploadId"
+            
+            # Move generated files to artifact dir if they exist
+            for ext in "webm" "webp"; do
+              for suffix in "" "-medium" "-low"; do
+                f="$uploadId-preview${suffix}.${ext}"
+                if [ -f "$f" ]; then
+                  mv "$f" "batch/$uploadId/"
+                fi
+              done
+            done
+            
+            # Move videoMeta json if it exists
+            if [ -f "$uploadId-preview.webm.json" ]; then
+              mv "$uploadId-preview.webm.json" "batch/$uploadId/meta.json"
+            else
+              echo "{}" > "batch/$uploadId/meta.json"
+            fi
+          done < batch-ids.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-${{ strategy.job-index }}
+          path: batch/
+          retention-days: 1
+          overwrite: true
+
+  commit-all:
+    needs: [export]
+    runs-on: ubuntu-24.04
+    if: always()
+    permissions:
+      contents: write
+
+    # Every commit job writes library_NN/index.json in the same branch, so they
+    # must take turns: a concurrent push is rejected by the branch lock and the
+    # loser rebuilds on a HEAD the winner has already moved.
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout indexes and merge script only
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/resolve-library.mjs
+            /library/index.json
+            /library_*/index.json
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+          pattern: export-*
+          merge-multiple: false
+          
+      - name: Process artifacts and update index
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const repoRoot = process.cwd();
+            const { pathToFileURL } = require('node:url');
+            const { entryForUpload } = await import(pathToFileURL(path.resolve(repoRoot, 'scripts/resolve-library.mjs')).href);
+            
+            const origin = 'https://spine-link.vercel.app';
+            // Each work may live in a different library_NN folder, so the folder
+            // and its index are resolved per upload and flushed at the end.
+            const touchedIndexes = new Map();
+            
+            const artifactsDir = 'downloaded-artifacts';
+            if (!fs.existsSync(artifactsDir)) {
+              console.log("No artifacts found.");
+              return;
+            }
+            
+            // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used a
+            // flat `export-<uploadId>/`, so both layouts are accepted.
+            function collectExportDirs(root) {
+              const out = [];
+              for (const name of fs.readdirSync(root)) {
+                const jobDir = path.join(root, name);
+                if (!fs.statSync(jobDir).isDirectory()) continue;
+                const entries = fs.readdirSync(jobDir);
+                if (!entries.length) continue;
+                const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
+                if (nested.length) {
+                  for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
+                } else if (/^export-/.test(name)) {
+                  out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
+                }
+              }
+              return out;
+            }
+            
+            const dirs = collectExportDirs(artifactsDir);
+            for (const { uploadId, sourceDir } of dirs) {
+              const found = entryForUpload(repoRoot, uploadId);
+              if (!found) {
+                console.log(`Skipping ${uploadId}: no collection folder holds it.`);
+                continue;
+              }
+              const basePath = found.basePath;
+              const indexPath = path.join(repoRoot, basePath, 'index.json');
+              if (!touchedIndexes.has(basePath)) {
+                touchedIndexes.set(basePath, { indexPath, indexData: found.index });
+              }
+              const indexData = touchedIndexes.get(basePath).indexData;
+              const targetDir = path.join(basePath, uploadId);
+              
+              if (!fs.existsSync(targetDir)) {
+                fs.mkdirSync(targetDir, { recursive: true });
+              }
+              
+              // Move files
+              const files = fs.readdirSync(sourceDir);
+              const uploadedUrls = {};
+              let videoMeta = {};
+              let isError = false;
+              
+              for (const file of files) {
+                if (file === 'meta.json') {
+                  try {
+                    videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8'));
+                    if (videoMeta.error) isError = true;
+                  } catch(e) {}
+                  continue;
+                }
+                
+                const cleanFileName = file.replace(uploadId + '-', '');
+                const targetPath = path.join(targetDir, cleanFileName);
+                fs.copyFileSync(path.join(sourceDir, file), targetPath);
+                
+                const relativeTarget = `${basePath}/${uploadId}/${cleanFileName}`;
+                
+                if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = `${origin}/assets/${relativeTarget}`;
+                if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = `${origin}/assets/${relativeTarget}`;
+              }
+              
+              // Update index
+              const entryIndex = indexData.findIndex(e => e.id === uploadId);
+              if (entryIndex !== -1) {
+                delete indexData[entryIndex].webmChunksJson;
+                delete indexData[entryIndex].webmChunks;
+                delete indexData[entryIndex].webmChunkCount;
+                delete indexData[entryIndex].webmIsChunked;
+                
+                indexData[entryIndex] = {
+                  ...indexData[entryIndex],
+                  ...uploadedUrls,
+                  webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
+                  webmStatus: isError ? 'error' : 'ready',
+                  webmError: isError ? videoMeta.error : undefined,
+                  webmGeneratedAt: new Date().toISOString(),
+                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                };
+              }
+            }
+            
+            for (const [basePath, { indexPath, indexData }] of touchedIndexes) {
+              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+              console.log(`Updated ${basePath}/index.json`);
+            }
+            console.log("Updated index.json successfully");
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $i/$MAX_RETRIES..."
+            
+            # 1. Pull latest state from remote first
+            # Shallow checkouts do not refresh origin/main on a plain fetch, so
+            # the remote ref is fetched explicitly; otherwise every retry rebuilt
+            # on the stale HEAD and the push was rejected all the same.
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            
+            # 2. Re-run the artifact processing script on top of fresh state
+            node --input-type=module -e "
+              import fs from 'node:fs';
+              import path from 'node:path';
+              import { entryForUpload } from './scripts/resolve-library.mjs';
+              
+              const origin = 'https://spine-link.vercel.app';
+              const repoRoot = process.cwd();
+              // Each work may live in a different library_NN folder, so the folder
+              // and its index are resolved per upload and flushed at the end.
+              const touched = new Map();
+              
+              const artifactsDir = 'downloaded-artifacts';
+              if (!fs.existsSync(artifactsDir)) { console.log('No artifacts dir'); process.exit(0); }
+              
+              // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used
+              // a flat `export-<uploadId>/`, so both layouts are accepted.
+              function collectExportDirs(root) {
+                const out = [];
+                for (const name of fs.readdirSync(root)) {
+                  const jobDir = path.join(root, name);
+                  if (!fs.statSync(jobDir).isDirectory()) continue;
+                  const entries = fs.readdirSync(jobDir);
+                  if (!entries.length) continue;
+                  const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
+                  if (nested.length) {
+                    for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
+                  } else if (/^export-/.test(name)) {
+                    out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
+                  }
+                }
+                return out;
+              }
+              
+              const dirs = collectExportDirs(artifactsDir);
+              for (const { uploadId, sourceDir } of dirs) {
+                const found = entryForUpload(repoRoot, uploadId);
+                if (!found) { console.log('Skipping ' + uploadId + ': not in any collection.'); continue; }
+                const basePath = found.basePath;
+                const indexPath = path.join(repoRoot, basePath, 'index.json');
+                if (!touched.has(basePath)) touched.set(basePath, { indexPath, indexData: found.index });
+                const indexData = touched.get(basePath).indexData;
+                const targetDir = path.join(basePath, uploadId);
+                
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                
+                const files = fs.readdirSync(sourceDir);
+                const uploadedUrls = {};
+                let videoMeta = {};
+                let isError = false;
+                
+                for (const file of files) {
+                  if (file === 'meta.json') {
+                    try { videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8')); if (videoMeta.error) isError = true; } catch(e) {}
+                    continue;
+                  }
+                  const cleanFileName = file.replace(uploadId + '-', '');
+                  const targetPath = path.join(targetDir, cleanFileName);
+                  fs.copyFileSync(path.join(sourceDir, file), targetPath);
+                  const relativeTarget = \`\${basePath}/\${uploadId}/\${cleanFileName}\`;
+                  if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
+                  if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = \`\${origin}/assets/\${relativeTarget}\`;
+                }
+                
+                const entryIndex = indexData.findIndex(e => e.id === uploadId);
+                if (entryIndex !== -1) {
+                  delete indexData[entryIndex].webmChunksJson;
+                  delete indexData[entryIndex].webmChunks;
+                  delete indexData[entryIndex].webmChunkCount;
+                  delete indexData[entryIndex].webmIsChunked;
+                  indexData[entryIndex] = {
+                    ...indexData[entryIndex],
+                    ...uploadedUrls,
+                    webmPreviewPath: isError ? undefined : \`\${basePath}/\${uploadId}/preview.webm\`,
+                    webmStatus: isError ? 'error' : 'ready',
+                    webmError: isError ? videoMeta.error : undefined,
+                    webmGeneratedAt: new Date().toISOString(),
+                    ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
+                    ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
+                    ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
+                    ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
+                    ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
+                  };
+                }
+              }
+              for (const [basePath, { indexPath, indexData }] of touched) {
+                fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+                console.log('updated ' + basePath + '/index.json');
+              }
+            "
+            
+            # 3. Stage changes
+            git add --sparse -A -- library*
+            
+            if git diff-index --quiet HEAD --; then
+              echo "No changes to commit."
+              exit 0
+            fi
+            
+            # 4. Commit
+            git commit -m "Auto-export: generate previews and update index"
+            
+            # 5. Push — if rejected, loop back and retry with fresh HEAD
+            if git push origin main; then
+              echo "Successfully pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Will retry with fresh HEAD..."
+              sleep $((RANDOM % 5 + 2))
+            fi
+          done
+          
+          echo "Failed to push after $MAX_RETRIES attempts."
+          exit 1

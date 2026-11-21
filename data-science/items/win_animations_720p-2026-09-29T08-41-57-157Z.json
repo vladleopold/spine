@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-09-29T08:41:57.157Z",
+  "updatedAt": "2026-09-29T08:42:30.318Z",
+  "animation_asset": {
+    "id": "win_animations_720p-2026-09-29T08-41-57-157Z",
+    "name": "win_animations_720p",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "bell",
+        "bell_static",
+        "bell_transform2throne",
+        "cherry",
+        "cherry_static",
+        "cherry_transform2throne",
+        "crown",
+        "crown_static",
+        "grape",
+        "grape_static",
+        "grape_transform2throne",
+        "lemon",
+        "lemon_static",
+        "lemon_transform2throne",
+        "orange",
+        "orange_static",
+        "orange_transform2throne",
+        "plum",
+        "plum_static",
+        "plum_transform2throne",
+        "scatter_shield",
+        "scatter_shield_static",
+        "scatter_star",
+        "scatter_star_static",
+        "seven",
+        "seven_static",
+        "seven_transform2throne",
+        "watermelon",
+        "watermelon_static",
+        "watermelon_transform2throne"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-bell",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/win_animations_720p-2026-09-29T08-41-57-157Z",
+    "manifestPath": "library/win_animations_720p-2026-09-29T08-41-57-157Z/manifest.json",
+    "files": [
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/win_animations_720p/win_animations_720p.json",
+        "name": "win_animations_720p/win_animations_720p.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/win_animations_720p/win_animations_720p.atlas",
+        "name": "win_animations_720p/win_animations_720p.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/win_animations_720p/win_animations_720p.webp",
+        "name": "win_animations_720p/win_animations_720p.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/win_animations_720p/win_animations_2.webp",
+        "name": "win_animations_720p/win_animations_2.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/bell-preview.webp",
+        "name": "bell-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/win_animations_720p-2026-09-29T08-41-57-157Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "win_animations_720p.json",
+    "atlas": "win_animations_720p.atlas",
+    "textures": [
+      "win_animations_720p.webp",
+      "win_animations_2.webp"
+    ],
+    "animationCount": 30,
+    "animationNames": [
+      "bell",
+      "bell_static",
+      "bell_transform2throne",
+      "cherry",
+      "cherry_static",
+      "cherry_transform2throne",
+      "crown",
+      "crown_static",
+      "grape",
+      "grape_static",
+      "grape_transform2throne",
+      "lemon",
+      "lemon_static",
+      "lemon_transform2throne",
+      "orange",
+      "orange_static",
+      "orange_transform2throne",
+      "plum",
+      "plum_static",
+      "plum_transform2throne",
+      "scatter_shield",
+      "scatter_shield_static",
+      "scatter_star",
+      "scatter_star_static",
+      "seven",
+      "seven_static",
+      "seven_transform2throne",
+      "watermelon",
+      "watermelon_static",
+      "watermelon_transform2throne"
+    ],
+    "defaultAnimation": "bell",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-04T17:51:51.742Z",
+  "updatedAt": "2026-05-04T17:52:03.360Z",
+  "animation_asset": {
+    "id": "city_jpgs-2026-05-04T17-51-51-742Z",
+    "name": "city_jpgs",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-skel"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "dead_04",
+        "loop_03",
+        "starter_01",
+        "starter_to_loop_02"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-dead_04",
+        "lose"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/city_jpgs-2026-05-04T17-51-51-742Z",
+    "manifestPath": "library/city_jpgs-2026-05-04T17-51-51-742Z/manifest.json",
+    "files": [
+      {
+        "path": "library/city_jpgs-2026-05-04T17-51-51-742Z/city_jpgs/City_JPGS.skel",
+        "name": "city_jpgs/City_JPGS.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/city_jpgs-2026-05-04T17-51-51-742Z/city_jpgs/bg1.atlas",
+        "name": "city_jpgs/bg1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/city_jpgs-2026-05-04T17-51-51-742Z/city_jpgs/bg1.png",
+        "name": "city_jpgs/bg1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/city_jpgs-2026-05-04T17-51-51-742Z/dead_04-preview.webm",
+        "name": "dead_04-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/city_jpgs-2026-05-04T17-51-51-742Z/dead_04-preview.webp",
+        "name": "dead_04-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "City_JPGS.skel",
+    "atlas": "bg1.atlas",
+    "textures": [
+      "bg1.png"
+    ],
+    "animationCount": 4,
+    "animationNames": [
+      "Dead_04",
+      "Loop_03",
+      "Starter_01",
+      "Starter_To_Loop_02"
+    ],
+    "defaultAnimation": "Dead_04",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

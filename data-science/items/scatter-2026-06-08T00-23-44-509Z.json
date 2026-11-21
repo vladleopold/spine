@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-08T00:23:44.509Z",
+  "updatedAt": "2026-06-08T00:23:59.493Z",
+  "animation_asset": {
+    "id": "scatter-2026-06-08T00-23-44-509Z",
+    "name": "scatter",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "hit",
+        "idle",
+        "landing"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/scatter-2026-06-08T00-23-44-509Z",
+    "manifestPath": "library/scatter-2026-06-08T00-23-44-509Z/manifest.json",
+    "files": [
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/scatter/Scatter.json",
+        "name": "scatter/Scatter.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/scatter/Scatter.atlas",
+        "name": "scatter/Scatter.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/scatter/Scatter.png",
+        "name": "scatter/Scatter.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/scatter-2026-06-08T00-23-44-509Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Scatter.json",
+    "atlas": "Scatter.atlas",
+    "textures": [
+      "Scatter.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "Hit",
+      "Idle",
+      "Landing"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

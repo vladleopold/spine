@@ -1,0 +1,67 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "cl_1_ch_lisa-2026-10-09T20-43-26-492Z",
+  "title": "cl_1_ch_lisa",
+  "uploadedAt": "2026-10-09T20:43:26.492Z",
+  "proofPath": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/source-proof.json?v=2026-10-09T20-43-26.492Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_nhwrce_1pp1i4z",
+    "anonymousFingerprint": "nhwrce",
+    "browserFingerprintSha256": "1e07a75a62195c63c27c06090a7a0d76e72146ac95c237b9f1ae48f43b2a6e13",
+    "browserEnvironmentHashSha256": "6b5e2fd652cadfe364abbffbd27811919ebd85ccb23698b64576cda05957aad1",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "ru"
+      ],
+      "hardwareConcurrency": 28,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1707,
+        "height": 960,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "Asia/Singapore",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:09b23120373752fef19e359d0bb2ee491cb0621450f433bbb9a0ecb06621c707",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "cl_1_ch_lisa/cl_1_ch_lisa.atlas",
+      "bytes": 179,
+      "sha256": "44991eab5bbed92948c3084ed7bc3ba5819eca4969cd0a11b9f3abfc3601451c"
+    },
+    {
+      "name": "cl_1_ch_lisa/cl_1_ch_lisa.json",
+      "bytes": 1501185,
+      "sha256": "da118da404825810faf857e4d2782dce48709408a76f8b9341bfdd2e3237fdca"
+    },
+    {
+      "name": "cl_1_ch_lisa/cl_1_ch_lisa.png",
+      "bytes": 2963224,
+      "sha256": "666004a57278f0fe7ebe0872b6fe59dd2f5ba3fa0bec54f1e0bd19bfb94d1149"
+    }
+  ],
+  "proofHash": "09b23120373752fef19e359d0bb2ee491cb0621450f433bbb9a0ecb06621c707"
+}

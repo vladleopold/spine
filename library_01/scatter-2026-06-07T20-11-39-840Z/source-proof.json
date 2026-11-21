@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "scatter-2026-06-07T20-11-39-840Z",
+  "title": "scatter",
+  "uploadedAt": "2026-06-07T20:11:39.840Z",
+  "proofPath": "library/scatter-2026-06-07T20-11-39-840Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/scatter-2026-06-07T20-11-39-840Z/source-proof.json?v=2026-06-07T20-11-39.840Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/scatter-2026-06-07T20-11-39-840Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:21a9a0e71699bc6bc231b073f89a4607a14c0b1413598b025bb75e127d79fed2",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webm",
+      "bytes": 627077,
+      "sha256": "8735601dbc664e0a8c40229e9b583f37f87b546f91a14156188ab74adad87d6a"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 221048,
+      "sha256": "d9278d8cd58f1f48e442e3059f06a5a359d293b41e7fd3d924c476aa69b36b4f"
+    },
+    {
+      "name": "scatter/Scatter.atlas",
+      "bytes": 1636,
+      "sha256": "7f6ca4fde586a6667c9546014807121ede064d52db2ecaf5aa38cb0faa354a5c"
+    },
+    {
+      "name": "scatter/Scatter.json",
+      "bytes": 244742,
+      "sha256": "dda6bcafd07b319646fcc7d33b3351a9709cac39ccc86922726e40b33a5fc8e0"
+    },
+    {
+      "name": "scatter/Scatter.png",
+      "bytes": 2485949,
+      "sha256": "cb6a074244e1f90dfd28c24c17c9b3d3ef1535806d5e7840e0cdc7614ba3a07a"
+    }
+  ],
+  "proofHash": "21a9a0e71699bc6bc231b073f89a4607a14c0b1413598b025bb75e127d79fed2"
+}

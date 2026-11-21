@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "stumobile-2026-08-29T21-55-32-730Z",
+  "title": "stumobile",
+  "uploadedAt": "2026-08-29T21:55:32.730Z",
+  "proofPath": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json?v=2026-08-29T21-55-32.730Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/stumobile-2026-08-29T21-55-32-730Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:eed1c6db9f95226ec911a702ed9b3daf6dcd4426b88451faeeba075dc0aac2a9",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 732,
+      "sha256": "1ba1d63d9297f969c5e7a70131774a0d12061702e5f246d2c0d48fbccd21d05a"
+    },
+    {
+      "name": "stumobile/stuMobile.atlas",
+      "bytes": 956,
+      "sha256": "26e7f88315273623dfd28019c74367006471b705e8fe7ba729d28d852103afd8"
+    },
+    {
+      "name": "stumobile/stuMobile.json",
+      "bytes": 60446,
+      "sha256": "03d73a0cd8bdf0f0e859d8f21134b5eaea45819036a0be65dea85e3ab1bf85de"
+    },
+    {
+      "name": "stumobile/stuMobile.png",
+      "bytes": 767299,
+      "sha256": "382a25045bbdeb4253993808b2d7d1ff11027ce6b3f21e247ce93de4b721aa9f"
+    }
+  ],
+  "proofHash": "eed1c6db9f95226ec911a702ed9b3daf6dcd4426b88451faeeba075dc0aac2a9"
+}

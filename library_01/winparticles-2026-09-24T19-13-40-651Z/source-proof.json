@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "winparticles-2026-09-24T19-13-40-651Z",
+  "title": "winparticles",
+  "uploadedAt": "2026-09-24T19:13:40.651Z",
+  "proofPath": "library/winparticles-2026-09-24T19-13-40-651Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/winparticles-2026-09-24T19-13-40-651Z/source-proof.json?v=2026-09-24T19-13-40.651Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ihaxts_1js6gww",
+    "anonymousFingerprint": "1ihaxts",
+    "browserFingerprintSha256": "599b952118132f0b69efd831ad33660d21a6bdb9514db97f28f27a5756476a6d",
+    "browserEnvironmentHashSha256": "d125864da451ce1c0c33f6296ff4469061f412f49b8cf746292ea42859a8a33e",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "fr"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 3360,
+        "height": 1890,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "America/Chicago",
+      "timezoneOffset": 300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/winparticles-2026-09-24T19-13-40-651Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:bc07171f8ae73090fff0a8fd0735dae5fdc7f0fe5f0d3e7b91ead104da108683",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "winparticles-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "winparticles/WinParticles.atlas",
+      "bytes": 84,
+      "sha256": "fe298b630523fb3bb2053381599d4713a6aab9c9219a21d8f243880d11373f82"
+    },
+    {
+      "name": "winparticles/WinParticles.json",
+      "bytes": 319261,
+      "sha256": "94359eb3155fac334f29878715a10ba8ccaacbf3243c88681a37bbc7198e5be1"
+    },
+    {
+      "name": "winparticles/WinParticles.png",
+      "bytes": 3876,
+      "sha256": "3e11360348736702c1377d5eec1d18b231a77b9daa0edbd83a36ee3f97cb83d8"
+    }
+  ],
+  "proofHash": "bc07171f8ae73090fff0a8fd0735dae5fdc7f0fe5f0d3e7b91ead104da108683"
+}

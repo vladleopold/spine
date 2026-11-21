@@ -1,0 +1,80 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "scissor-2026-06-13T19-05-17-210Z",
+  "title": "scissor",
+  "uploadedAt": "2026-06-13T19:05:17.210Z",
+  "proofPath": "library/scissor-2026-06-13T19-05-17-210Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/scissor-2026-06-13T19-05-17-210Z/source-proof.json?v=2026-06-13T19-05-17.210Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_anuce7_18wlcf",
+    "anonymousFingerprint": "anuce7",
+    "browserFingerprintSha256": "bec5b874db5724e3dd1e58217cf9de4242147df75c447fb2bddcd33480d06795",
+    "browserEnvironmentHashSha256": "540a52828a3723993a7f7254750a14f969d1b2c843d3f7c6c08ad93609d91b72",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr",
+      "languages": [
+        "tr",
+        "en-US",
+        "en",
+        "et",
+        "sk"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 32,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/scissor-2026-06-13T19-05-17-210Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:5c9f631e159c64f304a1199d4e73027c2057f5a5704e312ff44a49eb8bafff9d",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "hit-preview.webm",
+      "bytes": 395650,
+      "sha256": "236a6a1220790d300eeb551aaca27ecdeffeb4a0f6bb104873299e7b9fdcc07d"
+    },
+    {
+      "name": "hit-preview.webp",
+      "bytes": 75698,
+      "sha256": "fd4d5a1bc585f002d8ead27273f38bf5a22fd28e558e7f57809fb52a036cb3bf"
+    },
+    {
+      "name": "scissor/Scissor.atlas",
+      "bytes": 397,
+      "sha256": "4ab38d383e81b172c52a0a49f1848de62e0146a39e09aa303b64cc1bc00a54c8"
+    },
+    {
+      "name": "scissor/Scissor.json",
+      "bytes": 9619,
+      "sha256": "a4345277527fe4becd26783fd112be9968eab7e72407291c8a9f8763befb73c3"
+    },
+    {
+      "name": "scissor/Scissor.webp",
+      "bytes": 495988,
+      "sha256": "2cfc7614479b96a2bb1f8c0a7ec1a696f170669145bf20491f798203108f53bf"
+    }
+  ],
+  "proofHash": "5c9f631e159c64f304a1199d4e73027c2057f5a5704e312ff44a49eb8bafff9d"
+}

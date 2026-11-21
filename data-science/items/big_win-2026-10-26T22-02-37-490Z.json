@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-26T22:02:37.490Z",
+  "updatedAt": "2026-10-26T22:02:59.388Z",
+  "animation_asset": {
+    "id": "big_win-2026-10-26T22-02-37-490Z",
+    "name": "big_win",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "1_great_win_in",
+        "2_great_win_loop",
+        "3_great_win_out",
+        "4_big_win_in",
+        "5_big_win_loop",
+        "6_big_win_out",
+        "7_mega_win_in",
+        "8_mega_win_loop",
+        "9_mega_win_out",
+        "10_max_win_in",
+        "11_max_win_loop",
+        "12_max_win_out"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-1_great_win_in",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "big_win-2026-10-26T22-02-37-490Z",
+    "manifestPath": "big_win-2026-10-26T22-02-37-490Z/manifest.json",
+    "files": [
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/big_win/big_win.json",
+        "name": "big_win/big_win.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/big_win/big_win.atlas",
+        "name": "big_win/big_win.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/big_win/big_win.png",
+        "name": "big_win/big_win.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/1_great_win_in-preview.webp",
+        "name": "1_great_win_in-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "big_win-2026-10-26T22-02-37-490Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "big_win.json",
+    "atlas": "big_win.atlas",
+    "textures": [
+      "big_win.png"
+    ],
+    "animationCount": 12,
+    "animationNames": [
+      "1_great_win_in",
+      "2_great_win_loop",
+      "3_great_win_out",
+      "4_big_win_in",
+      "5_big_win_loop",
+      "6_big_win_out",
+      "7_mega_win_in",
+      "8_mega_win_loop",
+      "9_mega_win_out",
+      "10_max_win_in",
+      "11_max_win_loop",
+      "12_max_win_out"
+    ],
+    "defaultAnimation": "1_great_win_in",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "source_image": "a_clear_png_sprite_sheet_style_composition_on_a_tr.png",
+  "notes": [
+    "AI sprite sheet is a newly generated illustration, not an exact pixel-by-pixel segmentation of original photo.",
+    "Individual sprites are separately cropped transparent RGBA PNG files.",
+    "These sprites are not spatially registered to the original image; align them manually in Krita/Photoshop before Spine import.",
+    "Face includes some surrounding hair; left hand/weapon overlap; the standalone weapon was redrawn and may differ in shape.",
+    "Gold halo and water effects are newly generated based on prior full original, since the latest source picture does not include those effects."
+  ],
+  "assets": [
+    {
+      "filename": "01_face_and_hair.png",
+      "label": "脸部及附近发丝",
+      "size": [
+        204,
+        272
+      ],
+      "sheet_bbox": [
+        0,
+        70,
+        204,
+        342
+      ]
+    },
+    {
+      "filename": "02_horn_left.png",
+      "label": "蓝色龙角-左",
+      "size": [
+        103,
+        197
+      ],
+      "sheet_bbox": [
+        210,
+        55,
+        313,
+        252
+      ]
+    },
+    {
+      "filename": "03_horn_right.png",
+      "label": "蓝色龙角-右",
+      "size": [
+        152,
+        235
+      ],
+      "sheet_bbox": [
+        350,
+        46,
+        502,
+        281
+      ]
+    },
+    {
+      "filename": "04_hair_front.png",
+      "label": "额前头发",
+      "size": [
+        269,
+        342
+      ],
+      "sheet_bbox": [
+        493,
+        47,
+        762,
+        389
+      ]
+    },
+    {
+      "filename": "05_hair_back_right.png",
+      "label": "右侧长发",
+      "size": [
+        366,
+        381
+      ],
+      "sheet_bbox": [
+        774,
+        9,
+        1140,
+        390
+      ]
+    },
+    {
+      "filename": "06_magic_circle.png",
+      "label": "金色法环",
+      "size": [
+        343,
+        297
+      ],
+      "sheet_bbox": [
+        1177,
+        48,
+        1520,
+        345
+      ]
+    },
+    {
+      "filename": "07_left_hand_with_weapon.png",
+      "label": "左手持法器（组合）",
+      "size": [
+        193,
+        295
+      ],
+      "sheet_bbox": [
+        22,
+        386,
+        215,
+        681
+      ]
+    },
+    {
+      "filename": "08_right_hand.png",
+      "label": "右手及局部袖口",
+      "size": [
+        166,
+        244
+      ],
+      "sheet_bbox": [
+        198,
+        438,
+        364,
+        682
+      ]
+    },
+    {
+      "filename": "09_torso.png",
+      "label": "胸口及身体",
+      "size": [
+        267,
+        317
+      ],
+      "sheet_bbox": [
+        381,
+        386,
+        648,
+        703
+      ]
+    },
+    {
+      "filename": "10_sleeve_left.png",
+      "label": "左衣袖",
+      "size": [
+        320,
+        340
+      ],
+      "sheet_bbox": [
+        662,
+        389,
+        982,
+        729
+      ]
+    },
+    {
+      "filename": "11_sleeve_right.png",
+      "label": "右衣袖",
+      "size": [
+        270,
+        316
+      ],
+      "sheet_bbox": [
+        917,
+        388,
+        1187,
+        704
+      ]
+    },
+    {
+      "filename": "12_water_left.png",
+      "label": "左侧蓝色水流",
+      "size": [
+        180,
+        322
+      ],
+      "sheet_bbox": [
+        1141,
+        393,
+        1321,
+        715
+      ]
+    },
+    {
+      "filename": "13_water_right.png",
+      "label": "右侧蓝色水流",
+      "size": [
+        249,
+        315
+      ],
+      "sheet_bbox": [
+        1285,
+        398,
+        1534,
+        713
+      ]
+    },
+    {
+      "filename": "14_waist_front.png",
+      "label": "前腰饰",
+      "size": [
+        318,
+        274
+      ],
+      "sheet_bbox": [
+        7,
+        744,
+        325,
+        1018
+      ]
+    },
+    {
+      "filename": "15_waist_back.png",
+      "label": "后腰饰",
+      "size": [
+        324,
+        270
+      ],
+      "sheet_bbox": [
+        323,
+        746,
+        647,
+        1016
+      ]
+    },
+    {
+      "filename": "16_skirt_front_left.png",
+      "label": "前裙摆-左",
+      "size": [
+        302,
+        279
+      ],
+      "sheet_bbox": [
+        646,
+        740,
+        948,
+        1019
+      ]
+    },
+    {
+      "filename": "17_skirt_front_right.png",
+      "label": "前裙摆-右",
+      "size": [
+        276,
+        268
+      ],
+      "sheet_bbox": [
+        881,
+        750,
+        1157,
+        1018
+      ]
+    },
+    {
+      "filename": "18_skirt_back.png",
+      "label": "后裙摆及飘带",
+      "size": [
+        431,
+        277
+      ],
+      "sheet_bbox": [
+        1096,
+        743,
+        1527,
+        1020
+      ]
+    },
+    {
+      "filename": "19_weapon_separate.png",
+      "label": "左手法器独立素材（AI 补画）",
+      "size": [
+        594,
+        1496
+      ],
+      "sheet_bbox": null
+    }
+  ]
+}

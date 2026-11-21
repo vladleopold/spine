@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "bard_girl_front-2026-09-01T09-09-18-272Z",
+  "title": "bard_girl_front",
+  "uploadedAt": "2026-09-01T09:09:18.272Z",
+  "proofPath": "library/bard_girl_front-2026-09-01T09-09-18-272Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/bard_girl_front-2026-09-01T09-09-18-272Z/source-proof.json?v=2026-09-01T09-09-18.272Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/bard_girl_front-2026-09-01T09-09-18-272Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a4ce7b432bbc5273c65a0b09dd1895d302c7946f614b86664a6b890cab95b077",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "bard_girl_front/bard_girl_front.skel",
+      "bytes": 150508,
+      "sha256": "8d1075c4579d3cd8018bf33c4ecabc78193cfe1918b5b6f35fab105bda5664e2"
+    },
+    {
+      "name": "bard_girl_front/bard_girl.atlas",
+      "bytes": 5793,
+      "sha256": "3418b62728b02a0dc54a38b02857b8745edda7e64371f70b2a4554fc20827da9"
+    },
+    {
+      "name": "bard_girl_front/bard_girl.png",
+      "bytes": 10131,
+      "sha256": "3570620b4cabd5c8d952a6df109eafbb25b79019ba86eae8c3653d0fad8c4ac1"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1412,
+      "sha256": "aa06bf4e970c1305e660f53f4eb3107798e4d152383e5efffe9c49947c45e76e"
+    }
+  ],
+  "proofHash": "a4ce7b432bbc5273c65a0b09dd1895d302c7946f614b86664a6b890cab95b077"
+}

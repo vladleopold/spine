@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "louisa-gameplay-2026-08-29T21-50-23-515Z",
+  "title": "louisa-gameplay",
+  "uploadedAt": "2026-08-29T21:50:23.515Z",
+  "proofPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/louisa-gameplay-2026-08-29T21-50-23-515Z/source-proof.json?v=2026-08-29T21-50-23.515Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/louisa-gameplay-2026-08-29T21-50-23-515Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:db32d607d192e2f9dca54045887a1c9a45ce6cdd8fb2a864772472ec67b69a8a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 718,
+      "sha256": "839eac9d7269793bac361d1d09f8cb3df6879422195081101706410c42e50d31"
+    },
+    {
+      "name": "louisa-gameplay/louisa-gameplay.atlas",
+      "bytes": 2126,
+      "sha256": "34661b48810c7e95a04cd16a686dc2caa50516ef282fa71f9adea3ec77c2d34a"
+    },
+    {
+      "name": "louisa-gameplay/louisa-gameplay.json",
+      "bytes": 33432,
+      "sha256": "3ef182930f929a22e809579f6e687304b16f5f5b5e21027e4c15888b11633328"
+    },
+    {
+      "name": "louisa-gameplay/louisa-gameplay.png",
+      "bytes": 58239,
+      "sha256": "630de60bab20a2f0773a14a06a7dea3c705dd249fef0e6690460f4b639a1f680"
+    }
+  ],
+  "proofHash": "db32d607d192e2f9dca54045887a1c9a45ce6cdd8fb2a864772472ec67b69a8a"
+}

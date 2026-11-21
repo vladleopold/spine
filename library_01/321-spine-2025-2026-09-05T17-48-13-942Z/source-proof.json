@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "321-spine-2025-2026-09-05T17-48-13-942Z",
+  "title": "321-spine(2025)",
+  "uploadedAt": "2026-09-05T17:48:13.942Z",
+  "proofPath": "library/321-spine-2025-2026-09-05T17-48-13-942Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/321-spine-2025-2026-09-05T17-48-13-942Z/source-proof.json?v=2026-09-05T17-48-13.942Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_otflqv_1xurov5",
+    "anonymousFingerprint": "otflqv",
+    "browserFingerprintSha256": "aac0ce71d31dacbf08de75c32fdb6753a6cb1a52dd192366199901e426ef936a",
+    "browserEnvironmentHashSha256": "26f0b86250ca963450d11cd0f0e1d474cd8611a91b3d7b84514f0fd0c8a7d71d",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+      "platform": "Linux x86_64",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelRatio": 1.25
+      },
+      "timezone": "America/Detroit",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 10,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/321-spine-2025-2026-09-05T17-48-13-942Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:df13b26266af6ce4f246d6f806683cb9954ebc4900ff912da4a682be9022c517",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "321-spine(2025)/321-Spine(2025).json",
+      "bytes": 91034,
+      "sha256": "7e3167410e1c1ded7a81fa87c16084986a8772c80ae8b6d298b3ddc07f1f9d8b"
+    },
+    {
+      "name": "321-spine(2025)/spine-pet-321.atlas",
+      "bytes": 2132,
+      "sha256": "1aa31dd96eff97e701a30c74e12c1758801314b2d93f18d89ef22b8df95ae051"
+    },
+    {
+      "name": "321-spine(2025)/spine-pet-321.png",
+      "bytes": 73180,
+      "sha256": "97f96ed00f81a85880288e59d5ab953f1e2185a408c8649e432d580d4094f0e4"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 764,
+      "sha256": "52c21660e4f1f75c84b082a2be1461a1953baf9c32e503fd63596b13fd671fe0"
+    }
+  ],
+  "proofHash": "df13b26266af6ce4f246d6f806683cb9954ebc4900ff912da4a682be9022c517"
+}

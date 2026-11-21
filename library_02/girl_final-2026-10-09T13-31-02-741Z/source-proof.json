@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "girl_final-2026-10-09T13-31-02-741Z",
+  "title": "girl_final",
+  "uploadedAt": "2026-10-09T13:31:02.741Z",
+  "proofPath": "library_02/girl_final-2026-10-09T13-31-02-741Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library_02/girl_final-2026-10-09T13-31-02-741Z/source-proof.json?v=2026-10-09T13-31-02.741Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ihf0a1_17m43si",
+    "anonymousFingerprint": "1ihf0a1",
+    "browserFingerprintSha256": "14228a174d3c3f2d05ae4a70ac92c0ddcbd631f01704222b2800fb156cf6f384",
+    "browserEnvironmentHashSha256": "08ba4dab3704003494d9f6d0e881059e27be7d6e4d3146e3f7d9faefded22be4",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 1440,
+        "height": 900,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library_02/girl_final-2026-10-09T13-31-02-741Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:e08b71010b86f0cc33d7040e395f05241269cfd22c01d00328e93deb1bf2aad5",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "girl_final/Girl_final.atlas",
+      "bytes": 2411,
+      "sha256": "f1728eb1b082af579e6b7bb1edcdf10c16571a28cc28d063d4a6a256d195bca9"
+    },
+    {
+      "name": "girl_final/Girl_final.json",
+      "bytes": 170866,
+      "sha256": "6ab1f4862bf1f7f273edea0b30cf28aa50feea687af0e279b6a6ef045393f8e7"
+    },
+    {
+      "name": "girl_final/Girl_final.png",
+      "bytes": 5209528,
+      "sha256": "fcc26e98323d53da6d58157dcfd29c73da71721bd3bc4c8cee4ba73b3fda72ca"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 9124,
+      "sha256": "390386f317a1347ad6873d1fc54f5ff25235d44a90bfa688eafc3ea991b89b60"
+    }
+  ],
+  "proofHash": "e08b71010b86f0cc33d7040e395f05241269cfd22c01d00328e93deb1bf2aad5"
+}

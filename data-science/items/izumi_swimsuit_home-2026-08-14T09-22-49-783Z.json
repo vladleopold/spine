@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-14T09:22:49.783Z",
+  "updatedAt": "2026-08-14T09:23:04.301Z",
+  "animation_asset": {
+    "id": "izumi_swimsuit_home-2026-08-14T09-22-49-783Z",
+    "name": "izumi_swimsuit_home",
+    "domain": "gamedev",
+    "asset_category": "background",
+    "animation_type": "background",
+    "skeleton_type": "background",
+    "content_type": "background",
+    "taxonomy": {
+      "category": "environment",
+      "class": "background",
+      "type": "animated-background",
+      "tags": [
+        "bg"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "scene-background"
+      ],
+      "perspective": [
+        "2d"
+      ],
+      "animation_state": [
+        "dev_lookend_01_m",
+        "dev_look_01_m",
+        "dev_patend_01_m",
+        "dev_pat_01_m",
+        "dev_start_idle_01",
+        "dev_talk_01_m",
+        "dev_talk_02_m",
+        "dev_talk_03_m",
+        "dev_talk_04_m",
+        "dev_talk_05_m",
+        "dev_bg",
+        "dev_hair",
+        "dev_hair2",
+        "dev_idle",
+        "dev_octopus",
+        "dev_set",
+        "dummy",
+        "idle_01",
+        "lookend_01_a",
+        "lookend_01_m",
+        "look_01_m",
+        "patend_01_a",
+        "patend_01_m",
+        "pat_01_a",
+        "pat_01_m",
+        "start_idle_01",
+        "talk_01_a",
+        "talk_01_m",
+        "talk_02_a",
+        "talk_02_m",
+        "talk_03_a",
+        "talk_03_m",
+        "talk_04_a",
+        "talk_04_m",
+        "talk_05_a",
+        "talk_05_m",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-dev_lookend_01_m"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z",
+    "manifestPath": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/manifest.json",
+    "files": [
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/izumi_swimsuit_home/Izumi_swimsuit_home.skel",
+        "name": "izumi_swimsuit_home/Izumi_swimsuit_home.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/izumi_swimsuit_home/Izumi_swimsuit_home.atlas",
+        "name": "izumi_swimsuit_home/Izumi_swimsuit_home.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/izumi_swimsuit_home/Izumi_swimsuit_home.png",
+        "name": "izumi_swimsuit_home/Izumi_swimsuit_home.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/izumi_swimsuit_home/Izumi_swimsuit_home2.png",
+        "name": "izumi_swimsuit_home/Izumi_swimsuit_home2.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/dev_lookend_01_m-preview.webp",
+        "name": "dev_lookend_01_m-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/izumi_swimsuit_home-2026-08-14T09-22-49-783Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Izumi_swimsuit_home.skel",
+    "atlas": "Izumi_swimsuit_home.atlas",
+    "textures": [
+      "Izumi_swimsuit_home.png",
+      "Izumi_swimsuit_home2.png"
+    ],
+    "animationCount": 36,
+    "animationNames": [
+      "Dev_LookEnd_01_M",
+      "Dev_Look_01_M",
+      "Dev_PatEnd_01_M",
+      "Dev_Pat_01_M",
+      "Dev_Start_Idle_01",
+      "Dev_Talk_01_M",
+      "Dev_Talk_02_M",
+      "Dev_Talk_03_M",
+      "Dev_Talk_04_M",
+      "Dev_Talk_05_M",
+      "Dev_bg",
+      "Dev_hair",
+      "Dev_hair2",
+      "Dev_idle",
+      "Dev_octopus",
+      "Dev_set",
+      "Dummy",
+      "Idle_01",
+      "LookEnd_01_A",
+      "LookEnd_01_M",
+      "Look_01_M",
+      "PatEnd_01_A",
+      "PatEnd_01_M",
+      "Pat_01_A",
+      "Pat_01_M",
+      "Start_Idle_01",
+      "Talk_01_A",
+      "Talk_01_M",
+      "Talk_02_A",
+      "Talk_02_M",
+      "Talk_03_A",
+      "Talk_03_M",
+      "Talk_04_A",
+      "Talk_04_M",
+      "Talk_05_A",
+      "Talk_05_M"
+    ],
+    "defaultAnimation": "Dev_LookEnd_01_M",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 3
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "bg"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

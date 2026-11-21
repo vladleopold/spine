@@ -1,0 +1,180 @@
+name: Restore verified archive card previews
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-archive-card-previews.yml
+      - .github/workflows/spine-export-all.yml
+      - scripts/repair-archive-card-previews.mjs
+      - scripts/test-repair-archive-card-previews.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/repair-manifest-guard.mjs
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-archive-card-previews.yml
+      - scripts/repair-archive-card-previews.mjs
+      - scripts/test-repair-archive-card-previews.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/repair-manifest-guard.mjs
+permissions:
+  contents: write
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}
+  cancel-in-progress: false
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      candidateCount: ${{ steps.plan.outputs.candidateCount }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/test-repair-archive-card-previews.mjs
+            /scripts/verify-ready-preview-live.mjs
+            /.github/workflows/repair-archive-card-previews.yml
+            /.github/workflows/spine-export-all.yml
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Freeze exact default-animation media manifest
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/repair-archive-card-previews.mjs matrix >> "$GITHUB_OUTPUT"
+          node --check scripts/repair-archive-card-previews.mjs
+          node scripts/test-repair-archive-card-previews.mjs
+          echo "ARCHIVE_PREVIEW_INVENTORY_VALID"
+
+  render:
+    name: Render archive preview batch
+    needs: inventory
+    if: github.ref == 'refs/heads/main' && needs.inventory.outputs.candidateCount != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        batch: ${{ fromJson(needs.inventory.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: ${{ matrix.batch.sparseCheckout }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install FFmpeg for native WebM frame verification
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            if ! sudo apt-get install -y -qq ffmpeg; then
+              sudo apt-get update -qq
+              sudo apt-get install -y -qq ffmpeg
+            fi
+          fi
+      - name: Generate each poster from its own selected animation WebM
+        env:
+          REPAIR_BATCH_JSON: ${{ toJson(matrix.batch.entries) }}
+        run: node scripts/repair-archive-card-previews.mjs render
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-card-previews-${{ strategy.job-index }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [inventory, render]
+    if: github.ref == 'refs/heads/main' && always() && needs.inventory.result == 'success' && needs.render.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: archive-card-previews-*
+          path: downloaded-previews
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Publish only verified media and frozen metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            node scripts/repair-archive-card-previews.mjs merge
+            git add --sparse -A -- library*
+            if git diff --cached --quiet; then
+              echo "NO_ARCHIVE_PREVIEW_REPAIR_CHANGES"
+              break
+            fi
+            git commit -m 'fix(previews): restore exact archive card WebM and WebP pairs'
+            if git push origin HEAD:main; then
+              echo "ARCHIVE_PREVIEW_REPAIR_PUBLISHED"
+              break
+            fi
+            if (( attempt == 4 )); then
+              echo "::error::Could not publish verified archive card previews"
+              exit 1
+            fi
+            sleep $(( attempt * 4 ))
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-preview-repair-summary
+          path: preview-repair-summary.json
+          if-no-files-found: error
+          retention-days: 1
+
+  verify-production:
+    needs: publish
+    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/repair-archive-card-previews.mjs
+            /scripts/resolve-library.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/first-frame-poster.mjs
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive-preview-repair-summary
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify every restored WebM and its exact WebP poster on production
+        run: node scripts/repair-archive-card-previews.mjs verify

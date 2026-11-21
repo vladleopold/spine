@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "explosion-2026-09-10T10-40-30-323Z",
+  "title": "explosion",
+  "uploadedAt": "2026-09-10T10:40:30.323Z",
+  "proofPath": "library/explosion-2026-09-10T10-40-30-323Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/explosion-2026-09-10T10-40-30-323Z/source-proof.json?v=2026-09-10T10-40-30.323Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1yhdtee_1gee4ph",
+    "anonymousFingerprint": "1yhdtee",
+    "browserFingerprintSha256": "45c8a11fd9ff46d04a9549e320b6d8d4de937bd46d8d61e60d384d8625f064de",
+    "browserEnvironmentHashSha256": "04ccc2ac9c6f1ac8e7b7eee60469333d360f17bb964b9016286f1c2766ffdabb",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 22,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Sarajevo",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/explosion-2026-09-10T10-40-30-323Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:138751d9e6c31d7c3f6c449fd148981a471ff6dc14eac2df1d6aca9941fa8ee7",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "explosion-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "explosion/explosion.atlas",
+      "bytes": 2073,
+      "sha256": "c4935711a159b11212b308e11cb7024216de2e49edc5b7d8cead55a2b2fcfa5d"
+    },
+    {
+      "name": "explosion/explosion.json",
+      "bytes": 11893,
+      "sha256": "529a1521dff82078fb0d31346dfef991d45750ba50a48d11f9102f74fc8c5be0"
+    },
+    {
+      "name": "explosion/explosion.webp",
+      "bytes": 1723780,
+      "sha256": "5f2f0e26df0445ff0b01998f400e9d1afa2b022c766f301b4c169ff6662ea20c"
+    }
+  ],
+  "proofHash": "138751d9e6c31d7c3f6c449fd148981a471ff6dc14eac2df1d6aca9941fa8ee7"
+}

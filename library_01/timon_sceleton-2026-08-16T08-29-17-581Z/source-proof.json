@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "timon_sceleton-2026-08-16T08-29-17-581Z",
+  "title": "timon_sceleton",
+  "uploadedAt": "2026-08-16T08:29:17.581Z",
+  "proofPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/timon_sceleton-2026-08-16T08-29-17-581Z/source-proof.json?v=2026-08-16T08-29-17.581Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_qx0914_1r3ysm7",
+    "anonymousFingerprint": "qx0914",
+    "browserFingerprintSha256": "afd33ab4fac5e1f1042992c18db3ebf2f223f130d545527d09122469cb677181",
+    "browserEnvironmentHashSha256": "c8e1cae8b2aba86ceaf59e44b4370c44d2e1ad9d2ef79ba610a18f68350cbc03",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-GB",
+      "languages": [
+        "en-GB",
+        "he-IL",
+        "he",
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 24,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2195,
+        "height": 1235,
+        "colorDepth": 24,
+        "pixelRatio": 1.75
+      },
+      "timezone": "Asia/Jerusalem",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/timon_sceleton-2026-08-16T08-29-17-581Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:6de2efcac3e78f997c481d4103824965b0182385b0435269469796ba6cbf62fb",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "timon_sceleton/Timon_sceleton.atlas",
+      "bytes": 1564,
+      "sha256": "89250adc8379d90affa7b596cc4b342e4aecdbb7c8e87a1b58923c1cbb51e6e3"
+    },
+    {
+      "name": "timon_sceleton/Timon_sceleton.skel",
+      "bytes": 61055,
+      "sha256": "6cbb0e2e3571551e98400725fce81050acbcdf88ab3df83814f0317cb7f1098b"
+    },
+    {
+      "name": "timon_sceleton/Timon_sceleton.webp",
+      "bytes": 797752,
+      "sha256": "09b73b172e5bcee3bac72375b724d6ac10ee593d333145233e0dae90754cbfb0"
+    }
+  ],
+  "proofHash": "6de2efcac3e78f997c481d4103824965b0182385b0435269469796ba6cbf62fb"
+}

@@ -1,0 +1,81 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "dynamite-2026-07-23T10-18-53-634Z",
+  "title": "dynamite",
+  "uploadedAt": "2026-07-23T10:18:53.634Z",
+  "proofPath": "library/dynamite-2026-07-23T10-18-53-634Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/dynamite-2026-07-23T10-18-53-634Z/source-proof.json?v=2026-07-23T10-18-53.634Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_162ztpq_1rb5tey",
+    "anonymousFingerprint": "162ztpq",
+    "browserFingerprintSha256": "665e8095fc4f2bcc9ef88aa42afdaef04f8827abe7d74ac14bc1e6b11c57e7b4",
+    "browserEnvironmentHashSha256": "bb5a7b0dd577fc71403369b3240f71b4affd1a6c3811d5bc230614130575abb3",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "pl",
+        "de-AT",
+        "de-DE",
+        "de",
+        "en"
+      ],
+      "hardwareConcurrency": 32,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Warsaw",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/dynamite-2026-07-23T10-18-53-634Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:94258749a71e57f93b679b9123f0a4dd7d7c9d23bdde0405a4cdfbab26a98591",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "dynamite/Dynamite.atlas",
+      "bytes": 2192,
+      "sha256": "7a1a0600241d1d9777c6fcdec78a207b4e44b80c0b324faf9a6769baa5db8514"
+    },
+    {
+      "name": "dynamite/Dynamite.json",
+      "bytes": 18713,
+      "sha256": "ec8b890ad759ed4aba7f1dbf3ab2b2c609bacf61473cfa7f39394d3ddefee3e2"
+    },
+    {
+      "name": "dynamite/Dynamite.png",
+      "bytes": 1257442,
+      "sha256": "daa4efadb246f4bf4939424cfb34f640ff8950a59cd17438a0eb10ba26febbdb"
+    },
+    {
+      "name": "win-preview.webm",
+      "bytes": 752452,
+      "sha256": "a39f141ba39921f27aa935da5cd34cf364e833ff08487bfb5a55b0e324ac5bdd"
+    },
+    {
+      "name": "win-preview.webp",
+      "bytes": 43678,
+      "sha256": "2598af106b87aa0b9241ed80e15ef7a510272dbe1703b2da03ed736624488e09"
+    }
+  ],
+  "proofHash": "94258749a71e57f93b679b9123f0a4dd7d7c9d23bdde0405a4cdfbab26a98591"
+}

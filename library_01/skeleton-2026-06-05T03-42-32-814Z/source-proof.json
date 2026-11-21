@@ -1,0 +1,77 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "skeleton-2026-06-05T03-42-32-814Z",
+  "title": "skeleton",
+  "uploadedAt": "2026-06-05T03:42:32.814Z",
+  "proofPath": "library/skeleton-2026-06-05T03-42-32-814Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-06-05T03-42-32-814Z/source-proof.json?v=2026-06-05T03-42-32.814Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_8iuu18_16upj66",
+    "anonymousFingerprint": "8iuu18",
+    "browserFingerprintSha256": "5da876112f60831f4f1b68067a29364fa9161c1e40931abbb6394bd5dce0e0cd",
+    "browserEnvironmentHashSha256": "ab6268863d01e612171c8e190384ba096c2684a77e6d60a3dcbf1f876766c41c",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 32,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Bucharest",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-06-05T03-42-32-814Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9e5692efaf2e3e9ce5548dded8a1d773a4689097cf24050de0189006495f5196",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "character_idle-preview.webm",
+      "bytes": 617178,
+      "sha256": "91301075a77e818d520739f0a27ab8303e4b75b3b1ab7af6b1c208b64819b273"
+    },
+    {
+      "name": "character_idle-preview.webp",
+      "bytes": 117904,
+      "sha256": "d3bcb7f5f34775fe91270b715a6c47d759a320ce0078c5ac94c34894bce41dd1"
+    },
+    {
+      "name": "skeleton/caracter_furball.atlas",
+      "bytes": 4422,
+      "sha256": "9bd316f50167870e971caa073f8bb852e99689ceaa2e3723583d1583e57e04d3"
+    },
+    {
+      "name": "skeleton/caracter_furball.webp",
+      "bytes": 1696637,
+      "sha256": "1bf50c6df172ebb8989145d29374f86c5035939f8f43e5034efae5508849f1ff"
+    },
+    {
+      "name": "skeleton/skeleton.json",
+      "bytes": 110143,
+      "sha256": "3e6c9d80c1b6146fc538cf481cc1eabfc7610fa7c0caa6a81fe972c9c4985005"
+    }
+  ],
+  "proofHash": "9e5692efaf2e3e9ce5548dded8a1d773a4689097cf24050de0189006495f5196"
+}

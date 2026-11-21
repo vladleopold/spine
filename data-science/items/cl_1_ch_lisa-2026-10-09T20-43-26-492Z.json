@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-10-09T20:43:26.492Z",
+  "updatedAt": "2026-10-09T20:43:40.676Z",
+  "animation_asset": {
+    "id": "cl_1_ch_lisa-2026-10-09T20-43-26-492Z",
+    "name": "cl_1_ch_lisa",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "normal",
+        "angry",
+        "angry2",
+        "screaming",
+        "screaming2"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-normal"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z",
+    "manifestPath": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/manifest.json",
+    "files": [
+      {
+        "path": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/cl_1_ch_lisa/cl_1_ch_lisa.json",
+        "name": "cl_1_ch_lisa/cl_1_ch_lisa.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/cl_1_ch_lisa/cl_1_ch_lisa.atlas",
+        "name": "cl_1_ch_lisa/cl_1_ch_lisa.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/cl_1_ch_lisa/cl_1_ch_lisa.png",
+        "name": "cl_1_ch_lisa/cl_1_ch_lisa.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library_02/cl_1_ch_lisa-2026-10-09T20-43-26-492Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "cl_1_ch_lisa.json",
+    "atlas": "cl_1_ch_lisa.atlas",
+    "textures": [
+      "cl_1_ch_lisa.png"
+    ],
+    "animationCount": 5,
+    "animationNames": [
+      "normal",
+      "angry",
+      "angry2",
+      "screaming",
+      "screaming2"
+    ],
+    "defaultAnimation": "normal",
+    "fileCount": 5,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 1
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,612 @@
+name: Spine Export Full (All Animations · Parallel)
+
+# Triggered automatically by spine-export-webm.yml after the first preview is published
+on:
+  repository_dispatch:
+    types: [spine-export-full]
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/spine-export-full.yml
+      - scripts/spine-export-matrix.mjs
+      - scripts/lib/spine-export-matrix.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/prepare-render.mjs
+      - scripts/resolve-export-animation.mjs
+      - scripts/test-spine-export-matrix.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/repair-reported-previews.mjs
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/repair-last-ten-previews.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/test-repair-last-ten-previews.mjs
+      - scripts/test-preview-log-privacy.mjs
+  pull_request:
+    paths:
+      - .github/workflows/spine-export-full.yml
+      - scripts/spine-export-matrix.mjs
+      - scripts/lib/spine-export-matrix.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/prepare-render.mjs
+      - scripts/resolve-export-animation.mjs
+      - scripts/test-spine-export-matrix.mjs
+      - scripts/preview-animation-choice.mjs
+      - scripts/test-preview-animation-choice.mjs
+      - scripts/repair-reported-previews.mjs
+      - scripts/repair-latest-twenty-previews.mjs
+      - scripts/repair-last-ten-previews.mjs
+      - scripts/test-repair-latest-twenty.mjs
+      - scripts/test-repair-last-ten-previews.mjs
+      - scripts/test-preview-log-privacy.mjs
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 1 — Read index.json and produce the animation matrix
+# ═══════════════════════════════════════════════════════════════════════════
+jobs:
+  validate-contract:
+    name: Validate full-export privacy and selection contract
+    if: github.event_name != 'repository_dispatch'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library_02/index.json
+            /.github/workflows/spine-export-full.yml
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
+            /.github/workflows/repair-reported-previews.yml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run numeric matrix and no-fallback regressions
+        run: |
+          node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/lib/export-log-redaction.mjs
+          node --check scripts/prepare-render.mjs
+          node --check scripts/spine-export-matrix.mjs
+          node --check scripts/resolve-export-animation.mjs
+          node --check scripts/repair-reported-previews.mjs
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/repair-last-ten-previews.mjs
+          node --check scripts/preview-animation-choice.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/mask-preview-manifest.mjs
+          node --check scripts/lib/preview-manifest-redaction.mjs
+          node scripts/test-spine-export-matrix.mjs
+          node scripts/test-preview-log-privacy.mjs
+          node scripts/test-preview-animation-choice.mjs
+          node scripts/test-repair-last-ten-previews.mjs
+          node scripts/test-repair-latest-twenty.mjs
+
+  generate-matrix:
+    if: github.event_name == 'repository_dispatch'
+    name: 📋 Build animation matrix
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix:    ${{ steps.set-matrix.outputs.matrix }}
+      has-items: ${{ steps.set-matrix.outputs.has_items }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read numeric animation indexes from index.json
+        id: set-matrix
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          node scripts/spine-export-matrix.mjs "$UPLOAD_ID"
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 2a — Export OPAQUE WebM + WebP + MP4  (one job per animation)
+# ═══════════════════════════════════════════════════════════════════════════
+  export-opaque:
+    name: 🎬 Opaque · #${{ matrix.animation_index }}
+    needs: generate-matrix
+    if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        animation_index: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Resolve exact animation by numeric index
+        id: resolve-animation
+        env:
+          UPLOAD_ID: ${{ github.event.client_payload.uploadId }}
+          ANIMATION_INDEX: ${{ matrix.animation_index }}
+        run: node scripts/resolve-export-animation.mjs
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium --with-deps
+
+      - name: Install system dependencies (GPU + media)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
+            libwayland-egl1 ffmpeg webp
+
+      - name: Export WebM preview (opaque · 3 qualities)
+        id: export-webm
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="$(printf '%s' "$SPINE_ANIMATION_B64" | base64 --decode)"
+          SAFE="$SPINE_ANIMATION_SAFE"
+          echo "=== Exporting opaque WebM for animation index ${{ matrix.animation_index }} ==="
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$UPLOAD_ID" \
+            --animation="$ANIM" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --output="${{ github.workspace }}/${UPLOAD_ID}-anim-${SAFE}-preview.webm"
+
+          echo "safe_name=${SAFE}" >> $GITHUB_OUTPUT
+          echo "=== Opaque WebM done ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert WebM → MP4 (H.264 · 3 qualities)
+        id: convert-mp4
+        if: always() && steps.export-webm.outcome == 'success'
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          SAFE="${{ steps.export-webm.outputs.safe_name }}"
+          echo "=== Converting to MP4: $SAFE ==="
+
+          for suffix in "" "-medium" "-low"; do
+            SRC="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.webm"
+            DST="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.mp4"
+            if [ -f "$SRC" ]; then
+              ffmpeg -y -i "$SRC" \
+                -c:v libx264 -preset fast -crf 23 \
+                -movflags +faststart -pix_fmt yuv420p \
+                "$DST" && echo "MP4 rendition ready" || exit 1
+            fi
+          done
+
+      - name: Collect opaque artifacts
+        id: collect-opaque
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIMATION_INDEX="${{ matrix.animation_index }}"
+          SAFE="${{ steps.export-webm.outputs.safe_name }}"
+          DIR="artifact_opaque_${GITHUB_RUN_ID}_${SAFE}"
+          mkdir -p "$DIR"
+
+          # WebM files
+          for suffix in "" "-medium" "-low"; do
+            for ext in "webm" "webp" "mp4"; do
+              SRC="${UPLOAD_ID}-anim-${SAFE}-preview${suffix}.${ext}"
+              [ -f "$SRC" ] && mv "$SRC" "$DIR/"
+            done
+          done
+
+          # Keep only non-identifying render metadata in the public artifact.
+          META="${UPLOAD_ID}-anim-${SAFE}-preview.webm.json"
+          if [ -s "$META" ]; then
+            node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));const w=m?.qualityWidths&&typeof m.qualityWidths==='object'?m.qualityWidths:{};fs.writeFileSync(process.argv[2],JSON.stringify({animationDuration:Number(m?.animationDuration)||0,qualityWidths:{high:Number(w.high)||0,medium:Number(w.medium)||0,low:Number(w.low)||0}}))" "$META" "$DIR/meta.json"
+          else
+            echo '{}' > "$DIR/meta.json"
+          fi
+
+          # Store only the numeric source index; resolve the exact name from index.json at commit time.
+          echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
+          echo "$SAFE" > "$DIR/safe-name.txt"
+          echo "type=opaque" > "$DIR/export-type.txt"
+
+          echo "ARTIFACT_FILE_COUNT=$(find "$DIR" -maxdepth 1 -type f | wc -l)"
+
+      - name: Upload opaque artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-opaque-${{ github.run_id }}-${{ steps.export-webm.outputs.safe_name }}
+          path: artifact_opaque_${{ github.run_id }}_${{ steps.export-webm.outputs.safe_name }}/*
+          retention-days: 1
+          overwrite: true
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 2b — Export ALPHA (transparent) WebM  (one job per animation)
+#             Runs IN PARALLEL with export-opaque — no dependencies between them
+# ═══════════════════════════════════════════════════════════════════════════
+  export-alpha:
+    name: 🌀 Alpha · #${{ matrix.animation_index }}
+    needs: generate-matrix
+    if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        animation_index: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Resolve exact animation by numeric index
+        id: resolve-animation
+        env:
+          UPLOAD_ID: ${{ github.event.client_payload.uploadId }}
+          ANIMATION_INDEX: ${{ matrix.animation_index }}
+        run: node scripts/resolve-export-animation.mjs
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm init -y
+          npm install playwright@1.59.1
+          npx playwright install chromium --with-deps
+
+      - name: Install system dependencies (GPU + media)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libdbus-1-3 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libatspi2.0-0 libwayland-client0 libwayland-cursor0 \
+            libwayland-egl1 ffmpeg webp
+
+      - name: Export transparent WebM (alpha VP9 · 3 qualities)
+        id: export-alpha
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIM="$(printf '%s' "$SPINE_ANIMATION_B64" | base64 --decode)"
+          SAFE="$SPINE_ANIMATION_SAFE"
+          echo "=== Exporting alpha WebM for animation index ${{ matrix.animation_index }} ==="
+
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$UPLOAD_ID" \
+            --animation="$ANIM" \
+            --origin="${{ github.event.client_payload.origin }}" \
+            --owner="${{ github.event.client_payload.owner }}" \
+            --repo="${{ github.event.client_payload.repo }}" \
+            --branch="${{ github.event.client_payload.branch }}" \
+            --repo-path="${{ github.workspace }}" \
+            --alpha \
+            --output="${{ github.workspace }}/${UPLOAD_ID}-anim-${SAFE}-alpha.webm" \
+            && echo "Alpha export succeeded" \
+            || exit 1
+
+          echo "safe_name=${SAFE}" >> $GITHUB_OUTPUT
+          echo "=== Alpha WebM done ==="
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Collect alpha artifacts
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ANIMATION_INDEX="${{ matrix.animation_index }}"
+          SAFE="${{ steps.export-alpha.outputs.safe_name }}"
+          DIR="artifact_alpha_${GITHUB_RUN_ID}_${SAFE}"
+          mkdir -p "$DIR"
+
+          for suffix in "" "-medium" "-low"; do
+            SRC="${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.webm"
+            [ -f "$SRC" ] && mv "$SRC" "$DIR/" || echo "Missing alpha rendition for requested quality"
+          done
+
+          echo "$ANIMATION_INDEX" > "$DIR/animation-index.txt"
+          echo "$SAFE" > "$DIR/safe-name.txt"
+          echo "type=alpha" > "$DIR/export-type.txt"
+
+          # From each transparent WebM the site also offers MOV (ProRes 4444,
+          # keeps the alpha), GIF (palette-based) and a PNG sequence (one PNG
+          # per frame, keeps the alpha). All three are derived from the alpha
+          # WebM so they carry the same transparency and the same 3-quality
+          # ladder as the WebM itself.
+          for suffix in "" "-medium" "-low"; do
+            SRC="$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.webm"
+            [ -f "$SRC" ] || continue
+
+            # MOV with alpha — prores_ks in yuva444p preserves transparency.
+            # Non-critical: a single missing format must not fail the whole
+            # alpha export, otherwise the animation would lose every derived
+            # file (MOV/GIF/PNG) for all three quality levels.
+            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -c:v prores_ks -profile:v 4 -pix_fmt yuva444p10le               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.mov" || exit 1
+
+            # GIF — two-pass palette. The alpha channel of the source is
+            # folded into the 1-bit transparency of the GIF.
+            # Guarded for sub-2-frame clips: the palette filter dies on inputs
+            # with fewer than 2 frames, so a 1-frame animation is skipped
+            # instead of taking the whole job down.
+            FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -of csv=p=0 "$SRC" 2>/dev/null || echo 0)
+            if [ "${FRAMES:-0}" -ge 2 ] 2>/dev/null; then
+              ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC"               -vf "fps=15,split[s0][p1];[s0]palettegen=stats_mode=diff[p];[p1][p]paletteuse"               "$DIR/${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.gif" || exit 1
+            else
+              echo "Skipping GIF for suffix: $suffix (only ${FRAMES:-0} frames)"
+            fi
+
+            # PNG sequence — one PNG per frame, alpha channel kept, packed
+            # into a single zip so it ships as one downloadable file.
+            TMPDIR="$DIR/pngseq${suffix//-/}"
+            mkdir -p "$TMPDIR"
+            ffmpeg -y -v error -c:v libvpx-vp9 -i "$SRC" -vsync vfr "$TMPDIR/frame-%04d.png" || echo "PNG sequence failed for suffix: $suffix (non-critical)"
+            if [ -d "$TMPDIR" ] && [ "$(ls -A "$TMPDIR" 2>/dev/null)" ]; then
+              (cd "$TMPDIR" && zip -q -j "../${UPLOAD_ID}-anim-${SAFE}-alpha${suffix}.png.zip" ./*.png) || exit 1
+              rm -rf "$TMPDIR"
+            else
+              rm -rf "$TMPDIR"
+              echo "No PNG frames for suffix: $suffix"
+            fi
+          done
+
+          echo "ARTIFACT_FILE_COUNT=$(find "$DIR" -maxdepth 1 -type f | wc -l)"
+
+      - name: Upload alpha artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-alpha-${{ github.run_id }}-${{ steps.export-alpha.outputs.safe_name }}
+          path: artifact_alpha_${{ github.run_id }}_${{ steps.export-alpha.outputs.safe_name }}/*
+          retention-days: 1
+          overwrite: true
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  STAGE 3 — Atomic commit: gather ALL artifacts → copy files → update index
+#            Runs after BOTH export-opaque AND export-alpha complete
+# ═══════════════════════════════════════════════════════════════════════════
+  commit-all:
+    name: 💾 Commit all to repository
+    needs: [generate-matrix, export-opaque, export-alpha]
+    if: always() && github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    # Every commit job writes library_NN/index.json in the same branch, so they
+    # must take turns: a concurrent push is rejected by the branch lock and the
+    # loser rebuilds on a HEAD the winner has already moved.
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+      - name: Checkout animation source only
+        run: node scripts/prepare-render.mjs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download opaque artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts/opaque
+          pattern: full-opaque-${{ github.run_id }}-*
+          merge-multiple: false
+
+      - name: Download alpha artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts/alpha
+          pattern: full-alpha-${{ github.run_id }}-*
+          merge-multiple: false
+
+      - name: Commit and push atomically (fetch-reset-apply loop)
+        run: |
+          UPLOAD_ID="${{ github.event.client_payload.uploadId }}"
+          ORIGIN="${{ github.event.client_payload.origin }}"
+          # Resolve collection and work paths from the fresh main HEAD inside each retry.
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "=== Attempt $i/$MAX_RETRIES ==="
+
+            # 1. Always start from fresh remote HEAD to avoid conflicts.
+            # Shallow checkouts do not refresh origin/main on a plain fetch, so
+            # FETCH_HEAD is used directly; otherwise every retry rebuilt on the
+            # stale HEAD and the push was rejected all the same.
+            git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+            git reset --hard refs/remotes/origin/main
+            BASE_PATH=$(node --input-type=module -e "
+              import { collectionPathForUpload } from './scripts/resolve-library.mjs';
+              console.log(collectionPathForUpload(process.cwd(), process.argv[1]));
+            " "$UPLOAD_ID")
+            INDEX_PATH="${BASE_PATH}/index.json"
+            WORK_PATH=$(node --input-type=module -e "import {entryForUpload} from './scripts/resolve-library.mjs'; console.log(entryForUpload(process.cwd(), process.argv[1]).entry.previewPath)" "$UPLOAD_ID")
+            git sparse-checkout add --skip-checks "/${WORK_PATH}/"
+
+            # 2. Process all downloaded artifacts and update index.json
+            UPLOAD_ID="$UPLOAD_ID" ORIGIN="$ORIGIN" BASE_PATH="$BASE_PATH" INDEX_PATH="$INDEX_PATH" node --input-type=module <<'NODE'
+            import fs from 'node:fs';
+            import path from 'node:path';
+            import {
+              mergeFullExportMetadata,
+              resolveAnimationIndex,
+            } from './scripts/lib/spine-export-matrix.mjs';
+
+            const uploadId = process.env.UPLOAD_ID;
+            const origin = String(process.env.ORIGIN || '').replace(/\/+$/, '');
+            const basePath = process.env.BASE_PATH;
+            const indexPath = process.env.INDEX_PATH;
+            const indexData = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+            const entryIndex = indexData.findIndex((entry) => entry.id === uploadId);
+            if (entryIndex === -1) throw new Error('UPLOAD_INDEX_ENTRY_MISSING');
+
+            const entry = indexData[entryIndex];
+            const allAnimPreviews = { ...(entry.allAnimationPreviews || {}) };
+
+            for (const type of ['opaque', 'alpha']) {
+              const artifactsDir = path.join('downloaded-artifacts', type);
+              if (!fs.existsSync(artifactsDir)) continue;
+
+              for (const dir of fs.readdirSync(artifactsDir)) {
+                const sourceDir = path.join(artifactsDir, dir);
+                if (!fs.statSync(sourceDir).isDirectory()) continue;
+
+                const indexFile = path.join(sourceDir, 'animation-index.txt');
+                const safeNameFile = path.join(sourceDir, 'safe-name.txt');
+                if (!fs.existsSync(indexFile) || !fs.existsSync(safeNameFile)) continue;
+
+                const animationIndex = Number(fs.readFileSync(indexFile, 'utf8').trim());
+                const selection = resolveAnimationIndex(entry, animationIndex);
+                if (selection.status !== 'ready') throw new Error('INVALID_ANIMATION_INDEX');
+                const animName = selection.animation;
+                const safeName = fs.readFileSync(safeNameFile, 'utf8').trim();
+                if (safeName !== selection.safeName) throw new Error('INVALID_ANIMATION_ARTIFACT_NAME');
+
+                const workPath = String(entry.previewPath || path.join(basePath, uploadId))
+                  .replace(/^\/+|\/+$/g, '');
+                const animTargetDir = path.join(workPath, 'animations', safeName);
+                fs.mkdirSync(animTargetDir, { recursive: true });
+                if (!allAnimPreviews[animName]) allAnimPreviews[animName] = {};
+
+                const metaFile = path.join(sourceDir, 'meta.json');
+                if (fs.existsSync(metaFile)) {
+                  try {
+                    const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
+                    const duration = Number(meta?.animationDuration);
+                    if (Number.isFinite(duration) && duration > 0) {
+                      allAnimPreviews[animName].previewDuration = duration;
+                    }
+                    const widths = meta?.qualityWidths;
+                    if (widths && typeof widths === 'object') {
+                      allAnimPreviews[animName].qualityWidths = {
+                        high: Number(widths.high) || 0,
+                        medium: Number(widths.medium) || 0,
+                        low: Number(widths.low) || 0,
+                      };
+                    }
+                  } catch {
+                    // Invalid metadata is ignored; no alternate animation is selected.
+                  }
+                }
+
+                for (const file of fs.readdirSync(sourceDir)) {
+                  if (['animation-index.txt', 'safe-name.txt', 'export-type.txt', 'meta.json'].includes(file)) continue;
+                  const src = path.join(sourceDir, file);
+                  const dst = path.join(animTargetDir, file);
+                  fs.copyFileSync(src, dst);
+                  const url = origin + '/assets/' + workPath + '/animations/' + safeName + '/' + file;
+                  const prefix = uploadId + '-anim-' + safeName + '-';
+
+                  if (file === prefix + 'preview.webm') allAnimPreviews[animName].webmPreview = url;
+                  else if (file === prefix + 'preview-medium.webm') allAnimPreviews[animName].webmPreviewMedium = url;
+                  else if (file === prefix + 'preview-low.webm') allAnimPreviews[animName].webmPreviewLow = url;
+                  else if (file === prefix + 'preview.webp') allAnimPreviews[animName].webpPoster = url;
+                  else if (file === prefix + 'preview-medium.webp') allAnimPreviews[animName].webpPosterMedium = url;
+                  else if (file === prefix + 'preview-low.webp') allAnimPreviews[animName].webpPosterLow = url;
+                  else if (file === prefix + 'preview.mp4') allAnimPreviews[animName].mp4Preview = url;
+                  else if (file === prefix + 'preview-medium.mp4') allAnimPreviews[animName].mp4PreviewMedium = url;
+                  else if (file === prefix + 'preview-low.mp4') allAnimPreviews[animName].mp4PreviewLow = url;
+                  else if (file === prefix + 'alpha.webm') allAnimPreviews[animName].webmAlpha = url;
+                  else if (file === prefix + 'alpha-medium.webm') allAnimPreviews[animName].webmAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.webm') allAnimPreviews[animName].webmAlphaLow = url;
+                  else if (file === prefix + 'alpha.mov') allAnimPreviews[animName].movAlpha = url;
+                  else if (file === prefix + 'alpha-medium.mov') allAnimPreviews[animName].movAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.mov') allAnimPreviews[animName].movAlphaLow = url;
+                  else if (file === prefix + 'alpha.gif') allAnimPreviews[animName].gifAlpha = url;
+                  else if (file === prefix + 'alpha-medium.gif') allAnimPreviews[animName].gifAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.gif') allAnimPreviews[animName].gifAlphaLow = url;
+                  else if (file === prefix + 'alpha.png.zip') allAnimPreviews[animName].pngAlpha = url;
+                  else if (file === prefix + 'alpha-medium.png.zip') allAnimPreviews[animName].pngAlphaMedium = url;
+                  else if (file === prefix + 'alpha-low.png.zip') allAnimPreviews[animName].pngAlphaLow = url;
+                }
+              }
+            }
+
+            indexData[entryIndex] = mergeFullExportMetadata(
+              entry,
+              allAnimPreviews,
+              new Date().toISOString(),
+            );
+            fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+            console.log('FULL_EXPORT_INDEX_UPDATED', Object.keys(allAnimPreviews).length);
+          NODE
+
+            # 3. Stage everything
+            git add "$BASE_PATH" "$WORK_PATH/animations"
+            if git diff-index --quiet HEAD --; then
+              echo "No changes to commit — all animations already up to date."
+              exit 0
+            fi
+
+            # 4. Commit
+            git commit -m "Full export: verified preview media"
+
+            # 5. Push — retry if rejected by another concurrent push
+            if git push origin main; then
+              echo "Successfully pushed on attempt $i!"
+              exit 0
+            else
+              echo "Push rejected. Retrying with fresh HEAD..."
+              sleep $((RANDOM % 6 + 2))
+            fi
+          done
+
+          echo "ERROR: Failed to push after $MAX_RETRIES attempts."
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Full Export Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Run ID | ${{ github.run_id }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Opaque jobs | ${{ needs.export-opaque.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Alpha jobs  | ${{ needs.export-alpha.result }} |" >> $GITHUB_STEP_SUMMARY

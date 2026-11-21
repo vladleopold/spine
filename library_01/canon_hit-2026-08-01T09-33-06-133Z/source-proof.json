@@ -1,0 +1,75 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "canon_hit-2026-08-01T09-33-06-133Z",
+  "title": "canon_hit",
+  "uploadedAt": "2026-08-01T09:33:06.133Z",
+  "proofPath": "library/canon_hit-2026-08-01T09-33-06-133Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/canon_hit-2026-08-01T09-33-06-133Z/source-proof.json?v=2026-08-01T09-33-06.133Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "5710b3587a259e1682ceedc39ceee5f6d444d9343bef494ce1440a9ef2662de5",
+    "anonymousAccountId": "anon_1l7idal_1prc0gb",
+    "anonymousFingerprint": "1l7idal",
+    "browserFingerprintSha256": "a63f804d00cb3aec7ae3e227e4fa904ba1b1fc93c07c9cb8d5dd425ac27de653",
+    "browserEnvironmentHashSha256": "dec66001495598648a6308cc10175c7f3adac31c17fc56993324221c7595165f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "uk",
+      "languages": [
+        "uk",
+        "en-US",
+        "en",
+        "ru"
+      ],
+      "hardwareConcurrency": 4,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Kiev",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/canon_hit-2026-08-01T09-33-06-133Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c7edf69de24eb2261902f3033cf1133db93b943ef0f19047c0236c57b7bad104",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "1-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "canon_hit/canon_hit.atlas",
+      "bytes": 185,
+      "sha256": "1ea7b319716c641417fdb89409a6bc67173045306b6d8f7f0e738f8bc5d21ff0"
+    },
+    {
+      "name": "canon_hit/canon_hit.json",
+      "bytes": 8051,
+      "sha256": "0a3d4bd38b47d3ec5cba00e9800f832fd37e1e4d376a6d6040a149729ca5e969"
+    },
+    {
+      "name": "canon_hit/canon_hit.png",
+      "bytes": 15234,
+      "sha256": "bce11527e1f50d66b9fa3e51ff62c022e7bfb930eceb6750d813a17137957177"
+    }
+  ],
+  "proofHash": "c7edf69de24eb2261902f3033cf1133db93b943ef0f19047c0236c57b7bad104"
+}

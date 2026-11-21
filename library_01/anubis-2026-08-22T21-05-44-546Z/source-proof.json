@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "anubis-2026-08-22T21-05-44-546Z",
+  "title": "anubis",
+  "uploadedAt": "2026-08-22T21:05:44.546Z",
+  "proofPath": "library/anubis-2026-08-22T21-05-44-546Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/anubis-2026-08-22T21-05-44-546Z/source-proof.json?v=2026-08-22T21-05-44.546Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_qlezd4_1mv1amh",
+    "anonymousFingerprint": "qlezd4",
+    "browserFingerprintSha256": "1b707f0998ab4aab4d00563b0f620ae339e3af218c5f93217be1e6780bf41e58",
+    "browserEnvironmentHashSha256": "80d147f0c07f9f138d82e640befb6b9183dad0b3939ce7953c3ec6bd0385d8a5",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en",
+        "tr",
+        "uk"
+      ],
+      "hardwareConcurrency": 14,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1728,
+        "height": 1117,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Warsaw",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/anubis-2026-08-22T21-05-44-546Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:f9a160aae309e4681e5ddaca455c729ae248d1c0260d57035086d173b9e7c333",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "anubis/Anubis.atlas",
+      "bytes": 3150,
+      "sha256": "d232d1086a9acf4d6a813add39896684d045714fc0ece3e25d830a022f8369ab"
+    },
+    {
+      "name": "anubis/Anubis.json",
+      "bytes": 188704,
+      "sha256": "8cb02122dbf9ea760c84f7dd284594fa3fc3c699a9bed5e334e7c267041ea81b"
+    },
+    {
+      "name": "anubis/Anubis.png",
+      "bytes": 1221950,
+      "sha256": "a6c8a6817632d5bc96635731328060326690c333cb6a009690592b3e9109dee8"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    }
+  ],
+  "proofHash": "f9a160aae309e4681e5ddaca455c729ae248d1c0260d57035086d173b9e7c333"
+}

@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-21T10:46:26.524Z",
+  "updatedAt": "2026-05-21T10:46:43.289Z",
+  "animation_asset": {
+    "id": "json-miranda-2026-05-21T10-46-26-524Z",
+    "name": "json miranda",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "object"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "cheering_happy _victory",
+        "cheering_happy _victory_2",
+        "eating",
+        "eating_single_object",
+        "eating_single_object_2",
+        "eat_long_begin",
+        "eat_long_end",
+        "eat_long_loop",
+        "eat_shot",
+        "idle_hungry",
+        "idle_liemchan",
+        "idle_playing",
+        "idle_start",
+        "idle_yawn",
+        "listening",
+        "miss_appease",
+        "miss_object",
+        "miss_object_lose",
+        "miss_object_lose_2",
+        "specialmoment_burp",
+        "specialmoment_drool",
+        "specialmoment_drool_begin",
+        "specialmoment_drool_end",
+        "specialmoment_drool_loop",
+        "specialmoment_lipslicking",
+        "specialmoment_surprise",
+        "tail",
+        "tiramisu special",
+        "tiramisu special2",
+        "idle"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-idle_hungry",
+        "win",
+        "lose"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/json-miranda-2026-05-21T10-46-26-524Z",
+    "manifestPath": "library/json-miranda-2026-05-21T10-46-26-524Z/manifest.json",
+    "files": [
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/json miranda/Json Miranda.json",
+        "name": "json miranda/Json Miranda.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/json miranda/Json Miranda.atlas.txt",
+        "name": "json miranda/Json Miranda.atlas.txt",
+        "role": "atlas",
+        "format": "atlas.txt"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/json miranda/Json Miranda.png",
+        "name": "json miranda/Json Miranda.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/idle_hungry-preview.webm",
+        "name": "idle_hungry-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/idle_hungry-preview.webp",
+        "name": "idle_hungry-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/json-miranda-2026-05-21T10-46-26-524Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Json Miranda.json",
+    "atlas": "Json Miranda.atlas.txt",
+    "textures": [
+      "Json Miranda.png"
+    ],
+    "animationCount": 29,
+    "animationNames": [
+      "Cheering_Happy _Victory",
+      "Cheering_Happy _Victory_2",
+      "Eating",
+      "Eating_Single_Object",
+      "Eating_Single_Object_2",
+      "Eat_Long_Begin",
+      "Eat_Long_End",
+      "Eat_Long_Loop",
+      "Eat_Shot",
+      "Idle_Hungry",
+      "Idle_Liemchan",
+      "Idle_Playing",
+      "Idle_Start",
+      "Idle_Yawn",
+      "Listening",
+      "Miss_Appease",
+      "Miss_Object",
+      "Miss_Object_Lose",
+      "Miss_Object_Lose_2",
+      "SpecialMoment_Burp",
+      "SpecialMoment_Drool",
+      "SpecialMoment_Drool_Begin",
+      "SpecialMoment_Drool_End",
+      "SpecialMoment_Drool_Loop",
+      "SpecialMoment_LipsLicking",
+      "SpecialMoment_Surprise",
+      "Tail",
+      "Tiramisu Special",
+      "Tiramisu Special2"
+    ],
+    "defaultAnimation": "Idle_Hungry",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "object"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T21:49:16.570Z",
+  "updatedAt": "2026-08-29T21:49:24.827Z",
+  "animation_asset": {
+    "id": "luke-gameplay-2026-08-29T21-49-16-570Z",
+    "name": "luke-gameplay",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "blink",
+        "idle",
+        "launchball",
+        "run-backward",
+        "run-forward"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "run"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/luke-gameplay-2026-08-29T21-49-16-570Z",
+    "manifestPath": "library/luke-gameplay-2026-08-29T21-49-16-570Z/manifest.json",
+    "files": [
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/luke-gameplay/luke-gameplay.json",
+        "name": "luke-gameplay/luke-gameplay.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/luke-gameplay/luke-gameplay.atlas",
+        "name": "luke-gameplay/luke-gameplay.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/luke-gameplay/luke-gameplay.png",
+        "name": "luke-gameplay/luke-gameplay.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/luke-gameplay-2026-08-29T21-49-16-570Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "luke-gameplay.json",
+    "atlas": "luke-gameplay.atlas",
+    "textures": [
+      "luke-gameplay.png"
+    ],
+    "animationCount": 5,
+    "animationNames": [
+      "blink",
+      "idle",
+      "launchBall",
+      "run-backward",
+      "run-forward"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

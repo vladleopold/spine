@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "android_hitori_front-2026-09-01T10-04-27-925Z",
+  "title": "android_hitori_front",
+  "uploadedAt": "2026-09-01T10:04:27.925Z",
+  "proofPath": "library/android_hitori_front-2026-09-01T10-04-27-925Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/android_hitori_front-2026-09-01T10-04-27-925Z/source-proof.json?v=2026-09-01T10-04-27.925Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1h9kfok_mxhunj",
+    "anonymousFingerprint": "1h9kfok",
+    "browserFingerprintSha256": "b3d5011f42e75189d8f99e2d8bc0998ef61a95d91820866f55f7c4fa99e0f2c4",
+    "browserEnvironmentHashSha256": "afe05f15e72de468d790f3fc21467e6aa284e6f9ca92bc775cd257c4fe240750",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "en-GB"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/London",
+      "timezoneOffset": -60,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/android_hitori_front-2026-09-01T10-04-27-925Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c3594ff0b61a0515c560017ac4ed56256891df78ddca73f4abfbbf8b949adeb6",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "android_hitori_front/android_hitori_front.skel",
+      "bytes": 190914,
+      "sha256": "21947ae4b477ef7b7daa7727ef89dbd128ec96874edb38107e2094e7aa7635a7"
+    },
+    {
+      "name": "android_hitori_front/android_hitori.atlas",
+      "bytes": 6352,
+      "sha256": "3fd2f2c717a1df3de961ab1d0cc67c2095b1eccf72d7f7f1ef81bc4a8b3df655"
+    },
+    {
+      "name": "android_hitori_front/android_hitori.png",
+      "bytes": 14012,
+      "sha256": "230bc8f95c2e66d13a5ab0b95f1f61f0cd5dd37fcf2610ac75184674cec8d351"
+    },
+    {
+      "name": "down-run_front-preview.webp",
+      "bytes": 1430,
+      "sha256": "ce59538e4f52d8ba1e5769f698b50c0e8da867d490548dfde1222801ff56cbe7"
+    }
+  ],
+  "proofHash": "c3594ff0b61a0515c560017ac4ed56256891df78ddca73f4abfbbf8b949adeb6"
+}

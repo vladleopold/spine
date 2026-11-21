@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-13T19:05:17.210Z",
+  "updatedAt": "2026-06-13T19:05:29.445Z",
+  "animation_asset": {
+    "id": "scissor-2026-06-13T19-05-17-210Z",
+    "name": "scissor",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "one-shot"
+      ],
+      "animation_state": [
+        "hit"
+      ],
+      "state": [
+        "default-hit"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/scissor-2026-06-13T19-05-17-210Z",
+    "manifestPath": "library/scissor-2026-06-13T19-05-17-210Z/manifest.json",
+    "files": [
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/scissor/Scissor.json",
+        "name": "scissor/Scissor.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/scissor/Scissor.atlas",
+        "name": "scissor/Scissor.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/scissor/Scissor.webp",
+        "name": "scissor/Scissor.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/hit-preview.webm",
+        "name": "hit-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/hit-preview.webp",
+        "name": "hit-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/scissor-2026-06-13T19-05-17-210Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Scissor.json",
+    "atlas": "Scissor.atlas",
+    "textures": [
+      "Scissor.webp"
+    ],
+    "animationCount": 1,
+    "animationNames": [
+      "Hit"
+    ],
+    "defaultAnimation": "Hit",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

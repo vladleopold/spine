@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "pointpopup-2026-10-07T13-06-39-787Z",
+  "title": "pointpopup",
+  "uploadedAt": "2026-10-07T13:06:39.787Z",
+  "proofPath": "library_02/pointpopup-2026-10-07T13-06-39-787Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library_02/pointpopup-2026-10-07T13-06-39-787Z/source-proof.json?v=2026-10-07T13-06-39.787Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_kojtrv_a2yiak",
+    "anonymousFingerprint": "kojtrv",
+    "browserFingerprintSha256": "fd1b682d0d7cee4fa7e5d7cf410f52de1e38220ed1471ba634770c486b186ad0",
+    "browserEnvironmentHashSha256": "44ea7cbaed46d0312d0023c30e38d0da75ce7092cb87fbb47997fb33f9283d6f",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "nl-NL",
+      "languages": [
+        "nl-NL",
+        "nl",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 20,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1441,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "Europe/Brussels",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library_02/pointpopup-2026-10-07T13-06-39-787Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:94469c5701ba0fe66c5801d81d2ab337d45f8993620683c9239c74e9ec08e8a8",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "animation-preview.webp",
+      "bytes": 4246,
+      "sha256": "931c088887595039206ceafa6da3b7906c57f18ebeeca5fc60b06fba8b6e5a61"
+    },
+    {
+      "name": "pointpopup/PointPopup.atlas",
+      "bytes": 105,
+      "sha256": "ae87a25d729c3f84f3a0ff661500ae66f897003f7e5be61f8b2c39ef93e12d18"
+    },
+    {
+      "name": "pointpopup/PointPopup.json",
+      "bytes": 567,
+      "sha256": "989642c64974eb254266bde6af6d0d4d02e834f8ae4aff838763e5aa2bfd6419"
+    },
+    {
+      "name": "pointpopup/PointPopup.png",
+      "bytes": 209439,
+      "sha256": "346cbf24e385d5be80951464984704fddac71577f99a1c63841c31cfa142275d"
+    }
+  ],
+  "proofHash": "94469c5701ba0fe66c5801d81d2ab337d45f8993620683c9239c74e9ec08e8a8"
+}

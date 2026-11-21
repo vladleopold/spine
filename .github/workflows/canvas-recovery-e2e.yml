@@ -1,0 +1,175 @@
+name: Verify real canvas fallback for missing recent WebM
+on:
+  push:
+    branches: [fix/mediarecorder-frame-fallback-20261118]
+    paths:
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/canvas-fallback.mjs
+      - scripts/test-canvas-fallback.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/test-canvas-recovery-workflow.mjs
+      - scripts/prepare-render.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/lib/source-preservation-case.mjs
+      - scripts/resolve-source-preservation-case.mjs
+      - scripts/test-source-preservation-case.mjs
+      - .github/workflows/canvas-recovery-e2e.yml
+  pull_request:
+    paths:
+      - scripts/spine-export-webm.mjs
+      - scripts/lib/canvas-fallback.mjs
+      - scripts/test-canvas-fallback.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-renderer-failure-class.mjs
+      - scripts/lib/first-frame-poster.mjs
+      - scripts/test-first-frame-poster.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/test-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/test-canvas-recovery-workflow.mjs
+      - scripts/prepare-render.mjs
+      - scripts/lib/export-log-redaction.mjs
+      - scripts/lib/source-preservation-case.mjs
+      - scripts/resolve-source-preservation-case.mjs
+      - scripts/test-source-preservation-case.mjs
+      - .github/workflows/canvas-recovery-e2e.yml
+permissions:
+  contents: read
+jobs:
+  validate-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        case_index: [0, 1]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /.github/workflows/canvas-recovery-e2e.yml
+            /package.json
+            /package-lock.json
+            /library_02/index.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Resolve exact source-preserving case
+        env:
+          CASE_INDEX: ${{ matrix.case_index }}
+        run: node scripts/resolve-source-preservation-case.mjs
+      - name: Pure fallback unit gate and code syntax
+        run: |
+          node --check scripts/spine-export-webm.mjs
+          node scripts/test-canvas-fallback.mjs
+          node scripts/test-atlas-pages.mjs
+          node --check scripts/renderer-failure-class.mjs
+          node scripts/test-renderer-failure-class.mjs
+          node --check scripts/verify-poster-first-frame.mjs
+          node --check scripts/test-canvas-recovery-workflow.mjs
+          node scripts/test-canvas-recovery-workflow.mjs
+          node --check scripts/lib/source-preservation-case.mjs
+          node --check scripts/resolve-source-preservation-case.mjs
+          node --check scripts/test-source-preservation-case.mjs
+          node scripts/test-source-preservation-case.mjs
+      - name: Install Chromium and ffmpeg runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.59.1
+          npx playwright install chromium
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          if ! command -v cwebp >/dev/null; then
+            echo "WebP fallback uses FFmpeg's installed libwebp encoder"
+          fi
+          node --check scripts/lib/first-frame-poster.mjs
+          node scripts/test-first-frame-poster.mjs
+          node scripts/test-preview-motion.mjs
+      - name: Fingerprint original source files before rendering
+        id: source_fingerprint
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="$SOURCE_DIR"
+          test -d "$SOURCE_DIR"
+          if [[ -n "$(git status --porcelain -- "$SOURCE_DIR")" ]]; then
+            echo "SOURCE_PRESERVATION_PRECONDITION_FAILED"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.before"
+          test -s "$RUNNER_TEMP/source-files.before"
+          xargs -0 -r sha256sum < "$RUNNER_TEMP/source-files.before" > "$RUNNER_TEMP/source-hashes.before"
+          test -s "$RUNNER_TEMP/source-hashes.before"
+          echo "captured=true" >> "$GITHUB_OUTPUT"
+          echo "SOURCE_PRESERVATION_BASELINE_CAPTURED"
+      - name: Real proprietary animation, temporary private frames only, strict media acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          node scripts/spine-export-webm.mjs \
+            --upload-id="$ENTRY_ID" --animation="$ANIMATION" \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --output="$RUNNER_TEMP/private-preview.webm" > "$RUNNER_TEMP/private-render.log" 2>&1
+          code=$?
+          set -e
+          if (( code != 0 )); then
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/private-render.log"
+            exit 1
+          fi
+          for suffix in '' '-medium' '-low'; do
+            video="$RUNNER_TEMP/private-preview${suffix}.webm"
+            poster="$RUNNER_TEMP/private-preview${suffix}.webp"
+            probe="$RUNNER_TEMP/private-probe${suffix}.json"
+            test -s "$video" && test -s "$poster"
+            ffprobe -v error -count_frames -select_streams v:0 \
+              -show_entries stream=width,height,nb_read_frames \
+              -of json "$video" > "$probe"
+            node -e '
+              const p=require(process.argv[1]);const s=p.streams?.[0]||{};
+              if(!(s.width>0&&s.height>0&&Number(s.nb_read_frames)>=8))
+                throw Error("Incomplete actual animation video");
+            ' "$probe"
+            node scripts/verify-preview-motion.mjs "$video" > "$RUNNER_TEMP/motion${suffix}.log" 2>&1
+            node scripts/verify-poster-first-frame.mjs "$video" "$poster" > "$RUNNER_TEMP/poster${suffix}.log" 2>&1
+            echo "QUALITY_TIER_ACCEPTED"
+          done
+          echo "REAL_SPINE_WEBM_WEBP_PREVIEW_PASS"
+          # No source or output images/videos are uploaded, printed or committed.
+
+      - name: Verify original source files remain byte-identical
+        if: always() && steps.source_fingerprint.outputs.captured == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_DIR="$SOURCE_DIR"
+          if [[ ! -s "$RUNNER_TEMP/source-files.before" || ! -s "$RUNNER_TEMP/source-hashes.before" ]]; then
+            echo "SOURCE_PRESERVATION_BASELINE_MISSING"
+            exit 1
+          fi
+          find "$SOURCE_DIR" -type f -print0 | LC_ALL=C sort -z > "$RUNNER_TEMP/source-files.after"
+          if ! cmp -s "$RUNNER_TEMP/source-files.before" "$RUNNER_TEMP/source-files.after"; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if ! sha256sum -c "$RUNNER_TEMP/source-hashes.before" >/dev/null 2>&1; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          if [[ -n "$(git status --porcelain -- "$SOURCE_DIR")" ]]; then
+            echo "SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          echo "SOURCE_PRESERVATION_PASS"

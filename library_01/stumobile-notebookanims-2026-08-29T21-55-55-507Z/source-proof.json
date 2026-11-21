@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "stumobile-notebookanims-2026-08-29T21-55-55-507Z",
+  "title": "stumobile-notebookanims",
+  "uploadedAt": "2026-08-29T21:55:55.507Z",
+  "proofPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/stumobile-notebookanims-2026-08-29T21-55-55-507Z/source-proof.json?v=2026-08-29T21-55-55.507Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/stumobile-notebookanims-2026-08-29T21-55-55-507Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:ce18368e40c3542dab79beb7c5ff94976a01f58c90263360e890c6084bba6255",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "notebook-balloon-preview.webp",
+      "bytes": 734,
+      "sha256": "13c589aa78de2d31124e24c1bc9d51a4acede249920307ce78c81d2badda8d1e"
+    },
+    {
+      "name": "stumobile-notebookanims/stuMobile-notebookAnims.atlas",
+      "bytes": 2236,
+      "sha256": "ccef4e2b4c17be61cb5897694ec4b1255ea79c46ee9d17750fcf5a3b69327830"
+    },
+    {
+      "name": "stumobile-notebookanims/stuMobile-notebookAnims.json",
+      "bytes": 43304,
+      "sha256": "957d980b46b1fc90aa4ab0ec3be23c215080840b4f37577be8fd40b59f2564fc"
+    },
+    {
+      "name": "stumobile-notebookanims/stuMobile-notebookAnims.png",
+      "bytes": 923805,
+      "sha256": "e092c50b23ce99d88322becdec94d09e9ff40c2b87aea0a121ac8f9a5bc14cf6"
+    }
+  ],
+  "proofHash": "ce18368e40c3542dab79beb7c5ff94976a01f58c90263360e890c6084bba6255"
+}

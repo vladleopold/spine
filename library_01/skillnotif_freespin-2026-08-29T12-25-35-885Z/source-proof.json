@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "skillnotif_freespin-2026-08-29T12-25-35-885Z",
+  "title": "skillnotif_freespin",
+  "uploadedAt": "2026-08-29T12:25:35.885Z",
+  "proofPath": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/skillnotif_freespin-2026-08-29T12-25-35-885Z/source-proof.json?v=2026-08-29T12-25-35.885Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_temrck_86jfg1",
+    "anonymousFingerprint": "temrck",
+    "browserFingerprintSha256": "e56d4f70b5097517004c83c751b93aeff8561a0e40926a30b64fd897a3cc1aeb",
+    "browserEnvironmentHashSha256": "9e9eefc84c01091ac24c01783a4a3a8954f4064919e82da836244eacc68d1cbd",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "tr-TR",
+      "languages": [
+        "tr-TR",
+        "tr",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneOffset": -180,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/skillnotif_freespin-2026-08-29T12-25-35-885Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:b1b46b36e67423c74492cdd50c7a4b5580bc8c4e60f85965b21be4674296776a",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "3-freespin_idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "skillnotif_freespin/skillnotif_freespin.atlas",
+      "bytes": 122,
+      "sha256": "8db83aa6bbd37c5e1d863bcf98e2ed2960a1e659d087a8aadacec783a9238c63"
+    },
+    {
+      "name": "skillnotif_freespin/skillnotif_freespin.json",
+      "bytes": 3536,
+      "sha256": "a2fda4c409ef0d4a8cd6e7454d5c36f8d0fd1b07018016f00e6febe5644ce8d3"
+    },
+    {
+      "name": "skillnotif_freespin/skillnotif_freespin.webp",
+      "bytes": 2063340,
+      "sha256": "edf304f2687e7d4435de54d52588dd4f610bf7488fc4295a8041ebc89f6e6ffc"
+    }
+  ],
+  "proofHash": "b1b46b36e67423c74492cdd50c7a4b5580bc8c4e60f85965b21be4674296776a"
+}

@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-29T21:55:32.730Z",
+  "updatedAt": "2026-08-29T21:55:41.858Z",
+  "animation_asset": {
+    "id": "stumobile-2026-08-29T21-55-32-730Z",
+    "name": "stumobile",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "balloon-end",
+        "balloon-hold",
+        "balloon-start",
+        "bubble-end",
+        "bubble-hold",
+        "bubble-start",
+        "cheer",
+        "hitreact",
+        "idle",
+        "spring",
+        "stretch",
+        "stretch-end",
+        "stretch-hold",
+        "stretch-spin-test-draworderchange",
+        "stretch-spin-test-nodraworderchange",
+        "stretch-start",
+        "archive/balloon-testseq",
+        "archive/bubble-testseq",
+        "archive/bubble-testseq-nobubble",
+        "archive/bubble-testseq-nocar",
+        "archive/stretch-testseq"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/stumobile-2026-08-29T21-55-32-730Z",
+    "manifestPath": "library/stumobile-2026-08-29T21-55-32-730Z/manifest.json",
+    "files": [
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.json",
+        "name": "stumobile/stuMobile.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.atlas",
+        "name": "stumobile/stuMobile.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/stumobile/stuMobile.png",
+        "name": "stumobile/stuMobile.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/stumobile-2026-08-29T21-55-32-730Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "stuMobile.json",
+    "atlas": "stuMobile.atlas",
+    "textures": [
+      "stuMobile.png"
+    ],
+    "animationCount": 21,
+    "animationNames": [
+      "balloon-end",
+      "balloon-hold",
+      "balloon-start",
+      "bubble-end",
+      "bubble-hold",
+      "bubble-start",
+      "cheer",
+      "hitReact",
+      "idle",
+      "spring",
+      "stretch",
+      "stretch-end",
+      "stretch-hold",
+      "stretch-spin-test-drawOrderChange",
+      "stretch-spin-test-noDrawOrderChange",
+      "stretch-start",
+      "archive/balloon-testSeq",
+      "archive/bubble-testSeq",
+      "archive/bubble-testSeq-noBubble",
+      "archive/bubble-testSeq-noCar",
+      "archive/stretch-testSeq"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

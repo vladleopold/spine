@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-24T21:06:04.535Z",
+  "updatedAt": "2026-07-24T21:06:18.849Z",
+  "animation_asset": {
+    "id": "1036_1-2026-07-24T21-06-04-535Z",
+    "name": "1036_1",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "animation_state": [
+        "behit",
+        "fight_back",
+        "fight_enter",
+        "fight_front",
+        "fight_idle",
+        "fight_move",
+        "sing",
+        "skill1",
+        "skill2",
+        "skill3",
+        "skill5",
+        "skill7",
+        "talk_close",
+        "talk_default",
+        "idle"
+      ],
+      "state": [
+        "default-behit"
+      ],
+      "action": [
+        "attack"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-skel",
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/1036_1-2026-07-24T21-06-04-535Z",
+    "manifestPath": "library/1036_1-2026-07-24T21-06-04-535Z/manifest.json",
+    "files": [
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/1036_1/1036_1.skel",
+        "name": "1036_1/1036_1.skel",
+        "role": "skeleton",
+        "format": "skel"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/1036_1/1036_1.atlas",
+        "name": "1036_1/1036_1.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/1036_1/1036_1.png",
+        "name": "1036_1/1036_1.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/behit-preview.webm",
+        "name": "behit-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/behit-preview.webp",
+        "name": "behit-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/1036_1-2026-07-24T21-06-04-535Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "1036_1.skel",
+    "atlas": "1036_1.atlas",
+    "textures": [
+      "1036_1.png"
+    ],
+    "animationCount": 14,
+    "animationNames": [
+      "BeHit",
+      "Fight_Back",
+      "Fight_Enter",
+      "Fight_Front",
+      "Fight_Idle",
+      "Fight_Move",
+      "Sing",
+      "Skill1",
+      "Skill2",
+      "Skill3",
+      "Skill5",
+      "Skill7",
+      "Talk_Close",
+      "Talk_Default"
+    ],
+    "defaultAnimation": "BeHit",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

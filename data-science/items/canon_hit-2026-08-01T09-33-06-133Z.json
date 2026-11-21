@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-01T09:33:06.133Z",
+  "updatedAt": "2026-08-01T09:33:13.677Z",
+  "animation_asset": {
+    "id": "canon_hit-2026-08-01T09-33-06-133Z",
+    "name": "canon_hit",
+    "domain": "gamedev",
+    "asset_category": "fx",
+    "animation_type": "fx",
+    "skeleton_type": "fx",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "effects",
+      "class": "vfx",
+      "type": "effect",
+      "tags": [
+        "hit"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "feedback"
+      ],
+      "element": [
+        "energy"
+      ],
+      "loop_type": [
+        "effect",
+        "one-shot"
+      ],
+      "animation_state": [
+        "1",
+        "2",
+        "3"
+      ],
+      "state": [
+        "default-1"
+      ],
+      "action": [
+        "attack"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/canon_hit-2026-08-01T09-33-06-133Z",
+    "manifestPath": "library/canon_hit-2026-08-01T09-33-06-133Z/manifest.json",
+    "files": [
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/canon_hit/canon_hit.json",
+        "name": "canon_hit/canon_hit.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/canon_hit/canon_hit.atlas",
+        "name": "canon_hit/canon_hit.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/canon_hit/canon_hit.png",
+        "name": "canon_hit/canon_hit.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/1-preview.webp",
+        "name": "1-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/canon_hit-2026-08-01T09-33-06-133Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "canon_hit.json",
+    "atlas": "canon_hit.atlas",
+    "textures": [
+      "canon_hit.png"
+    ],
+    "animationCount": 3,
+    "animationNames": [
+      "1",
+      "2",
+      "3"
+    ],
+    "defaultAnimation": "1",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hit"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

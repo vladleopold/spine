@@ -1,0 +1,100 @@
+{
+  "type": "SpineLinkGitHubBlockchainAnchor",
+  "version": 1,
+  "createdAt": "2026-11-01T23:29:13.616Z",
+  "entryId": "character1-2026-11-01T23-28-46-401Z",
+  "title": "character1",
+  "uploadedAt": "2026-11-01T23:28:46.401Z",
+  "sourceProofHash": "3193bd2c467cb1d33274caa97aed7d149922be49ff9c5978b5a8d5de46d6adab",
+  "sourceProofPath": "character1-2026-11-01T23-28-46-401Z/source-proof.json",
+  "sourceProofUrl": "https://spine-link.vercel.app/assets/character1-2026-11-01T23-28-46-401Z/source-proof.json?v=2026-11-01T23-28-46.401Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ajqdn5_k8rcsz",
+    "anonymousFingerprint": "1ajqdn5",
+    "browserFingerprintSha256": "e1ba075270266a34efb60b072e31b46aa846d56552e2ee624df3513f7a43fafc",
+    "browserEnvironmentHashSha256": "ddae2ecb59d140da5915c650e553c586dfc0b9e3abcdc505349ce7a9abd27096",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 6,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2560,
+        "height": 1440,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "America/Toronto",
+      "timezoneOffset": 300,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "repositoryUrl": "https://github.com/vladleopold/spine",
+    "uploadPath": "character1-2026-11-01T23-28-46-401Z",
+    "files": [
+      {
+        "name": "character1.png",
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1.png",
+        "bytes": 1877985,
+        "sha256": "ef73459890288858052be0980f36db77202c70b8d2a2326deba9b7ad9965f007",
+        "github": {
+          "contentSha": "",
+          "commitSha": "",
+          "commitUrl": "",
+          "downloadUrl": ""
+        }
+      },
+      {
+        "name": "character1_7.png",
+        "path": "character1-2026-11-01T23-28-46-401Z/character1/character1_7.png",
+        "bytes": 655314,
+        "sha256": "e8319a07345ca6023d06ecdfa4236e7473b8383e325ac1c0c176433534f42637",
+        "github": {
+          "contentSha": "",
+          "commitSha": "",
+          "commitUrl": "",
+          "downloadUrl": ""
+        }
+      },
+      {
+        "name": "source-proof.json",
+        "path": "character1-2026-11-01T23-28-46-401Z/source-proof.json",
+        "bytes": 3352,
+        "sha256": "e47e6e53efd82d3bfcd575b926c7e04b363604483d99b8b85946208312b4563b",
+        "github": {
+          "contentSha": "",
+          "commitSha": "",
+          "commitUrl": "",
+          "downloadUrl": ""
+        }
+      }
+    ],
+    "anchorPath": "character1-2026-11-01T23-28-46-401Z/blockchain-anchor.json",
+    "anchorUrl": "https://spine-link.vercel.app/assets/character1-2026-11-01T23-28-46-401Z/blockchain-anchor.json"
+  },
+  "legalEvidence": {
+    "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+    "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+  },
+  "anchorHash": "d35c902998d9c7b31e4e759422620addf237be746b80cdfb7033359bbf8d5132",
+  "recommendedAnchorPayload": "sha256:d35c902998d9c7b31e4e759422620addf237be746b80cdfb7033359bbf8d5132",
+  "blockchain": {
+    "status": "disabled",
+    "chain": "evm",
+    "transactionData": "0xd35c902998d9c7b31e4e759422620addf237be746b80cdfb7033359bbf8d5132",
+    "message": "Blockchain anchoring is temporarily disabled."
+  },
+  "anchorPath": "character1-2026-11-01T23-28-46-401Z/blockchain-anchor.json",
+  "anchorUrl": "https://spine-link.vercel.app/assets/character1-2026-11-01T23-28-46-401Z/blockchain-anchor.json"
+}

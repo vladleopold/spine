@@ -1,0 +1,250 @@
+{
+"skeleton": {
+	"hash": "b/YaGu2Dt+g",
+	"spine": "4.1.24",
+	"x": -563.9,
+	"y": -370.55,
+	"width": 1128.4,
+	"height": 766.47,
+	"fps": 24,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "landUp", "parent": "root", "x": 12.5, "y": -4.55 },
+	{ "name": "landDown", "parent": "root", "x": -11.9, "y": 29.93, "scaleX": -1, "scaleY": -1 },
+	{ "name": "lightR", "parent": "root" },
+	{ "name": "lightLUp", "parent": "root" },
+	{ "name": "lightLDown", "parent": "root" }
+],
+"slots": [
+	{ "name": "images/frame_png/frame/frame_10", "bone": "landUp", "attachment": "images/frame_png/frame/frame_" },
+	{ "name": "images/frame_png/frame/frame_11", "bone": "landDown", "attachment": "images/frame_png/frame/frame_" },
+	{ "name": "images/Light R/Light R_4", "bone": "lightR", "attachment": "images/Light R/Light R_" },
+	{ "name": "images/Light L up/light Up L_", "bone": "lightLUp", "attachment": "images/Light L up/light Up L_" },
+	{ "name": "images/Light L up/light Up L_2", "bone": "lightLDown", "attachment": "images/Light L up/light Up L_" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"images/frame_png/frame/frame_10": {
+				"images/frame_png/frame/frame_": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 552, -366, -552, -366, -552, 366, 552, 366 ],
+					"hull": 4,
+					"sequence": { "count": 15, "start": 10 },
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 1104,
+					"height": 732
+				}
+			},
+			"images/frame_png/frame/frame_11": {
+				"images/frame_png/frame/frame_": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 552, -366, -552, -366, -552, 366, 552, 366 ],
+					"hull": 4,
+					"sequence": { "count": 15, "start": 10 },
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 1104,
+					"height": 732
+				}
+			},
+			"images/Light L up/light Up L_": {
+				"images/Light L up/light Up L_": {
+					"width": 372,
+					"height": 320,
+					"sequence": { "count": 13 }
+				}
+			},
+			"images/Light L up/light Up L_2": {
+				"images/Light L up/light Up L_": {
+					"width": 372,
+					"height": 320,
+					"sequence": { "count": 13 }
+				}
+			},
+			"images/Light R/Light R_4": {
+				"images/Light R/Light R_": {
+					"width": 289,
+					"height": 254,
+					"sequence": { "count": 20, "start": 4 }
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"backgroundAnimationLandscape": {
+		"slots": {
+			"images/Light L up/light Up L_": {
+				"attachment": [
+					{ "time": 1.0833 },
+					{ "time": 2.0833, "name": "images/Light L up/light Up L_" },
+					{ "time": 2.8333 }
+				]
+			},
+			"images/Light L up/light Up L_2": {
+				"attachment": [
+					{},
+					{ "time": 1.0417, "name": "images/Light L up/light Up L_" },
+					{ "time": 2.1667 }
+				]
+			},
+			"images/Light R/Light R_4": {
+				"attachment": [
+					{ "time": 0.9167 }
+				]
+			}
+		},
+		"bones": {
+			"landDown": {
+				"translate": [
+					{ "y": 5.22 }
+				]
+			},
+			"lightR": {
+				"translate": [
+					{ "x": 505.13, "y": 204.97 }
+				]
+			},
+			"lightLUp": {
+				"translate": [
+					{ "x": -497.54, "y": 222.8 },
+					{ "time": 0.375, "x": -497.15, "y": 222.8 }
+				]
+			},
+			"lightLDown": {
+				"rotate": [
+					{ "value": -35.47 }
+				],
+				"translate": [
+					{ "x": -496.68, "y": -80.86 }
+				],
+				"scale": [
+					{ "y": -1 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"images/frame_png/frame/frame_10": {
+					"images/frame_png/frame/frame_": {
+						"sequence": [
+							{ "mode": "loop", "delay": 0.0417 },
+							{ "time": 3, "mode": "loop", "index": 14 }
+						]
+					}
+				},
+				"images/frame_png/frame/frame_11": {
+					"images/frame_png/frame/frame_": {
+						"sequence": [
+							{ "mode": "loop", "delay": 0.0417 }
+						]
+					}
+				},
+				"images/Light L up/light Up L_": {
+					"images/Light L up/light Up L_": {
+						"sequence": [
+							{ "mode": "loop", "delay": 0.0833 },
+							{ "time": 2.0833, "mode": "loop" },
+							{ "time": 2.6667, "mode": "loop", "index": 11 }
+						]
+					}
+				},
+				"images/Light L up/light Up L_2": {
+					"images/Light L up/light Up L_": {
+						"sequence": [
+							{ "time": 1.0417, "mode": "once", "delay": 0.0833 }
+						]
+					}
+				},
+				"images/Light R/Light R_4": {
+					"images/Light R/Light R_": {
+						"sequence": [
+							{ "time": 0.1667, "mode": "once", "delay": 0.0417 }
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "images/Light L up/light Up L_", "offset": -2 },
+					{ "slot": "images/Light L up/light Up L_2", "offset": -4 }
+				]
+			}
+		]
+	},
+	"backgroundAnimationPortrait": {
+		"slots": {
+			"images/Light L up/light Up L_": {
+				"attachment": [
+					{}
+				]
+			},
+			"images/Light L up/light Up L_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"images/Light R/Light R_4": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"landUp": {
+				"translate": [
+					{ "x": 2.13, "y": 129.63 }
+				],
+				"scale": [
+					{ "x": 0.77, "y": 0.75 }
+				]
+			},
+			"landDown": {
+				"translate": [
+					{ "y": 124.62 }
+				],
+				"scale": [
+					{ "x": 0.77, "y": 0.75 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"images/frame_png/frame/frame_10": {
+					"images/frame_png/frame/frame_": {
+						"sequence": [
+							{ "mode": "loop", "delay": 0.0417 },
+							{ "time": 1.25, "mode": "loop", "index": 14 }
+						]
+					}
+				},
+				"images/frame_png/frame/frame_11": {
+					"images/frame_png/frame/frame_": {
+						"sequence": [
+							{ "mode": "loop", "index": 10, "delay": 0.0417 },
+							{ "time": 0.8333, "mode": "loop", "index": 14 }
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "images/frame_png/frame/frame_10", "offset": 1 }
+				]
+			}
+		]
+	}
+}
+}

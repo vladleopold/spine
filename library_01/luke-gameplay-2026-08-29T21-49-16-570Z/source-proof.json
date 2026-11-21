@@ -1,0 +1,73 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "luke-gameplay-2026-08-29T21-49-16-570Z",
+  "title": "luke-gameplay",
+  "uploadedAt": "2026-08-29T21:49:16.570Z",
+  "proofPath": "library/luke-gameplay-2026-08-29T21-49-16-570Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/luke-gameplay-2026-08-29T21-49-16-570Z/source-proof.json?v=2026-08-29T21-49-16.570Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1vg0ely_19kj40y",
+    "anonymousFingerprint": "1vg0ely",
+    "browserFingerprintSha256": "23dbc6ac26648f99f64e272ccef90f4479a7f1985795a863e82631b1b9d1b423",
+    "browserEnvironmentHashSha256": "f7c338b4b1e9e0f8642d215ee06b6b1142e027ad5603a46a511ecf2a326e0cda",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 800,
+        "height": 1280,
+        "colorDepth": 24,
+        "pixelRatio": 1.5
+      },
+      "timezone": "America/New_York",
+      "timezoneOffset": 240,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/luke-gameplay-2026-08-29T21-49-16-570Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:9ea33c4e95b88621b0c0506918fd13d34892fb6afe7801af928e7eff02d14fa6",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 708,
+      "sha256": "7904fef2419a34da9adc69772cad862d73945802c77cc1a4d9c8e78f404f15e1"
+    },
+    {
+      "name": "luke-gameplay/luke-gameplay.atlas",
+      "bytes": 1756,
+      "sha256": "49f5fc8e13f7e0f64f7446b56e65fe4b33f58a559ab99c37c58239fd68c634f9"
+    },
+    {
+      "name": "luke-gameplay/luke-gameplay.json",
+      "bytes": 31945,
+      "sha256": "bc4938e46f6cf797a6f6c6df5834db15c6eabd20a22f34e0c00f712e4244e668"
+    },
+    {
+      "name": "luke-gameplay/luke-gameplay.png",
+      "bytes": 37200,
+      "sha256": "68dca1f368a54145611b0244cabee413d4c05ea712496660d22201e90897deb3"
+    }
+  ],
+  "proofHash": "9ea33c4e95b88621b0c0506918fd13d34892fb6afe7801af928e7eff02d14fa6"
+}

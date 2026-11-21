@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-30T09:28:51.480Z",
+  "updatedAt": "2026-05-30T09:29:06.626Z",
+  "animation_asset": {
+    "id": "hero_01c3-2026-05-30T09-28-51-480Z",
+    "name": "hero_01c3",
+    "domain": "gamedev",
+    "asset_category": "character",
+    "animation_type": "character",
+    "skeleton_type": "humanoid",
+    "content_type": "character",
+    "taxonomy": {
+      "category": "character",
+      "class": "humanoid",
+      "type": "character",
+      "tags": [
+        "hero"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "avatar"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "animation_state": [
+        "blink",
+        "idle",
+        "idle_face_03",
+        "idle_face_04",
+        "idle_sp1",
+        "idle_sp2",
+        "spawn"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/hero_01c3-2026-05-30T09-28-51-480Z",
+    "manifestPath": "library/hero_01c3-2026-05-30T09-28-51-480Z/manifest.json",
+    "files": [
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/hero_01c3/Hero_01C3.json",
+        "name": "hero_01c3/Hero_01C3.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/hero_01c3/Hero_01C3.atlas",
+        "name": "hero_01c3/Hero_01C3.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/hero_01c3/Hero_01C3.png",
+        "name": "hero_01c3/Hero_01C3.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/hero_01c3-2026-05-30T09-28-51-480Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Hero_01C3.json",
+    "atlas": "Hero_01C3.atlas",
+    "textures": [
+      "Hero_01C3.png"
+    ],
+    "animationCount": 7,
+    "animationNames": [
+      "blink",
+      "Idle",
+      "Idle_face_03",
+      "Idle_face_04",
+      "Idle_sp1",
+      "Idle_sp2",
+      "spawn"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "hero"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

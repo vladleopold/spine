@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "skeleton-2026-08-23T13-42-39-841Z",
+  "title": "skeleton",
+  "uploadedAt": "2026-08-23T13:42:39.841Z",
+  "proofPath": "library/skeleton-2026-08-23T13-42-39-841Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-23T13-42-39-841Z/source-proof.json?v=2026-08-23T13-42-39.841Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_qlezd4_1mv1amh",
+    "anonymousFingerprint": "qlezd4",
+    "browserFingerprintSha256": "1b707f0998ab4aab4d00563b0f620ae339e3af218c5f93217be1e6780bf41e58",
+    "browserEnvironmentHashSha256": "80d147f0c07f9f138d82e640befb6b9183dad0b3939ce7953c3ec6bd0385d8a5",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "ru-RU",
+      "languages": [
+        "ru-RU",
+        "ru",
+        "en-US",
+        "en",
+        "tr",
+        "uk"
+      ],
+      "hardwareConcurrency": 14,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 1728,
+        "height": 1117,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Europe/Warsaw",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-08-23T13-42-39-841Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:be79bb536bb6eed234dba2faa17e920ce25c101ab3a0b04f33da8c51a0c6877e",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "skeleton/skeleton.atlas",
+      "bytes": 2435,
+      "sha256": "45aff42ae7a46cab0e974f3c4d2a0748d76382046a27c626710e43a7312bc350"
+    },
+    {
+      "name": "skeleton/skeleton.json",
+      "bytes": 17827,
+      "sha256": "5c85a9ce38d3216c040b07e81edfd2482911c2dede2031e80beb69719a21134c"
+    },
+    {
+      "name": "skeleton/skeleton.png",
+      "bytes": 246003,
+      "sha256": "ca6b2204e87d1a61453439d7cb52f564110a19e926c3e02ef8627c5df23d2926"
+    }
+  ],
+  "proofHash": "be79bb536bb6eed234dba2faa17e920ce25c101ab3a0b04f33da8c51a0c6877e"
+}

@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "caiwenjicg01-2026-07-26T09-25-02-675Z",
+  "title": "caiwenjicg01",
+  "uploadedAt": "2026-07-26T09:25:02.675Z",
+  "proofPath": "library/caiwenjicg01-2026-07-26T09-25-02-675Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/caiwenjicg01-2026-07-26T09-25-02-675Z/source-proof.json?v=2026-07-26T09-25-02.675Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1eh1wur_v2y62s",
+    "anonymousFingerprint": "1eh1wur",
+    "browserFingerprintSha256": "6bcf07719077c229f676d59337d92df7c2e914c3e6a2a6467898d60a2dfc3d86",
+    "browserEnvironmentHashSha256": "0577880e01490d39c5d4c3b5e6c3c699a51b690dd22659cf237802704d97f35b",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36 EdgA/149.0.0.0",
+      "platform": "Linux armv81",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 360,
+        "height": 800,
+        "colorDepth": 24,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 2,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/caiwenjicg01-2026-07-26T09-25-02-675Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a6af7c8ae8135ca9b3b4fcf19a3fb8abdd90af86706ea8b29563aece03abe16f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "caiwenjicg01/CaiwenjiCG01.atlas",
+      "bytes": 3140,
+      "sha256": "7ce15be197e1a77501ae98bd67dc11c47906b72d38a2e9e015cfd13394186128"
+    },
+    {
+      "name": "caiwenjicg01/CaiwenjiCG01.json",
+      "bytes": 157614,
+      "sha256": "61785dbb3d3f8205047821fdb7c63464d2b0372e454e95c15a3c9d8c4e9e0e0f"
+    },
+    {
+      "name": "caiwenjicg01/CaiwenjiCG01.png",
+      "bytes": 1310732,
+      "sha256": "9648886be6ed9e653e22eea1199cb2c5e2ec1b1f59c34621b8e834ed1ff59ee1"
+    },
+    {
+      "name": "ty_cc-preview.webp",
+      "bytes": 2286,
+      "sha256": "a6c0525e5d480c78b9bc55cca3c327476ed680acc0e12fdb5ba9f43548c37624"
+    }
+  ],
+  "proofHash": "a6af7c8ae8135ca9b3b4fcf19a3fb8abdd90af86706ea8b29563aece03abe16f"
+}

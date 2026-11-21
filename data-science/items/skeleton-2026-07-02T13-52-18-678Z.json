@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-07-02T13:52:18.678Z",
+  "updatedAt": "2026-07-02T13:52:57.211Z",
+  "animation_asset": {
+    "id": "skeleton-2026-07-02T13-52-18-678Z",
+    "name": "skeleton",
+    "domain": "gamedev",
+    "asset_category": "vehicle",
+    "animation_type": "vehicle",
+    "skeleton_type": "vehicle",
+    "content_type": "vehicle",
+    "taxonomy": {
+      "category": "vehicle",
+      "class": "transport",
+      "type": "vehicle",
+      "tags": [
+        "vehicle"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "transport"
+      ],
+      "rig_type": [
+        "mechanical",
+        "spine-json"
+      ],
+      "animation_state": [
+        "attack",
+        "blink",
+        "blink_delay1",
+        "closetablet",
+        "death",
+        "eat",
+        "exit_lander",
+        "hungry",
+        "idle",
+        "interact",
+        "interacttool",
+        "jackhammer",
+        "jumpintovehicle",
+        "levelup",
+        "lookaround",
+        "lookaround_meh",
+        "opentablet",
+        "shield_eyes",
+        "stun",
+        "suffocateoff",
+        "suffocateon",
+        "toolbreak",
+        "walk",
+        "walk_left",
+        "walk_right",
+        "zap",
+        "zap_off"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop",
+        "one-shot"
+      ],
+      "state": [
+        "default-idle",
+        "lose"
+      ],
+      "action": [
+        "walk",
+        "attack"
+      ],
+      "interaction_type": [
+        "open-close"
+      ],
+      "direction": [
+        "left",
+        "right"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/skeleton-2026-07-02T13-52-18-678Z",
+    "manifestPath": "library/skeleton-2026-07-02T13-52-18-678Z/manifest.json",
+    "files": [
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/skeleton/skeleton.json",
+        "name": "skeleton/skeleton.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/skeleton/skeleton.atlas",
+        "name": "skeleton/skeleton.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/skeleton/skeleton.png",
+        "name": "skeleton/skeleton.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/skeleton-2026-07-02T13-52-18-678Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "skeleton.json",
+    "atlas": "skeleton.atlas",
+    "textures": [
+      "skeleton.png"
+    ],
+    "animationCount": 27,
+    "animationNames": [
+      "attack",
+      "blink",
+      "blink_delay1",
+      "closeTablet",
+      "death",
+      "eat",
+      "exit_lander",
+      "hungry",
+      "idle",
+      "interact",
+      "interactTool",
+      "jackhammer",
+      "jumpIntoVehicle",
+      "levelup",
+      "lookAround",
+      "lookAround_meh",
+      "openTablet",
+      "shield_eyes",
+      "stun",
+      "suffocateOff",
+      "suffocateOn",
+      "toolbreak",
+      "walk",
+      "walk_left",
+      "walk_right",
+      "zap",
+      "zap_off"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "vehicle"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

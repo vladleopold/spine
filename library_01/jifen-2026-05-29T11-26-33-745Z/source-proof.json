@@ -1,0 +1,79 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "jifen-2026-05-29T11-26-33-745Z",
+  "title": "jifen",
+  "uploadedAt": "2026-05-29T11:26:33.745Z",
+  "proofPath": "library/jifen-2026-05-29T11-26-33-745Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/jifen-2026-05-29T11-26-33-745Z/source-proof.json?v=2026-05-29T11-26-33.745Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_rm3gx4_1n72yye",
+    "anonymousFingerprint": "rm3gx4",
+    "browserFingerprintSha256": "42edabde48b46270d88129fcbaf288e8714082614f0d88f92239970f21ec2e1c",
+    "browserEnvironmentHashSha256": "d55237fbfdb8a63262a223ff151277b193532425211493455aa5690f1b12a315",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "platform": "Win32",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh",
+        "en",
+        "de"
+      ],
+      "hardwareConcurrency": 16,
+      "deviceMemory": 32,
+      "screen": {
+        "width": 2048,
+        "height": 1152,
+        "colorDepth": 32,
+        "pixelRatio": 1.25
+      },
+      "timezone": "Asia/Shanghai",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/jifen-2026-05-29T11-26-33-745Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:649c4756f1d40c3e123e6a4388212df68d3a4ea6e8257256c0bbdd797c267608",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "caidai-preview.webm",
+      "bytes": 81001,
+      "sha256": "28101106607f32b98e30300e3c7d50ce6bff4740e8b453dec708a03026b4447a"
+    },
+    {
+      "name": "caidai-preview.webp",
+      "bytes": 12938,
+      "sha256": "1767c5c50ce0b4c35c91c85f8e0dda054d17516f5d17f26dc681bab7155e0517"
+    },
+    {
+      "name": "jifen/JiFen.atlas",
+      "bytes": 748,
+      "sha256": "37c4f314368ea39f0368f568a28f9065d51c2b9428cae1506cd4532163d522e5"
+    },
+    {
+      "name": "jifen/JiFen.json",
+      "bytes": 59346,
+      "sha256": "792c89232d8d4211ad2b12033951433075e9a4edad62fa11a6f72806802e6620"
+    },
+    {
+      "name": "jifen/JiFen.png",
+      "bytes": 72865,
+      "sha256": "a10e993c6a581fb11c743f2c6ecb09f59a75e0ef79f4138bb8416af1b42c15b8"
+    }
+  ],
+  "proofHash": "649c4756f1d40c3e123e6a4388212df68d3a4ea6e8257256c0bbdd797c267608"
+}

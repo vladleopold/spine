@@ -1,0 +1,76 @@
+name: Spine Export WebM
+on:
+  repository_dispatch:
+    types: [spine-export-webm]
+  workflow_dispatch:
+    inputs:
+      uploadId:
+        required: true
+        type: string
+  push:
+    paths: ['scripts/render-check.json']
+permissions:
+  contents: write
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    concurrency:
+      group: spine-render-${{ github.event.client_payload.uploadId || inputs.uploadId || github.run_id }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /library*/index.json
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
+      - name: Checkout only this work
+        id: source
+        run: node scripts/prepare-render.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate exact animation and pinned runtime selection
+        if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
+        run: node scripts/test-spine-player-runtime-assets.mjs
+      - name: Install renderer
+        if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
+        run: |
+          npm install --no-save playwright@1.59.1
+          # Serve matching 4.0/4.1/4.2/4.3 runtime files locally; avoid
+          # unreliable CDN calls while the animation is rendered.
+          bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install chromium
+          fi
+          # Use npm-packaged native tools instead of blocking on an apt mirror.
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
+            @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          FFPROBE_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffprobe-installer/ffprobe').path")
+          FFMPEG_BINARY=$(node -p "require('$RUNNER_TEMP/ffmpeg-native/node_modules/@ffmpeg-installer/ffmpeg').path")
+          test -x "$FFPROBE_BINARY" && test -x "$FFMPEG_BINARY"
+          ln -sf "$FFPROBE_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Render, validate and publish card and downloads
+        if: steps.source.outputs.skip_render != 'true'
+        run: node scripts/render-work.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Keep render verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-verification-${{ github.run_id }}
+          path: render-verification.json
+          if-no-files-found: warn
+          retention-days: 7

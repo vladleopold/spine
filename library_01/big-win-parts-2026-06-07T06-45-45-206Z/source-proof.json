@@ -1,0 +1,76 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "big-win-parts-2026-06-07T06-45-45-206Z",
+  "title": "big-win-parts",
+  "uploadedAt": "2026-06-07T06:45:45.206Z",
+  "proofPath": "library/big-win-parts-2026-06-07T06-45-45-206Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/big-win-parts-2026-06-07T06-45-45-206Z/source-proof.json?v=2026-06-07T06-45-45.206Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1quh5i1_1ry2579",
+    "anonymousFingerprint": "1quh5i1",
+    "browserFingerprintSha256": "439277c01c91747c3c82db29f476202811536b3f018d4659dfa0ebed75464519",
+    "browserEnvironmentHashSha256": "49d3964104648946982a696207a6b724bfe2090b50cbb96c113e710b96f61263",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 2,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 1680,
+        "height": 1050,
+        "colorDepth": 30,
+        "pixelRatio": 2
+      },
+      "timezone": "Asia/Calcutta",
+      "timezoneOffset": -330,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/big-win-parts-2026-06-07T06-45-45-206Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d8a7e0e69701b8efde547de050881d848adcbb474fbc68856ca9485d3d178334",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "big-win-parts/big-win-parts.atlas",
+      "bytes": 1940,
+      "sha256": "f27c05fee1b666a6e90b223f2a688096fb23c4dc9b5142f0291e65eacef5bb5b"
+    },
+    {
+      "name": "big-win-parts/big-win-parts.json",
+      "bytes": 38799,
+      "sha256": "dd3d93e708b18dd7dca758299e9eaf23ba56b4ec0b3be9ef66ee0eb879a64e54"
+    },
+    {
+      "name": "big-win-parts/big-win-parts.webp",
+      "bytes": 1945682,
+      "sha256": "8be9fd731f6ec92c9aa6dbe45d27100389ca2e98f4c00729131f8c62efe12ad7"
+    },
+    {
+      "name": "clouds-intro-preview.webm",
+      "bytes": 52774,
+      "sha256": "8d9d28360a889e9137bc166514336f564be33dc7013a4a78bba51646c82bcfda"
+    },
+    {
+      "name": "clouds-intro-preview.webp",
+      "bytes": 2946,
+      "sha256": "6bcf8b641d45727bc8ce796a6627708d988eab1610d0d73a78028e4198288060"
+    }
+  ],
+  "proofHash": "d8a7e0e69701b8efde547de050881d848adcbb474fbc68856ca9485d3d178334"
+}

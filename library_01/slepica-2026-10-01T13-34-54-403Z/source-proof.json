@@ -1,0 +1,71 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "slepica-2026-10-01T13-34-54-403Z",
+  "title": "slepica",
+  "uploadedAt": "2026-10-01T13:34:54.403Z",
+  "proofPath": "library/slepica-2026-10-01T13-34-54-403Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/slepica-2026-10-01T13-34-54-403Z/source-proof.json?v=2026-10-01T13-34-54.403Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_7an6lw_110tuzu",
+    "anonymousFingerprint": "7an6lw",
+    "browserFingerprintSha256": "9d8c0e1bc6cbfaab37abd094523ab329b85a1a10206cfe12c0db845187887b97",
+    "browserEnvironmentHashSha256": "e62623a65dd6d2b141eed21e0f374bc5156f95018691dadfd75a34af6f5733d8",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "languages": [
+        "en-GB"
+      ],
+      "hardwareConcurrency": 9,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 3840,
+        "height": 2160,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Europe/Prague",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/slepica-2026-10-01T13-34-54-403Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:c19d8f02a18e36673a6c7af781d401bdffdb902deefa3e525fa5e2cdb67c3dfd",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "idle-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "slepica/slepica.atlas",
+      "bytes": 1282,
+      "sha256": "3ae540694662eaa8b3db6670d55bfd6bf85164a2cc94132efa2afc9961b2ae6b"
+    },
+    {
+      "name": "slepica/slepica.json",
+      "bytes": 73449,
+      "sha256": "f741d24a2511916cdc1206172e43c429d09747541a88ac6e8e565cba929471e1"
+    },
+    {
+      "name": "slepica/slepica.webp",
+      "bytes": 1072357,
+      "sha256": "3e95e49ab4e92eb6dee7873ec4a900645eeb107333d7816fbf2704f6a8653054"
+    }
+  ],
+  "proofHash": "c19d8f02a18e36673a6c7af781d401bdffdb902deefa3e525fa5e2cdb67c3dfd"
+}

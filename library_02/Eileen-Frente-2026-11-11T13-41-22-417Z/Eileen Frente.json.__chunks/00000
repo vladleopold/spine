@@ -1,0 +1,2767 @@
+{
+	"skeleton": {
+		"hash": "4VyzNGt9r5w",
+		"spine": "4.3.26",
+		"x": -212.0836,
+		"y": -17.611084,
+		"width": 394.157,
+		"height": 1308.573,
+		"images": "G:/.shortcut-targets-by-id/1BDhLd4SxzcZ5nKQWk_T_NA0olWKEnbbO/Miniaturas/TEXTURAS/Eileen/",
+		"audio": "C:/temp/Spine Animations/Tracer_tut"
+	},
+	"bones": [
+		{
+			"name": "root",
+			"color": "d8e323ff"
+		},
+		{
+			"name": "Pernas",
+			"parent": "root"
+		},
+		{
+			"name": "quadril",
+			"parent": "root",
+			"x": -325.8272,
+			"y": 437.1401,
+			"color": "ffffffff"
+		},
+		{
+			"name": "pelvis",
+			"parent": "quadril",
+			"x": 185.7754,
+			"y": 317.332,
+			"color": "d8e323ff",
+			"icon": "arrows"
+		},
+		{
+			"name": "hip",
+			"parent": "pelvis",
+			"length": 138.65495,
+			"rotation": -89.38762,
+			"x": 114.972,
+			"y": 43.25146,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "waist",
+			"parent": "pelvis",
+			"length": 137.935,
+			"rotation": -4.122501,
+			"x": 97.81636,
+			"y": -757.667,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "chest",
+			"parent": "waist",
+			"length": 166.3933,
+			"rotation": 25.44693,
+			"x": 137.935,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "neck",
+			"parent": "chest",
+			"length": 74.6388,
+			"rotation": -19.23331,
+			"x": 98.0899,
+			"y": 10.216644,
+			"inherit": "noScale",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "head",
+			"parent": "neck",
+			"length": 120.75861,
+			"rotation": 67.14462,
+			"x": -1407.1198,
+			"y": 83.94912,
+			"inherit": "noRotationOrReflection",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "chest3",
+			"parent": "chest",
+			"length": 126.02648,
+			"rotation": 119.05486,
+			"x": 127.0813,
+			"y": 15.13066,
+			"scaleX": 0.8511595,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_upper_r",
+			"parent": "chest3",
+			"length": 187.40654,
+			"rotation": 257.23,
+			"x": 126.78462,
+			"y": 1.973755,
+			"scaleX": 1.2153195,
+			"scaleY": 1.3408357,
+			"inherit": "noRotationOrReflection",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_lower_r",
+			"parent": "arm_upper_r",
+			"length": 190.1319,
+			"rotation": 6.173433,
+			"x": 190.11407,
+			"y": -1.075348,
+			"scaleX": 1.0854427,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_lower_r2",
+			"parent": "arm_lower_r",
+			"length": 80.553,
+			"rotation": 8.513466,
+			"x": 187.1603,
+			"y": 0.46813965,
+			"scaleX": 0.8553546,
+			"inherit": "noScale",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "chest2",
+			"parent": "chest",
+			"length": 113.47782,
+			"rotation": -136.04427,
+			"x": 107.20569,
+			"y": -49.50708,
+			"scaleX": 0.7532194,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_upper_l",
+			"parent": "chest2",
+			"length": 172.1617,
+			"rotation": -76.6407,
+			"x": 114.27293,
+			"y": -0.1246338,
+			"scaleX": 1.234363,
+			"inherit": "onlyTranslation",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_lower_l",
+			"parent": "arm_upper_l",
+			"length": 197.9349,
+			"rotation": -5.031284,
+			"x": 175.9455,
+			"y": 0.5724792,
+			"scaleX": 1.1413382,
+			"inherit": "noScale",
+			"color": "ff0000ff"
+		},
+		{
+			"name": "arm_lower_l2",
+			"parent": "arm_lower_l",
+			"length": 50.1469,
+			"rotation": -1.9962586,
+			"x": 197.46747,
+			"y": -0.3822327,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "leg_lower_r2",
+			"parent": "Pernas",
+			"length": 84.93284,
+			"rotation": -1.7047194,
+			"x": 416.1807,
+			"y": -160.29855,
+			"color": "ff0000ff",
+			"icon": "ik"
+		},
+		{
+			"name": "leg_upper_l",
+			"parent": "hip",
+			"length": 385.0055,
+			"rotation": 8.7888,
+			"x": 102.96237,
+			"y": 99.3698,
+			"scaleX": 0.8645404,
+			"scaleY": 0.9485032,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "leg_lower_l",
+			"parent": "leg_upper_l",
+			"length": 397.1124,
+			"rotation": -5.916031,
+			"x": 375.3651,
+			"y": -22.470047,
+			"scaleX": 1.0337032,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "leg_lower_l2",
+			"parent": "Pernas",
+			"length": 86.4,
+			"rotation": -1.4087353,
+			"x": -515.0445,
+			"y": -160.96967,
+			"color": "ff0000ff",
+			"icon": "ik"
+		},
+		{
+			"name": "leg_lower_l3",
+			"parent": "leg_lower_l2",
+			"length": 80.10293,
+			"rotation": -7.679584,
+			"x": 86.44693,
+			"y": 0.1330471,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "leg_lower_r3",
+			"parent": "leg_lower_r2",
+			"length": 78.6353,
+			"rotation": -10.66432,
+			"x": 84.42273,
+			"y": 0.15333557,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "head2",
+			"parent": "head",
+			"rotation": -62.49823,
+			"x": 57.81934,
+			"y": -61.30521,
+			"color": "ffffffff",
+			"icon": "eye",
+			"iconSize": 1.5
+		},
+		{
+			"name": "hip5",
+			"parent": "hip",
+			"length": 359.727,
+			"rotation": -9.042017,
+			"x": 154.2524,
+			"y": -43.89131,
+			"scaleX": 0.7770002,
+			"scaleY": 0.7706328,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "leg_lower_r4",
+			"parent": "hip5",
+			"length": 449.6048,
+			"rotation": -14.896315,
+			"x": 359.727,
+			"scaleX": 1.0052187,
+			"color": "ff0000ff"
+		},
+		{
+			"name": ">antebraço",
+			"parent": "root",
+			"rotation": -8.424858,
+			"x": 585.698,
+			"y": 1077.1456,
+			"color": "ffffffff"
+		},
+		{
+			"name": "antebraço<",
+			"parent": "root",
+			"x": -493.3347,
+			"y": 1077.1456,
+			"color": "ffffffff"
+		},
+		{
+			"name": "braço<",
+			"parent": "root",
+			"x": -493.3347,
+			"y": 898.3524,
+			"color": "ffffffff"
+		},
+		{
+			"name": ">braço",
+			"parent": "root",
+			"rotation": 14.890957,
+			"x": 579.4246,
+			"y": 898.3524,
+			"color": "ffffffff"
+		},
+		{
+			"name": "mão<",
+			"parent": "root",
+			"x": -493.3347,
+			"y": 714.8541,
+			"color": "ffffffff"
+		},
+		{
+			"name": ">mão",
+			"parent": "root",
+			"rotation": -8.209114,
+			"x": 579.4246,
+			"y": 714.8541,
+			"color": "ffffffff"
+		},
+		{
+			"name": "ombro<",
+			"parent": "root",
+			"rotation": -19.787224,
+			"x": -493.3347,
+			"y": 1238.6868,
+			"color": "ffffffff"
+		},
+		{
+			"name": ">ombro",
+			"parent": "root",
+			"x": 579.4246,
+			"y": 1238.6868,
+			"color": "ffffffff"
+		},
+		{
+			"name": ">perna",
+			"parent": "root",
+			"x": 579.4246,
+			"y": 175.1978,
+			"color": "ffffffff"
+		},
+		{
+			"name": "perna<",
+			"parent": "root",
+			"x": -493.3347,
+			"y": 175.1978,
+			"color": "ffffffff"
+		},
+		{
+			"name": "cabeça",
+			"parent": "root",
+			"x": 84.03574,
+			"y": 1481.975,
+			"color": "ffffffff"
+		},
+		{
+			"name": "coluna",
+			"parent": "root",
+			"rotation": 4.55971,
+			"x": 308.24475,
+			"y": 1275.9125,
+			"color": "ffffffff"
+		},
+		{
+			"name": "hip11",
+			"parent": "hip",
+			"length": 191.6099,
+			"rotation": 16.01381,
+			"x": -64.25635,
+			"y": 132.79745,
+			"color": "ffde00ff"
+		},
+		{
+			"name": "EILEEN",
+			"parent": "root",
+			"x": -14.764923,
+			"y": 1063.6934,
+			"scaleX": 0.5,
+			"scaleY": 0.5
+		},
+		{
+			"name": "Eileen FRENTE",
+			"parent": "EILEEN"
+		},
+		{
+			"name": "chest4",
+			"parent": "chest",
+			"length": 47.15021,
+			"rotation": 157.2909,
+			"x": 60.56769,
+			"y": 16.68773,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest5",
+			"parent": "chest3",
+			"length": 59.65272,
+			"rotation": 49.42671,
+			"x": 86.30743,
+			"y": 14.563904,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest6",
+			"parent": "chest2",
+			"length": 65.39364,
+			"rotation": -23.481836,
+			"x": 71.21606,
+			"y": -21.270996,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest6b",
+			"parent": "chest6",
+			"length": 65.39364,
+			"x": 65.39364,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest6c",
+			"parent": "chest6b",
+			"length": 65.39364,
+			"x": 65.39364,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest4b",
+			"parent": "chest4",
+			"length": 47.15021,
+			"x": 47.15021,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest4c",
+			"parent": "chest4b",
+			"length": 47.15021,
+			"x": 47.15021,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest5b",
+			"parent": "chest5",
+			"length": 59.65272,
+			"x": 59.65272,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest5c",
+			"parent": "chest5b",
+			"length": 59.65272,
+			"x": 59.65272,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip2",
+			"parent": "hip",
+			"length": 125.15467,
+			"rotation": -4.018826,
+			"x": 90.38916,
+			"y": -16.1742,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip3",
+			"parent": "hip",
+			"length": 118.94773,
+			"rotation": 3.690169,
+			"x": 79.18066,
+			"y": 83.22884,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip3b",
+			"parent": "hip3",
+			"length": 118.94773,
+			"x": 118.94773,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip3c",
+			"parent": "hip3b",
+			"length": 118.94773,
+			"x": 118.94773,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip2b",
+			"parent": "hip2",
+			"length": 125.15467,
+			"x": 125.15467,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip2c",
+			"parent": "hip2b",
+			"length": 125.15467,
+			"x": 125.15467,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip4",
+			"parent": "hip",
+			"length": 147.30795,
+			"rotation": -15.146843,
+			"x": 33.04126,
+			"y": -44.58477,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip6",
+			"parent": "hip",
+			"length": 13.549418,
+			"rotation": -0.61241,
+			"x": 93.61359,
+			"y": 130.15942,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip6b",
+			"parent": "hip6",
+			"length": 13.549418,
+			"x": 13.549418,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip6b2",
+			"parent": "hip6b",
+			"length": 44.33766,
+			"rotation": -10.30482,
+			"x": 15.201782,
+			"y": -1.321869,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip7",
+			"parent": "hip",
+			"length": 13.848814,
+			"rotation": -0.6123805,
+			"x": 78.60864,
+			"y": 101.5505,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip7b",
+			"parent": "hip7",
+			"length": 13.848814,
+			"x": 13.848814,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip7b2",
+			"parent": "hip7b",
+			"length": 36.85297,
+			"rotation": 0.9612492,
+			"x": 15.827148,
+			"y": 0.4945908,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip7b2b",
+			"parent": "hip7b2",
+			"length": 36.85297,
+			"x": 36.85297,
+			"color": "fff000ff"
+		},
+		{
+			"name": "hip8",
+			"parent": "hip",
+			"length": 159.52203,
+			"rotation": -15.467667,
+			"x": 142.48145,
+			"y": -6.305399,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3",
+			"parent": "head",
+			"length": 55.21044,
+			"rotation": -145.5038,
+			"x": -26.356384,
+			"y": -16.91223,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3b",
+			"parent": "head3",
+			"length": 55.21044,
+			"rotation": 7.810835,
+			"x": 55.21044,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3c",
+			"parent": "head3b",
+			"length": 55.21044,
+			"rotation": -33.06207,
+			"x": 55.21044,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3d",
+			"parent": "head3c",
+			"length": 55.21044,
+			"rotation": 6.883877,
+			"x": 55.21044,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3e",
+			"parent": "head3d",
+			"length": 27.60522,
+			"rotation": 6.347183,
+			"x": 55.21044,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head3e2",
+			"parent": "head3e",
+			"length": 27.60522,
+			"x": 27.60522,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4",
+			"parent": "head",
+			"length": 56.41507,
+			"rotation": -160.365,
+			"x": -33.6416,
+			"y": 30.042694,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4b",
+			"parent": "head4",
+			"length": 56.41507,
+			"x": 56.41507,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4c",
+			"parent": "head4b",
+			"length": 56.41507,
+			"x": 56.41507,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4d",
+			"parent": "head4c",
+			"length": 56.41507,
+			"x": 56.41507,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4d2",
+			"parent": "head4d",
+			"length": 23.353113,
+			"rotation": 1.0992846,
+			"x": 58.71643,
+			"y": 0.12950134,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head4d2b",
+			"parent": "head4d2",
+			"length": 23.353113,
+			"x": 23.353113,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5",
+			"parent": "head",
+			"length": 54.17299,
+			"rotation": -166.9854,
+			"x": 53.414,
+			"y": -70.81052,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5b",
+			"parent": "head5",
+			"length": 54.17299,
+			"rotation": 7.36951,
+			"x": 54.17299,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5c",
+			"parent": "head5b",
+			"length": 54.17299,
+			"rotation": 8.765884,
+			"x": 54.17299,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5d",
+			"parent": "head5c",
+			"length": 54.17299,
+			"x": 54.17299,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5e",
+			"parent": "head5d",
+			"length": 54.17299,
+			"x": 54.17299,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5e2",
+			"parent": "head5e",
+			"length": 21.610376,
+			"rotation": -0.21126047,
+			"x": 53.56738,
+			"y": -1.718582,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head5e2b",
+			"parent": "head5e2",
+			"length": 21.610376,
+			"x": 21.610376,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6",
+			"parent": "head",
+			"length": 52.13587,
+			"rotation": -142.1561,
+			"x": 34.62762,
+			"y": -61.84534,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6b",
+			"parent": "head6",
+			"length": 52.13587,
+			"x": 52.13587,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6c",
+			"parent": "head6b",
+			"length": 52.13587,
+			"x": 52.13587,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6d",
+			"parent": "head6c",
+			"length": 52.13587,
+			"x": 52.13587,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6e",
+			"parent": "head6d",
+			"length": 52.13587,
+			"x": 52.13587,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6e2",
+			"parent": "head6e",
+			"length": 23.50549,
+			"rotation": -3.6785626,
+			"x": 51.72827,
+			"y": 0.7056885,
+			"color": "fff000ff"
+		},
+		{
+			"name": "head6e2b",
+			"parent": "head6e2",
+			"length": 23.50549,
+			"x": 23.50549,
+			"color": "fff000ff"
+		},
+		{
+			"name": "arm_lower_l3",
+			"parent": "arm_lower_l",
+			"length": 65.96586,
+			"rotation": -14.221456,
+			"x": 237.0718,
+			"y": 13.65512,
+			"color": "fff000ff"
+		},
+		{
+			"name": "arm_lower_l3b",
+			"parent": "arm_lower_l3",
+			"length": 65.96586,
+			"x": 65.96586,
+			"color": "fff000ff"
+		},
+		{
+			"name": "arm_lower_l3c",
+			"parent": "arm_lower_l3b",
+			"length": 65.96586,
+			"x": 65.96586,
+			"color": "fff000ff"
+		},
+		{
+			"name": "arm_lower_l3d",
+			"parent": "arm_lower_l3c",
+			"length": 65.96586,
+			"x": 65.96586,
+			"color": "fff000ff"
+		},
+		{
+			"name": "arm_lower_l3e",
+			"parent": "arm_lower_l3d",
+			"length": 65.96586,
+			"x": 65.96586,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest7",
+			"parent": "chest",
+			"x": 86.1679,
+			"y": -54.23202,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "chest8",
+			"parent": "chest",
+			"x": 104.06213,
+			"y": 20.08896,
+			"color": "ff0000ff"
+		},
+		{
+			"name": "chest9",
+			"parent": "chest",
+			"length": 39.57761,
+			"rotation": 176.2735,
+			"x": 73.5915,
+			"y": -30.447205,
+			"color": "fff000ff"
+		},
+		{
+			"name": "chest9b",
+			"parent": "chest9",
+			"length": 39.57761,
+			"x": 39.57761,
+			"color": "fff000ff"
+		},
+		{
+			"name": "Capacete 2 FRENTE",
+			"parent": "root",
+			"x": -0.5
+		},
+		{
+			"name": "Capacete 1 FRENTE",
+			"parent": "root",
+			"x": 5.5,
+			"y": 135
+		},
+		{
+			"name": "Fantasia FRENTE",
+			"parent": "root",
+			"x": 3.3953705,
+			"y": 1161.7694,
+			"scaleX": 0.55,
+			"scaleY": 0.55
+		},
+		{
+			"name": "arm_upper_r2",
+			"parent": "arm_upper_r",
+			"length": 56.71086,
+			"rotation": -2.2263465,
+			"x": 137.6288,
+			"y": -57.40062,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_upper_r2b",
+			"parent": "arm_upper_r2",
+			"length": 56.71086,
+			"x": 56.71086,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_upper_r2c",
+			"parent": "arm_upper_r2b",
+			"length": 56.71086,
+			"x": 56.71086,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_upper_l2",
+			"parent": "arm_upper_l",
+			"length": 54.30382,
+			"rotation": 6.86238,
+			"x": 139.88245,
+			"y": 57.62866,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_upper_l2b",
+			"parent": "arm_upper_l2",
+			"length": 54.30382,
+			"x": 54.30382,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_upper_l2c",
+			"parent": "arm_upper_l2b",
+			"length": 54.30382,
+			"x": 54.30382,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "neck2",
+			"parent": "neck",
+			"length": 124.59782,
+			"rotation": 179.55214,
+			"x": -91.6767,
+			"y": -5.805137,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "neck2b",
+			"parent": "neck2",
+			"length": 124.59782,
+			"x": 124.59782,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "neck2c",
+			"parent": "neck2b",
+			"length": 124.59782,
+			"x": 124.59782,
+			"color": "ffe500ff"
+		},
+		{
+			"name": "arm_lower_r3",
+			"parent": "arm_lower_r",
+			"length": 54.46183,
+			"rotation": -2.345952,
+			"x": 188.44144,
+			"y": -8.42781,
+			"color": "ffe800ff"
+		},
+		{
+			"name": "arm_lower_r4",
+			"parent": "arm_lower_r3",
+			"length": 119.90127,
+			"rotation": 2.0034366,
+			"x": 54.46185,
+			"color": "ffe800ff"
+		}
+	],
+	"slots": [
+		{
+			"name": "arm_upper_l",
+			"bone": "arm_upper_l",
+			"dark": "000000"
+		},
+		{
+			"name": "chest_back",
+			"bone": "chest",
+			"dark": "000000"
+		},
+		{
+			"name": "arm_lower_l",
+			"bone": "arm_lower_l",
+			"dark": "000000"
+		},
+		{
+			"name": "leg_lower_l",
+			"bone": "leg_lower_l",
+			"dark": "000000"
+		},
+		{
+			"name": "leg_upper_l",
+			"bone": "leg_upper_l",
+			"dark": "000000"
+		},
+		{
+			"name": "neck",
+			"bone": "neck",
+			"dark": "000000"
+		},
+		{
+			"name": "body",
+			"bone": "waist",
+			"dark": "000000"
+		},
+		{
+			"name": "head",
+			"bone": "head",
+			"dark": "000000"
+		},
+		{
+			"name": "arm_upper_r",
+			"bone": "arm_upper_r",
+			"dark": "000000"
+		},
+		{
+			"name": "arm_lower_r",
+			"bone": "arm_lower_r",
+			"dark": "000000"
+		},
+		{
+			"name": "root",
+			"bone": "root"
+		},
+		{
+			"name": "Capa Vigilia bottom",
+			"bone": "root",
+			"attachment": "Capa Vigilia bottom"
+		},
+		{
+			"name": "capa tras FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "capa tras FANTASIA"
+		},
+		{
+			"name": "Antebraço direito eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Antebraço direito eileen"
+		},
+		{
+			"name": "Antebraço direito mão fechada eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Antebraço direito mão fechada eileen"
+		},
+		{
+			"name": "funda eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "funda eileen"
+		},
+		{
+			"name": "tocha",
+			"bone": "root",
+			"attachment": "tocha"
+		},
+		{
+			"name": "vigilia lança",
+			"bone": "root",
+			"attachment": "vigilia lança"
+		},
+		{
+			"name": "vigilia espada",
+			"bone": "root",
+			"attachment": "vigilia espada"
+		},
+		{
+			"name": "vigilia sino",
+			"bone": "root",
+			"attachment": "vigilia sino"
+		},
+		{
+			"name": "Dedos direitos eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Dedos direitos eileen"
+		},
+		{
+			"name": "braço direito eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "braço direito eileen"
+		},
+		{
+			"name": "Canela esquerda eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Canela esquerda eileen"
+		},
+		{
+			"name": "Canela direita eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Canela direita eileen"
+		},
+		{
+			"name": "Canela direita walk eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Canela direita walk eileen"
+		},
+		{
+			"name": "corpo eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "corpo eileen"
+		},
+		{
+			"name": "avental eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "avental eileen"
+		},
+		{
+			"name": "penduricalhos eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "penduricalhos eileen"
+		},
+		{
+			"name": "CINTOS eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "CINTOS eileen"
+		},
+		{
+			"name": "saquinho eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "saquinho eileen"
+		},
+		{
+			"name": "poção eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "poção eileen"
+		},
+		{
+			"name": "porta foice vazio eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "porta foice vazio eileen"
+		},
+		{
+			"name": "porta foice usando eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "porta foice usando eileen"
+		},
+		{
+			"name": "bolsa eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "bolsa eileen"
+		},
+		{
+			"name": "vigilia tigela",
+			"bone": "root",
+			"attachment": "vigilia tigela"
+		},
+		{
+			"name": "Antebraço esquerdo eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Antebraço esquerdo eileen"
+		},
+		{
+			"name": "Polegar esquerdo eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Polegar esquerdo eileen"
+		},
+		{
+			"name": "vigilia chifre",
+			"bone": "root",
+			"attachment": "vigilia chifre"
+		},
+		{
+			"name": "foice eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "foice eileen"
+		},
+		{
+			"name": "lamparinas acesas 3",
+			"bone": "root",
+			"attachment": "lamparinas acesas 3"
+		},
+		{
+			"name": "lamparinas apagada 3",
+			"bone": "root",
+			"attachment": "lamparinas apagada 3"
+		},
+		{
+			"name": "cranio 1 aceso",
+			"bone": "root",
+			"attachment": "cranio 1 aceso"
+		},
+		{
+			"name": "Antebraço esquerdo mão fechada eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Antebraço esquerdo mão fechada eileen"
+		},
+		{
+			"name": "braço esquerdo eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "braço esquerdo eileen"
+		},
+		{
+			"name": "vigilia medalhao",
+			"bone": "root",
+			"attachment": "vigilia medalhao"
+		},
+		{
+			"name": "vigilia colar de pedra",
+			"bone": "root",
+			"attachment": "vigilia colar de pedra"
+		},
+		{
+			"name": "colar eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "colar eileen"
+		},
+		{
+			"name": "capuz tras FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "capuz tras FANTASIA"
+		},
+		{
+			"name": "pescoço FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "pescoço FANTASIA"
+		},
+		{
+			"name": "Babados capuz eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Babados capuz eileen2"
+		},
+		{
+			"name": "clip capuz FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "clip capuz FANTASIA"
+		},
+		{
+			"name": "Trança sem capuz esquerdo eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança sem capuz esquerdo eileen"
+		},
+		{
+			"name": "Trança sem capuz direito eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança sem capuz direito eileen"
+		},
+		{
+			"name": "olhos brancos eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "olhos brancos eileen"
+		},
+		{
+			"name": "olhos iris eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "olhos iris eileen"
+		},
+		{
+			"name": "brilho olho eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "brilho olho eileen"
+		},
+		{
+			"name": "Cabeça sem capuz eileen correto",
+			"bone": "Eileen FRENTE",
+			"attachment": "Cabeça sem capuz eileen correto"
+		},
+		{
+			"name": "Cabeça capuz eileen correto",
+			"bone": "Eileen FRENTE",
+			"attachment": "Cabeça capuz eileen correto"
+		},
+		{
+			"name": "Cabelo capuz eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Cabelo capuz eileen"
+		},
+		{
+			"name": "franja eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "franja eileen"
+		},
+		{
+			"name": "Trança com capuz direito eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança com capuz direito eileen"
+		},
+		{
+			"name": "Trança com capuz esquerdo  eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança com capuz esquerdo  eileen"
+		},
+		{
+			"name": "Cabeça sem capuz olhos fechados eileen",
+			"bone": "root",
+			"attachment": "Cabeça sem capuz olhos fechados eileen"
+		},
+		{
+			"name": "skin apicultora eileen",
+			"bone": "Eileen FRENTE",
+			"attachment": "skin apicultora eileen"
+		},
+		{
+			"name": "malha 1 frente",
+			"bone": "Capacete 1 FRENTE",
+			"attachment": "malha 1 frente"
+		},
+		{
+			"name": "capacete 1 frente",
+			"bone": "Capacete 1 FRENTE",
+			"attachment": "capacete 1 frente"
+		},
+		{
+			"name": "capacete 2 frente",
+			"bone": "Capacete 2 FRENTE",
+			"attachment": "capacete 2 frente"
+		},
+		{
+			"name": "capa FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "capa FANTASIA"
+		},
+		{
+			"name": "mascara FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "mascara FANTASIA"
+		},
+		{
+			"name": "capuz FANTASIA",
+			"bone": "Fantasia FRENTE",
+			"attachment": "capuz FANTASIA"
+		},
+		{
+			"name": "Trança com capuz esquerdo FANTASIA",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança com capuz esquerdo FANTASIA"
+		},
+		{
+			"name": "Trança com capuz direito FANTASIA",
+			"bone": "Eileen FRENTE",
+			"attachment": "Trança com capuz direito FANTASIA"
+		},
+		{
+			"name": "vigilia escudo",
+			"bone": "root",
+			"attachment": "vigilia escudo"
+		},
+		{
+			"name": "Capa Vigilia top",
+			"bone": "root",
+			"attachment": "Capa Vigilia top"
+		}
+	],
+	"constraints": [
+		{
+			"type": "physics",
+			"name": "hip2",
+			"bone": "hip2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip3",
+			"bone": "hip3",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip3b",
+			"bone": "hip3b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip3c",
+			"bone": "hip3c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip2b",
+			"bone": "hip2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip2c",
+			"bone": "hip2c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip4",
+			"bone": "hip4",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip6",
+			"bone": "hip6",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip6b",
+			"bone": "hip6b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip6b2",
+			"bone": "hip6b2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip7",
+			"bone": "hip7",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip7b",
+			"bone": "hip7b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip7b2",
+			"bone": "hip7b2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip7b2b",
+			"bone": "hip7b2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip8",
+			"bone": "hip8",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "hip11",
+			"bone": "hip11",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "coluna-to-waist",
+			"source": "coluna",
+			"bones": [
+				"waist"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"offset": 78.69487,
+							"max": 178.69487
+						}
+					}
+				},
+				"x": {
+					"offset": 345.6326,
+					"to": {
+						"x": {
+							"offset": 66.58006,
+							"max": 166.58006
+						}
+					}
+				},
+				"y": {
+					"offset": 1270.5713,
+					"to": {
+						"y": {
+							"offset": 806.0825,
+							"max": 906.0825
+						}
+					}
+				}
+			},
+			"localTarget": true,
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "neck2",
+			"bone": "neck2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "neck2b",
+			"bone": "neck2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "neck2c",
+			"bone": "neck2c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest9",
+			"bone": "chest9",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest9b",
+			"bone": "chest9b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest4",
+			"bone": "chest4",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest4b",
+			"bone": "chest4b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest4c",
+			"bone": "chest4c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "bone-to-head",
+			"source": "cabeça",
+			"bones": [
+				"head"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				},
+				"x": {
+					"to": {
+						"y": {
+							"max": -100,
+							"scale": -1
+						}
+					}
+				},
+				"y": {
+					"to": {
+						"x": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"localTarget": true,
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "head3",
+			"bone": "head3",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head3b",
+			"bone": "head3b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head3c",
+			"bone": "head3c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head3d",
+			"bone": "head3d",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head3e",
+			"bone": "head3e",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head3e2",
+			"bone": "head3e2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4",
+			"bone": "head4",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4b",
+			"bone": "head4b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4c",
+			"bone": "head4c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4d",
+			"bone": "head4d",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4d2",
+			"bone": "head4d2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head4d2b",
+			"bone": "head4d2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5",
+			"bone": "head5",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5b",
+			"bone": "head5b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5c",
+			"bone": "head5c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5d",
+			"bone": "head5d",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5e",
+			"bone": "head5e",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5e2",
+			"bone": "head5e2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head5e2b",
+			"bone": "head5e2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6",
+			"bone": "head6",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6b",
+			"bone": "head6b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6c",
+			"bone": "head6c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6d",
+			"bone": "head6d",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6e",
+			"bone": "head6e",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6e2",
+			"bone": "head6e2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "head6e2b",
+			"bone": "head6e2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "mão<2-to-leg_lower_r2",
+			"source": "perna<",
+			"bones": [
+				"leg_lower_r2"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				},
+				"x": {
+					"to": {
+						"x": {
+							"max": 100
+						}
+					}
+				},
+				"y": {
+					"to": {
+						"y": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "transform",
+			"name": ">mão2-to-leg_lower_l2",
+			"source": ">perna",
+			"bones": [
+				"leg_lower_l2"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				},
+				"x": {
+					"to": {
+						"x": {
+							"max": 100
+						}
+					}
+				},
+				"y": {
+					"to": {
+						"y": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "transform",
+			"name": "ombro<-to-chest3",
+			"source": "ombro<",
+			"bones": [
+				"chest3"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "chest5",
+			"bone": "chest5",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest5b",
+			"bone": "chest5b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest5c",
+			"bone": "chest5c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "antebraço<-to-arm_upper_r",
+			"source": "antebraço<",
+			"bones": [
+				"arm_upper_r"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_r2",
+			"bone": "arm_upper_r2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_r2b",
+			"bone": "arm_upper_r2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_r2c",
+			"bone": "arm_upper_r2c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "braço<-to-arm_lower_r",
+			"source": "braço<",
+			"bones": [
+				"arm_lower_r"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_r4",
+			"bone": "arm_lower_r4",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "mão<-to-arm_lower_r2",
+			"source": "mão<",
+			"bones": [
+				"arm_lower_r2"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "transform",
+			"name": ">ombro-to-chest2",
+			"source": ">ombro",
+			"bones": [
+				"chest2"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "chest6",
+			"bone": "chest6",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest6b",
+			"bone": "chest6b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "chest6c",
+			"bone": "chest6c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": "bone-to-arm_upper_l",
+			"source": ">antebraço",
+			"bones": [
+				"arm_upper_l"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_l2",
+			"bone": "arm_upper_l2",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_l2b",
+			"bone": "arm_upper_l2b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_upper_l2c",
+			"bone": "arm_upper_l2c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": ">braço-to-arm_lower_l",
+			"source": ">braço",
+			"bones": [
+				"arm_lower_l"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"additive": true
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_l3",
+			"bone": "arm_lower_l3",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_l3b",
+			"bone": "arm_lower_l3b",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_l3c",
+			"bone": "arm_lower_l3c",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_l3d",
+			"bone": "arm_lower_l3d",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "physics",
+			"name": "arm_lower_l3e",
+			"bone": "arm_lower_l3e",
+			"rotate": 1,
+			"fps": 20
+		},
+		{
+			"type": "transform",
+			"name": ">mão-to-arm_lower_l2",
+			"source": ">mão",
+			"bones": [
+				"arm_lower_l2"
+			],
+			"properties": {
+				"rotate": {
+					"to": {
+						"rotate": {
+							"max": 100
+						}
+					}
+				}
+			},
+			"localSource": true,
+			"additive": true
+		},
+		{
+			"type": "ik",
+			"name": "leg_IK_r",
+			"target": "leg_lower_r2",
+			"bones": [
+				"hip5",
+				"leg_lower_r4"
+			],
+			"bendPositive": false,
+			"stretch": true
+		},
+		{
+			"type": "ik",
+			"name": "leg_IK_l",
+			"target": "leg_lower_l2",
+			"bones": [
+				"leg_upper_l",
+				"leg_lower_l"
+			],
+			"bendPositive": false,
+			"stretch": true
+		}
+	],
+	"skins": [
+		{
+			"name": "default",
+			"attachments": {
+				"avental eileen": {
+					"avental eileen": {
+						"type": "mesh",
+						"uvs": [
+							0.8636193,
+							0.0003815985,
+							0.8747482,
+							0.004581322,
+							0.8639858,
+							0.03862954,
+							0.8418302,
+							0.05129616,
+							0.8649866,
+							0.08926558,
+							0.9391105,
+							0.2223536,
+							0.9539375,
+							0.3407106,
+							0.9687646,
+							0.45906755,
+							0.9803222,
+							0.5513267,
+							0.9893704,
+							0.6235541,
+							0.9984186,
+							0.6957814,
+							0.9956306,
+							0.7603214,
+							0.9928427,
+							0.8248613,
+							0.9988033,
+							0.9337668,
+							0.9523067,
+							0.9534678,
+							0.9246368,
+							0.9478792,
+							0.924602,
+							0.9351578,
+							0.7590333,
+							0.9435925,
+							0.6046178,
+							0.9744811,
+							0.5518151,
+							0.9787265,
+							0.5518092,
+							0.9978841,
+							0.5477206,
+							0.9978854,
+							0.532934,
+							0.9585212,
+							0.4515821,
+							0.9679912,
+							0.22878873,
+							0.9552753,
+							0.1071069,
+							0.9462433,
+							0.016849754,
+							0.9436275,
+							0.0029195114,
+							0.930922,
+							0.009217435,
+							0.8484484,
+							0.01551536,
+							0.7659748,
+							0.02716226,
+							0.693736,
+							0.03880916,
+							0.6214973,
+							0.06210295,
+							0.4770199,
+							0.11271319,
+							0.3410694,
+							0.1417389,
+							0.2630997,
+							0.22122332,
+							0.11548826,
+							0.24886593,
+							0.0658043,
+							0.1656353,
+							0.06362283,
+							0.1422369,
+							0.02541255,
+							0.3552619,
+							0.026030505,
+							0.6514128,
+							0.013339443,
+							0.24900757,
+							0.7867592,
+							0.2910216,
+							0.5826504,
+							0.3456398,
+							0.3571814,
+							0.3876537,
+							0.19341974,
+							0.7363727,
+							0.786759,
+							0.7279695,
+							0.6111306,
+							0.7195666,
+							0.38566175,
+							0.6985592,
+							0.2100332
+						],
+						"triangles": [
+							11,
+							45,
+							10,
+							12,
+							45,
+							11,
+							16,
+							45,
+							12,
+							16,
+							12,
+							13,
+							17,
+							45,
+							16,
+							14,
+							15,
+							16,
+							13,
+							14,
+							16,
+							22,
+							41,
+							45,
+							22,
+							45,
+							17,
+							18,
+							22,
+							17,
+							19,
+							22,
+							18,
+							19,
+							21,
+							22,
+							20,
+							21,
+							19,
+							28,
+							25,
+							27,
+							26,
+							27,
+							25,
+							41,
+							25,
+							28,
+							24,
+							25,
+							41,
+							23,
+							24,
+							41,
+							22,
+							23,
+							41,
+							31,
+							32,
+							42,
+							42,
+							30,
+							31,
+							41,
+							30,
+							42,
+							29,
+							30,
+							41,
+							28,
+							29,
+							41,
+							41,
+							42,
+							46,
+							46,
+							7,
+							8,
+							46,
+							8,
+							9,
+							9,
+							10,
+							46,
+							10,
+							45,
+							46,
+							42,
+							47,
+							46,
+							41,
+							46,
+							45,
+							48,
+							4,
+							5,
+							6,
+							47,
+							48,
+							6,
+							48,
+							5,
+							47,
+							6,
+							7,
+							46,
+							47,
+							7,
+							43,
+							48,
+							47,
+							42,
+							43,
+							47,
+							33,
+							34,
+							43,
+							43,
+							32,
+							33,
+							42,
+							32,
+							43,
+							43,
+							34,
+							44,
+							43,
+							44,
+							48,
+							2,
+							0,
+							1,
+							2,
+							3,
+							0,
+							4,
+							48,
+							40,
+							3,
+							40,
+							0,
+							4,
+							40,
+							3,
+							36,
+							37,
+							38,
+							39,
+							36,
+							38,
+							44,
+							39,
+							40,
+							36,
+							39,
+							44,
+							35,
+							36,
+							44,
+							44,
+							40,
+							48,
+							34,
+							35,
+							44
+						],
+						"vertices": [
+							1,
+							4,
+							-43.37,
+							132.83,
+							1,
+							1,
+							4,
+							-41.37,
+							135.76,
+							1,
+							1,
+							4,
+							-25.4,
+							132.73,
+							1,
+							1,
+							4,
+							-19.51,
+							126.79,
+							1,
+							1,
+							4,
+							-1.6,
+							132.74,
+							1,
+							2,
+							4,
+							61.16,
+							151.75,
+							0.00804,
+							51,
+							-13.57,
+							69.54,
+							0.99196,
+							2,
+							51,
+							42.2,
+							69.29,
+							0.99415,
+							52,
+							-76.75,
+							69.29,
+							0.00585,
+							2,
+							51,
+							97.96,
+							69.05,
+							0.74505,
+							52,
+							-20.99,
+							69.05,
+							0.25495,
+							2,
+							51,
+							141.43,
+							68.85,
+							0.25884,
+							52,
+							22.48,
+							68.85,
+							0.74116,
+							4,
+							51,
+							175.46,
+							68.7,
+							0.05012,
+							52,
+							56.52,
+							68.7,
+							0.9324,
+							55,
+							-103.8,
+							189.99,
+							0,
+							53,
+							-62.43,
+							68.7,
+							0.01748,
+							4,
+							51,
+							209.49,
+							68.55,
+							0.00159,
+							52,
+							90.55,
+							68.55,
+							0.83753,
+							55,
+							-70.05,
+							194.41,
+							0.00001,
+							53,
+							-28.4,
+							68.55,
+							0.16087,
+							4,
+							52,
+							120.74,
+							65.54,
+							0.5099,
+							54,
+							85.43,
+							195.47,
+							0,
+							55,
+							-39.73,
+							195.47,
+							0.00006,
+							53,
+							1.79,
+							65.54,
+							0.49004,
+							4,
+							52,
+							150.93,
+							62.52,
+							0.15485,
+							54,
+							115.75,
+							196.53,
+							0,
+							55,
+							-9.4,
+							196.53,
+							0.00022,
+							53,
+							31.98,
+							62.52,
+							0.84493,
+							4,
+							52,
+							202.09,
+							60.26,
+							0.00027,
+							54,
+							166.75,
+							201.15,
+							0,
+							55,
+							41.6,
+							201.15,
+							0.00075,
+							53,
+							83.14,
+							60.26,
+							0.99897,
+							3,
+							54,
+							176.73,
+							189.38,
+							0,
+							55,
+							51.57,
+							189.38,
+							0.00078,
+							53,
+							91.45,
+							47.26,
+							0.99922,
+							3,
+							54,
+							174.54,
+							181.89,
+							0,
+							55,
+							49.39,
+							181.89,
+							0.00077,
+							53,
+							88.28,
+							40.13,
+							0.99923,
+							4,
+							52,
+							201.27,
+							40.57,
+							0.00003,
+							54,
+							168.58,
+							181.53,
+							0,
+							55,
+							43.42,
+							181.53,
+							0.00073,
+							53,
+							82.32,
+							40.57,
+							0.99924,
+							2,
+							55,
+							49.99,
+							137.88,
+							0.00293,
+							53,
+							82.97,
+							-3.57,
+							0.99707,
+							3,
+							54,
+							192.07,
+							97.82,
+							0.00034,
+							55,
+							66.92,
+							97.82,
+							0.24897,
+							53,
+							94.37,
+							-45.54,
+							0.75069,
+							3,
+							54,
+							194.9,
+							83.94,
+							0.00099,
+							55,
+							69.74,
+							83.94,
+							0.31806,
+							53,
+							95.31,
+							-59.67,
+							0.68095,
+							3,
+							52,
+							223.24,
+							-60.34,
+							0,
+							55,
+							78.73,
+							84.48,
+							0.31693,
+							53,
+							104.29,
+							-60.34,
+							0.68307,
+							4,
+							52,
+							223.16,
+							-61.42,
+							0,
+							54,
+							203.95,
+							83.39,
+							0.00004,
+							55,
+							78.8,
+							83.39,
+							0.31698,
+							53,
+							104.21,
+							-61.42,
+							0.68298,
+							4,
+							52,
+							204.41,
+							-63.95,
+							0.00013,
+							54,
+							185.72,
+							78.38,
+							0.00574,
+							55,
+							60.56,
+							78.38,
+							0.38205,
+							53,
+							85.47,
+							-63.95,
+							0.61208,
+							3,
+							54,
+							191.44,
+							57.08,
+							0.00392,
+							55,
+							66.29,
+							57.08,
+							0.62948,
+							53,
+							88.28,
+							-85.82,
+							0.3666,
+							1,
+							55,
+							63.84,
+							-2.32,
+							1,
+							3,
+							54,
+							186.67,
+							-34.82,
+							0.00137,
+							55,
+							61.52,
+							-34.82,
+							0.99782,
+							53,
+							71.23,
+							-176.26,
+							0.0008,
+							3,
+							54,
+							186.87,
+							-58.82,
+							0.01284,
+							55,
+							61.72,
+							-58.82,
+							0.98639,
+							53,
+							68.21,
+							-200.06,
+							0.00078,
+							3,
+							54,
+							181.13,
+							-62.87,
+							0.01768,
+							55,
+							55.97,
+							-62.87,
+							0.98156,
+							53,
+							61.97,
+							-203.3,
+							0.00076,
+							3,
+							54,
+							142.34,
+							-63.5,
+							0.26099,
+							55,
+							17.18,
+							-63.5,
+							0.73868,
+							53,
+							23.45,
+							-198.73,
+							0.00032,
+							3,
+							54,
+							103.54,
+							-64.13,
+							0.76182,
+							55,
+							-21.61,
+							-64.13,
+							0.23812,
+							53,
+							-15.08,
+							-194.15,
+							0.00006,
+							4,
+							50,
+							194.62,
+							-63.06,
+							0.01404,
+							54,
+							69.47,
+							-63.06,
+							0.95793,
+							55,
+							-55.69,
+							-63.06,
+							0.02802,
+							53,
+							-48.71,
+							-188.52,
+							0,
+							2,
+							50,
+							160.54,
+							-61.99,
+							0.14352,
+							54,
+							35.39,
+							-61.99,
+							0.85648,
+							2,
+							50,
+							92.39,
+							-59.86,
+							0.89651,
+							54,
+							-32.76,
+							-59.86,
+							0.10349,
+							1,
+							50,
+							27.81,
+							-50.24,
+							1,
+							2,
+							4,
+							78.05,
+							-60.14,
+							0.06946,
+							50,
+							-9.23,
+							-44.72,
+							0.93054,
+							1,
+							4,
+							8.9,
+							-38.3,
+							1,
+							1,
+							4,
+	

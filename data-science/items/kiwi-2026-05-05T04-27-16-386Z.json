@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-05-05T04:27:16.386Z",
+  "updatedAt": "2026-05-05T04:27:31.110Z",
+  "animation_asset": {
+    "id": "kiwi-2026-05-05T04-27-16-386Z",
+    "name": "kiwi",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop"
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "rig_type": [
+        "skeletal-2d",
+        "spine-json"
+      ],
+      "quality_level": [
+        "unreviewed",
+        "auto-tagged"
+      ],
+      "animation_state": [
+        "happy",
+        "happy_s1",
+        "happy_s2",
+        "happy_s3",
+        "idle",
+        "idle_eb",
+        "swish_s1",
+        "swish_s2",
+        "swish_s3",
+        "water"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/kiwi-2026-05-05T04-27-16-386Z",
+    "manifestPath": "library/kiwi-2026-05-05T04-27-16-386Z/manifest.json",
+    "files": [
+      {
+        "path": "library/kiwi-2026-05-05T04-27-16-386Z/kiwi/kiwi.json",
+        "name": "kiwi/kiwi.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/kiwi-2026-05-05T04-27-16-386Z/kiwi/kiwi.atlas",
+        "name": "kiwi/kiwi.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/kiwi-2026-05-05T04-27-16-386Z/kiwi/kiwi.png",
+        "name": "kiwi/kiwi.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/kiwi-2026-05-05T04-27-16-386Z/idle-preview.webm",
+        "name": "idle-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/kiwi-2026-05-05T04-27-16-386Z/idle-preview.webp",
+        "name": "idle-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "kiwi.json",
+    "atlas": "kiwi.atlas",
+    "textures": [
+      "kiwi.png"
+    ],
+    "animationCount": 10,
+    "animationNames": [
+      "happy",
+      "happy_s1",
+      "happy_s2",
+      "happy_s3",
+      "idle",
+      "idle_eb",
+      "swish_s1",
+      "swish_s2",
+      "swish_s3",
+      "water"
+    ],
+    "defaultAnimation": "idle",
+    "fileCount": 5,
+    "skeletonCount": 1,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [],
+    "confidence": 0.35,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

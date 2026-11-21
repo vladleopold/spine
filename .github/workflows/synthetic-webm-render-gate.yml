@@ -1,0 +1,106 @@
+name: Synthetic WebM render gate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/prepare-render.mjs'
+      - 'scripts/test-synthetic-render-skip.mjs'
+      - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/lib/export-log-redaction.mjs'
+      - 'scripts/spine-export-matrix.mjs'
+      - 'scripts/resolve-export-animation.mjs'
+      - 'scripts/test-spine-export-matrix.mjs'
+      - 'scripts/preview-animation-choice.mjs'
+      - 'scripts/test-preview-animation-choice.mjs'
+      - 'scripts/repair-last-ten-previews.mjs'
+      - 'scripts/test-repair-last-ten-previews.mjs'
+      - 'scripts/test-repair-latest-twenty.mjs'
+      - '.github/workflows/spine-export-full.yml'
+      - '.github/workflows/spine-export-webm.yml'
+      - '.github/workflows/synthetic-webm-render-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/prepare-render.mjs'
+      - 'scripts/test-synthetic-render-skip.mjs'
+      - 'scripts/lib/spine-export-matrix.mjs'
+      - 'scripts/lib/export-log-redaction.mjs'
+      - 'scripts/spine-export-matrix.mjs'
+      - 'scripts/resolve-export-animation.mjs'
+      - 'scripts/test-spine-export-matrix.mjs'
+      - 'scripts/preview-animation-choice.mjs'
+      - 'scripts/test-preview-animation-choice.mjs'
+      - 'scripts/repair-last-ten-previews.mjs'
+      - 'scripts/test-repair-last-ten-previews.mjs'
+      - 'scripts/test-repair-latest-twenty.mjs'
+      - '.github/workflows/spine-export-full.yml'
+      - '.github/workflows/spine-export-webm.yml'
+      - '.github/workflows/synthetic-webm-render-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-render-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/prepare-render.mjs
+            /scripts/resolve-library.mjs
+            /scripts/test-synthetic-render-skip.mjs
+            /scripts/lib/spine-export-matrix.mjs
+            /scripts/lib/export-log-redaction.mjs
+            /scripts/spine-export-matrix.mjs
+            /scripts/resolve-export-animation.mjs
+            /scripts/test-spine-export-matrix.mjs
+            /scripts/test-preview-log-privacy.mjs
+            /scripts/preview-animation-choice.mjs
+            /scripts/test-preview-animation-choice.mjs
+            /scripts/repair-last-ten-previews.mjs
+            /scripts/test-repair-last-ten-previews.mjs
+            /scripts/test-repair-latest-twenty.mjs
+            /scripts/repair-manifest-guard.mjs
+            /scripts/lib/atlas-source-integrity.mjs
+            /scripts/atlas-pages.mjs
+            /scripts/spine-version-detect.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/mask-preview-manifest.mjs
+            /scripts/lib/preview-manifest-redaction.mjs
+            /scripts/verify-reported-preview-live.mjs
+            /scripts/repair-reported-previews.mjs
+            /scripts/repair-latest-twenty-previews.mjs
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
+            /.github/workflows/repair-reported-previews.yml
+            /scripts/resolve-library.mjs
+            /library/index.json
+            /library_*/index.json
+            /.github/workflows/spine-export-full.yml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify syntax and synthetic-only exclusion
+        run: |
+          node --check scripts/prepare-render.mjs
+          node --check scripts/test-synthetic-render-skip.mjs
+          node --check scripts/lib/spine-export-matrix.mjs
+          node --check scripts/lib/export-log-redaction.mjs
+          node --check scripts/spine-export-matrix.mjs
+          node --check scripts/resolve-export-animation.mjs
+          node --check scripts/repair-reported-previews.mjs
+          node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/repair-last-ten-previews.mjs
+          node --check scripts/preview-animation-choice.mjs
+          node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/mask-preview-manifest.mjs
+          node --check scripts/lib/preview-manifest-redaction.mjs
+          node scripts/test-synthetic-render-skip.mjs
+          node scripts/test-spine-export-matrix.mjs
+          node scripts/test-preview-log-privacy.mjs
+          node scripts/test-preview-animation-choice.mjs
+          node scripts/test-repair-last-ten-previews.mjs
+          node scripts/test-repair-latest-twenty.mjs

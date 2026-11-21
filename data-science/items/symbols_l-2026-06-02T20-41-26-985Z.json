@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-06-02T20:41:26.985Z",
+  "updatedAt": "2026-06-02T20:41:49.906Z",
+  "animation_asset": {
+    "id": "symbols_l-2026-06-02T20-41-26-985Z",
+    "name": "symbols_l",
+    "domain": "gamedev",
+    "asset_category": "object",
+    "animation_type": "object",
+    "skeleton_type": "object",
+    "content_type": "object",
+    "taxonomy": {
+      "category": "object",
+      "class": "game-object",
+      "type": "prop",
+      "tags": [
+        "win"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "game-object"
+      ],
+      "interaction_type": [
+        "collectible"
+      ],
+      "animation_state": [
+        "cone_land",
+        "cone_static",
+        "cone_win",
+        "furball_land",
+        "furball_static",
+        "furball_win",
+        "gate_land",
+        "gate_static",
+        "gate__win",
+        "glove_land",
+        "glove_static",
+        "glove_win",
+        "shoe_land",
+        "shoe_static",
+        "shoe_win",
+        "stadium_land",
+        "stadium_static",
+        "stadium_win",
+        "trophee_land",
+        "trophee_static",
+        "trophee_win",
+        "whistle_land",
+        "whistle_static",
+        "whistle_win"
+      ],
+      "loop_type": [
+        "one-shot"
+      ],
+      "state": [
+        "default-cone_land",
+        "win"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png",
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/symbols_l-2026-06-02T20-41-26-985Z",
+    "manifestPath": "library/symbols_l-2026-06-02T20-41-26-985Z/manifest.json",
+    "files": [
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/symbols_l/symbols_L.json",
+        "name": "symbols_l/symbols_L.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/symbols_l/symbols_L.atlas",
+        "name": "symbols_l/symbols_L.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/symbols_l/symbols_L.png",
+        "name": "symbols_l/symbols_L.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/cone_land-preview.webm",
+        "name": "cone_land-preview.webm",
+        "role": "support",
+        "format": "webm"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/cone_land-preview.webp",
+        "name": "cone_land-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/symbols_l-2026-06-02T20-41-26-985Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "symbols_L.json",
+    "atlas": "symbols_L.atlas",
+    "textures": [
+      "symbols_L.png"
+    ],
+    "animationCount": 24,
+    "animationNames": [
+      "cone_land",
+      "cone_static",
+      "cone_win",
+      "furball_land",
+      "furball_static",
+      "furball_win",
+      "gate_land",
+      "gate_static",
+      "gate__win",
+      "glove_land",
+      "glove_static",
+      "glove_win",
+      "shoe_land",
+      "shoe_static",
+      "shoe_win",
+      "stadium_land",
+      "stadium_static",
+      "stadium_win",
+      "trophee_land",
+      "trophee_static",
+      "trophee_win",
+      "whistle_land",
+      "whistle_static",
+      "whistle_win"
+    ],
+    "defaultAnimation": "cone_land",
+    "fileCount": 7,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "win"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

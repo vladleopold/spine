@@ -1,0 +1,68 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "activityroleluxiya-2026-07-23T01-07-35-120Z",
+  "title": "activityroleluxiya",
+  "uploadedAt": "2026-07-23T01:07:35.120Z",
+  "proofPath": "library/activityroleluxiya-2026-07-23T01-07-35-120Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/activityroleluxiya-2026-07-23T01-07-35-120Z/source-proof.json?v=2026-07-23T01-07-35.120Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_1ypb3fj_1v63oni",
+    "anonymousFingerprint": "1ypb3fj",
+    "browserFingerprintSha256": "9bc052a6132bd319680bf059e67d68161ef5d36b7d7d8f8dd578cc85ff8e23f1",
+    "browserEnvironmentHashSha256": "abd5396712aa2c369b4154481126a5c8f4ec195f5d959bd8c6512517d9866058",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "platform": "Linux armv81",
+      "language": "zh-CN",
+      "languages": [
+        "zh-CN",
+        "zh",
+        "zh-TW"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 8,
+      "screen": {
+        "width": 385,
+        "height": 845,
+        "colorDepth": 24,
+        "pixelRatio": 3.75
+      },
+      "timezone": "Europe/Rome",
+      "timezoneOffset": -120,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/activityroleluxiya-2026-07-23T01-07-35-120Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:d65229b27c99669799c501e3894ae956864be6bc98ead2422ed55c7b7132135f",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "activityroleluxiya/ActivityRoleLuxiya.atlas",
+      "bytes": 4989,
+      "sha256": "ff43bca3d388867fa1927d3baaa78339d3cca1e032217d2946e4349fa248c821"
+    },
+    {
+      "name": "activityroleluxiya/ActivityRoleLuxiya.png",
+      "bytes": 279768,
+      "sha256": "c7c0f223967cdcf2cde0f4414fb625f2cdd8441173d73a28098fe4e2609df5ac"
+    },
+    {
+      "name": "activityroleluxiya/ActivityRoleLuxiya.skel",
+      "bytes": 2641995,
+      "sha256": "654b3a62280dce53e45c166f8b451b448cba70cee1eac90861208effcbff2c7d"
+    }
+  ],
+  "proofHash": "d65229b27c99669799c501e3894ae956864be6bc98ead2422ed55c7b7132135f"
+}

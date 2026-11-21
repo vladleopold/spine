@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-08-13T06:21:29.121Z",
+  "updatedAt": "2026-08-13T06:21:37.981Z",
+  "animation_asset": {
+    "id": "reels-background-2026-08-13T06-21-29-121Z",
+    "name": "reels-background",
+    "domain": "gamedev",
+    "asset_category": "ui",
+    "animation_type": "ui",
+    "skeleton_type": "ui",
+    "content_type": "ui",
+    "taxonomy": {
+      "category": "ui",
+      "class": "interface",
+      "type": "panel",
+      "tags": [
+        "button"
+      ]
+    },
+    "tags": {
+      "gameplay_role": [
+        "interface"
+      ],
+      "interaction_type": [
+        "clickable",
+        "state"
+      ],
+      "style": [
+        "game-ui"
+      ],
+      "animation_state": [
+        "base-game",
+        "base-game-fast",
+        "button-no",
+        "button-yes",
+        "clouds"
+      ],
+      "loop_type": [],
+      "state": [
+        "default-base-game"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-webp"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "library/reels-background-2026-08-13T06-21-29-121Z",
+    "manifestPath": "library/reels-background-2026-08-13T06-21-29-121Z/manifest.json",
+    "files": [
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.json",
+        "name": "reels-background/reels-background.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.atlas",
+        "name": "reels-background/reels-background.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/reels-background/reels-background.webp",
+        "name": "reels-background/reels-background.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/base-game-preview.webp",
+        "name": "base-game-preview.webp",
+        "role": "texture",
+        "format": "webp"
+      },
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "library/reels-background-2026-08-13T06-21-29-121Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "reels-background.json",
+    "atlas": "reels-background.atlas",
+    "textures": [
+      "reels-background.webp"
+    ],
+    "animationCount": 5,
+    "animationNames": [
+      "base-game",
+      "base-game-fast",
+      "button-no",
+      "button-yes",
+      "clouds"
+    ],
+    "defaultAnimation": "base-game",
+    "fileCount": 6,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 2
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "button"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "you_win-2026-09-23T10-35-11-518Z",
+  "title": "you_win",
+  "uploadedAt": "2026-09-23T10:35:11.518Z",
+  "proofPath": "library/you_win-2026-09-23T10-35-11-518Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/library/you_win-2026-09-23T10-35-11-518Z/source-proof.json?v=2026-09-23T10-35-11.518Z",
+  "uploader": {
+    "mode": "anonymous-browser",
+    "anonymousAccountId": "anon_z3fbdg_1b7ktue",
+    "anonymousFingerprint": "z3fbdg",
+    "browserFingerprintSha256": "2d9ec093368601d69da2f5b1838f209b3404f6c55f90c806362d0fb4f4f2e5b9",
+    "browserEnvironmentHashSha256": "9bcad5de78570562a702cbe01187dfe8579ffcc1d87786b36220c99fc88427a7",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "language": "zh-TW",
+      "languages": [
+        "zh-TW",
+        "zh",
+        "en-US",
+        "en"
+      ],
+      "hardwareConcurrency": 12,
+      "deviceMemory": 16,
+      "screen": {
+        "width": 1920,
+        "height": 1080,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "Asia/Taipei",
+      "timezoneOffset": -480,
+      "maxTouchPoints": 0,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "library/you_win-2026-09-23T10-35-11-518Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:a4a6dd213a5d32df3069065a1fe6f8820d045c2288eaf04028cd9621cda4a836",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "you_win_in-preview.webp",
+      "bytes": 694,
+      "sha256": "53933553fe3f326b7be2ec7880384fc16bee571bc721048cd159df52f55271e5"
+    },
+    {
+      "name": "you_win/you_win.atlas",
+      "bytes": 724,
+      "sha256": "4ca8f878c521eb4ddfd996b186769c4e862a2762ada2165dd1939d6b4169f199"
+    },
+    {
+      "name": "you_win/you_win.json",
+      "bytes": 63524,
+      "sha256": "2ff96ec0e90dff0fa926db5a868a449ecd5b8af9cb4edb579dc80a4b3b25394b"
+    },
+    {
+      "name": "you_win/you_win.png",
+      "bytes": 386598,
+      "sha256": "29b9cb6213ba8f9ee3b2494710b2b9edbf280244fcba8f05fee65b9d1bc2059c"
+    }
+  ],
+  "proofHash": "a4a6dd213a5d32df3069065a1fe6f8820d045c2288eaf04028cd9621cda4a836"
+}
