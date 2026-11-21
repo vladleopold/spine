@@ -50,7 +50,7 @@ test("opaque stage-specific failures preserve diagnostic value without leaking c
   for (const stage of ["MEDIA_READ", "WEBM_PROBE", "WEBP_PROBE", "WEBP_DECODE", "MOTION_VERIFY", "POSTER_FIRST_FRAME"]) {
     const reason = previewMediaFailureReason(stage, "Command failed: /runner/private/path/media.webm");
     assert.equal(reason, stage + "_FAILED");
-    assert.doesNotMatch(reason, /runner|private|media|path/i);
+    assert.doesNotMatch(reason, /runner|private|path/i);
   }
   assert.equal(previewMediaFailureReason("MOTION_VERIFY", "MOTION_ZERO_PIXELS"), "MOTION_ZERO_PIXELS");
   assert.equal(previewMediaFailureReason("MOTION_VERIFY", "MEDIA_DECODE_FAILED"), "MOTION_VERIFY_FAILED");
@@ -62,7 +62,7 @@ test("the verifier reports the stage and rendition index but never raw paths", (
   for (const stage of ["MEDIA_READ", "WEBM_PROBE", "WEBP_PROBE", "WEBP_DECODE", "MOTION_VERIFY", "POSTER_FIRST_FRAME"]) {
     assert.ok(verifier.includes('stage = "' + stage + '"'), "missing stage " + stage);
   }
-  assert.match(verifier, /tier=\\" \+ tierIndex/);
+  assert.match(verifier, /tier=" \+ tierIndex/);
   assert.match(verifier, /previewMediaFailureReason\(stage, error\?\.message\)/);
 });
 
