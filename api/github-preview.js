@@ -418,11 +418,8 @@ function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl =
   // a moving clip. A 1-frame `idle` preview is a still image, so the video-watch
   // panel and the SEO metadata would otherwise surface a zero-length video.
   const target = resolvePreviewTarget(entry, origin);
-  const contentUrl = entryVideoAsset(target.url || repairEntryAssetUrl(entry, entry?.webmPreview || '', origin), entry, 'webm');
-  const poster =
-    entryImageAsset(target.poster || repairEntryAssetUrl(entry, entry?.thumbnailPoster || '', origin), entry, 'poster') ||
-    generatedThumbnailUrl(origin, entry) ||
-    entryImageAsset(entry?.thumbnail || '', entry, 'thumbnail');
+  const contentUrl = entryVideoAsset(target.url, entry, 'webm');
+  const poster = entryImageAsset(target.poster, entry, 'poster');
   if (!id || !contentUrl || !poster) return null;
   const name = cleanPublicText(entry?.title || id || 'Spine animation preview', 110);
   const description =
@@ -746,6 +743,13 @@ function resolvePreviewTarget(entry, origin = '') {
     return {
       name,
       url: typeof p.webmPreview === 'string' && p.webmPreview.trim() ? fix(p.webmPreview.trim()) : '',
+      lowUrl: typeof p.webmPreviewLow === 'string' && p.webmPreviewLow.trim()
+        ? fix(p.webmPreviewLow.trim())
+        : typeof p.webmPreviewMedium === 'string' && p.webmPreviewMedium.trim()
+          ? fix(p.webmPreviewMedium.trim())
+          : typeof p.webmPreview === 'string' && p.webmPreview.trim()
+            ? fix(p.webmPreview.trim())
+            : '',
       poster: typeof p.webpPoster === 'string' && p.webpPoster.trim() ? p.webpPoster.trim() : '',
       duration: Number(p.previewDuration),
     };
@@ -756,11 +760,18 @@ function resolvePreviewTarget(entry, origin = '') {
   // recorded and no per-animation map exists. Once a map exists, a missing
   // selected entry stays blocked rather than borrowing another map item.
   const legacyDefault = Boolean(chosen && !previews);
-  const url = selected
-    ? selected.url
-    : legacyDefault && typeof entry?.webmPreview === 'string'
-      ? fix(entry.webmPreview.trim())
-      : '';
+  const legacyUrl = legacyDefault
+    ? (typeof entry?.webmPreview === 'string' ? fix(entry.webmPreview.trim()) : '')
+    : '';
+  const legacyLowUrl = legacyDefault
+    ? (typeof entry?.webmPreviewLow === 'string' && entry.webmPreviewLow.trim()
+        ? fix(entry.webmPreviewLow.trim())
+        : typeof entry?.webmPreviewMedium === 'string' && entry.webmPreviewMedium.trim()
+          ? fix(entry.webmPreviewMedium.trim())
+          : legacyUrl)
+    : '';
+  const url = selected ? selected.url : legacyUrl;
+  const lowUrl = selected ? selected.lowUrl : legacyLowUrl;
   const poster = selected
     ? selected.poster
     : legacyDefault
@@ -775,6 +786,7 @@ function resolvePreviewTarget(entry, origin = '') {
   return {
     name: chosen,
     url,
+    lowUrl,
     poster,
     duration: Number.isFinite(durationValue) ? durationValue : 0,
     isFallback: false,
@@ -2260,7 +2272,7 @@ function jsonScript(value) {
 
 function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, metrics, videoSeo, robots, playerUrl, archiveUrl }) {
   const title = cleanPublicText(entry?.title || entryId || 'Spine preview');
-  const poster = entryImageAsset(entry?.thumbnailPoster || '', entry, 'poster') || generatedThumbnailUrl(origin, entry);
+  const poster = videoSeo?.thumbnailUrl || '';
   const video = entryVideoAsset(entry?.webmPreview || '', entry, 'webm');
   const ownerUrl = ownerProfile?.url || (entry?.publicOwnerId ? `${origin}/u/${encodeURIComponent(String(entry.publicOwnerId))}` : '/');
   const metricId = String(entryId || title);
@@ -2541,22 +2553,14 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         // The owner library is a dense strip of thumbnails that autoplays several
         // clips at once, so the cards use the LOW (360p) WebM. The full-quality
         // clip stays on the page's big video preview below the player.
-        const lowWebm = entryVideoAsset(
-          repairEntryAssetUrl(item, item?.webmPreviewLow || item?.webmPreviewMedium || item?.webmPreview || '', origin),
-          item,
-          'webm',
-        );
+        const lowWebm = entryVideoAsset(target.lowUrl || target.url, item, 'webm');
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
-          thumbnailPoster: entryImageAsset(target.poster || item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
+          thumbnailPoster: entryImageAsset(target.poster, item, 'poster'),
           webmPreview: lowWebm,
-          webmPreviewFull: entryVideoAsset(
-            target.url || repairEntryAssetUrl(item, item?.webmPreview || '', origin),
-            item,
-            'webm',
-          ),
+          webmPreviewFull: entryVideoAsset(target.url, item, 'webm'),
           previewDuration: Number.isFinite(target.duration) && target.duration > 0 ? target.duration : (Number(item?.previewDuration || 0) || undefined),
           previewAnimation: target.name || '',
           thumbnailType: '',
