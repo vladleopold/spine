@@ -38,5 +38,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Syntax-check upload API and path guard
+        run: |
+          node --check api/github-upload.js
+          node --check lib/spine-upload-path.js
       - name: Validate new upload destinations
         run: npm run test:upload-path
