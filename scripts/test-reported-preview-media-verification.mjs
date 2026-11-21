@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewRenderDisposition, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 import { summarizeRendererLog } from "./renderer-failure-class.mjs";
 
@@ -65,6 +70,74 @@ test("the verifier reports the stage and rendition index but never raw paths", (
   }
   assert.match(verifier, /tier=" \+ tierIndex/);
   assert.match(verifier, /previewMediaFailureReason\(stage, error\?\.message\)/);
+});
+
+test("merge reuses byte-verified existing media from the same reported19 artifact directory", () => {
+  const repair = readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");
+  const requested = repair.match(/const requestedIds=\[([\s\S]*?)\n\];/);
+  assert.ok(requested, "repair batch must expose its exact fixture IDs");
+  const ids = [...requested[1].matchAll(/"([^"]+)"/g)].map(match => match[1]);
+  assert.equal(ids.length, 19);
+  const root = mkdtempSync(path.join(os.tmpdir(), "spine-reported19-"));
+  try {
+    const selected = [];
+    const records = [];
+    const mediaNames = ["preview.webm", "preview-medium.webm", "preview-low.webm",
+      "preview.webp", "preview-medium.webp", "preview-low.webp"];
+    for (let repairSlot = 0; repairSlot < ids.length; repairSlot++) {
+      const id = ids[repairSlot];
+      const previewPath = "library_02/work-" + repairSlot;
+      const workDir = path.join(root, previewPath);
+      mkdirSync(workDir, { recursive: true });
+      writeFileSync(path.join(workDir, "source.json"), "{}");
+      writeFileSync(path.join(workDir, "source.atlas"), "page.png\n");
+      writeFileSync(path.join(workDir, "page.png"), Buffer.alloc(256, repairSlot + 1));
+      for (const name of mediaNames) {
+        writeFileSync(path.join(workDir, name), Buffer.alloc(256, repairSlot + 17));
+      }
+      const mediaFingerprint = fingerprintPreviewMedia(
+        mediaNames.map(name => [name, readFileSync(path.join(workDir, name))]),
+      );
+      const urls = {
+        webmPreview: "https://spine-link.vercel.app/assets/" + previewPath + "/preview.webm",
+        webmPreviewMedium: "https://spine-link.vercel.app/assets/" + previewPath + "/preview-medium.webm",
+        webmPreviewLow: "https://spine-link.vercel.app/assets/" + previewPath + "/preview-low.webm",
+        webpPoster: "https://spine-link.vercel.app/assets/" + previewPath + "/preview.webp",
+        webpPosterMedium: "https://spine-link.vercel.app/assets/" + previewPath + "/preview-medium.webp",
+        webpPosterLow: "https://spine-link.vercel.app/assets/" + previewPath + "/preview-low.webp",
+      };
+      records.push({
+        id, previewPath, defaultAnimation: "Exact Animation",
+        webmStatus: "ready", previewStatus: "ready",
+        webmPreview: urls.webmPreview, webpPoster: urls.webpPoster,
+        allAnimationPreviews: { "Exact Animation": urls },
+      });
+      selected.push({ repairSlot, id, basePath: "library_02", previewPath, animation: "Exact Animation" });
+      const artifactDir = path.join(root, "downloaded-reported19", "reported19-" + repairSlot);
+      mkdirSync(artifactDir, { recursive: true });
+      writeFileSync(path.join(artifactDir, "meta.json"), JSON.stringify({
+        ok: true, existingVerified: true, animationMatches: true,
+        animationHash: createHash("sha256").update("Exact Animation").digest("hex"),
+        tierCount: 3, mediaFingerprint,
+      }));
+    }
+    const collectionDir = path.join(root, "library_02");
+    mkdirSync(collectionDir, { recursive: true });
+    writeFileSync(path.join(collectionDir, "index.json"), JSON.stringify(records));
+    const script = fileURLToPath(new URL("./repair-reported-previews.mjs", import.meta.url));
+    const result = spawnSync(process.execPath, [script, "merge"], {
+      cwd: root, encoding: "utf8", timeout: 30000,
+      env: { ...process.env, REPAIR_IDS_JSON: JSON.stringify(selected) },
+    });
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const summary = JSON.parse(readFileSync(path.join(root, "preview-repair-summary.json"), "utf8"));
+    assert.deepEqual(summary, { ready: 19, failed: 0, blocked: 0 });
+    const after = JSON.parse(readFileSync(path.join(collectionDir, "index.json"), "utf8"));
+    assert.equal(after.length, 19);
+    assert.ok(after.every(record => record.webmStatus === "ready" && record.previewStatus === "ready"));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("repair workflow validates existing bytes before it can classify media as ready", () => {
