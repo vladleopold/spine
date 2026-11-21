@@ -1813,7 +1813,11 @@ const pinchDistance = { value: null };
       function playAnimationEntry(name) {
         if (!player) return;
         const selection = selectExactAnimation(player?.skeleton?.data?.animations, name);
-        if (selection.status !== "ready") { markAnimationSelectionBlocked(); return; }
+        if (selection.status !== "ready") {
+          try { player.pause(); } catch (error) {}
+          markAnimationSelectionBlocked();
+          return;
+        }
         clearAnimationSelectionBlocked();
         disableMix();
         const scenarioStep = isScenarioStep(name);
@@ -1842,7 +1846,11 @@ const pinchDistance = { value: null };
       function playActiveAnimationFromStart() {
         if (!player) return;
         const selection = selectExactAnimation(player?.skeleton?.data?.animations, activeAnimation.name);
-        if (selection.status !== "ready") { markAnimationSelectionBlocked(); return; }
+        if (selection.status !== "ready") {
+          try { player.pause(); } catch (error) {}
+          markAnimationSelectionBlocked();
+          return;
+        }
         if (isScenarioStep(activeAnimation.name)) scenarioState.index = scenarioState.names.indexOf(activeAnimation.name);
         playAnimationEntry(activeAnimation.name);
       }
@@ -2015,6 +2023,7 @@ const pinchDistance = { value: null };
             renderAnimationList();
             const selection = selectExactAnimation(filteredNames, activeAnimation.name);
             if (selection.status !== "ready") {
+              try { player.pause(); } catch (error) {}
               markAnimationSelectionBlocked();
               return;
             }
