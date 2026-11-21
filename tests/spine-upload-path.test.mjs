@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { isAllowedSpineUploadPath } from '../lib/spine-upload-path.js';
 
 test('accepts a project folder in the active collection', () => {
@@ -56,4 +57,16 @@ test('keeps all project artifact writes inside a validated project folder', asyn
   assert.equal(isAllowedSpineProjectFilePath('library/../README.md'), false);
   assert.equal(isAllowedSpineProjectFilePath('library/hero/../../README.md'), false);
   assert.equal(isAllowedSpineProjectFilePath('library_backup/hero/file.json'), false);
+});
+
+test('API uses server-controlled roots and guards every client-directed artifact write', () => {
+  const api = readFileSync(new URL('../api/github-upload.js', import.meta.url), 'utf8');
+  assert.match(api, /basePath: cleanRepoPath\(process\.env\.GITHUB_BASE_PATH \|\| defaultBasePath\)/);
+  assert.doesNotMatch(api, /body\?\.settings\?\.basePath/);
+  assert.match(api, /function dataScienceBasePathFor\(\)/);
+  assert.doesNotMatch(api, /body\?\.dataScience\?\.basePath/);
+  assert.match(api, /isAllowedSpineProjectFilePath\(path, settings\.basePath\)/);
+  assert.match(api, /isAllowedSpineProjectFilePath\(filePath, settings\.basePath\)/);
+  assert.match(api, /isAllowedSpineProjectFilePath\(anchorPath, settings\.basePath\)/);
+  assert.match(api, /isAllowedSpineUploadFileName\(item\?\.name\)/);
 });
