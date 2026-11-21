@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fail-closed 10-most-recent Spine preview repair.
+ * Fail-closed reported Spine preview repair (18 reports plus the priority work).
  * Runs only on authenticated private Github Actions workers.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
@@ -31,7 +31,8 @@ const requestedIds=[
   "Spine-animation-2026-11-17T18-26-38-201Z",
   "Spine-animation-2026-11-17T18-27-52-258Z",
   "Spine-animation-2026-11-17T18-36-51-976Z",
-  "Spine-animation-2026-11-17T18-39-06-745Z"
+  "Spine-animation-2026-11-17T18-39-06-745Z",
+  "Spine-animation-2026-11-17T18-45-14-132Z"
 ];
 const requestedSet=new Set(requestedIds);
 function newestTen() {

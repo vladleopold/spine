@@ -1,5 +1,5 @@
-# Run with version-matched 4.0/4.1/4.2/4.3 Web Players for all 18 source projects.
-name: Repair and accept 18 reported Spine preview projects
+# Run version-matched Spine players for 18 reported source projects plus the priority work.
+name: Repair and accept 18 reported plus priority Spine previews
 on:
   push:
     branches: [main]
@@ -365,7 +365,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main' && matrix.entry.ready
         with:
-          name: reported18-${{ matrix.entry.repairSlot }}
+          name: reported19-${{ matrix.entry.repairSlot }}
           path: out/${{ matrix.entry.repairSlot }}/
           if-no-files-found: error
           retention-days: 1
@@ -394,7 +394,7 @@ jobs:
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-          if(selected.length!==18)throw new Error('Missing exact repair manifest');
+          if(selected.length!==19)throw new Error('Missing exact repair manifest');
           const paths=new Set();
           for(const item of selected){
             const source=String(item.previewPath||'');
@@ -408,8 +408,8 @@ jobs:
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
-          pattern: reported18-*
-          path: downloaded-reported18
+          pattern: reported19-*
+          path: downloaded-reported19
           merge-multiple: false
       - uses: actions/setup-node@v4
         with:

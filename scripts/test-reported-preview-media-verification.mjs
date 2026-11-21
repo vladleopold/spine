@@ -143,3 +143,21 @@ test("PR render failure policy distinguishes content blocks from infrastructure 
   assert.match(artifactStep, /if: github.ref == 'refs\/heads\/main' && matrix\.entry\.ready/);
   assert.doesNotMatch(artifactStep, /pull_request/);
 });
+
+test("the priority publication is included in the same exact-source repair and live verification batch", () => {
+  const repair = readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");
+  const live = readFileSync(new URL("./verify-reported-preview-live.mjs", import.meta.url), "utf8");
+  const workflow = readFileSync(new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url), "utf8");
+  const requested = repair.match(/const requestedIds=\[([\s\S]*?)\n\];/);
+  assert.ok(requested, "repair batch must expose its exact requested IDs");
+  const ids = [...requested[1].matchAll(/"([^"]+)"/g)].map(match => match[1]);
+  const priority = live.match(/const priorityId\s*=\s*"([^"]+)"/);
+  assert.ok(priority, "live verifier must keep an explicit priority work");
+  assert.equal(ids.length, 19);
+  assert.ok(ids.includes(priority[1]), "the priority work must be rendered/validated, not only checked after publish");
+  assert.match(live, /const allIds = \[\.\.\.reportedIds, priorityId\]/);
+  assert.match(workflow, /selected\.length!==19/);
+  assert.match(workflow, /reported19-/);
+  assert.match(workflow, /downloaded-reported19/);
+  assert.match(workflow, /node scripts\/verify-reported-preview-live\.mjs/);
+});
