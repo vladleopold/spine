@@ -19,7 +19,7 @@ assert.match(preview,
 assert.match(preview,
   /function preferredSkinName\(skinNames\) \{\s*return Array\.isArray\(skinNames\) && skinNames\.includes\('default'\) \? 'default' : '';\s*\}/,
   'preview API may select only the source default skin');
-assert.doesNotMatch(preview, /animations\s*\[\s*0\s*\]|names\s*\[\s*0\s*\]|skinNames\s*\[\s*0\s*\]|includes\('idle'\)/,
+assert.doesNotMatch(preview, /animations\s*\[\s*0\s*\]|names\s*\[\s*0\s*\]|filteredNames\s*\[\s*0\s*\]|skinNames\s*\[\s*0\s*\]|includes\('idle'\)/,
   'preview API must not infer an animation or skin from list order or idle naming');
 
 assert.match(preview, /const matchedTextures = atlasPages\.map/,
@@ -31,7 +31,7 @@ assert.match(preview, /if \(atlasPages\.length === 0 \|\| matchedTextures\.some\
 assert.doesNotMatch(preview, /data:image\/png;base64,/,
   'missing atlas pages must never be disguised by a synthetic 1x1 texture');
 
-const previewTargetStart = preview.indexOf('function resolvePreviewTarget(entry, origin = \'\') {');
+const previewTargetStart = preview.indexOf('function resolvePreviewTarget(entry, origin = \'\', requestedAnimation = \'\') {');
 const previewTargetEnd = preview.indexOf('// Compact download picker for the sidebar.', previewTargetStart);
 assert.ok(previewTargetStart >= 0 && previewTargetEnd > previewTargetStart,
   'the exact preview target resolver must exist');
@@ -82,6 +82,79 @@ assert.doesNotMatch(ownerWorks, /item\?\.webmPreview|item\?\.thumbnailPoster|ite
   'owner-library cards must not use generic work-level media fields');
 assert.doesNotMatch(fallbackPage, /generatedThumbnailUrl|entry\?\.thumbnailPoster/,
   'the fallback page must not disguise missing selected media with a generic poster');
+
+const selectionStart = preview.indexOf('function initialSet()');
+const selectionEnd = preview.indexOf('// Kept in sync with the server-side PREVIEW_PAD', selectionStart);
+assert.ok(selectionStart >= 0 && selectionEnd > selectionStart,
+  'URL selection functions must exist');
+const selectionCode = preview.slice(selectionStart, selectionEnd);
+assert.match(selectionCode, /if \(queryAnimation\) return sets\.find\(\(set\) => setHasAnimation\(set, queryAnimation\)\) \|\| null;/,
+  'an unavailable URL animation must not select another set');
+assert.match(selectionCode, /return sets\.length === 1 \? sets\[0\] : null;/,
+  'only a sole set may be selected implicitly');
+assert.match(selectionCode, /return queryAnimation \|\| set\?\.animation \|\| "";/,
+  'the exact URL animation name must be preserved even when it is not in the list');
+
+const scenarioStart = preview.indexOf('function syncScenario() {}');
+const scenarioEnd = preview.indexOf('function markPreviewBlocked()', scenarioStart);
+assert.ok(scenarioStart >= 0 && scenarioEnd > scenarioStart,
+  'automatic track sequencing must be disabled');
+assert.doesNotMatch(preview.slice(scenarioStart, scenarioEnd), /scenarioState|lookup\.has|idle|loop|playNextScenarioStep/,
+  'in/idle/out and loop tracks must never be chained automatically');
+
+const playbackStart = preview.indexOf('function markPreviewBlocked()');
+const playbackEnd = preview.indexOf('function togglePlayback()', playbackStart);
+assert.ok(playbackStart >= 0 && playbackEnd > playbackStart,
+  'blocked-state and exact playback guards must exist');
+const playbackCode = preview.slice(playbackStart, playbackEnd);
+assert.match(playbackCode, /box\.dataset\.previewStatus = "blocked";/,
+  'an unavailable selected animation must be visibly marked blocked');
+assert.match(playbackCode, /const exactAnimation = player\?\.skeleton\?\.data\?\.findAnimation\?\.\(name\);/,
+  'playback must resolve the exact requested animation from the loaded skeleton');
+assert.match(playbackCode, /if \(!exactAnimation\) \{ markPreviewBlocked\(\); return; \}/,
+  'a missing animation must stop instead of continuing the previous or first track');
+assert.doesNotMatch(playbackCode, /playNextScenarioStep|scenarioStep/,
+  'playback completion must not switch to an auxiliary track');
+
+const playerStart = preview.indexOf('async function createPlayer()');
+const playerEnd = preview.indexOf('function renderAnimationList()', playerStart);
+assert.ok(playerStart >= 0 && playerEnd > playerStart,
+  'player startup must exist');
+const playerCode = preview.slice(playerStart, playerEnd);
+assert.match(playerCode, /if \(!activeSet\.value\) \{ markPreviewBlocked\(\); return; \}/,
+  'a missing selected set must be blocked');
+assert.match(playerCode, /if \(!activeAnimation\.name \|\| !filteredNames\.includes\(activeAnimation\.name\)\) \{\s*markPreviewBlocked\(\);\s*return;/,
+  'player startup must block an absent selected animation');
+assert.doesNotMatch(playerCode, /filteredNames\s*\[\s*0\s*\]|activeSet\.value\?\.animation\s*&&\s*filteredNames/,
+  'player startup must not choose the first runtime track or replace the requested name');
+
+const videoFallbackStart = preview.indexOf('function showPreviewVideoFallback()');
+const videoFallbackEnd = preview.indexOf('function clearPreviewVideoFallback()', videoFallbackStart);
+assert.ok(videoFallbackStart >= 0 && videoFallbackEnd > videoFallbackStart,
+  'same-animation video fallback helper must exist');
+assert.match(preview.slice(videoFallbackStart, videoFallbackEnd), /videoAnimation !== activeAnimation\.name/,
+  'the temporary WebM may be shown only when its indexed animation matches the exact selection');
+
+const videoMetadataStart = preview.indexOf('function videoMetadataForEntry(');
+const videoMetadataEnd = preview.indexOf('function breadcrumbStructuredData(', videoMetadataStart);
+assert.ok(videoMetadataStart >= 0 && videoMetadataEnd > videoMetadataStart,
+  'video metadata resolver must exist');
+const videoMetadata = preview.slice(videoMetadataStart, videoMetadataEnd);
+assert.match(videoMetadata, /resolvePreviewTarget\(entry, origin, requestedAnimation\)/,
+  'the video panel must resolve the URL-selected animation');
+assert.match(videoMetadata, /animation: target\.name/,
+  'video metadata must carry the exact animation identity');
+
+assert.match(preview, /async function createDynamicPreview\(settings, uploadPath, origin, requestedAnimation = ''\)/,
+  'dynamic preview must accept the URL-selected animation');
+assert.match(preview, /videoMetadataForEntry\(origin, entry, entryId, note, canonicalUrl, playerUrl, requestedAnimation\)/,
+  'dynamic preview must pass the selected animation to video metadata');
+assert.match(preview, /createDynamicPreview\(settings, path, origin, requestedAnimation\)/,
+  'the request handler must pass the exact query selection through to the page');
+assert.match(preview, /const legacyDefault = Boolean\(chosen && chosen === indexedDefault && !previews\);/,
+  'legacy single-preview fields may be used only for the exact indexed default');
+assert.doesNotMatch(preview, /setSelect\.onchange = \(\) => \{ activeSet\.value = sets\.find\(\(set\) => set\.label === setSelect\.value\) \|\| sets\[0\]/,
+  'an invalid set selection must not switch to the first set');
 
 assert.match(batch,
   /const targetAnim = typeof entry\.defaultAnimation === 'string' \? entry\.defaultAnimation : '';/,
