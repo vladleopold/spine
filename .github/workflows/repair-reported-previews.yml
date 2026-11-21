@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - scripts/recover-recorded-webm.mjs
+      - scripts/lib/recovered-animation-choice.mjs
+      - scripts/test-recovered-animation-choice.mjs
   workflow_dispatch:
   pull_request:
     paths:
@@ -16,6 +19,9 @@ on:
       - scripts/test-preview-log-privacy.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
+      - scripts/recover-recorded-webm.mjs
+      - scripts/lib/recovered-animation-choice.mjs
+      - scripts/test-recovered-animation-choice.mjs
       - scripts/lib/reported-preview-live-status.mjs
       - scripts/test-reported-preview-live-status.mjs
       - .github/workflows/verify-reported-preview-live.yml
@@ -70,10 +76,12 @@ jobs:
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-recovered-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
+          node scripts/test-recovered-animation-choice.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
@@ -314,6 +322,8 @@ jobs:
             /scripts/verify-poster-first-frame.mjs
             /scripts/test-reported-preview-live.mjs
             /scripts/test-reported-preview-live-workflow.mjs
+            /scripts/lib/recovered-animation-choice.mjs
+            /scripts/test-recovered-animation-choice.mjs
             /scripts/resolve-library.mjs
             /library_02/index.json
       - uses: actions/setup-node@v4
