@@ -61,7 +61,7 @@ assert.match(verifier,/REPORTED_PREVIEW_PRODUCTION_AUDIT=/);
 assert.doesNotMatch(verifier,/console\.log\([^\n]*(?:allIds|assetUrl|webmPreview)/,
   "never print private work identifiers or asset URLs in public action logs");
 
-assert.match(verifyWorkflow,/schedule:\s*\n\s+- cron: '\\d+ \\* \\* \\* \\*'/);
+assert.match(verifyWorkflow,/schedule:\s*\n\s+- cron: '\d+ \* \* \* \*'/);
 assert.match(verifyWorkflow,/workflow_run:/);
 assert.match(verifyWorkflow,/workflow_run\.event != 'pull_request'/);
 assert.match(verifyWorkflow,/workflow_run\.conclusion == 'success'/);
