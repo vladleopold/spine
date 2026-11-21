@@ -24,6 +24,12 @@ test('rejects traversal, absolute paths, and nested arbitrary destinations', () 
   assert.equal(isAllowedSpineUploadPath('library\\hero'), false);
 });
 
+test('a numbered configured collection cannot create nested pseudo-shards', () => {
+  assert.equal(isAllowedSpineUploadPath('library_02_03/hero', 'library_02'), false);
+  assert.equal(isAllowedSpineUploadPath('library_03/hero', 'library_02'), false);
+  assert.equal(isAllowedSpineUploadPath('library_03/hero', 'library'), true);
+});
+
 test('rejects similarly named but non-collection directories', () => {
   assert.equal(isAllowedSpineUploadPath('library_backup/hero'), false);
   assert.equal(isAllowedSpineUploadPath('library_x/hero'), false);
