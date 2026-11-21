@@ -1,0 +1,53 @@
+import path from "node:path";
+
+const TIERS = [
+  { webmFile: "preview.webm", posterFile: "preview.webp", webmKey: "webmPreview", posterKey: "webpPoster" },
+  { webmFile: "preview-medium.webm", posterFile: "preview-medium.webp", webmKey: "webmPreviewMedium", posterKey: "webpPosterMedium" },
+  { webmFile: "preview-low.webm", posterFile: "preview-low.webp", webmKey: "webmPreviewLow", posterKey: "webpPosterLow" },
+];
+
+export function hasWebmSignature(bytes) {
+  return Boolean(bytes && bytes.length >= 4 &&
+    bytes[0] === 0x1a && bytes[1] === 0x45 && bytes[2] === 0xdf && bytes[3] === 0xa3);
+}
+
+export function hasWebpSignature(bytes) {
+  if (!bytes || bytes.length < 12) return false;
+  const ascii = (start, end) => String.fromCharCode(...bytes.subarray(start, end));
+  return ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP";
+}
+
+export function selectedPreviewTiers(record, animation) {
+  if (!record || typeof animation !== "string" || !animation ||
+      record.defaultAnimation !== animation || record.webmStatus !== "ready") return null;
+  const selected = record.allAnimationPreviews?.[animation];
+  if (!selected || typeof selected !== "object") return null;
+  const tiers = TIERS.map((tier) => ({
+    ...tier,
+    webmUrl: selected[tier.webmKey],
+    posterUrl: selected[tier.posterKey],
+  }));
+  if (tiers.some((tier) => typeof tier.webmUrl !== "string" || !tier.webmUrl ||
+      typeof tier.posterUrl !== "string" || !tier.posterUrl)) return null;
+  return tiers;
+}
+
+export function safePreviewDirectory(root, previewPath) {
+  const relative = String(previewPath || "");
+  if (!relative || relative.startsWith("/") || relative.includes("\\") ||
+      relative.split("/").some((part) => !part || part === "." || part === "..")) return null;
+  const rootPath = path.resolve(root);
+  const target = path.resolve(rootPath, relative);
+  return target.startsWith(rootPath + path.sep) ? target : null;
+}
+
+export function previewUrlMatches(value, previewPath, fileName) {
+  try {
+    const url = new URL(value);
+    const expected = "/assets/" + String(previewPath).split("/").map(encodeURIComponent).join("/") +
+      "/" + encodeURIComponent(fileName);
+    return url.protocol === "https:" && decodeURIComponent(url.pathname) === decodeURIComponent(expected);
+  } catch {
+    return false;
+  }
+}
