@@ -84,6 +84,28 @@ jobs:
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
+  app-build:
+    name: Build app and validate preview API
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate changed server modules and build the React application
+        run: |
+          set -euo pipefail
+          node --check api/github-preview.js
+          node --check lib/spine-data-science.js
+          node --check scripts/batch-export-all.mjs
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm run build
+
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
     needs: inventory
