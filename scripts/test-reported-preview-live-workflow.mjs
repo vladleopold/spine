@@ -136,7 +136,7 @@ const auditWithoutHistoricalDependency = new Set(
 assert.throws(
   () => assertImportClosure(['scripts/verify-reported-preview-live.mjs'], auditWithoutHistoricalDependency,
     'historical missing-dependency fixture'),
-  /sparse checkout omits scripts\\/lib\\/reported-preview-live-status\\.mjs/,
+  (error) => error.message.includes('sparse checkout omits scripts/lib/reported-preview-live-status.mjs'),
   'a missing multiline direct dependency must be detected',
 );
 
