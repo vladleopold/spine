@@ -3,6 +3,7 @@ import { metricCountsForId, parseMetricsJson } from '../lib/spine-metrics.js';
 import { cacheProfiles, setCacheHeaders, setNoStoreHeaders } from '../lib/cache-headers.js';
 import { appendAssetVersion, assetVersionForEntry } from '../lib/asset-version.js';
 import { cachedGithubText } from '../lib/github-content-cache.js';
+import { selectExactAnimation, selectExactPreview } from '../lib/exact-animation-selection.mjs';
 
 const defaultOwner = 'vladleopold';
 const defaultRepo = 'spine';
@@ -270,9 +271,11 @@ function pageUrlForEntry(origin, entryId) {
   return `${origin}/p/${encodeURIComponent(String(entryId || '').trim())}`;
 }
 
-function playerUrlForEntry(origin, entry, entryId) {
+function playerUrlForEntry(origin, entry, entryId, requestedAnimation = '') {
   const id = encodeURIComponent(String(entry?.id || entryId || '').trim());
-  const animation = String(entry?.defaultAnimation || '').trim();
+  const animation = typeof requestedAnimation === 'string' && requestedAnimation
+    ? requestedAnimation
+    : (typeof entry?.defaultAnimation === 'string' ? entry.defaultAnimation : '');
   return animation ? `${origin}/p/${id}?animation=${encodeURIComponent(animation)}` : `${origin}/p/${id}`;
 }
 
@@ -413,17 +416,15 @@ function isPublicArchiveEntry(entry, exclusions) {
   );
 }
 
-function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '') {
+function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '', requestedAnimation = '') {
   const id = String(entry?.id || entryId || '').trim();
-  // Prefer the preview of an animation that is actually long enough to show as
-  // a moving clip. A 1-frame `idle` preview is a still image, so the video-watch
-  // panel and the SEO metadata would otherwise surface a zero-length video.
-  const target = resolvePreviewTarget(entry, origin);
-  const contentUrl = entryVideoAsset(target.url || repairEntryAssetUrl(entry, entry?.webmPreview || '', origin), entry, 'webm');
-  const poster =
-    entryImageAsset(target.poster || repairEntryAssetUrl(entry, entry?.thumbnailPoster || '', origin), entry, 'poster') ||
-    generatedThumbnailUrl(origin, entry) ||
-    entryImageAsset(entry?.thumbnail || '', entry, 'thumbnail');
+  const target = resolvePreviewTarget(entry, origin, requestedAnimation || undefined);
+  const contentUrl = target.status === 'ready'
+    ? entryVideoAsset(target.url, entry, 'webm')
+    : '';
+  const poster = target.status === 'ready'
+    ? entryImageAsset(target.poster, entry, 'poster')
+    : '';
   if (!id || !contentUrl || !poster) return null;
   const name = cleanPublicText(entry?.title || id || 'Spine animation preview', 110);
   const description =
@@ -438,16 +439,11 @@ function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl =
     contentUrl,
     embedUrl: embedUrl || watchPageUrl,
     url: watchPageUrl,
-    playerPageUrl: canonicalUrl || pageUrlForEntry(origin, id),
-    proofDocuments: proofDocumentsForEntry(origin, entry, watchPageUrl),
-    sourceProofUrl: sourceProofUrlForEntry(origin, entry),
-    blockchainAnchorUrl: blockchainAnchorUrlForEntry(origin, entry),
-    proofHash: sanitizeSha256(entry?.sourceProof?.proofHash || entry?.blockchainAnchor?.sourceProofHash),
-    anchorHash: sanitizeSha256(entry?.blockchainAnchor?.anchorHash),
-    uploadDate: isoDate(entry?.uploadedAt) || '2026-05-04T00:00:00.000Z',
-    duration: durationToIso8601(Number.isFinite(target.duration) && target.duration > 0 ? target.duration : entry?.previewDuration),
-    width: positiveInteger(entry?.previewWidth),
-    height: positiveInteger(entry?.previewHeight),
+    uploadDate: isoDate(entry?.uploadedAt || entry?.createdAt),
+    duration: isoDuration(target.duration),
+    width: positiveInteger(entry?.previewWidth || entry?.width),
+    height: positiveInteger(entry?.previewHeight || entry?.height),
+    canonicalUrl,
   };
 }
 
@@ -730,40 +726,31 @@ async function findSpineSetDirectories(settings, uploadPath, maxDepth = 3) {
 // returns the first one whose preview is long enough. The returned object
 // carries the URL, the poster and the duration so every consumer (owner card,
 // video-watch panel, SEO metadata) renders the same moving clip.
-function resolvePreviewTarget(entry, origin = '') {
-  const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
-    ? entry.allAnimationPreviews
-    : null;
-  const animations = Array.isArray(entry?.animations) ? entry.animations : (previews ? Object.keys(previews) : []);
-  const chosen = String(entry?.defaultAnimation || '').trim();
-
+// Work-level media is bound only to the exact requested animation or the
+// exact indexed defaultAnimation. Duration never promotes another track.
+function resolvePreviewTarget(entry, origin = '', requestedAnimation) {
+  const selection = selectExactPreview(entry, requestedAnimation);
+  const preview = selection.preview;
   const fix = origin ? (value) => repairAnimationAssetUrl(entry, value, origin) : (value) => value;
-  const pick = (name) => {
-    const p = previews && previews[name];
-    if (!p) return null;
-    return {
-      name,
-      url: typeof p.webmPreview === 'string' && p.webmPreview.trim() ? fix(p.webmPreview.trim()) : '',
-      poster: typeof p.webpPoster === 'string' && p.webpPoster.trim() ? p.webpPoster.trim() : '',
-      duration: Number(p.previewDuration),
-    };
-  };
-
-  const order = [];
-  if (chosen && animations.includes(chosen)) order.push(chosen);
-  for (const a of animations) if (!order.includes(a)) order.push(a);
-
-  const candidates = order.map(pick).filter(Boolean);
-  const first = candidates[0] || null;
-  const fallback = candidates.find((c) => Number.isFinite(c.duration) && c.duration >= 2) || null;
-  const target = fallback || first;
-
+  const url = typeof preview?.webmPreview === 'string' && preview.webmPreview
+    ? fix(preview.webmPreview)
+    : '';
+  const lowValue = typeof preview?.webmPreviewLow === 'string' && preview.webmPreviewLow
+    ? preview.webmPreviewLow
+    : (typeof preview?.webmPreviewMedium === 'string' && preview.webmPreviewMedium
+      ? preview.webmPreviewMedium
+      : (typeof preview?.webmPreview === 'string' ? preview.webmPreview : ''));
+  const poster = typeof preview?.webpPoster === 'string' && preview.webpPoster
+    ? fix(preview.webpPoster)
+    : '';
   return {
-    name: target ? target.name : chosen,
-    url: target ? target.url : (typeof entry?.webmPreview === 'string' ? entry.webmPreview.trim() : ''),
-    poster: target ? target.poster : '',
-    duration: target ? target.duration : Number(entry?.previewDuration || 0),
-    isFallback: Boolean(target && fallback && target.name !== chosen),
+    name: selection.name,
+    url,
+    lowUrl: lowValue ? fix(lowValue) : '',
+    poster,
+    duration: Number(preview?.previewDuration) || 0,
+    isFallback: false,
+    status: selection.status,
   };
 }
 
@@ -1029,7 +1016,8 @@ function createHtml(config) {
          средне-серой шахматке почти не читались — больше половины видимых пикселей
          не набирали контраста с фоном. Узор оставлен тёмным, чтобы прозрачные
          области всё так же читались, но не съедали контраст анимации. */
-      #player { width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#1c1f24 25%, #141619 0 50%, #1c1f24 0 75%, #141619 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
+      #player { position: relative; width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#1c1f24 25%, #141619 0 50%, #1c1f24 0 75%, #141619 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
+      #player .preview-selection-blocked { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; padding: 24px; color: #ffb088; font-weight: 900; text-align: center; background: rgba(0,0,0,.82); pointer-events: none; }
       .library-nav-button { position: absolute; top: 50%; z-index: 8; display: grid; place-items: center; width: 52px; min-height: 78px; padding: 0; border: 1px solid rgba(140,199,255,.55); border-radius: 8px; color: #f7fbff; background: rgba(9,13,17,.68); box-shadow: 0 16px 34px rgba(0,0,0,.38), inset 0 0 22px rgba(140,199,255,.08); font-size: 42px; font-weight: 800; line-height: 1; transform: translateY(-50%); backdrop-filter: blur(10px); }
       .library-nav-button:hover { border-color: rgba(179,255,64,.78); background: rgba(23,31,18,.78); }
       .library-nav-button:disabled { display: none; }
@@ -1361,7 +1349,7 @@ function createHtml(config) {
       }
       function initialAnimation(set) {
         const queryAnimation = queryValue("animation");
-        return setHasAnimation(set, queryAnimation) ? queryAnimation : set?.animation || "";
+        return queryAnimation || (typeof set?.animation === "string" ? set.animation : "");
       }
       // Kept in sync with the server-side PREVIEW_PAD: a narrow margin so a clip whose
       // attachment quads are far larger than its visible pixels still fills the canvas.
@@ -1803,8 +1791,30 @@ const pinchDistance = { value: null };
       // Кадр зафиксирован на весь показ: переключение анимации не должно
       // пересчитывать вьюпорт и сбивать центровку. Снимок берём до setAnimation
       // (рантайм успевает перемерить кадр) и возвращаем сразу после.
+      function markAnimationSelectionBlocked() {
+        const box = document.getElementById("player");
+        if (!box) return;
+        box.dataset.animationStatus = "blocked";
+        let status = box.querySelector(".preview-selection-blocked");
+        if (!status) {
+          status = document.createElement("div");
+          status.className = "preview-selection-blocked";
+          status.setAttribute("role", "status");
+          box.appendChild(status);
+        }
+        status.textContent = "Selected animation is unavailable in this source.";
+      }
+      function clearAnimationSelectionBlocked() {
+        const box = document.getElementById("player");
+        if (!box) return;
+        delete box.dataset.animationStatus;
+        box.querySelector(".preview-selection-blocked")?.remove();
+      }
       function playAnimationEntry(name) {
-        if (!player || !name) return;
+        if (!player) return;
+        const selection = selectExactAnimation(player?.skeleton?.data?.animations, name);
+        if (selection.status !== "ready") { markAnimationSelectionBlocked(); return; }
+        clearAnimationSelectionBlocked();
         disableMix();
         const scenarioStep = isScenarioStep(name);
         const entry = player.setAnimation(name, scenarioStep ? false : loopEnabled.value);
@@ -1830,7 +1840,9 @@ const pinchDistance = { value: null };
         playAnimationEntry(nextName);
       }
       function playActiveAnimationFromStart() {
-        if (!player || !activeAnimation.name) return;
+        if (!player) return;
+        const selection = selectExactAnimation(player?.skeleton?.data?.animations, activeAnimation.name);
+        if (selection.status !== "ready") { markAnimationSelectionBlocked(); return; }
         if (isScenarioStep(activeAnimation.name)) scenarioState.index = scenarioState.names.indexOf(activeAnimation.name);
         playAnimationEntry(activeAnimation.name);
       }
@@ -1865,11 +1877,10 @@ const pinchDistance = { value: null };
       function refitToContent(targetPlayer) {
         const p = targetPlayer || player;
         if (!p?.skeleton?.data) return false;
-        const names = p.skeleton.data.animations.map((a) => a.name);
-        const active = activeAnimation.name && names.includes(activeAnimation.name) ? activeAnimation.name : names[0];
-        if (!active) return false;
+        const selection = selectExactAnimation(p.skeleton.data.animations, activeAnimation.name);
+        if (selection.status !== "ready") return false;
         try {
-          p.setViewport(active);
+          p.setViewport(selection.name);
         } catch (e) {
           return false;
         }
@@ -1887,8 +1898,9 @@ const pinchDistance = { value: null };
         const p = targetPlayer || player;
         const skeleton = p?.skeleton;
         if (!skeleton?.data) return null;
-        const animation = skeleton.data.findAnimation(activeAnimation.name) || skeleton.data.animations[0];
-        if (!animation) return null;
+        const selection = selectExactAnimation(skeleton.data.animations, activeAnimation.name);
+        const animation = selection.animation;
+        if (selection.status !== "ready" || !animation) return null;
         const ns = window.spine || {};
         const MixFrom = ns.MixFrom || p.constructor?.MixFrom;
         const Physics = ns.Physics || { update: 0 };
@@ -1971,11 +1983,67 @@ const pinchDistance = { value: null };
         if (video.parentNode) video.parentNode.removeChild(video);
       }
 
-      async function createPlayer() { if (!activeSet.value) return; resetHealAttempts(); player?.dispose(); baseViewport.value = null; showPreviewVideoFallback(); const SpinePlayer = await loadSpineRuntime(activeSet.value); player = new SpinePlayer("player", { ...activeSet.value, viewport: measuredViewport(activeSet.value), showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: false, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; limitPlayerFps(loadedPlayer, 30); releaseRuntimeWheelCapture(); requestAnimationFrame(clearPreviewVideoFallback); const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? []; const filteredNames = names.filter(name => !name.startsWith('Backup/')); if (filteredNames.length) { animationNames.value = filteredNames; syncScenario(filteredNames); const queryAnimation = queryValue("animation"); if (queryAnimation && filteredNames.includes(queryAnimation)) activeAnimation.name = queryAnimation; if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) activeAnimation.name = activeSet.value?.animation && filteredNames.includes(activeSet.value.animation) ? activeSet.value.animation : filteredNames[0]; renderAnimationList(); syncUrl(); } disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); captureStageOffset(); applyZoom(currentZoom.value); window.setTimeout(ensureVisibleContent, 120); window.setTimeout(ensureVisibleContent, 420); window.setTimeout(applyStageAnchor, 560); window.setTimeout(applyStageAnchor, 900); }); }, error: (_player, message) => { const box = document.getElementById("player"); if (!box) return;
-        // WebGL недоступен или рантайм не смог поднять скелет: оставляем выгрузку
-        // того же клипа, чтобы работа осталась видна.
-        if (showPreviewVideoFallback()) { const v = box.querySelector("video"); if (v) v.controls = true; return; }
-        box.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Spine player error: ' + String(message || "could not load animation").replace(/[<>&]/g, "") + '</div>'; } }); }
+      async function createPlayer() {
+        if (!activeSet.value) return;
+        if (!activeAnimation.name) { markAnimationSelectionBlocked(); return; }
+        resetHealAttempts();
+        player?.dispose();
+        baseViewport.value = null;
+        clearAnimationSelectionBlocked();
+        showPreviewVideoFallback();
+        const SpinePlayer = await loadSpineRuntime(activeSet.value);
+        player = new SpinePlayer("player", {
+          ...activeSet.value,
+          animation: activeAnimation.name,
+          viewport: measuredViewport(activeSet.value),
+          showControls: true,
+          showLoading: true,
+          alpha: true,
+          preserveDrawingBuffer: false,
+          backgroundColor: "00000000",
+          success: (loadedPlayer) => {
+            player = loadedPlayer;
+            limitPlayerFps(loadedPlayer, 30);
+            releaseRuntimeWheelCapture();
+            requestAnimationFrame(clearPreviewVideoFallback);
+            const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? [];
+            const filteredNames = names.filter((name) => !name.startsWith('Backup/'));
+            animationNames.value = filteredNames;
+            syncScenario(filteredNames);
+            renderAnimationList();
+            const selection = selectExactAnimation(filteredNames, activeAnimation.name);
+            if (selection.status !== "ready") {
+              markAnimationSelectionBlocked();
+              return;
+            }
+            clearAnimationSelectionBlocked();
+            syncUrl();
+            disableMix();
+            installLoopButton();
+            playActiveAnimationFromStart();
+            requestAnimationFrame(() => {
+              rememberBaseViewport();
+              captureStageOffset();
+              applyZoom(currentZoom.value);
+              window.setTimeout(ensureVisibleContent, 120);
+              window.setTimeout(ensureVisibleContent, 420);
+              window.setTimeout(applyStageAnchor, 560);
+              window.setTimeout(applyStageAnchor, 900);
+            });
+          },
+          error: (_player, message) => {
+            const box = document.getElementById("player");
+            if (!box) return;
+            if (showPreviewVideoFallback()) {
+              const video = box.querySelector("video");
+              if (video) video.controls = true;
+              return;
+            }
+            box.dataset.animationStatus = "failed";
+            box.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Spine player error: ' + String(message || "could not load selected animation").replace(/[<>&]/g, "") + '</div>';
+          },
+        });
+      }
       function renderAnimationList() {
         animationMenu.innerHTML = "";
         animationNames.value.forEach((animationName) => {
@@ -2065,7 +2133,17 @@ playerElement.addEventListener("touchstart", (event) => {
        }, true);
        window.addEventListener("mousemove", (event) => { if (!panPosition.value) return; event.preventDefault(); event.stopImmediatePropagation(); const deltaX = event.clientX - panPosition.value.x, deltaY = event.clientY - panPosition.value.y; panPosition.value = { x: event.clientX, y: event.clientY }; panByPixels(deltaX, deltaY); }, { passive: false, capture: true });
        window.addEventListener("mouseup", (event) => { if (event.button !== 0) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
-      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); syncScenario(animationNames.value); renderAnimationList(); syncUrl(); createPlayer(); };
+      setSelect.onchange = () => {
+        const nextSet = sets.find((set) => set.label === setSelect.value);
+        if (!nextSet) return;
+        activeSet.value = nextSet;
+        activeAnimation.name = typeof nextSet.animation === "string" ? nextSet.animation : "";
+        syncSetInfo();
+        syncScenario(animationNames.value);
+        renderAnimationList();
+        syncUrl();
+        createPlayer();
+      };
       window.addEventListener("popstate", applySelectionFromUrl);
       // Compact download picker: Format -> Size -> Files, each step sliding
       // the track sideways. The user picks a format and a size, then either
@@ -2413,7 +2491,7 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
 </html>`;
 }
 
-async function createDynamicPreview(settings, uploadPath, origin) {
+async function createDynamicPreview(settings, uploadPath, origin, requestedAnimation = '') {
   const setDirectories = await findSpineSetDirectories(settings, uploadPath);
   const sets = [];
   let note = '';
@@ -2459,11 +2537,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         (textures.length === 1 ? textures[0] : null);
       return matchedTexture ? versionedAssetUrl(origin, matchedTexture, matchedTexture.sha) : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO5U9WcAAAAASUVORK5CYII=';
     });
-    const defaultAnimation =
-      animations.find((name) => name.toLowerCase() === 'idle') ??
-      animations.find((name) => name.toLowerCase().includes('idle')) ??
-      animations[0] ??
-      '';
+    const defaultAnimation = typeof entry?.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 
     const assetVersion = [skeleton.sha, atlas.sha, ...textures.map((texture) => texture.sha)].filter(Boolean).join('-');
 
@@ -2527,23 +2601,15 @@ async function createDynamicPreview(settings, uploadPath, origin) {
         // The owner library is a dense strip of thumbnails that autoplays several
         // clips at once, so the cards use the LOW (360p) WebM. The full-quality
         // clip stays on the page's big video preview below the player.
-        const lowWebm = entryVideoAsset(
-          repairEntryAssetUrl(item, item?.webmPreviewLow || item?.webmPreviewMedium || item?.webmPreview || '', origin),
-          item,
-          'webm',
-        );
+        const lowWebm = target.status === 'ready' ? entryVideoAsset(target.lowUrl, item, 'webm') : '';
         return {
           title: cleanPublicText(item?.title || item?.id || 'Spine preview'),
           url: `${origin}/p/${encodeURIComponent(String(item?.id || '').trim())}`,
           thumbnail: item?.thumbnailType === 'gif' || /^data:image\/gif;base64,/i.test(String(item?.thumbnail || '')) ? '' : entryImageAsset(item?.thumbnail || '', item, 'thumbnail'),
-          thumbnailPoster: entryImageAsset(target.poster || item?.thumbnailPoster || '', item, 'poster') || generatedThumbnailUrl(origin, item),
+          thumbnailPoster: target.status === 'ready' ? entryImageAsset(target.poster, item, 'poster') : '',
           webmPreview: lowWebm,
-          webmPreviewFull: entryVideoAsset(
-            target.url || repairEntryAssetUrl(item, item?.webmPreview || '', origin),
-            item,
-            'webm',
-          ),
-          previewDuration: Number.isFinite(target.duration) && target.duration > 0 ? target.duration : (Number(item?.previewDuration || 0) || undefined),
+          webmPreviewFull: target.status === 'ready' ? entryVideoAsset(target.url, item, 'webm') : '',
+          previewDuration: target.status === 'ready' && Number.isFinite(target.duration) && target.duration > 0 ? target.duration : undefined,
           previewAnimation: target.name || '',
           thumbnailType: '',
           animations: Array.isArray(item?.animations) ? item.animations.length : 0,
@@ -2563,13 +2629,13 @@ async function createDynamicPreview(settings, uploadPath, origin) {
     note = '';
   }
   const publicArchiveEntry = isPublicArchiveEntry(entry, exclusions);
-  const playerUrl = publicArchiveEntry ? playerUrlForEntry(origin, entry, entryId) : pageUrlForEntry(origin, entryId);
+  const playerUrl = publicArchiveEntry ? playerUrlForEntry(origin, entry, entryId, requestedAnimation) : pageUrlForEntry(origin, entryId);
   const archiveUrl = publicArchiveEntry ? archiveUrlForEntry(origin, entry, entryId) : '';
   const canonicalUrl = publicArchiveEntry ? playerUrl : '';
   const robots = entry && (entry.hiddenFromPublicLibrary === true || entryExcludedFromArchive(entry, exclusions))
     ? 'noindex,follow'
     : 'index,follow,max-image-preview:large,max-video-preview:-1,max-snippet:-1';
-  const video = videoMetadataForEntry(origin, entry, entryId, note, canonicalUrl, playerUrl);
+  const video = videoMetadataForEntry(origin, entry, entryId, note, canonicalUrl, playerUrl, requestedAnimation);
   if (sets.length === 0) {
     return {
       html: createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, metrics, videoSeo: video, robots, playerUrl, archiveUrl }),
@@ -2636,7 +2702,8 @@ export default async function handler(request, response) {
       html = await githubText(settings, path);
       if (!html) return response.status(404).send('Preview not found');
     } else {
-      const preview = await createDynamicPreview(settings, path, origin);
+      const requestedAnimation = typeof request.query?.animation === 'string' ? request.query.animation : '';
+      const preview = await createDynamicPreview(settings, path, origin, requestedAnimation);
       html = preview.html;
       robotsHeader = preview.robots;
     }
