@@ -32,6 +32,8 @@ test('a numbered configured collection cannot create nested pseudo-shards', () =
 
 test('rejects similarly named but non-collection directories', () => {
   assert.equal(isAllowedSpineUploadPath('library_backup/hero'), false);
+  assert.equal(isAllowedSpineUploadPath('library/hero '), false);
+  assert.equal(isAllowedSpineUploadPath('library /hero'), false);
   assert.equal(isAllowedSpineUploadPath('library_x/hero'), false);
   assert.equal(isAllowedSpineUploadPath('library/index.json'), false);
 });
@@ -51,6 +53,10 @@ test('accepts safe spaced and Unicode filenames while rejecting path traversal',
   assert.equal(isAllowedSpineUploadFileName('hero.json'), true);
   assert.equal(isAllowedSpineUploadFileName('spine-set/hero.json'), true);
   assert.equal(isAllowedSpineUploadFileName('Character Body.skel'), true);
+  assert.equal(isAllowedSpineUploadFileName(' Character Body.skel'), false);
+  assert.equal(isAllowedSpineUploadFileName('Character Body.skel '), false);
+  assert.equal(isAllowedSpineUploadFileName('spine-set /hero.json'), false);
+  assert.equal(isAllowedSpineUploadFileName('spine-set/ hero.json'), false);
   assert.equal(isAllowedSpineUploadFileName('spine-set/Texture 01 (front).png'), true);
   assert.equal(isAllowedSpineUploadFileName('персонаж/Тело.png'), true);
   assert.equal(isAllowedSpineUploadFileName('日本語/胴体.png'), true);
@@ -67,6 +73,8 @@ test('keeps all project artifact writes inside a validated project folder', asyn
   assert.equal(isAllowedSpineProjectFilePath('library_02/hero/source/hero.psd'), true);
   assert.equal(isAllowedSpineProjectFilePath('library_02/hero/Texture 01.png'), true);
   assert.equal(isAllowedSpineProjectFilePath('library_02/hero/Тело.png'), true);
+  assert.equal(isAllowedSpineProjectFilePath('library_02/hero /Тело.png'), false);
+  assert.equal(isAllowedSpineProjectFilePath('library_02/hero/ source/Тело.png'), false);
   assert.equal(isAllowedSpineProjectFilePath('README.md'), false);
   assert.equal(isAllowedSpineProjectFilePath('library/../README.md'), false);
   assert.equal(isAllowedSpineProjectFilePath('library/hero/../../README.md'), false);
