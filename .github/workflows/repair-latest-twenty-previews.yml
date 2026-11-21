@@ -101,6 +101,9 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /api/github-upload.js
+            /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
             /scripts/
             /library/index.json
             /library_*/index.json
