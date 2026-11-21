@@ -66,7 +66,7 @@ function computeDuration(entry) {
   if (jsonFiles.length === 0) return 0;
 
   const skeletonPath = path.join(setPath, jsonFiles[0]);
-  const targetAnim = entry.defaultAnimation || (Array.isArray(entry.animations) ? entry.animations[0] : '');
+  const targetAnim = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 
   try {
     const data = JSON.parse(fs.readFileSync(skeletonPath, 'utf8'));
@@ -96,9 +96,9 @@ for (let i = 0; i < targetEntries.length; i++) {
   const entry = targetEntries[i];
   console.log(`\n[${i + 1}/${targetEntries.length}] Processing ${entry.id} (${entry.title || 'untitled'})...`);
 
-  const animName = entry.defaultAnimation || (Array.isArray(entry.animations) ? entry.animations[0] : '');
+  const animName = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
   if (!animName) {
-    console.error(`  Skipping ${entry.id}: no animations defined.`);
+    console.error('  Skipping: no explicit default animation is selected.');
     failCount++;
     continue;
   }

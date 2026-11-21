@@ -1028,8 +1028,7 @@ function skinNamesFromSkeletonJson(skeletonJson: unknown) {
 }
 
 function preferredSkinName(skinNames: string[]) {
-  if (!skinNames.length) return "";
-  return skinNames.includes("default") ? "default" : skinNames[0] || "";
+  return Array.isArray(skinNames) && skinNames.includes("default") ? "default" : "";
 }
 
 function sanitizeSkeletonData(json: unknown): unknown {
@@ -2450,11 +2449,9 @@ if (extensionOf(file.name) === "json" && text) {
         skeletonJson && typeof skeletonJson === "object" && "animations" in skeletonJson
           ? Object.keys((skeletonJson as { animations?: Record<string, unknown> }).animations ?? {})
           : [];
-      const defaultAnimation =
-        animationNames.find((animationName) => animationName.toLowerCase() === "idle") ??
-        animationNames.find((animationName) => animationName.toLowerCase().includes("idle")) ??
-        animationNames.find((animationName) => !animationName.toLowerCase().startsWith("eyes")) ??
-        animationNames[0];
+      // A dropped source bundle has no selected animation metadata. Keep the
+      // selection empty until the user explicitly chooses a track in the menu.
+      const defaultAnimation = "";
       const skinNames = skinNamesFromSkeletonJson(skeletonJson);
       const defaultSkin = preferredSkinName(skinNames);
       const skeletonBounds =
@@ -2535,11 +2532,9 @@ if (extensionOf(file.name) === "json" && text) {
 }
 
 function chooseInitialSet(preparedSets: PreparedSpine[]) {
-  return (
-    preparedSets.find((set) => set.label.includes("clover")) ??
-    preparedSets.find((set) => set.defaultAnimation?.toLowerCase() === "idle") ??
-    preparedSets[0]
-  );
+  // Never select a different set by label or list order. Auto-select only a
+  // unique source set; multiple sets require an explicit user choice.
+  return preparedSets.length === 1 ? preparedSets[0] : null;
 }
 
 function filesForLibrary(preparedSpine: PreparedSpine) {
@@ -3317,13 +3312,18 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
   }, []);
 
   const playActiveAnimationFromStart = useCallback(() => {
-    const animationName = activeAnimationRef.current || preparedSpineRef.current?.defaultAnimation || animationsRef.current[0] || "";
+    const animationName = activeAnimationRef.current || preparedSpineRef.current?.defaultAnimation || "";
+    if (!animationName) {
+      setError("No exact animation is selected; preview is blocked.");
+      setStatus("Select an animation explicitly.");
+      return;
+    }
     if (playAnimationWithLoopMode(playerRef.current, animationName, loopEnabledRef.current, () => loopEnabledRef.current)) {
       setActiveAnimation(animationName);
       setError("");
     } else if (animationName) {
       setError(`Animation bounds are invalid: ${animationName}.`);
-      setStatus("Choose another animation.");
+      setStatus("Selected animation is unavailable; preview is blocked.");
     }
   }, []);
 
@@ -3401,8 +3401,8 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
           const nextSpineOptions = await loadFiles(Array.from(fileList));
           const nextSpine = chooseInitialSet(nextSpineOptions);
           if (!nextSpine) throw new Error("Could not create an extra player from these files.");
-          const nextAnimations = nextSpine.animations.length ? nextSpine.animations : [nextSpine.defaultAnimation || "animation"].filter(Boolean);
-          const nextActiveAnimation = nextSpine.defaultAnimation && nextAnimations.includes(nextSpine.defaultAnimation) ? nextSpine.defaultAnimation : nextAnimations[0] || "";
+          const nextAnimations = Array.isArray(nextSpine.animations) ? nextSpine.animations : [];
+          const nextActiveAnimation = typeof nextSpine.defaultAnimation === "string" ? nextSpine.defaultAnimation : "";
           setExtraSpineSets((currentSets) => [
             ...currentSets,
             {
@@ -3443,9 +3443,14 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
         setSelectedCardSize("auto");
         setCurrentLibraryEntry(null);
         publishedKeysRef.current.clear();
+        const initialSet = chooseInitialSet(nextSpineOptions);
         setSpineOptions(nextSpineOptions);
-        setPreparedSpine(chooseInitialSet(nextSpineOptions));
-        setStatus(nextSpineOptions.length > 1 ? `Sets found: ${nextSpineOptions.length}. Starting preview...` : "Files ready. Starting preview...");
+        setPreparedSpine(initialSet);
+        setStatus(
+          initialSet
+            ? "Files ready. Select an animation explicitly to start the preview."
+            : `Sets found: ${nextSpineOptions.length}. Select the intended set before previewing.`,
+        );
       } catch (nextError) {
         setSpineOptions([]);
         setPreparedSpine(null);
@@ -3619,8 +3624,12 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
           return isEntrySet && entry.defaultAnimation ? { ...set, defaultAnimation: entry.defaultAnimation } : set;
         });
         if (isCancelled) return;
-        const nextSpine =
-          nextSpineOptions.find((set) => basename(set.skeletonName) === basename(entry.skeleton)) ?? chooseInitialSet(nextSpineOptions);
+        const nextSpine = nextSpineOptions.find(
+          (set) => basename(set.skeletonName) === basename(entry.skeleton),
+        );
+        if (!nextSpine) {
+          throw new Error("The indexed skeleton file is missing; refusing to preview a different set.");
+        }
         resetPlayer();
         setAnimations([]);
         setActiveAnimation(entry.defaultAnimation || nextSpine?.defaultAnimation || "");
@@ -3680,27 +3689,31 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
       },
       success: (player: SpinePlayerInstance) => {
         const names = player.skeleton?.data.animations.map((animation: { name: string }) => animation.name) ?? [];
-        const initialAnimation = configuredSpine.defaultAnimation && names.includes(configuredSpine.defaultAnimation) ? configuredSpine.defaultAnimation : names[0];
-        const playableAnimation =
-          initialAnimation && playAnimationWithLoopMode(player, initialAnimation, loopEnabledRef.current, () => loopEnabledRef.current)
-            ? initialAnimation
-            : names.find((animationName: string) => playAnimationWithLoopMode(player, animationName, loopEnabledRef.current, () => loopEnabledRef.current));
+        const initialAnimation = typeof configuredSpine.defaultAnimation === "string"
+          ? configuredSpine.defaultAnimation
+          : "";
+        const playableAnimation = initialAnimation && names.includes(initialAnimation) &&
+          playAnimationWithLoopMode(player, initialAnimation, loopEnabledRef.current, () => loopEnabledRef.current)
+          ? initialAnimation
+          : "";
         setAnimations(names);
-        setActiveAnimation(playableAnimation ?? initialAnimation ?? "");
+        setActiveAnimation(initialAnimation);
         if (playableAnimation) {
           installLoopButton(player, loopEnabledRef.current, toggleLoopEnabled, playActiveAnimationFromStart);
           rememberCurrentViewport();
           applyZoomToPlayer(zoomRef.current, false);
           if (!currentLibraryEntry) void publishToGitHub(configuredSpine, names, playableAnimation);
         } else if (initialAnimation) {
-          setError(`Animation bounds are invalid: ${initialAnimation}.`);
+          setError(`Selected animation is unavailable or failed to render: ${initialAnimation}.`);
+        } else {
+          setError("No exact animation is selected; preview is blocked.");
         }
         setStatus(
           playableAnimation
             ? `Ready. Animations found: ${names.length}. Creating permanent link...`
-            : names.length
-              ? "Ready, but the available animations have invalid bounds."
-            : "Ready, but the animation list is empty.",
+            : initialAnimation
+              ? "Selected animation is unavailable; preview is blocked."
+              : "Select an animation explicitly; no default animation was selected.",
         );
       },
       error: (_player: SpinePlayerInstance, message: unknown) => {

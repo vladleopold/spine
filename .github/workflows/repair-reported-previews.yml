@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - scripts/recover-recorded-webm.mjs
+      - scripts/lib/recovered-animation-choice.mjs
+      - scripts/test-recovered-animation-choice.mjs
   workflow_dispatch:
   pull_request:
     paths:
@@ -16,6 +19,19 @@ on:
       - scripts/test-preview-log-privacy.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
+      - scripts/test-no-preview-track-or-skin-fallbacks.mjs
+      - scripts/lib/preview-set-selection.mjs
+      - api/github-upload.js
+      - scripts/lib/spine-export-entry.mjs
+      - scripts/render-work.mjs
+      - scripts/test-upload-default-animation.mjs
+      - scripts/recover-recorded-webm.mjs
+      - scripts/lib/recovered-animation-choice.mjs
+      - scripts/test-recovered-animation-choice.mjs
+      - scripts/batch-export-all.mjs
+      - api/github-preview.js
+      - lib/spine-data-science.js
+      - src/SpineApp.tsx
       - scripts/lib/reported-preview-live-status.mjs
       - scripts/test-reported-preview-live-status.mjs
       - .github/workflows/verify-reported-preview-live.yml
@@ -51,6 +67,10 @@ jobs:
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/verify-reported-preview-live.yml
             /scripts/
+            /api/github-preview.js
+            /api/github-upload.js
+            /lib/spine-data-science.js
+            /src/SpineApp.tsx
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -66,15 +86,42 @@ jobs:
           node --check scripts/repair-reported-previews.mjs
           node --check scripts/spine-export-webm.mjs
           node --check scripts/recover-recorded-webm.mjs
+          node --check api/github-upload.js
+          node --check scripts/render-work.mjs
           node --check scripts/preview-runtime-minor.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-no-preview-track-or-skin-fallbacks.mjs
+          node scripts/test-upload-default-animation.mjs
+          node scripts/test-recovered-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
+  app-build:
+    name: Build app and validate preview API
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate changed server modules and build the React application
+        run: |
+          set -euo pipefail
+          node --check api/github-preview.js
+          node --check lib/spine-data-science.js
+          node --check scripts/batch-export-all.mjs
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm run build
+
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
     needs: inventory

@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
@@ -32,6 +33,33 @@ const report={
  formats:[],
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
+const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
+async function markBlockedSelection(){
+  for(let attempt=0;attempt<5;attempt++){
+    run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
+    run('git',['reset','--hard','origin/main']);
+    const current=entryForUpload(process.cwd(),id);
+    if(!current||!Array.isArray(current.index))throw new Error('Upload index unavailable');
+    const index=current.index;
+    const indexPosition=index.findIndex(entry=>entry?.id===id);
+    if(indexPosition<0)throw new Error('Upload removed before blocked status update');
+    const record=index[indexPosition];
+    const blocked=missingAnimationPreviewMetadata(record);
+    if(!blocked)throw new Error('Explicit animation selection changed before blocked status update');
+    Object.assign(record,blocked);
+    const indexPath=path.join(current.basePath,'index.json');
+    fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
+    run('git',['add','--',indexPath]);
+    if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+    run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m','Mark unselected Spine preview as blocked']);
+    try{
+      run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
+      return;
+    }catch(error){
+      if(attempt===4)throw error;
+    }
+  }
+}
 process.on('uncaughtException',error=>{
  report.status='failed';
  report.code=report.code||'RENDER_FAILED';
@@ -43,11 +71,19 @@ process.on('uncaughtException',error=>{
 });
 if(selection.status==='blocked'){
  writeReport();
+ try{
+  await markBlockedSelection();
+ }catch{
+  report.status='failed';
+  report.code='BLOCKED_STATUS_PUBLISH_FAILED';
+  writeReport();
+  console.error('SPINE_BLOCKED_STATUS_PUBLISH_FAILED');
+  process.exit(1);
+ }
  console.error('SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION');
  process.exit(1);
 }
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
-const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 run('node',['scripts/spine-export-webm.mjs',...flags]);
