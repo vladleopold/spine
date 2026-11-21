@@ -8,7 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { fingerprintPreviewMedia } from "./lib/preview-media-validation.mjs";
+import { fingerprintPreviewMedia, previewRenderDisposition } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 
@@ -197,8 +197,19 @@ if(action==="matrix"){
         }
       }catch{complete=false;}
     }
+    if(!complete && meta?.reason==="blocked" &&
+      previewRenderDisposition({distinctError:meta.failureCode})==="blocked") {
+      const noMotion=meta.failureCode==="COMPOSITED_FRAMES_IDENTICAL";
+      record.webmStatus=noMotion?"blocked-no-motion":"blocked-render";
+      record.previewStatus="blocked";
+      record.previewError=noMotion
+        ?"Selected animation produced identical composited frames"
+        :"Selected animation did not pass preview content acceptance";
+      summary.blocked++;
+      continue;
+    }
     if(!complete) {
-      // An index-ready preview that failed byte/decode acceptance is not genuine media.
+      // Invalid or infrastructure-failed media never remains marked ready.
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";

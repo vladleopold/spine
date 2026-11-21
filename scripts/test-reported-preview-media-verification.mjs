@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
+import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewRenderDisposition, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
+import { summarizeRendererLog } from "./renderer-failure-class.mjs";
 
 const animation = "Exact Animation";
 const selected = {
@@ -97,4 +98,48 @@ test("pull requests render the exact selected animation privately and verify sou
   assert.doesNotMatch(artifactStep, /pull_request/);
   assert.match(workflow, /if: always\(\) && github\.ref == 'refs\/heads\/main'/);
   assert.match(workflow, /if: github\.ref == 'refs\/heads\/main' && needs\.publish\.result == 'success'/);
+});
+
+test("identical composited frames block the exact animation without selecting a substitute", () => {
+  const summary = summarizeRendererLog([
+    "Skeleton: redacted (v4.3.17)",
+    "SOURCE_SKIN_MODE=default",
+    "RECORDER_STATE=recording",
+    "No video data captured by MediaRecorder",
+    "CANVAS_FALLBACK_CAPTURE=started",
+    "Selected animation has no changing canvas frames",
+    "frame peak=253",
+    "canvas=960x720",
+  ].join("\n"));
+  assert.equal(summary.reason, "BROWSER_MEDIA_RECORDER");
+  assert.equal(summary.distinctError, "COMPOSITED_FRAMES_IDENTICAL");
+  assert.equal(summary.stages.canvasFallbackAttempted, true);
+  assert.equal(summary.stages.canvasFallbackPassed, false);
+  assert.deepEqual(summary.peaks, [253]);
+  assert.deepEqual(summary.canvasSizes, [[960, 720]]);
+  assert.equal(previewRenderDisposition(summary), "blocked");
+  assert.equal(previewRenderDisposition({ distinctError: "NETWORK_ASSET" }), "failed");
+  assert.equal(previewRenderDisposition({ distinctError: "MEDIARECORDER_NO_BLOB" }), "failed");
+});
+
+test("content-invalid render results publish as blocked, never as ready", () => {
+  const repair = readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");
+  assert.match(repair, /previewRenderDisposition\(\{distinctError:meta\.failureCode\}\)/);
+  assert.match(repair, /record\.webmStatus=noMotion\?"blocked-no-motion":"blocked-render"/);
+  assert.match(repair, /record\.previewStatus="blocked"/);
+  assert.match(repair, /Selected animation produced identical composited frames/);
+  assert.match(repair, /summary\.blocked\+\+/);
+});
+
+test("PR render failure policy distinguishes content blocks from infrastructure failures", () => {
+  const workflow = readFileSync(new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url), "utf8");
+  assert.match(workflow, /previewRenderDisposition\(JSON\.parse\(match\[1\]\)\)/);
+  assert.match(workflow, /ACCEPTANCE_BLOCKED_EXACT_SELECTED_ANIMATION/);
+  assert.match(workflow, /Unexpected exact-animation renderer failure; no alternate animation will be used/);
+  assert.match(workflow, /reason:"blocked",failureCode/);
+  const artifactStart = workflow.indexOf("      - uses: actions/upload-artifact@v4");
+  const publishStart = workflow.indexOf("\n  publish:");
+  const artifactStep = workflow.slice(artifactStart, publishStart);
+  assert.match(artifactStep, /if: github.ref == 'refs\/heads\/main' && matrix\.entry\.ready/);
+  assert.doesNotMatch(artifactStep, /pull_request/);
 });

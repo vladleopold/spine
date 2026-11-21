@@ -77,3 +77,21 @@ export function fingerprintPreviewMedia(entries) {
   for (const [name, bytes] of [...entries].sort((a, b) => String(a[0]).localeCompare(String(b[0])))) hash.update(String(name)).update(bytes);
   return hash.digest("hex");
 }
+
+const BLOCKED_RENDER_FAILURES = new Set([
+  "COMPOSITED_FRAMES_IDENTICAL",
+  "COMPOSITED_FRAMES_NOT_VISIBLE",
+  "NO_VISIBLE_PIXEL",
+  "POSTER_NO_VISIBLE_FRAMES",
+  "DECODED_FRAMES_INVISIBLE",
+  "RUNTIME_ALL_SKINS_INVISIBLE",
+  "UNKNOWN_ANIMATION_DURATION",
+  "SOURCE_GRAPH_MISSING",
+  "ANIMATION_SELECTION",
+]);
+
+// Content-invalid selections stay blocked; infrastructure/encoder errors fail CI.
+export function previewRenderDisposition(summary) {
+  const failureCode = String(summary?.distinctError || "");
+  return BLOCKED_RENDER_FAILURES.has(failureCode) ? "blocked" : "failed";
+}

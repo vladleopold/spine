@@ -286,10 +286,34 @@ jobs:
             fi
           fi
           if (( code != 0 )); then
-            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
+            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log" > "$RUNNER_TEMP/renderer-summary.log"
+            cat "$RUNNER_TEMP/renderer-summary.log"
+            disposition=$(node --input-type=module - "$RUNNER_TEMP/renderer-summary.log" <<'NODE'
+          import fs from "node:fs";
+          import { previewRenderDisposition } from "./scripts/lib/preview-media-validation.mjs";
+          const raw=fs.readFileSync(process.argv[2],"utf8");
+          const match=raw.match(/SANITIZED_RENDER_RESULT=(\{[^\r\n]+\})/);
+          if(!match)throw new Error("Missing sanitized renderer summary");
+          process.stdout.write(previewRenderDisposition(JSON.parse(match[1])));
+          NODE
+            )
+            if [[ "$disposition" == "blocked" ]]; then
+              node --input-type=module - "$RUNNER_TEMP/renderer-summary.log" "out/$REPAIR_SLOT/meta.json" <<'NODE'
+          import fs from "node:fs";
+          const raw=fs.readFileSync(process.argv[2],"utf8");
+          const match=raw.match(/SANITIZED_RENDER_RESULT=(\{[^\r\n]+\})/);
+          if(!match)throw new Error("Missing sanitized renderer summary");
+          const summary=JSON.parse(match[1]);
+          const failureCode=String(summary.distinctError||"").replace(/[^A-Z0-9_]/g,"");
+          if(!failureCode)throw new Error("Missing safe renderer failure code");
+          fs.writeFileSync(process.argv[3],JSON.stringify({ok:false,reason:"blocked",failureCode}));
+          NODE
+              echo "ACCEPTANCE_BLOCKED_EXACT_SELECTED_ANIMATION"
+              exit 0
+            fi
             echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
             if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-              echo "::error::Exact selected animation render failed; no alternate animation will be used"
+              echo "::error::Unexpected exact-animation renderer failure; no alternate animation will be used"
               exit 1
             fi
             echo "::warning::Native Spine rendering failed; no preview will be published"
