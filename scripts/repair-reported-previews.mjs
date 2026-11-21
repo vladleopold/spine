@@ -7,6 +7,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { fingerprintPreviewMedia } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 
@@ -66,16 +68,16 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
-  // A previously published Urka clip was decoded as only 12 frames over
-  // 1.82 seconds. Require real frame-density evidence before treating it as
-  // an accepted final video; leave older previews intact during retries.
-  const f=Number(record?.previewFrameCount||0);
-  const duration=Number(record?.previewDuration||0);
-  if(f>0&&duration>0&&f/duration<15)return false;
-  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
-  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
+  if(record?.webmStatus!=="ready"||record?.previewStatus!=="ready"||!selected||record?.defaultAnimation!==selected||
+    choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
+  const selectedMedia=record?.allAnimationPreviews?.[selected];
+  const requiredFields=["webmPreview","webmPreviewMedium","webmPreviewLow",
+    "webpPoster","webpPosterMedium","webpPosterLow"];
+  if(!selectedMedia||requiredFields.some(key=>typeof selectedMedia[key]!=="string"||!selectedMedia[key]))return false;
+  if(record.webmPreview!==selectedMedia.webmPreview||record.webpPoster!==selectedMedia.webpPoster)return false;
+  // Index metadata is only a candidate filter. The render matrix independently
+  // decodes every source-ready candidate and verifies all three WebM/WebP pairs.
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
   return mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
@@ -96,12 +98,12 @@ if(action==="matrix"){
       needsRender:ready&&!existingMediaOk(e,animation),animation,
       blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
   });
-  const required=matrix.filter(x=>x.needsRender);
-  // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
-  // available clip has already been rendered and independently accepted.
-  console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
+  const validationCandidates=matrix.filter(x=>x.ready);
+  // Every source-ready entry is checked against real local media bytes, even
+  // when index metadata already claims that its preview is ready.
+  console.log("matrix="+JSON.stringify(validationCandidates.length?validationCandidates:[matrix[0]]));
   console.log("allEntries="+JSON.stringify(matrix));
-  console.log("renderCount="+required.length);
+  console.log("renderCount="+validationCandidates.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
@@ -115,7 +117,7 @@ if(action==="matrix"){
     " SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED_SOURCE_BUNDLE="+matrix.filter(x=>x.blockedReason==="MISSING_SOURCE_BUNDLE").length+
     " BLOCKED_MISSING_ANIMATION="+matrix.filter(x=>x.blockedReason==="MISSING_DEFAULT_ANIMATION").length+
-    " NEEDS_RENDER="+required.length+
+    " VALIDATION_CANDIDATES="+validationCandidates.length+
     " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
@@ -156,25 +158,23 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(item.needsRender===false){
-      if(existingMediaOk(entryInfo,selectedAnimation)){
-        summary.ready++;
-        continue;
-      }
-      record.webmStatus="failed";
-      record.previewStatus="failed";
-      record.previewError="Media previously marked ready but expected outputs are missing";
-      summary.failed++;
-      continue;
-    }
     const artifact=path.join(base,"reported18-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
+    const animationHash=createHash("sha256").update(selectedAnimation).digest("hex");
+    if(meta?.ok===true && meta?.existingVerified===true && meta?.animationMatches===true &&
+      meta?.animationHash===animationHash && Number(meta?.tierCount)===3){
+      let currentFingerprint="";
+      try { currentFingerprint=fingerprintPreviewMedia(names.map(name=>[name,fs.readFileSync(path.join(root,entryInfo.previewPath,name))])); } catch {}
+      if(currentFingerprint && currentFingerprint===meta.mediaFingerprint){summary.ready++;continue;}
+      record.webmStatus="failed";record.previewStatus="failed";
+      record.previewError="Media changed after byte-level verification";summary.failed++;continue;
+    }
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
     let complete=meta?.ok===true && meta?.animationMatches===true &&
-      choosePreviewAnimation([],meta?.animation)===selectedAnimation && names.every(n=>
+      meta?.animationHash===animationHash && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -189,17 +189,16 @@ if(action==="matrix"){
             seconds=Number(data.format?.duration);
           if(!(seconds>=0.5&&frames>=8&&frames/seconds>=15&&stream?.width>0&&stream?.height>0))
             throw new Error("Video has too few real frames");
+          const suffix=name==="preview.webm"?"":name==="preview-medium.webm"?"-medium":"-low";
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),path.join(artifact,name)],{stdio:"ignore",timeout:150000});
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
+            path.join(artifact,name),path.join(artifact,"preview"+suffix+".webp")],{stdio:"ignore",timeout:150000});
           if(name==="preview.webm")mainVideo={frames,seconds};
         }
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
-        // Never replace an existing genuine clip with a failed higher-FPS retry.
-        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
-        summary.ready++;
-        continue;
-      }
+      // An index-ready preview that failed byte/decode acceptance is not genuine media.
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";

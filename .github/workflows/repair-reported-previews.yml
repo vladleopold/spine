@@ -8,6 +8,10 @@ on:
       - scripts/recover-recorded-webm.mjs
       - scripts/lib/recovered-animation-choice.mjs
       - scripts/test-recovered-animation-choice.mjs
+      - scripts/repair-reported-previews.mjs
+      - scripts/verify-existing-preview-media.mjs
+      - scripts/lib/preview-media-validation.mjs
+      - scripts/test-reported-preview-media-verification.mjs
       - scripts/spine-export-webm.mjs
       - scripts/lib/source-set-choice.mjs
       - scripts/test-source-set-choice.mjs
@@ -42,6 +46,9 @@ on:
       - scripts/test-reported-preview-live-status.mjs
       - .github/workflows/verify-reported-preview-live.yml
       - scripts/test-reported-preview-live-workflow.mjs
+      - scripts/verify-existing-preview-media.mjs
+      - scripts/lib/preview-media-validation.mjs
+      - scripts/test-reported-preview-media-verification.mjs
       - scripts/lib/reported-preview-media.mjs
       - scripts/test-reported-preview-live.mjs
       - scripts/verify-preview-motion.mjs
@@ -104,9 +111,12 @@ jobs:
           node scripts/test-upload-default-animation.mjs
           node scripts/test-recovered-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
+          node --check scripts/verify-existing-preview-media.mjs
+          node --check scripts/lib/preview-media-validation.mjs
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
+          node scripts/test-reported-preview-media-verification.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   app-build:
     name: Build app and validate preview API
@@ -125,6 +135,8 @@ jobs:
         run: |
           set -euo pipefail
           node --check api/github-preview.js
+          node --check scripts/verify-existing-preview-media.mjs
+          node --check scripts/lib/preview-media-validation.mjs
           node --check lib/spine-data-science.js
           node --check scripts/batch-export-all.mjs
           npm ci --ignore-scripts --no-audit --no-fund
@@ -133,11 +145,12 @@ jobs:
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
     needs: inventory
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
       ENTRY_ID: ${{ matrix.entry.id }}
+      ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
       PREVIEW_PATH: ${{ matrix.entry.previewPath }}
       ENTRY_ANIMATION: ${{ matrix.entry.animation }}
       ENTRY_READY: ${{ matrix.entry.ready }}
@@ -163,6 +176,7 @@ jobs:
             /library/index.json
             /library_*/index.json
       - name: Mask private metadata and hydrate exact source
+        if: matrix.entry.ready
         shell: bash
         run: |
           set -euo pipefail
@@ -171,8 +185,41 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for existing-media verification
+        if: matrix.entry.ready
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Validate existing selected animation media before render
+        id: existing
+        if: matrix.entry.ready
+        shell: bash
+        run: |
+          set +e
+          node scripts/verify-existing-preview-media.mjs \
+            --upload-id="$ENTRY_ID" --base-path="$ENTRY_BASE_PATH" \
+            --animation="$ENTRY_ANIMATION" --repo-path="$GITHUB_WORKSPACE" \
+            --slot="$REPAIR_SLOT" --preview-path="$PREVIEW_PATH" \
+            --output="out/$REPAIR_SLOT/meta.json" \
+            > "$RUNNER_TEMP/existing-media.log" 2>&1
+          code=$?
+          set -e
+          cat "$RUNNER_TEMP/existing-media.log"
+          if (( code == 0 )); then
+            echo "verified=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$ENTRY_NEEDS_RENDER" != true ]]; then
+              echo "::error::Index-ready media failed byte-level decode acceptance"
+              exit 1
+            fi
+          fi
       - name: Install native Chromium renderer and video/poster encoders
-        if: matrix.entry.needsRender
+        if: github.ref == 'refs/heads/main' && matrix.entry.ready && steps.existing.outputs.verified != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -201,7 +248,7 @@ jobs:
             sudo apt-get install -y -qq ffmpeg
           fi
       - name: Render and validate actual Spine video + still posters
-        if: matrix.entry.needsRender
+        if: github.ref == 'refs/heads/main' && matrix.entry.ready && steps.existing.outputs.verified != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -209,11 +256,6 @@ jobs:
           if [[ "$ENTRY_READY" != true ]]; then
             echo '{"ok":false,"reason":"incomplete-source"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
-            exit 0
-          fi
-          if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$REPAIR_SLOT/meta.json"
-            echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
           set +e
@@ -257,19 +299,25 @@ jobs:
               exit 1
             }
             file "out/$REPAIR_SLOT/preview$suffix.webp" | grep -q 'Web/P image'
+            node scripts/verify-preview-motion.mjs "out/$REPAIR_SLOT/preview$suffix.webm" >/dev/null
+            node scripts/verify-poster-first-frame.mjs "out/$REPAIR_SLOT/preview$suffix.webm" "out/$REPAIR_SLOT/preview$suffix.webp" >/dev/null
           done
           cp "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
+            import {createHash} from "node:crypto";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
-              throw new Error("Export metadata incomplete");
+            if(!m.sha256||!m.bytes||!m.animation||m.animation!==process.env.ENTRY_ANIMATION||!m.width||!m.height)
+              throw new Error("Export metadata incomplete or animation identity mismatch");
+            m.animationHash=createHash("sha256").update(m.animation).digest("hex");
+            delete m.animation;
+            m.animationMatches=true;
             m.ok=true;
             fs.writeFileSync(p,JSON.stringify(m));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$REPAIR_SLOT/meta.json"
       - uses: actions/upload-artifact@v4
-        if: matrix.entry.needsRender
+        if: github.ref == 'refs/heads/main' && matrix.entry.ready
         with:
           name: reported18-${{ matrix.entry.repairSlot }}
           path: out/${{ matrix.entry.repairSlot }}/
@@ -279,7 +327,7 @@ jobs:
     needs: [inventory, render]
     permissions:
       contents: write
-    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
+    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success' && needs.render.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     concurrency:
@@ -320,6 +368,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for final media acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
       - name: Publish verified only, retain source untouched, flag missing and failed
         shell: bash
         run: |

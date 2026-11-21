@@ -96,7 +96,13 @@ assert.doesNotMatch(reportedRepair, /record\.animations\s*=\s*meta\.animations/,
   'preview publication must not rewrite source animation names');
 assert.doesNotMatch(latestTwentyRepair, /record\.animations\s*=\s*meta\.animations/,
   'latest-twenty publication must not rewrite source animation names');
-assert.match(reportedRepair, /existingMediaOk\(entryInfo,selectedAnimation\)/);
+assert.match(reportedRepair, /meta\?\.existingVerified===true/);
+assert.match(reportedRepair, /fingerprintPreviewMedia/);
+assert.match(reportedRepair, /meta\.mediaFingerprint/);
+assert.match(reportedRepair, /verify-preview-motion\.mjs/);
+assert.match(reportedRepair, /verify-poster-first-frame\.mjs/);
+assert.doesNotMatch(reportedRepair, /previous media retained/,
+  'index-ready media must be decoded before it can remain ready');
 assert.match(reportedRepair, /blocked-missing-animation/);
 assert.match(reportedRepair, /BLOCKED_SOURCE_BUNDLE=/);
 assert.match(reportedRepair, /BLOCKED_MISSING_ANIMATION=/);
