@@ -38,7 +38,7 @@ assert.equal(storedPreviewStatusAllowsReuse(exactReady, ""), false);
 const repairScript = fs.readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");
 assert.ok(repairScript.includes("Spine-animation-2026-11-17T18-45-14-132Z"),
   "the exact priority work must be part of the source repair matrix");
-assert.match(repairScript, /storedPreviewStatusAllowsReuse\(record,selected\)/);
+assert.match(repairScript, /storedPreviewStatusAllowsReuse\(record,selected,\{allowFailedStatus\}\)/);
 assert.match(repairScript, /inspectAtlasSourceBundle\(p,files\)\.complete/,
   "a complete source bundle must reconcile every atlas page");
 assert.match(repairScript, /verify-preview-motion\.mjs/);
