@@ -75,7 +75,7 @@ try{
     assert.equal(item.ready,false);
     assert.equal(item.needsRender,false);
     assert.equal(item.blockedReason,'MISSING_DEFAULT_ANIMATION');
-    assert.ok(!matrix.some(x=>x.id===id),'a record without a selected animation must never enter render matrix');
+    assert.ok(!renderSlots.includes(item.repairSlot),'a record without a selected animation must never enter render matrix');
   }
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
