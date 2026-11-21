@@ -15,7 +15,7 @@ assert.equal(chooseSourceSet([first, second], 'https://example.invalid/assets/Ta
   'encoded indexed paths and same-stem binary aliases resolve the same source set');
 assert.equal(chooseSourceSet([first, second], 'Missing.skel'), null,
   'a missing indexed skeleton must block instead of choosing another set');
-assert.equal(chooseSourceSet([first, { ...second, name: 'duplicate' }], 'Target Rig.skel'), null,
+assert.equal(chooseSourceSet([first, second, { ...second, name: 'duplicate' }], 'Target Rig.skel'), null,
   'duplicate matching sets must be treated as ambiguous');
 assert.equal(chooseSourceSet([first, second, other], 'first.skel'), first,
   'an exact source set may be selected from a larger directory list');
