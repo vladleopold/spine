@@ -5,7 +5,7 @@ import {
   classifyPreviewHttpStatus,
   classifyReportedPreviewEntry,
 } from "./lib/reported-preview-live-status.mjs";
-import { storedPreviewStatusAllowsReuse } from "./lib/reported-preview-repair-status.mjs";
+import { storedPreviewStatusAllowsReuse, resolveStoredPreviewMediaDirectory } from "./lib/reported-preview-repair-status.mjs";
 
 assert.equal(classifyReportedPreviewEntry({webmStatus:"blocked-missing-source",previewStatus:"blocked"}), "blocked");
 assert.equal(classifyReportedPreviewEntry({webmStatus:"blocked-missing-animation",previewStatus:"blocked"}), "blocked");
@@ -33,6 +33,80 @@ assert.equal(storedPreviewStatusAllowsReuse({ webmStatus: "ready", defaultAnimat
   "legacy records without previewStatus remain eligible for independent byte/decode checks");
 assert.equal(storedPreviewStatusAllowsReuse(exactReady, "Different"), false,
   "stored media may only be reused for the exact indexed animation");
+
+const mediaFields = {
+  webmPreview: "preview.webm",
+  webmPreviewMedium: "preview-medium.webm",
+  webmPreviewLow: "preview-low.webm",
+  webpPoster: "preview.webp",
+  webpPosterMedium: "preview-medium.webp",
+  webpPosterLow: "preview-low.webp",
+};
+const mediaUrls = (directory) => Object.fromEntries(
+  Object.entries(mediaFields).map(([field, file]) => [
+    field, "https://spine-link.vercel.app/assets/" + directory + "/" + file,
+  ]),
+);
+const mediaEntry = { previewPath: "library_02/work" };
+const exactNested = {
+  defaultAnimation: "Exact",
+  ...mediaUrls("library_02/work"),
+  allAnimationPreviews: {
+    Exact: mediaUrls("library_02/work/animations/Exact"),
+  },
+};
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, exactNested, "Exact"),
+  "library_02/work/animations/Exact",
+  "stored-media validation must follow the exact animation's indexed media directory");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  ...exactNested,
+  allAnimationPreviews: { Other: mediaUrls("library_02/work/animations/Other") },
+}, "Exact"), "",
+  "a missing exact animation entry must not fall back to work-level media");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  ...exactNested,
+  allAnimationPreviews: {
+    Exact: {
+      ...mediaUrls("library_02/work/animations/Exact"),
+      webmPreviewLow: "https://spine-link.vercel.app/assets/library_02/work/animations/Other/preview-low.webm",
+    },
+  },
+}, "Exact"), "",
+  "all quality tiers and posters must resolve from one exact animation directory");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  ...exactNested,
+  allAnimationPreviews: {
+    Exact: {
+      ...mediaUrls("library_02/work/animations/Exact"),
+      webpPoster: "https://cdn.example.invalid/preview.webp",
+    },
+  },
+}, "Exact"), "",
+  "stored media outside the trusted asset origin must not be reused");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  ...exactNested,
+  allAnimationPreviews: {
+    Exact: mediaUrls("library_02/work/../other"),
+  },
+}, "Exact"), "",
+  "stored media paths may not escape the work's source directory");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  defaultAnimation: "Other",
+  ...mediaUrls("library_02/work"),
+}, "Exact"), "",
+  "legacy media is reusable only for the exact indexed default animation");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  defaultAnimation: "Exact",
+  ...mediaUrls("library_02/work"),
+}, "Exact"), "library_02/work",
+  "legacy single-animation media remains reusable when no animation map exists");
+assert.equal(resolveStoredPreviewMediaDirectory(mediaEntry, {
+  defaultAnimation: "Exact",
+  ...mediaUrls("library_02/work"),
+  allAnimationPreviews: {},
+}, "Exact"), "library_02/work",
+  "an empty legacy animation map may use the exact indexed default media");
+
 assert.equal(storedPreviewStatusAllowsReuse(exactReady, ""), false);
 
 const repairScript = fs.readFileSync(new URL("./repair-reported-previews.mjs", import.meta.url), "utf8");

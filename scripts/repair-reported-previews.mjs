@@ -9,7 +9,7 @@ import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
-import { storedPreviewStatusAllowsReuse } from "./lib/reported-preview-repair-status.mjs";
+import { storedPreviewStatusAllowsReuse, resolveStoredPreviewMediaDirectory } from "./lib/reported-preview-repair-status.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -74,19 +74,20 @@ function existingMediaOk(entry,animation,allowFailedStatus=false){
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
   if(!storedPreviewStatusAllowsReuse(record,selected,{allowFailedStatus}))return false;
+  const mediaDirectory=resolveStoredPreviewMediaDirectory(entry,record,selected);
+  if(!mediaDirectory)return false;
   const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
   if(!(frames>=8&&duration>=0.5&&frames/duration>=15))return false;
-  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
   if(!mediaNames.every(name=>{
-    try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
+    try{return fs.statSync(path.join(root,mediaDirectory,name)).size>128;}
     catch{return false;}
   }))return false;
   try{
     const probes={};
     for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]){
-      const file=path.join(root,entry.previewPath,name);
+      const file=path.join(root,mediaDirectory,name);
       const data=JSON.parse(execFileSync("ffprobe",[
         "-v","error","-count_frames","-select_streams","v:0",
         "-show_entries","stream=width,height,nb_read_frames:format=duration",
@@ -102,11 +103,11 @@ function existingMediaOk(entry,animation,allowFailedStatus=false){
       probes["preview-low.webm"].width<probes["preview-medium.webm"].width))return false;
     for(const suffix of ["","-medium","-low"]){
       execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
-        path.join(root,entry.previewPath,"preview"+suffix+".webm")],
+        path.join(root,mediaDirectory,"preview"+suffix+".webm")],
         {stdio:"ignore",timeout:120000});
       execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
-        path.join(root,entry.previewPath,"preview"+suffix+".webm"),
-        path.join(root,entry.previewPath,"preview"+suffix+".webp")],
+        path.join(root,mediaDirectory,"preview"+suffix+".webm"),
+        path.join(root,mediaDirectory,"preview"+suffix+".webp")],
         {stdio:"ignore",timeout:60000});
     }
     return true;
