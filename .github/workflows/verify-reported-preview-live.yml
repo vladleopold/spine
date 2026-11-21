@@ -1,13 +1,19 @@
 name: Verify production previews for all 18 reported Spine works
 on:
+  schedule:
+    - cron: '29 * * * *'
   workflow_run:
     workflows: ["Repair and accept 18 reported Spine preview projects"]
     types: [completed]
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: reported-preview-production-audit
+  cancel-in-progress: false
 jobs:
   production-audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.event != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
@@ -17,11 +23,15 @@ jobs:
           sparse-checkout: |
             /scripts/resolve-library.mjs
             /scripts/verify-reported-preview-live.mjs
+            /scripts/lib/reported-preview-live-status.mjs
+            /scripts/test-reported-preview-live-workflow.mjs
             /library_02/index.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify each published WebM/WebP on the live site
+      - name: Verify the sparse checkout contains the production verifier dependency graph
         run: |
           node --check scripts/verify-reported-preview-live.mjs
-          node scripts/verify-reported-preview-live.mjs
+          node scripts/test-reported-preview-live-workflow.mjs
+      - name: Verify each published WebM/WebP on the live site
+        run: node scripts/verify-reported-preview-live.mjs
