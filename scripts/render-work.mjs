@@ -33,6 +33,7 @@ const report={
  formats:[],
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
+let primaryPreviewPublished=false;
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 async function markPreviewBlocked(expectedAnimation, reason='render-failed'){
  for(let attempt=0;attempt<5;attempt++){
@@ -75,10 +76,14 @@ process.on('uncaughtException',async error=>{
  const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
  report.code=safeCode;
  writeReport();
- try{
-  await markPreviewBlocked(selection.animation,'render-failed');
- }catch{
-  console.error('SPINE_BLOCKED_STATUS_PUBLISH_FAILED');
+ if(!primaryPreviewPublished){
+  try{
+   await markPreviewBlocked(selection.animation,'render-failed');
+  }catch{
+   console.error('SPINE_BLOCKED_STATUS_PUBLISH_FAILED');
+  }
+ }else{
+  console.error('SPINE_SECONDARY_EXPORT_FAILED_PRIMARY_PREVIEW_READY');
  }
  console.error(`SPINE_RENDER_FAILED=${safeCode}`);
  process.exit(1);
@@ -142,6 +147,7 @@ async function publish(update){
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
 await publish({webmStatus:'ready',previewStatus:'ready',dispatchStatus:'ready',webmError:null,previewError:null,dispatchError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,defaultAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
+primaryPreviewPublished=true;
 // Verify every Download format and size on the requested animation. Remaining
 // animations are handled by the existing full-export workflow after this run.
 run('node',['scripts/spine-export-webm.mjs',...flags.filter(f=>!f.startsWith('--output=')),'--alpha',`--output=${path.join(temp,'alpha.webm')}`]);
