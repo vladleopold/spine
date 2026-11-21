@@ -16,6 +16,7 @@ import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mj
 import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
+import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 const args = {
@@ -112,14 +113,11 @@ if (sets.length === 0) {
 }
 
 const requestedSkeleton = String(entry.skeleton || entry.skeletonFile || '');
-const requestedStem = path.basename(requestedSkeleton).replace(/\.(?:skel|json)$/i, '').toLowerCase();
-const firstSet = requestedSkeleton
-  ? sets.find(set => fs.readdirSync(set.path).some(file =>
-      path.basename(file).toLowerCase() === path.basename(requestedSkeleton).toLowerCase() ||
-      path.basename(file).replace(/\.(?:skel|json)$/i, '').toLowerCase() === requestedStem))
-  : sets[0];
+const firstSet = chooseSourceSet(sets, requestedSkeleton, (set) => fs.readdirSync(set.path));
 if (!firstSet) {
-  console.error(`Requested source skeleton set not found: ${requestedSkeleton || '(no skeleton specified)'}`);
+  console.error(requestedSkeleton
+    ? 'REQUESTED_SOURCE_SET_MISSING_OR_AMBIGUOUS'
+    : 'AMBIGUOUS_SOURCE_SKELETON_SET');
   process.exit(1);
 }
 const setFiles = fs.readdirSync(firstSet.path);
