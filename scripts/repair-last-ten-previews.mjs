@@ -11,6 +11,7 @@ import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
+import { applyFrozenRenderSlots, previewManifestDigest, preparePreviewManifest, preparePreviewSlot, writePreparedPreviewEnvironment } from "./lib/preview-manifest-transport.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -73,16 +74,16 @@ function existingMediaOk(entry,animation){
   });
 }
 const action=process.argv[2]||"matrix";
-const latest=action==="matrix"?newestTen():[];
-if(action==="matrix"){
+const latest=newestTen();
+function buildMatrix(){
   if(latest.length!==10)throw new Error("Cannot find 10 recent entries");
-  const matrix=latest.map((e,repairSlot)=>{
+  return latest.map((e,repairSlot)=>{
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const animation=choosePreviewAnimation([],record?.defaultAnimation);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const sourceReady=bundleOk(e);
     const ready=Boolean(animation)&&sourceReady&&!incompatible;
-    const rel=String(e.previewPath).replace(/\\/g,"/");
+    const rel=String(e.previewPath).replace(/\\\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
@@ -92,15 +93,29 @@ if(action==="matrix"){
       animation,
       blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":!animation?"MISSING_DEFAULT_ANIMATION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
   });
+}
+const matrix=action==="merge"?[]:buildMatrix();
+if(action==="matrix"){
   const required=matrix.filter(x=>x.needsRender);
-  // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
-  // available clip has already been rendered and independently accepted.
-  console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
-  console.log("allEntries="+JSON.stringify(matrix));
+  const renderSlots=required.map(x=>x.repairSlot);
+  const renderMatrix=renderSlots.length
+    ? renderSlots.map(repairSlot=>({repairSlot,needsRender:true}))
+    : [{repairSlot:0,needsRender:false}];
+  console.log("matrix="+JSON.stringify(renderMatrix));
+  console.log("renderSlots="+JSON.stringify(renderSlots));
+  console.log("manifestSha256="+previewManifestDigest(matrix));
   console.log("renderCount="+required.length);
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
-}else if(action==="merge"){
+}else if(action==="prepare-manifest"||action==="prepare-slot"){
+  const frozen=applyFrozenRenderSlots(matrix,process.env.RENDER_SLOTS_JSON||"[]");
+  const expected=process.env.EXPECTED_MANIFEST_SHA256||"";
+  const prepared=action==="prepare-manifest"
+    ? preparePreviewManifest(frozen,expected)
+    : preparePreviewSlot(frozen,process.env.REPAIR_SLOT,expected);
+  writePreparedPreviewEnvironment(prepared,process.env.GITHUB_ENV);
+  console.log(action==="prepare-manifest"?"LATEST10_PREVIEW_MANIFEST_PREPARED":"LATEST10_PREVIEW_SLOT_PREPARED");
+}else else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==10)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest10");
