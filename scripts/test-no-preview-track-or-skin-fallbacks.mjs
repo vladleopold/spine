@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { resolveIndexedPreviewSet } from './lib/preview-set-selection.mjs';
 
 const read = (relative) => fs.readFileSync(new URL(relative, import.meta.url), 'utf8');
 const preview = read('../api/github-preview.js');
@@ -88,12 +89,67 @@ const selectionEnd = preview.indexOf('// Kept in sync with the server-side PREVI
 assert.ok(selectionStart >= 0 && selectionEnd > selectionStart,
   'URL selection functions must exist');
 const selectionCode = preview.slice(selectionStart, selectionEnd);
-assert.match(selectionCode, /if \(queryAnimation\) return sets\.find\(\(set\) => setHasAnimation\(set, queryAnimation\)\) \|\| null;/,
-  'an unavailable URL animation must not select another set');
+assert.match(selectionCode, /const indexedSet = sets\.find\(\(set\) => set\.label === config\.activeLabel\)/,
+  'the work page must resolve the set identified by the source index');
+assert.match(selectionCode, /if \(indexedSet\) return indexedSet;/,
+  'the exact indexed skeleton set must win over animation-name matches');
+assert.match(selectionCode, /if \(config\.requireIndexedSet\) return null;/,
+  'a missing indexed skeleton set must not fall through to another set');
+assert.match(selectionCode, /return matches\.length === 1 \? matches\[0\] : null;/,
+  'a non-indexed animation may identify a set only when the match is unique');
 assert.match(selectionCode, /return sets\.length === 1 \? sets\[0\] : null;/,
   'only a sole set may be selected implicitly');
 assert.match(selectionCode, /return queryAnimation \|\| set\?\.animation \|\| "";/,
   'the exact URL animation name must be preserved even when it is not in the list');
+
+const indexedSets = [
+  {
+    label: 'unrelated',
+    skeleton: 'https://spine-link.vercel.app/assets/library_02/other/other.json',
+    atlasUrl: 'https://spine-link.vercel.app/assets/library_02/other/other.atlas?v=1',
+    animation: '',
+  },
+  {
+    label: 'indexed',
+    skeleton: 'https://spine-link.vercel.app/assets/library_02/target/target.skel',
+    atlasUrl: 'https://spine-link.vercel.app/assets/library_02/target/target.atlas?v=2',
+    animation: '',
+  },
+];
+const exactIndexedSelection = resolveIndexedPreviewSet(indexedSets, {
+  skeleton: 'target.skel',
+  atlas: 'target.atlas',
+  defaultAnimation: 'Missing exact track',
+});
+assert.equal(exactIndexedSelection?.set, indexedSets[1],
+  'the index must bind the preview to its exact skeleton and atlas');
+assert.equal(exactIndexedSelection.animation, 'Missing exact track',
+  'an unavailable indexed animation name must remain exact');
+const noIndexedDefault = resolveIndexedPreviewSet(indexedSets, {
+  skeleton: 'target.skel',
+  atlas: 'target.atlas',
+});
+assert.equal(noIndexedDefault?.set, indexedSets[1]);
+assert.equal(noIndexedDefault.animation, '',
+  'an absent default remains unselected rather than becoming the first track');
+assert.equal(resolveIndexedPreviewSet([
+  indexedSets[1],
+  { ...indexedSets[1], label: 'duplicate' },
+], { skeleton: 'target.skel', atlas: 'target.atlas', defaultAnimation: 'Exact' }), null,
+  'ambiguous source-set matches must fail closed');
+assert.equal(resolveIndexedPreviewSet(indexedSets, {
+  skeleton: 'missing.skel',
+  atlas: 'missing.atlas',
+  defaultAnimation: 'Exact',
+}), null, 'a missing indexed source set must not borrow another set');
+assert.equal(resolveIndexedPreviewSet(indexedSets, { defaultAnimation: 'Exact' }), null,
+  'animation metadata alone must not identify an unrelated skeleton set');
+assert.match(preview, /indexedSelection = resolveIndexedPreviewSet\\(sets, entry\\)/,
+  'the dynamic preview must bind the source index to its exact set');
+assert.match(preview, /activeLabel: indexedSelection\\?\\.set\\?\\.label \\|\\| ''/,
+  'the browser must start from the indexed set when it is unambiguous');
+assert.match(preview, /requireIndexedSet: Boolean\\(entry\\?\\.skeleton \\|\\| entry\\?\\.atlas\\)/,
+  'a missing indexed set must prevent single-set fallback');
 
 const scenarioStart = preview.indexOf('function syncScenario() {}');
 const scenarioEnd = preview.indexOf('function markPreviewBlocked(', scenarioStart);
