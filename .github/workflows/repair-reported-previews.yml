@@ -16,6 +16,11 @@ on:
       - scripts/test-preview-log-privacy.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
+      - scripts/test-no-preview-track-or-skin-fallbacks.mjs
+      - scripts/batch-export-all.mjs
+      - api/github-preview.js
+      - lib/spine-data-science.js
+      - src/SpineApp.tsx
       - scripts/lib/reported-preview-live-status.mjs
       - scripts/test-reported-preview-live-status.mjs
       - .github/workflows/verify-reported-preview-live.yml
@@ -51,6 +56,9 @@ jobs:
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/verify-reported-preview-live.yml
             /scripts/
+            /api/github-preview.js
+            /lib/spine-data-science.js
+            /src/SpineApp.tsx
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -70,6 +78,7 @@ jobs:
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-no-preview-track-or-skin-fallbacks.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
