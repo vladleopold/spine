@@ -22,6 +22,15 @@ assert.match(preview,
 assert.doesNotMatch(preview, /animations\s*\[\s*0\s*\]|names\s*\[\s*0\s*\]|skinNames\s*\[\s*0\s*\]|includes\('idle'\)/,
   'preview API must not infer an animation or skin from list order or idle naming');
 
+assert.match(preview, /const matchedTextures = atlasPages\.map/,
+  'atlas pages must be paired with exact source texture names');
+assert.match(preview, /textures\.length === 1 && atlasPages\.length === 1/,
+  'a sole texture may be used only for a sole atlas page');
+assert.match(preview, /if \(atlasPages\.length === 0 \|\| matchedTextures\.some\(\(texture\) => !texture\)\) continue;/,
+  'missing or ambiguous atlas textures must block the set');
+assert.doesNotMatch(preview, /data:image\/png;base64,/,
+  'missing atlas pages must never be disguised by a synthetic 1x1 texture');
+
 assert.match(batch,
   /const targetAnim = typeof entry\.defaultAnimation === 'string' \? entry\.defaultAnimation : '';/,
   'batch duration calculation must use the exact indexed default');
