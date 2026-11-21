@@ -1,0 +1,32 @@
+name: Repository layout guard
+
+on:
+  pull_request:
+    paths:
+      - "api/github-upload.js"
+      - "lib/spine-upload-path.js"
+      - "tests/spine-upload-path.test.mjs"
+      - "package.json"
+      - ".github/workflows/repository-layout-guard.yml"
+  push:
+    branches: [main]
+    paths:
+      - "api/github-upload.js"
+      - "lib/spine-upload-path.js"
+      - "tests/spine-upload-path.test.mjs"
+      - "package.json"
+      - ".github/workflows/repository-layout-guard.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  upload-path-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate new upload destinations
+        run: npm run test:upload-path
