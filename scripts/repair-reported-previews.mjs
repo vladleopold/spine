@@ -90,7 +90,7 @@ function buildMatrix(){
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
     const ready=sourceReady&&Boolean(animation);
-    const rel=String(e.previewPath).replace(/\\\\/g,"/");
+    const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
