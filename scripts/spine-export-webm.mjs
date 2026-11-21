@@ -1143,10 +1143,41 @@ try {
       await canvasHost.waitFor({state:'visible',timeout:10000});
       let visibleFrames=0;
       const frameHashes=new Set();
+      const trackTimeSamples=new Set();
+      let trackTimeMin=Infinity,trackTimeMax=-Infinity;
+      let timelineCount=null,animationDuration=null,pausedSamples=0;
+      let canvasWidth=0,canvasHeight=0;
       for(let frame=0;frame<frameCount;frame++){
         await new Promise(r=>setTimeout(r,Math.max(10,intervalMs)));
-        const peak=await page.evaluate(()=>typeof window.__framePeak==='function' ? window.__framePeak() : -1);
-        if(peak>=40)visibleFrames++;
+        const sample=await page.evaluate(()=>{
+          const p=window.__exportPlayer;
+          let track=null;
+          try{track=p?.animationState?.getCurrent?.(0)||null;}catch{}
+          const animation=track?.animation;
+          const trackTime=Number(track?.trackTime);
+          const duration=Number(animation?.duration);
+          const timelines=animation?.timelines;
+          return {
+            trackTime:Number.isFinite(trackTime)?trackTime:null,
+            timelineCount:Array.isArray(timelines)?timelines.length:null,
+            duration:Number.isFinite(duration)?duration:null,
+            paused:p?.paused===true,
+            width:Number(p?.canvas?.width||0),
+            height:Number(p?.canvas?.height||0),
+            peak:typeof window.__framePeak==='function'?window.__framePeak():-1,
+          };
+        });
+        if(sample.peak>=40)visibleFrames++;
+        if(sample.paused)pausedSamples++;
+        if(Number.isFinite(sample.trackTime)){
+          trackTimeSamples.add(sample.trackTime.toFixed(3));
+          trackTimeMin=Math.min(trackTimeMin,sample.trackTime);
+          trackTimeMax=Math.max(trackTimeMax,sample.trackTime);
+        }
+        if(timelineCount===null&&Number.isInteger(sample.timelineCount))timelineCount=sample.timelineCount;
+        if(animationDuration===null&&Number.isFinite(sample.duration))animationDuration=sample.duration;
+        if(sample.width>0)canvasWidth=sample.width;
+        if(sample.height>0)canvasHeight=sample.height;
         // CDP screenshot captures the actual composited canvas, including
         // graphics that do not survive canvas.toDataURL in headless WebGL.
         const png=await canvasHost.screenshot({type:'png',timeout:15000});
@@ -1154,6 +1185,13 @@ try {
         frameHashes.add(createHash('sha256').update(png).digest('hex'));
         fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),png);
       }
+      const trackTimeRange=Number.isFinite(trackTimeMin)&&Number.isFinite(trackTimeMax)
+        ?Number((trackTimeMax-trackTimeMin).toFixed(3)):null;
+      console.error('CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+        samples:frameCount,trackTimeDistinct:trackTimeSamples.size,trackTimeRange,
+        timelineCount,animationDuration,pausedSamples,visibleFrames,
+        distinctFrames:frameHashes.size,canvasWidth,canvasHeight,
+      }));
       if(visibleFrames<2)throw new Error('No visible real-time Spine frames');
       if(frameHashes.size<2)throw new Error('Selected animation has no changing canvas frames');
       console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
