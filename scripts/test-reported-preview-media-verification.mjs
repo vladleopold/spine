@@ -86,7 +86,7 @@ test("pull requests render the exact selected animation privately and verify sou
   assert.equal(workflow.split(renderCondition).length - 1, 3,
     "PRs and main must run the same exact-animation render and source fingerprint gates");
   assert.match(workflow, /EXISTING_MEDIA_INVALID_RENDERING_EXACT_SELECTED_ANIMATION/);
-  assert.match(workflow, /Exact selected animation render failed; no alternate animation will be used/);
+  assert.match(workflow, /Unexpected exact-animation renderer failure; no alternate animation will be used/);
   assert.match(workflow, /Fingerprint source bundle before exact-animation render/);
   assert.match(workflow, /Verify source bundle remained byte-identical/);
   assert.match(workflow, /SOURCE_PRESERVATION_PASS/);
