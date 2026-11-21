@@ -38,10 +38,35 @@ assert.ok(previewTargetStart >= 0 && previewTargetEnd > previewTargetStart,
 const previewTarget = preview.slice(previewTargetStart, previewTargetEnd);
 assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
   'the work page may resolve only the exact indexed default animation');
+assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
+  'the work page may resolve only the exact indexed default animation');
 assert.match(previewTarget, /isFallback: false/,
   'the resolver must never report or produce a substitute animation');
 assert.doesNotMatch(previewTarget, /for \(const a of animations\)|candidates\.find|fallback \|\| first|target\.name !== chosen/,
   'a short or missing selected preview must not fall through to another animation');
+
+assert.match(preview, /const contentUrl = entryVideoAsset\(target\.url, entry, 'webm'\);/,
+  'video metadata must use only the selected animation URL');
+assert.match(preview, /const poster = entryImageAsset\(target\.poster, entry, 'poster'\);/,
+  'video metadata must use only the selected animation poster');
+assert.match(preview, /const lowWebm = entryVideoAsset\(target\.lowUrl \|\| target\.url, item, 'webm'\);/,
+  'owner-library low rendition must remain within the selected animation');
+assert.match(preview, /webmPreviewFull: entryVideoAsset\(target\.url, item, 'webm'\)/,
+  'owner-library full video must remain within the selected animation');
+assert.match(preview, /thumbnailPoster: entryImageAsset\(target\.poster, item, 'poster'\)/,
+  'owner-library poster must remain within the selected animation');
+assert.doesNotMatch(preview, /target\.url\s*\|\|\s*repairEntryAssetUrl\(entry, entry\?\.webmPreview|target\.url\s*\|\|\s*repairEntryAssetUrl\(item, item\?\.webmPreview|target\.poster\s*\|\|\s*item\?\.thumbnailPoster/,
+  'a missing selected preview must not borrow a generic or alternate animation asset');
+
+const fallbackPageStart = preview.indexOf('function createVideoFallbackHtml(');
+const fallbackPageEnd = preview.indexOf('// Finds the folder of a work by id', fallbackPageStart);
+assert.ok(fallbackPageStart >= 0 && fallbackPageEnd > fallbackPageStart,
+  'the no-set fallback page must exist');
+const fallbackPage = preview.slice(fallbackPageStart, fallbackPageEnd);
+assert.match(fallbackPage, /const poster = videoSeo\\?\\.thumbnailUrl \\|\\| '';/,
+  'the fallback page must use only a verified selected-animation poster');
+assert.doesNotMatch(fallbackPage, /generatedThumbnailUrl|entry\\?\\.thumbnailPoster/,
+  'the fallback page must not disguise missing selected media with a generic poster');
 
 assert.match(batch,
   /const targetAnim = typeof entry\.defaultAnimation === 'string' \? entry\.defaultAnimation : '';/,
