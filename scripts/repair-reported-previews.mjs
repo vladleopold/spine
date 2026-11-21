@@ -5,11 +5,12 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
-import { storedPreviewStatusAllowsReuse, resolveStoredPreviewMediaDirectory } from "./lib/reported-preview-repair-status.mjs";
+import { storedPreviewStatusAllowsReuse, resolveStoredPreviewMediaFiles } from "./lib/reported-preview-repair-status.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -34,36 +35,58 @@ const requestedIds=[
   "Spine-animation-2026-11-17T18-45-14-132Z"
 ];
 const requestedSet=new Set(requestedIds);
+// One additional legacy record has a complete indexed media map but no
+// previewStatus. Keep its identifier out of public workflow source/logs.
+const additionalIdHashes=new Set([
+  "58208d872bd596e521f4869b427fe7c48453d60c24a832fb4fb1199ec5e76193",
+]);
+const requestedCount=requestedIds.length+additionalIdHashes.size;
+const idHash=id=>createHash("sha256").update(String(id||"")).digest("hex");
 function resolveRequestedEntries() {
   const byId=new Map();
   for(const folder of listCollectionFolders(root)) {
     for(const entry of readIndex(root,folder)||[]) {
-      if(!requestedSet.has(entry?.id))continue;
-      if(byId.has(entry.id))throw new Error('Duplicate work across archive collections');
+      const id=String(entry?.id||"");
+      if(!requestedSet.has(id)&&!additionalIdHashes.has(idHash(id)))continue;
+      if(byId.has(id))throw new Error('Duplicate work across archive collections');
       const defaultAnimation=choosePreviewAnimation([],entry.defaultAnimation);
-      byId.set(entry.id,{id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+'/'+entry.id,
+      byId.set(id,{id,basePath:folder,previewPath:entry.previewPath||folder+'/'+id,
         at:Date.parse(entry.uploadedAt||0)||0,defaultAnimation});
     }
   }
   const missing=requestedIds.filter(id=>!byId.has(id));
-  if(missing.length)throw new Error('Requested Spine works missing from source indexes: '+missing.length);
-  return requestedIds.map(id=>byId.get(id));
+  const missingHashes=[...additionalIdHashes].filter(hash=>![...byId.keys()].some(id=>idHash(id)===hash));
+  if(missing.length||missingHashes.length)
+    throw new Error('Requested Spine source records missing: '+(missing.length+missingHashes.length));
+  const primary=requestedIds.map(id=>byId.get(id));
+  const additional=[...byId.values()].filter(entry=>!requestedSet.has(entry.id))
+    .sort((a,b)=>idHash(a.id).localeCompare(idHash(b.id)));
+  return [...primary,...additional];
 }
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
-  let files=[],indexOnly=false;
-  try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
-  catch{
-    indexOnly=true;
-    files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
+  const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
+  const indexedFiles=Array.isArray(record?.files)?record.files:[];
+  const indexOnly=process.env.SPINE_REPAIR_INDEX_ONLY==="1";
+  let files=[];
+  if(indexOnly) files=indexedFiles;
+  else {
+    if(!fs.existsSync(p))return false;
+    files=indexedFiles.filter(value=>{
+      const rel=String(value||"").replace(/\\/g,"/");
+      if(!rel||rel.startsWith("/")||rel.split("/").includes(".."))return false;
+      const target=path.resolve(p,rel);
+      if(!target.startsWith(p+path.sep))return false;
+      try{return fs.statSync(target).isFile();}catch{return false;}
+    });
   }
-  const triad=files.some(f=>/\.(json|skel)$/i.test(f)) &&
-    files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
-    files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
+  const triad=files.some(f=>/\\.(json|skel)$/i.test(f)) &&
+    files.some(f=>/\\.atlas(?:\\.txt|\\.docx)?$/i.test(f)) &&
+    files.some(f=>/\\.(png|jpe?g|webp|dds)$/i.test(f));
   if(!triad)return false;
-  // The sparse inventory can prove the triad exists; the render job checks
-  // every atlas page against the actual source texture dimensions.
+  // Indexed paths may be nested (legacy exports). The hydrated render job
+  // checks every listed source file and every atlas page against real texture dimensions.
   if(indexOnly)return true;
   return inspectAtlasSourceBundle(p,files).complete;
 }
@@ -74,41 +97,47 @@ function existingMediaOk(entry,animation,allowFailedStatus=false){
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
   if(!storedPreviewStatusAllowsReuse(record,selected,{allowFailedStatus}))return false;
-  const mediaDirectory=resolveStoredPreviewMediaDirectory(entry,record,selected);
-  if(!mediaDirectory)return false;
+  const resolved=resolveStoredPreviewMediaFiles(entry,record,selected);
+  if(!resolved)return false;
   const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
-  if(!(frames>=8&&duration>=0.5&&frames/duration>=15))return false;
+  if((frames>0&&frames<8)||(duration>0&&duration<0.5)||
+     (frames>0&&duration>0&&frames/duration<15))return false;
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
-  if(!mediaNames.every(name=>{
-    try{return fs.statSync(path.join(root,mediaDirectory,name)).size>128;}
+  const mediaPaths=Object.fromEntries(Object.entries(resolved.files).map(([key,relative])=>{
+    const file=path.resolve(root,relative);
+    if(!file.startsWith(root+path.sep))throw new Error("Unsafe indexed media path");
+    return [key,file];
+  }));
+  if(!Object.values(mediaPaths).every(file=>{
+    try{return fs.statSync(file).isFile()&&fs.statSync(file).size>128;}
     catch{return false;}
   }))return false;
   try{
     const probes={};
-    for(const name of ["preview.webm","preview-medium.webm","preview-low.webm"]){
-      const file=path.join(root,mediaDirectory,name);
+    for(const key of ["webmPreview","webmPreviewMedium","webmPreviewLow"]){
       const data=JSON.parse(execFileSync("ffprobe",[
         "-v","error","-count_frames","-select_streams","v:0",
         "-show_entries","stream=width,height,nb_read_frames:format=duration",
-        "-of","json",file,
+        "-of","json",mediaPaths[key],
       ],{encoding:"utf8",timeout:30000}));
       const stream=data.streams?.[0]||{};
       const item={width:Number(stream.width),height:Number(stream.height),
         frames:Number(stream.nb_read_frames),duration:Number(data.format?.duration)};
       if(!(item.width>0&&item.height>0&&item.frames>=8&&item.duration>=0.5&&item.frames/item.duration>=15))return false;
-      probes[name]=item;
+      probes[key]=item;
     }
-    if(!(probes["preview-medium.webm"].width<probes["preview.webm"].width&&
-      probes["preview-low.webm"].width<probes["preview-medium.webm"].width))return false;
-    for(const suffix of ["","-medium","-low"]){
+    if(!(probes.webmPreviewMedium.width<probes.webmPreview.width&&
+      probes.webmPreviewLow.width<probes.webmPreviewMedium.width))return false;
+    for(const [videoKey,posterKey] of [
+      ["webmPreview","webpPoster"],
+      ["webmPreviewMedium","webpPosterMedium"],
+      ["webmPreviewLow","webpPosterLow"],
+    ]){
       execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
-        path.join(root,mediaDirectory,"preview"+suffix+".webm")],
-        {stdio:"ignore",timeout:120000});
+        mediaPaths[videoKey]],{stdio:"ignore",timeout:120000});
       execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
-        path.join(root,mediaDirectory,"preview"+suffix+".webm"),
-        path.join(root,mediaDirectory,"preview"+suffix+".webp")],
-        {stdio:"ignore",timeout:60000});
+        mediaPaths[videoKey],mediaPaths[posterKey]],{stdio:"ignore",timeout:60000});
     }
     return true;
   }catch{return false;}
@@ -116,13 +145,15 @@ function existingMediaOk(entry,animation,allowFailedStatus=false){
 const action=process.argv[2]||"matrix";
 const latest=resolveRequestedEntries();
 if(action==="matrix"){
-  if(latest.length!==requestedIds.length)throw new Error("Cannot find all requested reported entries");
+  if(latest.length!==requestedCount)throw new Error("Cannot find all requested reported entries");
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const animation=choosePreviewAnimation([],e.defaultAnimation);
     const ready=sourceReady&&Boolean(animation);
     const rel=String(e.previewPath).replace(/\\/g,"/");
-    if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
+    const legacyRootPath=rel===e.id&&!rel.includes("/")&&!rel.includes("\\");
+    if((!rel.startsWith(e.basePath+"/")&&!legacyRootPath)||rel.startsWith("/")||
+      rel.includes("\\")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
       needsRender:ready&&!existingMediaOk(e,animation),animation,
@@ -151,11 +182,11 @@ if(action==="matrix"){
     " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
-  if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-reported19");
+  if(selected.length!==requestedCount)throw new Error("Missing exact repair manifest");
+  const base=path.resolve(root,"downloaded-reported20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
-    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedCount||seenSlots.has(item.repairSlot))
       throw new Error("Invalid artifact slot");
     seenSlots.add(item.repairSlot);
     if(!latest.some(e=>e.id===item.id)) throw new Error("Untrusted repair entry");
@@ -199,7 +230,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"reported19-"+item.repairSlot);
+    const artifact=path.join(base,"reported20-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
