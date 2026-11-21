@@ -211,7 +211,7 @@ async function buildMatrix(){
 
   return matrix;
 }
-const matrix=action==="merge"?[]:await buildMatrix();
+const matrix=await buildMatrix();
 if(action==="matrix"){
   const required=matrix.filter(x=>x.needsRender);
   const renderSlots=required.map(x=>x.repairSlot);
@@ -232,8 +232,14 @@ if(action==="matrix"){
     : preparePreviewSlot(frozen,process.env.REPAIR_SLOT,expected);
   writePreparedPreviewEnvironment(prepared,process.env.GITHUB_ENV);
   console.log(action==="prepare-manifest"?"LATEST20_PREVIEW_MANIFEST_PREPARED":"LATEST20_PREVIEW_SLOT_PREPARED");
-}else else if(action==="merge"){
+}else if(action==="merge"){
+  const frozen=applyFrozenRenderSlots(matrix,process.env.RENDER_SLOTS_JSON||"[]");
+  const expected=process.env.EXPECTED_MANIFEST_SHA256||"";
+  if(previewManifestDigest(frozen)!==expected)
+    throw new Error("Frozen preview manifest changed before publish");
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
+  if(previewManifestDigest(selected)!==expected)
+    throw new Error("Published preview manifest does not match the frozen snapshot");
   if(selected.length!==20)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
