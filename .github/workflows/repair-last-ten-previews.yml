@@ -20,6 +20,8 @@ on:
       - scripts/test-canvas-fallback.mjs
       - scripts/verify-latest-ten-live.mjs
       - scripts/lib/latest-ten-live-audit.mjs
+      - scripts/lib/preview-manifest-transport.mjs
+      - scripts/test-preview-log-privacy.mjs
       - scripts/test-latest-ten-live-audit.mjs
       - scripts/render-work.mjs
       - scripts/lib/render-selection.mjs
@@ -36,9 +38,9 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
+      renderSlots: ${{ steps.latest.outputs.renderSlots }}
+      manifestSha256: ${{ steps.latest.outputs.manifestSha256 }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
-      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -69,6 +71,7 @@ jobs:
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-latest-ten-live-audit.mjs
+          node scripts/test-preview-log-privacy.mjs
           echo "LATEST10_INVENTORY_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
@@ -91,12 +94,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      ENTRY_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-      ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
       REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+      EXPECTED_MANIFEST_SHA256: ${{ needs.inventory.outputs.manifestSha256 }}
+      RENDER_SLOTS_JSON: ${{ needs.inventory.outputs.renderSlots }}
+      SPINE_REPAIR_INDEX_ONLY: '1'
+      SPINE_REPAIR_SKIP_LIVE: '1'
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -116,14 +118,15 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-      - name: Mask private source metadata and hydrate exact source
+      - name: Prepare and mask the frozen source slot
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
-          for value in "$ENTRY_ID" "$ENTRY_PATH" "$ENTRY_ANIMATION"; do
-            [[ -z "$value" ]] || printf '::add-mask::%s\n' "$value"
-          done
+          node scripts/repair-last-ten-previews.mjs prepare-slot
+      - name: Hydrate exact source after metadata masking
+        shell: bash
+        run: |
+          set -euo pipefail
           if [[ "$ENTRY_PATH" = /* || "$ENTRY_PATH" == *..* ]]; then
             echo "Invalid source path"
             exit 1
@@ -237,7 +240,10 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+      EXPECTED_MANIFEST_SHA256: ${{ needs.inventory.outputs.manifestSha256 }}
+      RENDER_SLOTS_JSON: ${{ needs.inventory.outputs.renderSlots }}
+      SPINE_REPAIR_INDEX_ONLY: '1'
+      SPINE_REPAIR_SKIP_LIVE: '1'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -246,21 +252,19 @@ jobs:
             /scripts/
             /library/index.json
             /library_*/index.json
-      - name: Mask and hydrate exact source directories
+      - name: Prepare and mask the frozen latest-ten manifest
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
+          node scripts/repair-last-ten-previews.mjs prepare-manifest
+      - name: Hydrate exact source directories
+        shell: bash
+        run: |
+          set -euo pipefail
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
           if(selected.length!==10)throw new Error('Missing exact repair manifest');
-          for(const item of selected){
-            for(const value of [item.id,item.previewPath,item.animation]){
-              const secret=String(value||'');
-              if(secret.length>=4)process.stdout.write('::add-mask::'+secret+'\n');
-            }
-          }
           const paths=new Set();
           for(const item of selected){
             const source=String(item.previewPath||'');
@@ -315,19 +319,20 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+      EXPECTED_MANIFEST_SHA256: ${{ needs.inventory.outputs.manifestSha256 }}
+      RENDER_SLOTS_JSON: ${{ needs.inventory.outputs.renderSlots }}
+      SPINE_REPAIR_INDEX_ONLY: '1'
+      SPINE_REPAIR_SKIP_LIVE: '1'
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /scripts/verify-latest-ten-live.mjs
-            /scripts/lib/latest-ten-live-audit.mjs
-            /scripts/mask-preview-manifest.mjs
-            /scripts/lib/preview-manifest-redaction.mjs
-            /scripts/lib/export-log-redaction.mjs
-      - name: Mask exact production audit manifest
-        run: node scripts/mask-preview-manifest.mjs
+            /scripts/
+            /library/index.json
+            /library_*/index.json
+      - name: Prepare and mask the frozen production audit manifest
+        run: node scripts/repair-last-ten-previews.mjs prepare-manifest
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
