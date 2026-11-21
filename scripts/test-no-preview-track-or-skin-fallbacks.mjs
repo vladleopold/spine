@@ -102,7 +102,7 @@ assert.ok(scenarioStart >= 0 && scenarioEnd > scenarioStart,
 assert.doesNotMatch(preview.slice(scenarioStart, scenarioEnd), /scenarioState|lookup\.has|idle|loop|playNextScenarioStep/,
   'in/idle/out and loop tracks must never be chained automatically');
 
-const playbackStart = preview.indexOf('function markPreviewBlocked()');
+const playbackStart = preview.indexOf('function setPreviewStatus(status, message, preserveSameAnimationVideo = false)');
 const playbackEnd = preview.indexOf('function togglePlayback()', playbackStart);
 assert.ok(playbackStart >= 0 && playbackEnd > playbackStart,
   'blocked-state and exact playback guards must exist');
@@ -115,6 +115,20 @@ assert.match(playbackCode, /if \(!exactAnimation\) \{ markPreviewBlocked\(\); re
   'a missing animation must stop instead of continuing the previous or first track');
 assert.doesNotMatch(playbackCode, /playNextScenarioStep|scenarioStep/,
   'playback completion must not switch to an auxiliary track');
+assert.match(playbackCode, /function markPreviewNeedsSelection\(\)/,
+  'a missing default waits for explicit user selection rather than choosing a track');
+assert.match(playbackCode, /box\.dataset\.previewStatus = status/,
+  'blocked and awaiting-selection states must be exposed on the player');
+assert.match(playbackCode, /overlay\.textContent = message/,
+  'the player must explain why an animation is blocked');
+assert.doesNotMatch(playbackCode, /player\?\.dispose|player = null/,
+  'blocking an animation must not destroy the player needed for an explicit manual selection');
+assert.match(playbackCode, /try \{\s*const entry = player\.setAnimation\(name, loopEnabled\.value\);/,
+  'the exact selected animation must be set inside a guarded runtime call');
+assert.match(playbackCode, /catch \(error\) \{\s*markPreviewBlocked\(\);/,
+  'a failed exact-animation call must become blocked');
+assert.match(playbackCode, /if \(!player\) \{ void createPlayer\(\); return; \}/,
+  'manual selection can retry the player without choosing a different animation');
 
 const playerStart = preview.indexOf('async function createPlayer()');
 const playerEnd = preview.indexOf('function renderAnimationList()', playerStart);
