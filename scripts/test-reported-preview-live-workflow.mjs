@@ -33,8 +33,43 @@ function includesPath(paths, filePath) {
 }
 
 function importSpecifiers(source) {
-  const pattern = /^\s*import\s+(?:[^;\n]*?\s+from\s+)?['"]([^'"]+)['"]\s*;?\s*$/gm;
-  return [...source.matchAll(pattern)].map((match) => match[1]);
+  // This is deliberately a small source scanner, not a single-line import regex:
+  // multiline named imports were the exact dependency shape omitted by the old
+  // checker. Strip comments before scanning so examples in comments are ignored.
+  const clean = source
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^\s*\/\/.*$/gm, '');
+  const found = [];
+
+  const staticImports = /^\s*import\s+(?!\()([\s\S]*?);/gm;
+  for (const match of clean.matchAll(staticImports)) {
+    const clause = match[1];
+    const from = clause.match(/\bfrom\s*(['"])([^'"]+)\1/);
+    const sideEffect = clause.match(/^\s*(['"])([^'"]+)\1\s*$/);
+    const specifier = from?.[2] || sideEffect?.[2];
+    if (specifier) found.push(specifier);
+  }
+
+  const reExports = /^\s*export\s+(?:\*|\{[\s\S]*?\})\s+from\s*(['"])([^'"]+)\1\s*;?/gm;
+  for (const match of clean.matchAll(reExports)) found.push(match[2]);
+
+  const dynamicImports = /\bimport\s*\(\s*(['"])([^'"]+)\1\s*\)/g;
+  for (const match of clean.matchAll(dynamicImports)) found.push(match[2]);
+
+  const commonJsRequires = /\brequire\s*\(\s*(['"])([^'"]+)\1\s*\)/g;
+  for (const match of clean.matchAll(commonJsRequires)) found.push(match[2]);
+
+  return [...new Set(found)];
+}
+
+function resolveLocalDependency(importerPath, specifier) {
+  const base = path.posix.normalize(path.posix.join(path.posix.dirname(importerPath), specifier));
+  const candidates = [
+    base,
+    ...['.mjs', '.js', '.cjs', '.json'].map((extension) => base + extension),
+    ...['index.mjs', 'index.js', 'index.cjs', 'index.json'].map((name) => path.posix.join(base, name)),
+  ];
+  return candidates.find((candidate) => fs.existsSync(path.join(root, candidate))) || base;
 }
 
 function assertImportClosure(entrypoints, sparsePaths, label) {
@@ -50,12 +85,31 @@ function assertImportClosure(entrypoints, sparsePaths, label) {
     const source = fs.readFileSync(absolutePath, 'utf8');
     for (const specifier of importSpecifiers(source)) {
       if (!specifier.startsWith('.')) continue;
-      const dependency = path.posix.normalize(path.posix.join(path.posix.dirname(normalized), specifier));
-      visit(dependency);
+      visit(resolveLocalDependency(normalized, specifier));
     }
   }
   for (const entrypoint of entrypoints) visit(entrypoint);
 }
+
+assert.deepEqual(importSpecifiers(`
+import {
+  directDependency,
+  anotherDependency,
+} from './multiline-dependency.mjs';
+import './side-effect-dependency.mjs';
+export {
+  reExported,
+} from './re-export-dependency.mjs';
+await import('./dynamic-dependency.mjs');
+const commonJs = require('./commonjs-dependency.cjs');
+// import { ignored } from './comment-only-dependency.mjs';
+`), [
+  './multiline-dependency.mjs',
+  './side-effect-dependency.mjs',
+  './re-export-dependency.mjs',
+  './dynamic-dependency.mjs',
+  './commonjs-dependency.cjs',
+], 'dependency scanner must include multiline, side-effect, re-export, dynamic and CommonJS imports');
 
 const auditSparse = sparseCheckoutPaths(auditWorkflow, 'production audit workflow');
 const repairVerifyStart = repairWorkflow.indexOf('  verify-production:');
@@ -72,6 +126,19 @@ const entrypoints = [
 ];
 assertImportClosure(entrypoints, auditSparse, 'hourly production audit');
 assertImportClosure(entrypoints, repairVerifySparse, 'post-publish production audit');
+
+// Prove the historical failure is caught: the verifier's multiline import of
+// this module must make a sparse checkout without it fail before execution.
+const historicalMissingDependency = 'scripts/lib/reported-preview-live-status.mjs';
+const auditWithoutHistoricalDependency = new Set(
+  [...auditSparse].filter((entry) => entry !== historicalMissingDependency),
+);
+assert.throws(
+  () => assertImportClosure(['scripts/verify-reported-preview-live.mjs'], auditWithoutHistoricalDependency,
+    'historical missing-dependency fixture'),
+  /sparse checkout omits scripts\\/lib\\/reported-preview-live-status\\.mjs/,
+  'a missing multiline direct dependency must be detected',
+);
 
 for (const required of [
   '.github/workflows/repair-reported-previews.yml',
@@ -113,4 +180,4 @@ const repairVerify = repairVerifyJob.indexOf('node scripts/verify-reported-previ
 assert.ok(repairTest >= 0 && repairVerify > repairTest,
   'media acceptance regression must run before post-publish live verification');
 
-console.log('PASS reported-preview audit dependency closure, no duplicate trigger, HTTP classification, motion and poster gates');
+console.log('PASS reported-preview audit dependency closure, including multiline imports and the historical omission fixture');
