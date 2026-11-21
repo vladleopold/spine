@@ -163,7 +163,7 @@ const playbackEnd = preview.indexOf('function togglePlayback()', playbackStart);
 assert.ok(playbackStart >= 0 && playbackEnd > playbackStart,
   'blocked-state and exact playback guards must exist');
 const playbackCode = preview.slice(playbackStart, playbackEnd);
-assert.match(playbackCode, /box\.dataset\.previewStatus = "blocked";/,
+assert.match(playbackCode, /setPreviewStatus\("blocked", "Selected animation is unavailable; no alternate animation was played\."/,
   'an unavailable selected animation must be visibly marked blocked');
 assert.match(playbackCode, /const exactAnimation = player\?\.skeleton\?\.data\?\.findAnimation\?\.\(name\);/,
   'playback must resolve the exact requested animation from the loaded skeleton');
