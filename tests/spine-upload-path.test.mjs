@@ -70,4 +70,5 @@ test('API uses server-controlled roots and guards every client-directed artifact
   assert.match(api, /isAllowedSpineProjectFilePath\(filePath, settings\.basePath\)/);
   assert.match(api, /isAllowedSpineProjectFilePath\(anchorPath, settings\.basePath\)/);
   assert.match(api, /isAllowedSpineUploadFileName\(item\?\.name\)/);
+  assert.match(api, /if \(!isAllowedSpineUploadPath\(entry\.previewPath, settings\.basePath\)\)/);
 });
