@@ -378,14 +378,6 @@
   ],
   "rewrites": [
     {
-      "source": "/output-mobile-before.png",
-      "destination": "/diagnostics/screenshots/output-mobile-before.png"
-    },
-    {
-      "source": "/output-mobile-after.png",
-      "destination": "/diagnostics/screenshots/output-mobile-after.png"
-    },
-    {
       "source": "/spine-link.webm",
       "destination": "/api/github-asset?path=spine-link.webm"
     },
