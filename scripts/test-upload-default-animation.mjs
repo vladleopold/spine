@@ -178,6 +178,8 @@ assert.match(renderWorkSource, /await markPreviewBlocked\(selection\.animation/,
   'failed or missing selected animations must be persisted as blocked');
 assert.match(renderWorkSource, /Object\.assign\(record,blocked\)/,
   'blocked status updates must preserve all source and index fields');
+assert.match(renderWorkSource, /delete record\[key\]/,
+  'a failed selected animation must not leave a stale top-level preview URL');
 assert.match(renderWorkSource, /previewStatus:'ready'/,
   'a successful retry of the same exact animation must clear the previous blocked state');
 assert.doesNotMatch(exporterSource, /alternatePreviewAnimations|targetAnimation\s*=\s*candidate/,
