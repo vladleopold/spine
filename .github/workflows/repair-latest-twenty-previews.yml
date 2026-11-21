@@ -14,6 +14,7 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/render-work.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
       - scripts/test-spine-player-runtime-assets.mjs
       - scripts/source-skeleton-choice.mjs
@@ -51,6 +52,7 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/render-work.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
       - scripts/test-spine-player-runtime-assets.mjs
       - scripts/source-skeleton-choice.mjs
@@ -141,6 +143,7 @@ jobs:
           node --check scripts/lib/first-frame-poster.mjs
           node scripts/test-preview-visibility-recovery.mjs
           node --check scripts/spine-export-webm.mjs
+          node --check scripts/render-work.mjs
           node --check scripts/recover-recorded-webm.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
