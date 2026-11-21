@@ -22,6 +22,11 @@ const exactReady = { webmStatus: "ready", previewStatus: "ready", defaultAnimati
 assert.equal(storedPreviewStatusAllowsReuse(exactReady, "Exact"), true);
 assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "failed" }, "Exact"), false,
   "a failed poster/video status must force revalidation even when the work-level WebM flag is ready");
+assert.equal(storedPreviewStatusAllowsReuse(
+  { ...exactReady, previewStatus: "failed" }, "Exact", { allowFailedStatus: true }), true,
+  "a failed status may be restored only after the caller independently verifies the exact stored media");
+assert.equal(storedPreviewStatusAllowsReuse(
+  { ...exactReady, previewStatus: "failed" }, "Different", { allowFailedStatus: true }), false);
 assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "blocked" }, "Exact"), false);
 assert.equal(storedPreviewStatusAllowsReuse({ ...exactReady, previewStatus: "pending" }, "Exact"), false);
 assert.equal(storedPreviewStatusAllowsReuse({ webmStatus: "ready", defaultAnimation: "Exact" }, "Exact"), true,
@@ -38,6 +43,9 @@ assert.match(repairScript, /inspectAtlasSourceBundle\(p,files\)\.complete/,
   "a complete source bundle must reconcile every atlas page");
 assert.match(repairScript, /verify-preview-motion\.mjs/);
 assert.match(repairScript, /verify-poster-first-frame\.mjs/);
+assert.match(repairScript, /action==="validate-existing"/);
+assert.match(repairScript, /existingMediaVerified===true/);
+assert.match(repairScript, /existingMediaOk\(entryInfo,selectedAnimation,true\)/);
 
 assert.equal(classifyOriginHttpStatus(200), "ok");
 assert.equal(classifyOriginHttpStatus(206), "ok");
