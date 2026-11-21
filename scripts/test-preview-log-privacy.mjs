@@ -69,7 +69,9 @@ for (const workflow of [reported, latestTen, latestTwenty]) {
 
 const reportedRender = reported.slice(reported.indexOf('  render:'), reported.indexOf('  publish:'));
 assert.match(reportedRender, /name: validate-reported-preview-\$\{\{ matrix\.entry\.repairSlot \}\}/);
-assert.match(reportedRender, /name: reported18-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(reportedRender, /name: reported19-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(reported, /pattern: reported19-\*/);
+assert.match(reported, /path: downloaded-reported19/);
 assert.doesNotMatch(reportedRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(reportedRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
@@ -81,7 +83,8 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
-assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
+assert.match(reportedRepair, /downloaded-reported19/);
+assert.match(reportedRepair, /reported19-"\+item\.repairSlot/);
 assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
 assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
 assert.match(reportedRepair, /const animation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
