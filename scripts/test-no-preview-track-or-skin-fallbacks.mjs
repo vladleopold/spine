@@ -31,6 +31,18 @@ assert.match(preview, /if \(atlasPages\.length === 0 \|\| matchedTextures\.some\
 assert.doesNotMatch(preview, /data:image\/png;base64,/,
   'missing atlas pages must never be disguised by a synthetic 1x1 texture');
 
+const previewTargetStart = preview.indexOf('function resolvePreviewTarget(entry, origin = \'\') {');
+const previewTargetEnd = preview.indexOf('// Compact download picker for the sidebar.', previewTargetStart);
+assert.ok(previewTargetStart >= 0 && previewTargetEnd > previewTargetStart,
+  'the exact preview target resolver must exist');
+const previewTarget = preview.slice(previewTargetStart, previewTargetEnd);
+assert.match(previewTarget, /const selected = chosen \? pick\(chosen\) : null;/,
+  'the work page may resolve only the exact indexed default animation');
+assert.match(previewTarget, /isFallback: false/,
+  'the resolver must never report or produce a substitute animation');
+assert.doesNotMatch(previewTarget, /for \(const a of animations\)|candidates\.find|fallback \|\| first|target\.name !== chosen/,
+  'a short or missing selected preview must not fall through to another animation');
+
 assert.match(batch,
   /const targetAnim = typeof entry\.defaultAnimation === 'string' \? entry\.defaultAnimation : '';/,
   'batch duration calculation must use the exact indexed default');
