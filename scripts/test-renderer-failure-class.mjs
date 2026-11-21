@@ -103,6 +103,20 @@ const stalledTrack = summarizeRendererLog(
 );
 assert.equal(stalledTrack.distinctError,"ANIMATION_TRACK_TIME_STALLED");
 
+const stateUnavailable = summarizeRendererLog(
+  'PLAYER_READY=1\\nRECORDER_STATE=recording\\nCANVAS_FALLBACK_CAPTURE=started\\n' +
+  'Selected animation has no changing canvas frames\\n' +
+  'CANVAS_FALLBACK_DIAGNOSTICS='+JSON.stringify({
+    samples:60,trackTimeDistinct:0,trackTimeRange:null,timelineCount:null,
+    animationDuration:null,getCurrentAvailable:false,tracksArrayAvailable:false,
+    trackAvailable:false,setAnimationReturnAvailable:true,pausedSamples:0,
+    visibleFrames:60,distinctFrames:1,canvasWidth:960,canvasHeight:720
+  })
+);
+assert.equal(stateUnavailable.sourceSignal,"ANIMATION_TRACK_STATE_UNAVAILABLE");
+assert.equal(stateUnavailable.canvasProgress.getCurrentAvailable,false);
+assert.equal(stateUnavailable.canvasProgress.setAnimationReturnAvailable,true);
+
 const advancedStatic = summarizeRendererLog(
   'PLAYER_READY=1\nRECORDER_STATE=recording\nCANVAS_FALLBACK_CAPTURE=started\n' +
   'Selected animation has no changing canvas frames\n' +
@@ -122,6 +136,8 @@ assert.match(exporter,/console\.error\('PLAYER_READY=1'\)/);
 assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
+assert.match(exporter,/window\.__exportTrackEntry\s*=\s*player\.animationState\.setAnimation/);
+assert.match(exporter,/stateTracks=state\?\.tracks/);
 assert.match(exporter,/CANVAS_FALLBACK_DIAGNOSTICS=/,
   "real-canvas failure logs must expose only sanitized track progress and frame counts");
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
