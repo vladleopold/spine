@@ -98,6 +98,12 @@ assert.ok(hourlyTest >= 0 && hourlyVerify > hourlyTest,
 
 assert.match(repairWorkflow, /pull_request:/,
   'the repair workflow must validate pull-request changes');
+assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
+  'workflow-wide permissions must be read-only');
+const publishStart = repairWorkflow.indexOf('  publish:');
+const publishJob = repairWorkflow.slice(publishStart);
+assert.match(publishJob, /^    permissions:\s*\n\s+contents:\s+write/m,
+  'only the publisher may write source changes');
 assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
   'repair inventory must run the media acceptance regression');
 assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
