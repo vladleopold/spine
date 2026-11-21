@@ -6,10 +6,8 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const auditWorkflowPath = path.join(root, '.github/workflows/verify-reported-preview-live.yml');
 const repairWorkflowPath = path.join(root, '.github/workflows/repair-reported-previews.yml');
-const verifierPath = path.join(root, 'scripts/verify-reported-preview-live.mjs');
 const auditWorkflow = fs.readFileSync(auditWorkflowPath, 'utf8');
 const repairWorkflow = fs.readFileSync(repairWorkflowPath, 'utf8');
-const verifier = fs.readFileSync(verifierPath, 'utf8');
 
 function sparseCheckoutPaths(source, label) {
   const lines = source.split(/\r?\n/);
@@ -34,37 +32,79 @@ function includesPath(paths, filePath) {
     filePath === entry || filePath.startsWith(entry.endsWith('/') ? entry : entry + '/'));
 }
 
-const auditSparse = sparseCheckoutPaths(auditWorkflow, 'production audit workflow');
-const repairSparse = sparseCheckoutPaths(repairWorkflow, 'repair inventory workflow');
-
-const importPattern = /^\s*import\s+(?:[^;\n]*?\s+from\s+)?['"]([^'"]+)['"]\s*;?\s*$/gm;
-const imports = [...verifier.matchAll(importPattern)].map((match) => match[1]);
-assert.ok(imports.length > 0, 'production verifier must retain explicit static imports');
-
-for (const specifier of imports) {
-  if (!specifier.startsWith('.')) continue;
-  const resolved = path.posix.normalize(path.posix.join('scripts', specifier));
-  assert.ok(fs.existsSync(path.join(root, resolved)), 'verifier dependency must exist: ' + resolved);
-  assert.ok(includesPath(auditSparse, resolved),
-    'production audit sparse checkout must include verifier dependency: ' + resolved);
+function importSpecifiers(source) {
+  const pattern = /^\s*import\s+(?:[^;\n]*?\s+from\s+)?['"]([^'"]+)['"]\s*;?\s*$/gm;
+  return [...source.matchAll(pattern)].map((match) => match[1]);
 }
 
-assert.ok(includesPath(auditSparse, 'scripts/test-reported-preview-live-workflow.mjs'),
-  'production audit sparse checkout must include this regression test');
-assert.ok(includesPath(auditSparse, 'library_02/index.json'),
-  'production audit requires the reported-work index');
-assert.ok(includesPath(repairSparse, '.github/workflows/verify-reported-preview-live.yml'),
-  'repair inventory sparse checkout must include the audited workflow source');
-assert.ok(includesPath(repairSparse, 'scripts/test-reported-preview-live-workflow.mjs'),
-  'repair inventory sparse checkout must include this regression test');
+function assertImportClosure(entrypoints, sparsePaths, label) {
+  const visited = new Set();
+  function visit(relativePath) {
+    const normalized = path.posix.normalize(relativePath);
+    if (visited.has(normalized)) return;
+    visited.add(normalized);
+    const absolutePath = path.join(root, normalized);
+    assert.ok(fs.existsSync(absolutePath), label + ' is missing ' + normalized);
+    assert.ok(includesPath(sparsePaths, normalized),
+      label + ' sparse checkout omits ' + normalized);
+    const source = fs.readFileSync(absolutePath, 'utf8');
+    for (const specifier of importSpecifiers(source)) {
+      if (!specifier.startsWith('.')) continue;
+      const dependency = path.posix.normalize(path.posix.join(path.posix.dirname(normalized), specifier));
+      visit(dependency);
+    }
+  }
+  for (const entrypoint of entrypoints) visit(entrypoint);
+}
 
-const testStep = auditWorkflow.indexOf('node scripts/test-reported-preview-live-workflow.mjs');
-const verifyStep = auditWorkflow.indexOf('node scripts/verify-reported-preview-live.mjs');
-assert.ok(testStep >= 0 && verifyStep > testStep,
-  'sparse-checkout regression must run before the live production audit');
+const auditSparse = sparseCheckoutPaths(auditWorkflow, 'production audit workflow');
+const repairVerifyStart = repairWorkflow.indexOf('  verify-production:');
+assert.ok(repairVerifyStart >= 0, 'repair workflow must retain one post-publish production verification job');
+const repairVerifyJob = repairWorkflow.slice(repairVerifyStart);
+const repairVerifySparse = sparseCheckoutPaths(repairVerifyJob, 'post-publish verification job');
+
+const entrypoints = [
+  'scripts/verify-reported-preview-live.mjs',
+  'scripts/test-reported-preview-live.mjs',
+  'scripts/test-reported-preview-live-workflow.mjs',
+  'scripts/verify-preview-motion.mjs',
+  'scripts/verify-poster-first-frame.mjs',
+];
+assertImportClosure(entrypoints, auditSparse, 'hourly production audit');
+assertImportClosure(entrypoints, repairVerifySparse, 'post-publish production audit');
+
+for (const required of [
+  '.github/workflows/repair-reported-previews.yml',
+  '.github/workflows/verify-reported-preview-live.yml',
+  'scripts/test-reported-preview-live-workflow.mjs',
+  'library_02/index.json',
+]) {
+  assert.ok(includesPath(auditSparse, required), 'hourly audit sparse checkout must include ' + required);
+  assert.ok(includesPath(repairVerifySparse, required), 'post-publish sparse checkout must include ' + required);
+}
+
 assert.match(auditWorkflow, /schedule:\s*\n\s+- cron:/,
-  'reported-preview production audit must retain its hourly schedule');
+  'production preview audit must remain hourly');
 assert.match(auditWorkflow, /group:\s*reported-preview-production-audit/,
-  'hourly and workflow_run audits must share one concurrency group');
+  'hourly audit must not overlap itself');
+assert.doesNotMatch(auditWorkflow, /^\s*workflow_run:/m,
+  'do not duplicate the post-publish audit already owned by the repair workflow');
+assert.match(auditWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
+  'hourly audit must install a real media decoder');
+const hourlyTest = auditWorkflow.indexOf('node scripts/test-reported-preview-live.mjs');
+const hourlyVerify = auditWorkflow.indexOf('node scripts/verify-reported-preview-live.mjs');
+assert.ok(hourlyTest >= 0 && hourlyVerify > hourlyTest,
+  'media acceptance regression must run before the hourly live audit');
 
-console.log('PASS reported-preview production workflow sparse-checkout contract');
+assert.match(repairWorkflow, /pull_request:/,
+  'the repair workflow must validate pull-request changes');
+assert.match(repairWorkflow, /node scripts/test-reported-preview-live.mjs/,
+  'repair inventory must run the media acceptance regression');
+assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
+  'post-publish audit must install a real media decoder');
+const repairTest = repairVerifyJob.indexOf('node scripts/test-reported-preview-live.mjs');
+const repairVerify = repairVerifyJob.indexOf('node scripts/verify-reported-preview-live.mjs');
+assert.ok(repairTest >= 0 && repairVerify > repairTest,
+  'media acceptance regression must run before post-publish live verification');
+
+console.log('PASS reported-preview audit dependency closure, no duplicate trigger, HTTP classification, motion and poster gates');
