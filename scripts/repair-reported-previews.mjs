@@ -205,7 +205,7 @@ if(action==="matrix"){
           if(!(seconds>=0.5&&frames>=8&&frames/seconds>=15&&stream?.width>0&&stream?.height>0))
             throw new Error("Video has too few real frames");
           const videoPath=path.join(artifact,name);
-          const posterPath=path.join(artifact,name.replace(/\\.webm$/i,".webp"));
+          const posterPath=path.join(artifact,name.replace(/\.webm$/i,".webp"));
           execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),videoPath],{
             stdio:"ignore",timeout:120000
           });
