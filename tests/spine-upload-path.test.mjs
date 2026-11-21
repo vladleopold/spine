@@ -28,3 +28,22 @@ test('rejects similarly named but non-collection directories', () => {
   assert.equal(isAllowedSpineUploadPath('library_x/hero'), false);
   assert.equal(isAllowedSpineUploadPath('library/index.json'), false);
 });
+
+test('rejects unsafe upload collection configuration', async () => {
+  const { isAllowedSpineCollectionBasePath } = await import('../lib/spine-upload-path.js');
+  assert.equal(isAllowedSpineCollectionBasePath('library'), true);
+  assert.equal(isAllowedSpineCollectionBasePath('library_02'), true);
+  assert.equal(isAllowedSpineCollectionBasePath('.'), false);
+  assert.equal(isAllowedSpineCollectionBasePath('..'), false);
+  assert.equal(isAllowedSpineCollectionBasePath('uploads'), false);
+  assert.equal(isAllowedSpineCollectionBasePath('library/..'), false);
+});
+
+test('rejects upload filenames that can escape the project directory', async () => {
+  const { isAllowedSpineUploadFileName } = await import('../lib/spine-upload-path.js');
+  assert.equal(isAllowedSpineUploadFileName('hero.json'), true);
+  assert.equal(isAllowedSpineUploadFileName('../README.md'), false);
+  assert.equal(isAllowedSpineUploadFileName('nested/hero.json'), false);
+  assert.equal(isAllowedSpineUploadFileName('nested\\hero.json'), false);
+  assert.equal(isAllowedSpineUploadFileName('..'), false);
+});
