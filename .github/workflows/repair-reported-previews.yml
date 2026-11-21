@@ -20,6 +20,11 @@ on:
       - scripts/test-reported-preview-live-status.mjs
       - .github/workflows/verify-reported-preview-live.yml
       - scripts/test-reported-preview-live-workflow.mjs
+      - scripts/lib/reported-preview-media.mjs
+      - scripts/test-reported-preview-live.mjs
+      - scripts/verify-preview-motion.mjs
+      - scripts/verify-poster-first-frame.mjs
+      - scripts/lib/first-frame-poster.mjs
 permissions:
   contents: write
 # Supersede the obsolete 4.0/4.1 render attempt after fixing binaryUrl/jsonUrl.
@@ -67,6 +72,7 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live-status.mjs
+          node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
@@ -290,21 +296,41 @@ jobs:
     needs: [inventory, render, publish]
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/verify-reported-preview-live.yml
             /scripts/verify-reported-preview-live.mjs
             /scripts/lib/reported-preview-live-status.mjs
+            /scripts/lib/reported-preview-media.mjs
+            /scripts/lib/first-frame-poster.mjs
+            /scripts/verify-preview-motion.mjs
+            /scripts/verify-poster-first-frame.mjs
+            /scripts/test-reported-preview-live.mjs
+            /scripts/test-reported-preview-live-workflow.mjs
             /scripts/resolve-library.mjs
-            /library/index.json
-            /library_*/index.json
+            /library_02/index.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install FFmpeg for actual media decoding
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Verify sparse checkout and media acceptance contracts
+        run: |
+          node --check scripts/verify-reported-preview-live.mjs
+          node scripts/test-reported-preview-live.mjs
+          node scripts/test-reported-preview-live-workflow.mjs
       - name: Verify actual media responses after publication
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/verify-reported-preview-live.mjs
