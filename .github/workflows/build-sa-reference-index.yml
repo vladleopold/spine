@@ -15,7 +15,7 @@ permissions:
   contents: write
 concurrency:
   group: sa-reference-library-index
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   build-index:
     runs-on: ubuntu-latest
