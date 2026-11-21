@@ -222,6 +222,13 @@ if(action==="matrix"){
             throw new Error("Video has too few real frames");
           if(name==="preview.webm")mainVideo={frames,seconds};
         }
+        for(const suffix of ["","-medium","-low"]){
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),
+            path.join(artifact,"preview"+suffix+".webm")],{stdio:"ignore",timeout:120000});
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
+            path.join(artifact,"preview"+suffix+".webm"),
+            path.join(artifact,"preview"+suffix+".webp")],{stdio:"ignore",timeout:60000});
+        }
       }catch{complete=false;}
     }
     if(!complete) {
