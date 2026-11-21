@@ -69,11 +69,11 @@ function bundleOk(entry) {
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
-function existingMediaOk(entry,animation){
+function existingMediaOk(entry,animation,allowFailedStatus=false){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(!storedPreviewStatusAllowsReuse(record,selected))return false;
+  if(!storedPreviewStatusAllowsReuse(record,selected,{allowFailedStatus}))return false;
   const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
   if(!(frames>=8&&duration>=0.5&&frames/duration>=15))return false;
@@ -232,10 +232,13 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(existingMediaOk(entryInfo,selectedAnimation)) {
-        // Retain a previous clip only after its exact animation, all three
-        // renditions, eight distinct frames and matching posters are rechecked.
-        record.lastPreviewRetryError="New version failed acceptance; independently verified previous media retained";
+      if(existingMediaOk(entryInfo,selectedAnimation,true)) {
+        // A failed stored status can be repaired only after the old files pass
+        // exact-animation, three-rendition, motion and poster verification.
+        record.webmStatus="ready";
+        record.previewStatus="ready";
+        record.previewError="";
+        record.lastPreviewRetryError="New render failed; previous exact-animation media passed independent verification";
         summary.ready++;
         continue;
       }
@@ -288,4 +291,20 @@ if(action==="matrix"){
   for(const [p,a] of indexes)fs.writeFileSync(p,JSON.stringify(a,null,2)+"\n");
   fs.writeFileSync(path.join(root,"preview-repair-summary.json"), JSON.stringify(summary));
   console.log("PREVIEW_REPAIR_RESULT="+JSON.stringify(summary));
+}else if(action==="validate-existing"){
+  const entryId=process.env.ENTRY_ID||"";
+  const entry=latest.find(x=>x.id===entryId);
+  const selected=choosePreviewAnimation([],process.env.ENTRY_ANIMATION||"");
+  const output=process.env.OUTPUT_META||"";
+  if(!entry||!output||!selected||selected!==entry.defaultAnimation||!bundleOk(entry)||
+    !existingMediaOk(entry,selected,true)){
+    console.log("EXISTING_MEDIA_REJECTED");
+    process.exitCode=1;
+  }else{
+    fs.mkdirSync(path.dirname(output),{recursive:true});
+    fs.writeFileSync(output,JSON.stringify({
+      ok:true,animationMatches:true,animation:selected,existingMediaVerified:true,
+    }));
+    console.log("EXISTING_MEDIA_REVALIDATED");
+  }
 }else throw new Error("Unsupported action");
