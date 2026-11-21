@@ -412,11 +412,11 @@ function isPublicArchiveEntry(entry, exclusions) {
   );
 }
 
-function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '') {
+function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl = '', embedUrl = '', requestedAnimation = '') {
   const id = String(entry?.id || entryId || '').trim();
   // Use only the exact indexed default animation. Short, static or missing
   // selections stay unavailable; they never authorize another track.
-  const target = resolvePreviewTarget(entry, origin);
+  const target = resolvePreviewTarget(entry, origin, requestedAnimation);
   const contentUrl = entryVideoAsset(target.url, entry, 'webm');
   const poster = entryImageAsset(target.poster, entry, 'poster');
   if (!id || !contentUrl || !poster) return null;
@@ -428,6 +428,7 @@ function videoMetadataForEntry(origin, entry, entryId, note = '', canonicalUrl =
   return {
     id,
     name,
+    animation: target.name,
     description,
     thumbnailUrl: poster,
     contentUrl,
@@ -723,15 +724,18 @@ async function findSpineSetDirectories(settings, uploadPath, maxDepth = 3) {
 // This resolver checks the chosen animation's preview duration. If it is too
 // Resolve only the exact indexed default animation. The returned object carries
 // that animation's URL, poster and duration to every page consumer.
-function resolvePreviewTarget(entry, origin = '') {
+function resolvePreviewTarget(entry, origin = '', requestedAnimation = '') {
   const previews = entry && entry.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
     ? entry.allAnimationPreviews
     : null;
   // Preserve the exact indexed default. A short, static, missing, or failed
   // preview is not permission to substitute another animation.
-  const chosen = typeof entry?.defaultAnimation === 'string' && entry.defaultAnimation.trim()
+  const indexedDefault = typeof entry?.defaultAnimation === 'string' && entry.defaultAnimation !== ''
     ? entry.defaultAnimation
     : '';
+  const chosen = typeof requestedAnimation === 'string' && requestedAnimation !== ''
+    ? requestedAnimation
+    : indexedDefault;
 
   const fix = origin ? (value) => repairAnimationAssetUrl(entry, value, origin) : (value) => value;
   const pick = (name) => {
@@ -756,7 +760,7 @@ function resolvePreviewTarget(entry, origin = '') {
   // Legacy single-preview entries are usable only when an exact default is
   // recorded and no per-animation map exists. Once a map exists, a missing
   // selected entry stays blocked rather than borrowing another map item.
-  const legacyDefault = Boolean(chosen && !previews);
+  const legacyDefault = Boolean(chosen && chosen === indexedDefault && !previews);
   const legacyUrl = legacyDefault
     ? (typeof entry?.webmPreview === 'string' ? fix(entry.webmPreview.trim()) : '')
     : '';
@@ -1380,11 +1384,15 @@ function createHtml(config) {
       function initialSet() {
         const querySet = queryValue("set");
         const queryAnimation = queryValue("animation");
-        return sets.find((set) => set.label === querySet) || sets.find((set) => setHasAnimation(set, queryAnimation)) || sets.find((set) => set.label === config.activeLabel) || sets[0];
+        if (querySet) return sets.find((set) => set.label === querySet) || null;
+        if (queryAnimation) return sets.find((set) => setHasAnimation(set, queryAnimation)) || null;
+        const indexedSet = sets.find((set) => set.label === config.activeLabel);
+        if (indexedSet) return indexedSet;
+        return sets.length === 1 ? sets[0] : null;
       }
       function initialAnimation(set) {
         const queryAnimation = queryValue("animation");
-        return setHasAnimation(set, queryAnimation) ? queryAnimation : set?.animation || "";
+        return queryAnimation || set?.animation || "";
       }
       // Kept in sync with the server-side PREVIEW_PAD: a narrow margin so a clip whose
       // attachment quads are far larger than its visible pixels still fills the canvas.
@@ -1393,7 +1401,6 @@ function createHtml(config) {
       const activeAnimation = { name: initialAnimation(activeSet.value) };
       const loopEnabled = { value: true };
       // Сценарий in -> idle -> out для проектов с такими анимациями.
-      const scenarioState = { names: [], index: 0, active: false };
       const currentZoom = { value: config.zoom || 1 };
       const baseViewport = { value: null };
       const animationNames = { value: activeSet.value?.animations || [] };
@@ -1539,8 +1546,8 @@ const pinchDistance = { value: null };
         createPlayer();
       }
       function syncSetInfo() {
+        animationNames.value = activeSet.value?.animations || [];
         if (!activeSet.value) return;
-        animationNames.value = activeSet.value.animations || [];
         setCard.style.display = sets.length > 1 ? "" : "none";
         setSelect.value = activeSet.value.label;
         const note = String(config.note || "").trim();
@@ -1799,62 +1806,40 @@ const pinchDistance = { value: null };
       function updateLoopButtonState(button) { button.classList.toggle("is-on", loopEnabled.value); button.classList.toggle("is-off", !loopEnabled.value); button.title = loopEnabled.value ? "Loop on" : "Loop off"; button.setAttribute("aria-label", button.title); button.setAttribute("aria-pressed", String(loopEnabled.value)); }
       function setTrackLoop() { const entry = player?.animationState?.getCurrent?.(0); if (entry) entry.loop = loopEnabled.value; }
       function disableMix() { if (player?.animationState?.data) player.animationState.data.defaultMix = 0; }
-      function normalizeAnimationToken(name) {
-        const token = String(name || "").trim().toLowerCase();
-        const slash = token.lastIndexOf("/");
-        return slash >= 0 ? token.slice(slash + 1) : token;
-      }
-      // Любой проект с анимациями in / idle / out играет их по очереди.
-      function syncScenario(names) {
-        const lookup = new Map();
-        (Array.isArray(names) ? names : []).forEach((name) => {
-          const token = normalizeAnimationToken(name);
-          if (token && !lookup.has(token)) lookup.set(token, name);
-        });
-        // Наборы бывают двух видов: in/out и begin/end — по смыслу одно и то же.
-        const entry = lookup.has("in") ? "in" : (lookup.has("begin") ? "begin" : "");
-        const exit = lookup.has("out") ? "out" : (lookup.has("end") ? "end" : "");
-        // Средняя фаза: idle, иначе loop. Без неё сценарий просто вход -> выход.
-        const middle = lookup.has("idle") ? "idle" : (lookup.has("loop") ? "loop" : "");
-        // idle удваивается, чтобы работа не выглядела «замершей» в середине цикла.
-        const cycle = entry && exit ? [entry, middle, middle, exit] : [];
-        scenarioState.names = cycle.map((token) => lookup.get(token)).filter(Boolean);
-        scenarioState.active = scenarioState.names.length > 1;
-        scenarioState.index = Math.max(0, scenarioState.names.indexOf(activeAnimation.name));
-      }
-      function isScenarioStep(name) { return scenarioState.active && scenarioState.names.indexOf(name) >= 0; }
+      // Automatic in/idle/out track cycling is intentionally disabled.
+      function syncScenario() {}
       // Кадр зафиксирован на весь показ: переключение анимации не должно
       // пересчитывать вьюпорт и сбивать центровку. Снимок берём до setAnimation
       // (рантайм успевает перемерить кадр) и возвращаем сразу после.
+      function markPreviewBlocked() {
+        const box = document.getElementById("player");
+        if (!box) return;
+        clearPreviewVideoFallback();
+        try { player?.pause?.(); } catch (e) {}
+        try { player?.dispose?.(); } catch (e) {}
+        player = null;
+        box.dataset.previewStatus = "blocked";
+        box.innerHTML = '<div role="status" style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Selected animation is unavailable; no alternate animation was played.</div>';
+      }
       function playAnimationEntry(name) {
-        if (!player || !name) return;
+        if (!player || !name) { markPreviewBlocked(); return; }
+        const exactAnimation = player?.skeleton?.data?.findAnimation?.(name);
+        if (!exactAnimation) { markPreviewBlocked(); return; }
         disableMix();
-        const scenarioStep = isScenarioStep(name);
-        const entry = player.setAnimation(name, scenarioStep ? false : loopEnabled.value);
-        if (entry) {
-          entry.mixDuration = 0;
-          entry.mixTime = 0;
-          entry.listener = { ...(entry.listener || {}), complete: () => {
-            if (scenarioStep) { playNextScenarioStep(); return; }
-            if (!loopEnabled.value) player.pause();
-          } };
-        }
+        const entry = player.setAnimation(name, loopEnabled.value);
+        if (!entry) { markPreviewBlocked(); return; }
+        entry.mixDuration = 0;
+        entry.mixTime = 0;
+        entry.listener = { ...(entry.listener || {}), complete: () => {
+          if (!loopEnabled.value) player.pause();
+        } };
         player.play();
         rememberBaseViewport();
         applyStageAnchor();
       }
-      function playNextScenarioStep() {
-        if (!scenarioState.active || !player || !scenarioState.names.length) return;
-        scenarioState.index = (scenarioState.index + 1) % scenarioState.names.length;
-        const nextName = scenarioState.names[scenarioState.index];
-        activeAnimation.name = nextName;
-        syncUrl(true);
-        renderAnimationList();
-        playAnimationEntry(nextName);
-      }
       function playActiveAnimationFromStart() {
-        if (!player || !activeAnimation.name) return;
-        if (isScenarioStep(activeAnimation.name)) scenarioState.index = scenarioState.names.indexOf(activeAnimation.name);
+        if (!player) return;
+        if (!activeAnimation.name) { markPreviewBlocked(); return; }
         playAnimationEntry(activeAnimation.name);
       }
       function togglePlayback() { if (!player) return; if (player.paused === false) { player.pause(); return; } playActiveAnimationFromStart(); }
@@ -1977,7 +1962,8 @@ const pinchDistance = { value: null };
       function showPreviewVideoFallback() {
         const box = document.getElementById("player");
         const src = config.video?.contentUrl || "";
-        if (!box || !src) return null;
+        const videoAnimation = typeof config.video?.animation === "string" ? config.video.animation : "";
+        if (!box || !src || !activeAnimation.name || videoAnimation !== activeAnimation.name) return null;
         box.innerHTML = '<video class="preview-fallback-video" src="' + src.replace(/[<>&"]/g, "") + '" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:0"></video>';
         const video = box.querySelector("video");
         if (video) {
@@ -1994,11 +1980,66 @@ const pinchDistance = { value: null };
         if (video.parentNode) video.parentNode.removeChild(video);
       }
 
-      async function createPlayer() { if (!activeSet.value) return; resetHealAttempts(); player?.dispose(); baseViewport.value = null; showPreviewVideoFallback(); const SpinePlayer = await loadSpineRuntime(activeSet.value); player = new SpinePlayer("player", { ...activeSet.value, viewport: measuredViewport(activeSet.value), showControls: true, showLoading: true, alpha: true, preserveDrawingBuffer: false, backgroundColor: "00000000", success: (loadedPlayer) => { player = loadedPlayer; limitPlayerFps(loadedPlayer, 30); releaseRuntimeWheelCapture(); requestAnimationFrame(clearPreviewVideoFallback); const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? []; const filteredNames = names.filter(name => !name.startsWith('Backup/')); if (filteredNames.length) { animationNames.value = filteredNames; syncScenario(filteredNames); const queryAnimation = queryValue("animation"); if (queryAnimation && filteredNames.includes(queryAnimation)) activeAnimation.name = queryAnimation; if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) activeAnimation.name = activeSet.value?.animation && filteredNames.includes(activeSet.value.animation) ? activeSet.value.animation : filteredNames[0]; renderAnimationList(); syncUrl(); } disableMix(); installLoopButton(); playActiveAnimationFromStart(); requestAnimationFrame(() => { rememberBaseViewport(); captureStageOffset(); applyZoom(currentZoom.value); window.setTimeout(ensureVisibleContent, 120); window.setTimeout(ensureVisibleContent, 420); window.setTimeout(applyStageAnchor, 560); window.setTimeout(applyStageAnchor, 900); }); }, error: (_player, message) => { const box = document.getElementById("player"); if (!box) return;
-        // WebGL недоступен или рантайм не смог поднять скелет: оставляем выгрузку
-        // того же клипа, чтобы работа осталась видна.
-        if (showPreviewVideoFallback()) { const v = box.querySelector("video"); if (v) v.controls = true; return; }
-        box.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Spine player error: ' + String(message || "could not load animation").replace(/[<>&]/g, "") + '</div>'; } }); }
+      async function createPlayer() {
+        if (!activeSet.value) { markPreviewBlocked(); return; }
+        resetHealAttempts();
+        try { player?.dispose(); } catch (e) {}
+        player = null;
+        baseViewport.value = null;
+        showPreviewVideoFallback();
+        try {
+          const SpinePlayer = await loadSpineRuntime(activeSet.value);
+          player = new SpinePlayer("player", {
+            ...activeSet.value,
+            viewport: measuredViewport(activeSet.value),
+            showControls: true,
+            showLoading: true,
+            alpha: true,
+            preserveDrawingBuffer: false,
+            backgroundColor: "00000000",
+            success: (loadedPlayer) => {
+              player = loadedPlayer;
+              limitPlayerFps(loadedPlayer, 30);
+              releaseRuntimeWheelCapture();
+              const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? [];
+              const filteredNames = names.filter((name) => !name.startsWith("Backup/"));
+              animationNames.value = filteredNames;
+              syncScenario();
+              renderAnimationList();
+              if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) {
+                markPreviewBlocked();
+                return;
+              }
+              clearPreviewVideoFallback();
+              syncUrl();
+              disableMix();
+              installLoopButton();
+              playActiveAnimationFromStart();
+              requestAnimationFrame(() => {
+                rememberBaseViewport();
+                captureStageOffset();
+                applyZoom(currentZoom.value);
+                window.setTimeout(ensureVisibleContent, 120);
+                window.setTimeout(ensureVisibleContent, 420);
+                window.setTimeout(applyStageAnchor, 560);
+                window.setTimeout(applyStageAnchor, 900);
+              });
+            },
+            error: (_player, _message) => {
+              const box = document.getElementById("player");
+              if (!box) return;
+              if (showPreviewVideoFallback()) {
+                const video = box.querySelector("video");
+                if (video) video.controls = true;
+                return;
+              }
+              markPreviewBlocked();
+            },
+          });
+        } catch (error) {
+          markPreviewBlocked();
+        }
+      }
       function renderAnimationList() {
         animationMenu.innerHTML = "";
         animationNames.value.forEach((animationName) => {
@@ -2088,7 +2129,7 @@ playerElement.addEventListener("touchstart", (event) => {
        }, true);
        window.addEventListener("mousemove", (event) => { if (!panPosition.value) return; event.preventDefault(); event.stopImmediatePropagation(); const deltaX = event.clientX - panPosition.value.x, deltaY = event.clientY - panPosition.value.y; panPosition.value = { x: event.clientX, y: event.clientY }; panByPixels(deltaX, deltaY); }, { passive: false, capture: true });
        window.addEventListener("mouseup", (event) => { if (event.button !== 0) return; event.preventDefault(); event.stopImmediatePropagation(); panPosition.value = null; }, true);
-      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || sets[0]; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); syncScenario(animationNames.value); renderAnimationList(); syncUrl(); createPlayer(); };
+      setSelect.onchange = () => { activeSet.value = sets.find((set) => set.label === setSelect.value) || null; activeAnimation.name = activeSet.value?.animation || ""; syncSetInfo(); syncScenario(); renderAnimationList(); syncUrl(); createPlayer(); };
       window.addEventListener("popstate", applySelectionFromUrl);
       // Compact download picker: Format -> Size -> Files, each step sliding
       // the track sideways. The user picks a format and a size, then either
@@ -2439,7 +2480,7 @@ function createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, m
 </html>`;
 }
 
-async function createDynamicPreview(settings, uploadPath, origin) {
+async function createDynamicPreview(settings, uploadPath, origin, requestedAnimation = '') {
   const setDirectories = await findSpineSetDirectories(settings, uploadPath);
   const sets = [];
   let note = '';
@@ -2587,7 +2628,7 @@ async function createDynamicPreview(settings, uploadPath, origin) {
   const robots = entry && (entry.hiddenFromPublicLibrary === true || entryExcludedFromArchive(entry, exclusions))
     ? 'noindex,follow'
     : 'index,follow,max-image-preview:large,max-video-preview:-1,max-snippet:-1';
-  const video = videoMetadataForEntry(origin, entry, entryId, note, canonicalUrl, playerUrl);
+  const video = videoMetadataForEntry(origin, entry, entryId, note, canonicalUrl, playerUrl, requestedAnimation);
   if (sets.length === 0) {
     return {
       html: createVideoFallbackHtml({ origin, entry, ownerProfile, note, entryId, metrics, videoSeo: video, robots, playerUrl, archiveUrl }),
@@ -2654,7 +2695,10 @@ export default async function handler(request, response) {
       html = await githubText(settings, path);
       if (!html) return response.status(404).send('Preview not found');
     } else {
-      const preview = await createDynamicPreview(settings, path, origin);
+      const requestedAnimation = typeof request.query?.animation === 'string'
+        ? request.query.animation
+        : new URL(request.url || '/', origin).searchParams.get('animation') || '';
+      const preview = await createDynamicPreview(settings, path, origin, requestedAnimation);
       html = preview.html;
       robotsHeader = preview.robots;
     }
