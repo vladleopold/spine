@@ -15,6 +15,8 @@ on:
       - scripts/lib/preview-manifest-redaction.mjs
       - scripts/lib/preview-manifest-transport.mjs
       - scripts/test-preview-log-privacy.mjs
+      - scripts/test-repair-last-ten-previews.mjs
+      - scripts/test-repair-latest-twenty.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
       - scripts/lib/reported-preview-live-status.mjs
@@ -50,6 +52,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/verify-reported-preview-live.yml
             /scripts/
             /library/index.json
@@ -76,6 +80,8 @@ jobs:
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
           node scripts/test-preview-log-privacy.mjs
+          node scripts/test-repair-last-ten-previews.mjs
+          node scripts/test-repair-latest-twenty.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
