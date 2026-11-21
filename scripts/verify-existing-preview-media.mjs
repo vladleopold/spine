@@ -4,7 +4,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readIndex } from "./resolve-library.mjs";
-import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
+import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 
 const args = Object.fromEntries(process.argv.slice(2).filter(x => x.startsWith("--")).map(x => {
   const i = x.indexOf("="); return [x.slice(2, i), x.slice(i + 1)];
@@ -18,9 +18,10 @@ function writeMeta(value) {
     fs.writeFileSync(output, JSON.stringify(value));
   }
 }
-function reject(reason) {
-  writeMeta({ ok: false, existingVerified: false, reason });
-  console.log("EXISTING_PREVIEW_MEDIA_NOT_VERIFIED slot=" + slot + " reason=" + reason);
+function reject(reason, tierIndex = null) {
+  writeMeta({ ok: false, existingVerified: false, reason, ...(tierIndex ? { tierIndex } : {}) });
+  console.log("EXISTING_PREVIEW_MEDIA_NOT_VERIFIED slot=" + slot +
+    (tierIndex ? " tier=" + tierIndex : "") + " reason=" + reason);
   process.exitCode = 2;
 }
 function probe(file) {
@@ -31,6 +32,8 @@ function probe(file) {
   ], { encoding: "utf8", timeout: 30000 }));
 }
 
+let stage = "IDENTITY";
+let tierIndex = 0;
 try {
   const basePath = String(args["base-path"] || "");
   const uploadId = String(args["upload-id"] || "");
@@ -48,17 +51,21 @@ try {
       const mediaEntries = [];
       if (!tiers || !previewDir) reject("EXACT_MEDIA_MAPPING_MISSING");
       else {
-        for (const tier of tiers) {
+        for (const [index, tier] of tiers.entries()) {
+          tierIndex = index + 1;
+          stage = "URL_MAPPING";
           if (!previewUrlMatches(tier.webmUrl, record.previewPath, tier.webmFile) ||
               !previewUrlMatches(tier.posterUrl, record.previewPath, tier.posterFile))
             throw new Error("MEDIA_URL_PATH_MISMATCH");
           const videoPath = path.join(previewDir, tier.webmFile);
           const posterPath = path.join(previewDir, tier.posterFile);
+          stage = "MEDIA_READ";
           const video = fs.readFileSync(videoPath);
           const poster = fs.readFileSync(posterPath);
           if (video.length <= 128 || !hasWebmSignature(video)) throw new Error("WEBM_BYTES_INVALID");
           if (poster.length <= 128 || !hasWebpSignature(poster)) throw new Error("WEBP_BYTES_INVALID");
           mediaEntries.push([tier.webmFile, video], [tier.posterFile, poster]);
+          stage = "WEBM_PROBE";
           const videoInfo = probe(videoPath);
           const stream = videoInfo.streams?.[0];
           const frames = Number(stream?.nb_read_frames || 0);
@@ -66,14 +73,18 @@ try {
           if (!(frames >= 8 && seconds >= 0.5 && frames / seconds >= 15 &&
               Number(stream?.width) > 0 && Number(stream?.height) > 0))
             throw new Error("WEBM_DECODE_OR_FRAME_DENSITY_FAILED");
+          stage = "WEBP_PROBE";
           const posterInfo = probe(posterPath);
           const posterStream = posterInfo.streams?.[0];
           if (!(Number(posterStream?.width) > 0 && Number(posterStream?.height) > 0))
             throw new Error("WEBP_DECODE_FAILED");
+          stage = "WEBP_DECODE";
           execFileSync("ffmpeg", ["-v", "error", "-i", posterPath, "-frames:v", "1", "-f", "null", "-"],
             { stdio: "ignore", timeout: 30000 });
+          stage = "MOTION_VERIFY";
           execFileSync(process.execPath, [path.join(root, "scripts/verify-preview-motion.mjs"), videoPath],
             { stdio: "ignore", timeout: 150000 });
+          stage = "POSTER_FIRST_FRAME";
           execFileSync(process.execPath, [path.join(root, "scripts/verify-poster-first-frame.mjs"), videoPath, posterPath],
             { stdio: "ignore", timeout: 150000 });
         }
@@ -85,6 +96,5 @@ try {
     }
   }
 } catch (error) {
-  const reason = /^[A-Z0-9_]+$/.test(String(error?.message || "")) ? error.message : "MEDIA_DECODE_FAILED";
-  reject(reason);
+  reject(previewMediaFailureReason(stage, error?.message), tierIndex);
 }

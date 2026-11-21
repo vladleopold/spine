@@ -7,6 +7,23 @@ const TIERS = [
   { webmFile: "preview-low.webm", posterFile: "preview-low.webp", webmKey: "webmPreviewLow", posterKey: "webpPosterLow" },
 ];
 
+const SAFE_FAILURE_STAGES = new Set([
+  "MEDIA_READ",
+  "WEBM_PROBE",
+  "WEBP_PROBE",
+  "WEBP_DECODE",
+  "MOTION_VERIFY",
+  "POSTER_FIRST_FRAME",
+]);
+
+// Child-process errors can contain local paths and other private details. Keep
+// diagnostics useful without forwarding the raw exception into Actions logs.
+export function previewMediaFailureReason(stage, message) {
+  const value = String(message || "");
+  if (/^[A-Z0-9_]+$/.test(value) && value !== "MEDIA_DECODE_FAILED") return value;
+  return SAFE_FAILURE_STAGES.has(stage) ? stage + "_FAILED" : "MEDIA_CHECK_FAILED";
+}
+
 export function hasWebmSignature(bytes) {
   return Boolean(bytes && bytes.length >= 4 &&
     bytes[0] === 0x1a && bytes[1] === 0x45 && bytes[2] === 0xdf && bytes[3] === 0xa3);
