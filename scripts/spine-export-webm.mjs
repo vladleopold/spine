@@ -631,7 +631,7 @@ ${skinLine}    showLoading: false,
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
-        player.animationState.setAnimation(0, window.__selectedAnimation, true);
+        window.__exportTrackEntry = player.animationState.setAnimation(0, window.__selectedAnimation, true);
       }
       window.__ready = true;
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
@@ -977,7 +977,7 @@ try {
       await page.evaluate(name => {
         const p = window.__exportPlayer;
         p.animationState.clearTracks();
-        p.animationState.setAnimation(0, name, true);
+        window.__exportTrackEntry = p.animationState.setAnimation(0, name, true);
         p.paused = false;
       }, targetAnimation);
       const count = Math.max(1, Math.ceil(captureDuration * args.fps));
@@ -998,7 +998,7 @@ try {
         if(!p?.animationState)return false;
         try {
           p.animationState.clearTracks();
-          p.animationState.setAnimation(0,name,true);
+          window.__exportTrackEntry = p.animationState.setAnimation(0,name,true);
           p.paused=false;
           return true;
         }catch{return false;}
@@ -1135,7 +1135,7 @@ try {
         if(!player || !player.canvas || !player.animationState)
           throw new Error('No active Spine runtime for real-time fallback');
         player.animationState.clearTracks();
-        player.animationState.setAnimation(0,name,true);
+        window.__exportTrackEntry = player.animationState.setAnimation(0,name,true);
         player.paused=false;
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
@@ -1151,8 +1151,12 @@ try {
         await new Promise(r=>setTimeout(r,Math.max(10,intervalMs)));
         const sample=await page.evaluate(()=>{
           const p=window.__exportPlayer;
+          const state=p?.animationState;
           let track=null;
-          try{track=p?.animationState?.getCurrent?.(0)||null;}catch{}
+          try{track=state?.getCurrent?.(0)||null;}catch{}
+          const stateTracks=state?.tracks;
+          if(!track&&Array.isArray(stateTracks))track=stateTracks[0]||null;
+          if(!track)track=window.__exportTrackEntry||null;
           const animation=track?.animation;
           const trackTime=Number(track?.trackTime);
           const duration=Number(animation?.duration);
@@ -1161,6 +1165,10 @@ try {
             trackTime:Number.isFinite(trackTime)?trackTime:null,
             timelineCount:Array.isArray(timelines)?timelines.length:null,
             duration:Number.isFinite(duration)?duration:null,
+            getCurrentAvailable:typeof state?.getCurrent==='function',
+            tracksArrayAvailable:Array.isArray(stateTracks),
+            trackAvailable:Boolean(track),
+            setAnimationReturnAvailable:Boolean(window.__exportTrackEntry),
             paused:p?.paused===true,
             width:Number(p?.canvas?.width||0),
             height:Number(p?.canvas?.height||0),
