@@ -9,9 +9,11 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { entryForUpload } from './resolve-library.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
+import { chooseRecoveryAnimation } from './lib/recovered-animation-choice.mjs';
 const video = path.resolve(process.argv[2] || '');
 const record = process.argv[4] ? entryForUpload(process.cwd(),process.argv[4])?.entry : null;
-const animation = String(process.argv[3] || record?.defaultAnimation || record?.animations?.[0] || '').trim();
+const animation = chooseRecoveryAnimation(process.argv[3] ?? '', record?.defaultAnimation ?? '');
+if (!animation) throw Error('No explicit or indexed Spine animation; refusing to guess');
 if (!video.endsWith('.webm') || !fs.existsSync(video) || fs.statSync(video).size < 1000) throw Error('No recorded WebM to recover');
 const run=(cmd,args,opts={})=>execFileSync(cmd,args,{timeout:120000,maxBuffer:16*1024*1024,stdio:['ignore','pipe','pipe'],...opts});
 const inspect=file=>JSON.parse(run('ffprobe',['-v','error','-count_frames','-show_entries','stream=width,height,nb_read_frames:format=duration','-select_streams','v:0','-of','json',file],{encoding:'utf8'}));
@@ -76,7 +78,7 @@ const media=fs.readFileSync(video);
 const metaPath=video+'.json';
 let previous={};
 try{previous=JSON.parse(fs.readFileSync(metaPath,'utf8'))}catch{}
-const metadata={...previous,animation:animation||previous.animation||'',animationDuration:duration,
+const metadata={...previous,animation,animationDuration:duration,
 width,height,bytes:media.length,sha256:createHash('sha256').update(media).digest('hex'),
 qualityWidths:widths,files:Object.fromEntries(Object.entries(files).map(([key,p])=>[key,fs.statSync(p).size]))};
 fs.writeFileSync(metaPath,JSON.stringify(metadata,null,2));
