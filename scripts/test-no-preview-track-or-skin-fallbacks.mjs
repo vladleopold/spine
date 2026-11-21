@@ -188,7 +188,7 @@ assert.match(app, /const defaultAnimation = "";/,
   'fresh source bundles must wait for a user-selected animation');
 assert.match(app, /return preparedSets\.length === 1 \? preparedSets\[0\] : null;/,
   'multiple skeleton sets must require an explicit set selection');
-assert.match(app, /The indexed skeleton file is missing; refusing to preview a different set\\./,
+assert.match(app, /The indexed skeleton file is missing; refusing to preview a different set\./,
   'editable pages must not switch to another skeleton set when the indexed one is missing');
 assert.match(app, /const playableAnimation = initialAnimation && names\.includes\(initialAnimation\) &&/,
   'runtime playback must validate and play only the exact selected animation');
