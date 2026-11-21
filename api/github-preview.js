@@ -1017,7 +1017,7 @@ function createHtml(config) {
          не набирали контраста с фоном. Узор оставлен тёмным, чтобы прозрачные
          области всё так же читались, но не съедали контраст анимации. */
       #player { position: relative; width: 100%; height: 100%; min-height: 0; touch-action: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; background: conic-gradient(#1c1f24 25%, #141619 0 50%, #1c1f24 0 75%, #141619 0); background-size: var(--preview-pattern-size, 140px) var(--preview-pattern-size, 140px); }
-      #player .preview-selection-blocked { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; padding: 24px; color: #ffb088; font-weight: 900; text-align: center; background: rgba(0,0,0,.82); pointer-events: none; }
+      #player .preview-selection-blocked { position: absolute; right: 12px; bottom: 12px; left: 12px; z-index: 20; display: grid; place-items: center; padding: 9px 12px; border: 1px solid rgba(255,176,136,.48); border-radius: 8px; color: #ffb088; font-size: 12px; font-weight: 900; text-align: center; background: rgba(0,0,0,.82); pointer-events: none; }
       .library-nav-button { position: absolute; top: 50%; z-index: 8; display: grid; place-items: center; width: 52px; min-height: 78px; padding: 0; border: 1px solid rgba(140,199,255,.55); border-radius: 8px; color: #f7fbff; background: rgba(9,13,17,.68); box-shadow: 0 16px 34px rgba(0,0,0,.38), inset 0 0 22px rgba(140,199,255,.08); font-size: 42px; font-weight: 800; line-height: 1; transform: translateY(-50%); backdrop-filter: blur(10px); }
       .library-nav-button:hover { border-color: rgba(179,255,64,.78); background: rgba(23,31,18,.78); }
       .library-nav-button:disabled { display: none; }
@@ -1791,7 +1791,7 @@ const pinchDistance = { value: null };
       // Кадр зафиксирован на весь показ: переключение анимации не должно
       // пересчитывать вьюпорт и сбивать центровку. Снимок берём до setAnimation
       // (рантайм успевает перемерить кадр) и возвращаем сразу после.
-      function markAnimationSelectionBlocked() {
+      function markAnimationSelectionBlocked(message = "Selected animation is unavailable in this source.") {
         const box = document.getElementById("player");
         if (!box) return;
         box.dataset.animationStatus = "blocked";
@@ -1802,7 +1802,7 @@ const pinchDistance = { value: null };
           status.setAttribute("role", "status");
           box.appendChild(status);
         }
-        status.textContent = "Selected animation is unavailable in this source.";
+        status.textContent = message;
       }
       function clearAnimationSelectionBlocked() {
         const box = document.getElementById("player");
@@ -1984,11 +1984,14 @@ const pinchDistance = { value: null };
       }
 
       async function createPlayer() {
-        if (!activeSet.value) return;
-        if (!activeAnimation.name) { markAnimationSelectionBlocked(); return; }
         resetHealAttempts();
         player?.dispose();
+        player = null;
         baseViewport.value = null;
+        if (!activeSet.value || !activeAnimation.name) {
+          markAnimationSelectionBlocked();
+          return;
+        }
         clearAnimationSelectionBlocked();
         showPreviewVideoFallback();
         const SpinePlayer = await loadSpineRuntime(activeSet.value);
@@ -2005,7 +2008,6 @@ const pinchDistance = { value: null };
             player = loadedPlayer;
             limitPlayerFps(loadedPlayer, 30);
             releaseRuntimeWheelCapture();
-            requestAnimationFrame(clearPreviewVideoFallback);
             const names = player?.skeleton?.data?.animations?.map((animation) => animation.name) ?? [];
             const filteredNames = names.filter((name) => !name.startsWith('Backup/'));
             animationNames.value = filteredNames;
@@ -2017,6 +2019,7 @@ const pinchDistance = { value: null };
               return;
             }
             clearAnimationSelectionBlocked();
+            requestAnimationFrame(clearPreviewVideoFallback);
             syncUrl();
             disableMix();
             installLoopButton();
@@ -2037,6 +2040,7 @@ const pinchDistance = { value: null };
             if (showPreviewVideoFallback()) {
               const video = box.querySelector("video");
               if (video) video.controls = true;
+              markAnimationSelectionBlocked("Spine runtime failed; the exact selected-animation video is shown.");
               return;
             }
             box.dataset.animationStatus = "failed";
