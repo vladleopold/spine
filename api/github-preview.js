@@ -1811,35 +1811,71 @@ const pinchDistance = { value: null };
       // Кадр зафиксирован на весь показ: переключение анимации не должно
       // пересчитывать вьюпорт и сбивать центровку. Снимок берём до setAnimation
       // (рантайм успевает перемерить кадр) и возвращаем сразу после.
-      function markPreviewBlocked() {
+      function setPreviewStatus(status, message, preserveSameAnimationVideo = false) {
         const box = document.getElementById("player");
         if (!box) return;
-        clearPreviewVideoFallback();
-        try { player?.pause?.(); } catch (e) {}
-        try { player?.dispose?.(); } catch (e) {}
-        player = null;
-        box.dataset.previewStatus = "blocked";
-        box.innerHTML = '<div role="status" style="display:grid;place-items:center;height:100%;padding:24px;color:#ffb088;font-weight:900;text-align:center;">Selected animation is unavailable; no alternate animation was played.</div>';
+        if (!preserveSameAnimationVideo) clearPreviewVideoFallback();
+        try {
+          player?.pause?.();
+          player?.animationState?.clearTracks?.();
+          player?.skeleton?.setToSetupPose?.();
+          player?.skeleton?.updateWorldTransform?.();
+        } catch (e) {}
+        box.style.position = "relative";
+        box.dataset.previewStatus = status;
+        let overlay = box.querySelector(".preview-status-overlay");
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.className = "preview-status-overlay";
+          overlay.setAttribute("role", "status");
+          overlay.style.cssText = "position:absolute;inset:0;z-index:20;display:grid;place-items:center;padding:24px;color:#ffb088;font-weight:900;text-align:center;background:rgba(0,0,0,.78);";
+          box.appendChild(overlay);
+        }
+        overlay.textContent = message;
+      }
+      function markPreviewBlocked(preserveSameAnimationVideo = false) {
+        const box = document.getElementById("player");
+        const video = box?.querySelector(".preview-fallback-video");
+        if (preserveSameAnimationVideo && video) video.controls = true;
+        setPreviewStatus("blocked", "Selected animation is unavailable; no alternate animation was played.", preserveSameAnimationVideo && Boolean(video));
+      }
+      function markPreviewNeedsSelection() {
+        setPreviewStatus("needs-selection", "No animation is selected. Choose one from the animation list.");
+      }
+      function clearPreviewStatus() {
+        const box = document.getElementById("player");
+        box?.querySelector(".preview-status-overlay")?.remove();
+        if (box) delete box.dataset.previewStatus;
       }
       function playAnimationEntry(name) {
         if (!player || !name) { markPreviewBlocked(); return; }
         const exactAnimation = player?.skeleton?.data?.findAnimation?.(name);
-        if (!exactAnimation) { markPreviewBlocked(); return; }
+        if (!exactAnimation) {
+          const box = document.getElementById("player");
+          markPreviewBlocked(Boolean(box?.querySelector(".preview-fallback-video")));
+          return;
+        }
+        clearPreviewVideoFallback();
+        clearPreviewStatus();
         disableMix();
-        const entry = player.setAnimation(name, loopEnabled.value);
-        if (!entry) { markPreviewBlocked(); return; }
-        entry.mixDuration = 0;
-        entry.mixTime = 0;
-        entry.listener = { ...(entry.listener || {}), complete: () => {
-          if (!loopEnabled.value) player.pause();
-        } };
-        player.play();
-        rememberBaseViewport();
-        applyStageAnchor();
+        try {
+          const entry = player.setAnimation(name, loopEnabled.value);
+          if (!entry) { markPreviewBlocked(); return; }
+          entry.mixDuration = 0;
+          entry.mixTime = 0;
+          entry.listener = { ...(entry.listener || {}), complete: () => {
+            if (!loopEnabled.value) player.pause();
+          } };
+          player.play();
+          rememberBaseViewport();
+          applyStageAnchor();
+        } catch (error) {
+          markPreviewBlocked();
+        }
       }
       function playActiveAnimationFromStart() {
-        if (!player) return;
-        if (!activeAnimation.name) { markPreviewBlocked(); return; }
+        if (!activeAnimation.name) { markPreviewNeedsSelection(); return; }
+        if (!player) { void createPlayer(); return; }
         playAnimationEntry(activeAnimation.name);
       }
       function togglePlayback() { if (!player) return; if (player.paused === false) { player.pause(); return; } playActiveAnimationFromStart(); }
@@ -2007,11 +2043,21 @@ const pinchDistance = { value: null };
               animationNames.value = filteredNames;
               syncScenario();
               renderAnimationList();
-              if (!activeAnimation.name || !filteredNames.includes(activeAnimation.name)) {
+              if (!filteredNames.length) {
                 markPreviewBlocked();
                 return;
               }
+              if (!activeAnimation.name) {
+                markPreviewNeedsSelection();
+                return;
+              }
+              if (!filteredNames.includes(activeAnimation.name)) {
+                const box = document.getElementById("player");
+                markPreviewBlocked(Boolean(box?.querySelector(".preview-fallback-video")));
+                return;
+              }
               clearPreviewVideoFallback();
+              clearPreviewStatus();
               syncUrl();
               disableMix();
               installLoopButton();
