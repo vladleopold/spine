@@ -1,0 +1,52 @@
+name: Build SA reference library index
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'library/**'
+      - 'library_*/**'
+      - 'scripts/build-sa-reference-index.mjs'
+      - 'tests/build-sa-reference-index.test.mjs'
+      - '.github/workflows/build-sa-reference-index.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sa-reference-library-index
+  cancel-in-progress: false
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/build-sa-reference-index.mjs
+            /tests/build-sa-reference-index.test.mjs
+            /public/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test reference metadata extraction
+        run: node --test tests/build-sa-reference-index.test.mjs
+      - name: Build sanitized structural index from all library shards
+        run: node scripts/build-sa-reference-index.mjs
+      - name: Publish generated index
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/sa-reference-index.json
+          if git diff --cached --quiet; then
+            echo "Reference index is unchanged."
+            exit 0
+          fi
+          git commit -m "chore(library): refresh sanitized SA reference index"
+          git push origin HEAD:main
