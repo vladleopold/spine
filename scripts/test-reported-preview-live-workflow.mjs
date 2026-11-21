@@ -189,6 +189,10 @@ assert.match(renderJob,
 assert.match(renderJob,
   /if: matrix\.entry\.needsRender && github\.ref == 'refs\/heads\/main'/,
   'private media artifacts must be uploaded only by the main-branch publisher');
+const existingValidation = renderJob.indexOf('repair-reported-previews.mjs validate-existing');
+const nativeRender = renderJob.indexOf('node scripts/spine-export-webm.mjs');
+assert.ok(existingValidation >= 0 && nativeRender > existingValidation,
+  'failed stored status must be revalidated from the exact source before a same-animation rerender');
 const publishJob = repairWorkflow.slice(publishStart);
 assert.match(publishJob, /selected\.length!==19/,
   'the repair publisher must require the 18 reported projects plus the exact priority work');
