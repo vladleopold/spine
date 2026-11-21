@@ -65,6 +65,8 @@ function bundleOk(entry) {
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
+const mediaUrlFields=["webmPreview","webmPreviewMedium","webmPreviewLow",
+  "webpPoster","webpPosterMedium","webpPosterLow"];
 function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
@@ -79,7 +81,7 @@ function existingMediaOk(entry,animation){
   if(f>0&&duration>0&&f/duration<15)return false;
   if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
+    return mediaUrlFields.every(name=>typeof record?.[name]==="string"&&record[name].length>0);
   return mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
