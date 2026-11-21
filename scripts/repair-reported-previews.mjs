@@ -202,6 +202,21 @@ if(action==="matrix"){
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
+    if(meta?.existingMediaVerified===true){
+      if(existingMediaOk(entryInfo,selectedAnimation,true)){
+        record.webmStatus="ready";
+        record.previewStatus="ready";
+        record.previewError="";
+        record.lastPreviewRetryError="";
+        summary.ready++;
+      }else{
+        record.webmStatus="failed";
+        record.previewStatus="failed";
+        record.previewError="Stored same-animation media failed independent verification";
+        summary.failed++;
+      }
+      continue;
+    }
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
     let complete=meta?.ok===true && meta?.animationMatches===true &&
