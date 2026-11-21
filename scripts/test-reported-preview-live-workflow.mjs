@@ -111,6 +111,14 @@ const commonJs = require('./commonjs-dependency.cjs');
   './commonjs-dependency.cjs',
 ], 'dependency scanner must include multiline, side-effect, re-export, dynamic and CommonJS imports');
 
+const inventoryStart = repairWorkflow.indexOf('  inventory:');
+const appBuildStart = repairWorkflow.indexOf('  app-build:', inventoryStart);
+assert.ok(inventoryStart >= 0 && appBuildStart > inventoryStart,
+  'repair workflow must retain an isolated inventory job');
+const inventorySparse = sparseCheckoutPaths(
+  repairWorkflow.slice(inventoryStart, appBuildStart),
+  'reported preview repair inventory',
+);
 const auditSparse = sparseCheckoutPaths(auditWorkflow, 'production audit workflow');
 const repairVerifyStart = repairWorkflow.indexOf('  verify-production:');
 assert.ok(repairVerifyStart >= 0, 'repair workflow must retain one post-publish production verification job');
@@ -123,6 +131,8 @@ const entrypoints = [
   'scripts/verify-preview-motion.mjs',
   'scripts/verify-poster-first-frame.mjs',
 ];
+assertImportClosure(['scripts/repair-reported-previews.mjs'], inventorySparse,
+  'reported preview repair inventory');
 assertImportClosure(entrypoints, auditSparse, 'hourly production audit');
 assertImportClosure(entrypoints, repairVerifySparse, 'post-publish production audit');
 
@@ -164,6 +174,25 @@ assert.ok(hourlyTest >= 0 && hourlyVerify > hourlyTest,
 
 assert.match(repairWorkflow, /pull_request:/,
   'the repair workflow must validate pull-request changes');
+
+assert.ok(includesPath(inventorySparse, 'scripts/lib/reported-preview-repair-status.mjs'),
+  'repair inventory must include the stored-status acceptance helper');
+assert.ok(includesPath(inventorySparse, 'scripts/lib/atlas-source-integrity.mjs'),
+  'repair inventory must include full atlas-page reconciliation');
+const renderStart = repairWorkflow.indexOf('  render:');
+const publishStart = repairWorkflow.indexOf('  publish:', renderStart);
+assert.ok(renderStart >= 0 && publishStart > renderStart);
+const renderJob = repairWorkflow.slice(renderStart, publishStart);
+assert.match(renderJob,
+  /if: github\.ref == 'refs\/heads\/main' \|\| github\.event_name == 'pull_request'/,
+  'source rendering must run as a pull-request quality gate');
+assert.match(renderJob,
+  /if: matrix\.entry\.needsRender && github\.ref == 'refs\/heads\/main'/,
+  'private media artifacts must be uploaded only by the main-branch publisher');
+const publishJob = repairWorkflow.slice(publishStart);
+assert.match(publishJob, /selected\.length!==19/,
+  'the repair publisher must require the 18 reported projects plus the exact priority work');
+assert.match(publishJob, /pattern: reported19-\*/);
 assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
   'workflow-wide permissions must be read-only');
 const publishStart = repairWorkflow.indexOf('  publish:');
