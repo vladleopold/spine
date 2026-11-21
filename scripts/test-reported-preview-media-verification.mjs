@@ -78,3 +78,23 @@ test("repair workflow validates existing bytes before it can classify media as r
   assert.match(workflow, /verify-preview-motion\.mjs/);
   assert.match(workflow, /verify-poster-first-frame\.mjs/);
 });
+
+test("pull requests render the exact selected animation privately and verify source preservation", () => {
+  const workflow = readFileSync(new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url), "utf8");
+  const renderCondition = "if: (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') && matrix.entry.ready && steps.existing.outputs.verified != 'true'";
+  assert.equal(workflow.split(renderCondition).length - 1, 3,
+    "PRs and main must run the same exact-animation render and source fingerprint gates");
+  assert.match(workflow, /EXISTING_MEDIA_INVALID_RENDERING_EXACT_SELECTED_ANIMATION/);
+  assert.match(workflow, /Exact selected animation render failed; no alternate animation will be used/);
+  assert.match(workflow, /Fingerprint source bundle before exact-animation render/);
+  assert.match(workflow, /Verify source bundle remained byte-identical/);
+  assert.match(workflow, /SOURCE_PRESERVATION_PASS/);
+  const artifactStart = workflow.indexOf("      - uses: actions/upload-artifact@v4");
+  const publishStart = workflow.indexOf("\n  publish:");
+  assert.ok(artifactStart >= 0 && publishStart > artifactStart);
+  const artifactStep = workflow.slice(artifactStart, publishStart);
+  assert.match(artifactStep, /if: github.ref == 'refs\/heads\/main' && matrix\.entry\.ready/);
+  assert.doesNotMatch(artifactStep, /pull_request/);
+  assert.match(workflow, /if: always\(\) && github\.ref == 'refs\/heads\/main'/);
+  assert.match(workflow, /if: github\.ref == 'refs\/heads\/main' && needs\.publish\.result == 'success'/);
+});

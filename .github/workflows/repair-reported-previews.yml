@@ -154,7 +154,6 @@ jobs:
       PREVIEW_PATH: ${{ matrix.entry.previewPath }}
       ENTRY_ANIMATION: ${{ matrix.entry.animation }}
       ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
       REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
@@ -213,13 +212,12 @@ jobs:
             echo "verified=true" >> "$GITHUB_OUTPUT"
           else
             echo "verified=false" >> "$GITHUB_OUTPUT"
-            if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$ENTRY_NEEDS_RENDER" != true ]]; then
-              echo "::error::Index-ready media failed byte-level decode acceptance"
-              exit 1
+            if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+              echo "EXISTING_MEDIA_INVALID_RENDERING_EXACT_SELECTED_ANIMATION"
             fi
           fi
       - name: Install native Chromium renderer and video/poster encoders
-        if: github.ref == 'refs/heads/main' && matrix.entry.ready && steps.existing.outputs.verified != 'true'
+        if: (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') && matrix.entry.ready && steps.existing.outputs.verified != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -247,8 +245,17 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y -qq ffmpeg
           fi
+      - name: Fingerprint source bundle before exact-animation render
+        id: source_before
+        if: (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') && matrix.entry.ready && steps.existing.outputs.verified != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "$PREVIEW_PATH"
+          find "$PREVIEW_PATH" -type f -print0 | LC_ALL=C sort -z | xargs -0 -r sha256sum > "$RUNNER_TEMP/source.before"
+          test -s "$RUNNER_TEMP/source.before"
       - name: Render and validate actual Spine video + still posters
-        if: github.ref == 'refs/heads/main' && matrix.entry.ready && steps.existing.outputs.verified != 'true'
+        if: (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') && matrix.entry.ready && steps.existing.outputs.verified != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -281,6 +288,10 @@ jobs:
           if (( code != 0 )); then
             node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
             echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
+            if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+              echo "::error::Exact selected animation render failed; no alternate animation will be used"
+              exit 1
+            fi
             echo "::warning::Native Spine rendering failed; no preview will be published"
             exit 0
           fi
@@ -316,6 +327,17 @@ jobs:
             fs.writeFileSync(p,JSON.stringify(m));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$REPAIR_SLOT/meta.json"
+      - name: Verify source bundle remained byte-identical
+        if: always() && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') && matrix.entry.ready && steps.existing.outputs.verified != 'true' && steps.source_before.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          find "$PREVIEW_PATH" -type f -print0 | LC_ALL=C sort -z | xargs -0 -r sha256sum > "$RUNNER_TEMP/source.after"
+          if ! cmp -s "$RUNNER_TEMP/source.before" "$RUNNER_TEMP/source.after"; then
+            echo "::error::SOURCE_PRESERVATION_FAILED"
+            exit 1
+          fi
+          echo "SOURCE_PRESERVATION_PASS"
       - uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main' && matrix.entry.ready
         with:
