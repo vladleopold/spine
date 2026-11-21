@@ -63,7 +63,24 @@ assert.ok(fallbackPageStart >= 0 && fallbackPageEnd > fallbackPageStart,
 const fallbackPage = preview.slice(fallbackPageStart, fallbackPageEnd);
 assert.match(fallbackPage, /const poster = videoSeo\?\.thumbnailUrl \|\| '';/,
   'the fallback page must use only a verified selected-animation poster');
-assert.doesNotMatch(fallbackPage, /generatedThumbnailUrl|entry\\?\\.thumbnailPoster/,
+assert.match(fallbackPage, /const video = videoSeo\?\.contentUrl \|\| '';/,
+  'the fallback page must use only the exact selected-animation video URL');
+assert.doesNotMatch(fallbackPage, /entry\?\.webmPreview/,
+  'the fallback page must not borrow a work-level WebM from another animation');
+const ownerWorksStart = preview.indexOf('const authorWorks = (Array.isArray(ownerProfile?.library)');
+const ownerWorksEnd = preview.indexOf('.filter((item) => item.video || item.poster);', ownerWorksStart);
+assert.ok(ownerWorksStart >= 0 && ownerWorksEnd > ownerWorksStart,
+  'the owner-library media mapper must exist');
+const ownerWorks = preview.slice(ownerWorksStart, ownerWorksEnd);
+assert.match(ownerWorks, /const target = resolvePreviewTarget\(item, origin\);/,
+  'each owner-library card must resolve its own exact indexed default animation');
+assert.match(ownerWorks, /poster: entryImageAsset\(target\.poster, item, 'poster'\)/,
+  'owner-library posters must come from that exact animation');
+assert.match(ownerWorks, /video: entryVideoAsset\(target\.lowUrl \|\| target\.url, item, 'webm'\)/,
+  'owner-library videos must come from that exact animation');
+assert.doesNotMatch(ownerWorks, /item\?\.webmPreview|item\?\.thumbnailPoster|item\?\.thumbnail/,
+  'owner-library cards must not use generic work-level media fields');
+assert.doesNotMatch(fallbackPage, /generatedThumbnailUrl|entry\?\.thumbnailPoster/,
   'the fallback page must not disguise missing selected media with a generic poster');
 
 assert.match(batch,
