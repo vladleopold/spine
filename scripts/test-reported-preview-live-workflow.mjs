@@ -39,6 +39,8 @@ for (const specifier of imports) {
   assert.ok(isCheckedOut(resolved), 'sparse checkout must include verifier dependency: ' + resolved);
 }
 
+assert.ok(isCheckedOut('.github/workflows/verify-reported-preview-live.yml'),
+  'sparse checkout must include the audited workflow source');
 assert.ok(isCheckedOut('scripts/test-reported-preview-live-workflow.mjs'),
   'sparse checkout must include this regression test');
 assert.ok(isCheckedOut('library_02/index.json'),
