@@ -6,7 +6,7 @@ function fileName(value) {
   try {
     path = decodeURIComponent(path);
   } catch {}
-  return path.replace(/\\\\/g, '/').split('/').filter(Boolean).pop() || '';
+  return path.split(String.fromCharCode(92)).join('/').split('/').filter(Boolean).pop() || '';
 }
 
 // Resolve the one source set named by the index. Basenames are compared for
