@@ -60,8 +60,34 @@ export function summarizeRendererLog(text) {
     canvasFallbackPassed:/CANVAS_FALLBACK_CAPTURE=passed|REALTIME_CANVAS_CAPTURE_PASS/i.test(log),
   };
   const ffmpegFailure=classifyFfmpegFailure(log);
-  const distinctError=ffmpegFailure!=="NONE"?ffmpegFailure:
-    /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
+  const diagnosticMatch=log.match(/CANVAS_FALLBACK_DIAGNOSTICS=(\{[^\r\n]*\})/);
+  let canvasProgress=null;
+  if(diagnosticMatch){
+    try{
+      const raw=JSON.parse(diagnosticMatch[1]);
+      const safeInt=value=>Number.isSafeInteger(value)&&value>=0?value:null;
+      const safeNumber=value=>Number.isFinite(value)?Number(value):null;
+      canvasProgress={
+        samples:safeInt(raw.samples),
+        trackTimeDistinct:safeInt(raw.trackTimeDistinct),
+        trackTimeRange:safeNumber(raw.trackTimeRange),
+        timelineCount:safeInt(raw.timelineCount),
+        animationDuration:safeNumber(raw.animationDuration),
+        pausedSamples:safeInt(raw.pausedSamples),
+        visibleFrames:safeInt(raw.visibleFrames),
+        distinctFrames:safeInt(raw.distinctFrames),
+        canvasWidth:safeInt(raw.canvasWidth),
+        canvasHeight:safeInt(raw.canvasHeight),
+      };
+    }catch{}
+  }
+  const canvasFailure=canvasProgress?.timelineCount===0?"SELECTED_ANIMATION_HAS_NO_TIMELINES":
+    canvasProgress?.samples>0&&canvasProgress.pausedSamples===canvasProgress.samples?"PLAYER_PAUSED_DURING_CAPTURE":
+    canvasProgress?.trackTimeDistinct===0?"ANIMATION_TRACK_STATE_UNAVAILABLE":
+    canvasProgress?.trackTimeDistinct===1?"ANIMATION_TRACK_TIME_STALLED":
+    canvasProgress?.trackTimeDistinct>1&&canvasProgress.distinctFrames===1?"ANIMATION_TIME_ADVANCED_WITH_STATIC_PIXELS":"";
+  const distinctError=ffmpegFailure!=="NONE"?ffmpegFailure:canvasFailure||
+    (/no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
     /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
     /No visible real-time Spine frames/i.test(log)?"COMPOSITED_FRAMES_NOT_VISIBLE":
@@ -71,19 +97,19 @@ export function summarizeRendererLog(text) {
     /No video data captured by MediaRecorder/i.test(log)?"MEDIARECORDER_NO_BLOB":
     /No visible pixels from any available Spine skin/i.test(log)?"RUNTIME_ALL_SKINS_INVISIBLE":
     /Cannot establish playable animation duration/i.test(log)?"UNKNOWN_ANIMATION_DURATION":
-    /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":
-    "UNCLASSIFIED";
+    /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":"UNCLASSIFIED");
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
     .map(x=>[Number(x[1]),Number(x[2])]).slice(-8);
   const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
     .map(x=>Number(x[1])).at(-1)||0;
   const skinSelectionMode=sourceDefaultSkin?"source-default":"unknown";
-  const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
+  const sourceSignal=canvasFailure||(
+    log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
-    log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
+    log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN");
   return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,
-    peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
+    peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,canvasProgress,sourceSignal};
 }
 
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
