@@ -83,7 +83,7 @@ function buildMatrix(){
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
     const sourceReady=bundleOk(e);
     const ready=Boolean(animation)&&sourceReady&&!incompatible;
-    const rel=String(e.previewPath).replace(/\\\\/g,"/");
+    const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
