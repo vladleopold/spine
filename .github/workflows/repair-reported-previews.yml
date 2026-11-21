@@ -81,7 +81,6 @@ jobs:
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
-          node scripts/test-recovered-animation-choice.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   render:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
@@ -344,5 +343,6 @@ jobs:
           node --check scripts/verify-reported-preview-live.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
+          node scripts/test-recovered-animation-choice.mjs
       - name: Verify actual media responses after publication
         run: node scripts/verify-reported-preview-live.mjs
