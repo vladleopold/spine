@@ -158,6 +158,11 @@ assert.equal(explicitMissingList.shouldDispatch, true,
 
 const generic = { id: 'generic', files: ['poster.webp'] };
 assert.deepEqual(normalizeSpineExportEntry(generic), { entry: generic, error: null });
+const genericAccepted = { ...generic, webmStatus: 'ready', webmPreview: 'https://example.invalid/generic.webm' };
+const genericState = mergeSpineExportPreviewState(generic, genericAccepted);
+assert.equal(genericState.entry.webmStatus, 'ready');
+assert.equal(genericState.entry.webmPreview, genericAccepted.webmPreview,
+  'Spine-only invalidation must not erase an unrelated non-Spine preview');
 
 const apiSource = fs.readFileSync(new URL('../api/github-upload.js', import.meta.url), 'utf8');
 const renderWorkSource = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
