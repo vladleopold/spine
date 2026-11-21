@@ -7,6 +7,7 @@ on:
       - "lib/spine-upload-path.js"
       - "tests/spine-upload-path.test.mjs"
       - "package.json"
+      - "docs/architecture/repository-layout.md"
       - ".github/workflows/repository-layout-guard.yml"
   push:
     branches: [main]
@@ -31,6 +32,7 @@ jobs:
           sparse-checkout: |
             package.json
             api/github-upload.js
+            docs/architecture/repository-layout.md
             lib/spine-upload-path.js
             tests/spine-upload-path.test.mjs
       - uses: actions/setup-node@v4
