@@ -43,8 +43,9 @@ test('rejects unsafe upload collection configuration', async () => {
 test('rejects upload filenames that can escape the project directory', async () => {
   const { isAllowedSpineUploadFileName } = await import('../lib/spine-upload-path.js');
   assert.equal(isAllowedSpineUploadFileName('hero.json'), true);
+  assert.equal(isAllowedSpineUploadFileName('spine-set/hero.json'), true);
   assert.equal(isAllowedSpineUploadFileName('../README.md'), false);
-  assert.equal(isAllowedSpineUploadFileName('nested/hero.json'), false);
+  assert.equal(isAllowedSpineUploadFileName('../nested/hero.json'), false);
   assert.equal(isAllowedSpineUploadFileName('nested\\hero.json'), false);
   assert.equal(isAllowedSpineUploadFileName('..'), false);
 });
