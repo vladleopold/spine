@@ -327,10 +327,6 @@ function generatedPreviewWebmUrl(origin, entry) {
   return id ? `${origin}/v_holder.webm` : '';
 }
 
-function isSpineExportEntry(entry) {
-  return hasSpineSourceBundle(entry) && resolveSpineExportDispatch(entry).status === 'ready';
-}
-
 async function dispatchSpineExportWebm(settings, entry, origin) {
   const id = String(entry?.id || '').trim();
   if (!id) return null;
