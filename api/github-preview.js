@@ -1986,6 +1986,7 @@ const pinchDistance = { value: null };
         try { player?.dispose(); } catch (e) {}
         player = null;
         baseViewport.value = null;
+        clearPreviewVideoFallback();
         showPreviewVideoFallback();
         try {
           const SpinePlayer = await loadSpineRuntime(activeSet.value);
@@ -2028,15 +2029,21 @@ const pinchDistance = { value: null };
             error: (_player, _message) => {
               const box = document.getElementById("player");
               if (!box) return;
-              if (showPreviewVideoFallback()) {
-                const video = box.querySelector("video");
-                if (video) video.controls = true;
+              const fallback = box.querySelector(".preview-fallback-video") || showPreviewVideoFallback();
+              if (fallback) {
+                fallback.controls = true;
                 return;
               }
               markPreviewBlocked();
             },
           });
         } catch (error) {
+          const box = document.getElementById("player");
+          const fallback = box?.querySelector(".preview-fallback-video") || showPreviewVideoFallback();
+          if (fallback) {
+            fallback.controls = true;
+            return;
+          }
           markPreviewBlocked();
         }
       }
