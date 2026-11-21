@@ -44,6 +44,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/verify-reported-preview-live.yml
             /scripts/
             /library/index.json
             /library_*/index.json
