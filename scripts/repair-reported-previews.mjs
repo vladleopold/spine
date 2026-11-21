@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { fingerprintPreviewMedia } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 
@@ -67,12 +68,13 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||record?.defaultAnimation!==selected||
+  if(record?.webmStatus!=="ready"||record?.previewStatus!=="ready"||!selected||record?.defaultAnimation!==selected||
     choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
   const selectedMedia=record?.allAnimationPreviews?.[selected];
   const requiredFields=["webmPreview","webmPreviewMedium","webmPreviewLow",
     "webpPoster","webpPosterMedium","webpPosterLow"];
   if(!selectedMedia||requiredFields.some(key=>typeof selectedMedia[key]!=="string"||!selectedMedia[key]))return false;
+  if(record.webmPreview!==selectedMedia.webmPreview||record.webpPoster!==selectedMedia.webpPoster)return false;
   // Index metadata is only a candidate filter. The render matrix independently
   // decodes every source-ready candidate and verifies all three WebM/WebP pairs.
   if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
@@ -163,8 +165,11 @@ if(action==="matrix"){
     const animationHash=createHash("sha256").update(selectedAnimation).digest("hex");
     if(meta?.ok===true && meta?.existingVerified===true && meta?.animationMatches===true &&
       meta?.animationHash===animationHash && Number(meta?.tierCount)===3){
-      summary.ready++;
-      continue;
+      let currentFingerprint="";
+      try { currentFingerprint=fingerprintPreviewMedia(names.map(name=>[name,fs.readFileSync(path.join(root,entryInfo.previewPath,name))])); } catch {}
+      if(currentFingerprint && currentFingerprint===meta.mediaFingerprint){summary.ready++;continue;}
+      record.webmStatus="failed";record.previewStatus="failed";
+      record.previewError="Media changed after byte-level verification";summary.failed++;continue;
     }
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];

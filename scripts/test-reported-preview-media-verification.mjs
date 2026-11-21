@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { hasWebmSignature, hasWebpSignature, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
+import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 
 const animation = "Exact Animation";
 const selected = {
@@ -14,7 +14,7 @@ const selected = {
 };
 
 test("existing media requires the exact indexed animation and all three WebM/WebP tiers", () => {
-  const record = { defaultAnimation: animation, webmStatus: "ready", allAnimationPreviews: { [animation]: selected } };
+  const record = { defaultAnimation: animation, webmStatus: "ready", previewStatus: "ready", webmPreview: selected.webmPreview, webpPoster: selected.webpPoster, allAnimationPreviews: { [animation]: selected } };
   assert.equal(selectedPreviewTiers(record, animation).length, 3);
   assert.equal(selectedPreviewTiers(record, "Other Animation"), null);
   assert.equal(selectedPreviewTiers({ ...record, defaultAnimation: "Other Animation" }, animation), null);
@@ -36,6 +36,12 @@ test("preview paths and direct media URLs must resolve to the same project asset
   assert.equal(previewUrlMatches(selected.webmPreview, "library_02/work", "preview.webm"), true);
   assert.equal(previewUrlMatches(selected.webmPreview, "library_02/other", "preview.webm"), false);
   assert.equal(previewUrlMatches("data:image/webp;base64,AAAA", "library_02/work", "preview.webp"), false);
+});
+
+test("media fingerprint detects any byte change between verification and publish", () => {
+  const a = fingerprintPreviewMedia([["preview.webm", Buffer.from("a")], ["preview.webp", Buffer.from("b")]]);
+  const b = fingerprintPreviewMedia([["preview.webm", Buffer.from("a")], ["preview.webp", Buffer.from("c")]]);
+  assert.notEqual(a, b);
 });
 
 test("repair workflow validates existing bytes before it can classify media as ready", () => {

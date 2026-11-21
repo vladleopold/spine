@@ -1,4 +1,5 @@
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 const TIERS = [
   { webmFile: "preview.webm", posterFile: "preview.webp", webmKey: "webmPreview", posterKey: "webpPoster" },
@@ -19,7 +20,7 @@ export function hasWebpSignature(bytes) {
 
 export function selectedPreviewTiers(record, animation) {
   if (!record || typeof animation !== "string" || !animation ||
-      record.defaultAnimation !== animation || record.webmStatus !== "ready") return null;
+      record.defaultAnimation !== animation || record.webmStatus !== "ready" || record.previewStatus !== "ready") return null;
   const selected = record.allAnimationPreviews?.[animation];
   if (!selected || typeof selected !== "object") return null;
   const tiers = TIERS.map((tier) => ({
@@ -29,6 +30,7 @@ export function selectedPreviewTiers(record, animation) {
   }));
   if (tiers.some((tier) => typeof tier.webmUrl !== "string" || !tier.webmUrl ||
       typeof tier.posterUrl !== "string" || !tier.posterUrl)) return null;
+  if (record.webmPreview !== tiers[0].webmUrl || record.webpPoster !== tiers[0].posterUrl) return null;
   return tiers;
 }
 
@@ -46,8 +48,15 @@ export function previewUrlMatches(value, previewPath, fileName) {
     const url = new URL(value);
     const expected = "/assets/" + String(previewPath).split("/").map(encodeURIComponent).join("/") +
       "/" + encodeURIComponent(fileName);
-    return url.protocol === "https:" && decodeURIComponent(url.pathname) === decodeURIComponent(expected);
+    return url.protocol === "https:" && url.hostname === "spine-link.vercel.app" &&
+      decodeURIComponent(url.pathname) === decodeURIComponent(expected);
   } catch {
     return false;
   }
+}
+
+export function fingerprintPreviewMedia(entries) {
+  const hash = createHash("sha256");
+  for (const [name, bytes] of entries) hash.update(String(name)).update(bytes);
+  return hash.digest("hex");
 }

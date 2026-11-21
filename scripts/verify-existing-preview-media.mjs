@@ -4,7 +4,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readIndex } from "./resolve-library.mjs";
-import { hasWebmSignature, hasWebpSignature, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
+import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 
 const args = Object.fromEntries(process.argv.slice(2).filter(x => x.startsWith("--")).map(x => {
   const i = x.indexOf("="); return [x.slice(2, i), x.slice(i + 1)];
@@ -35,15 +35,17 @@ try {
   const basePath = String(args["base-path"] || "");
   const uploadId = String(args["upload-id"] || "");
   const animation = String(args.animation || "");
-  if (!basePath || !uploadId || !animation) reject("IDENTITY_ARGUMENT_MISSING");
+  const expectedPreviewPath = String(args["preview-path"] || "");
+  if (!basePath || !uploadId || !animation || !expectedPreviewPath) reject("IDENTITY_ARGUMENT_MISSING");
   else {
     const record = (readIndex(root, basePath) || []).find(entry => entry?.id === uploadId);
     if (!record) reject("INDEX_RECORD_MISSING");
-    else if (record.defaultAnimation !== animation || record.webmStatus !== "ready")
+    else if (record.defaultAnimation !== animation || record.previewPath !== expectedPreviewPath || record.webmStatus !== "ready")
       reject("INDEX_MEDIA_NOT_READY_FOR_EXACT_ANIMATION");
     else {
       const tiers = selectedPreviewTiers(record, animation);
       const previewDir = safePreviewDirectory(root, record.previewPath);
+      const mediaEntries = [];
       if (!tiers || !previewDir) reject("EXACT_MEDIA_MAPPING_MISSING");
       else {
         for (const tier of tiers) {
@@ -56,6 +58,7 @@ try {
           const poster = fs.readFileSync(posterPath);
           if (video.length <= 128 || !hasWebmSignature(video)) throw new Error("WEBM_BYTES_INVALID");
           if (poster.length <= 128 || !hasWebpSignature(poster)) throw new Error("WEBP_BYTES_INVALID");
+          mediaEntries.push([tier.webmFile, video], [tier.posterFile, poster]);
           const videoInfo = probe(videoPath);
           const stream = videoInfo.streams?.[0];
           const frames = Number(stream?.nb_read_frames || 0);
@@ -75,7 +78,8 @@ try {
             { stdio: "ignore", timeout: 150000 });
         }
         const animationHash = createHash("sha256").update(animation).digest("hex");
-        writeMeta({ ok: true, existingVerified: true, animationMatches: true, animationHash, tierCount: 3 });
+        const mediaFingerprint = fingerprintPreviewMedia(mediaEntries);
+        writeMeta({ ok: true, existingVerified: true, animationMatches: true, animationHash, mediaFingerprint, tierCount: 3 });
         console.log("EXISTING_PREVIEW_MEDIA_VERIFIED slot=" + slot + " tiers=3");
       }
     }
