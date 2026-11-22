@@ -4,6 +4,53 @@ export const ARCHIVE_MEDIA_TIERS = Object.freeze([
   Object.freeze({ tier: 'low', webmKey: 'webmPreviewLow', posterKey: 'webpPosterLow', webmName: 'preview-low.webm' }),
 ]);
 
+export function classifyArchiveEntryStatus(entry) {
+  const webmStatus = typeof entry?.webmStatus === 'string' ? entry.webmStatus : '';
+  const previewStatus = typeof entry?.previewStatus === 'string' ? entry.previewStatus : '';
+
+  if (webmStatus === 'failed' || webmStatus === 'error' || previewStatus === 'failed') return 'failed';
+  if (webmStatus.startsWith('blocked-') || previewStatus === 'blocked' ||
+      webmStatus === 'pending' || previewStatus === 'pending') return 'blocked';
+  if (webmStatus === 'ready') return previewStatus === 'ready' ? 'ready' : 'failed';
+  return 'not-ready';
+}
+
+export function selectArchiveMediaPreflight(candidates, maxFolders = 4) {
+  const selected = [];
+  const seenFolders = new Set();
+  const limit = Math.max(0, Number(maxFolders) || 0);
+  if (limit === 0) return selected;
+
+  const ordered = (Array.isArray(candidates) ? [...candidates] : [])
+    .sort((left, right) => Number(right?.status === 'ready') - Number(left?.status === 'ready'));
+
+  for (const candidate of ordered) {
+    const folder = String(candidate?.folder || '');
+    if (seenFolders.has(folder)) continue;
+    const pairs = Array.isArray(candidate?.pairs) ? candidate.pairs : [];
+    const pair = pairs.find((item) => item?.tier === 'high') || pairs[0];
+    if (!pair) continue;
+
+    selected.push({
+      slot: candidate.slot,
+      folder,
+      previewPath: candidate.previewPath,
+      ...pair,
+    });
+    seenFolders.add(folder);
+    if (selected.length >= limit) break;
+  }
+
+  return selected;
+}
+
+export function shouldRunArchiveMediaAudit(originStatus, preflightResults, candidateCount) {
+  if (classifyArchiveMediaHttpStatus(originStatus) === 'ok') return Number(candidateCount) > 0;
+  if (!(Number(candidateCount) > 0)) return false;
+  return (Array.isArray(preflightResults) ? preflightResults : []).some((result) =>
+    result?.ok === true || result?.classification === 'failed');
+}
+
 export function listVisibleArchiveEntries(collections) {
   const result = [];
   for (const collection of Array.isArray(collections) ? collections : []) {
