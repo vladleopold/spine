@@ -170,11 +170,15 @@ test('live media verifier excludes hidden works and never logs work identifiers'
     { id: 'metadata-missing' },
   ] }]);
   assert.deepEqual(visible.map(({ entry }) => entry.id), ['public']);
-  assert.match(verifier, /Invalid production media URL in public entry/);
-  assert.match(verifier, /return \{ok:true,ext:t\.ext,bytes:data\.length\}/);
-  assert.match(verifier, /return \{ok:false,ext:t\.ext,error:last\}/);
-  assert.match(verifier, /PRODUCTION_MEDIA_EVIDENCE '\+JSON\.stringify\(\{ok:result\.ok,ext:result\.ext/);
-  assert.doesNotMatch(verifier, /id:t\.id|entry\.id\}\);|JSON\.stringify\(result\)/);
+  assert.match(verifier, /validateArchiveMediaUrl\(pair\.webm, origin, previewPath, pair\.webmName\)/);
+  assert.match(verifier, /webmBytes: video\.bytes\.length/);
+  assert.match(verifier, /webpBytes: poster\.bytes\.length/);
+  assert.match(verifier, /ARCHIVE_MEDIA_PAIR=/);
+  assert.match(verifier, /declaredStatus: task\.status \|\| 'unknown'/);
+  assert.match(verifier, /webmBytes: result\.webmBytes \|\| 0/);
+  assert.match(verifier, /webpBytes: result\.webpBytes \|\| 0/);
+  const evidenceBlock = verifier.slice(verifier.indexOf('function recordResult'), verifier.indexOf('try {', verifier.indexOf('function recordResult')));
+  assert.doesNotMatch(evidenceBlock, /entry\.id|entry\.defaultAnimation|previewPath|JSON\.stringify\(result\)/);
 });
 
 test('Spine export workflow serializes matrix arrays and imports repository modules from an absolute file URL', () => {
