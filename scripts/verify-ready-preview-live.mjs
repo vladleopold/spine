@@ -7,7 +7,6 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { readIndex, listCollectionFolders } from './resolve-library.mjs';
 import {
-  includeRootArchiveIndex,
   classifyArchiveEntryStatus,
   listVisibleArchiveEntries,
   resolveExactArchiveMedia,
@@ -23,11 +22,10 @@ const root = process.cwd();
 const origin = 'https://spine-link.vercel.app';
 const archiveUrl = origin + '/world-spine-archive';
 const folders = listCollectionFolders(root);
-const rootIndex = readIndex(root, '.') || [];
-const collections = includeRootArchiveIndex(
-  folders.map((folder) => ({ folder, entries: readIndex(root, folder) || [] })),
-  rootIndex,
-);
+const collections = folders.map((folder) => ({
+  folder,
+  entries: readIndex(root, folder) || [],
+}));
 const visible = listVisibleArchiveEntries(collections);
 if (!visible.length) throw new Error('ARCHIVE_INDEX_EMPTY');
 
