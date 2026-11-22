@@ -6,12 +6,14 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
-      - scripts/mask-preview-manifest.mjs
-      - scripts/lib/preview-manifest-redaction.mjs
-      - scripts/test-preview-log-privacy.mjs
       - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-existing-preview-media.mjs
+      - scripts/lib/preview-media-validation.mjs
+      - scripts/test-repair-existing-media-gates.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/lib/preview-repair-commit-message.mjs
+      - scripts/test-preview-repair-commit-message.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
@@ -47,8 +49,13 @@ on:
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
+      - scripts/verify-existing-preview-media.mjs
+      - scripts/lib/preview-media-validation.mjs
+      - scripts/test-repair-existing-media-gates.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/lib/preview-repair-commit-message.mjs
+      - scripts/test-preview-repair-commit-message.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
@@ -91,7 +98,6 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
       sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
@@ -100,10 +106,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /api/github-upload.js
-            /.github/workflows/repair-last-ten-previews.yml
-            /.github/workflows/repair-latest-twenty-previews.yml
-            /.github/workflows/repair-reported-previews.yml
             /scripts/
+            /.github/workflows/repair-latest-twenty-previews.yml
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -136,11 +140,15 @@ jobs:
           node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check api/github-upload.js
           node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/verify-existing-preview-media.mjs
+          node --check scripts/lib/preview-media-validation.mjs
           node --check scripts/verify-latest-twenty-live.mjs
           node --check scripts/verify-preview-motion.mjs
           node scripts/test-preview-motion.mjs
           node scripts/test-renderer-failure-class.mjs
           node scripts/test-repair-latest-twenty.mjs
+          node --check scripts/lib/preview-repair-commit-message.mjs
+          node scripts/test-preview-repair-commit-message.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
           node --check scripts/verify-poster-first-frame.mjs
@@ -159,7 +167,6 @@ jobs:
           node scripts/test-spine-player-runtime-assets.mjs
           node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
-          node scripts/test-preview-log-privacy.mjs
           echo "LATEST20_INVENTORY_VALID"
   runtime-package-smoke:
     runs-on: ubuntu-24.04
@@ -187,6 +194,11 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
+    env:
+      ENTRY_READY: ${{ matrix.entry.ready }}
+      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+      SOURCE_FINGERPRINT: ${{ matrix.entry.sourceFingerprint }}
+      ANIMATION_HASH: ${{ matrix.entry.animationHash }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -206,20 +218,10 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-      - name: Mask private source metadata and hydrate exact source
-        env:
-          ENTRY_ID: ${{ matrix.entry.id }}
-          ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
-          PREVIEW_PATH: ${{ matrix.entry.previewPath }}
-          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-          ENTRY_READY: ${{ matrix.entry.ready }}
-          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
+      - name: Mask private metadata and hydrate exact source
+        if: matrix.entry.ready
         shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
-          git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
+        run: node scripts/repair-latest-twenty-previews.mjs prepare "$REPAIR_SLOT"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -227,28 +229,11 @@ jobs:
         with:
           name: spine-player-runtimes
           path: ${{ runner.temp }}/spine-player-runtimes
-      - name: Configure shared pinned Spine runtimes
-        if: matrix.entry.needsRender
+      - name: Install FFmpeg for existing-media verification
+        if: matrix.entry.ready
         shell: bash
         run: |
           set -euo pipefail
-          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.0/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
-          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.1/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
-          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.2/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
-          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.3/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
-          echo "SPINE_VERSIONED_PLAYER_DIR=$RUNNER_TEMP/spine-player-runtimes" >> "$GITHUB_ENV"
-      - name: Install native Chromium renderer and video/poster encoders
-        if: matrix.entry.needsRender
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm install --no-save --no-audit --no-fund playwright@1.59.1
-          if command -v google-chrome >/dev/null 2>&1; then
-            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
-            echo "Using preinstalled Chrome for WebGL preview rendering"
-          else
-            npx playwright install chromium
-          fi
           npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/ffmpeg-native" \
             @ffprobe-installer/ffprobe @ffmpeg-installer/ffmpeg
           mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
@@ -261,8 +246,52 @@ jobs:
           export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
+      - name: Validate existing selected animation media before render
+        id: existing
+        if: matrix.entry.ready
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "out/$REPAIR_SLOT"
+          set +e
+          node scripts/verify-existing-preview-media.mjs \
+            --upload-id="$ENTRY_ID" --base-path="$ENTRY_BASE_PATH" \
+            --animation="$ENTRY_ANIMATION" --repo-path="$GITHUB_WORKSPACE" \
+            --slot="$REPAIR_SLOT" --preview-path="$PREVIEW_PATH" \
+            --output="out/$REPAIR_SLOT/existing-media.json" > "$RUNNER_TEMP/existing-media.log" 2>&1
+          code=$?
+          set -e
+          cat "$RUNNER_TEMP/existing-media.log"
+          if (( code == 0 )); then
+            echo "verified=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            echo "EXISTING_MEDIA_REQUIRES_EXACT_ANIMATION_RENDER"
+          fi
+      - name: Configure shared pinned Spine runtimes
+        if: matrix.entry.ready && steps.existing.outputs.verified != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.0/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.1/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.2/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          test -s "$RUNNER_TEMP/spine-player-runtimes/spine-4.3/node_modules/@esotericsoftware/spine-player/dist/iife/spine-player.js"
+          echo "SPINE_VERSIONED_PLAYER_DIR=$RUNNER_TEMP/spine-player-runtimes" >> "$GITHUB_ENV"
+      - name: Install native Chromium renderer and video/poster encoders
+        if: matrix.entry.ready && steps.existing.outputs.verified != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-audit --no-fund playwright@1.59.1
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "PLAYWRIGHT_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+            echo "Using preinstalled Chrome for WebGL preview rendering"
+          else
+            npx playwright install chromium
+          fi
       - name: Render and validate actual Spine video + still posters
-        if: matrix.entry.needsRender
+        if: matrix.entry.ready && steps.existing.outputs.verified != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -270,11 +299,6 @@ jobs:
           if [[ "$ENTRY_READY" != true ]]; then
             echo '{"ok":false,"reason":"incomplete-source"}' > "out/$REPAIR_SLOT/meta.json"
             echo "ACCEPTANCE_BLOCKED_INCOMPLETE_SOURCE"
-            exit 0
-          fi
-          if [[ "$ENTRY_NEEDS_RENDER" != true ]]; then
-            echo '{"ok":false,"reason":"existing-verified-media"}' > "out/$REPAIR_SLOT/meta.json"
-            echo "ACCEPTANCE_EXISTING_VERIFIED_MEDIA"
             exit 0
           fi
           set +e
@@ -334,17 +358,19 @@ jobs:
           cp "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm.json" "out/$REPAIR_SLOT/meta.json"
           node --input-type=module -e '
             import fs from "node:fs";
+            import { createHash } from "node:crypto";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
             const animationMatches=typeof process.env.ENTRY_ANIMATION==="string"&&m.animation===process.env.ENTRY_ANIMATION;
             if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
               throw new Error("Export metadata incomplete or selected animation mismatch");
-            const safe={ok:true,animationMatches:true,width:m.width,height:m.height,
+            const animationHash=createHash("sha256").update(process.env.ENTRY_ANIMATION||"").digest("hex");
+            const safe={ok:true,animationMatches:true,animationHash,sourceFingerprint:process.env.SOURCE_FINGERPRINT,width:m.width,height:m.height,
               animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
             fs.writeFileSync(p,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
           ' "out/$REPAIR_SLOT/meta.json"
       - uses: actions/upload-artifact@v4
-        if: always() && matrix.entry.needsRender
+        if: always() && matrix.entry.ready
         with:
           name: latest20-${{ matrix.entry.repairSlot }}
           path: out/${{ matrix.entry.repairSlot }}/
@@ -370,25 +396,9 @@ jobs:
             /library_*/index.json
       - name: Mask and hydrate exact latest-20 source directories
         env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+          SPINE_PREPARE_HYDRATE: '1'
         shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/mask-preview-manifest.mjs
-          node --input-type=module <<'NODE'
-          import { execFileSync } from 'node:child_process';
-          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-          if(selected.length!==20)throw new Error('Missing exact repair manifest');
-          const paths=new Set();
-          for(const item of selected){
-            const source=String(item.previewPath||'');
-            if(!source||source.startsWith('/')||source.split('/').includes('..')||
-              !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
-            paths.add(source);
-          }
-          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
-          console.log('SOURCE_PATHS_HYDRATED');
-          NODE
+        run: node scripts/repair-latest-twenty-previews.mjs prepare-all
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
@@ -437,7 +447,13 @@ jobs:
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
-            git commit -m 'fix: restore validated previews for latest 20 Spine uploads'
+            commit_message=$(node --input-type=module -e '
+              import fs from "node:fs";
+              import { previewRepairCommitMessage } from "./scripts/lib/preview-repair-commit-message.mjs";
+              const summary=JSON.parse(fs.readFileSync("preview-repair-summary.json","utf8"));
+              process.stdout.write(previewRepairCommitMessage(summary));
+            ')
+            git commit -m "$commit_message"
             if git push origin HEAD:main; then
               echo "LATEST20_REPAIR_PUBLISHED"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
@@ -458,16 +474,11 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /scripts/verify-latest-twenty-live.mjs
-            /scripts/repair-manifest-guard.mjs
-            /scripts/lib/fetch-public-index.mjs
-            /scripts/mask-preview-manifest.mjs
-            /scripts/lib/preview-manifest-redaction.mjs
-            /scripts/lib/export-log-redaction.mjs
+            /scripts/
+            /library/index.json
+            /library_*/index.json
       - name: Mask exact production audit manifest
-        env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
-        run: node scripts/mask-preview-manifest.mjs
+        run: node scripts/repair-latest-twenty-previews.mjs prepare-all
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

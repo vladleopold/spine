@@ -7,11 +7,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { fingerprintPreviewMedia, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
+import { previewManifestMaskCommands, previewManifestEnvBlock } from "./lib/preview-manifest-redaction.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -178,6 +181,73 @@ async function originalMediaFilesOk(entry){
     return mediaNames.every(name=>names.has(name));
   }catch{return false;}
 }
+function existingMediaMatchesVerification(entryInfo, record, animation, meta) {
+  const animationHash=createHash("sha256").update(animation).digest("hex");
+  if(meta?.ok!==true || meta?.existingVerified!==true || meta?.animationMatches!==true ||
+     meta?.animationHash!==animationHash || meta?.sourceFingerprint!==previewSourceFingerprint(record) || Number(meta?.tierCount)!==3 ||
+     typeof meta?.mediaFingerprint!=="string" || !meta.mediaFingerprint)return false;
+  const tiers=selectedPreviewTiers(record,animation);
+  if(!tiers || tiers.length!==3)return false;
+  const media=[];
+  try{
+    for(const tier of tiers){
+      media.push([tier.webmFile,fs.readFileSync(path.join(root,entryInfo.previewPath,tier.webmFile))]);
+      media.push([tier.posterFile,fs.readFileSync(path.join(root,entryInfo.previewPath,tier.posterFile))]);
+    }
+  }catch{return false;}
+  return fingerprintPreviewMedia(media)===meta.mediaFingerprint;
+}
+
+
+function manifestFor(entries=newestTwenty()) {
+  return entries.map((entry,repairSlot)=>{
+    const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
+    const animation=choosePreviewAnimation([],record?.defaultAnimation);
+    const sourceFingerprint=previewSourceFingerprint(record);
+    const animationHash=createHash("sha256").update(animation).digest("hex");
+    return {repairSlot,id:entry.id,basePath:entry.basePath,previewPath:entry.previewPath,
+      uploadedAt:entry.at,sourceFingerprint,animation,animationHash};
+  });
+}
+function appendMaskedEnv(values) {
+  if(!process.env.GITHUB_ENV)throw new Error("Missing GitHub environment file");
+  const raw=JSON.stringify(values);
+  process.stdout.write(previewManifestMaskCommands(values,raw,values));
+  fs.appendFileSync(process.env.GITHUB_ENV,previewManifestEnvBlock(values),"utf8");
+}
+function prepareSlot(slot) {
+  if(!Number.isInteger(slot)||slot<0||slot>=20)throw new Error("Invalid latest-20 repair slot");
+  const item=manifestFor()[slot];
+  if(!item||!item.animation)throw new Error("Selected latest-20 entry is not renderable");
+  if(process.env.SOURCE_FINGERPRINT&&process.env.SOURCE_FINGERPRINT!==item.sourceFingerprint)
+    throw new Error("Source fingerprint changed since inventory");
+  if(process.env.ANIMATION_HASH&&process.env.ANIMATION_HASH!==item.animationHash)
+    throw new Error("Animation identity changed since inventory");
+  const values={ENTRY_ID:item.id,ENTRY_BASE_PATH:item.basePath,PREVIEW_PATH:item.previewPath,
+    ENTRY_PATH:item.previewPath,ENTRY_ANIMATION:item.animation,
+    SOURCE_FINGERPRINT:item.sourceFingerprint,ANIMATION_HASH:item.animationHash};
+  appendMaskedEnv(values);
+  if(process.env.SPINE_PREPARE_SKIP_HYDRATE!=="1")
+    execFileSync("git",["sparse-checkout","add",item.previewPath+"/"],{stdio:"ignore"});
+  console.log("PREVIEW_METADATA_MASKED");
+}
+function prepareAll() {
+  const manifest=manifestFor();
+  const raw=JSON.stringify(manifest);
+  if(!process.env.GITHUB_ENV)throw new Error("Missing GitHub environment file");
+  process.stdout.write(previewManifestMaskCommands(manifest,raw,{}));
+  fs.appendFileSync(process.env.GITHUB_ENV,previewManifestEnvBlock({REPAIR_IDS_JSON:raw}),"utf8");
+  if(process.env.SPINE_PREPARE_HYDRATE==="1") {
+    for(const item of manifest) {
+      const rel=String(item.previewPath||"").replace(/\\\\/g,"/");
+      if(!rel.startsWith(String(item.basePath||"")+"/")||rel.split("/").includes(".."))
+        throw new Error("Unsafe source path in repair manifest");
+      execFileSync("git",["sparse-checkout","add",rel+"/"],{stdio:"ignore"});
+    }
+  }
+  console.log("PREVIEW_METADATA_MASKED");
+}
+
 const action=process.argv[2]||"matrix";
 const latest=action==="matrix"?newestTwenty():[];
 if(action==="matrix"){
@@ -201,13 +271,14 @@ if(action==="matrix"){
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint(record),
+      animationHash:createHash("sha256").update(animation).digest("hex"),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
       blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
     }));
     matrix.push(...batch);
   }
-  const required=matrix.filter(x=>x.needsRender);
+  const required=matrix.filter(x=>x.ready);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
   // available clip has already been rendered and independently accepted.
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
@@ -224,6 +295,10 @@ if(action==="matrix"){
   console.log("SPINE_SPARSE_END");
   console.error("AUDIT_LAST20="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
+}else if(action==="prepare"){
+  prepareSlot(Number(process.argv[3]));
+}else if(action==="prepare-all"){
+  prepareAll();
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==20)throw new Error("Missing exact repair manifest");
@@ -267,35 +342,21 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(item.needsRender===false){
-      if(existingMediaOk(entryInfo)){
-        try{
-          // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
-          // its matching WebP posters from frame zero of each quality tier.
-          refreshStoredPostersAndTimestamp(record,entryInfo,base);
-          summary.ready++;
-        }catch{
-          record.webmStatus="failed";
-          record.previewStatus="failed";
-          record.previewError="Existing WebM could not produce its exact first-frame WebP poster";
-          summary.failed++;
-        }
-        continue;
-      }
-      record.webmStatus="failed";
-      record.previewStatus="failed";
-      record.previewError="Media previously marked ready but expected outputs are missing";
-      summary.failed++;
+    const artifact=path.join(base,"latest20-"+item.repairSlot);
+    let existingMeta=null;
+    try{existingMeta=JSON.parse(fs.readFileSync(path.join(artifact,"existing-media.json"),"utf8"));}catch{}
+    if(existingMediaMatchesVerification(entryInfo,record,selectedAnimation,existingMeta)){
+      summary.ready++;
       continue;
     }
-    const artifact=path.join(base,"latest20-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
+    const expectedAnimationHash=createHash("sha256").update(selectedAnimation).digest("hex");
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
     let complete=meta?.ok===true && meta?.animationMatches===true &&
-      choosePreviewAnimation([],meta?.animation)===choosePreviewAnimation([],item.animation) && names.every(n=>
+      meta?.animationHash===expectedAnimationHash && meta?.sourceFingerprint===item.sourceFingerprint && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -327,29 +388,10 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      // A previous completed job may have already published genuine complete
-      // media while this older job was rendering. Do not downgrade an
-      // independently valid six-file source simply because this attempt failed.
-      // Local source and frame-density gates remain mandatory.
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
-         existingMediaOk(entryInfo)) {
-        try{
-          refreshStoredPostersAndTimestamp(record,entryInfo,base);
-          record.lastPreviewRetryError="Concurrent retry had no accepted media; verified original WebM retained";
-          summary.ready++;
-        }catch{
-          record.webmStatus="failed";
-          record.previewStatus="failed";
-          record.previewError="Retained WebM could not produce its exact first-frame WebP poster";
-          summary.failed++;
-        }
-        continue;
-      }
-      // No existing independently validated media: mark failed, never fake it.
       record.lastPreviewRetryError="Live media missing or replacement failed real motion acceptance";
       record.webmStatus="failed";
       record.previewStatus="failed";
-      record.previewError="Native preview render did not pass media acceptance";
+      record.previewError="Native preview render did not pass media acceptance; existing bytes were not independently verified";
       summary.failed++;
       continue;
     }

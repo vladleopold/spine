@@ -7,10 +7,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { fingerprintPreviewMedia, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
+import { previewManifestMaskCommands, previewManifestEnvBlock } from "./lib/preview-manifest-redaction.mjs";
 
 const root=process.cwd();
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -65,13 +68,83 @@ function existingMediaOk(entry,animation){
   const duration=Number(record?.previewDuration||0);
   if(f>0&&duration>0&&f/duration<15)return false;
   if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
-  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1") {
+    // An index-only inventory has no media bytes to probe or decode. Force the
+    // downstream worker to verify the exact WebM/WebP pair before accepting it.
+    return false;
+  }
   return mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
   });
 }
+function existingMediaMatchesVerification(entryInfo, record, animation, meta) {
+  const animationHash=createHash("sha256").update(animation).digest("hex");
+  if(meta?.ok!==true || meta?.existingVerified!==true || meta?.animationMatches!==true ||
+     meta?.animationHash!==animationHash || meta?.sourceFingerprint!==previewSourceFingerprint(record) || Number(meta?.tierCount)!==3 ||
+     typeof meta?.mediaFingerprint!=="string" || !meta.mediaFingerprint)return false;
+  const tiers=selectedPreviewTiers(record,animation);
+  if(!tiers || tiers.length!==3)return false;
+  const media=[];
+  try{
+    for(const tier of tiers){
+      media.push([tier.webmFile,fs.readFileSync(path.join(root,entryInfo.previewPath,tier.webmFile))]);
+      media.push([tier.posterFile,fs.readFileSync(path.join(root,entryInfo.previewPath,tier.posterFile))]);
+    }
+  }catch{return false;}
+  return fingerprintPreviewMedia(media)===meta.mediaFingerprint;
+}
+
+
+function manifestFor(entries=newestTen()) {
+  return entries.map((entry,repairSlot)=>{
+    const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
+    const animation=choosePreviewAnimation([],record?.defaultAnimation);
+    const sourceFingerprint=previewSourceFingerprint(record);
+    const animationHash=createHash("sha256").update(animation).digest("hex");
+    return {repairSlot,id:entry.id,basePath:entry.basePath,previewPath:entry.previewPath,
+      uploadedAt:entry.at,sourceFingerprint,animation,animationHash};
+  });
+}
+function appendMaskedEnv(values) {
+  if(!process.env.GITHUB_ENV)throw new Error("Missing GitHub environment file");
+  const raw=JSON.stringify(values);
+  process.stdout.write(previewManifestMaskCommands(values,raw,values));
+  fs.appendFileSync(process.env.GITHUB_ENV,previewManifestEnvBlock(values),"utf8");
+}
+function prepareSlot(slot) {
+  if(!Number.isInteger(slot)||slot<0||slot>=10)throw new Error("Invalid latest-10 repair slot");
+  const item=manifestFor()[slot];
+  if(!item||!item.animation)throw new Error("Selected latest-10 entry is not renderable");
+  if(process.env.SOURCE_FINGERPRINT&&process.env.SOURCE_FINGERPRINT!==item.sourceFingerprint)
+    throw new Error("Source fingerprint changed since inventory");
+  if(process.env.ANIMATION_HASH&&process.env.ANIMATION_HASH!==item.animationHash)
+    throw new Error("Animation identity changed since inventory");
+  const values={ENTRY_ID:item.id,ENTRY_BASE_PATH:item.basePath,ENTRY_PATH:item.previewPath,
+    PREVIEW_PATH:item.previewPath,ENTRY_ANIMATION:item.animation,
+    SOURCE_FINGERPRINT:item.sourceFingerprint,ANIMATION_HASH:item.animationHash};
+  appendMaskedEnv(values);
+  if(process.env.SPINE_PREPARE_SKIP_HYDRATE!=="1")
+    execFileSync("git",["sparse-checkout","add",item.previewPath+"/"],{stdio:"ignore"});
+  console.log("PREVIEW_METADATA_MASKED");
+}
+function prepareAll() {
+  const manifest=manifestFor();
+  const raw=JSON.stringify(manifest);
+  if(!process.env.GITHUB_ENV)throw new Error("Missing GitHub environment file");
+  process.stdout.write(previewManifestMaskCommands(manifest,raw,{}));
+  fs.appendFileSync(process.env.GITHUB_ENV,previewManifestEnvBlock({REPAIR_IDS_JSON:raw}),"utf8");
+  if(process.env.SPINE_PREPARE_HYDRATE==="1") {
+    for(const item of manifest) {
+      const rel=String(item.previewPath||"").replace(/\\\\/g,"/");
+      if(!rel.startsWith(String(item.basePath||"")+"/")||rel.split("/").includes(".."))
+        throw new Error("Unsafe source path in repair manifest");
+      execFileSync("git",["sparse-checkout","add",rel+"/"],{stdio:"ignore"});
+    }
+  }
+  console.log("PREVIEW_METADATA_MASKED");
+}
+
 const action=process.argv[2]||"matrix";
 const latest=action==="matrix"?newestTen():[];
 if(action==="matrix"){
@@ -88,11 +161,12 @@ if(action==="matrix"){
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,
       sourceFingerprint:previewSourceFingerprint(record),
+      animationHash:createHash("sha256").update(animation).digest("hex"),
       ready,needsRender:ready&&!existingMediaOk(e,animation),
       animation,
       blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":!animation?"MISSING_DEFAULT_ANIMATION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
   });
-  const required=matrix.filter(x=>x.needsRender);
+  const required=matrix.filter(x=>x.ready);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
   // available clip has already been rendered and independently accepted.
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
@@ -100,6 +174,10 @@ if(action==="matrix"){
   console.log("renderCount="+required.length);
   console.error("AUDIT_LAST10="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
+}else if(action==="prepare"){
+  prepareSlot(Number(process.argv[3]));
+}else if(action==="prepare-all"){
+  prepareAll();
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==10)throw new Error("Missing exact repair manifest");
@@ -143,24 +221,20 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(item.needsRender===false){
-      if(existingMediaOk(entryInfo,expectedAnimation)){
-        summary.ready++;
-        continue;
-      }
-      record.webmStatus="failed";
-      record.previewStatus="failed";
-      record.previewError="Media previously marked ready but expected outputs are missing";
-      summary.failed++;
+    const artifact=path.join(base,"latest10-"+item.repairSlot);
+    let existingMeta=null;
+    try{existingMeta=JSON.parse(fs.readFileSync(path.join(artifact,"existing-media.json"),"utf8"));}catch{}
+    if(existingMediaMatchesVerification(entryInfo,record,expectedAnimation,existingMeta)){
+      summary.ready++;
       continue;
     }
-    const artifact=path.join(base,"latest10-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
+    const expectedAnimationHash=createHash("sha256").update(expectedAnimation).digest("hex");
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && meta?.animationMatches===true && names.every(n=>
+    let complete=meta?.ok===true && meta?.animationMatches===true && meta?.animationHash===expectedAnimationHash && meta?.sourceFingerprint===item.sourceFingerprint && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -180,16 +254,9 @@ if(action==="matrix"){
       }catch{complete=false;}
     }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster &&
-         existingMediaOk(entryInfo,expectedAnimation)) {
-        // Never replace an existing genuine clip with a failed higher-FPS retry.
-        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
-        summary.ready++;
-        continue;
-      }
       record.webmStatus="failed";
       record.previewStatus="failed";
-      record.previewError="Native preview render did not pass media acceptance";
+      record.previewError="Native preview render did not pass media acceptance; existing bytes were not independently verified";
       summary.failed++;
       continue;
     }

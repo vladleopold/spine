@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 /**
- * Fail-closed 10-most-recent Spine preview repair.
+ * Fail-closed reported Spine preview repair (18 reports plus the priority work).
  * Runs only on authenticated private Github Actions workers.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { fingerprintPreviewMedia, previewRenderDisposition } from "./lib/preview-media-validation.mjs";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { escapeWorkflowCommandValue } from "./lib/export-log-redaction.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -29,7 +32,8 @@ const requestedIds=[
   "Spine-animation-2026-11-17T18-26-38-201Z",
   "Spine-animation-2026-11-17T18-27-52-258Z",
   "Spine-animation-2026-11-17T18-36-51-976Z",
-  "Spine-animation-2026-11-17T18-39-06-745Z"
+  "Spine-animation-2026-11-17T18-39-06-745Z",
+  "Spine-animation-2026-11-17T18-45-14-132Z"
 ];
 const requestedSet=new Set(requestedIds);
 function newestTen() {
@@ -66,20 +70,50 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
-  // A previously published Urka clip was decoded as only 12 frames over
-  // 1.82 seconds. Require real frame-density evidence before treating it as
-  // an accepted final video; leave older previews intact during retries.
-  const f=Number(record?.previewFrameCount||0);
-  const duration=Number(record?.previewDuration||0);
-  if(f>0&&duration>0&&f/duration<15)return false;
-  if(entry.id==="Spine-animation-2026-11-17T18-39-06-745Z"&&!(f>0&&duration>0&&f/duration>=15))return false;
-  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")
-    return Boolean(record?.webmPreview&&record?.webpPoster);
+  if(record?.webmStatus!=="ready"||record?.previewStatus!=="ready"||!selected||record?.defaultAnimation!==selected||
+    choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
+  const selectedMedia=record?.allAnimationPreviews?.[selected];
+  const requiredFields=["webmPreview","webmPreviewMedium","webmPreviewLow",
+    "webpPoster","webpPosterMedium","webpPosterLow"];
+  if(!selectedMedia||requiredFields.some(key=>typeof selectedMedia[key]!=="string"||!selectedMedia[key]))return false;
+  if(record.webmPreview!==selectedMedia.webmPreview||record.webpPoster!==selectedMedia.webpPoster)return false;
+  // Index metadata is only a candidate filter. The render matrix independently
+  // decodes every source-ready candidate and verifies all three WebM/WebP pairs.
+  if(process.env.SPINE_REPAIR_INDEX_ONLY==="1")return true;
   return mediaNames.every(name=>{
     try{return fs.statSync(path.join(root,entry.previewPath,name)).size>128;}
     catch{return false;}
   });
+}
+function emitPreviewMask(value) {
+  const text=String(value??"");
+  if(!text || /[\r\n]/.test(text))return;
+  process.stdout.write("::add-mask::"+escapeWorkflowCommandValue(text)+"\n");
+}
+function appendMaskedEnvironment(name,value) {
+  const target=process.env.GITHUB_ENV;
+  if(!target)throw new Error("Missing GitHub environment file");
+  const text=String(value??"");
+  const delimiter="SPINE_PREVIEW_"+createHash("sha256").update(name+"\0"+text).digest("hex").slice(0,20);
+  if(text.includes(delimiter))throw new Error("Unsafe environment delimiter");
+  fs.appendFileSync(target,name+"<<"+delimiter+"\n"+text+"\n"+delimiter+"\n");
+}
+function prepareEntry(entry,exportEnvironment=false) {
+  const base=String(entry.basePath||"");
+  const rel=String(entry.previewPath||"").replace(/\\/g,"/");
+  if(!base||!rel.startsWith(base+"/")||rel.split("/").includes(".."))
+    throw new Error("Unsafe preview path");
+  const values={
+    ENTRY_ID:String(entry.id||""),
+    ENTRY_BASE_PATH:base,
+    PREVIEW_PATH:rel,
+    ENTRY_ANIMATION:String(entry.defaultAnimation??""),
+  };
+  for(const [key,value] of Object.entries(values)) {
+    emitPreviewMask(value);
+    if(exportEnvironment)appendMaskedEnvironment(key,value);
+  }
+  execFileSync("git",["sparse-checkout","add",rel+"/"],{stdio:"ignore"});
 }
 const action=process.argv[2]||"matrix";
 const latest=newestTen();
@@ -96,12 +130,14 @@ if(action==="matrix"){
       needsRender:ready&&!existingMediaOk(e,animation),animation,
       blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
   });
-  const required=matrix.filter(x=>x.needsRender);
-  // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
-  // available clip has already been rendered and independently accepted.
-  console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
-  console.log("allEntries="+JSON.stringify(matrix));
-  console.log("renderCount="+required.length);
+  const validationCandidates=matrix.filter(x=>x.ready);
+  // Every source-ready entry is checked against real local media bytes, even
+  // when index metadata already claims that its preview is ready.
+  const safeMatrix=validationCandidates.length
+    ? validationCandidates.map(({repairSlot,ready})=>({repairSlot,ready}))
+    : [{repairSlot:0,ready:false}];
+  console.log("matrix="+JSON.stringify(safeMatrix));
+  console.log("renderCount="+validationCandidates.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
@@ -115,12 +151,23 @@ if(action==="matrix"){
     " SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED_SOURCE_BUNDLE="+matrix.filter(x=>x.blockedReason==="MISSING_SOURCE_BUNDLE").length+
     " BLOCKED_MISSING_ANIMATION="+matrix.filter(x=>x.blockedReason==="MISSING_DEFAULT_ANIMATION").length+
-    " NEEDS_RENDER="+required.length+
+    " VALIDATION_CANDIDATES="+validationCandidates.length+
     " EXISTING_READY="+matrix.filter(x=>x.ready&&!x.needsRender).length);
+}else if(action==="prepare"){
+  const slot=Number(process.argv[3]);
+  if(!Number.isInteger(slot)||slot<0||slot>=latest.length)throw new Error("Invalid reported preview slot");
+  prepareEntry(latest[slot],true);
+  console.log("PREVIEW_METADATA_MASKED");
+}else if(action==="prepare-all"){
+  for(const entry of latest)prepareEntry(entry,false);
+  console.log("PREVIEW_METADATA_MASKED");
 }else if(action==="merge"){
-  const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
+  const selected=latest.map((entry,repairSlot)=>({
+    repairSlot,id:entry.id,basePath:entry.basePath,previewPath:entry.previewPath,
+    animation:entry.defaultAnimation,
+  }));
   if(selected.length!==requestedIds.length)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-reported18");
+  const base=path.resolve(root,"downloaded-reported19");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0},seenSlots=new Set();
   for(const item of selected){
     if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=requestedIds.length||seenSlots.has(item.repairSlot))
@@ -156,25 +203,21 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(item.needsRender===false){
-      if(existingMediaOk(entryInfo,selectedAnimation)){
-        summary.ready++;
-        continue;
-      }
-      record.webmStatus="failed";
-      record.previewStatus="failed";
-      record.previewError="Media previously marked ready but expected outputs are missing";
-      summary.failed++;
-      continue;
-    }
-    const artifact=path.join(base,"reported18-"+item.repairSlot);
+    const artifact=path.join(base,"reported19-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
-    const names=["preview.webm","preview-medium.webm","preview-low.webm",
-      "preview.webp","preview-medium.webp","preview-low.webp"];
+    const animationHash=createHash("sha256").update(selectedAnimation).digest("hex");
+    if(meta?.ok===true && meta?.existingVerified===true && meta?.animationMatches===true &&
+      meta?.animationHash===animationHash && Number(meta?.tierCount)===3){
+      let currentFingerprint="";
+      try { currentFingerprint=fingerprintPreviewMedia(mediaNames.map(name=>[name,fs.readFileSync(path.join(root,entryInfo.previewPath,name))])); } catch {}
+      if(currentFingerprint && currentFingerprint===meta.mediaFingerprint){summary.ready++;continue;}
+      record.webmStatus="failed";record.previewStatus="failed";
+      record.previewError="Media changed after byte-level verification";summary.failed++;continue;
+    }
     let complete=meta?.ok===true && meta?.animationMatches===true &&
-      choosePreviewAnimation([],meta?.animation)===selectedAnimation && names.every(n=>
+      meta?.animationHash===animationHash && mediaNames.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -189,17 +232,27 @@ if(action==="matrix"){
             seconds=Number(data.format?.duration);
           if(!(seconds>=0.5&&frames>=8&&frames/seconds>=15&&stream?.width>0&&stream?.height>0))
             throw new Error("Video has too few real frames");
+          const suffix=name==="preview.webm"?"":name==="preview-medium.webm"?"-medium":"-low";
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-preview-motion.mjs"),path.join(artifact,name)],{stdio:"ignore",timeout:150000});
+          execFileSync(process.execPath,[path.join(root,"scripts/verify-poster-first-frame.mjs"),
+            path.join(artifact,name),path.join(artifact,"preview"+suffix+".webp")],{stdio:"ignore",timeout:150000});
           if(name==="preview.webm")mainVideo={frames,seconds};
         }
       }catch{complete=false;}
     }
+    if(!complete && meta?.reason==="blocked" &&
+      previewRenderDisposition({distinctError:meta.failureCode})==="blocked") {
+      const noMotion=meta.failureCode==="COMPOSITED_FRAMES_IDENTICAL";
+      record.webmStatus=noMotion?"blocked-no-motion":"blocked-render";
+      record.previewStatus="blocked";
+      record.previewError=noMotion
+        ?"Selected animation produced identical composited frames"
+        :"Selected animation did not pass preview content acceptance";
+      summary.blocked++;
+      continue;
+    }
     if(!complete) {
-      if(record.webmStatus==="ready" && record.webmPreview && record.webpPoster) {
-        // Never replace an existing genuine clip with a failed higher-FPS retry.
-        record.lastPreviewRetryError="New version failed frame-density acceptance; previous media retained";
-        summary.ready++;
-        continue;
-      }
+      // Invalid or infrastructure-failed media never remains marked ready.
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";
@@ -207,7 +260,7 @@ if(action==="matrix"){
       continue;
     }
     const destination=path.resolve(root,entryInfo.previewPath);
-    for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
+    for(const name of mediaNames)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
     const animation=selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";

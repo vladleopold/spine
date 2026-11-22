@@ -6,6 +6,7 @@ import fs from "node:fs";
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_export_3_8_75"))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
+  if(x.includes("selected_animation_has_no_timelines")||x.includes("selected animation has no keyed timelines"))return "SELECTED_ANIMATION_HAS_NO_TIMELINES";
   if (x.includes("couldn't load texture atlas page")||x.includes("couldn't load image")||x.includes("assets could not be loaded")||x.includes("could not load atlas")||x.includes("failed to fetch atlas")||x.includes("texture atlas page")) return "ATLAS_TEXTURE_LOAD";
   if (x.includes("unknown format")||x.includes("unsupported skeleton")||x.includes("unsupported spine")) return "SKELETON_RUNTIME_VERSION";
   if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
@@ -60,7 +61,11 @@ export function summarizeRendererLog(text) {
     canvasFallbackPassed:/CANVAS_FALLBACK_CAPTURE=passed|REALTIME_CANVAS_CAPTURE_PASS/i.test(log),
   };
   const ffmpegFailure=classifyFfmpegFailure(log);
+  const timelineMatch=log.match(/SELECTED_ANIMATION_TIMELINE_COUNT=([0-9]+)/);
+  const animationTimelineCount=timelineMatch?Number(timelineMatch[1]):null;
+  const noKeyedTimelines=animationTimelineCount===0||/SELECTED_ANIMATION_HAS_NO_TIMELINES/i.test(log);
   const distinctError=ffmpegFailure!=="NONE"?ffmpegFailure:
+    noKeyedTimelines?"SELECTED_ANIMATION_HAS_NO_TIMELINES":
     /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
     /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
@@ -79,11 +84,12 @@ export function summarizeRendererLog(text) {
   const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
     .map(x=>Number(x[1])).at(-1)||0;
   const skinSelectionMode=sourceDefaultSkin?"source-default":"unknown";
-  const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
+  const sourceSignal=noKeyedTimelines?"NO_KEYED_ANIMATION_TIMELINES":
+    log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
   return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,
-    peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
+    animationTimelineCount,peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){

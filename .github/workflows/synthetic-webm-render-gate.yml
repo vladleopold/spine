@@ -13,6 +13,7 @@ on:
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
+      - 'scripts/lib/preview-media-validation.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
       - '.github/workflows/spine-export-full.yml'
@@ -31,6 +32,7 @@ on:
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
+      - 'scripts/lib/preview-media-validation.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
       - '.github/workflows/spine-export-full.yml'
@@ -61,6 +63,7 @@ jobs:
             /scripts/preview-animation-choice.mjs
             /scripts/test-preview-animation-choice.mjs
             /scripts/repair-last-ten-previews.mjs
+            /scripts/lib/preview-media-validation.mjs
             /scripts/test-repair-last-ten-previews.mjs
             /scripts/test-repair-latest-twenty.mjs
             /scripts/repair-manifest-guard.mjs

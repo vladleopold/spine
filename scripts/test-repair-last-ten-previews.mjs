@@ -27,14 +27,12 @@ assert.match(workflow,/group:\s*spine-preview-latest-ten-\$\{\{\s*github\.event_
   "PR and main repair runs must use separate concurrency groups");
 assert.match(workflow,/cancel-in-progress:\s*false/,
   "a read-only PR check must never cancel an active main repair");
-assert.match(workflow,/branches:.*fix\/latest10-explicit-animation-guard-20261120/,
-  "the exact feature branch must run the read-only inventory check");
-assert.match(workflow,/branches:.*fix\/latest10-public-only-inventory-20261120/,
-  "the public-only inventory regression branch must run the read-only check");
-assert.match(workflow,/branches:.*fix\/latest10-preserve-source-blockers-20261120/,
-  "the source-blocker preservation regression branch must run the read-only check");
-assert.doesNotMatch(workflow,/^\s+pull_request:/m,
-  "use one push-triggered feature-branch check, not duplicate push and pull_request runs");
+assert.match(workflow,/branches:\s*\[main\]/,
+  "only main pushes may launch mutating preview repair");
+assert.match(workflow,/^\s+pull_request:/m,
+  "pull requests must run read-only inventory and contract checks");
+assert.doesNotMatch(workflow,/branches:.*fix\//,
+  "feature branches are validated through pull_request, avoiding duplicate push and PR runs");
 assert.ok(!source.includes("record.defaultAnimation=animation"),
   "preview repair must not rewrite the source index default animation");
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"spine-latest10-animation-"));
@@ -109,7 +107,8 @@ try{
   const target=all.find(x=>x.id===targetId);
   assert.equal(target.ready,true);
   assert.equal(target.animation,"Idle Post Climax Cum");
-  assert.equal(target.needsRender,false);
+  assert.equal(target.needsRender,true,
+    "index-only metadata cannot prove that existing media bytes are playable");
   const exact=all.find(x=>x.id==="fixture-02");
   assert.equal(exact.animation," Walk ","leading/trailing whitespace is part of the exact selected animation name");
   assert.equal(exact.ready,true);
@@ -133,7 +132,10 @@ try{
   assert.match(savedIncompatible.previewError,/Spine 3\.8\.75/);
   const savedTarget=saved.find(x=>x.id===targetId);
   assert.equal(savedTarget.defaultAnimation,"Idle Post Climax Cum");
-  assert.equal(savedTarget.webmStatus,"ready");
+  assert.equal(savedTarget.webmStatus,"failed",
+    "index-ready URLs without byte-level verification must not remain ready");
+  assert.equal(savedTarget.previewStatus,"failed");
+  assert.match(savedTarget.previewError,/existing bytes were not independently verified/);
   const savedExact=saved.find(x=>x.id==="fixture-02");
   assert.equal(savedExact.defaultAnimation," Walk ","publishing media must not normalize the index animation name");
   console.log("PASS latest10: missing default stays blocked, incompatible Spine source keeps its specific blocker, no animation substitution");

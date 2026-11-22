@@ -272,3 +272,25 @@ assert.doesNotMatch(app,
   'the UI must not invent a first-track or synthetic animation name');
 
 console.log('PASS preview, batch export, data-science metadata and UI preserve exact animation/default skin without list-order fallbacks');
+
+const exporter = read('./spine-export-webm.mjs');
+assert.match(exporter,
+  /const targetAnimation = choosePreviewAnimation\(availableAnimations, requestedAnimation\);/,
+  'the exporter must retain the exact requested/indexed animation');
+assert.match(exporter,
+  /if \(availableAnimations\.length && !availableAnimations\.includes\(targetAnimation\)\)/,
+  'an unavailable named animation must be blocked instead of replaced');
+assert.match(exporter, /const captureAnimation = targetAnimation;/,
+  'the recorder must capture the exact selected animation');
+assert.match(exporter, /const skinCandidates = Object\.freeze\(\[null\]\);/,
+  'the exporter must keep the source skin and never search alternate skins');
+assert.doesNotMatch(exporter,
+  /alternatePreviewAnimations|targetAnimation\s*=\s*candidate|availableAnimations\s*\[\s*0\s*\]|runtimeAnimations\s*\[\s*0\s*\]/,
+  'the exporter must never choose a substitute or first runtime animation');
+assert.doesNotMatch(exporter,
+  /scenarioEntry|scenarioIdle|scenarioExit|animationNames\.find/,
+  'the exporter must not infer an idle/run or helper timeline');
+assert.match(exporter,
+  /setAnimation\(0,\s*name,\s*true\)[\s\S]{0,250}targetAnimation\);/,
+  'capture and retries must keep the exact selected animation name');
+console.log('PASS exporter preserves the exact selected animation and source skin; no alternate animation fallback');

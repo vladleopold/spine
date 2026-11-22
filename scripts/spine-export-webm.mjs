@@ -649,6 +649,9 @@ ${skinLine}    showLoading: false,
         var foundAnimation = runtimeData && typeof runtimeData.findAnimation === 'function'
           ? runtimeData.findAnimation(window.__selectedAnimation) : null;
         var foundDuration = Number(foundAnimation && foundAnimation.duration) || 0;
+        var animationTimelines = foundAnimation && Array.isArray(foundAnimation.timelines)
+          ? foundAnimation.timelines.length : null;
+        window.__animationTimelineCount = animationTimelines;
         window.__animDuration = Math.max(trackDuration, skeletonDuration, foundDuration);
       } catch (e) {}
 
@@ -888,6 +891,16 @@ try {
     if (!runtimeAnimations.includes(pinnedAnimation)) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
+      break;
+    }
+    const timelineCount = await page.evaluate(() => {
+      const value = window.__animationTimelineCount;
+      return Number.isInteger(value) && value >= 0 ? value : null;
+    });
+    console.error(`SELECTED_ANIMATION_TIMELINE_COUNT=${timelineCount === null ? 'unknown' : timelineCount}`);
+    if (timelineCount === 0) {
+      lastCaptureError = 'SELECTED_ANIMATION_HAS_NO_TIMELINES';
+      console.error('SELECTED_ANIMATION_HAS_NO_TIMELINES');
       break;
     }
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);

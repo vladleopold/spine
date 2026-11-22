@@ -57,6 +57,7 @@ const MANIFEST_ENV_KEYS = [
   'REPAIR_IDS_JSON', 'ENTRY_ID', 'UPLOAD_ID', 'ENTRY_BASE_PATH',
   'ENTRY_PATH', 'PREVIEW_PATH', 'ENTRY_ANIMATION', 'ANIMATION',
   'ENTRY_READY', 'ENTRY_NEEDS_RENDER', 'REPAIR_SLOT', 'SOURCE_PATH',
+  'SOURCE_FINGERPRINT', 'ANIMATION_HASH',
 ];
 
 // Export only the small, explicit set of workflow variables needed by later

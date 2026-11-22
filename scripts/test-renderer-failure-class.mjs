@@ -67,12 +67,47 @@ const canvasPass=summarizeRendererLog(
 assert.equal(canvasPass.stages.canvasFallbackAttempted,true);
 assert.equal(canvasPass.stages.canvasFallbackPassed,true);
 
+const noTimelineLog=[
+  "Skeleton: /private/source/secret-character/source.skel (v4.3.17)",
+  "Animation: private-animation-name",
+  "PLAYER_READY=1",
+  "SELECTED_ANIMATION_TIMELINE_COUNT=0",
+  "SELECTED_ANIMATION_HAS_NO_TIMELINES",
+].join(String.fromCharCode(10));
+const noTimelineSummary=summarizeRendererLog(noTimelineLog);
+assert.equal(classifyRendererError(noTimelineLog),"SELECTED_ANIMATION_HAS_NO_TIMELINES");
+assert.equal(noTimelineSummary.reason,"SELECTED_ANIMATION_HAS_NO_TIMELINES");
+assert.equal(noTimelineSummary.distinctError,"SELECTED_ANIMATION_HAS_NO_TIMELINES");
+assert.equal(noTimelineSummary.animationTimelineCount,0);
+assert.equal(noTimelineSummary.sourceSignal,"NO_KEYED_ANIMATION_TIMELINES");
+assert.ok(!JSON.stringify(noTimelineSummary).includes("secret-character"));
+assert.ok(!JSON.stringify(noTimelineSummary).includes("private-animation-name"));
+
+const identicalWithKeys=summarizeRendererLog([
+  "PLAYER_READY=1",
+  "SELECTED_ANIMATION_TIMELINE_COUNT=4",
+  "Selected animation has no changing canvas frames",
+].join(String.fromCharCode(10)));
+assert.equal(identicalWithKeys.animationTimelineCount,4);
+assert.equal(identicalWithKeys.distinctError,"COMPOSITED_FRAMES_IDENTICAL",
+  "an animation with keyed timelines but identical pixels remains a distinct visual/render blocker");
+const unknownTimelineCount=summarizeRendererLog([
+  "PLAYER_READY=1",
+  "Selected animation has no changing canvas frames",
+].join(String.fromCharCode(10)));
+assert.equal(unknownTimelineCount.animationTimelineCount,null,
+  "missing runtime timeline metadata must remain unknown, never be reported as zero");
+
 const exporter=fs.readFileSync(new URL("./spine-export-webm.mjs",import.meta.url),"utf8");
 assert.match(exporter,/console\.error\('PLAYER_READY=1'\)/);
 assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
+assert.ok(exporter.includes("window.__animationTimelineCount = animationTimelines"));
+assert.ok(exporter.includes("SELECTED_ANIMATION_TIMELINE_COUNT="));
+assert.ok(exporter.includes("if (timelineCount === 0)"));
+assert.ok(exporter.includes("SELECTED_ANIMATION_HAS_NO_TIMELINES"));
 assert.match(exporter,/const skinCandidates = Object\.freeze\(\[null\]\)/,
   "diagnostic markers must not enable alternate source skins");
 assert.doesNotMatch(exporter,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);

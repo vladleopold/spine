@@ -19,7 +19,10 @@ on:
       - scripts/repair-reported-previews.mjs
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/repair-last-ten-previews.mjs
+      - scripts/lib/preview-media-validation.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/lib/preview-repair-commit-message.mjs
+      - scripts/test-preview-repair-commit-message.mjs
       - scripts/test-repair-last-ten-previews.mjs
       - scripts/test-preview-log-privacy.mjs
   pull_request:
@@ -36,7 +39,10 @@ on:
       - scripts/repair-reported-previews.mjs
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/repair-last-ten-previews.mjs
+      - scripts/lib/preview-media-validation.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/lib/preview-repair-commit-message.mjs
+      - scripts/test-preview-repair-commit-message.mjs
       - scripts/test-repair-last-ten-previews.mjs
       - scripts/test-preview-log-privacy.mjs
 
@@ -81,6 +87,8 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
+          node --check scripts/lib/preview-repair-commit-message.mjs
+          node scripts/test-preview-repair-commit-message.mjs
 
   generate-matrix:
     if: github.event_name == 'repository_dispatch'
