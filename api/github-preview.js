@@ -2602,7 +2602,7 @@ async function createDynamicPreview(settings, uploadPath, origin, requestedAnima
       atlas: atlasUrl,
       atlasUrl,
       animation: defaultAnimation,
-      animations,
+      ...(skeletonJson ? { animations } : {}),
       skeletonVersion,
       textures: textureUrls,
       skin: preferredSkinName(skinNames),
