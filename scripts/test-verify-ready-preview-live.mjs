@@ -201,6 +201,8 @@ const workflow = fs.readFileSync(new URL('../.github/workflows/verify-spine-prod
 const reportedWorkflow = fs.readFileSync(new URL('../.github/workflows/repair-reported-previews.yml', import.meta.url), 'utf8');
 assert.doesNotMatch(script, /readIndex\(root, '\.'\)/,
   'the public archive API does not expose the repository-root index');
+assert.doesNotMatch(script, /\\brootIndex\\b/,
+  'the full-archive audit must not reference an undefined root index that is intentionally excluded from public collections');
 assert.doesNotMatch(script, /includeRootArchiveIndex/,
   'the hourly audit must cover only collections the public archive actually reads');
 assert.match(script, /selectArchiveMediaPreflight/);
