@@ -76,7 +76,6 @@ const tasks = candidates.flatMap((candidate) => candidate.pairs.map((pair) => ({
 
 const summary = {
   collections: collections.length,
-  rootIndexEntries: rootIndex.length,
   visibleEntries: visible.length,
   declaredReadyEntries: visible.filter(({ entry }) => entry.webmStatus === 'ready').length,
   readyEntries: candidates.filter((item) => item.status === 'ready').length,
