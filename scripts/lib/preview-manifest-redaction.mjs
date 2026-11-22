@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { escapeWorkflowCommandValue } from './export-log-redaction.mjs';
 
 const SENSITIVE_KEYS = /(^|_)(?:ids?|paths?|files?|names?|animations?|sources?|fingerprints?|urls?|owners?|repos?|atlases?|textures?)(_|$)/i;
@@ -38,7 +39,7 @@ export function collectPreviewManifestSecrets(manifest, rawManifest = '', enviro
 
   visit(manifest);
   for (const key of [
-    'ENTRY_ID', 'UPLOAD_ID', 'ENTRY_PATH', 'PREVIEW_PATH',
+    'ENTRY_ID', 'UPLOAD_ID', 'ENTRY_BASE_PATH', 'ENTRY_PATH', 'PREVIEW_PATH',
     'ENTRY_ANIMATION', 'ANIMATION', 'SOURCE_PATH',
   ]) addValue(values, environment[key]);
 
@@ -49,4 +50,29 @@ export function previewManifestMaskCommands(manifest, rawManifest = '', environm
   return collectPreviewManifestSecrets(manifest, rawManifest, environment)
     .map(value => '::add-mask::' + escapeWorkflowCommandValue(value) + '\n')
     .join('');
+}
+
+
+const MANIFEST_ENV_KEYS = [
+  'REPAIR_IDS_JSON', 'ENTRY_ID', 'UPLOAD_ID', 'ENTRY_BASE_PATH',
+  'ENTRY_PATH', 'PREVIEW_PATH', 'ENTRY_ANIMATION', 'ANIMATION',
+  'ENTRY_READY', 'ENTRY_NEEDS_RENDER', 'REPAIR_SLOT', 'SOURCE_PATH',
+];
+
+// Export only the small, explicit set of workflow variables needed by later
+// steps. The mask commands are emitted before this block is appended to
+// GITHUB_ENV, so subsequent runner log lines redact every private value.
+export function previewManifestEnvBlock(environment = {}) {
+  const lines = [];
+  for (const key of MANIFEST_ENV_KEYS) {
+    const value = environment[key];
+    if (typeof value !== 'string' || value.length === 0) continue;
+    const digest = createHash('sha256').update(key + '\0' + value).digest('hex').slice(0, 20);
+    const delimiter = 'SPINE_PREVIEW_ENV_' + key + '_' + digest;
+    if (value.split(/\r?\n/).includes(delimiter)) {
+      throw new Error('Preview manifest environment delimiter collision');
+    }
+    lines.push(key + '<<' + delimiter + '\n' + value + '\n' + delimiter + '\n');
+  }
+  return lines.join('');
 }
