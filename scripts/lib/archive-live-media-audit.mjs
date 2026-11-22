@@ -28,7 +28,7 @@ export function classifyArchiveEntryStatus(entry) {
   if (webmStatus === 'failed' || webmStatus === 'error' || previewStatus === 'failed') return 'failed';
   if (webmStatus.startsWith('blocked-') || previewStatus === 'blocked' ||
       webmStatus === 'pending' || previewStatus === 'pending') return 'blocked';
-  if (webmStatus === 'ready') return previewStatus && previewStatus !== 'ready' ? 'failed' : 'ready';
+  if (webmStatus === 'ready') return previewStatus === 'ready' ? 'ready' : 'failed';
   return 'not-ready';
 }
 
