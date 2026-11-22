@@ -181,13 +181,20 @@ test('live media verifier excludes hidden works and never logs work identifiers'
   assert.doesNotMatch(evidenceBlock, /entry\.id|entry\.defaultAnimation|previewPath|JSON\.stringify\(result\)/);
 });
 
-test('Spine export workflow serializes matrix arrays and imports repository modules from an absolute file URL', () => {
+test('Spine export workflow serializes matrix batches and gates ready status on exact verified artifacts', () => {
   const workflow = readFileSync(new URL('../.github/workflows/spine-export-all.yml', import.meta.url), 'utf8');
+  const merge = readFileSync(new URL('./merge-export-artifacts.mjs', import.meta.url), 'utf8');
+  const validator = readFileSync(new URL('./lib/export-preview-artifact.mjs', import.meta.url), 'utf8');
   assert.match(workflow, /echo '\$\{\{ toJSON\(matrix\.batch\) \}\}' > batch\.json/);
   assert.doesNotMatch(workflow, /echo '\$\{\{ matrix\.batch \}\}' > batch\.json/);
-  assert.match(
-    workflow,
-    /const repoRoot = process\.cwd\(\);[\s\S]*?await import\(pathToFileURL\(path\.resolve\(repoRoot, 'scripts\/resolve-library\.mjs'\)\)\.href\)/,
-  );
-  assert.doesNotMatch(workflow, /await import\('\.\/scripts\/resolve-library\.mjs'\)/);
+  assert.equal((workflow.match(/node scripts\/merge-export-artifacts\.mjs downloaded-artifacts/g) || []).length, 2);
+  assert.match(merge, /validateExportPreviewArtifact/);
+  assert.match(merge, /resolveIndexedExportAnimation/);
+  assert.match(validator, /meta\.animation !== selection\.animation/);
+  assert.match(validator, /meta\.sha256/);
+  assert.match(validator, /preview\.webp/);
+  assert.doesNotMatch(workflow, /webmStatus:\s*isError\s*\?\s*'error'\s*:\s*'ready'/);
+  assert.match(workflow, /RUNNER_TEMP\/spine-export\.log/);
+  assert.doesNotMatch(workflow, /Exporting \$uploadId|Export failed for \$uploadId/);
+  assert.doesNotMatch(workflow, /actions\/github-script@v7/);
 });
