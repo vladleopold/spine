@@ -11,6 +11,18 @@ const script=fileURLToPath(new URL("./repair-last-ten-previews.mjs",import.meta.
 const source=fs.readFileSync(script,"utf8");
 const workflowPath=fileURLToPath(new URL("../.github/workflows/repair-last-ten-previews.yml",import.meta.url));
 const workflow=fs.readFileSync(workflowPath,"utf8");
+const latestTwentyScriptPath=fileURLToPath(new URL("./repair-latest-twenty-previews.mjs",import.meta.url));
+const latestTwentySource=fs.readFileSync(latestTwentyScriptPath,"utf8");
+const blockedAnimationReason="No explicit default animation is selected; existing media cannot be attributed to an exact source animation";
+const blockedAnimationAssignment=`record.previewError="${blockedAnimationReason}"`;
+assert.ok(source.includes(blockedAnimationAssignment),
+  "latest-10 must use the canonical missing-animation blocker shared with latest-20");
+assert.ok(latestTwentySource.includes(blockedAnimationAssignment),
+  "latest-20 must use the same canonical missing-animation blocker as latest-10");
+assert.doesNotMatch(source,/No exact default animation is selected; preview rendering will not guess or substitute an animation/,
+  "legacy latest-10 wording must not cause index status churn");
+assert.doesNotMatch(latestTwentySource,/No exact default animation is selected; preview rendering will not guess or substitute an animation/,
+  "legacy latest-20 wording must not be reintroduced");
 assert.match(workflow,/group:\s*spine-preview-latest-ten-\$\{\{\s*github\.event_name\s*\}\}-\$\{\{\s*github\.ref\s*\}\}/,
   "PR and main repair runs must use separate concurrency groups");
 assert.match(workflow,/cancel-in-progress:\s*false/,
@@ -111,6 +123,8 @@ try{
   const blocked=saved.find(x=>x.id===missingId);
   assert.equal(blocked.webmStatus,"blocked-missing-animation-selection");
   assert.equal(blocked.previewStatus,"blocked");
+  assert.equal(blocked.previewError,blockedAnimationReason,
+    "blocked entries must keep one canonical reason across latest-10 and latest-20 repair jobs");
   assert.equal(Object.hasOwn(blocked,"defaultAnimation"),false,
     "the blocked record must not acquire a guessed default");
   const savedIncompatible=saved.find(x=>x.id===incompatibleId);
