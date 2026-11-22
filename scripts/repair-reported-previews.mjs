@@ -12,6 +12,7 @@ import { fingerprintPreviewMedia, previewRenderDisposition } from "./lib/preview
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { escapeWorkflowCommandValue } from "./lib/export-log-redaction.mjs";
+import { previewSourceFingerprint, previewSourceBytesFingerprint } from "./repair-manifest-guard.mjs";
 
 const root=process.cwd();
 const requestedIds=[
@@ -208,6 +209,17 @@ if(action==="matrix"){
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const animationHash=createHash("sha256").update(selectedAnimation).digest("hex");
+    if(meta?.ok===true && meta?.animationMatches===true) {
+      let currentSourceBytesFingerprint="";
+      try { currentSourceBytesFingerprint=previewSourceBytesFingerprint(root,entryInfo.previewPath); } catch {}
+      if(meta.sourceFingerprint!==previewSourceFingerprint(record) ||
+        !/^[a-f0-9]{64}$/.test(meta.sourceBytesFingerprint||"") ||
+        meta.sourceBytesFingerprint!==currentSourceBytesFingerprint) {
+        record.webmStatus="failed";record.previewStatus="failed";
+        record.previewError="Source bundle changed after media validation";
+        summary.failed++;continue;
+      }
+    }
     if(meta?.ok===true && meta?.existingVerified===true && meta?.animationMatches===true &&
       meta?.animationHash===animationHash && Number(meta?.tierCount)===3){
       let currentFingerprint="";

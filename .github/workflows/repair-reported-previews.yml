@@ -19,7 +19,9 @@ on:
       - scripts/lib/recovered-animation-choice.mjs
       - scripts/test-recovered-animation-choice.mjs
       - scripts/repair-reported-previews.mjs
+      - scripts/repair-manifest-guard.mjs
       - scripts/verify-existing-preview-media.mjs
+      - scripts/repair-manifest-guard.mjs
       - scripts/lib/preview-media-validation.mjs
       - scripts/test-reported-preview-media-verification.mjs
       - scripts/spine-export-webm.mjs
@@ -389,6 +391,22 @@ jobs:
             echo "::error::SOURCE_PRESERVATION_FAILED"
             exit 1
           fi
+          # Bind the artifact to the exact index manifest and source bytes used by this render.
+          node --input-type=module - "$PREVIEW_PATH" "out/$REPAIR_SLOT/meta.json" <<'NODE'
+          import fs from "node:fs";
+          import { readIndex } from "./scripts/resolve-library.mjs";
+          import { previewSourceFingerprint, previewSourceBytesFingerprint } from "./scripts/repair-manifest-guard.mjs";
+          const [previewPath, metaPath] = process.argv.slice(2);
+          const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+          if (meta.ok === true && meta.animationMatches === true) {
+            const record = (readIndex(process.cwd(), process.env.ENTRY_BASE_PATH) || [])
+              .find((entry) => entry?.id === process.env.ENTRY_ID);
+            if (!record) throw new Error("Source record missing while binding preview artifact");
+            meta.sourceFingerprint = previewSourceFingerprint(record);
+            meta.sourceBytesFingerprint = previewSourceBytesFingerprint(process.cwd(), previewPath);
+            fs.writeFileSync(metaPath, JSON.stringify(meta));
+          }
+          NODE
           echo "SOURCE_PRESERVATION_PASS"
       - uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main' && matrix.entry.ready

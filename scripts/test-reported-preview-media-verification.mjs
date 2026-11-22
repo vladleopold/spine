@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewRenderDisposition, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 import { summarizeRendererLog } from "./renderer-failure-class.mjs";
+import { previewSourceFingerprint, previewSourceBytesFingerprint } from "./repair-manifest-guard.mjs";
 
 const animation = "Exact Animation";
 const selected = {
@@ -26,6 +27,25 @@ test("existing media requires the exact indexed animation and all three WebM/Web
   assert.equal(selectedPreviewTiers({ ...record, defaultAnimation: "Other Animation" }, animation), null);
   assert.equal(selectedPreviewTiers({ ...record, allAnimationPreviews: {} }, animation), null);
   assert.equal(selectedPreviewTiers({ ...record, allAnimationPreviews: { [animation]: { webmPreview: selected.webmPreview } } }, animation), null);
+});
+
+test("source byte fingerprint changes when source contents change and rejects unsafe paths", () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), "spine-source-fingerprint-"));
+  try {
+    const work = path.join(root, "library_02", "work");
+    mkdirSync(work, { recursive: true });
+    writeFileSync(path.join(work, "source.json"), '{"bones":[]}');
+    writeFileSync(path.join(work, "source.atlas"), "page.png\\n");
+    writeFileSync(path.join(work, "page.png"), Buffer.alloc(32, 1));
+    const first = previewSourceBytesFingerprint(root, "library_02/work");
+    writeFileSync(path.join(work, "source.json"), '{"bones":[{"name":"root"}]}');
+    const second = previewSourceBytesFingerprint(root, "library_02/work");
+    assert.match(first, /^[a-f0-9]{64}$/);
+    assert.notEqual(first, second);
+    assert.throws(() => previewSourceBytesFingerprint(root, "../escape"), /unsafe/i);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("WebM and WebP must have their real container signatures", () => {
@@ -113,10 +133,13 @@ test("merge reuses byte-verified existing media from the same reported19 artifac
       });
       const artifactDir = path.join(root, "downloaded-reported19", "reported19-" + repairSlot);
       mkdirSync(artifactDir, { recursive: true });
+      const record = records[records.length - 1];
       writeFileSync(path.join(artifactDir, "meta.json"), JSON.stringify({
         ok: true, existingVerified: true, animationMatches: true,
         animationHash: createHash("sha256").update("Exact Animation").digest("hex"),
         tierCount: 3, mediaFingerprint,
+        sourceFingerprint: previewSourceFingerprint(record),
+        sourceBytesFingerprint: previewSourceBytesFingerprint(root, previewPath),
       }));
     }
     const collectionDir = path.join(root, "library_02");
@@ -133,6 +156,20 @@ test("merge reuses byte-verified existing media from the same reported19 artifac
     const after = JSON.parse(readFileSync(path.join(collectionDir, "index.json"), "utf8"));
     assert.equal(after.length, 19);
     assert.ok(after.every(record => record.webmStatus === "ready" && record.previewStatus === "ready"));
+
+    // A source update after verification must invalidate the old media artifact.
+    writeFileSync(path.join(root, "library_02", "work-0", "source.json"), '{"changed":true}');
+    const stale = spawnSync(process.execPath, [script, "merge"], {
+      cwd: root, encoding: "utf8", timeout: 30000,
+      env: { ...process.env },
+    });
+    assert.equal(stale.status, 0, stale.stderr || stale.stdout);
+    const staleSummary = JSON.parse(readFileSync(path.join(root, "preview-repair-summary.json"), "utf8"));
+    assert.deepEqual(staleSummary, { ready: 18, failed: 1, blocked: 0 });
+    const staleIndex = JSON.parse(readFileSync(path.join(collectionDir, "index.json"), "utf8"));
+    assert.equal(staleIndex[0].webmStatus, "failed");
+    assert.equal(staleIndex[0].previewStatus, "failed");
+    assert.match(staleIndex[0].previewError, /source bundle changed/i);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -143,6 +180,8 @@ test("repair workflow validates existing bytes before it can classify media as r
   const workflow = readFileSync(new URL("../.github/workflows/repair-reported-previews.yml", import.meta.url), "utf8");
   assert.match(repair, /const validationCandidates=matrix\.filter\(x=>x\.ready\)/);
   assert.match(repair, /meta\?\.existingVerified===true/);
+  assert.match(repair, /meta\.sourceFingerprint!==previewSourceFingerprint\(record\)/);
+  assert.match(repair, /meta\.sourceBytesFingerprint!==currentSourceBytesFingerprint/);
   const merge = repair.slice(repair.indexOf('}else if(action==="merge")'));
   assert.match(repair, /const mediaNames=\[/);
   assert.doesNotMatch(merge, /const names=/,

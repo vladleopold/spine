@@ -4,7 +4,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readIndex } from "./resolve-library.mjs";
-import { previewSourceFingerprint } from "./repair-manifest-guard.mjs";
+import { previewSourceFingerprint, previewSourceBytesFingerprint } from "./repair-manifest-guard.mjs";
 import { fingerprintPreviewMedia, hasWebmSignature, hasWebpSignature, previewMediaFailureReason, previewUrlMatches, safePreviewDirectory, selectedPreviewTiers } from "./lib/preview-media-validation.mjs";
 
 const args = Object.fromEntries(process.argv.slice(2).filter(x => x.startsWith("--")).map(x => {
@@ -91,7 +91,7 @@ try {
         }
         const animationHash = createHash("sha256").update(animation).digest("hex");
         const mediaFingerprint = fingerprintPreviewMedia(mediaEntries);
-        writeMeta({ ok: true, existingVerified: true, animationMatches: true, animationHash, mediaFingerprint, tierCount: 3, sourceFingerprint: previewSourceFingerprint(record) });
+        writeMeta({ ok: true, existingVerified: true, animationMatches: true, animationHash, mediaFingerprint, tierCount: 3, sourceFingerprint: previewSourceFingerprint(record), sourceBytesFingerprint: previewSourceBytesFingerprint(root, record.previewPath) });
         console.log("EXISTING_PREVIEW_MEDIA_VERIFIED slot=" + slot + " tiers=3");
       }
     }

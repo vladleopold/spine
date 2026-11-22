@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { createHash } from "node:crypto";
 import path from "node:path";
 
@@ -11,6 +12,42 @@ export function previewSourceFingerprint(record) {
     files: Array.isArray(record?.files) ? record.files : [],
   })).digest("hex");
 }
+
+
+ // Bind verified media to every byte and relative filename in the source directory.
+ // A concurrent main update must invalidate an artifact generated from older files.
+ export function previewSourceBytesFingerprint(root, previewPath) {
+   const relative = String(previewPath || "");
+   if (!relative || relative.startsWith("/") || relative.includes(String.fromCharCode(92)) ||
+       relative.split("/").some((part) => !part || part === "." || part === "..")) {
+     throw new Error("Unsafe preview source path");
+   }
+   const rootPath = path.resolve(root);
+   const directory = path.resolve(rootPath, relative);
+   if (!directory.startsWith(rootPath + path.sep)) throw new Error("Unsafe preview source path");
+   const hash = createHash("sha256");
+   hash.update(relative).update("\\0");
+   let fileCount = 0;
+   const visit = (current, prefix = "") => {
+     const entries = fs.readdirSync(current, { withFileTypes: true }).sort((a, b) =>
+       a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+     for (const entry of entries) {
+       const relativeName = prefix ? prefix + "/" + entry.name : entry.name;
+       const fullPath = path.join(current, entry.name);
+       if (entry.isSymbolicLink()) throw new Error("Symlink in preview source bundle");
+       if (entry.isDirectory()) visit(fullPath, relativeName);
+       else if (entry.isFile()) {
+         const bytes = fs.readFileSync(fullPath);
+         hash.update(relativeName).update("\\0").update(String(bytes.length)).update("\\0")
+           .update(bytes).update("\\0");
+         fileCount++;
+       }
+     }
+   };
+   visit(directory);
+   if (fileCount === 0) throw new Error("Preview source bundle is empty");
+   return hash.digest("hex");
+ }
 
 // Older archive IDs embed their upload timestamp even when uploadedAt is blank.
 export function repairRecordTimestamp(record) {
