@@ -108,6 +108,8 @@ export function resolveExactArchiveMedia(entry) {
   }
 
   const pairs = [];
+  const incompleteTiers = [];
+  const invalidTiers = [];
   for (const tier of ARCHIVE_MEDIA_TIERS) {
     const webm = typeof selected[tier.webmKey] === 'string' ? selected[tier.webmKey] : '';
     let poster = typeof selected[tier.posterKey] === 'string' ? selected[tier.posterKey] : '';
@@ -115,28 +117,39 @@ export function resolveExactArchiveMedia(entry) {
         typeof selected.thumbnailPoster === 'string') {
       poster = selected.thumbnailPoster;
     }
+
     const hasWebm = Boolean(webm);
     const hasPoster = Boolean(poster);
+    if (!hasWebm && !hasPoster) continue;
     if (hasWebm !== hasPoster) {
-      return { ok: false, reason: 'INCOMPLETE_EXACT_MEDIA_PAIR' };
+      incompleteTiers.push(tier.tier);
+      continue;
     }
-    if (hasWebm) {
-      const posterName = posterBasename(poster);
-      if (!posterName) return { ok: false, reason: 'NON_WEBP_POSTER' };
-      pairs.push({
-        tier: tier.tier,
-        webm,
-        poster,
-        webmName: tier.webmName,
-        posterName,
-      });
+
+    const posterName = posterBasename(poster);
+    if (!posterName) {
+      invalidTiers.push(tier.tier);
+      continue;
     }
+    pairs.push({
+      tier: tier.tier,
+      webm,
+      poster,
+      webmName: tier.webmName,
+      posterName,
+    });
   }
 
-  if (!pairs.some((pair) => pair.tier === 'high')) {
-    return { ok: false, reason: 'MISSING_EXACT_MEDIA_PAIR' };
+  if (!pairs.length) {
+    if (incompleteTiers.length) {
+      return { ok: false, reason: 'INCOMPLETE_EXACT_MEDIA_PAIR', animation, incompleteTiers, invalidTiers };
+    }
+    if (invalidTiers.length) {
+      return { ok: false, reason: 'NON_WEBP_POSTER', animation, incompleteTiers, invalidTiers };
+    }
+    return { ok: false, reason: 'MISSING_EXACT_MEDIA_PAIR', animation };
   }
-  return { ok: true, animation, pairs };
+  return { ok: true, animation, pairs, incompleteTiers, invalidTiers };
 }
 
 export function validateArchiveMediaUrl(value, origin, previewPath, filename) {

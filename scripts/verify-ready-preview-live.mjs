@@ -37,6 +37,8 @@ let notReadyEntries = 0;
 let staleReadyEntries = 0;
 let missingExactPairEntries = 0;
 let invalidPairEntries = 0;
+let incompleteTierEntries = 0;
+let invalidTierEntries = 0;
 const candidates = [];
 
 for (let slot = 0; slot < visible.length; slot += 1) {
@@ -47,6 +49,8 @@ for (let slot = 0; slot < visible.length; slot += 1) {
   else if (status === 'not-ready') notReadyEntries += 1;
 
   const selected = resolveExactArchiveMedia(entry);
+  if (selected.incompleteTiers?.length) incompleteTierEntries += 1;
+  if (selected.invalidTiers?.length) invalidTierEntries += 1;
   if (!selected.ok) {
     missingExactPairEntries += 1;
     if (status === 'ready') staleReadyEntries += 1;
@@ -86,6 +90,8 @@ const summary = {
   staleReadyEntries,
   missingExactPairEntries,
   invalidPairEntries,
+  incompleteTierEntries,
+  invalidTierEntries,
   failedEntries,
   notReadyEntries,
   mediaPairs: tasks.length,

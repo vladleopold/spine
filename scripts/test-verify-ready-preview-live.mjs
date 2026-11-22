@@ -99,6 +99,42 @@ assert.equal(resolveExactArchiveMedia({
   webmPreview: media.webmPreview,
 }).reason, 'INCOMPLETE_EXACT_MEDIA_PAIR');
 
+const mediumLowOnly = resolveExactArchiveMedia({
+  defaultAnimation: 'Walk',
+  webmPreviewMedium: media.webmPreviewMedium,
+  webpPosterMedium: media.webpPosterMedium,
+  webmPreviewLow: media.webmPreviewLow,
+  webpPosterLow: media.webpPosterLow,
+});
+assert.equal(mediumLowOnly.ok, true,
+  'a same-animation medium/low pair is valid when the high tier is absent');
+assert.deepEqual(mediumLowOnly.pairs.map((pair) => pair.tier), ['medium', 'low']);
+
+const highIncompleteWithValidLowerTiers = resolveExactArchiveMedia({
+  defaultAnimation: 'Walk',
+  webmPreview: media.webmPreview,
+  webmPreviewMedium: media.webmPreviewMedium,
+  webpPosterMedium: media.webpPosterMedium,
+  webmPreviewLow: media.webmPreviewLow,
+  webpPosterLow: media.webpPosterLow,
+});
+assert.equal(highIncompleteWithValidLowerTiers.ok, true,
+  'an incomplete high tier must not hide complete exact-animation medium/low pairs');
+assert.deepEqual(highIncompleteWithValidLowerTiers.incompleteTiers, ['high']);
+assert.deepEqual(highIncompleteWithValidLowerTiers.pairs.map((pair) => pair.tier), ['medium', 'low']);
+
+const invalidHighWithValidLowerTiers = resolveExactArchiveMedia({
+  defaultAnimation: 'Walk',
+  webmPreview: media.webmPreview,
+  webpPoster: base + 'preview.png',
+  webmPreviewMedium: media.webmPreviewMedium,
+  webpPosterMedium: media.webpPosterMedium,
+});
+assert.equal(invalidHighWithValidLowerTiers.ok, true,
+  'a non-WebP high poster must not suppress a valid same-animation medium pair');
+assert.deepEqual(invalidHighWithValidLowerTiers.invalidTiers, ['high']);
+assert.deepEqual(invalidHighWithValidLowerTiers.pairs.map((pair) => pair.tier), ['medium']);
+
 assert.equal(validateArchiveMediaUrl(
   base + 'preview.webm?v=live',
   'https://spine-link.vercel.app',
@@ -180,6 +216,8 @@ assert.match(script, /includeRootArchiveIndex/);
 assert.match(script, /selectArchiveMediaPreflight/);
 assert.match(script, /shouldRunArchiveMediaAudit/);
 assert.match(script, /classifyArchiveEntryStatus\(entry\)/);
+assert.match(script, /incompleteTierEntries/);
+assert.match(script, /invalidTierEntries/);
 const statusAuditBlock = script.slice(script.indexOf("const status = classifyArchiveEntryStatus(entry)"),
   script.indexOf("const selected = resolveExactArchiveMedia(entry)"));
 assert.doesNotMatch(statusAuditBlock, /continue/,
