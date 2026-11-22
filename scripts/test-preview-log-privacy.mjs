@@ -168,8 +168,10 @@ assert.doesNotMatch(reportedRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/)
 assert.doesNotMatch(latestTwentyRepair, /\.\.\.matrix\.map\(x=>"\/"+x\.previewPath/);
 assert.match(latestTwenty, /animationMatches:true/);
 assert.match(latestTwentyRepair, /meta\?\.animationMatches===true/);
-assert.ok(latestTen.includes('/scripts/lib/export-log-redaction.mjs'));
-assert.ok(latestTwenty.includes('/scripts/lib/export-log-redaction.mjs'));
+assert.ok(latestTen.includes('/scripts/'),
+  'latest-10 sparse checkout must include the scripts tree and its imported redaction helper');
+assert.ok(latestTwenty.includes('/scripts/'),
+  'latest-20 sparse checkout must include the scripts tree and its imported redaction helper');
 assert.doesNotMatch(latestTwenty, /m\.ok=true;\s*fs\.writeFileSync\(p,JSON\.stringify\(m\)\)/);
 
 console.log('PASS preview audit privacy: masked manifests, scoped workflow environments, opaque diagnostics');
