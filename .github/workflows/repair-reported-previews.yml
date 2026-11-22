@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/repair-reported-previews.yml
+      - scripts/mask-preview-manifest.mjs
+      - scripts/lib/preview-manifest-redaction.mjs
+      - scripts/test-preview-log-privacy.mjs
       - scripts/recover-recorded-webm.mjs
       - scripts/lib/recovered-animation-choice.mjs
       - scripts/test-recovered-animation-choice.mjs
@@ -71,6 +74,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/repair-last-ten-previews.yml
+            /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/verify-reported-preview-live.yml
             /scripts/
             /api/github-preview.js
@@ -107,6 +112,7 @@ jobs:
           node scripts/test-reported-preview-live-status.mjs
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
+          node scripts/test-preview-log-privacy.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   app-build:
     name: Build app and validate preview API
@@ -136,13 +142,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    env:
-      ENTRY_ID: ${{ matrix.entry.id }}
-      PREVIEW_PATH: ${{ matrix.entry.previewPath }}
-      ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-      ENTRY_READY: ${{ matrix.entry.ready }}
-      ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
-      REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -162,7 +161,15 @@ jobs:
             /public/vendor-spine-player-3.8.css
             /library/index.json
             /library_*/index.json
-      - name: Mask private metadata and hydrate exact source
+      - name: Mask private source metadata and hydrate exact source
+        env:
+          ENTRY_ID: ${{ matrix.entry.id }}
+          ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
+          PREVIEW_PATH: ${{ matrix.entry.previewPath }}
+          ENTRY_ANIMATION: ${{ matrix.entry.animation }}
+          ENTRY_READY: ${{ matrix.entry.ready }}
+          ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
+          REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
         shell: bash
         run: |
           set -euo pipefail
@@ -285,14 +292,17 @@ jobs:
     concurrency:
       group: spine-library-commit
       cancel-in-progress: false
-    env:
-      REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
-          sparse-checkout: ${{ needs.inventory.outputs.sparseCheckout }}
+          sparse-checkout: |
+            /scripts/
+            /library/index.json
+            /library_*/index.json
       - name: Mask and hydrate exact reported source directories
+        env:
+          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         shell: bash
         run: |
           set -euo pipefail
