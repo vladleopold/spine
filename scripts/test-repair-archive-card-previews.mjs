@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { animationAssetPath, isPublicPreviewRepairCandidate } from './repair-archive-card-previews.mjs';
 import { previewSourceFingerprint, repairRecordTimestamp, validateFrozenRepairRecord } from './repair-manifest-guard.mjs';
 import { readFileSync } from 'node:fs';
+import { listVisibleArchiveEntries } from './lib/archive-live-media-audit.mjs';
 
 const entry = { id: 'sp_hyjingx_data-2026-10-03T14-25-07-486Z' };
 const previewPath = 'library_01/' + entry.id;
@@ -158,8 +159,17 @@ test('matrix render job names do not expose per-work identifiers', () => {
 
 test('live media verifier excludes hidden works and never logs work identifiers', () => {
   const verifier = readFileSync(new URL('./verify-ready-preview-live.mjs', import.meta.url), 'utf8');
-  assert.match(verifier, /hiddenFromPublicLibrary !== true/);
-  assert.match(verifier, /testOnly !== true/);
+  const archiveAudit = readFileSync(new URL('./lib/archive-live-media-audit.mjs', import.meta.url), 'utf8');
+  assert.match(verifier, /listVisibleArchiveEntries\(collections\)/);
+  assert.match(archiveAudit, /entry\.hiddenFromPublicLibrary === true \|\| entry\.testOnly === true/);
+  assert.match(archiveAudit, /if \(!hasPreviewMetadata\) continue/);
+  const visible = listVisibleArchiveEntries([{ folder: 'library_01', entries: [
+    { id: 'public', webmPreview: 'https://example.invalid/public.webm' },
+    { id: 'hidden', hiddenFromPublicLibrary: true, webmPreview: 'https://example.invalid/hidden.webm' },
+    { id: 'test', testOnly: true, webmPreview: 'https://example.invalid/test.webm' },
+    { id: 'metadata-missing' },
+  ] }]);
+  assert.deepEqual(visible.map(({ entry }) => entry.id), ['public']);
   assert.match(verifier, /Invalid production media URL in public entry/);
   assert.match(verifier, /return \{ok:true,ext:t\.ext,bytes:data\.length\}/);
   assert.match(verifier, /return \{ok:false,ext:t\.ext,error:last\}/);
