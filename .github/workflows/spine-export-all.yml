@@ -140,11 +140,15 @@ jobs:
           NODE
           while IFS= read -r uploadId; do
             [ -z "$uploadId" ] && continue
-            echo "=== Exporting $uploadId ==="
-            node scripts/spine-export-webm.mjs \
+            if node scripts/spine-export-webm.mjs \
               --upload-id="$uploadId" \
               --repo-path="${{ github.workspace }}" \
-              --output="${{ github.workspace }}/$uploadId-preview.webm" || echo "Export failed for $uploadId (recorded as error)"
+              --output="${{ github.workspace }}/$uploadId-preview.webm" \
+              > "$RUNNER_TEMP/spine-export.log" 2>&1; then
+              echo "EXPORT_SUCCEEDED"
+            else
+              echo "EXPORT_FAILED"
+            fi
           done < batch-ids.txt
 
       - name: Prepare Artifacts
@@ -200,6 +204,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/resolve-library.mjs
+            /scripts/merge-export-artifacts.mjs
+            /scripts/lib/export-preview-artifact.mjs
             /library/index.json
             /library_*/index.json
       
@@ -215,124 +221,8 @@ jobs:
           pattern: export-*
           merge-multiple: false
           
-      - name: Process artifacts and update index
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            const repoRoot = process.cwd();
-            const { pathToFileURL } = require('node:url');
-            const { entryForUpload } = await import(pathToFileURL(path.resolve(repoRoot, 'scripts/resolve-library.mjs')).href);
-            
-            const origin = 'https://spine-link.vercel.app';
-            // Each work may live in a different library_NN folder, so the folder
-            // and its index are resolved per upload and flushed at the end.
-            const touchedIndexes = new Map();
-            
-            const artifactsDir = 'downloaded-artifacts';
-            if (!fs.existsSync(artifactsDir)) {
-              console.log("No artifacts found.");
-              return;
-            }
-            
-            // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used a
-            // flat `export-<uploadId>/`, so both layouts are accepted.
-            function collectExportDirs(root) {
-              const out = [];
-              for (const name of fs.readdirSync(root)) {
-                const jobDir = path.join(root, name);
-                if (!fs.statSync(jobDir).isDirectory()) continue;
-                const entries = fs.readdirSync(jobDir);
-                if (!entries.length) continue;
-                const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
-                if (nested.length) {
-                  for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
-                } else if (/^export-/.test(name)) {
-                  out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
-                }
-              }
-              return out;
-            }
-            
-            const dirs = collectExportDirs(artifactsDir);
-            for (const { uploadId, sourceDir } of dirs) {
-              const found = entryForUpload(repoRoot, uploadId);
-              if (!found) {
-                console.log(`Skipping ${uploadId}: no collection folder holds it.`);
-                continue;
-              }
-              const basePath = found.basePath;
-              const indexPath = path.join(repoRoot, basePath, 'index.json');
-              if (!touchedIndexes.has(basePath)) {
-                touchedIndexes.set(basePath, { indexPath, indexData: found.index });
-              }
-              const indexData = touchedIndexes.get(basePath).indexData;
-              const targetDir = path.join(basePath, uploadId);
-              
-              if (!fs.existsSync(targetDir)) {
-                fs.mkdirSync(targetDir, { recursive: true });
-              }
-              
-              // Move files
-              const files = fs.readdirSync(sourceDir);
-              const uploadedUrls = {};
-              let videoMeta = {};
-              let isError = false;
-              
-              for (const file of files) {
-                if (file === 'meta.json') {
-                  try {
-                    videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8'));
-                    if (videoMeta.error) isError = true;
-                  } catch(e) {}
-                  continue;
-                }
-                
-                const cleanFileName = file.replace(uploadId + '-', '');
-                const targetPath = path.join(targetDir, cleanFileName);
-                fs.copyFileSync(path.join(sourceDir, file), targetPath);
-                
-                const relativeTarget = `${basePath}/${uploadId}/${cleanFileName}`;
-                
-                if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = `${origin}/assets/${relativeTarget}`;
-                if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = `${origin}/assets/${relativeTarget}`;
-                if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = `${origin}/assets/${relativeTarget}`;
-                if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = `${origin}/assets/${relativeTarget}`;
-                if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = `${origin}/assets/${relativeTarget}`;
-                if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = `${origin}/assets/${relativeTarget}`;
-              }
-              
-              // Update index
-              const entryIndex = indexData.findIndex(e => e.id === uploadId);
-              if (entryIndex !== -1) {
-                delete indexData[entryIndex].webmChunksJson;
-                delete indexData[entryIndex].webmChunks;
-                delete indexData[entryIndex].webmChunkCount;
-                delete indexData[entryIndex].webmIsChunked;
-                
-                indexData[entryIndex] = {
-                  ...indexData[entryIndex],
-                  ...uploadedUrls,
-                  webmPreviewPath: isError ? undefined : `${basePath}/${uploadId}/preview.webm`,
-                  webmStatus: isError ? 'error' : 'ready',
-                  webmError: isError ? videoMeta.error : undefined,
-                  webmGeneratedAt: new Date().toISOString(),
-                  ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
-                  ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
-                  ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
-                  ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
-                  ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
-                };
-              }
-            }
-            
-            for (const [basePath, { indexPath, indexData }] of touchedIndexes) {
-              fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
-              console.log(`Updated ${basePath}/index.json`);
-            }
-            console.log("Updated index.json successfully");
-
+      - name: Validate exact-animation artifacts and update index
+        run: node scripts/merge-export-artifacts.mjs downloaded-artifacts
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
@@ -349,101 +239,8 @@ jobs:
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
             
-            # 2. Re-run the artifact processing script on top of fresh state
-            node --input-type=module -e "
-              import fs from 'node:fs';
-              import path from 'node:path';
-              import { entryForUpload } from './scripts/resolve-library.mjs';
-              
-              const origin = 'https://spine-link.vercel.app';
-              const repoRoot = process.cwd();
-              // Each work may live in a different library_NN folder, so the folder
-              // and its index are resolved per upload and flushed at the end.
-              const touched = new Map();
-              
-              const artifactsDir = 'downloaded-artifacts';
-              if (!fs.existsSync(artifactsDir)) { console.log('No artifacts dir'); process.exit(0); }
-              
-              // Each matrix job uploads `export-<n>/<uploadId>/`; older runs used
-              // a flat `export-<uploadId>/`, so both layouts are accepted.
-              function collectExportDirs(root) {
-                const out = [];
-                for (const name of fs.readdirSync(root)) {
-                  const jobDir = path.join(root, name);
-                  if (!fs.statSync(jobDir).isDirectory()) continue;
-                  const entries = fs.readdirSync(jobDir);
-                  if (!entries.length) continue;
-                  const nested = entries.filter((child) => fs.statSync(path.join(jobDir, child)).isDirectory());
-                  if (nested.length) {
-                    for (const child of nested) out.push({ uploadId: child, sourceDir: path.join(jobDir, child) });
-                  } else if (/^export-/.test(name)) {
-                    out.push({ uploadId: name.replace(/^export-/, ''), sourceDir: jobDir });
-                  }
-                }
-                return out;
-              }
-              
-              const dirs = collectExportDirs(artifactsDir);
-              for (const { uploadId, sourceDir } of dirs) {
-                const found = entryForUpload(repoRoot, uploadId);
-                if (!found) { console.log('Skipping ' + uploadId + ': not in any collection.'); continue; }
-                const basePath = found.basePath;
-                const indexPath = path.join(repoRoot, basePath, 'index.json');
-                if (!touched.has(basePath)) touched.set(basePath, { indexPath, indexData: found.index });
-                const indexData = touched.get(basePath).indexData;
-                const targetDir = path.join(basePath, uploadId);
-                
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                
-                const files = fs.readdirSync(sourceDir);
-                const uploadedUrls = {};
-                let videoMeta = {};
-                let isError = false;
-                
-                for (const file of files) {
-                  if (file === 'meta.json') {
-                    try { videoMeta = JSON.parse(fs.readFileSync(path.join(sourceDir, file), 'utf8')); if (videoMeta.error) isError = true; } catch(e) {}
-                    continue;
-                  }
-                  const cleanFileName = file.replace(uploadId + '-', '');
-                  const targetPath = path.join(targetDir, cleanFileName);
-                  fs.copyFileSync(path.join(sourceDir, file), targetPath);
-                  const relativeTarget = \`\${basePath}/\${uploadId}/\${cleanFileName}\`;
-                  if (file.endsWith('-preview.webm')) uploadedUrls['webmPreview'] = \`\${origin}/assets/\${relativeTarget}\`;
-                  if (file.endsWith('-preview-medium.webm')) uploadedUrls['webmPreviewMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
-                  if (file.endsWith('-preview-low.webm')) uploadedUrls['webmPreviewLow'] = \`\${origin}/assets/\${relativeTarget}\`;
-                  if (file.endsWith('-preview.webp')) uploadedUrls['webpPoster'] = \`\${origin}/assets/\${relativeTarget}\`;
-                  if (file.endsWith('-preview-medium.webp')) uploadedUrls['webpPosterMedium'] = \`\${origin}/assets/\${relativeTarget}\`;
-                  if (file.endsWith('-preview-low.webp')) uploadedUrls['webpPosterLow'] = \`\${origin}/assets/\${relativeTarget}\`;
-                }
-                
-                const entryIndex = indexData.findIndex(e => e.id === uploadId);
-                if (entryIndex !== -1) {
-                  delete indexData[entryIndex].webmChunksJson;
-                  delete indexData[entryIndex].webmChunks;
-                  delete indexData[entryIndex].webmChunkCount;
-                  delete indexData[entryIndex].webmIsChunked;
-                  indexData[entryIndex] = {
-                    ...indexData[entryIndex],
-                    ...uploadedUrls,
-                    webmPreviewPath: isError ? undefined : \`\${basePath}/\${uploadId}/preview.webm\`,
-                    webmStatus: isError ? 'error' : 'ready',
-                    webmError: isError ? videoMeta.error : undefined,
-                    webmGeneratedAt: new Date().toISOString(),
-                    ...(videoMeta.width > 0 ? { previewWidth: videoMeta.width } : {}),
-                    ...(videoMeta.height > 0 ? { previewHeight: videoMeta.height } : {}),
-                    ...(videoMeta.animationDuration > 0 ? { previewDuration: videoMeta.animationDuration } : {}),
-                    ...(videoMeta.skeletonWidth > 0 ? { skeletonWidth: videoMeta.skeletonWidth } : {}),
-                    ...(videoMeta.skeletonHeight > 0 ? { skeletonHeight: videoMeta.skeletonHeight } : {}),
-                  };
-                }
-              }
-              for (const [basePath, { indexPath, indexData }] of touched) {
-                fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
-                console.log('updated ' + basePath + '/index.json');
-              }
-            "
-            
+            # 2. Revalidate the same artifacts against the freshly fetched index.
+            node scripts/merge-export-artifacts.mjs downloaded-artifacts
             # 3. Stage changes
             git add --sparse -A -- library*
             
