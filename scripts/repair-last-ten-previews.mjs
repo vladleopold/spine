@@ -139,7 +139,7 @@ if(action==="matrix"){
     if(!expectedAnimation||choosePreviewAnimation([],item.animation)!==expectedAnimation){
       record.webmStatus="blocked-missing-animation-selection";
       record.previewStatus="blocked";
-      record.previewError="No exact default animation is selected; preview rendering will not guess or substitute an animation";
+      record.previewError="No explicit default animation is selected; existing media cannot be attributed to an exact source animation";
       summary.blocked++;
       continue;
     }
