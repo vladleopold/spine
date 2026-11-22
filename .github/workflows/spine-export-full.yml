@@ -8,12 +8,16 @@ on:
     branches: [main]
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/spine-export-all.yml
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
       - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
+      - scripts/merge-export-artifacts.mjs
+      - scripts/lib/export-preview-artifact.mjs
+      - scripts/test-export-preview-artifact.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
       - scripts/repair-reported-previews.mjs
@@ -32,12 +36,16 @@ on:
   pull_request:
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/spine-export-all.yml
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
       - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
+      - scripts/merge-export-artifacts.mjs
+      - scripts/lib/export-preview-artifact.mjs
+      - scripts/test-export-preview-artifact.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
       - scripts/repair-reported-previews.mjs
@@ -70,6 +78,7 @@ jobs:
             /scripts/
             /library_02/index.json
             /.github/workflows/spine-export-full.yml
+            /.github/workflows/spine-export-all.yml
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
@@ -92,6 +101,9 @@ jobs:
           node --check scripts/mask-preview-manifest.mjs
           node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
+          node --check scripts/lib/export-preview-artifact.mjs
+          node --check scripts/merge-export-artifacts.mjs
+          node scripts/test-export-preview-artifact.mjs
           node scripts/test-preview-log-privacy.mjs
           node --check scripts/verify-ready-preview-live.mjs
           node --check scripts/lib/archive-live-media-audit.mjs
