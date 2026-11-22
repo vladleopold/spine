@@ -160,7 +160,10 @@ assert.equal(classifyArchiveMediaHttpStatus(403), 'blocked');
 assert.equal(classifyArchiveMediaHttpStatus(404), 'failed');
 assert.equal(classifyArchiveMediaHttpStatus(503), 'blocked');
 
-assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready' }), 'ready');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready' }), 'failed',
+  'a ready WebM without previewStatus=ready is hidden by the archive UI and must not be counted ready');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready', previewStatus: 'ready' }), 'ready');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready', previewStatus: '' }), 'failed');
 assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready', previewStatus: 'failed' }), 'failed');
 assert.equal(classifyArchiveEntryStatus({ webmStatus: 'failed', previewStatus: 'failed' }), 'failed');
 assert.equal(classifyArchiveEntryStatus({ webmStatus: 'error' }), 'failed');
