@@ -8,6 +8,8 @@ on:
       - .github/workflows/spine-export-all.yml
       - scripts/repair-archive-card-previews.mjs
       - scripts/test-repair-archive-card-previews.mjs
+      - scripts/merge-export-artifacts.mjs
+      - scripts/lib/export-preview-artifact.mjs
       - scripts/lib/archive-live-media-audit.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/repair-manifest-guard.mjs
@@ -17,6 +19,8 @@ on:
       - .github/workflows/repair-archive-card-previews.yml
       - scripts/repair-archive-card-previews.mjs
       - scripts/test-repair-archive-card-previews.mjs
+      - scripts/merge-export-artifacts.mjs
+      - scripts/lib/export-preview-artifact.mjs
       - scripts/lib/archive-live-media-audit.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/repair-manifest-guard.mjs
@@ -43,6 +47,8 @@ jobs:
             /scripts/lib/archive-live-media-audit.mjs
             /scripts/lib/first-frame-poster.mjs
             /scripts/test-repair-archive-card-previews.mjs
+            /scripts/merge-export-artifacts.mjs
+            /scripts/lib/export-preview-artifact.mjs
             /scripts/verify-ready-preview-live.mjs
             /.github/workflows/repair-archive-card-previews.yml
             /.github/workflows/spine-export-all.yml
