@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {
+  classifyArchiveEntryStatus,
   includeRootArchiveIndex,
   listVisibleArchiveEntries,
   selectArchiveMediaPreflight,
@@ -123,13 +124,31 @@ assert.equal(classifyArchiveMediaHttpStatus(403), 'blocked');
 assert.equal(classifyArchiveMediaHttpStatus(404), 'failed');
 assert.equal(classifyArchiveMediaHttpStatus(503), 'blocked');
 
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready' }), 'ready');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'ready', previewStatus: 'failed' }), 'failed');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'failed', previewStatus: 'failed' }), 'failed');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'error' }), 'failed');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'blocked-missing-source', previewStatus: 'blocked' }), 'blocked');
+assert.equal(classifyArchiveEntryStatus({ webmStatus: 'pending' }), 'blocked');
+
+const failedButExact = {
+  defaultAnimation: 'Walk',
+  webmStatus: 'failed',
+  previewStatus: 'failed',
+  webmPreview: media.webmPreview,
+  webpPoster: media.webpPoster,
+};
+assert.equal(classifyArchiveEntryStatus(failedButExact), 'failed');
+assert.equal(resolveExactArchiveMedia(failedButExact).ok, true,
+  'a failed status must not suppress byte-level inspection of its exact selected media');
+
 const preflightCandidates = [
-  { folder: 'library_01', slot: 1, previewPath: 'library_01/a', pairs: [{ tier: 'high', webm: 'a.webm', poster: 'a.webp' }] },
-  { folder: 'library_01', slot: 2, previewPath: 'library_01/b', pairs: [{ tier: 'high', webm: 'b.webm', poster: 'b.webp' }] },
-  { folder: 'library_02', slot: 3, previewPath: 'library_02/c', pairs: [{ tier: 'high', webm: 'c.webm', poster: 'c.webp' }] },
+  { folder: 'library_01', slot: 1, status: 'failed', previewPath: 'library_01/a', pairs: [{ tier: 'high', webm: 'a.webm', poster: 'a.webp' }] },
+  { folder: 'library_01', slot: 2, status: 'ready', previewPath: 'library_01/b', pairs: [{ tier: 'high', webm: 'b.webm', poster: 'b.webp' }] },
+  { folder: 'library_02', slot: 3, status: 'blocked', previewPath: 'library_02/c', pairs: [{ tier: 'high', webm: 'c.webm', poster: 'c.webp' }] },
 ];
 const preflight = selectArchiveMediaPreflight(preflightCandidates, 4);
-assert.deepEqual(preflight.map((item) => item.slot), [1, 3],
+assert.deepEqual(preflight.map((item) => item.slot), [2, 3],
   'preflight probes one exact high-quality pair per collection');
 assert.equal(shouldRunArchiveMediaAudit(402, [{ ok: false, classification: 'blocked' }], 2), false,
   'when the page and every sampled media pair are blocked, stop before a full archive sweep');
@@ -160,6 +179,11 @@ assert.match(script, /readIndex\(root, '\.'\)/,
 assert.match(script, /includeRootArchiveIndex/);
 assert.match(script, /selectArchiveMediaPreflight/);
 assert.match(script, /shouldRunArchiveMediaAudit/);
+assert.match(script, /classifyArchiveEntryStatus\(entry\)/);
+const statusAuditBlock = script.slice(script.indexOf("const status = classifyArchiveEntryStatus(entry)"),
+  script.indexOf("const selected = resolveExactArchiveMedia(entry)"));
+assert.doesNotMatch(statusAuditBlock, /continue/,
+  'failed and blocked status labels must not suppress exact media inspection');
 assert.match(script, /await Promise\.all\(preflightTasks\.map\(\(task\) => verifyPair\(task\)\)\)/);
 assert.doesNotMatch(script, /while\s*\(cursor\s*<\s*remainingTasks\.length\s*&&/,
   'one blocked media pair must not stop checks of other public cards');
@@ -177,7 +201,7 @@ assert.match(workflow, /^\s+\/index\.json$/m,
   'the hourly sparse checkout must include the root index');
 assert.match(reportedWorkflow, /node scripts\/test-verify-ready-preview-live\.mjs/,
   'the PR inventory gate must execute the full-archive regression test');
-assert.match(reportedWorkflow, /\/index\.json/,
+assert.match(reportedWorkflow, /^\s+\/index\.json$/m,
   'the PR inventory checkout must include the root index');
 assert.doesNotMatch(script, /console\.log\([^\n]*(?:entry\.id|entry\.defaultAnimation|previewPath)/,
   'public audit logs must not expose work names or private source paths');

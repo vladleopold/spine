@@ -21,13 +21,27 @@ export function includeRootArchiveIndex(collections, rootEntries) {
   return result;
 }
 
+export function classifyArchiveEntryStatus(entry) {
+  const webmStatus = typeof entry?.webmStatus === 'string' ? entry.webmStatus : '';
+  const previewStatus = typeof entry?.previewStatus === 'string' ? entry.previewStatus : '';
+
+  if (webmStatus === 'failed' || webmStatus === 'error' || previewStatus === 'failed') return 'failed';
+  if (webmStatus.startsWith('blocked-') || previewStatus === 'blocked' ||
+      webmStatus === 'pending' || previewStatus === 'pending') return 'blocked';
+  if (webmStatus === 'ready') return previewStatus && previewStatus !== 'ready' ? 'failed' : 'ready';
+  return 'not-ready';
+}
+
 export function selectArchiveMediaPreflight(candidates, maxFolders = 4) {
   const selected = [];
   const seenFolders = new Set();
   const limit = Math.max(0, Number(maxFolders) || 0);
   if (limit === 0) return selected;
 
-  for (const candidate of Array.isArray(candidates) ? candidates : []) {
+  const ordered = (Array.isArray(candidates) ? [...candidates] : [])
+    .sort((left, right) => Number(right?.status === 'ready') - Number(left?.status === 'ready'));
+
+  for (const candidate of ordered) {
     const folder = String(candidate?.folder || '');
     if (seenFolders.has(folder)) continue;
     const pairs = Array.isArray(candidate?.pairs) ? candidate.pairs : [];

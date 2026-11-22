@@ -8,6 +8,7 @@ import { execFileSync } from 'node:child_process';
 import { readIndex, listCollectionFolders } from './resolve-library.mjs';
 import {
   includeRootArchiveIndex,
+  classifyArchiveEntryStatus,
   listVisibleArchiveEntries,
   resolveExactArchiveMedia,
   validateArchiveMediaUrl,
@@ -34,38 +35,21 @@ let blockedEntries = 0;
 let failedEntries = 0;
 let notReadyEntries = 0;
 let staleReadyEntries = 0;
+let missingExactPairEntries = 0;
+let invalidPairEntries = 0;
 const candidates = [];
 
 for (let slot = 0; slot < visible.length; slot += 1) {
   const { folder, entry } = visible[slot];
-  const webmStatus = typeof entry.webmStatus === 'string' ? entry.webmStatus : '';
-  const previewStatus = typeof entry.previewStatus === 'string' ? entry.previewStatus : '';
-
-  if (webmStatus === 'failed' || previewStatus === 'failed') {
-    failedEntries += 1;
-    continue;
-  }
-  if (webmStatus !== 'ready') {
-    if (webmStatus.startsWith('blocked-') || previewStatus === 'blocked' ||
-        webmStatus === 'pending' || previewStatus === 'pending') {
-      blockedEntries += 1;
-    } else {
-      notReadyEntries += 1;
-    }
-    continue;
-  }
-  if (previewStatus === 'blocked' || previewStatus === 'pending') {
-    blockedEntries += 1;
-    continue;
-  }
-  if (previewStatus && previewStatus !== 'ready') {
-    failedEntries += 1;
-    continue;
-  }
+  const status = classifyArchiveEntryStatus(entry);
+  if (status === 'failed') failedEntries += 1;
+  else if (status === 'blocked') blockedEntries += 1;
+  else if (status === 'not-ready') notReadyEntries += 1;
 
   const selected = resolveExactArchiveMedia(entry);
   if (!selected.ok) {
-    staleReadyEntries += 1;
+    missingExactPairEntries += 1;
+    if (status === 'ready') staleReadyEntries += 1;
     continue;
   }
 
@@ -75,10 +59,10 @@ for (let slot = 0; slot < visible.length; slot += 1) {
     validateArchiveMediaUrl(pair.webm, origin, previewPath, pair.webmName) &&
     validateArchiveMediaUrl(pair.poster, origin, previewPath, pair.posterName));
   if (!validPairs) {
-    failedEntries += 1;
+    invalidPairEntries += 1;
     continue;
   }
-  candidates.push({ slot, folder, previewPath, pairs: selected.pairs });
+  candidates.push({ slot, folder, previewPath, pairs: selected.pairs, status });
 }
 
 const tasks = candidates.flatMap((candidate) => candidate.pairs.map((pair) => ({
@@ -93,9 +77,15 @@ const summary = {
   rootIndexEntries: rootIndex.length,
   visibleEntries: visible.length,
   declaredReadyEntries: visible.filter(({ entry }) => entry.webmStatus === 'ready').length,
-  readyEntries: candidates.length,
+  readyEntries: candidates.filter((item) => item.status === 'ready').length,
+  exactMediaEntries: candidates.length,
+  blockedExactMediaEntries: candidates.filter((item) => item.status === 'blocked').length,
+  failedExactMediaEntries: candidates.filter((item) => item.status === 'failed').length,
+  notReadyExactMediaEntries: candidates.filter((item) => item.status === 'not-ready').length,
   blockedEntries,
   staleReadyEntries,
+  missingExactPairEntries,
+  invalidPairEntries,
   failedEntries,
   notReadyEntries,
   mediaPairs: tasks.length,
@@ -217,6 +207,7 @@ function recordResult(result, task) {
     console.log('ARCHIVE_MEDIA_PAIR=' + JSON.stringify({
       slot: task.slot,
       tier: task.tier,
+      declaredStatus: task.status || 'unknown',
       ok: Boolean(result.ok),
       code: result.code || '',
       webmBytes: result.webmBytes || 0,
@@ -289,9 +280,10 @@ console.log('ARCHIVE_PRODUCTION_MEDIA_AUDIT=' + JSON.stringify(summary));
 
 const originClass = classifyArchiveMediaHttpStatus(originStatus);
 if (originClass === 'failed' || summary.failedEntries > 0 ||
-    summary.failedPairs > 0 || summary.staleReadyEntries > 0) {
+    summary.failedPairs > 0 || summary.staleReadyEntries > 0 || summary.invalidPairEntries > 0) {
   process.exitCode = 1;
-} else if (originBlockedReason || assetBlockedReason ||
+} else if (originBlockedReason || assetBlockedReason || summary.blockedEntries > 0 ||
+    summary.notReadyEntries > 0 || summary.missingExactPairEntries > 0 ||
     (summary.readyEntries === 0 && summary.visibleEntries > 0)) {
   process.exitCode = 2;
 }
