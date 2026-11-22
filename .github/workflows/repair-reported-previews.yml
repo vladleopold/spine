@@ -8,6 +8,10 @@ on:
       - .github/workflows/synthetic-webm-render-gate.yml
       - .github/workflows/repair-last-ten-previews.yml
       - .github/workflows/repair-latest-twenty-previews.yml
+      - .github/workflows/verify-spine-production-media.yml
+      - scripts/verify-ready-preview-live.mjs
+      - scripts/lib/archive-live-media-audit.mjs
+      - scripts/test-verify-ready-preview-live.mjs
       - scripts/repair-last-ten-previews.mjs
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/test-repair-existing-media-gates.mjs
@@ -30,6 +34,10 @@ on:
       - .github/workflows/synthetic-webm-render-gate.yml
       - .github/workflows/repair-last-ten-previews.yml
       - .github/workflows/repair-latest-twenty-previews.yml
+      - .github/workflows/verify-spine-production-media.yml
+      - scripts/verify-ready-preview-live.mjs
+      - scripts/lib/archive-live-media-audit.mjs
+      - scripts/test-verify-ready-preview-live.mjs
       - scripts/repair-last-ten-previews.mjs
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/test-repair-existing-media-gates.mjs
@@ -96,12 +104,14 @@ jobs:
             /.github/workflows/synthetic-webm-render-gate.yml
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
+            /.github/workflows/verify-spine-production-media.yml
             /.github/workflows/verify-reported-preview-live.yml
             /scripts/
             /api/github-preview.js
             /api/github-upload.js
             /lib/spine-data-science.js
             /src/SpineApp.tsx
+            /index.json
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
@@ -136,6 +146,9 @@ jobs:
           node scripts/test-reported-preview-live.mjs
           node scripts/test-reported-preview-live-workflow.mjs
           node scripts/test-reported-preview-media-verification.mjs
+          node --check scripts/verify-ready-preview-live.mjs
+          node --check scripts/lib/archive-live-media-audit.mjs
+          node scripts/test-verify-ready-preview-live.mjs
           node scripts/test-repair-existing-media-gates.mjs
           echo "REPORTED_PREVIEWS_INVENTORY_VALID"
   app-build:

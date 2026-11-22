@@ -13,6 +13,9 @@ on:
       - scripts/verify-poster-first-frame.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/resolve-library.mjs
+      - index.json
+      - library/index.json
+      - library_*/index.json
   workflow_dispatch:
 permissions:
   contents: read
@@ -36,6 +39,7 @@ jobs:
             /scripts/verify-preview-motion.mjs
             /scripts/verify-poster-first-frame.mjs
             /scripts/lib/first-frame-poster.mjs
+            /index.json
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4

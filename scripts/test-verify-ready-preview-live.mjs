@@ -2,7 +2,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {
+  includeRootArchiveIndex,
   listVisibleArchiveEntries,
+  selectArchiveMediaPreflight,
+  shouldRunArchiveMediaAudit,
   resolveExactArchiveMedia,
   validateArchiveMediaUrl,
   classifyArchiveMediaHttpStatus,
@@ -31,6 +34,27 @@ const visible = listVisibleArchiveEntries(collections);
 assert.equal(visible.length, 15, 'the audit must retain all public entries across every shard');
 assert.equal(visible[0].folder, 'library_01');
 assert.equal(visible[14].folder, 'library_02');
+
+const rootEntry = {
+  id: 'legacy-root-entry',
+  defaultAnimation: 'Walk',
+  webmStatus: 'ready',
+  webmPreview: media.webmPreview,
+  thumbnailPoster: base + 'legacy-preview.webp',
+};
+const withRoot = includeRootArchiveIndex(
+  [...collections, { folder: 'library', entries: [] }],
+  [rootEntry],
+);
+const allVisible = listVisibleArchiveEntries(withRoot);
+assert.equal(allVisible.length, 16, 'the root index must be included alongside every sharded index');
+assert.equal(allVisible.find((item) => item.entry.id === 'legacy-root-entry')?.folder, 'library');
+assert.equal(
+  includeRootArchiveIndex([{ folder: 'library', entries: [{ id: 'same' }] }], [{ id: 'same' }, { id: 'root-only' }])
+    .find((item) => item.folder === 'library').entries.length,
+  2,
+  'root-index merge must not duplicate an id already present in the bare library shard',
+);
 
 const exact = resolveExactArchiveMedia({
   defaultAnimation: ' Walk ',
@@ -99,6 +123,29 @@ assert.equal(classifyArchiveMediaHttpStatus(403), 'blocked');
 assert.equal(classifyArchiveMediaHttpStatus(404), 'failed');
 assert.equal(classifyArchiveMediaHttpStatus(503), 'blocked');
 
+const preflightCandidates = [
+  { folder: 'library_01', slot: 1, previewPath: 'library_01/a', pairs: [{ tier: 'high', webm: 'a.webm', poster: 'a.webp' }] },
+  { folder: 'library_01', slot: 2, previewPath: 'library_01/b', pairs: [{ tier: 'high', webm: 'b.webm', poster: 'b.webp' }] },
+  { folder: 'library_02', slot: 3, previewPath: 'library_02/c', pairs: [{ tier: 'high', webm: 'c.webm', poster: 'c.webp' }] },
+];
+const preflight = selectArchiveMediaPreflight(preflightCandidates, 4);
+assert.deepEqual(preflight.map((item) => item.slot), [1, 3],
+  'preflight probes one exact high-quality pair per collection');
+assert.equal(shouldRunArchiveMediaAudit(402, [{ ok: false, classification: 'blocked' }], 2), false,
+  'when the page and every sampled media pair are blocked, stop before a full archive sweep');
+assert.equal(shouldRunArchiveMediaAudit(402, [{ ok: true }], 2), true,
+  'a blocked HTML route must not suppress a full media audit when a static pair is reachable');
+assert.equal(shouldRunArchiveMediaAudit(402, [{ ok: false, classification: 'failed' }], 2), true,
+  'an individual missing asset must not suppress checks of the remaining archive');
+assert.equal(shouldRunArchiveMediaAudit(200, [], 2), true);
+assert.equal(shouldRunArchiveMediaAudit(402, [], 0), false);
+
+assert.equal(resolveExactArchiveMedia({
+  defaultAnimation: '__proto__',
+  allAnimationPreviews: {},
+}).reason, 'MISSING_EXACT_ANIMATION_MEDIA',
+  'inherited object properties must not satisfy an exact animation-map lookup');
+
 assert.equal(hasWebmSignature(Uint8Array.from([0x1a, 0x45, 0xdf, 0xa3, ...new Array(128).fill(0)])), true);
 assert.equal(hasWebpSignature(Uint8Array.from([
   0x52, 0x49, 0x46, 0x46, 0, 0, 0, 0, 0x57, 0x45, 0x42, 0x50,
@@ -107,6 +154,15 @@ assert.equal(hasWebpSignature(Uint8Array.from([
 
 const script = fs.readFileSync(new URL('./verify-ready-preview-live.mjs', import.meta.url), 'utf8');
 const workflow = fs.readFileSync(new URL('../.github/workflows/verify-spine-production-media.yml', import.meta.url), 'utf8');
+const reportedWorkflow = fs.readFileSync(new URL('../.github/workflows/repair-reported-previews.yml', import.meta.url), 'utf8');
+assert.match(script, /readIndex\(root, '\.'\)/,
+  'the hourly audit must read the legacy root index as well as collection shards');
+assert.match(script, /includeRootArchiveIndex/);
+assert.match(script, /selectArchiveMediaPreflight/);
+assert.match(script, /shouldRunArchiveMediaAudit/);
+assert.match(script, /await Promise\.all\(preflightTasks\.map\(\(task\) => verifyPair\(task\)\)\)/);
+assert.doesNotMatch(script, /while\s*\(cursor\s*<\s*remainingTasks\.length\s*&&/,
+  'one blocked media pair must not stop checks of other public cards');
 assert.match(script, /listVisibleArchiveEntries/);
 assert.doesNotMatch(script, /\.slice\(\s*0\s*,\s*10\s*\)/,
   'the production audit must not stop at the newest ten entries');
@@ -117,6 +173,12 @@ assert.match(workflow, /cron:\s*'47 \* \* \* \*'/,
   'the full-archive production audit must run hourly');
 assert.match(workflow, /node scripts\/verify-ready-preview-live\.mjs/);
 assert.match(workflow, /scripts\/lib\/archive-live-media-audit\.mjs/);
+assert.match(workflow, /^\s+\/index\.json$/m,
+  'the hourly sparse checkout must include the root index');
+assert.match(reportedWorkflow, /node scripts\/test-verify-ready-preview-live\.mjs/,
+  'the PR inventory gate must execute the full-archive regression test');
+assert.match(reportedWorkflow, /\/index\.json/,
+  'the PR inventory checkout must include the root index');
 assert.doesNotMatch(script, /console\.log\([^\n]*(?:entry\.id|entry\.defaultAnimation|previewPath)/,
   'public audit logs must not expose work names or private source paths');
 

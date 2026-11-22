@@ -4,6 +4,56 @@ export const ARCHIVE_MEDIA_TIERS = Object.freeze([
   Object.freeze({ tier: 'low', webmKey: 'webmPreviewLow', posterKey: 'webpPosterLow', webmName: 'preview-low.webm' }),
 ]);
 
+export function includeRootArchiveIndex(collections, rootEntries) {
+  const result = Array.isArray(collections) ? collections.map((item) => ({ ...item })) : [];
+  if (!Array.isArray(rootEntries) || rootEntries.length === 0) return result;
+
+  const libraryIndex = result.findIndex((item) => item?.folder === 'library');
+  if (libraryIndex < 0) {
+    result.unshift({ folder: 'library', entries: rootEntries });
+    return result;
+  }
+
+  const existing = Array.isArray(result[libraryIndex].entries) ? result[libraryIndex].entries : [];
+  const existingIds = new Set(existing.filter((entry) => typeof entry?.id === 'string').map((entry) => entry.id));
+  const rootOnly = rootEntries.filter((entry) => typeof entry?.id !== 'string' || !existingIds.has(entry.id));
+  result[libraryIndex] = { ...result[libraryIndex], entries: [...rootOnly, ...existing] };
+  return result;
+}
+
+export function selectArchiveMediaPreflight(candidates, maxFolders = 4) {
+  const selected = [];
+  const seenFolders = new Set();
+  const limit = Math.max(0, Number(maxFolders) || 0);
+  if (limit === 0) return selected;
+
+  for (const candidate of Array.isArray(candidates) ? candidates : []) {
+    const folder = String(candidate?.folder || '');
+    if (seenFolders.has(folder)) continue;
+    const pairs = Array.isArray(candidate?.pairs) ? candidate.pairs : [];
+    const pair = pairs.find((item) => item?.tier === 'high') || pairs[0];
+    if (!pair) continue;
+
+    selected.push({
+      slot: candidate.slot,
+      folder,
+      previewPath: candidate.previewPath,
+      ...pair,
+    });
+    seenFolders.add(folder);
+    if (selected.length >= limit) break;
+  }
+
+  return selected;
+}
+
+export function shouldRunArchiveMediaAudit(originStatus, preflightResults, candidateCount) {
+  if (classifyArchiveMediaHttpStatus(originStatus) === 'ok') return Number(candidateCount) > 0;
+  if (!(Number(candidateCount) > 0)) return false;
+  return (Array.isArray(preflightResults) ? preflightResults : []).some((result) =>
+    result?.ok === true || result?.classification === 'failed');
+}
+
 export function listVisibleArchiveEntries(collections) {
   const result = [];
   for (const collection of Array.isArray(collections) ? collections : []) {
@@ -36,7 +86,9 @@ export function resolveExactArchiveMedia(entry) {
   const hasMap = Boolean(entry?.allAnimationPreviews &&
     typeof entry.allAnimationPreviews === 'object' &&
     !Array.isArray(entry.allAnimationPreviews));
-  const selected = hasMap ? entry.allAnimationPreviews[animation] : entry;
+  const selected = hasMap
+    ? (Object.hasOwn(entry.allAnimationPreviews, animation) ? entry.allAnimationPreviews[animation] : null)
+    : entry;
   if (!selected || typeof selected !== 'object') {
     return { ok: false, reason: 'MISSING_EXACT_ANIMATION_MEDIA' };
   }
