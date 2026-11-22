@@ -28,12 +28,20 @@ const collections = [
     { id: 'hidden', hiddenFromPublicLibrary: true },
     { id: 'test', testOnly: true },
   ] },
-  { folder: 'library_02', entries: Array.from({ length: 14 }, (_, i) => ({ id: 'work-' + i })) },
+  { folder: 'library_02', entries: [
+    ...Array.from({ length: 14 }, (_, i) => ({ id: 'work-' + i, thumbnailPoster: base + 'legacy.webp' })),
+    { id: 'map-only', allAnimationPreviews: { Walk: {} } },
+    { id: 'metadata-missing' },
+  ] },
 ];
 const visible = listVisibleArchiveEntries(collections);
-assert.equal(visible.length, 15, 'the audit must retain all public entries across every shard');
+assert.equal(visible.length, 16, 'the audit must retain every public card across every shard, but exclude records the archive API cannot display');
 assert.equal(visible[0].folder, 'library_01');
 assert.equal(visible[14].folder, 'library_02');
+assert.equal(visible.some((item) => item.entry.id === 'map-only'), true,
+  'an exact-animation map is public archive metadata even when its selected media is blocked');
+assert.equal(visible.some((item) => item.entry.id === 'metadata-missing'), false,
+  'records with no archive preview metadata are not public cards and must not be inspected');
 
 const exact = resolveExactArchiveMedia({
   defaultAnimation: ' Walk ',

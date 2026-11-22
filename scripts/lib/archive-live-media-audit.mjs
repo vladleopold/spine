@@ -58,6 +58,14 @@ export function listVisibleArchiveEntries(collections) {
     for (const entry of collection.entries) {
       if (!entry || typeof entry.id !== 'string' || !entry.id) continue;
       if (entry.hiddenFromPublicLibrary === true || entry.testOnly === true) continue;
+      const previews = entry.allAnimationPreviews;
+      const hasPreviewMetadata = Boolean(
+        entry.webmPreview || entry.webmPreviewMedium || entry.webmPreviewLow ||
+        entry.webpPoster || entry.webpPosterMedium || entry.webpPosterLow ||
+        entry.thumbnail || entry.thumbnailPoster ||
+        (previews && typeof previews === 'object' && !Array.isArray(previews) && Object.keys(previews).length > 0)
+      );
+      if (!hasPreviewMetadata) continue;
       result.push({ folder: String(collection.folder || ''), entry });
     }
   }
