@@ -8,6 +8,7 @@ on:
       - .github/workflows/spine-export-all.yml
       - scripts/repair-archive-card-previews.mjs
       - scripts/test-repair-archive-card-previews.mjs
+      - scripts/lib/archive-live-media-audit.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/repair-manifest-guard.mjs
   push:
@@ -16,6 +17,7 @@ on:
       - .github/workflows/repair-archive-card-previews.yml
       - scripts/repair-archive-card-previews.mjs
       - scripts/test-repair-archive-card-previews.mjs
+      - scripts/lib/archive-live-media-audit.mjs
       - scripts/lib/first-frame-poster.mjs
       - scripts/repair-manifest-guard.mjs
 permissions:
@@ -38,6 +40,7 @@ jobs:
             /scripts/repair-archive-card-previews.mjs
             /scripts/resolve-library.mjs
             /scripts/repair-manifest-guard.mjs
+            /scripts/lib/archive-live-media-audit.mjs
             /scripts/lib/first-frame-poster.mjs
             /scripts/test-repair-archive-card-previews.mjs
             /scripts/verify-ready-preview-live.mjs
