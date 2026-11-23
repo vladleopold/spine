@@ -167,7 +167,15 @@ function refreshStoredPostersAndTimestamp(record,entryInfo,stagingRoot) {
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  if(record?.webmStatus!=="ready"||record?.previewStatus!=="ready")return false;
+  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
+    ?record.previewAnimation
+    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  const selectedSet=selectedName&&record?.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
+    ?record.allAnimationPreviews[selectedName]:null;
+  // A previously accepted render can be safely restored after a metadata-only
+  // block/failure if its exact selected animation and all six installed files
+  // still exist and pass byte, ffprobe, and motion checks below.
+  if(!selectedSet||!selectedName)return false;
   const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
   // A genuinely moving 8+ frame clip is still a usable low-quality preview.
@@ -211,7 +219,11 @@ const mediaFields=[
 async function liveMediaOk(entry){
   if(process.env.SPINE_REPAIR_SKIP_LIVE==="1")return existingMediaOk(entry);
   const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
-  if(!record || record.webmStatus!=="ready" || !mediaFields.every(([key])=>record[key]))return false;
+  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
+    ?record.previewAnimation
+    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  if(!record || !selectedName || !record?.allAnimationPreviews?.[selectedName] ||
+    !mediaFields.every(([key])=>record[key]))return false;
   const pathPrefix="/assets/"+entry.previewPath+"/";
   const results=await Promise.all(mediaFields.map(async ([key,kind])=>{
     let url;
@@ -408,6 +420,11 @@ if(action==="matrix"){
           // its matching WebP posters from frame zero of each quality tier.
           refreshStoredPostersAndTimestamp(record,entryInfo,base);
           record.previewAnimation=selectedAnimation;
+          record.webmStatus="ready";
+          record.previewStatus="ready";
+          record.dispatchStatus="rendered";
+          record.previewError="";
+          record.lastPreviewRetryError="";
           summary.ready++;
         }catch{
           record.webmStatus="failed";
