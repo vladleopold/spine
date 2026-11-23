@@ -13,7 +13,7 @@ const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 const liveAudit=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'verify-latest-twenty-live.mjs'),'utf8');
-assert.match(liveAudit,/record\.previewBlockedAnimation===String\(work\.animation\|\|record\.defaultAnimation\|\|'\'\)/,
+assert.match(liveAudit,/record\.previewBlockedAnimation===String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/,
   'the production audit must compare blocked metadata to the frozen selected source track, not only the original default');
 assert.ok(!repairSource.includes('record.animations=meta.animations'),
   'publishing a preview must never rewrite source animation names');
