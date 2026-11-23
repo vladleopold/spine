@@ -177,20 +177,46 @@ function readSkeletonBounds(filePath) {
 function readAnimationNames(filePath) {
   try {
     const ext = path.extname(filePath).toLowerCase();
-    if (ext === '.json') {
-      const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      return Object.keys(content?.animations || {});
+    let content=null;
+    if (ext === '.json') content=JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    else if (ext === '.skel') {
+      const jsonSibling=path.join(path.dirname(filePath),path.basename(filePath,'.skel')+'.json');
+      if(fs.existsSync(jsonSibling))content=JSON.parse(fs.readFileSync(jsonSibling,'utf8'));
     }
-    if (ext === '.skel') {
-      const dir = path.dirname(filePath);
-      const base = path.basename(filePath, '.skel');
-      const jsonSibling = path.join(dir, base + '.json');
-      if (fs.existsSync(jsonSibling)) {
-        const content = JSON.parse(fs.readFileSync(jsonSibling, 'utf8'));
-        return Object.keys(content?.animations || {});
-      }
-    }
+    const animations=content?.animations||{};
+    const names=Object.keys(animations);
+    // When no default is selected, prefer tracks with multiple distinct
+    // timeline times. A one-key pose is not a useful video preview when a
+    // genuinely animated source track is available.
+    const moving=names.filter(name=>{
+      const times=new Set();
+      const walk=value=>{
+        if(!value||typeof value!=='object')return;
+        if(Array.isArray(value)){for(const item of value)walk(item);return;}
+        if(typeof value.time==='number')times.add(value.time);
+        for(const key of Object.keys(value))walk(value[key]);
+      };
+      walk(animations[name]);
+      return times.size>1;
+    });
+    return moving.length?moving:names;
   } catch { }
+  return [];
+}
+
+function readSkinNames(filePath) {
+  try {
+    const ext=path.extname(filePath).toLowerCase();
+    let content=null;
+    if(ext==='.json')content=JSON.parse(fs.readFileSync(filePath,'utf8'));
+    else if(ext==='.skel'){
+      const sibling=path.join(path.dirname(filePath),path.basename(filePath,'.skel')+'.json');
+      if(fs.existsSync(sibling))content=JSON.parse(fs.readFileSync(sibling,'utf8'));
+    }
+    const skins=content?.skins;
+    if(Array.isArray(skins))return skins.map(skin=>String(skin?.name||'')).filter(Boolean);
+    if(skins&&typeof skins==='object')return Object.keys(skins);
+  }catch{}
   return [];
 }
 
@@ -836,9 +862,12 @@ try {
       });
     });
   }
-  // Preserve the source skin. An invisible default skin is a blocked preview.
+  // Try the source default first. If it is empty/invisible, inspect the
+  // exact source skeleton's declared skins and choose the first visible one.
+  // No attachments or source files are edited; the selected skin is recorded
+  // as preview metadata only.
   const FRAME_PEAK_MIN = 40;
-  const skinCandidates = Object.freeze([null]);
+  const skinCandidates = Object.freeze([null,...readSkinNames(skeletonFilePath)]);
 
   let chosenSkin = null;
   let animDuration = 0;
