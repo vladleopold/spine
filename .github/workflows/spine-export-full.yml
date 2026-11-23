@@ -41,6 +41,9 @@ on:
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/repair-last-ten-previews.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/render-work.mjs
+      - scripts/renderer-failure-class.mjs
+      - scripts/test-no-preview-track-or-skin-fallbacks.mjs
       - scripts/test-repair-last-ten-previews.mjs
       - scripts/test-preview-log-privacy.mjs
 
