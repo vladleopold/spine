@@ -9,6 +9,9 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
 import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
+import { chooseSourceSkeleton } from "./source-skeleton-choice.mjs";
+import { detectSkeletonVersion } from "./spine-version-detect.mjs";
+import { spinePlayerSourceBlocker } from "./lib/spine-player-source-support.mjs";
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
@@ -52,11 +55,11 @@ function newestEntries() {
   }
   return entries.sort((a,b)=>b.at-a.at);
 }
-function inspectSourceTree(entry){
+function inspectSourceTree(entry,record){
   const rootPath=path.resolve(root,entry.previewPath);
   if(!rootPath.startsWith(root+path.sep))return {complete:false,reason:'UNSAFE_PREVIEW_PATH'};
   let bestReason='MISSING_SOURCE_TRIAD',foundTriad=false;
-  const priority=['UNSUPPORTED_SPINE_EXPORT_3_8_75','ATLAS_PAGE_SOURCE_MISSING',
+  const priority=['UNSUPPORTED_SPINE_EXPORT_3_8_75','UNSUPPORTED_SPINE_3_7_BINARY_SKELETON','ATLAS_PAGE_SOURCE_MISSING',
     'ATLAS_SOURCE_UNREADABLE','ATLAS_PAGE_INVENTORY_UNKNOWN','MISSING_SOURCE_TRIAD'];
   function walk(directory,depth=0){
     if(depth>6)return null;
@@ -68,6 +71,22 @@ function inspectSourceTree(entry){
       files.some(name=>/\.(png|jpe?g|webp|dds)$/i.test(name));
     if(triad){
       foundTriad=true;
+      // Resolve the exact skeleton selected for this work. A valid same-work
+      // JSON sibling wins; a 3.7 binary-only source is blocked before render.
+      const requested=String(record?.skeleton||record?.skeletonFile||'');
+      let selectedSkeleton='';
+      try{
+        selectedSkeleton=chooseSourceSkeleton(requested,files,name=>{
+          if(!/\.json$/i.test(name))return false;
+          try{return Array.isArray(JSON.parse(fs.readFileSync(path.join(directory,name),'utf8')).bones);}
+          catch{return false;}
+        });
+      }catch{}
+      if(selectedSkeleton){
+        const version=detectSkeletonVersion(path.join(directory,selectedSkeleton));
+        const blocker=spinePlayerSourceBlocker(version,selectedSkeleton);
+        if(blocker)return {complete:false,reason:blocker.code,authoritative:true};
+      }
       const result=inspectAtlasSourceBundle(directory,files);
       if(result.complete)return {complete:true,reason:'COMPLETE'};
       if(priority.indexOf(result.reason)<priority.indexOf(bestReason))bestReason=result.reason;
@@ -75,19 +94,19 @@ function inspectSourceTree(entry){
     for(const item of items){
       if(item.isDirectory()&&!item.name.endsWith('.__chunks')){
         const result=walk(path.join(directory,item.name),depth+1);
-        if(result?.complete)return result;
+        if(result?.complete||result?.authoritative)return result;
       }
     }
     return null;
   }
   try{
     const result=walk(rootPath);
-    if(result?.complete)return result;
+    if(result?.complete||result?.authoritative)return result;
   }catch{}
   return {complete:false,reason:foundTriad?bestReason:'MISSING_SOURCE_TRIAD'};
 }
-function sourceIssue(entry){
-  return inspectSourceTree(entry).reason;
+function sourceIssue(entry,record){
+  return inspectSourceTree(entry,record).reason;
 }
 function readSourceAnimationNames(entry, record) {
   const directory=path.resolve(root,entry.previewPath);
@@ -138,7 +157,7 @@ function readSourceAnimationNames(entry, record) {
     ? record.animations.map(item=>typeof item==='string'?item:String(item?.name||'')).filter(Boolean)
     : [];
 }
-function bundleOk(entry) {
+function bundleOk(entry,record) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
   try{fs.statSync(p);}
@@ -149,7 +168,7 @@ function bundleOk(entry) {
       files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f))&&
       files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
   }
-  return inspectSourceTree(entry).complete;
+  return inspectSourceTree(entry,record).complete;
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
@@ -320,7 +339,8 @@ if(action==="matrix"){
      const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const sourceReady=bundleOk(e);
+    const sourceCheck=inspectSourceTree(e,record);
+    const sourceReady=sourceCheck.complete;
     const sourceAnimations=readSourceAnimationNames(e,record);
     // Keep an explicit selection verbatim; when it is absent, prefer Idle
     // and otherwise the first animation declared by the exact source skeleton.
@@ -351,9 +371,9 @@ if(action==="matrix"){
       hasExplicitAnimation:Boolean(animation),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
-      blockedReason:!animation?"MISSING_SOURCE_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":
-        blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):
-        !sourceReady?"MISSING_SOURCE_TRIAD":""};
+      blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":
+        !sourceReady?sourceCheck.reason:!animation?"MISSING_SOURCE_ANIMATION":
+        blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):""};
     }));
     matrix.push(...batch);
   }
@@ -399,14 +419,18 @@ if(action==="matrix"){
     const entries=indexes.get(indexPath);
     const record=entries.find(e=>e.id===item.id);
     if(!record)throw new Error("Index record disappeared before repair");
-    if(!bundleOk(entryInfo)){
-      const issue=sourceIssue(entryInfo);
-      const unsupported=issue==="UNSUPPORTED_SPINE_EXPORT_3_8_75";
-      record.webmStatus=unsupported?"blocked-incompatible-source-version":"blocked-missing-source";
+    const sourceCheck=inspectSourceTree(entryInfo,record);
+    if(!sourceCheck.complete){
+      const unsupported38=sourceCheck.reason==="UNSUPPORTED_SPINE_EXPORT_3_8_75";
+      const unsupported37=sourceCheck.reason==="UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
+      record.webmStatus=unsupported38?"blocked-incompatible-source-version":
+        unsupported37?"blocked-unsupported-runtime":"blocked-missing-source";
       record.previewStatus="blocked";
-      record.previewError=unsupported
+      record.previewError=unsupported38
         ?"Spine 3.8.75 export is rejected by official runtimes; re-export from the original Spine project required"
-        :"Incomplete skeleton, atlas page, or texture bundle";
+        :unsupported37
+          ?"Spine 3.7 Player requires JSON; this source has only a binary .skel and no same-work JSON skeleton"
+          :"Incomplete skeleton, atlas page, or texture bundle";
       summary.blocked++;
       continue;
     }
