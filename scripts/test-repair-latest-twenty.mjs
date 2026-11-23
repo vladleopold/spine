@@ -190,7 +190,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
     'manual and push recovery must start at the newest archive batch');
-  assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\\.offset \\|\\|assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
+  assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
     'push and manual recovery must start at offset zero unless a successor batch supplies an explicit offset');
   assert.doesNotMatch(workflowSource,/github\.event_name == 'push' && '50'/,
     'push must not silently skip the newest 50 archive entries');
