@@ -827,7 +827,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "",
+    "lastPreviewRetryError": "Concurrent retry had no accepted media; verified original WebM retained",
     "previewFrameCount": 103,
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview.webm"
   },
@@ -1064,10 +1064,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-26-20-981Z/019.png?v=2026-11-17T18-26-20.981Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-source",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -1147,7 +1147,7 @@
     "webmStatus": "failed",
     "dispatchStatus": "rendered",
     "previewStatus": "failed",
-    "previewError": "Media previously marked ready but expected outputs are missing",
+    "previewError": "Native preview render did not pass media acceptance",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webp",
@@ -1295,7 +1295,7 @@
         "pngAlphaLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-45-14-132Z/animations/Idle_Post_Climax_Cum/alpha-low.png.zip"
       }
     },
-    "lastPreviewRetryError": "",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewFrameCount": 58,
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-45-14-132Z/preview.webm",
     "qualityWidths": {
@@ -1341,7 +1341,7 @@
     "webmStatus": "failed",
     "dispatchStatus": "rendered",
     "previewStatus": "failed",
-    "previewError": "Media previously marked ready but expected outputs are missing",
+    "previewError": "Native preview render did not pass media acceptance",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-44-12-762Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-44-12-762Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-44-12-762Z/preview.webp",
@@ -1491,7 +1491,7 @@
       }
     },
     "previewDuration": 2,
-    "lastPreviewRetryError": "",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewFrameCount": 57,
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-44-12-762Z/preview.webm"
   },
@@ -1708,7 +1708,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-36-51-976Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "New version failed frame-density acceptance; previous media retained",
+    "lastPreviewRetryError": "Concurrent retry had no accepted media; verified original WebM retained",
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-36-51-976Z/preview.webm"
   },
   {
@@ -2056,7 +2056,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-19-06-491Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "New version failed frame-density acceptance; previous media retained",
+    "lastPreviewRetryError": "Concurrent retry had no accepted media; verified original WebM retained",
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-19-06-491Z/preview.webm"
   },
   {
@@ -2139,7 +2139,7 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-17-09-503Z/preview-low.webp"
       }
     },
-    "lastPreviewRetryError": "New version failed frame-density acceptance; previous media retained",
+    "lastPreviewRetryError": "Concurrent retry had no accepted media; verified original WebM retained",
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-17-09-503Z/preview.webm"
   },
   {
@@ -2181,10 +2181,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-07-35-146Z/Orc%20Fisting_9.png?v=2026-11-17T18-07-35.146Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "Spine-animation-2026-11-17T18-06-25-641Z",
@@ -2213,10 +2213,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-06-25-641Z/Dark%20Knight%20Worship_2.png?v=2026-11-17T18-06-25.641Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "Spine-animation-2026-11-17T18-04-48-688Z",
@@ -2247,10 +2247,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-04-48-688Z/Inn%20Orgy.png?v=2026-11-17T18-04-48.688Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "Spine-animation-2026-11-17T17-50-04-803Z",
@@ -2281,10 +2281,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T17-50-04-803Z/Princess_3.png?v=2026-11-17T17-50-04.803Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "config-2026-11-17T17-15-57-407Z",
@@ -2314,10 +2314,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/config-2026-11-17T17-15-57-407Z/player-main.png?v=2026-11-17T17-15-57.407Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "config-2026-11-17T17-15-17-289Z",
@@ -2373,10 +2373,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/wolf_v13-2026-11-17T15-57-55-338Z/wolf_v13.webp?v=2026-11-17T15-57-55.338Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "wolf-2026-11-17T07-14-36-248Z",
@@ -2407,10 +2407,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-17T07-14-36-248Z/wolf_5.webp?v=2026-11-17T07-14-36.248Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "wolf-2026-11-17T07-13-38-536Z",
@@ -2459,10 +2459,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T05-40-26-980Z/tom2020.png?v=2026-11-17T05-40-26.980Z",
     "webmPreview": "",
-    "webmStatus": "blocked-missing-animation",
+    "webmStatus": "blocked-missing-animation-selection",
     "dispatchStatus": "pending",
     "previewStatus": "blocked",
-    "previewError": "No exact selected/default animation is available"
+    "previewError": "No explicit default animation is selected; existing media cannot be attributed to an exact source animation"
   },
   {
     "id": "Spine-animation-2026-11-17T05-25-45-640Z",
