@@ -22,6 +22,21 @@ if(!Number.isInteger(repairOffset)||repairOffset<0)throw new Error('SPINE_REPAIR
 // Work names include wolf, cherry, characters and user-defined prefixes.
 // Filtering only "Spine-animation-*" silently excluded genuinely new uploads.
 const idPattern=/^[a-z0-9][a-z0-9._-]{0,200}$/i;
+function normalizedPreviewPath(basePath,value,id) {
+  const raw=String(value||"").replace(/\\/g,"/");
+  const relative=raw||String(basePath)+"/"+String(id);
+  const parts=relative.split("/");
+  if(relative.startsWith("/") || /^[a-z]:/i.test(relative) ||
+    parts.some(part=>!part||part==="."||part===".."))
+    throw new Error("Unsafe preview path metadata");
+  // Older indexes stored only the ID; interpret that as relative to the
+  // collection shard. Multi-segment paths may point to a migrated folder,
+  // but must remain strictly inside this repository checkout.
+  const candidate=parts.length===1?String(basePath)+"/"+relative:relative;
+  const resolved=path.resolve(root,candidate);
+  if(!resolved.startsWith(root+path.sep))throw new Error("Unsafe preview path metadata");
+  return candidate;
+}
 function newestEntries() {
   const entries=[];
   for(const folder of listCollectionFolders(root)) {
@@ -29,8 +44,8 @@ function newestEntries() {
       if(!idPattern.test(entry?.id||"") || entry.testOnly===true || entry.hiddenFromPublicLibrary===true)continue;
       const timestamp=Date.parse(entry.uploadedAt||"");
       if(!Number.isFinite(timestamp))continue;
-      entries.push({id:entry.id,basePath:folder,previewPath:entry.previewPath||folder+"/"+entry.id,
-        at:timestamp});
+      entries.push({id:entry.id,basePath:folder,
+        previewPath:normalizedPreviewPath(folder,entry.previewPath,entry.id),at:timestamp});
     }
   }
   return entries.sort((a,b)=>b.at-a.at);
@@ -290,9 +305,7 @@ if(action==="matrix"){
       // source track without rewriting the original upload metadata.
       return Boolean(record) && hasSkeleton && hasAtlas && hasTexture;
     }).map(entry=>{
-      const relative=String(entry.previewPath||"").replace(/\\/g,"/");
-      const resolved=path.resolve(root,relative);
-      if(!relative.startsWith(String(entry.basePath||"")+"/") || relative.split("/").includes("..") || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
+      const relative=normalizedPreviewPath(entry.basePath,entry.previewPath,entry.id);
       return relative+"/";
     });
     if(sourcePaths.length)execFileSync("git",["sparse-checkout","add",...sourcePaths],{stdio:"inherit"});
@@ -324,10 +337,8 @@ if(action==="matrix"){
       record?.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
     const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
-    const rel=String(e.previewPath).replace(/\\/g,"/");
-    if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
-      throw new Error("Unsafe preview path");
-    return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
+    const rel=normalizedPreviewPath(e.basePath,e.previewPath,e.id);
+     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,sourceFingerprint,
       indexedWebmStatus:String(record?.webmStatus||''),
       indexedPreviewStatus:String(record?.previewStatus||''),
