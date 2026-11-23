@@ -15,6 +15,7 @@ on:
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
+      - 'scripts/verify-latest-twenty-live.mjs'
       - 'scripts/repair-manifest-guard.mjs'
       - '.github/workflows/spine-export-full.yml'
       - '.github/workflows/spine-export-webm.yml'
@@ -64,6 +65,7 @@ jobs:
             /scripts/repair-last-ten-previews.mjs
             /scripts/test-repair-last-ten-previews.mjs
             /scripts/test-repair-latest-twenty.mjs
+            /scripts/verify-latest-twenty-live.mjs
             /scripts/repair-manifest-guard.mjs
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/atlas-source-integrity.mjs
