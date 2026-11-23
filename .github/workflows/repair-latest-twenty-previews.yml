@@ -365,7 +365,10 @@ jobs:
           node --input-type=module -e '
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            const expectedAnimation=process.env.ENTRY_ANIMATION;\n            const animationMatches=expectedAnimation==="__SPINE_AUTO__"\n              ?typeof m.animation==="string"&&m.animation.length>0\n              :typeof expectedAnimation==="string"&&m.animation===expectedAnimation;
+            const expectedAnimation=process.env.ENTRY_ANIMATION;
+            const animationMatches=expectedAnimation==="__SPINE_AUTO__"
+              ?typeof m.animation==="string"&&m.animation.length>0
+              :typeof expectedAnimation==="string"&&m.animation===expectedAnimation;
             if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
               throw new Error("Export metadata incomplete or selected animation mismatch");
             const safe={ok:true,animationMatches:true,animation:m.animation,width:m.width,height:m.height,
