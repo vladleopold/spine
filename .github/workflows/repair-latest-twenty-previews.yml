@@ -135,7 +135,6 @@ jobs:
       - name: Enumerate requested newest uploads and validate required source file triads
         id: latest
         env:
-          SPINE_REPAIR_INDEX_ONLY: '1'
           SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
           SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
