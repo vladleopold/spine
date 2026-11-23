@@ -294,7 +294,8 @@ if(action==="matrix"){
     }
     const selectedAnimation=choosePreviewAnimation([],item.animation);
     const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
-    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation"]);
+    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
+      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
     const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
       record.previewBlockedAnimation===selectedAnimation &&
       record.previewBlockedSourceFingerprint===item.sourceFingerprint &&
