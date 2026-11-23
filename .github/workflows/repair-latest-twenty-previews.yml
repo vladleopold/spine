@@ -1,9 +1,9 @@
-name: Recover newest 50 Spine WebP and WebM previews
+name: Recover archive Spine WebP and WebM previews in 50-item batches
 # Canonical automatic recovery pipeline. Targeted latest-10 and reported-project repair
 # workflows remain manually/feature-branch invoked to prevent overlapping main-branch writes.
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '17 3 * * *'
   push:
     branches: [main]
     paths:
@@ -87,11 +87,15 @@ on:
   workflow_dispatch:
     inputs:
       limit:
-        description: 'Number of newest works to audit and repair'
+        description: 'Number of works in this archive batch (1–50)'
         required: true
-        type: choice
-        options: ['20', '50']
-        default: '50'
+        type: number
+        default: 50
+      offset:
+        description: 'Zero-based offset into the public archive, newest first'
+        required: true
+        type: number
+        default: 50
 permissions:
   contents: read
 concurrency:
@@ -103,6 +107,8 @@ jobs:
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
+      totalCount: ${{ steps.latest.outputs.totalCount }}
+      nextOffset: ${{ steps.latest.outputs.nextOffset }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -138,6 +144,7 @@ jobs:
         id: latest
         env:
           SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
+          SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || github.event_name == 'push' && '50' || inputs.offset || '0' }}
           SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -395,6 +402,7 @@ jobs:
     needs: [inventory, render]
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
+      SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || github.event_name == 'push' && '50' || inputs.offset || '0' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     permissions:
       contents: write
@@ -486,7 +494,7 @@ jobs:
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
-            git commit -m "fix: restore validated previews for latest ${SPINE_REPAIR_LIMIT} Spine uploads"
+            git commit -m "fix: restore validated previews for archive batch offset ${SPINE_REPAIR_OFFSET} limit ${SPINE_REPAIR_LIMIT}"
             if git push origin HEAD:main; then
               echo "LATEST50_REPAIR_PUBLISHED"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
@@ -501,6 +509,7 @@ jobs:
     needs: [inventory, render, publish]
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
+      SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || github.event_name == 'push' && '50' || inputs.offset || '0' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
@@ -531,3 +540,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/verify-latest-twenty-live.mjs
+  dispatch-next-batch:
+    needs: [inventory, render, publish, verify-production]
+    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Queue the next older archive batch after publication and audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEXT_OFFSET: ${{ needs.inventory.outputs.nextOffset }}
+          TOTAL_COUNT: ${{ needs.inventory.outputs.totalCount }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))
+          next_limit=$(( remaining < 50 ? remaining : 50 ))
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/repair-latest-twenty-previews.yml/dispatches" \
+            -f ref=main \
+            -f inputs[offset]="$NEXT_OFFSET" \
+            -f inputs[limit]="$next_limit"
+          echo "DISPATCHED_NEXT_ARCHIVE_BATCH offset=$NEXT_OFFSET limit=$next_limit total=$TOTAL_COUNT"
