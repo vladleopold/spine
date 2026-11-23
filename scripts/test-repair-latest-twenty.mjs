@@ -188,6 +188,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.notEqual(olderBatch[0].id,allFifty[0].id,'offset 50 must not repeat the newest batch');
   assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
+  assert.match(workflowSource,/needs\.verify-production\.result == 'success'/,
+    'the next batch must wait for a successful live production audit of the current batch');
   assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
     'manual and push recovery must start at the newest archive batch');
   assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
