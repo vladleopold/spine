@@ -920,7 +920,8 @@ try {
 
     // Stable, non-sensitive stage markers distinguish startup from later visibility failure.
     console.error('PLAYER_READY=1');
-    console.error('SOURCE_SKIN_MODE=default-first-runtime-fallback');
+    console.error('SOURCE_SKIN_MODE=default');
+    console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
     if (skinIndex === 0 && skinCandidates.length === 1) {
       const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
       for (const name of runtimeSkinNames.names) {
