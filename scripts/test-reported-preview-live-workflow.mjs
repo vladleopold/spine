@@ -171,6 +171,8 @@ const publishStart = repairWorkflow.indexOf('  publish:');
 const publishJob = repairWorkflow.slice(publishStart);
 assert.match(publishJob, /^    permissions:\s*\n\s+contents:\s+write/m,
   'only the publisher may write source changes');
+assert.match(publishJob, /concurrency:\s*\n\s+group:\s*spine-library-commit/,
+  'reported preview publishing must serialize with every other library writer');
 assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
   'repair inventory must run the media acceptance regression');
 assert.match(repairWorkflow, /--allow-visible-track-fallback/,
