@@ -10,6 +10,7 @@ on:
       - scripts/lib/preview-manifest-redaction.mjs
       - scripts/test-preview-log-privacy.mjs
       - scripts/repair-latest-twenty-previews.mjs
+      - scripts/repair-manifest-guard.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/verify-preview-motion.mjs
