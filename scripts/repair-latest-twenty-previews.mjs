@@ -220,7 +220,8 @@ if(action==="matrix"){
     // A missing default remains blocked; historical names are never inferred.
     const animation=indexedAnimation;
     const sourceFingerprint=previewSourceFingerprint(record);
-    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation"]);
+    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
+      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
     const blockedSameSelection=blockedStatuses.has(record?.webmStatus) &&
       record?.previewBlockedAnimation===animation &&
       record?.previewBlockedSourceFingerprint===sourceFingerprint &&
@@ -393,7 +394,8 @@ if(action==="matrix"){
       }
       // A blank or frame-identical selected track is not a transient renderer
       // failure. Keep it blocked until the exact animation or skin selection changes.
-      if(meta?.reason==="blocked-invisible-default-skin"||meta?.reason==="blocked-static-animation"){
+      if(["blocked-invisible-default-skin","blocked-static-animation","blocked-invalid-default-animation",
+          "blocked-incomplete-source","blocked-unsupported-runtime"].includes(meta?.reason)){
         record.webmStatus=meta.reason;
         record.previewStatus="blocked";
         record.previewBlockedAnimation=selectedAnimation;
@@ -401,9 +403,13 @@ if(action==="matrix"){
         record.previewBlockedRendererRevision=PREVIEW_RENDERER_REVISION;
         record.previewBlockedSkin=String(record.defaultSkin||record.skin||"");
         record.previewBlockedAt=new Date().toISOString();
-        record.previewError=meta.reason==="blocked-static-animation"
-          ?"Selected default animation has no changing frames; choose an animated track before rendering"
-          :"Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering";
+        record.previewError={
+          "blocked-static-animation":"Selected default animation has no changing frames; choose an animated track before rendering",
+          "blocked-invisible-default-skin":"Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+          "blocked-invalid-default-animation":"The indexed default animation is not present in the source skeleton; select an exact available animation",
+          "blocked-incomplete-source":"The indexed skeleton, atlas or texture source graph cannot be loaded completely",
+          "blocked-unsupported-runtime":"The source Spine version is not supported by the pinned renderer",
+        }[meta.reason];
         record.lastPreviewRetryError="";
         summary.blocked++;
         continue;
