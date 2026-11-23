@@ -169,7 +169,7 @@ assert.match(reportedRepair, /BLOCKED_MISSING_ANIMATION=/);
 assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest50-"\+item\.repairSlot/);
 assert.doesNotMatch(latestTwentyRepair, /record\.defaultAnimation\.trim\(\)/);
-assert.match(latestTwentyRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
+assert.match(latestTwentyRepair, /readSourceAnimationNames\(e,record\)/);
 assert.match(latestTenRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
 assert.doesNotMatch(latestTenRepair, /String\(record\?\.defaultAnimation\|\|""\)\.trim\(\)/);
 assert.doesNotMatch(latestTenRepair, /String\(animation\|\|record\?\.defaultAnimation\|\|""\)\.trim\(\)/);
