@@ -102,8 +102,9 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
-  assert.equal(all[5].ready,true);
-  assert.equal(all[5].needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
+  const reusable=all.find(x=>x.id==='fixture-05');
+  assert.equal(reusable.ready,true);
+  assert.equal(reusable.needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
   assert.ok(!matrix.some(x=>x.id==='fixture-05'));
   const formerlyBlocked=all.find(x=>x.id==='fixture-19');
   assert.equal(formerlyBlocked.ready,true,'new renderer revision must retry previously blocked default skin');
