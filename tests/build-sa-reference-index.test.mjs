@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { parseAtlasPages, summarizeSkeleton, buildProjectEntry } from '../scripts/build-sa-reference-index.mjs';
 const skeleton={skeleton:{spine:'4.3.26'},bones:[{name:'root'}],slots:[{name:'body',bone:'root'}],
  skins:[{name:'default',attachments:{body:{body:{type:'mesh',bones:[1,0,0,1],vertices:[0,0,1,1],triangles:[0,0,0]}}}}],
@@ -29,4 +30,12 @@ test('reference entry never exports uploader identity and never assumes training
  assert.equal(entry.projectCompleteness,'complete');assert.equal(entry.previewUrl.includes('preview.webm'),true);
  assert.equal(entry.rights.trainingEligible,false);assert.equal(entry.rights.sourceReuseAllowed,false);
  assert.equal(JSON.stringify(entry).includes('secret-user'),false);
+});
+
+test('reference index publisher commits only the generated index from a clean sparse tree',()=>{
+ const workflow=fs.readFileSync(new URL('../.github/workflows/build-sa-reference-index.yml',import.meta.url),'utf8');
+ assert.match(workflow,/git read-tree --empty/);
+ assert.match(workflow,/git add -f sa-reference-index\\.json/);
+ assert.match(workflow,/git -c http\\.version=HTTP\\/1\\.1 push --force/);
+ assert.doesNotMatch(workflow,/git rm -rf \\./);
 });
