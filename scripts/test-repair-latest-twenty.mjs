@@ -181,7 +181,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   assert.match(workflowSource,/github[.]event_name != 'schedule'/,'the scheduled maintenance path must not fan out through the full archive');
-  assert.match(workflowSource,/actions:\\s*write/,'the batch runner needs permission to dispatch its successor');
+  assert.match(workflowSource,/actions:\s*write/,'the batch runner needs permission to dispatch its successor');
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
   const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
   assert.match(verifySource,/blocked-invisible-default-skin/);
