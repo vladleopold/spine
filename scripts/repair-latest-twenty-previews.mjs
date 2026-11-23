@@ -406,6 +406,7 @@ if(action==="matrix"){
           // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
           // its matching WebP posters from frame zero of each quality tier.
           refreshStoredPostersAndTimestamp(record,entryInfo,base);
+          record.previewAnimation=selectedAnimation;
           summary.ready++;
         }catch{
           record.webmStatus="failed";
@@ -512,6 +513,7 @@ if(action==="matrix"){
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
     const animation=choosePreviewAnimation([],meta.animation);
+    record.previewAnimation=animation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
