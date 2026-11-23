@@ -14,7 +14,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="auto-track-recovery-v3";
+const PREVIEW_RENDERER_REVISION="auto-track-recovery-v4-runtime-skin";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 // Work names include wolf, cherry, characters and user-defined prefixes.
