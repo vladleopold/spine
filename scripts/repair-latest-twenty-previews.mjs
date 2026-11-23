@@ -93,7 +93,7 @@ function refreshStoredPostersAndTimestamp(record,entryInfo,stagingRoot) {
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  if(record?.webmStatus!=="ready")return false;
+  if(record?.webmStatus!=="ready"||record?.previewStatus!=="ready")return false;
   const frames=Number(record?.previewFrameCount||0);
   const duration=Number(record?.previewDuration||0);
   // A genuinely moving 8+ frame clip is still a usable low-quality preview.
