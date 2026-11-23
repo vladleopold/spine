@@ -236,6 +236,10 @@ if(action==="matrix"){
       uploadedAt:e.at,sourceFingerprint,
       indexedWebmStatus:String(record?.webmStatus||''),
       indexedPreviewStatus:String(record?.previewStatus||''),
+      indexedPreviewAnimation:typeof record?.previewAnimation==='string'?record.previewAnimation:'',
+      indexedAnimationCount:Array.isArray(record?.animations)?record.animations.length:0,
+      indexedPreviewSetNames:record?.allAnimationPreviews&&typeof record.allAnimationPreviews==='object'
+        ?Object.keys(record.allAnimationPreviews).slice(0,8):[],
       hasExplicitAnimation:Boolean(animation),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
