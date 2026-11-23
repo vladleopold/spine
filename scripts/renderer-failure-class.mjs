@@ -41,10 +41,11 @@ export function classifyFfmpegFailure(text) {
 
 export function summarizeRendererLog(text) {
   const log=String(text||"");
-  const reason=classifyRendererError(log);
-  const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
-  const lastCause=[...log.matchAll(/Capture failed:\s*([^\r\n]+)/g)].at(-1)?.[1]||"";
+  const lastCause=[...log.matchAll(/Capture(?: with skin [^\r\n]+)? failed:\s*([^\r\n]+)/g)].at(-1)?.[1]||"";
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
+  const classifiedLog=classifyRendererError(log);
+  const reason=classifiedLog==="OTHER_RENDER_FAILURE"&&secondary!=="NONE"?secondary:classifiedLog;
+  const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
   const sourceDefaultSkin=/SOURCE_SKIN_MODE=default|Skin \(default\):/i.test(log);
   const recordingStarted=/RECORDER_STATE=recording|recorder recording/i.test(log);
   const attempts=sourceDefaultSkin?1:(log.match(/Skin candidates:/g)||[]).length;
