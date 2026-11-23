@@ -35,7 +35,7 @@ test('reference entry never exports uploader identity and never assumes training
 test('reference index publisher commits only the generated index from a clean sparse tree',()=>{
  const workflow=fs.readFileSync(new URL('../.github/workflows/build-sa-reference-index.yml',import.meta.url),'utf8');
  assert.match(workflow,/git read-tree --empty/);
- assert.match(workflow,/git add -f sa-reference-index\\.json/);
- assert.match(workflow,/git -c http\\.version=HTTP\\/1\\.1 push --force/);
+ assert.match(workflow,/git add --sparse -f sa-reference-index\.json/);
+ assert.match(workflow,/git -c http\.version=HTTP\/1\.1 push --force/);
  assert.doesNotMatch(workflow,/git rm -rf \\./);
 });
