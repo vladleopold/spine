@@ -11,7 +11,6 @@ on:
       - 'library/index.json'
       - 'library_*/index.json'
       - 'scripts/build-sa-reference-index.mjs'
-      - 'tests/build-sa-reference-index.test.mjs'
       - '.github/workflows/build-sa-reference-index.yml'
 permissions:
   contents: write
@@ -31,6 +30,7 @@ jobs:
           sparse-checkout: |
             /scripts/build-sa-reference-index.mjs
             /tests/build-sa-reference-index.test.mjs
+            /.github/workflows/build-sa-reference-index.yml
             /public/
       - uses: actions/setup-node@v4
         with:
@@ -48,8 +48,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan sa-reference-index
-          git rm -rf . >/dev/null 2>&1 || true
+          # Sparse checkout leaves skipped paths in the Git index. Reset the
+          # index explicitly so the generated branch contains only this file.
+          git read-tree --empty
           cp /tmp/sa-reference/sa-reference-index.json ./sa-reference-index.json
-          git add --sparse sa-reference-index.json
+          git add -f sa-reference-index.json
           git commit -m "chore(library): publish sanitized SA reference index"
-          git push --force origin HEAD:refs/heads/sa-reference-index
+          for attempt in 1 2 3; do
+            if git -c http.version=HTTP/1.1 push --force origin HEAD:refs/heads/sa-reference-index; then
+              exit 0
+            fi
+            if [[ "$attempt" -lt 3 ]]; then sleep $((attempt * 10)); fi
+          done
+          exit 1
