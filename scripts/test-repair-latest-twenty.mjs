@@ -124,6 +124,13 @@ assert.match(workflowSource,/animation:m\.animation/);
 assert.match(workflowSource,/if\(item\.ready!==true\)continue;/);
 assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
     'a renderer policy update must permit one retry of an earlier deterministic block');
+  assert.match(repairSource,/meta\.animationFallbackUsed===true/,
+    'a preview may use another source-declared animation only after visible motion is verified');
+  assert.match(repairSource,/record\.previewAnimation=animation/,
+    'the exact rendered track is stored separately from the source default');
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track"/);
+  assert.match(workflowSource,/--allow-visible-track-fallback/);
+  assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
     /if\(!selectedAnimation\)\{([\s\S]*?)\n\s*\}/
   )?.[1]||"";
