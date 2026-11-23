@@ -3,8 +3,10 @@
 // Only aggregated counts are emitted: never print original filenames or pixels.
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const repo='vladleopold/spine';
+const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
+if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-if(snapshot.length!==20)throw Error('Expected frozen snapshot of 20 works');
+if(snapshot.length!==repairLimit)throw Error(`Expected frozen snapshot of ${repairLimit} works`);
 const token=process.env.GITHUB_TOKEN||'';
 const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Bearer '+token}:{})};
 const cache=new Map();
@@ -100,7 +102,7 @@ for(const work of snapshot){
   if(checks.every(Boolean))ready++;
   else failed++;
 }
-console.log('LATEST20_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({
+console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
   total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
   expectedMedia:snapshot.length*fields.length,mutatedSource
 }));
