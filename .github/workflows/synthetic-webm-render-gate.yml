@@ -7,6 +7,7 @@ on:
       - 'scripts/test-synthetic-render-skip.mjs'
       - 'scripts/lib/spine-export-matrix.mjs'
       - 'scripts/lib/export-log-redaction.mjs'
+      - 'scripts/lib/repair-manifest-guard.mjs'
       - 'scripts/spine-export-matrix.mjs'
       - 'scripts/resolve-export-animation.mjs'
       - 'scripts/test-spine-export-matrix.mjs'
@@ -54,6 +55,7 @@ jobs:
             /scripts/test-synthetic-render-skip.mjs
             /scripts/lib/spine-export-matrix.mjs
             /scripts/lib/export-log-redaction.mjs
+            /scripts/lib/repair-manifest-guard.mjs
             /scripts/spine-export-matrix.mjs
             /scripts/resolve-export-animation.mjs
             /scripts/test-spine-export-matrix.mjs
