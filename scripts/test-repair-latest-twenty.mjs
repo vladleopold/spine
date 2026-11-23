@@ -35,6 +35,14 @@ try{
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
+  // Add older entries so the same fixture proves the configurable 50-item window
+  // without changing which records belong to the default newest-20 window.
+  for(let i=0;i<36;i++){
+    const id='older-fixture-'+String(i).padStart(2,'0');
+    records.push({id,uploadedAt:new Date(Date.UTC(2026,10,16,0,i,0)).toISOString(),
+      previewPath:'library_02/'+id,webmStatus:'failed',defaultAnimation:'idle',
+      files:['test.skel','test.atlas','test.png']});
+  }
   fs.writeFileSync(path.join(shard,'index.json'),JSON.stringify(records));
   const result=spawnSync(process.execPath,[script,'matrix'],{
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
@@ -84,5 +92,22 @@ try{
   assert.doesNotMatch(missingSelectionBranch,/existingMediaOk|refreshStoredPostersAndTimestamp/,
     "unattributed old media cannot be reaccepted or used to regenerate a poster");
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
+
+  const fiftyResult=spawnSync(process.execPath,[script,'matrix'],{
+    cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
+      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'50'}});
+  assert.equal(fiftyResult.status,0,fiftyResult.stderr);
+  const fiftyOutput=Object.fromEntries(fiftyResult.stdout.split('\\n').filter(x=>x.includes('='))
+    .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
+  const allFifty=JSON.parse(fiftyOutput.allEntries);
+  const matrixFifty=JSON.parse(fiftyOutput.matrix);
+  assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
+  assert.equal(matrixFifty.length,47,'only 47 entries with exact animation and complete source may render');
+  assert.equal(Number(fiftyOutput.renderCount),47);
+  assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
+    'the additional 26 older-but-in-window fixtures must remain eligible');
+  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.blockedReason==='MISSING_DEFAULT_ANIMATION'));
+  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.blockedReason==='MISSING_DEFAULT_ANIMATION'));
+  assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
