@@ -36,6 +36,7 @@ try{
   blockedRecord.webmStatus='blocked-invisible-default-skin';
   blockedRecord.previewBlockedAnimation=blockedRecord.defaultAnimation;
   blockedRecord.previewBlockedSourceFingerprint=previewSourceFingerprint(blockedRecord);
+  blockedRecord.previewBlockedRendererRevision='visibility-contrast-v2';
   blockedRecord.previewBlockedSkin='';
   records[20].defaultAnimation=' Walk ';
   records[4].webmStatus='ready';
@@ -100,6 +101,8 @@ try{
   assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
     'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
+  assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
+    'a renderer policy update must permit one retry of an earlier deterministic block');
   const missingSelectionBranch=repairSource.match(
     /if\(!selectedAnimation\|\|selectedAnimation!==indexedAnimation\)\{([\s\S]*?)\n\s*\}/
   )?.[1]||"";
