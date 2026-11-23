@@ -77,6 +77,8 @@ jobs:
             /scripts/verify-reported-preview-live.mjs
             /scripts/repair-reported-previews.mjs
             /scripts/repair-latest-twenty-previews.mjs
+            /scripts/source-skeleton-choice.mjs
+            /scripts/lib/spine-player-source-support.mjs
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
