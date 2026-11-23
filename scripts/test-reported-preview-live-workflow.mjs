@@ -8,6 +8,7 @@ const auditWorkflowPath = path.join(root, '.github/workflows/verify-reported-pre
 const repairWorkflowPath = path.join(root, '.github/workflows/repair-reported-previews.yml');
 const auditWorkflow = fs.readFileSync(auditWorkflowPath, 'utf8');
 const repairWorkflow = fs.readFileSync(repairWorkflowPath, 'utf8');
+const repairScript = fs.readFileSync(path.join(root, 'scripts/repair-reported-previews.mjs'), 'utf8');
 
 function sparseCheckoutPaths(source, label) {
   const lines = source.split(/\r?\n/);
@@ -172,6 +173,13 @@ assert.match(publishJob, /^    permissions:\s*\n\s+contents:\s+write/m,
   'only the publisher may write source changes');
 assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
   'repair inventory must run the media acceptance regression');
+assert.match(repairWorkflow, /--allow-visible-track-fallback/,
+  'reported previews without an index default may use a real source-declared moving track');
+assert.match(repairWorkflow, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
+assert.match(repairScript, /__SPINE_AUTO__/,
+  'missing defaults must enter the native source-track discovery path');
+assert.match(repairScript, /record\.previewAnimation=animation/,
+  'the exact rendered track must be recorded without rewriting defaultAnimation');
 assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
   'post-publish audit must install a real media decoder');
 const repairTest = repairVerifyJob.indexOf('node scripts/test-reported-preview-live.mjs');
