@@ -74,6 +74,11 @@ const unsupportedRuntimeLog="Error: unsupported Spine skeleton version";
 const unsupportedRuntime=summarizeRendererLog(unsupportedRuntimeLog);
 assert.equal(classifyRendererError(unsupportedRuntimeLog),"SKELETON_RUNTIME_VERSION");
 assert.equal(unsupportedRuntime.distinctError,"SKELETON_RUNTIME_VERSION");
+const unsupported37Log="UNSUPPORTED_SPINE_3_7_BINARY_SKELETON: Spine Player 3.7 requires jsonUrl; binary .skel cannot be loaded without a same-work JSON skeleton.";
+const unsupported37=summarizeRendererLog(unsupported37Log);
+assert.equal(classifyRendererError(unsupported37Log),"UNSUPPORTED_SPINE_3_7_BINARY_SKELETON");
+assert.equal(unsupported37.distinctError,"UNSUPPORTED_SPINE_3_7_BINARY_SKELETON",
+  'Spine 3.7 binary-only input must have a stable blocker classification, never UNCLASSIFIED');
 
 const startupFailure=summarizeRendererLog(
   "Skeleton: source (v3.8.59)\nCapture with skin (default) failed: Timed out waiting for player ready"
