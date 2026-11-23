@@ -657,6 +657,9 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
+      var runtimeSkins = runtimeData && runtimeData.skins;
+      window.__skinNames = Array.isArray(runtimeSkins) ? runtimeSkins.map(function(s) { return s && s.name; }).filter(Boolean) : (runtimeSkins && typeof runtimeSkins === 'object' ? Object.keys(runtimeSkins) : []);
+      window.__defaultSkinName = runtimeData && runtimeData.defaultSkin && runtimeData.defaultSkin.name ? runtimeData.defaultSkin.name : '';
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)} ||
         window.__animationNames.find(function(name) { return /^idle$/i.test(name); }) ||
         window.__animationNames.find(function(name) { return /idle/i.test(name); }) ||
@@ -873,7 +876,7 @@ try {
   // No attachments or source files are edited; the selected skin is recorded
   // as preview metadata only.
   const FRAME_PEAK_MIN = 40;
-  const skinCandidates = Object.freeze([null,...readSkinNames(skeletonFilePath)]);
+  const skinCandidates = [null,...readSkinNames(skeletonFilePath)];
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -898,7 +901,8 @@ try {
     } catch { return false; }
   }
 
-  for (const skin of skinCandidates) {
+  for (let skinIndex = 0; skinIndex < skinCandidates.length; skinIndex++) {
+    const skin = skinCandidates[skinIndex];
     const label = skin === null ? '(default)' : `'${skin}'`;
     await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
     let ready = true;
@@ -916,7 +920,13 @@ try {
 
     // Stable, non-sensitive stage markers distinguish startup from later visibility failure.
     console.error('PLAYER_READY=1');
-    console.error('SOURCE_SKIN_MODE=default');
+    console.error('SOURCE_SKIN_MODE=default-first-runtime-fallback');
+    if (skinIndex === 0 && skinCandidates.length === 1) {
+      const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
+      for (const name of runtimeSkinNames.names) {
+        if (name && name !== runtimeSkinNames.defaultName && !skinCandidates.includes(name)) skinCandidates.push(name);
+      }
+    }
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
     const pinnedAnimation = autoAnimation
