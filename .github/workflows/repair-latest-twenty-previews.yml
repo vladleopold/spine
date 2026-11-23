@@ -341,7 +341,7 @@ jobs:
                 result.distinctError==="RUNTIME_ALL_SKINS_INVISIBLE";
               const invalidAnimation=result.distinctError==="ANIMATION_SELECTION";
               const incompleteSource=["SOURCE_GRAPH_MISSING","ATLAS_TEXTURE_LOAD"].includes(result.distinctError);
-              const unsupportedRuntime=["SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION"].includes(result.distinctError);
+              const unsupportedRuntime=["SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION","UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"].includes(result.distinctError);
               const reason=staticTrack?"blocked-static-animation":
                 invisible?"blocked-invisible-default-skin":
                 invalidAnimation?"blocked-invalid-default-animation":
