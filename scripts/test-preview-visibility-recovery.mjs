@@ -7,7 +7,10 @@ assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
 assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
   'missing index/default selection prefers a declared Idle source track');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
-assert.doesNotMatch(source,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate|SPINE_VISIBLE_ALTERNATE_ANIMATION/);
+assert.match(source,/if \(args\.allowVisibleTrackFallback\)[\s\S]*?const candidates = \[targetAnimation, \.\.\.alternatives\.slice\(0, 7\)\]/,
+  'source-declared alternatives are considered only in the explicit repair mode');
+assert.match(source,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
+  'the preview may change tracks only after a candidate shows visible changing pixels');
 assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureAnimation\)\} \|\|[\s\S]*?window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/,
   'binary-only sources prefer a runtime Idle track before the first declared track');
 assert.match(source,/const skinCandidates = \[null,\.\.\.readSkinNames\(skeletonFilePath\)\];/,
