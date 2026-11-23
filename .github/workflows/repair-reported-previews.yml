@@ -373,6 +373,7 @@ jobs:
             /scripts/verify-poster-first-frame.mjs
             /scripts/test-reported-preview-live.mjs
             /scripts/test-reported-preview-live-workflow.mjs
+            /scripts/repair-reported-previews.mjs
             /scripts/resolve-library.mjs
             /library_02/index.json
       - uses: actions/setup-node@v4
