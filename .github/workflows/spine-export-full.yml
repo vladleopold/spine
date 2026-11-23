@@ -11,7 +11,6 @@ on:
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
-      - scripts/lib/repair-manifest-guard.mjs
       - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
@@ -19,6 +18,7 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/repair-reported-previews.mjs
       - scripts/repair-latest-twenty-previews.mjs
+      - scripts/repair-manifest-guard.mjs
       - scripts/repair-last-ten-previews.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/test-repair-last-ten-previews.mjs
