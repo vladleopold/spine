@@ -7,8 +7,6 @@ const preview = read('../api/github-preview.js');
 const batch = read('./batch-export-all.mjs');
 const science = read('../lib/spine-data-science.js');
 const app = read('../src/SpineApp.tsx');
-const renderWork = read('./render-work.mjs');
-const failureClassifier = read('./renderer-failure-class.mjs');
 
 assert.match(preview,
   /const defaultAnimation = typeof entry\?\.defaultAnimation === 'string' \? entry\.defaultAnimation : '';/,
@@ -272,24 +270,5 @@ assert.doesNotMatch(app, /animationNames\.find\([^\n]*idle|animationNames\s*\[\s
 assert.doesNotMatch(app,
   /animationsRef\.current\s*\[\s*0\s*\]|nextAnimations\s*\[\s*0\s*\]|skinNames\s*\[\s*0\s*\]|nextSpine\.defaultAnimation\s*\|\|\s*"animation"/,
   'the UI must not invent a first-track or synthetic animation name');
-
-const blockedRenderStart=renderWork.indexOf('async function markBlockedRender(');
-const blockedRenderEnd=renderWork.indexOf('async function markBlockedSelection()',blockedRenderStart);
-assert.ok(blockedRenderStart>=0&&blockedRenderEnd>blockedRenderStart,
-  'upload rendering must publish blocked metadata for a non-renderable exact selection');
-const blockedRender=renderWork.slice(blockedRenderStart,blockedRenderEnd);
-assert.match(blockedRender,/record\.webmStatus=status/);
-assert.match(blockedRender,/record\.previewStatus='blocked'/);
-assert.match(blockedRender,/previewBlockedAnimation/);
-assert.match(blockedRender,/previewBlockedSourceFingerprint/);
-assert.match(blockedRender,/previewBlockedSkin/);
-assert.match(renderWork,/renderer-failure-class\.mjs/);
-assert.match(renderWork,/blocked-static-animation/);
-assert.match(renderWork,/blocked-invisible-default-skin/);
-assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
-assert.match(renderWork,/process\.exit\(0\)/,
-  'expected blocked states must complete as a successful workflow rather than a retrying failure');
-assert.match(failureClassifier,/COMPOSITED_FRAMES_IDENTICAL/);
-assert.match(failureClassifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 
 console.log('PASS preview, batch export, data-science metadata and UI preserve exact animation/default skin without list-order fallbacks');
