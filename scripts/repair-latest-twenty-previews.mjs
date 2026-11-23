@@ -218,23 +218,31 @@ if(action==="matrix"){
     // Only the exact index-selected animation is eligible for preview rendering.
     // A missing default remains blocked; historical names are never inferred.
     const animation=indexedAnimation;
+    const sourceFingerprint=previewSourceFingerprint(record);
+    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation"]);
+    const blockedSameSelection=blockedStatuses.has(record?.webmStatus) &&
+      record?.previewBlockedAnimation===animation &&
+      record?.previewBlockedSourceFingerprint===sourceFingerprint &&
+      String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
     const sourceReady=bundleOk(e);
-    const ready=!incompatible&&Boolean(animation)&&sourceReady;
+    const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
-      uploadedAt:e.at,
-      sourceFingerprint:previewSourceFingerprint(record),
+      uploadedAt:e.at,sourceFingerprint,
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
-      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":!sourceReady?"MISSING_SOURCE_TRIAD":""};
+      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":
+        blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):
+        !sourceReady?"MISSING_SOURCE_TRIAD":""};
     }));
     matrix.push(...batch);
   }
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
   // available clip has already been rendered and independently accepted.
+  fs.writeFileSync(path.join(root,"repair-manifest.json"),JSON.stringify(matrix));
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
   console.log("allEntries="+JSON.stringify(matrix));
   console.log("renderCount="+required.length);
@@ -250,7 +258,9 @@ if(action==="matrix"){
   console.error("AUDIT_LIMIT="+repairLimit+" ENTRIES="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
 }else if(action==="merge"){
-  const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
+  const selected=process.env.REPAIR_IDS_FILE
+    ? JSON.parse(fs.readFileSync(process.env.REPAIR_IDS_FILE,"utf8"))
+    : JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==repairLimit)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
@@ -282,6 +292,15 @@ if(action==="matrix"){
     }
     const selectedAnimation=choosePreviewAnimation([],item.animation);
     const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
+    const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation"]);
+    const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
+      record.previewBlockedAnimation===selectedAnimation &&
+      record.previewBlockedSourceFingerprint===item.sourceFingerprint &&
+      String(record.previewBlockedSkin||"")===String(record.defaultSkin||record.skin||"");
+    if(blockedSameSelection){
+      summary.blocked++;
+      continue;
+    }
     if(!selectedAnimation||selectedAnimation!==indexedAnimation){
       // Without an exact selected/default timeline, even an older installed
       // WebM cannot be proven to represent the requested animation. Preserve
@@ -370,6 +389,22 @@ if(action==="matrix"){
         }
         continue;
       }
+      // A blank or frame-identical selected track is not a transient renderer
+      // failure. Keep it blocked until the exact animation or skin selection changes.
+      if(meta?.reason==="blocked-invisible-default-skin"||meta?.reason==="blocked-static-animation"){
+        record.webmStatus=meta.reason;
+        record.previewStatus="blocked";
+        record.previewBlockedAnimation=selectedAnimation;
+        record.previewBlockedSourceFingerprint=item.sourceFingerprint;
+        record.previewBlockedSkin=String(record.defaultSkin||record.skin||"");
+        record.previewBlockedAt=new Date().toISOString();
+        record.previewError=meta.reason==="blocked-static-animation"
+          ?"Selected default animation has no changing frames; choose an animated track before rendering"
+          :"Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering";
+        record.lastPreviewRetryError="";
+        summary.blocked++;
+        continue;
+      }
       // No existing independently validated media: mark failed, never fake it.
       record.lastPreviewRetryError="Live media missing or replacement failed real motion acceptance";
       record.webmStatus="failed";
@@ -394,6 +429,10 @@ if(action==="matrix"){
     record.previewStatus="ready";
     record.dispatchStatus="rendered";
     record.previewError="";
+    delete record.previewBlockedAnimation;
+    delete record.previewBlockedSourceFingerprint;
+    delete record.previewBlockedSkin;
+    delete record.previewBlockedAt;
     const now=new Date().toISOString();
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
