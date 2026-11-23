@@ -134,7 +134,7 @@ jobs:
       - name: Enumerate requested newest uploads and validate required source file triads
         id: latest
         env:
-          SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
+          SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
           SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -382,7 +382,7 @@ jobs:
   publish:
     needs: [inventory, render]
     env:
-      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
+      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     permissions:
       contents: write
@@ -488,7 +488,7 @@ jobs:
   verify-production:
     needs: [inventory, render, publish]
     env:
-      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
+      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
