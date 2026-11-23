@@ -94,5 +94,7 @@ assert.match(exporter,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
   "binary-only skeletons expose source skin names from their loaded runtime");
 assert.match(exporter,/skinCandidates\.push\(name\)/,
   "runtime skins are tried only after the default skin produces no visible frame");
-assert.doesNotMatch(exporter,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);
+assert.match(exporter,/if \(args\.allowVisibleTrackFallback\)/);
+assert.match(exporter,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
+  "alternate source tracks are accepted only after visible motion is detected");
 console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas and keep runtime skin fallback source-bound");
