@@ -243,7 +243,6 @@ if(action==="matrix"){
   // available clip has already been rendered and independently accepted.
   fs.writeFileSync(path.join(root,"repair-manifest.json"),JSON.stringify(matrix));
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
-  console.log("allEntries="+JSON.stringify(matrix));
   console.log("renderCount="+required.length);
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
