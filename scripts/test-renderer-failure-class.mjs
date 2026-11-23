@@ -53,6 +53,21 @@ assert.equal("selectedSkinCount" in summary,false,
 assert.doesNotMatch(JSON.stringify(summary),/secret-character|private-animation-name|private\/source/,
   "sanitized diagnostics must not expose source paths or animation names");
 
+const invalidAnimationLog="Error: Animation 'missing-track' not found in skeleton";
+const invalidAnimation=summarizeRendererLog(invalidAnimationLog);
+assert.equal(classifyRendererError(invalidAnimationLog),"ANIMATION_SELECTION");
+assert.equal(invalidAnimation.distinctError,"ANIMATION_SELECTION");
+
+const incompleteSourceLog="Error: skeleton file not found while loading atlas source";
+const incompleteSource=summarizeRendererLog(incompleteSourceLog);
+assert.equal(classifyRendererError(incompleteSourceLog),"SOURCE_GRAPH_MISSING");
+assert.equal(incompleteSource.distinctError,"SOURCE_GRAPH_MISSING");
+
+const unsupportedRuntimeLog="Error: unsupported Spine skeleton version";
+const unsupportedRuntime=summarizeRendererLog(unsupportedRuntimeLog);
+assert.equal(classifyRendererError(unsupportedRuntimeLog),"SKELETON_RUNTIME_VERSION");
+assert.equal(unsupportedRuntime.distinctError,"SKELETON_RUNTIME_VERSION");
+
 const startupFailure=summarizeRendererLog(
   "Skeleton: source (v3.8.59)\nCapture with skin (default) failed: Timed out waiting for player ready"
 );
