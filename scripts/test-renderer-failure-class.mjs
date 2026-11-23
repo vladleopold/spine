@@ -75,6 +75,8 @@ assert.equal(startupFailure.stages.playerReady,false);
 assert.equal(startupFailure.stages.recordingStarted,false);
 assert.equal(startupFailure.skinSelectionMode,"unknown");
 assert.equal(startupFailure.reason,"PLAYER_INITIALIZATION_TIMEOUT");
+assert.equal(startupFailure.secondary,"PLAYER_INITIALIZATION_TIMEOUT",
+  "the exact skin-capture failure must be classified even when the player never reaches its ready marker");
 
 const canvasPass=summarizeRendererLog(
   "PLAYER_READY=1\nSOURCE_SKIN_MODE=default\nCANVAS_FALLBACK_CAPTURE=started\nREALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES=12 DISTINCT=12"
