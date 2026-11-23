@@ -52,7 +52,7 @@ jobs:
           # index explicitly so the generated branch contains only this file.
           git read-tree --empty
           cp /tmp/sa-reference/sa-reference-index.json ./sa-reference-index.json
-          git add -f sa-reference-index.json
+          git add --sparse -f sa-reference-index.json
           git commit -m "chore(library): publish sanitized SA reference index"
           for attempt in 1 2 3; do
             if git -c http.version=HTTP/1.1 push --force origin HEAD:refs/heads/sa-reference-index; then
