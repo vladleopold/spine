@@ -20,6 +20,8 @@ on:
       - scripts/repair-manifest-guard.mjs
 permissions:
   contents: write
+# Run on the hosted Ubuntu repair path so existing, exact default-animation WebMs
+# can regain their matching first-frame posters without local editor access.
 concurrency:
   group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}
   cancel-in-progress: false
