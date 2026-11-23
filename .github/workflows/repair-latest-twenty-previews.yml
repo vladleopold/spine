@@ -99,9 +99,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
-      allEntries: ${{ steps.latest.outputs.allEntries }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
-      sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
       - uses: actions/checkout@v4
         with:
