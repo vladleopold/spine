@@ -1,4 +1,6 @@
 name: Recover newest 50 Spine WebP and WebM previews
+# Canonical automatic recovery pipeline. Targeted latest-10 and reported-project repair
+# workflows remain manually/feature-branch invoked to prevent overlapping main-branch writes.
 on:
   schedule:
     - cron: '17 * * * *'
