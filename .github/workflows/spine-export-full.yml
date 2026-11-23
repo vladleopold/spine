@@ -23,7 +23,7 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/render-work.mjs
       - scripts/renderer-failure-class.mjs
-      - scripts/test-no-preview-track-or-skin-fallbacks.mjs
+      - scripts/test-render-work-blocked-states.mjs
       - scripts/test-repair-last-ten-previews.mjs
       - scripts/test-preview-log-privacy.mjs
   pull_request:
@@ -43,7 +43,7 @@ on:
       - scripts/test-repair-latest-twenty.mjs
       - scripts/render-work.mjs
       - scripts/renderer-failure-class.mjs
-      - scripts/test-no-preview-track-or-skin-fallbacks.mjs
+      - scripts/test-render-work-blocked-states.mjs
       - scripts/test-repair-last-ten-previews.mjs
       - scripts/test-preview-log-privacy.mjs
 
@@ -89,7 +89,7 @@ jobs:
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
-          node scripts/test-no-preview-track-or-skin-fallbacks.mjs
+          node scripts/test-render-work-blocked-states.mjs
 
   generate-matrix:
     if: github.event_name == 'repository_dispatch'
