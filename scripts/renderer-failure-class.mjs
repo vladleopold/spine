@@ -12,7 +12,10 @@ export function classifyRendererError(text) {
   if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
   if (x.includes("net::err_")||x.includes("failed to load resource")||x.includes("networkidle")||x.includes("could not resolve host")) return "NETWORK_ASSET";
   if (x.includes("timed out waiting for player ready")||x.includes("waiting for player ready")||x.includes("waitforfunction")&&x.includes("timeout")) return "PLAYER_INITIALIZATION_TIMEOUT";
-  if (x.includes("no skin produced visible content")||x.includes("no visible real-time spine frames")||x.includes("no visible pixels from the selected default spine skin")||x.includes("frame peak=0")||x.includes("rendered no visible content")) return "NO_VISIBLE_PIXEL";
+  if (x.includes("no source animation produced visible changing frames")||
+      x.includes("no skin produced visible content")||x.includes("no visible real-time spine frames")||
+      x.includes("no visible pixels from the selected default spine skin")||
+      x.includes("frame peak=0")||x.includes("rendered no visible content")) return "NO_VISIBLE_PIXEL";
   if (x.includes("no video data captured")||x.includes("mediarecorder failed")||x.includes("recorder")&&x.includes("error")) return "BROWSER_MEDIA_RECORDER";
   if (x.includes("webp generation failed")||x.includes("ffmpeg processing failed")||x.includes("invalid rendered video")) return "MEDIA_ENCODING";
   if (x.includes("spineplayer is not a function")||x.includes("player creation failed")) return "SPINE_RUNTIME_INITIALIZATION";
@@ -78,6 +81,7 @@ export function summarizeRendererLog(text) {
     reason==="SKELETON_RUNTIME_VERSION"?"SKELETON_RUNTIME_VERSION":
     reason==="UNSUPPORTED_SPINE_EXPORT_VERSION"?"UNSUPPORTED_SPINE_EXPORT_VERSION":
     reason==="ATLAS_TEXTURE_LOAD"?"ATLAS_TEXTURE_LOAD":
+    reason==="NO_VISIBLE_PIXEL"?"COMPOSITED_FRAMES_NOT_VISIBLE":
     "UNCLASSIFIED";
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
