@@ -14,7 +14,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="visibility-contrast-v2";
+const PREVIEW_RENDERER_REVISION="auto-track-recovery-v3";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -40,6 +40,37 @@ function sourceIssue(entry){
     const files=fs.readdirSync(p).filter(x=>fs.statSync(path.join(p,x)).isFile());
     return inspectAtlasSourceBundle(p,files).reason;
   }catch{return 'MISSING_SOURCE_TRIAD';}
+}
+function readSourceAnimationNames(entry, record) {
+  const directory=path.resolve(root,entry.previewPath);
+  if(!directory.startsWith(root+path.sep))return [];
+  const files=[];
+  function walk(current,depth=0){
+    if(depth>6)return;
+    let items=[];
+    try{items=fs.readdirSync(current,{withFileTypes:true});}catch{return;}
+    for(const item of items){
+      const full=path.join(current,item.name);
+      if(item.isDirectory()&&!item.name.endsWith('.__chunks'))walk(full,depth+1);
+      else if(item.isFile()&&/\.json$/i.test(item.name))files.push(full);
+    }
+  }
+  walk(directory);
+  const requested=path.basename(String(record?.skeleton||record?.skeletonFile||''));
+  files.sort((a,b)=>{
+    const ae=path.basename(a)===requested?0:1,be=path.basename(b)===requested?0:1;
+    return ae-be;
+  });
+  for(const file of files){
+    try{
+      const data=JSON.parse(fs.readFileSync(file,'utf8'));
+      if(Array.isArray(data?.bones)&&data.animations&&typeof data.animations==='object')
+        return Object.keys(data.animations);
+    }catch{}
+  }
+  return Array.isArray(record?.animations)
+    ? record.animations.map(item=>typeof item==='string'?item:String(item?.name||'')).filter(Boolean)
+    : [];
 }
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
@@ -197,8 +228,10 @@ if(action==="matrix"){
       const hasSkeleton=fileNames.some(file=>/\.(json|skel)$/i.test(file));
       const hasAtlas=fileNames.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
       const hasTexture=fileNames.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
-      return Boolean(record) && typeof record.defaultAnimation==="string" && record.defaultAnimation.length>0 &&
-        hasSkeleton && hasAtlas && hasTexture;
+      // Hydrate every complete source bundle, including records with no
+      // indexed defaultAnimation. The renderer now selects a deterministic
+      // source track without rewriting the original upload metadata.
+      return Boolean(record) && hasSkeleton && hasAtlas && hasTexture;
     }).map(entry=>{
       const relative=String(entry.previewPath||"").replace(/\\/g,"/");
       const resolved=path.resolve(root,relative);
@@ -215,10 +248,12 @@ if(action==="matrix"){
      const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const indexedAnimation=choosePreviewAnimation([],record?.defaultAnimation);
-    // Only the exact index-selected animation is eligible for preview rendering.
-    // A missing default remains blocked; historical names are never inferred.
-    const animation=indexedAnimation;
+    const sourceAnimations=readSourceAnimationNames(e,record);
+    // Keep an explicit selection verbatim; when it is absent, prefer Idle
+    // and otherwise the first animation declared by the exact source skeleton.
+    // This is preview metadata only: defaultAnimation and source bytes remain unchanged.
+    const animation=choosePreviewAnimation(sourceAnimations,
+      typeof record?.defaultAnimation==='string'?record.defaultAnimation:'');
     const sourceFingerprint=previewSourceFingerprint(record);
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
       "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
@@ -312,7 +347,7 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(!selectedAnimation||selectedAnimation!==indexedAnimation){
+    if(!selectedAnimation||(indexedAnimation&&selectedAnimation!==indexedAnimation)){
       // Without an exact selected/default timeline, even an older installed
       // WebM cannot be proven to represent the requested animation. Preserve
       // the media bytes, but never advertise them as accepted or refresh posters.
