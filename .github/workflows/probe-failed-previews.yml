@@ -1,12 +1,5 @@
 name: Probe failed recent Spine renderer (NDA-safe)
 on:
-  push:
-    branches: [fix/retry-legacy-four-preview-renders-20261118]
-    paths:
-      - scripts/renderer-failure-class.mjs
-      - scripts/spine-export-webm.mjs
-      - scripts/atlas-pages.mjs
-      - .github/workflows/probe-failed-previews.yml
   workflow_dispatch:
 concurrency:
   group: legacy-preview-diagnostic-${{ github.ref }}

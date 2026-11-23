@@ -1,9 +1,5 @@
 name: Audit and repair Spine preview FPS
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/audit-preview-videos.yml'
   schedule:
     - cron: '17 3 * * 0'
   workflow_dispatch:
@@ -21,6 +17,9 @@ concurrency:
   cancel-in-progress: false
 jobs:
   audit:
+    concurrency:
+      group: ${{ github.event_name == 'workflow_dispatch' && inputs.repair == true && 'spine-library-commit' || 'spine-preview-audit' }}
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
@@ -36,7 +35,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
       - name: Audit previews and optionally repair FPS
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.repair }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.repair }}" = "true" ]; then
             node scripts/audit-preview-videos.mjs --repair
           else
             node scripts/audit-preview-videos.mjs
