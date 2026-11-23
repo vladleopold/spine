@@ -500,7 +500,7 @@ jobs:
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
-    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
