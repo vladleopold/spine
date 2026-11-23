@@ -188,6 +188,12 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.notEqual(olderBatch[0].id,allFifty[0].id,'offset 50 must not repeat the newest batch');
   assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
+  assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\\s\\S]*?default: 0/,
+    'manual and push recovery must start at the newest archive batch');
+  assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\\.offset \\|\\| '0'/,
+    'push and manual recovery must start at offset zero unless a successor batch supplies an explicit offset');
+  assert.doesNotMatch(workflowSource,/github\\.event_name == 'push' && '50'/,
+    'push must not silently skip the newest 50 archive entries');
   assert.match(workflowSource,/github[.]event_name != 'schedule'/,'the scheduled maintenance path must not fan out through the full archive');
   assert.match(workflowSource,/actions:\s*write/,'the batch runner needs permission to dispatch its successor');
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
