@@ -31,6 +31,11 @@ try{
   records[22].previewPath='library_02/'+records[22].id;
   records[22].defaultAnimation=undefined;
   records[21].files=['test.skel'];
+  const blockedRecord=records[19];
+  blockedRecord.webmStatus='blocked-invisible-default-skin';
+  blockedRecord.previewBlockedAnimation=blockedRecord.defaultAnimation;
+  blockedRecord.previewBlockedSourceFingerprint=previewSourceFingerprint(blockedRecord);
+  blockedRecord.previewBlockedSkin='';
   records[20].defaultAnimation=' Walk ';
   records[4].webmStatus='ready';
   records[4].previewStatus='failed';
@@ -59,8 +64,8 @@ try{
   const all=JSON.parse(output.allEntries);
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,17);
-  assert.equal(Number(output.renderCount),17);
+  assert.equal(matrix.length,16);
+  assert.equal(Number(output.renderCount),16);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
@@ -81,7 +86,11 @@ try{
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
-  assert.ok(all.slice(3).every(x=>x.ready&&x.needsRender));
+  assert.ok(all.slice(3).filter(x=>x.id!=='fixture-19').every(x=>x.ready&&x.needsRender));
+  const blocked=all.find(x=>x.id==='fixture-19');
+  assert.equal(blocked.ready,false);
+  assert.equal(blocked.needsRender,false);
+  assert.equal(blocked.blockedReason,'INVISIBLE_DEFAULT_SKIN');
   assert.equal(all[3].animation,' Walk ','the exact index animation string must pass through unchanged');
   assert.ok(all.slice(4).every(x=>x.animation==='idle'));
   assert.doesNotMatch(repairSource,/record\.defaultAnimation\.trim\(\)/,
@@ -109,12 +118,19 @@ try{
   const allFifty=JSON.parse(fiftyOutput.allEntries);
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,47,'only 47 entries with exact animation and complete source may render');
-  assert.equal(Number(fiftyOutput.renderCount),47);
+  assert.equal(matrixFifty.length,46,'only 46 entries with exact animation, complete source and no prior invisible-skin block may render');
+  assert.equal(Number(fiftyOutput.renderCount),46);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.blockedReason==='MISSING_DEFAULT_ANIMATION'));
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.blockedReason==='MISSING_DEFAULT_ANIMATION'));
+  assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.blockedReason==='INVISIBLE_DEFAULT_SKIN'&&!x.needsRender));
   assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
+  const verifySource=fs.readFileSync(path.join(root,'scripts/verify-latest-twenty-live.mjs'),'utf8');
+  const maskSource=fs.readFileSync(path.join(root,'scripts/mask-preview-manifest.mjs'),'utf8');
+  assert.match(verifySource,/blocked-invisible-default-skin/);
+  assert.match(verifySource,/blocked-static-animation/);
+  assert.match(verifySource,/REPAIR_IDS_FILE/);
+  assert.match(maskSource,/REPAIR_IDS_FILE/);
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
