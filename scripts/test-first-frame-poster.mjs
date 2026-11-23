@@ -17,6 +17,9 @@ assert.match(helper,/-frames:v', '1'/);
 assert.match(helper,/-pix_fmt', 'rgba'/);
 assert.match(helper,/verifyPosterFirstFrame\(videoPath, posterPath\)/);
 assert.match(helper,/Math\.abs\(videoFrame\[i\] - posterFrame\[i\]\)/);
+assert.match(helper, /'-lossless', '0', '-quality', '88'/);
+assert.match(helper, /meanDelta > 3\.5/);
+assert.match(helper, /highDeltaRatio > 0\.025/);
 assert.doesNotMatch(helper,/-ss|positions|pickPosterFrame|scan real timeline/);
 assert.match(repair,/generateFirstFrameWebp/);
 assert.doesNotMatch(repair,/frames\/seconds>=15|f\/duration<15|18-39-06-745Z/);
@@ -44,7 +47,7 @@ try{
     '-show_entries','stream=nb_read_frames','-of','default=nw=1:nk=1',input,
   ],{encoding:'utf8',timeout:30000,stdio:['ignore','pipe','ignore']}).trim());
   assert.ok(frameCount>=8,'synthetic source must contain multiple real frames');
-  console.log('PASS synthetic VP9 first-frame WebP exact-pair regression; frames='+frameCount);
+  console.log('PASS synthetic VP9 first-frame faithful compressed WebP regression; frames='+frameCount);
 }finally{
   fs.rmSync(tempDir,{recursive:true,force:true});
 }
