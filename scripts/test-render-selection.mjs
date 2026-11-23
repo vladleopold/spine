@@ -71,37 +71,39 @@ test('Spine 3.7 binary .skel is blocked before player creation; same-version JSO
 });
 
 
-test('WebM exporter preserves requested tracks and only falls back to a visible changing source track when explicitly enabled', () => {
+test('WebM exporter uses only the exact requested/indexed animation and source-default skin', () => {
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   const selector = fs.readFileSync(new URL('./preview-animation-choice.mjs', import.meta.url), 'utf8');
-  assert.ok(exporter.includes("let targetAnimation = autoAnimation ? '' : (requestedAnimation && availableAnimations.includes(requestedAnimation)"),
-    'the requested track remains the first candidate');
-  assert.match(exporter, /allowVisibleTrackFallback: false/);
-  assert.match(exporter, /if \(args\.allowVisibleTrackFallback\)/);
-  assert.match(exporter, /window\.__frameSignature = function/);
-  assert.match(exporter, /const candidates = \[targetAnimation, \.\.\.alternatives\.slice\(0, 7\)\]/);
-  assert.match(exporter, /candidatePeak >= FRAME_PEAK_MIN && changing/);
-  assert.match(exporter, /targetAnimation = candidate/);
-  assert.match(exporter, /animationFallbackUsed: Boolean\(args\.allowVisibleTrackFallback && targetAnimation !== requestedAnimation\)/);
-  assert.match(selector, /if \(typeof preferred === 'string' && preferred\.length > 0\) return preferred;/,
-    'the source selector keeps the indexed default first; the renderer only changes previewAnimation after pixel/motion validation');
+  const repair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
+  const workflow = fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml', import.meta.url), 'utf8');
+  assert.ok(exporter.includes('const targetAnimation = requestedAnimation;'));
+  assert.ok(exporter.includes('NO_DEFAULT_SPINE_ANIMATION'));
+  assert.ok(exporter.includes('SELECTED_SPINE_ANIMATION_UNAVAILABLE'));
+  assert.ok(exporter.includes('const skinCandidates = [null];'));
+  assert.ok(exporter.includes('window.__selectedAnimation = ${JSON.stringify(captureAnimation)};'));
+  assert.ok(exporter.includes('SAME_ANIMATION_VISIBILITY_PROBES='));
+  for (const token of ['__SPINE_AUTO__','allowVisibleTrackFallback','--allow-visible-track-fallback',
+    'targetAnimation = candidate','skinCandidates.push','SOURCE_SKIN_FALLBACK'])
+    assert.ok(!exporter.includes(token), 'unexpected exporter fallback: '+token);
+  assert.ok(selector.includes("return typeof preferred === 'string' ? preferred : '';"));
+  assert.ok(repair.includes('exactSelectedAnimation(record)'));
+  assert.ok(!repair.includes('__SPINE_AUTO__'));
+  assert.ok(!workflow.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+  assert.ok(!workflow.includes('--allow-visible-track-fallback'));
 });
 
-
-test('binary-only skeletons defer preview animation selection to the loaded Spine runtime', () => {
+test('binary-only skeletons require the exact selected animation before rendering', () => {
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   const repair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
   const workflow = fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml', import.meta.url), 'utf8');
-  assert.match(repair, /sourceReady\?'__SPINE_AUTO__':''/);
-  assert.match(exporter, /const autoAnimation = requestedAnimation === '__SPINE_AUTO__'/);
-  assert.match(exporter, /window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/);
-  assert.match(exporter, /const pinnedAnimation = autoAnimation[\s\S]*?choosePreviewAnimation\(runtimeAnimations, ''\)/);
-  assert.match(workflow, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
-  assert.match(workflow, /--allow-visible-track-fallback/);
-  assert.match(workflow, /allowFallback\|\|expectedAnimation==="__SPINE_AUTO__"/);
-  assert.match(workflow, /animationFallbackUsed:Boolean\(m\.animationFallbackUsed\)/);
-  assert.match(repair, /meta\.animationFallbackUsed===true/);
-  assert.match(repair, /PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track"/);
+  assert.ok(repair.includes('MISSING_SOURCE_ANIMATION'));
+  assert.ok(repair.includes('INVALID_DEFAULT_ANIMATION'));
+  assert.ok(exporter.includes('const targetAnimation = requestedAnimation;'));
+  assert.ok(!exporter.includes('runtimeAnimations.find'));
+  assert.ok(!exporter.includes('window.__animationNames.find'));
+  assert.ok(!workflow.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+  assert.ok(!workflow.includes('--allow-visible-track-fallback'));
+  assert.ok(repair.includes('PREVIEW_RENDERER_REVISION="exact-track-and-default-skin-only-v6"'));
 });
 
 test('latest-ten recovery exposes only numeric slots and sanitized metadata publicly', () => {

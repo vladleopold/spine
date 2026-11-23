@@ -271,4 +271,26 @@ assert.doesNotMatch(app,
   /animationsRef\.current\s*\[\s*0\s*\]|nextAnimations\s*\[\s*0\s*\]|skinNames\s*\[\s*0\s*\]|nextSpine\.defaultAnimation\s*\|\|\s*"animation"/,
   'the UI must not invent a first-track or synthetic animation name');
 
+
+
+
+// Exact-only policy must hold in the native exporter and both repair workflows.
+const exporter = read('../scripts/spine-export-webm.mjs');
+const latestTwentyRepair = read('./repair-latest-twenty-previews.mjs');
+const reportedRepair = read('./repair-reported-previews.mjs');
+const latestTwentyWorkflow = read('../.github/workflows/repair-latest-twenty-previews.yml');
+const reportedWorkflow = read('../.github/workflows/repair-reported-previews.yml');
+assert.ok(exporter.includes('const targetAnimation = requestedAnimation;'));
+assert.ok(exporter.includes('const skinCandidates = [null];'));
+for (const token of ['allowVisibleTrackFallback','allow-visible-track-fallback',
+  'alternatePreviewAnimations','targetAnimation = candidate','__SPINE_AUTO__','skinCandidates.push'])
+  assert.ok(!exporter.includes(token), 'unexpected exporter fallback: '+token);
+for (const token of ['__SPINE_AUTO__','choosePreviewAnimation','animationFallbackUsed'])
+  assert.ok(!latestTwentyRepair.includes(token), 'unexpected latest-20 fallback: '+token);
+for (const token of ['__SPINE_AUTO__','automaticSelection','animationFallbackUsed'])
+  assert.ok(!reportedRepair.includes(token), 'unexpected reported-preview fallback: '+token);
+for (const source of [latestTwentyWorkflow,reportedWorkflow])
+  for (const token of ['ALLOW_VISIBLE_TRACK_FALLBACK','allow-visible-track-fallback','__SPINE_AUTO__'])
+    assert.ok(!source.includes(token), 'unexpected repair-workflow fallback: '+token);
+
 console.log('PASS preview, batch export, data-science metadata and UI preserve exact animation/default skin without list-order fallbacks');

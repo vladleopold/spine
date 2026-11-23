@@ -235,7 +235,6 @@ jobs:
           ENTRY_BASE_PATH: ${{ matrix.entry.basePath }}
           PREVIEW_PATH: ${{ matrix.entry.previewPath }}
           ENTRY_ANIMATION: ${{ matrix.entry.animation }}
-          ALLOW_VISIBLE_TRACK_FALLBACK: "true"
           ENTRY_READY: ${{ matrix.entry.ready }}
           ENTRY_NEEDS_RENDER: ${{ matrix.entry.needsRender }}
           REPAIR_SLOT: ${{ matrix.entry.repairSlot }}
@@ -288,7 +287,6 @@ jobs:
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
         env:
-          ALLOW_VISIBLE_TRACK_FALLBACK: "true"
         shell: bash
         run: |
           set -euo pipefail
@@ -306,7 +304,6 @@ jobs:
           set +e
           node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
-            --allow-visible-track-fallback \
             --repo-path="$GITHUB_WORKSPACE" \
             --output="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
           code=$?
@@ -380,13 +377,11 @@ jobs:
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
             const expectedAnimation=process.env.ENTRY_ANIMATION;
-            const allowFallback=process.env.ALLOW_VISIBLE_TRACK_FALLBACK==="true";
-            const animationMatches=typeof m.animation==="string"&&m.animation.length>0&&
-              (allowFallback||expectedAnimation==="__SPINE_AUTO__"||m.animation===expectedAnimation);
+            const animationMatches=typeof m.animation==="string"&&m.animation.length>0&&m.animation===expectedAnimation;
             if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
               throw new Error("Export metadata incomplete or no source animation was selected");
             const safe={ok:true,animationMatches:true,animation:m.animation,
-              animationFallbackUsed:Boolean(m.animationFallbackUsed),width:m.width,height:m.height,
+              width:m.width,height:m.height,
               animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
             fs.writeFileSync(p,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");

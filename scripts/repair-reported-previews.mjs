@@ -66,7 +66,9 @@ function existingMediaOk(entry,animation){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
   const selected=choosePreviewAnimation([],animation);
-  if(record?.webmStatus!=="ready"||!selected||choosePreviewAnimation([],record?.defaultAnimation)!==selected)return false;
+  const indexed=choosePreviewAnimation([],record?.defaultAnimation);
+  const stored=choosePreviewAnimation([],record?.previewAnimation);
+  if(record?.webmStatus!=="ready"||!selected||indexed!==selected||stored!==indexed)return false;
   // A previously published Urka clip was decoded as only 12 frames over
   // 1.82 seconds. Require real frame-density evidence before treating it as
   // an accepted final video; leave older previews intact during retries.
@@ -88,17 +90,15 @@ if(action==="matrix"){
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
     const indexedAnimation=choosePreviewAnimation([],e.defaultAnimation);
-    // Keep the source index default untouched. If it is absent, ask the native
-    // renderer to discover a real source-declared track and accept it only
-    // after its own visible-motion checks pass.
-    const animation=indexedAnimation||(sourceReady?"__SPINE_AUTO__":"");
+    // No exact selection means the source remains blocked; never infer from track order.
+    const animation=indexedAnimation;
     const ready=sourceReady&&Boolean(animation);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
-      needsRender:ready&&(animation==="__SPINE_AUTO__"||!existingMediaOk(e,animation)),animation,
-      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":""};
+      needsRender:ready&&!existingMediaOk(e,animation),animation,
+      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_SOURCE_ANIMATION":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -146,18 +146,17 @@ if(action==="matrix"){
     }
     const selectedAnimation=choosePreviewAnimation([],item.animation);
     const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
-    const automaticSelection=item.animation==="__SPINE_AUTO__";
     if(!selectedAnimation){
       record.webmStatus="blocked-missing-animation";
       record.previewStatus="blocked";
-      record.previewError="No source-declared animation could be selected";
+      record.previewError="No exact selected/default animation is recorded; no source track may be substituted";
       summary.blocked++;
       continue;
     }
-    if(!automaticSelection&&selectedAnimation!==indexedAnimation){
+    if(selectedAnimation!==indexedAnimation){
       record.webmStatus="blocked-animation-selection-mismatch";
       record.previewStatus="blocked";
-      record.previewError="Selected animation does not match the unchanged index default";
+      record.previewError="Selected animation does not match the exact indexed preview/default selection";
       summary.blocked++;
       continue;
     }
@@ -179,7 +178,7 @@ if(action==="matrix"){
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
     const renderedAnimation=choosePreviewAnimation([],meta?.animation);
-    const animationMatches=automaticSelection?Boolean(renderedAnimation):renderedAnimation===selectedAnimation;
+    const animationMatches=renderedAnimation===selectedAnimation;
     let complete=meta?.ok===true && meta?.animationMatches===true && animationMatches && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
@@ -215,7 +214,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=automaticSelection?renderedAnimation:selectedAnimation;
+    const animation=selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";

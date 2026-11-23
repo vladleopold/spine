@@ -11,7 +11,6 @@ import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
-import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
@@ -34,13 +33,11 @@ const args = {
   sanitizeSkel: false,
   fps: 30,
   alpha: false,
-  allowVisibleTrackFallback: false,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
   const arg = process.argv[i];
   if (arg === '--alpha') args.alpha = true;
-  else if (arg === '--allow-visible-track-fallback') args.allowVisibleTrackFallback = true;
   else if (arg.startsWith('--fps=')) args.fps = Number(arg.slice(arg.indexOf('=') + 1));
   else if (arg.startsWith('--upload-id=')) args.uploadId = arg.slice(arg.indexOf('=') + 1);
   else if (arg.startsWith('--origin=')) args.origin = arg.slice(arg.indexOf('=') + 1);
@@ -185,27 +182,10 @@ function readAnimationNames(filePath) {
       const jsonSibling=path.join(path.dirname(filePath),path.basename(filePath,'.skel')+'.json');
       if(fs.existsSync(jsonSibling))content=JSON.parse(fs.readFileSync(jsonSibling,'utf8'));
     }
-    const animations=content?.animations||{};
-    const names=Object.keys(animations);
-    // When no default is selected, prefer tracks with multiple distinct
-    // timeline times. A one-key pose is not a useful video preview when a
-    // genuinely animated source track is available.
-    const moving=names.filter(name=>{
-      const times=new Set();
-      const walk=value=>{
-        if(!value||typeof value!=='object')return;
-        if(Array.isArray(value)){for(const item of value)walk(item);return;}
-        if(typeof value.time==='number')times.add(value.time);
-        for(const key of Object.keys(value))walk(value[key]);
-      };
-      walk(animations[name]);
-      return times.size>1;
-    });
-    return moving.length?moving:names;
+    return Object.keys(content?.animations||{});
   } catch { }
   return [];
 }
-
 function readSkinNames(filePath) {
   try {
     const ext=path.extname(filePath).toLowerCase();
@@ -413,15 +393,12 @@ const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
 const indexedAnimation = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation;
-const autoAnimation = requestedAnimation === '__SPINE_AUTO__';
-let targetAnimation = autoAnimation ? '' : (requestedAnimation && availableAnimations.includes(requestedAnimation)
-  ? requestedAnimation
-  : (availableAnimations.length ? choosePreviewAnimation(availableAnimations, '') : requestedAnimation));
-if (!targetAnimation && !autoAnimation) {
-  console.error('NO_DEFAULT_SPINE_ANIMATION: no source animation is available for preview');
+const targetAnimation = requestedAnimation;
+if (!targetAnimation) {
+  console.error('NO_DEFAULT_SPINE_ANIMATION: exact selected/default animation is required');
   process.exit(1);
 }
-if (availableAnimations.length && targetAnimation && !availableAnimations.includes(targetAnimation)) {
+if (availableAnimations.length && !availableAnimations.includes(targetAnimation)) {
   console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
   process.exit(1);
 }
@@ -683,13 +660,7 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
-      var runtimeSkins = runtimeData && runtimeData.skins;
-      window.__skinNames = Array.isArray(runtimeSkins) ? runtimeSkins.map(function(s) { return s && s.name; }).filter(Boolean) : (runtimeSkins && typeof runtimeSkins === 'object' ? Object.keys(runtimeSkins) : []);
-      window.__defaultSkinName = runtimeData && runtimeData.defaultSkin && runtimeData.defaultSkin.name ? runtimeData.defaultSkin.name : '';
-      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} ||
-        window.__animationNames.find(function(name) { return /^idle$/i.test(name); }) ||
-        window.__animationNames.find(function(name) { return /idle/i.test(name); }) ||
-        window.__animationNames[0] || '';
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
         player.animationState.setAnimation(0, window.__selectedAnimation, true);
@@ -897,12 +868,10 @@ try {
       });
     });
   }
-  // Try the source default first. If it is empty/invisible, inspect the
-  // exact source skeleton's declared skins and choose the first visible one.
-  // No attachments or source files are edited; the selected skin is recorded
-  // as preview metadata only.
+  // Keep the source default skin. An invisible default must be blocked rather
+  // than switching to a different set of source layers.
   const FRAME_PEAK_MIN = 40;
-  const skinCandidates = [null,...readSkinNames(skeletonFilePath)];
+  const skinCandidates = [null];
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -953,124 +922,15 @@ try {
     // Stable, non-sensitive stage markers distinguish startup from later visibility failure.
     console.error('PLAYER_READY=1');
     console.error('SOURCE_SKIN_MODE=default');
-    console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
-    if (skinIndex === 0 && skinCandidates.length === 1) {
-      const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
-      for (const name of runtimeSkinNames.names) {
-        if (name && name !== runtimeSkinNames.defaultName && !skinCandidates.includes(name)) skinCandidates.push(name);
-      }
-    }
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
-    const pinnedAnimation = autoAnimation
-      ? choosePreviewAnimation(runtimeAnimations, '')
-      : targetAnimation;
-    if (!pinnedAnimation || !runtimeAnimations.includes(pinnedAnimation)) {
+    const pinnedAnimation = targetAnimation;
+    if (!runtimeAnimations.includes(pinnedAnimation)) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
       break;
     }
-    targetAnimation = pinnedAnimation;
-    if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
-    animDuration = await page.evaluate(() => window.__animDuration || 0);
-    canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
-    canvasHeight = await page.evaluate(() => window.__canvasHeight || 0) || videoHeight;
-
-    // Fallback: if the player reported duration=0 (e.g. Spine 4.2.x JSON with
-    // no top-level 'duration' field), compute it from raw JSON timeline data.
-    effectiveDuration = animDuration;
-    if (effectiveDuration <= 0 && targetAnimation) {
-      const fallbackDuration = readJsonAnimationDuration(skeletonFilePath, targetAnimation);
-      if (fallbackDuration > 0) {
-        console.error(`Player reported duration=0, using JSON timeline max time=${fallbackDuration}s for '${targetAnimation}'`);
-        effectiveDuration = fallbackDuration;
-      }
-    }
-
-    // Let a few frames render, then wait for the canvas backing store to
-    // settle at its final size. Starting the recorder earlier (on the
-    // initial 300x150 canvas) breaks the capture track on resize.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    let canvasSize = [0, 0];
-    let stableCount = 0;
-    for (let i = 0; i < 20; i++) {
-      const s = await page.evaluate(() => (typeof window.__canvasSize === 'function' ? window.__canvasSize() : [0, 0]));
-      if (s[0] > 0 && s[0] === canvasSize[0] && s[1] === canvasSize[1]) {
-        stableCount++;
-        if (stableCount >= 2) break;
-      } else {
-        stableCount = 0;
-      }
-      canvasSize = s;
-      await new Promise((resolve) => setTimeout(resolve, 250));
-    }
-    canvasWidth = canvasSize[0] || videoWidth;
-    canvasHeight = canvasSize[1] || videoHeight;
     let framePeak = await page.evaluate(() => (typeof window.__framePeak === 'function' ? window.__framePeak() : -1));
-    if (args.allowVisibleTrackFallback) {
-      const scoreAnimation = name => {
-        let score = 0;
-        if (/idle|loop|walk|run|move|attack|play|breathe|talk|hit/i.test(name)) score += 20;
-        if (/background|bkg|camera|intro|outro|transition|popup|overlay/i.test(name)) score -= 30;
-        return score;
-      };
-      const alternatives = runtimeAnimations
-        .filter(name => typeof name === 'string' && name && name !== targetAnimation)
-        .sort((a, b) => scoreAnimation(b) - scoreAnimation(a) ||
-          runtimeAnimations.indexOf(a) - runtimeAnimations.indexOf(b));
-      const candidates = [targetAnimation, ...alternatives.slice(0, 7)];
-      let acceptedAnimation = '';
-      for (let candidateIndex = 0; candidateIndex < candidates.length; candidateIndex++) {
-        const candidate = candidates[candidateIndex];
-        const candidateInfo = await page.evaluate(name => {
-          const p = window.__exportPlayer;
-          if (!p || !p.animationState) return null;
-          const data = p.skeleton && p.skeleton.data || p.skeletonData;
-          const animation = data && typeof data.findAnimation === 'function'
-            ? data.findAnimation(name)
-            : (data && data.animations || []).find(item => item && item.name === name);
-          try {
-            p.animationState.clearTracks();
-            p.animationState.setAnimation(0, name, true);
-            p.paused = false;
-            window.__selectedAnimation = name;
-            window.__animDuration = animation && Number(animation.duration) || 0;
-            return { duration: window.__animDuration };
-          } catch { return null; }
-        }, candidate);
-        if (!candidateInfo) continue;
-        await new Promise(resolve => setTimeout(resolve, 650));
-        let candidatePeak = await page.evaluate(() =>
-          typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
-        if (candidatePeak < FRAME_PEAK_MIN && await hasVisibleCompositedCanvas())
-          candidatePeak = FRAME_PEAK_MIN;
-        const signatureA = await compositedCanvasSignature();
-        await new Promise(resolve => setTimeout(resolve, 700));
-        const signatureB = await compositedCanvasSignature();
-        await new Promise(resolve => setTimeout(resolve, 700));
-        const signatureC = await compositedCanvasSignature();
-        const changing = Boolean(signatureA && signatureB && signatureC &&
-          (signatureA !== signatureB || signatureB !== signatureC));
-        if (candidatePeak >= FRAME_PEAK_MIN && changing) {
-          targetAnimation = candidate;
-          animDuration = Number(candidateInfo.duration) || 0;
-          effectiveDuration = animDuration > 0
-            ? animDuration
-            : readJsonAnimationDuration(skeletonFilePath, targetAnimation);
-          framePeak = candidatePeak;
-          acceptedAnimation = candidate;
-          console.error(candidateIndex === 0
-            ? 'REQUESTED_TRACK_VISIBLE_AND_MOVING=1'
-            : 'SOURCE_TRACK_FALLBACK_VISIBLE_AND_MOVING=1');
-          break;
-        }
-      }
-      if (!acceptedAnimation) {
-        lastCaptureError = 'No source animation produced visible changing frames';
-        console.error('NO_VISIBLE_MOVING_SOURCE_TRACK');
-        continue;
-      }
-    }
     if(framePeak<FRAME_PEAK_MIN && await hasVisibleCompositedCanvas()) {
       framePeak=FRAME_PEAK_MIN;
       console.error('VISIBLE_COMPOSITED_SPINE_CANVAS');
@@ -1093,10 +953,7 @@ try {
       console.error('SAME_ANIMATION_VISIBILITY_PROBES='+probes+
         ' VISIBLE='+String(framePeak>=FRAME_PEAK_MIN));
     }
-    // Without the repair-only fallback flag, the exact requested/default
-    // animation remains mandatory. When fallback is enabled, targetAnimation
-    // has already passed visible-pixel and changing-frame checks above; the
-    // original source defaultAnimation remains untouched in the index.
+    // The exact selected animation remains mandatory; no other track or skin is tried.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     if (framePeak < FRAME_PEAK_MIN) {
       lastCaptureError = 'No visible pixels from the selected source skin';
@@ -1477,7 +1334,6 @@ try {
   const widthOf = (dim) => Number(String(dim).split('x')[0]) || 0;
   const meta = {
     animation: targetAnimation,
-    animationFallbackUsed: Boolean(args.allowVisibleTrackFallback && targetAnimation !== requestedAnimation),
     skin: chosenSkin === null ? 'default' : chosenSkin,
     animationDuration: captureDuration,
     sourceAnimationDuration: effectiveDuration || null,

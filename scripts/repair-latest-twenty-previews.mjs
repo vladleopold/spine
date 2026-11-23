@@ -8,7 +8,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { listCollectionFolders, readIndex } from "./resolve-library.mjs";
-import { choosePreviewAnimation } from "./preview-animation-choice.mjs";
 import { chooseSourceSkeleton } from "./source-skeleton-choice.mjs";
 import { detectSkeletonVersion } from "./spine-version-detect.mjs";
 import { spinePlayerSourceBlocker } from "./lib/spine-player-source-support.mjs";
@@ -17,7 +16,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track";
+const PREVIEW_RENDERER_REVISION="exact-track-and-default-skin-only-v6";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const repairOffset=Number(process.env.SPINE_REPAIR_OFFSET||0);
@@ -149,13 +148,16 @@ function readSourceAnimationNames(entry, record) {
           walk(data.animations[name]);
           return times.size>1;
         });
-        return moving.length?moving:names;
+        return names;
       }
     }catch{}
   }
   return Array.isArray(record?.animations)
     ? record.animations.map(item=>typeof item==='string'?item:String(item?.name||'')).filter(Boolean)
     : [];
+}
+function exactSelectedAnimation(record) {
+  return typeof record?.defaultAnimation==='string'?record.defaultAnimation:'';
 }
 function bundleOk(entry,record) {
   const p=path.resolve(root,entry.previewPath);
@@ -205,10 +207,10 @@ function refreshStoredPostersAndTimestamp(record,entryInfo,stagingRoot) {
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
-    ?record.previewAnimation
-    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
-  const selectedSet=selectedName&&record?.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
+  const selectedName=typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  const storedPreviewName=typeof record?.previewAnimation==="string"?record.previewAnimation:"";
+  if(!selectedName || storedPreviewName!==selectedName)return false;
+  const selectedSet=record?.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
     ?record.allAnimationPreviews[selectedName]:null;
   // A previously accepted render can be safely restored after a metadata-only
   // block/failure if its exact selected animation and all six installed files
@@ -257,10 +259,10 @@ const mediaFields=[
 async function liveMediaOk(entry){
   if(process.env.SPINE_REPAIR_SKIP_LIVE==="1")return existingMediaOk(entry);
   const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
-  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
-    ?record.previewAnimation
-    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
-  if(!record || !selectedName || !record?.allAnimationPreviews?.[selectedName] ||
+  const selectedName=typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  const storedPreviewName=typeof record?.previewAnimation==="string"?record.previewAnimation:"";
+  if(!record || !selectedName || storedPreviewName!==selectedName ||
+    !record?.allAnimationPreviews?.[selectedName] ||
     !mediaFields.every(([key])=>record[key]))return false;
   const pathPrefix="/assets/"+entry.previewPath+"/";
   const results=await Promise.all(mediaFields.map(async ([key,kind])=>{
@@ -342,23 +344,20 @@ if(action==="matrix"){
     const sourceCheck=inspectSourceTree(e,record);
     const sourceReady=sourceCheck.complete;
     const sourceAnimations=readSourceAnimationNames(e,record);
-    // Keep an explicit selection verbatim; when it is absent, prefer Idle
-    // and otherwise the first animation declared by the exact source skeleton.
-    // Binary-only .skel uploads defer selection to the matching Spine runtime.
-    // This is preview metadata only: source defaultAnimation and bytes stay unchanged.
-    const preferredAnimation=typeof record?.defaultAnimation==='string'?record.defaultAnimation:'';
-    const animation=preferredAnimation&&sourceAnimations.includes(preferredAnimation)
-      ?preferredAnimation
-      :(choosePreviewAnimation(sourceAnimations,'')||preferredAnimation||(sourceReady?'__SPINE_AUTO__':'' ));
+    // Use only the exact index default; prior preview metadata cannot override it.
+    const animation=exactSelectedAnimation(record);
+    const selectionReason=!animation?"MISSING_SOURCE_ANIMATION":
+      sourceAnimations.length&&!sourceAnimations.includes(animation)?"INVALID_DEFAULT_ANIMATION":"";
     const sourceFingerprint=previewSourceFingerprint(record);
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
-      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
+      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime",
+      "blocked-missing-animation-selection"]);
     const blockedSameSelection=blockedStatuses.has(record?.webmStatus) &&
       record?.previewBlockedAnimation===animation &&
       record?.previewBlockedSourceFingerprint===sourceFingerprint &&
       record?.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
-    const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
+    const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady&&!selectionReason;
     const rel=normalizedPreviewPath(e.basePath,e.previewPath,e.id);
      return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,sourceFingerprint,
@@ -372,8 +371,8 @@ if(action==="matrix"){
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
       blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":
-        !sourceReady?sourceCheck.reason:!animation?"MISSING_SOURCE_ANIMATION":
-        blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):""};
+         !sourceReady?sourceCheck.reason:selectionReason||
+         (blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):"")};
     }));
     matrix.push(...batch);
   }
@@ -434,9 +433,10 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    const selectedAnimation=choosePreviewAnimation([],item.animation);
+    const selectedAnimation=typeof item.animation==="string"?item.animation:"";
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
-      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
+      "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime",
+      "blocked-missing-animation-selection"]);
     const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
       record.previewBlockedAnimation===selectedAnimation &&
       record.previewBlockedSourceFingerprint===item.sourceFingerprint &&
@@ -446,17 +446,21 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(!selectedAnimation){
-      // Without an exact selected/default timeline, even an older installed
-      // WebM cannot be proven to represent the requested animation. Preserve
-      // the media bytes, but never advertise them as accepted or refresh posters.
-      record.webmStatus="blocked-missing-animation-selection";
-      record.previewStatus="blocked";
-      record.previewError="No explicit default animation is selected; existing media cannot be attributed to an exact source animation";
-      summary.blocked++;
-      continue;
-    }
-    if(item.needsRender===false){
+    if(!selectedAnimation || item.blockedReason==="MISSING_SOURCE_ANIMATION"){
+       record.webmStatus="blocked-missing-animation-selection";
+       record.previewStatus="blocked";
+       record.previewError="No exact preview/default animation is selected; no source track may be substituted";
+       summary.blocked++;
+       continue;
+     }
+     if(item.blockedReason==="INVALID_DEFAULT_ANIMATION"){
+       record.webmStatus="blocked-invalid-default-animation";
+       record.previewStatus="blocked";
+       record.previewError="The exact selected animation is not declared by this source skeleton";
+       summary.blocked++;
+       continue;
+     }
+     if(item.needsRender===false){
       if(existingMediaOk(entryInfo)){
         try{
           // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
@@ -489,10 +493,7 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    const animationMatches=typeof meta?.animation==="string"&&meta.animation.length>0&&
-      (item.animation==="__SPINE_AUTO__" ||
-       choosePreviewAnimation([],meta.animation)===choosePreviewAnimation([],item.animation) ||
-       meta.animationFallbackUsed===true);
+    const animationMatches=typeof meta?.animation==="string"&&meta.animation.length>0&&meta.animation===item.animation;
     let complete=meta?.ok===true && meta?.animationMatches===true &&
       animationMatches && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
@@ -577,7 +578,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=choosePreviewAnimation([],meta.animation);
+    const animation=typeof meta.animation==="string"?meta.animation:"";
     record.previewAnimation=animation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;

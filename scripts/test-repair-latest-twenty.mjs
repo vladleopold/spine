@@ -24,30 +24,30 @@ try{
     const id='fixture-'+String(i).padStart(2,'0');
     const date=new Date(Date.UTC(2026,10,17,0,i,0)).toISOString();
     return {id,uploadedAt:date,previewPath:'library_02/'+id,
-      webmStatus:'failed',defaultAnimation:i===22?undefined:'idle',animations:['Idle','Walk'],
+      webmStatus:'failed',defaultAnimation:i===22||i===23?undefined:'Idle',animations:['Idle','Walk'],
       files:['test.skel','test.atlas','test.png']};
   });
-  // These historical records have no explicit default. Their source-declared
-  // animation names are used only for preview rendering, never written back.
-  records[23].id='Spine-animation-2026-11-17T18-44-12-762Z';
+  // A missing exact selection stays blocked even when the source declares other tracks.
+  records[23].id='fixture-explicit-missing';
   records[23].previewPath='library_02/'+records[23].id;
   records[23].defaultAnimation=undefined;
-  records[22].id='Spine-animation-2026-11-17T18-45-14-132Z';
+  records[22].id='fixture-explicit-selection';
   records[22].previewPath='library_02/'+records[22].id;
-  records[22].defaultAnimation=undefined;
+  records[22].defaultAnimation='Exact Selected Track';
   // Legacy indexes may store only an ID; it is normalized to the collection path.
   records[4].previewPath=records[4].id;
-  // Binary-only Spine 3.7 source: Player 3.7 requires a same-work JSON sibling.
+  // Binary-only Spine 3.7 source: the missing same-work JSON means it stays blocked.
   records[18].skeleton='hero.skel';
   records[18].atlas='hero.atlas';
   records[18].files=['hero.skel','hero.atlas','hero.png'];
   const versionString=value=>Buffer.concat([Buffer.from([value.length+1]),Buffer.from(value)]);
   const legacy37=Buffer.concat([versionString('legacy-hash'),versionString('3.7.93'),Buffer.alloc(32)]);
+  const onePixelPng=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO7+FwcAAAAASUVORK5CYII=','base64');
   const legacyDirectory=path.join(root,'library_02','fixture-18');
   fs.mkdirSync(legacyDirectory,{recursive:true});
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
-  fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
-  fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
+  fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\nsize: 1,1\nformat: RGBA8888\nfilter: Nearest,Nearest\nrepeat: none\n');
+  fs.writeFileSync(path.join(legacyDirectory,'hero.png'),onePixelPng);
   records[21].files=['test.skel'];
   const blockedRecord=records[19];
   blockedRecord.webmStatus='blocked-invisible-default-skin';
@@ -73,6 +73,15 @@ try{
   records[5].webpPoster='https://example.test/preview.webp';
   records[5].previewFrameCount=60;
   records[5].previewDuration=2;
+  // Simulate a previously published fallback clip: its previewAnimation says
+  // Walk while the exact index default is Idle. It must not be reused.
+  records[6].webmStatus='ready';
+  records[6].previewAnimation='Walk';
+  records[6].allAnimationPreviews={Walk:{webmPreview:'https://example.test/old-fallback.webm'}};
+  records[6].webmPreview='https://example.test/old-fallback.webm';
+  records[6].webpPoster='https://example.test/old-fallback.webp';
+  records[6].previewFrameCount=60;
+  records[6].previewDuration=2;
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -100,14 +109,17 @@ try{
       fs.writeFileSync(path.join(directory,'test.skel'),
         Buffer.concat([versionString('legacy-hash'),versionString('4.2.11'),Buffer.alloc(32)]));
     }else{
+      const animationNames=record.id==='fixture-explicit-selection'
+      ?['Idle','Walk','Exact Selected Track']:['Idle','Walk'];
+      const animations=Object.fromEntries(animationNames.map(name=>[name,{
+        bones:{root:{rotate:[{time:0,angle:0},{time:1,angle:10}]}}
+      }]));
       fs.writeFileSync(path.join(directory,'test.json'),JSON.stringify({
-        skeleton:{spine:'4.2.11'},bones:[{name:'root'}],
-        animations:{Idle:{bones:{root:{rotate:[{time:0,angle:0},{time:1,angle:10}]}}},
-          Walk:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:10,y:0}]}}}}
+        skeleton:{spine:'4.2.11'},bones:[{name:'root'}],animations
       }));
     }
     fs.writeFileSync(path.join(directory,'test.atlas'),'test.png\nsize: 1,1\nformat: RGBA8888\n');
-    fs.writeFileSync(path.join(directory,'test.png'),Buffer.alloc(24));
+    fs.writeFileSync(path.join(directory,'test.png'),onePixelPng);
   }
   fs.writeFileSync(path.join(shard,'index.json'),JSON.stringify(records));
   const result=spawnSync(process.execPath,[script,'matrix'],{
@@ -119,27 +131,29 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,17);
-  assert.equal(Number(output.renderCount),17);
+  assert.equal(matrix.length,15);
+  assert.equal(Number(output.renderCount),15);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
-  assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
-  assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
+  assert.equal(all[0].id,'fixture-explicit-missing');
+  assert.equal(all[1].id,'fixture-explicit-selection');
   assert.equal(all[19].id,'fixture-04');
   assert.equal(all[19].previewPath,'library_02/fixture-04',
     'legacy ID-only previewPath values must be normalized to their source collection');
   assert.equal(all[19].needsRender,true,'a failed preview status must force rerender even when old WebM metadata exists');
-  for(const id of [
-    'Spine-animation-2026-11-17T18-44-12-762Z',
-    'Spine-animation-2026-11-17T18-45-14-132Z',
-  ]){
-    const item=all.find(x=>x.id===id);
-    assert.ok(item);
-    assert.equal(item.animation,'Idle','missing default should use the source-declared Idle track');
-    assert.equal(item.ready,true);
-    assert.equal(item.needsRender,true);
-    assert.equal(item.blockedReason,'');
-    assert.ok(matrix.some(x=>x.id===id),'source-declared animation fallback should enter render matrix');
-  }
+  const missingSelection=all.find(x=>x.id==='fixture-explicit-missing');
+  assert.ok(missingSelection);
+  assert.equal(missingSelection.animation,'');
+  assert.equal(missingSelection.ready,false);
+  assert.equal(missingSelection.needsRender,false);
+  assert.equal(missingSelection.blockedReason,'MISSING_SOURCE_ANIMATION');
+  assert.ok(!matrix.some(x=>x.id===missingSelection.id));
+  const exactTarget=all.find(x=>x.id==='fixture-explicit-selection');
+  assert.ok(exactTarget);
+  assert.equal(exactTarget.animation,'Exact Selected Track');
+  assert.equal(exactTarget.ready,true);
+  assert.equal(exactTarget.needsRender,true);
+  assert.equal(exactTarget.blockedReason,'');
+  assert.ok(matrix.some(x=>x.id===exactTarget.id));
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
@@ -148,7 +162,11 @@ try{
   assert.equal(legacyBinary.needsRender,false);
   assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
     'Spine 3.7 binary-only source without same-work JSON must not enter native rendering');
-  assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
+  assert.ok(all.slice(3).filter(x=>!['fixture-20','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
+  const mismatchedPreview=all.find(x=>x.id==='fixture-06');
+  assert.equal(mismatchedPreview.animation,'Idle');
+  assert.equal(mismatchedPreview.needsRender,true,
+    'a previously published fallback track must not be reused when it differs from defaultAnimation');
   const reusable=all.find(x=>x.id==='fixture-05');
   assert.equal(reusable.ready,true);
   assert.equal(reusable.needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
@@ -157,7 +175,10 @@ try{
   assert.equal(formerlyBlocked.ready,true,'new renderer revision must retry previously blocked default skin');
   assert.equal(formerlyBlocked.needsRender,true);
   assert.equal(formerlyBlocked.blockedReason,'');
-  assert.equal(all[3].animation,'Idle','an unavailable indexed track falls back to a real source track');
+  assert.equal(all[3].animation,' Walk ');
+  assert.equal(all[3].ready,false);
+  assert.equal(all[3].needsRender,false);
+  assert.equal(all[3].blockedReason,'INVALID_DEFAULT_ANIMATION');
   assert.ok(all.slice(4).every(x=>x.animation==='Idle'));
   assert.doesNotMatch(repairSource,/record\.defaultAnimation\.trim\(\)/,
     'selection presence must not normalize the exact animation name');
@@ -171,21 +192,18 @@ assert.match(workflowSource,/animation:m\.animation/);
 assert.match(workflowSource,/if\(item\.ready!==true\)continue;/);
 assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
     'a renderer policy update must permit one retry of an earlier deterministic block');
-  assert.match(repairSource,/meta\.animationFallbackUsed===true/,
-    'a preview may use another source-declared animation only after visible motion is verified');
+  assert.doesNotMatch(repairSource,/__SPINE_AUTO__|choosePreviewAnimation\(sourceAnimations|meta\.animationFallbackUsed/);
   assert.match(repairSource,/record\.previewAnimation=animation/,
     'the exact rendered track is stored separately from the source default');
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track"/);
-  assert.match(workflowSource,/--allow-visible-track-fallback/);
-  assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
-  const missingSelectionBranch=repairSource.match(
-    /if\(!selectedAnimation\)\{([\s\S]*?)\n\s*\}/
-  )?.[1]||"";
-  assert.match(missingSelectionBranch,/record\.webmStatus="blocked-missing-animation-selection"/,
-    "a source with no discoverable animation must remain blocked");
-  assert.match(missingSelectionBranch,/record\.previewStatus="blocked"/);
-  assert.doesNotMatch(missingSelectionBranch,/existingMediaOk|refreshStoredPostersAndTimestamp/,
-    "unattributed old media cannot be reaccepted or used to regenerate a poster");
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="exact-track-and-default-skin-only-v6"/);
+  assert.doesNotMatch(workflowSource,/--allow-visible-track-fallback|ALLOW_VISIBLE_TRACK_FALLBACK|__SPINE_AUTO__/);
+  const missingSelectionStart=repairSource.indexOf('if(!selectedAnimation || item.blockedReason==="MISSING_SOURCE_ANIMATION"){');
+  const missingSelectionEnd=repairSource.indexOf('if(item.blockedReason==="INVALID_DEFAULT_ANIMATION")',missingSelectionStart);
+  const missingSelectionBranch=repairSource.slice(missingSelectionStart,missingSelectionEnd);
+  assert.ok(missingSelectionStart>=0 && missingSelectionEnd>missingSelectionStart);
+  assert.match(missingSelectionBranch,/blocked-missing-animation-selection/);
+  assert.ok(missingSelectionBranch.includes('record.previewStatus="blocked"'));
+  assert.doesNotMatch(missingSelectionBranch,/existingMediaOk|refreshStoredPostersAndTimestamp/);
   assert.ok(all.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
 
   const fiftyResult=spawnSync(process.execPath,[script,'matrix'],{
@@ -197,14 +215,17 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,47,'two intentionally blocked sources and one verified reusable preview are excluded from rendering');
-  assert.equal(Number(fiftyOutput.renderCount),47);
-  assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
-    'the additional 26 older-but-in-window fixtures must remain eligible');
-  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
-  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.animation==='Idle'&&x.needsRender));
-  assert.ok(allFifty.some(x=>x.id==='older-fixture-35'&&x.animation==='__SPINE_AUTO__'&&x.ready&&x.needsRender),
-    'binary-only skeletons defer animation selection to the pinned Spine runtime');
+  assert.equal(matrixFifty.length,44,'only exact selected/default tracks and complete sources enter the render matrix');
+  assert.equal(Number(fiftyOutput.renderCount),44);
+  assert.ok(allFifty.slice(24).filter(x=>x.id!=='older-fixture-35').every(x=>x.ready&&x.needsRender));
+  const missingOlder=allFifty.find(x=>x.id==='older-fixture-35');
+  assert.equal(missingOlder.animation,'');
+  assert.equal(missingOlder.ready,false);
+  assert.equal(missingOlder.needsRender,false);
+  assert.equal(missingOlder.blockedReason,'MISSING_SOURCE_ANIMATION');
+  assert.ok(allFifty.some(x=>x.id==='fixture-explicit-missing'&&x.animation===''&&!x.ready));
+  assert.ok(allFifty.some(x=>x.id==='fixture-explicit-selection'&&x.animation==='Exact Selected Track'&&x.needsRender));
+  assert.ok(allFifty.every(x=>x.animation!=='__SPINE_AUTO__'));
   assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.ready&&x.needsRender));
   assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   assert.equal(Number(fiftyOutput.totalCount),60,'the inventory must report the full public archive size');
@@ -245,5 +266,5 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.match(verifySource,/expectedMedia:ready\*fields\.length/);
   assert.match(verifySource,/REPAIR_IDS_FILE/);
   assert.match(maskSource,/REPAIR_IDS_FILE/);
-  console.log('PASS latest50: source-track fallback, skin retry, frozen source, incomplete-source guard, no fake media');
+  console.log('PASS latest50: exact animation only, source-default skin only, frozen source, incomplete-source guard, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}

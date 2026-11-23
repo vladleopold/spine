@@ -102,13 +102,9 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
-assert.match(exporter,/const skinCandidates = \[null,\.\.\.readSkinNames\(skeletonFilePath\)\]/,
-  "try the source default first, then declared source skins");
-assert.match(exporter,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
-  "binary-only skeletons expose source skin names from their loaded runtime");
-assert.match(exporter,/skinCandidates\.push\(name\)/,
-  "runtime skins are tried only after the default skin produces no visible frame");
-assert.match(exporter,/if \(args\.allowVisibleTrackFallback\)/);
-assert.match(exporter,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
-  "alternate source tracks are accepted only after visible motion is detected");
-console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas and keep runtime skin fallback source-bound");
+assert.ok(exporter.includes('const skinCandidates = [null];'));
+for(const token of ['skinCandidates.push','SOURCE_SKIN_FALLBACK','allowVisibleTrackFallback',
+  '--allow-visible-track-fallback','targetAnimation = candidate','alternatePreviewAnimations','__SPINE_AUTO__'])
+  assert.ok(!exporter.includes(token), 'unexpected fallback token: '+token);
+assert.ok(exporter.includes('SAME_ANIMATION_VISIBILITY_PROBES='));
+console.log("PASS renderer diagnostics block invisible source-default artwork without changing animation or skin");

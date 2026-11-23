@@ -22,10 +22,10 @@ for (const selected of ['Walk', 'Missing', ' Walk ', ' ']) {
   assert.equal(choosePreviewAnimation(['Walk'], selected), selected,
     'explicit animation names, including unavailable and whitespace-padded names, must remain byte-for-byte unchanged');
 }
-assert.equal(choosePreviewAnimation(['Walk']), 'Walk',
-  'without an explicit selection, preview recovery must preserve the first source track when no Idle track exists');
-assert.equal(choosePreviewAnimation(['Walk', 'Idle']), 'Idle',
-  'without an explicit selection, preview recovery must prefer the source Idle track');
+assert.equal(choosePreviewAnimation(['Walk']), '',
+  'without an explicit selection, preview recovery must not choose a source track');
+assert.equal(choosePreviewAnimation(['Walk', 'Idle']), '',
+  'without an explicit selection, preview recovery must not choose Idle');
 
 const environment = {
   REPAIR_IDS_JSON: raw,
@@ -147,10 +147,10 @@ assert.match(latestTwentyRender, /name: validate-latest50-\$\{\{ matrix\.entry\.
 assert.match(latestTwentyRender, /name: latest50-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 const renderAcceptanceStep = latestTwenty.slice(
   latestTwenty.indexOf('name: Render and validate actual Spine video + still posters'),
-  latestTwenty.indexOf('name: Render and validate actual Spine video + still posters') + 260,
+  latestTwenty.indexOf('name: Render and validate actual Spine video + still posters') + 520,
 );
-assert.match(renderAcceptanceStep, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/,
-  'render acceptance must receive the same explicit visible-track fallback permission as the renderer');
+assert.ok(!renderAcceptanceStep.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+assert.ok(!renderAcceptanceStep.includes('--allow-visible-track-fallback'));
 
 assert.doesNotMatch(latestTwentyRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
@@ -158,11 +158,10 @@ assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\
 assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
-assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
-assert.match(reportedRepair, /const indexedAnimation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
-assert.match(reportedRepair, /indexedAnimation\|\|\(sourceReady\?"__SPINE_AUTO__":""\)/,
-  'a missing indexed default must be rendered only through source-track discovery');
-assert.match(reportedRepair, /animation==="__SPINE_AUTO__"/);
+assert.ok(reportedRepair.includes('const defaultAnimation=choosePreviewAnimation([],entry.defaultAnimation);'));
+assert.ok(reportedRepair.includes('const indexedAnimation=choosePreviewAnimation([],e.defaultAnimation);'));
+assert.ok(!reportedRepair.includes('__SPINE_AUTO__'));
+assert.ok(!reportedRepair.includes('automaticSelection'));
 assert.match(reportedRepair, /record\.previewAnimation=animation/,
   'the exact rendered track is stored separately from defaultAnimation');
 assert.match(reportedRepair, /const selectedAnimation=choosePreviewAnimation\(\[\],item\.animation\)/);
@@ -184,6 +183,22 @@ assert.match(reportedRepair, /meta\?\.animationMatches===true/);
 assert.match(latestTwentyRepair, /latest50-"\+item\.repairSlot/);
 assert.doesNotMatch(latestTwentyRepair, /record\.defaultAnimation\.trim\(\)/);
 assert.match(latestTwentyRepair, /readSourceAnimationNames\(e,record\)/);
+assert.ok(latestTwentyRepair.includes('exactSelectedAnimation(record)'));
+assert.ok(!latestTwentyRepair.includes('__SPINE_AUTO__'));
+assert.ok(!latestTwentyRepair.includes('choosePreviewAnimation'));
+assert.ok(!latestTwentyRepair.includes('animationFallbackUsed'));
+assert.ok(latestTwentyRepair.includes('INVALID_DEFAULT_ANIMATION'));
+assert.ok(!latestTwenty.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+assert.ok(!latestTwenty.includes('--allow-visible-track-fallback'));
+assert.ok(!latestTwenty.includes('__SPINE_AUTO__'));
+assert.ok(!reported.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+assert.ok(!reported.includes('--allow-visible-track-fallback'));
+assert.ok(!reported.includes('__SPINE_AUTO__'));
+assert.match(latestTwentyRepair, /exactSelectedAnimation/);
+assert.doesNotMatch(latestTwentyRepair, /__SPINE_AUTO__|choosePreviewAnimation|animationFallbackUsed/);
+assert.match(latestTwentyRepair, /INVALID_DEFAULT_ANIMATION/);
+assert.doesNotMatch(latestTwenty, /ALLOW_VISIBLE_TRACK_FALLBACK|allow-visible-track-fallback|__SPINE_AUTO__/);
+assert.doesNotMatch(reported, /ALLOW_VISIBLE_TRACK_FALLBACK|allow-visible-track-fallback|__SPINE_AUTO__/);
 assert.match(latestTenRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
 assert.doesNotMatch(latestTenRepair, /String\(record\?\.defaultAnimation\|\|""\)\.trim\(\)/);
 assert.doesNotMatch(latestTenRepair, /String\(animation\|\|record\?\.defaultAnimation\|\|""\)\.trim\(\)/);

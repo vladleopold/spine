@@ -179,13 +179,11 @@ assert.match(publishJob, /concurrency:\s*\n\s+group:\s*spine-library-commit/,
   'reported preview publishing must serialize with every other library writer');
 assert.ok(repairWorkflow.includes('node scripts/test-reported-preview-live.mjs'),
   'repair inventory must run the media acceptance regression');
-assert.match(repairWorkflow, /--allow-visible-track-fallback/,
-  'reported previews without an index default may use a real source-declared moving track');
-assert.match(repairWorkflow, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
-assert.match(repairScript, /__SPINE_AUTO__/,
-  'missing defaults must enter the native source-track discovery path');
-assert.match(repairScript, /record\.previewAnimation=animation/,
-  'the exact rendered track must be recorded without rewriting defaultAnimation');
+assert.ok(!repairWorkflow.includes('--allow-visible-track-fallback'));
+assert.ok(!repairWorkflow.includes('ALLOW_VISIBLE_TRACK_FALLBACK'));
+assert.ok(!repairWorkflow.includes('__SPINE_AUTO__'));
+assert.ok(!repairScript.includes('__SPINE_AUTO__'));
+assert.ok(!repairScript.includes('automaticSelection'));
 assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
   'post-publish audit must install a real media decoder');
 const repairTest = repairVerifyJob.indexOf('node scripts/test-reported-preview-live.mjs');
