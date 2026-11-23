@@ -159,8 +159,12 @@ assert.match(latestTen, /name: validate-recovery-\$\{\{ matrix\.entry\.repairSlo
 assert.match(latestTen, /name: latest10-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(reportedRepair, /reported18-"\+item\.repairSlot/);
 assert.match(reportedRepair, /const defaultAnimation=choosePreviewAnimation\(\[\],entry\.defaultAnimation\)/);
-assert.match(reportedRepair, /!animation\?"MISSING_DEFAULT_ANIMATION"/);
-assert.match(reportedRepair, /const animation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
+assert.match(reportedRepair, /const indexedAnimation=choosePreviewAnimation\(\[\],e\.defaultAnimation\)/);
+assert.match(reportedRepair, /indexedAnimation\|\|\(sourceReady\?"__SPINE_AUTO__":""\)/,
+  'a missing indexed default must be rendered only through source-track discovery');
+assert.match(reportedRepair, /animation==="__SPINE_AUTO__"/);
+assert.match(reportedRepair, /record\.previewAnimation=animation/,
+  'the exact rendered track is stored separately from defaultAnimation');
 assert.match(reportedRepair, /const selectedAnimation=choosePreviewAnimation\(\[\],item\.animation\)/);
 assert.doesNotMatch(reportedRepair, /e\.id==="[^"]+"\?"[^"]+"/,
   'reported repair must not inject per-work alternate animation names');
