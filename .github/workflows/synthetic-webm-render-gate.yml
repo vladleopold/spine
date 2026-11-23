@@ -7,7 +7,6 @@ on:
       - 'scripts/test-synthetic-render-skip.mjs'
       - 'scripts/lib/spine-export-matrix.mjs'
       - 'scripts/lib/export-log-redaction.mjs'
-      - 'scripts/lib/repair-manifest-guard.mjs'
       - 'scripts/spine-export-matrix.mjs'
       - 'scripts/resolve-export-animation.mjs'
       - 'scripts/test-spine-export-matrix.mjs'
@@ -16,6 +15,7 @@ on:
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
+      - 'scripts/repair-manifest-guard.mjs'
       - '.github/workflows/spine-export-full.yml'
       - '.github/workflows/spine-export-webm.yml'
       - '.github/workflows/synthetic-webm-render-gate.yml'
@@ -55,7 +55,6 @@ jobs:
             /scripts/test-synthetic-render-skip.mjs
             /scripts/lib/spine-export-matrix.mjs
             /scripts/lib/export-log-redaction.mjs
-            /scripts/lib/repair-manifest-guard.mjs
             /scripts/spine-export-matrix.mjs
             /scripts/resolve-export-animation.mjs
             /scripts/test-spine-export-matrix.mjs
@@ -65,6 +64,7 @@ jobs:
             /scripts/repair-last-ten-previews.mjs
             /scripts/test-repair-last-ten-previews.mjs
             /scripts/test-repair-latest-twenty.mjs
+            /scripts/repair-manifest-guard.mjs
             /scripts/repair-manifest-guard.mjs
             /scripts/lib/atlas-source-integrity.mjs
             /scripts/atlas-pages.mjs
