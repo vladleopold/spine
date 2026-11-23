@@ -48,6 +48,7 @@ try{
   const versionString=value=>Buffer.concat([Buffer.from([value.length+1]),Buffer.from(value)]);
   const legacy37=Buffer.concat([versionString('legacy-hash'),versionString('3.7.93'),Buffer.alloc(32)]);
   const legacyDirectory=path.join(root,'library_02','fixture-18');
+  fs.mkdirSync(legacyDirectory,{recursive:true});
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
   fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
   fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
