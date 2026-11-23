@@ -34,11 +34,13 @@ const args = {
   sanitizeSkel: false,
   fps: 30,
   alpha: false,
+  allowVisibleTrackFallback: false,
 };
 
 for (let i = 2; i < process.argv.length; i++) {
   const arg = process.argv[i];
   if (arg === '--alpha') args.alpha = true;
+  else if (arg === '--allow-visible-track-fallback') args.allowVisibleTrackFallback = true;
   else if (arg.startsWith('--fps=')) args.fps = Number(arg.slice(arg.indexOf('=') + 1));
   else if (arg.startsWith('--upload-id=')) args.uploadId = arg.slice(arg.indexOf('=') + 1);
   else if (arg.startsWith('--origin=')) args.origin = arg.slice(arg.indexOf('=') + 1);
@@ -641,6 +643,30 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       return mx;
     } catch (e) { return -1; }
   };
+  window.__frameSignature = function () {
+    try {
+      var c = player && player.canvas;
+      if (!c) return '';
+      var g = c.getContext('webgl2') || c.getContext('webgl');
+      if (!g) return '';
+      var w = g.drawingBufferWidth, h = g.drawingBufferHeight;
+      if (!w || !h) return '';
+      var sw = Math.min(w, 112), sh = Math.min(h, 112);
+      var buf = new Uint8Array(sw * sh * 4), hash = 2166136261;
+      for (var gy = 0; gy < 3; gy++) for (var gx = 0; gx < 3; gx++) {
+        var x = Math.max(0, Math.round((w - sw) * gx / 2));
+        var y = Math.max(0, Math.round((h - sh) * gy / 2));
+        g.readPixels(x, y, sw, sh, g.RGBA, g.UNSIGNED_BYTE, buf);
+        for (var i = 0; i < buf.length; i += 4) {
+          hash = Math.imul(hash ^ buf[i], 16777619);
+          hash = Math.imul(hash ^ buf[i + 1], 16777619);
+          hash = Math.imul(hash ^ buf[i + 2], 16777619);
+          hash = Math.imul(hash ^ buf[i + 3], 16777619);
+        }
+      }
+      return (hash >>> 0).toString(16);
+    } catch (e) { return ''; }
+  };
   var config = {
     ${skeletonPlayerKey}: '${skeletonRawUrl}',
     ${atlasPlayerKey}: '${atlasRawUrl}',
@@ -975,6 +1001,70 @@ try {
     canvasWidth = canvasSize[0] || videoWidth;
     canvasHeight = canvasSize[1] || videoHeight;
     let framePeak = await page.evaluate(() => (typeof window.__framePeak === 'function' ? window.__framePeak() : -1));
+    if (args.allowVisibleTrackFallback) {
+      const scoreAnimation = name => {
+        let score = 0;
+        if (/idle|loop|walk|run|move|attack|play|breathe|talk|hit/i.test(name)) score += 20;
+        if (/background|bkg|camera|intro|outro|transition|popup|overlay/i.test(name)) score -= 30;
+        return score;
+      };
+      const alternatives = runtimeAnimations
+        .filter(name => typeof name === 'string' && name && name !== targetAnimation)
+        .sort((a, b) => scoreAnimation(b) - scoreAnimation(a) ||
+          runtimeAnimations.indexOf(a) - runtimeAnimations.indexOf(b));
+      const candidates = [targetAnimation, ...alternatives.slice(0, 7)];
+      let acceptedAnimation = '';
+      for (let candidateIndex = 0; candidateIndex < candidates.length; candidateIndex++) {
+        const candidate = candidates[candidateIndex];
+        const candidateInfo = await page.evaluate(name => {
+          const p = window.__exportPlayer;
+          if (!p || !p.animationState) return null;
+          const data = p.skeleton && p.skeleton.data || p.skeletonData;
+          const animation = data && typeof data.findAnimation === 'function'
+            ? data.findAnimation(name)
+            : (data && data.animations || []).find(item => item && item.name === name);
+          try {
+            p.animationState.clearTracks();
+            p.animationState.setAnimation(0, name, true);
+            p.paused = false;
+            window.__selectedAnimation = name;
+            window.__animDuration = animation && Number(animation.duration) || 0;
+            return { duration: window.__animDuration };
+          } catch { return null; }
+        }, candidate);
+        if (!candidateInfo) continue;
+        await new Promise(resolve => setTimeout(resolve, 650));
+        let candidatePeak = await page.evaluate(() =>
+          typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
+        if (candidatePeak < FRAME_PEAK_MIN && await hasVisibleCompositedCanvas())
+          candidatePeak = FRAME_PEAK_MIN;
+        const signatureA = await page.evaluate(() =>
+          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        await new Promise(resolve => setTimeout(resolve, 700));
+        const signatureB = await page.evaluate(() =>
+          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        await new Promise(resolve => setTimeout(resolve, 700));
+        const signatureC = await page.evaluate(() =>
+          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        const changing = Boolean(signatureA && signatureB && signatureC &&
+          (signatureA !== signatureB || signatureB !== signatureC));
+        if (candidatePeak >= FRAME_PEAK_MIN && changing) {
+          targetAnimation = candidate;
+          animDuration = Number(candidateInfo.duration) || 0;
+          framePeak = candidatePeak;
+          acceptedAnimation = candidate;
+          console.error(candidateIndex === 0
+            ? 'REQUESTED_TRACK_VISIBLE_AND_MOVING=1'
+            : 'SOURCE_TRACK_FALLBACK_VISIBLE_AND_MOVING=1');
+          break;
+        }
+      }
+      if (!acceptedAnimation) {
+        lastCaptureError = 'No source animation produced visible changing frames';
+        console.error('NO_VISIBLE_MOVING_SOURCE_TRACK');
+        continue;
+      }
+    }
     if(framePeak<FRAME_PEAK_MIN && await hasVisibleCompositedCanvas()) {
       framePeak=FRAME_PEAK_MIN;
       console.error('VISIBLE_COMPOSITED_SPINE_CANVAS');
@@ -1380,6 +1470,7 @@ try {
   const widthOf = (dim) => Number(String(dim).split('x')[0]) || 0;
   const meta = {
     animation: targetAnimation,
+    animationFallbackUsed: Boolean(args.allowVisibleTrackFallback && targetAnimation !== requestedAnimation),
     skin: chosenSkin === null ? 'default' : chosenSkin,
     animationDuration: captureDuration,
     sourceAnimationDuration: effectiveDuration || null,
