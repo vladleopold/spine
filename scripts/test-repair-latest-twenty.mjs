@@ -104,8 +104,8 @@ try{
   assert.match(repairSource,/blocked-missing-animation-selection/);
   assert.match(repairSource,/downloaded-latest50/);
 assert.match(repairSource,/latest50-/);
-assert.match(workflowSource,/animation:m\\.animation/);
-assert.match(workflowSource,/if\\(item\\.ready!==true\\)continue;/);
+assert.match(workflowSource,/animation:m\.animation/);
+assert.match(workflowSource,/if\(item\.ready!==true\)continue;/);
 assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
     'a renderer policy update must permit one retry of an earlier deterministic block');
   const missingSelectionBranch=repairSource.match(
