@@ -9,6 +9,7 @@ import {fileURLToPath} from 'node:url';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
+const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 assert.ok(!repairSource.includes('record.animations=meta.animations'),
@@ -101,7 +102,11 @@ try{
   assert.doesNotMatch(repairSource,/indexedAnimation\s*\|\|\s*\(/,
     'no hard-coded animation name may replace a missing default');
   assert.match(repairSource,/blocked-missing-animation-selection/);
-  assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
+  assert.match(repairSource,/downloaded-latest50/);
+assert.match(repairSource,/latest50-/);
+assert.match(workflowSource,/animation:m\.animation/);
+assert.match(workflowSource,/if\(item\.ready!==true\)continue;/);
+assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
     'a renderer policy update must permit one retry of an earlier deterministic block');
   const missingSelectionBranch=repairSource.match(
     /if\(!selectedAnimation\|\|selectedAnimation!==indexedAnimation\)\{([\s\S]*?)\n\s*\}/

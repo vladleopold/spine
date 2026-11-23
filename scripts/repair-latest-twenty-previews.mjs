@@ -264,7 +264,7 @@ if(action==="matrix"){
     ? JSON.parse(fs.readFileSync(process.env.REPAIR_IDS_FILE,"utf8"))
     : JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
   if(selected.length!==repairLimit)throw new Error("Missing exact repair manifest");
-  const base=path.resolve(root,"downloaded-latest20");
+  const base=path.resolve(root,"downloaded-latest50");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
   const seen=new Set(),seenSlots=new Set();
@@ -335,7 +335,7 @@ if(action==="matrix"){
       summary.failed++;
       continue;
     }
-    const artifact=path.join(base,"latest20-"+item.repairSlot);
+    const artifact=path.join(base,"latest50-"+item.repairSlot);
     const metaPath=path.join(artifact,"meta.json");
     let meta=null;
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
