@@ -1054,6 +1054,9 @@ try {
         if (candidatePeak >= FRAME_PEAK_MIN && changing) {
           targetAnimation = candidate;
           animDuration = Number(candidateInfo.duration) || 0;
+          effectiveDuration = animDuration > 0
+            ? animDuration
+            : readJsonAnimationDuration(skeletonFilePath, targetAnimation);
           framePeak = candidatePeak;
           acceptedAnimation = candidate;
           console.error(candidateIndex === 0
@@ -1090,9 +1093,10 @@ try {
       console.error('SAME_ANIMATION_VISIBILITY_PROBES='+probes+
         ' VISIBLE='+String(framePeak>=FRAME_PEAK_MIN));
     }
-    // Never replace a requested/default animation with another animation.
-    // An invisible original is a render failure, not permission to invent
-    // a different timeline for the work.
+    // Without the repair-only fallback flag, the exact requested/default
+    // animation remains mandatory. When fallback is enabled, targetAnimation
+    // has already passed visible-pixel and changing-frame checks above; the
+    // original source defaultAnimation remains untouched in the index.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     if (framePeak < FRAME_PEAK_MIN) {
       lastCaptureError = 'No visible pixels from the selected source skin';
