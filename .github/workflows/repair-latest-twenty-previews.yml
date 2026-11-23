@@ -1,4 +1,4 @@
-name: Recover newest 20 Spine WebP and WebM previews
+name: Recover newest 50 Spine WebP and WebM previews
 on:
   schedule:
     - cron: '17 * * * *'
@@ -88,7 +88,7 @@ on:
         required: true
         type: choice
         options: ['20', '50']
-        default: '20'
+        default: '50'
 permissions:
   contents: read
 concurrency:
@@ -166,7 +166,7 @@ jobs:
           node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-preview-log-privacy.mjs
-          echo "LATEST20_INVENTORY_VALID"
+          echo "LATEST50_INVENTORY_VALID"
       - uses: actions/upload-artifact@v4
         with:
           name: latest50-manifest
@@ -194,7 +194,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
   render:
-    name: validate-latest20-${{ matrix.entry.repairSlot }}
+    name: validate-latest50-${{ matrix.entry.repairSlot }}
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
@@ -368,7 +368,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && matrix.entry.needsRender
         with:
-          name: latest20-${{ matrix.entry.repairSlot }}
+          name: latest50-${{ matrix.entry.repairSlot }}
           path: out/${{ matrix.entry.repairSlot }}/
           if-no-files-found: error
           retention-days: 1
@@ -397,7 +397,7 @@ jobs:
         with:
           name: latest50-manifest
           path: repair-manifest
-      - name: Mask and hydrate exact latest-20 source directories
+      - name: Mask and hydrate source-ready latest-50 source directories
         env:
           REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
         shell: bash
@@ -407,9 +407,10 @@ jobs:
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(await (await import('node:fs/promises')).readFile(process.env.REPAIR_IDS_FILE,'utf8'));
-          if(selected.length!==Number(process.env.SPINE_REPAIR_LIMIT||20))throw new Error('Missing exact repair manifest');
+          if(selected.length!==Number(process.env.SPINE_REPAIR_LIMIT||50))throw new Error('Missing exact repair manifest');
           const paths=new Set();
           for(const item of selected){
+            if(item.ready!==true)continue;
             const source=String(item.previewPath||'');
             if(!source||source.startsWith('/')||source.split('/').includes('..')||
               !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
@@ -421,8 +422,8 @@ jobs:
       - uses: actions/download-artifact@v4
         if: needs.inventory.outputs.renderCount != '0'
         with:
-          pattern: latest20-*
-          path: downloaded-latest20
+          pattern: latest50-*
+          path: downloaded-latest50
           merge-multiple: false
       - uses: actions/setup-node@v4
         with:
@@ -463,13 +464,13 @@ jobs:
             git add -A -- library_*
             if git diff --cached --quiet; then
               echo "NO_PREVIEW_CHANGES"
-              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
             git commit -m "fix: restore validated previews for latest ${SPINE_REPAIR_LIMIT} Spine uploads"
             if git push origin HEAD:main; then
-              echo "LATEST20_REPAIR_PUBLISHED"
-              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
+              echo "LATEST50_REPAIR_PUBLISHED"
+              node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
             sleep $(( attempt * 3 ))
