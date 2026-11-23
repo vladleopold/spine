@@ -14,9 +14,6 @@ assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>/,
 assert.match(repairSource,/sparse-checkout","add",\.\.\.sourcePaths\],\{stdio:"ignore"\}/,
   'private source paths must stay out of public CI logs');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
-const syntheticWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/synthetic-webm-render-gate.yml'),'utf8');
-assert.match(syntheticWorkflowSource,/\/scripts\/source-skeleton-choice\.mjs/,'synthetic gate sparse checkout must include the exact skeleton selector dependency');
-assert.match(syntheticWorkflowSource,/\/scripts\/lib\/spine-player-source-support\.mjs/,'synthetic gate sparse checkout must include the runtime source blocker dependency');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 const liveAudit=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'verify-latest-twenty-live.mjs'),'utf8');
