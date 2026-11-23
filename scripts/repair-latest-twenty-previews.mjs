@@ -348,7 +348,6 @@ if(action==="matrix"){
       continue;
     }
     const selectedAnimation=choosePreviewAnimation([],item.animation);
-    const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
       "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
     const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
@@ -360,7 +359,7 @@ if(action==="matrix"){
       summary.blocked++;
       continue;
     }
-    if(!selectedAnimation||(indexedAnimation&&selectedAnimation!==indexedAnimation)){
+    if(!selectedAnimation){
       // Without an exact selected/default timeline, even an older installed
       // WebM cannot be proven to represent the requested animation. Preserve
       // the media bytes, but never advertise them as accepted or refresh posters.
