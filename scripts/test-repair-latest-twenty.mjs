@@ -37,6 +37,16 @@ try{
   records[22].defaultAnimation=undefined;
   // Legacy indexes may store only an ID; it is normalized to the collection path.
   records[4].previewPath=records[4].id;
+  // Binary-only Spine 3.7 source: Player 3.7 requires a same-work JSON sibling.
+  records[18].skeleton='hero.skel';
+  records[18].atlas='hero.atlas';
+  records[18].files=['hero.skel','hero.atlas','hero.png'];
+  const versionString=value=>Buffer.concat([Buffer.from([value.length+1]),Buffer.from(value)]);
+  const legacy37=Buffer.concat([versionString('legacy-hash'),versionString('3.7.93'),Buffer.alloc(32)]);
+  const legacyDirectory=path.join(root,'library_02','fixture-18');
+  fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
+  fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
+  fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
   records[21].files=['test.skel'];
   const blockedRecord=records[19];
   blockedRecord.webmStatus='blocked-invisible-default-skin';
@@ -84,8 +94,8 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,18);
-  assert.equal(Number(output.renderCount),18);
+  assert.equal(matrix.length,17);
+  assert.equal(Number(output.renderCount),17);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
@@ -108,7 +118,12 @@ try{
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
-  assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
+  const legacyBinary=all.find(x=>x.id==='fixture-18');
+  assert.equal(legacyBinary.ready,false);
+  assert.equal(legacyBinary.needsRender,false);
+  assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
+    'Spine 3.7 binary-only source without same-work JSON must not enter native rendering');
+  assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
   const reusable=all.find(x=>x.id==='fixture-05');
   assert.equal(reusable.ready,true);
   assert.equal(reusable.needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
