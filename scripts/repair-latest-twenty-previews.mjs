@@ -290,14 +290,16 @@ if(action==="matrix"){
      const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
+    const sourceReady=bundleOk(e);
     const sourceAnimations=readSourceAnimationNames(e,record);
     // Keep an explicit selection verbatim; when it is absent, prefer Idle
     // and otherwise the first animation declared by the exact source skeleton.
-    // This is preview metadata only: defaultAnimation and source bytes remain unchanged.
+    // Binary-only .skel uploads defer selection to the matching Spine runtime.
+    // This is preview metadata only: source defaultAnimation and bytes stay unchanged.
     const preferredAnimation=typeof record?.defaultAnimation==='string'?record.defaultAnimation:'';
     const animation=preferredAnimation&&sourceAnimations.includes(preferredAnimation)
       ?preferredAnimation
-      :(choosePreviewAnimation(sourceAnimations,'')||preferredAnimation);
+      :(choosePreviewAnimation(sourceAnimations,'')||preferredAnimation||(sourceReady?'__SPINE_AUTO__':'' ));
     const sourceFingerprint=previewSourceFingerprint(record);
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
       "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
@@ -306,7 +308,6 @@ if(action==="matrix"){
       record?.previewBlockedSourceFingerprint===sourceFingerprint &&
       record?.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
-    const sourceReady=bundleOk(e);
     const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
@@ -322,7 +323,7 @@ if(action==="matrix"){
       hasExplicitAnimation:Boolean(animation),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
-      blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":
+      blockedReason:!animation?"MISSING_SOURCE_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":
         blockedSameSelection?(record.webmStatus==="blocked-static-animation"?"STATIC_ANIMATION":"INVISIBLE_DEFAULT_SKIN"):
         !sourceReady?"MISSING_SOURCE_TRIAD":""};
     }));
