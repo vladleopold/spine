@@ -14,10 +14,12 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
+const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
+if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 // Work names include wolf, cherry, characters and user-defined prefixes.
 // Filtering only "Spine-animation-*" silently excluded genuinely new uploads.
 const idPattern=/^[a-z0-9][a-z0-9._-]{0,200}$/i;
-function newestTwenty() {
+function newestEntries() {
   const entries=[];
   for(const folder of listCollectionFolders(root)) {
     for(const entry of readIndex(root,folder)||[]) {
@@ -28,7 +30,7 @@ function newestTwenty() {
         at:timestamp});
     }
   }
-  return entries.sort((a,b)=>b.at-a.at).slice(0,20);
+  return entries.sort((a,b)=>b.at-a.at).slice(0,repairLimit);
 }
 function sourceIssue(entry){
   const p=path.resolve(root,entry.previewPath);
@@ -179,9 +181,9 @@ async function originalMediaFilesOk(entry){
   }catch{return false;}
 }
 const action=process.argv[2]||"matrix";
-const latest=action==="matrix"?newestTwenty():[];
+const latest=action==="matrix"?newestEntries():[];
 if(action==="matrix"){
-  if(latest.length!==20)throw new Error("Cannot find 20 recent entries");
+  if(latest.length!==repairLimit)throw new Error(`Cannot find ${repairLimit} recent entries`);
   const matrix=[];
   // Bound concurrent production probes so the gallery is not flooded.
   for(let offset=0;offset<latest.length;offset+=4){
@@ -222,17 +224,17 @@ if(action==="matrix"){
   console.log("sparseCheckout<<SPINE_SPARSE_END");
   console.log([...new Set(sparse)].join(String.fromCharCode(10)));
   console.log("SPINE_SPARSE_END");
-  console.error("AUDIT_LAST20="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
+  console.error("AUDIT_LIMIT="+repairLimit+" ENTRIES="+matrix.length+" SOURCE_READY="+matrix.filter(x=>x.ready).length+
     " BLOCKED="+matrix.filter(x=>!x.ready).length);
 }else if(action==="merge"){
   const selected=JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
-  if(selected.length!==20)throw new Error("Missing exact repair manifest");
+  if(selected.length!==repairLimit)throw new Error("Missing exact repair manifest");
   const base=path.resolve(root,"downloaded-latest20");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
   const seen=new Set(),seenSlots=new Set();
   for(const item of selected){
-    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=20||seenSlots.has(item.repairSlot))
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=repairLimit||seenSlots.has(item.repairSlot))
       throw new Error("Invalid artifact slot");
     seenSlots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
