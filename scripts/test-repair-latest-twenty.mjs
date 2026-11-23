@@ -170,7 +170,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
       SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'10',SPINE_REPAIR_OFFSET:'50'}});
   assert.equal(olderResult.status,0,olderResult.stderr);
-  const olderOutput=Object.fromEntries(olderResult.stdout.split('\\n').filter(x=>x.includes('='))
+  const olderOutput=Object.fromEntries(olderResult.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
   const olderBatch=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   assert.equal(olderBatch.length,10,'the final partial archive batch must be selectable');
