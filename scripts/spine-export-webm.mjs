@@ -411,14 +411,15 @@ const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
 const indexedAnimation = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation;
-const targetAnimation = requestedAnimation && availableAnimations.includes(requestedAnimation)
+const autoAnimation = requestedAnimation === '__SPINE_AUTO__';
+let targetAnimation = autoAnimation ? '' : (requestedAnimation && availableAnimations.includes(requestedAnimation)
   ? requestedAnimation
-  : (availableAnimations.length ? choosePreviewAnimation(availableAnimations, '') : requestedAnimation);
-if (!targetAnimation) {
-  console.error('NO_DEFAULT_SPINE_ANIMATION: refusing to guess a runtime track');
+  : (availableAnimations.length ? choosePreviewAnimation(availableAnimations, '') : requestedAnimation));
+if (!targetAnimation && !autoAnimation) {
+  console.error('NO_DEFAULT_SPINE_ANIMATION: no source animation is available for preview');
   process.exit(1);
 }
-if (availableAnimations.length && !availableAnimations.includes(targetAnimation)) {
+if (availableAnimations.length && targetAnimation && !availableAnimations.includes(targetAnimation)) {
   console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
   process.exit(1);
 }
@@ -644,7 +645,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     ${skeletonPlayerKey}: '${skeletonRawUrl}',
     ${atlasPlayerKey}: '${atlasRawUrl}',
     textures: ${JSON.stringify(textureRawUrls)},
-    animation: ${JSON.stringify(captureAnimation)},
+    animation: ${captureAnimation ? JSON.stringify(captureAnimation) : 'undefined'},
 ${skinLine}    showLoading: false,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
@@ -656,7 +657,10 @@ ${skinLine}    showLoading: false,
       window.__exportPlayer = p;
       var runtimeData = player.skeleton && player.skeleton.data || player.skeletonData;
       window.__animationNames = runtimeData && runtimeData.animations ? runtimeData.animations.map(function(a) { return a.name; }) : [];
-      window.__selectedAnimation = ${JSON.stringify(captureAnimation)};
+      window.__selectedAnimation = ${JSON.stringify(captureAnimation)} ||
+        window.__animationNames.find(function(name) { return /^idle$/i.test(name); }) ||
+        window.__animationNames.find(function(name) { return /idle/i.test(name); }) ||
+        window.__animationNames[0] || '';
       if (window.__selectedAnimation && player.animationState) {
         player.animationState.clearTracks();
         player.animationState.setAnimation(0, window.__selectedAnimation, true);
@@ -915,12 +919,15 @@ try {
     console.error('SOURCE_SKIN_MODE=default');
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
-    const pinnedAnimation = requestedAnimation;
-    if (!runtimeAnimations.includes(pinnedAnimation)) {
+    const pinnedAnimation = autoAnimation
+      ? choosePreviewAnimation(runtimeAnimations, '')
+      : targetAnimation;
+    if (!pinnedAnimation || !runtimeAnimations.includes(pinnedAnimation)) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
       break;
     }
+    targetAnimation = pinnedAnimation;
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
