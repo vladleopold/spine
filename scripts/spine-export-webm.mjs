@@ -916,6 +916,12 @@ try {
   // WebGL readPixels sometimes returns an empty back buffer even when the
   // browser compositor draws the real skeleton. Confirm visible pixels from
   // a temporary on-screen canvas screenshot before declaring the art blank.
+  async function compositedCanvasSignature() {
+    try {
+      const png=await page.locator('#player canvas').first().screenshot({type:'png',timeout:15000});
+      return createHash('sha256').update(png).digest('hex');
+    } catch { return ''; }
+  }
   async function hasVisibleCompositedCanvas() {
     try {
       const png=await page.locator('#player canvas').first().screenshot({type:'png',timeout:15000});
@@ -1038,14 +1044,11 @@ try {
           typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
         if (candidatePeak < FRAME_PEAK_MIN && await hasVisibleCompositedCanvas())
           candidatePeak = FRAME_PEAK_MIN;
-        const signatureA = await page.evaluate(() =>
-          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        const signatureA = await compositedCanvasSignature();
         await new Promise(resolve => setTimeout(resolve, 700));
-        const signatureB = await page.evaluate(() =>
-          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        const signatureB = await compositedCanvasSignature();
         await new Promise(resolve => setTimeout(resolve, 700));
-        const signatureC = await page.evaluate(() =>
-          typeof window.__frameSignature === 'function' ? window.__frameSignature() : '').catch(() => '');
+        const signatureC = await compositedCanvasSignature();
         const changing = Boolean(signatureA && signatureB && signatureC &&
           (signatureA !== signatureB || signatureB !== signatureC));
         if (candidatePeak >= FRAME_PEAK_MIN && changing) {
