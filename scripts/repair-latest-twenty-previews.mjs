@@ -191,12 +191,13 @@ if(action==="matrix"){
   // contains moving frames or that all three quality tiers decode correctly.
   if(process.env.GITHUB_ACTIONS==="true" && process.env.SPINE_REPAIR_INDEX_ONLY!=="1"){
     const sourcePaths=latest.filter(entry=>{
-      const files=Array.isArray(entry.files)?entry.files:[];
+      const record=(readIndex(root,entry.basePath)||[]).find(item=>item.id===entry.id);
+      const files=Array.isArray(record?.files)?record.files:[];
       const fileNames=files.map(file=>typeof file==="string"?file:String(file?.path||file?.name||file?.filename||"")).filter(Boolean);
       const hasSkeleton=fileNames.some(file=>/\.(json|skel)$/i.test(file));
       const hasAtlas=fileNames.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
       const hasTexture=fileNames.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
-      return typeof entry.defaultAnimation==="string" && entry.defaultAnimation.length>0 &&
+      return Boolean(record) && typeof record.defaultAnimation==="string" && record.defaultAnimation.length>0 &&
         hasSkeleton && hasAtlas && hasTexture;
     }).map(entry=>{
       const relative=String(entry.previewPath||"").replace(/\\/g,"/");
