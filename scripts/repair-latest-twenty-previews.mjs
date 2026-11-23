@@ -234,6 +234,9 @@ if(action==="matrix"){
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,sourceFingerprint,
+      indexedWebmStatus:String(record?.webmStatus||''),
+      indexedPreviewStatus:String(record?.previewStatus||''),
+      hasExplicitAnimation:Boolean(animation),
       ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
       animation,
       blockedReason:!animation?"MISSING_DEFAULT_ANIMATION":incompatible?"INCOMPATIBLE_SOURCE_VERSION":
