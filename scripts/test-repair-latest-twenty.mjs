@@ -62,7 +62,7 @@ try{
   assert.equal(result.status,0,result.stderr);
   const output=Object.fromEntries(result.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
-  const all=JSON.parse(output.allEntries);
+  const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
   assert.equal(matrix.length,16);
