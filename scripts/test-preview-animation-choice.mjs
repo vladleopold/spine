@@ -2,18 +2,22 @@ import assert from 'node:assert/strict';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
 
 assert.equal(choosePreviewAnimation(['bkg_landscape','blow_loop_landscape']), 'bkg_landscape',
-  'when no default exists, select a deterministic source track');
+  'choose a deterministic source track when no default exists');
 assert.equal(choosePreviewAnimation(['background','Idle','Walk']), 'Idle',
   'prefer an exact Idle track');
 assert.equal(choosePreviewAnimation(['walk','Idle Post Climax Cum']), 'Idle Post Climax Cum',
   'prefer a named idle variant');
 assert.equal(choosePreviewAnimation(['background','Walk'], 'Walk'), 'Walk',
-  'preserve explicit selection');
-assert.equal(choosePreviewAnimation(['background','Idle','Walk'], 'Missing'), 'Missing',
-  'an unavailable explicit name remains unchanged for a failed/blocked result');
+  'preserve an explicit selection when it is animated');
+assert.equal(choosePreviewAnimation(['Idle','Walk'], 'Missing'), 'Idle',
+  'fall back when the indexed selection is absent from animated source tracks');
+assert.equal(choosePreviewAnimation(['Idle','Walk'], 'background'), 'Idle',
+  'fall back from a static track to a moving source track');
+assert.equal(choosePreviewAnimation([], 'Missing'), 'Missing',
+  'preserve exact selection when binary source track names are not locally inspectable');
 assert.equal(choosePreviewAnimation(['mask','background']), 'mask',
-  'preserve deterministic source order when no idle exists');
+  'preserve source order when no idle exists');
 assert.equal(choosePreviewAnimation([]), '');
-assert.equal(choosePreviewAnimation(['walk'], ' walk '), ' walk ',
-  'preserve the requested animation string exactly');
-console.log('PASS Spine preview preserves explicit selection and deterministically selects a source track when absent');
+assert.equal(choosePreviewAnimation(['walk'], ' walk '), 'walk',
+  'trimmed mismatch is not silently treated as an available source track');
+console.log('PASS Spine preview preserves valid explicit selections and selects moving source tracks when needed');
