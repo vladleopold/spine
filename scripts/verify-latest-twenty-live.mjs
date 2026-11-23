@@ -117,4 +117,4 @@ console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
   total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
   expectedMedia:ready*fields.length,mutatedSource
 }));
-if(failed||ready+blocked!==snapshot.length)process.exitCode=1;
+if(failed||blocked||ready!==snapshot.length||ready+blocked!==snapshot.length)process.exitCode=1;
