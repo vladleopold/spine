@@ -53,9 +53,13 @@ async function markBlockedRender(status,distinctError){
  const expectedFingerprint=previewSourceFingerprint(found.entry);
  const expectedSkin=String(found.entry.defaultSkin||found.entry.skin||'');
  const animation=selection.animation;
- const message=status==='blocked-static-animation'
-  ?'Selected default animation has no changing frames; choose an animated track before rendering'
-  :'Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering';
+ const message={
+  'blocked-static-animation':'Selected default animation has no changing frames; choose an animated track before rendering',
+  'blocked-invisible-default-skin':'Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering',
+  'blocked-invalid-default-animation':'The indexed default animation is not present in the source skeleton; select an exact available animation',
+  'blocked-incomplete-source':'The indexed skeleton, atlas or texture source graph cannot be loaded completely',
+  'blocked-unsupported-runtime':'The source Spine version is not supported by the pinned renderer',
+ }[status]||'Selected Spine preview cannot be rendered with the current source metadata';
  for(let attempt=0;attempt<5;attempt++){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
   run('git',['reset','--hard','origin/main']);
@@ -154,11 +158,23 @@ try{
  const blockedStatus=result.distinctError==='COMPOSITED_FRAMES_IDENTICAL'
   ?'blocked-static-animation'
   :['COMPOSITED_FRAMES_NOT_VISIBLE','RUNTIME_ALL_SKINS_INVISIBLE'].includes(result.distinctError)
-   ?'blocked-invisible-default-skin':'';
+   ?'blocked-invisible-default-skin'
+   :result.distinctError==='ANIMATION_SELECTION'
+    ?'blocked-invalid-default-animation'
+    :['SOURCE_GRAPH_MISSING','ATLAS_TEXTURE_LOAD'].includes(result.distinctError)
+     ?'blocked-incomplete-source'
+     :['SKELETON_RUNTIME_VERSION','UNSUPPORTED_SPINE_EXPORT_VERSION'].includes(result.distinctError)
+      ?'blocked-unsupported-runtime':'';
  if(blockedStatus){
   await markBlockedRender(blockedStatus,result.distinctError);
   report.status='blocked';
-  report.code=blockedStatus==='blocked-static-animation'?'STATIC_ANIMATION':'INVISIBLE_DEFAULT_SKIN';
+  report.code={
+    'blocked-static-animation':'STATIC_ANIMATION',
+    'blocked-invisible-default-skin':'INVISIBLE_DEFAULT_SKIN',
+    'blocked-invalid-default-animation':'INVALID_DEFAULT_ANIMATION',
+    'blocked-incomplete-source':'INCOMPLETE_SOURCE',
+    'blocked-unsupported-runtime':'UNSUPPORTED_RUNTIME',
+  }[blockedStatus];
   writeReport();
   console.error('SPINE_PREVIEW_BLOCKED='+report.code);
   process.exit(0);
