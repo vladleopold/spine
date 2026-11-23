@@ -88,7 +88,7 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
-assert.match(exporter,/const skinCandidates = Object\.freeze\(\[null\]\)/,
-  "diagnostic markers must not enable alternate source skins");
+assert.match(exporter,/const skinCandidates = Object\.freeze\(\[null,\.\.\.readSkinNames\(skeletonFilePath\)\]\)/,
+  "diagnostic markers may inspect only skins declared by the same source skeleton");
 assert.doesNotMatch(exporter,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);
 console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas without leaking source metadata");
