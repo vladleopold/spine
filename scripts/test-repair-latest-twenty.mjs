@@ -54,7 +54,8 @@ try{
   for(let i=0;i<36;i++){
     const id='older-fixture-'+String(i).padStart(2,'0');
     records.push({id,uploadedAt:new Date(Date.UTC(2026,10,16,0,i,0)).toISOString(),
-      previewPath:'library_02/'+id,webmStatus:'failed',defaultAnimation:'idle',
+      previewPath:'library_02/'+id,webmStatus:'failed',
+      ...(i===35?{}:{defaultAnimation:'idle'}),
       files:['test.skel','test.atlas','test.png']});
   }
   fs.writeFileSync(path.join(shard,'index.json'),JSON.stringify(records));
@@ -133,6 +134,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.animation==='Idle'&&x.needsRender));
+  assert.ok(allFifty.some(x=>x.id==='older-fixture-35'&&x.animation==='__SPINE_AUTO__'&&x.ready&&x.needsRender),
+    'binary-only skeletons defer animation selection to the pinned Spine runtime');
   assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.ready&&x.needsRender));
   assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
