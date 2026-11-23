@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: restore-library
+  group: spine-library-commit
 
 jobs:
   restore:

@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: bump-asset-versions
+  group: spine-library-commit
   cancel-in-progress: false
 
 jobs:

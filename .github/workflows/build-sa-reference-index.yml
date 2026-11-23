@@ -15,7 +15,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: sa-reference-library-index
+  group: spine-library-commit
   cancel-in-progress: true
 jobs:
   build-index:
