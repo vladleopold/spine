@@ -48,6 +48,19 @@ try{
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
   fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
   fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
+  // Every other source-complete record needs a real on-disk skeleton/atlas/
+  // texture triad: the production inventory inspects files, not index claims.
+  // Keep fixture-21 deliberately incomplete and fixture-18 binary-only.
+  for(const record of records){
+    if(record.id==='fixture-18'||record.id==='fixture-21')continue;
+    const relative=record.previewPath.startsWith('library_02/')
+      ?record.previewPath:'library_02/'+record.previewPath;
+    const directory=path.join(root,relative);
+    fs.mkdirSync(directory,{recursive:true});
+    fs.writeFileSync(path.join(directory,'test.skel'),Buffer.from('synthetic-spine-fixture'));
+    fs.writeFileSync(path.join(directory,'test.atlas'),'test.png\nsize: 1,1\nformat: RGBA8888\n');
+    fs.writeFileSync(path.join(directory,'test.png'),Buffer.alloc(24));
+  }
   records[21].files=['test.skel'];
   const blockedRecord=records[19];
   blockedRecord.webmStatus='blocked-invisible-default-skin';
