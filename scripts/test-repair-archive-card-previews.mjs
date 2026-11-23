@@ -145,6 +145,21 @@ test('publish-time source guard rejects works hidden after inventory', () => {
   }
 });
 
+test('repair workflow fails closed when no preview pair is restored and preserves skip reasons', () => {
+  const repair = readFileSync(new URL('./repair-archive-card-previews.mjs', import.meta.url), 'utf8');
+  const workflow = readFileSync(new URL('../.github/workflows/repair-archive-card-previews.yml', import.meta.url), 'utf8');
+  assert.match(repair, /meta && meta\.reason \|\| 'render-artifact-unavailable'/,
+    'render failure reasons must survive into the private summary');
+  assert.match(repair, /if \(!queue\.length\) throw new Error\('No archive card preview pairs were restored'\)/,
+    'empty production verification must never pass');
+  assert.match(repair, /if \(summary\.skipped\.length\)/,
+    'partial repairs with skipped candidates must remain visibly failed after verifying restored media');
+  assert.match(workflow, /if: always\(\)[\s\S]*?name: archive-preview-repair-summary/,
+    'keep the private repair summary even when the publish gate fails');
+  assert.match(workflow, /No archive card preview pairs were restored/,
+    'the publish job must fail instead of reporting a no-op as success');
+});
+
 test('matrix render job names do not expose per-work identifiers', () => {
   const workflow = readFileSync(new URL('../.github/workflows/repair-archive-card-previews.yml', import.meta.url), 'utf8');
   const start = workflow.indexOf('  render:');

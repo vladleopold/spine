@@ -249,7 +249,8 @@ function merge() {
     let meta = null;
     try { meta = JSON.parse(fs.readFileSync(path.join(artifact, 'meta.json'), 'utf8')); } catch {}
     if (!meta || !meta.ok || !meta.manifest || meta.id !== artifactDir.name) {
-      summary.skipped.push({ id: artifactDir.name, reason: 'render-artifact-unavailable' });
+      const reason = String(meta && meta.reason || 'render-artifact-unavailable').slice(0, 180);
+      summary.skipped.push({ id: artifactDir.name, reason });
       continue;
     }
     const item = meta.manifest;
@@ -363,6 +364,7 @@ function merge() {
 async function verifyProduction() {
   const summary = JSON.parse(fs.readFileSync('preview-repair-summary.json', 'utf8'));
   const queue = summary.restored.flatMap(entry => entry.urls.map(url => ({ id: entry.id, url })));
+  if (!queue.length) throw new Error('No archive card preview pairs were restored');
   const failures = [];
   let cursor = 0;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -384,10 +386,14 @@ async function verifyProduction() {
     }
   }
   await Promise.all(Array.from({ length: 12 }, () => worker()));
-  console.log('PRODUCTION_MEDIA_CHECKED=' + queue.length + ' FAILED=' + failures.length);
+  console.log('PRODUCTION_MEDIA_CHECKED=' + queue.length + ' FAILED=' + failures.length +
+    ' SKIPPED=' + summary.skipped.length);
   if (failures.length) {
     fs.writeFileSync('preview-production-failures.json', JSON.stringify(failures, null, 2));
     throw new Error('Production preview media verification failed for ' + failures.length + ' assets');
+  }
+  if (summary.skipped.length) {
+    throw new Error('Some archive card preview candidates were not restored: ' + summary.skipped.length);
   }
 }
 

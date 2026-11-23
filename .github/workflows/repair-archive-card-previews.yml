@@ -135,6 +135,7 @@ jobs:
             git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
             git reset --hard refs/remotes/origin/main
             node scripts/repair-archive-card-previews.mjs merge
+            node -e "const s=JSON.parse(require('fs').readFileSync('preview-repair-summary.json','utf8')); if(!s.restored.length) throw new Error('No archive card preview pairs were restored');"
             git add --sparse -A -- library*
             if git diff --cached --quiet; then
               echo "NO_ARCHIVE_PREVIEW_REPAIR_CHANGES"
@@ -152,6 +153,7 @@ jobs:
             sleep $(( attempt * 4 ))
           done
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: archive-preview-repair-summary
           path: preview-repair-summary.json
