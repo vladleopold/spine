@@ -27,14 +27,12 @@ assert.match(workflow,/group:\s*spine-preview-latest-ten-\$\{\{\s*github\.event_
   "PR and main repair runs must use separate concurrency groups");
 assert.match(workflow,/cancel-in-progress:\s*false/,
   "a read-only PR check must never cancel an active main repair");
-assert.match(workflow,/branches:.*fix\/latest10-explicit-animation-guard-20261120/,
-  "the exact feature branch must run the read-only inventory check");
-assert.match(workflow,/branches:.*fix\/latest10-public-only-inventory-20261120/,
-  "the public-only inventory regression branch must run the read-only check");
-assert.match(workflow,/branches:.*fix\/latest10-preserve-source-blockers-20261120/,
-  "the source-blocker preservation regression branch must run the read-only check");
+assert.match(workflow,/workflow_dispatch:/,
+  "the superseded latest-10 repair remains available only as an explicit manual recovery");
+assert.doesNotMatch(workflow,/^\s+push:/m,
+  "the legacy branch-specific latest-10 workflow must not run automatically");
 assert.doesNotMatch(workflow,/^\s+pull_request:/m,
-  "use one push-triggered feature-branch check, not duplicate push and pull_request runs");
+  "the legacy latest-10 workflow must not duplicate the canonical latest-50 and reported-preview checks");
 assert.ok(!source.includes("record.defaultAnimation=animation"),
   "preview repair must not rewrite the source index default animation");
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"spine-latest10-animation-"));
