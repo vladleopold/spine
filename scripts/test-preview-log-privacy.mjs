@@ -104,7 +104,7 @@ function jobLevelEnvironmentBlocks(workflow) {
   return blocks;
 }
 const sensitiveJobEnvironmentKey = /^\s*(?:REPAIR_IDS_JSON|ENTRY_ID|UPLOAD_ID|ENTRY_BASE_PATH|ENTRY_PATH|PREVIEW_PATH|ENTRY_ANIMATION|ANIMATION|SOURCE_PATH)\s*:/m;
-for (const [label, workflow] of [['reported', reported], ['latest-ten', latestTen], ['latest-twenty', latestTwenty]]) {
+for (const [label, workflow] of [['reported', reported], ['latest-ten', latestTen]]) {
   assert.ok(workflow.includes('node scripts/mask-preview-manifest.mjs'),
     label + ' must mask private manifest values before use');
   const jobEnvBlocks = jobLevelEnvironmentBlocks(workflow);
@@ -119,10 +119,15 @@ for (const [label, workflow] of [['reported', reported], ['latest-ten', latestTe
   assert.ok(workflow.includes('node scripts/test-preview-log-privacy.mjs'),
     label + ' must execute the privacy regression');
 }
-for (const workflow of [latestTen, latestTwenty]) {
-  assert.match(workflow, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_JSON:/,
-    'production audit manifest must be scoped to its masking step');
-}
+assert.ok(latestTwenty.includes('node scripts/mask-preview-manifest.mjs'));
+assert.match(latestTwenty, /name: Mask and hydrate exact latest-20 source directories\n        env:\n          REPAIR_IDS_FILE:/,
+  'latest-50 publish manifest must be loaded from a private artifact file');
+assert.match(latestTwenty, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_FILE:/,
+  'latest-50 production audit manifest must be loaded from a private artifact file');
+assert.ok(latestTwenty.includes('name: latest50-manifest'));
+assert.ok(latestTwenty.includes('path: repair-manifest.json'));
+assert.match(latestTen, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_JSON:/,
+  'latest-10 production audit manifest must remain scoped to its masking step');
 
 const reportedRender = reported.slice(reported.indexOf('  render:'), reported.indexOf('  publish:'));
 assert.match(reportedRender, /name: validate-reported-preview-\$\{\{ matrix\.entry\.repairSlot \}\}/);
