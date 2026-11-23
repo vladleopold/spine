@@ -142,6 +142,13 @@ assert.doesNotMatch(reportedRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//
 const latestTwentyRender = latestTwenty.slice(latestTwenty.indexOf('  render:'), latestTwenty.indexOf('  publish:'));
 assert.match(latestTwentyRender, /name: validate-latest50-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.match(latestTwentyRender, /name: latest50-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+const renderAcceptanceStep = latestTwenty.slice(
+  latestTwenty.indexOf('name: Render and validate actual Spine video + still posters'),
+  latestTwenty.indexOf('name: Render and validate actual Spine video + still posters') + 260,
+);
+assert.match(renderAcceptanceStep, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/,
+  'render acceptance must receive the same explicit visible-track fallback permission as the renderer');
+
 assert.doesNotMatch(latestTwentyRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
