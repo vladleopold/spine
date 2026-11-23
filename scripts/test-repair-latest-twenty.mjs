@@ -139,6 +139,11 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
   assert.match(verifySource,/blocked-invisible-default-skin/);
   assert.match(verifySource,/blocked-static-animation/);
+  for(const status of ['blocked-invalid-default-animation','blocked-incomplete-source','blocked-unsupported-runtime']){
+    assert.match(repairSource,new RegExp(status));
+    assert.match(verifySource,new RegExp(status));
+  }
+  assert.match(verifySource,/expectedMedia:ready\*fields\.length/);
   assert.match(verifySource,/REPAIR_IDS_FILE/);
   assert.match(maskSource,/REPAIR_IDS_FILE/);
   console.log('PASS latest20: exact public selection, frozen source, blocked triad, no fake media');
