@@ -35,6 +35,10 @@ try{
   records[22].id='Spine-animation-2026-11-17T18-45-14-132Z';
   records[22].previewPath='library_02/'+records[22].id;
   records[22].defaultAnimation=undefined;
+  // Legacy indexes may store only an ID, while migrated records can
+  // safely point to a different repo-relative folder.
+  records[4].previewPath=records[4].id;
+  records[3].previewPath='migrated/fixture-03';
   records[21].files=['test.skel'];
   const blockedRecord=records[19];
   blockedRecord.webmStatus='blocked-invisible-default-skin';
@@ -88,6 +92,8 @@ try{
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
   assert.equal(all[19].id,'fixture-04');
+  assert.equal(all[19].previewPath,'library_02/fixture-04',
+    'legacy ID-only previewPath values must be normalized to their source collection');
   assert.equal(all[19].needsRender,true,'a failed preview status must force rerender even when old WebM metadata exists');
   for(const id of [
     'Spine-animation-2026-11-17T18-44-12-762Z',
@@ -159,6 +165,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.animation==='Idle'&&x.needsRender));
+  assert.ok(allFifty.some(x=>x.id==='fixture-03'&&x.previewPath==='migrated/fixture-03'),
+    'safe migrated preview folders may differ from the current collection shard');
   assert.ok(allFifty.some(x=>x.id==='older-fixture-35'&&x.animation==='__SPINE_AUTO__'&&x.ready&&x.needsRender),
     'binary-only skeletons defer animation selection to the pinned Spine runtime');
   assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.ready&&x.needsRender));
