@@ -265,8 +265,10 @@ if(action==="matrix"){
     // Keep an explicit selection verbatim; when it is absent, prefer Idle
     // and otherwise the first animation declared by the exact source skeleton.
     // This is preview metadata only: defaultAnimation and source bytes remain unchanged.
-    const animation=choosePreviewAnimation(sourceAnimations,
-      typeof record?.defaultAnimation==='string'?record.defaultAnimation:'');
+    const preferredAnimation=typeof record?.defaultAnimation==='string'?record.defaultAnimation:'';
+    const animation=preferredAnimation&&sourceAnimations.includes(preferredAnimation)
+      ?preferredAnimation
+      :(choosePreviewAnimation(sourceAnimations,'')||preferredAnimation);
     const sourceFingerprint=previewSourceFingerprint(record);
     const blockedStatuses=new Set(["blocked-invisible-default-skin","blocked-static-animation",
       "blocked-invalid-default-animation","blocked-incomplete-source","blocked-unsupported-runtime"]);
