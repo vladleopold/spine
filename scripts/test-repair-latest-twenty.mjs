@@ -9,6 +9,10 @@ import {fileURLToPath} from 'node:url';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
+assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>/,
+  'source hydration must inspect every selected source directory, even when legacy files metadata is empty');
+assert.match(repairSource,/sparse-checkout","add",\.\.\.sourcePaths\],\{stdio:"ignore"\}/,
+  'private source paths must stay out of public CI logs');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
