@@ -26,6 +26,10 @@ on:
         required: false
         default: '0'
 
+concurrency:
+  group: spine-library-commit
+  cancel-in-progress: false
+
 jobs:
   trim:
     permissions:

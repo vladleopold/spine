@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: repair-poster-paths
+  group: spine-library-commit
 
 jobs:
   repair:
