@@ -27,4 +27,12 @@ for(let i=0;i<7;i++)blank[i*3]=255;
 assert.equal(hasVisibleScreenshotPixels(blank),false);
 blank[7*3]=255;
 assert.equal(hasVisibleScreenshotPixels(blank),true);
-console.log('PASS Spine preview: no animation substitution; exact selection and real composited pixels');
+const darkArtwork=Buffer.alloc(32*32*3,7);
+for(let i=100;i<108;i++)darkArtwork.fill(24,i*3,i*3+3);
+assert.equal(hasVisibleScreenshotPixels(darkArtwork),true,
+  'dark artwork with real contrast against the dark canvas must not be rejected');
+const nearUniform=Buffer.alloc(32*32*3,7);
+for(let i=100;i<120;i++)nearUniform[i*3]=16;
+assert.equal(hasVisibleScreenshotPixels(nearUniform),false,
+  'minor pixel noise must not make a blank canvas visible');
+console.log('PASS Spine preview: no animation/skin substitution; contrast-based real-pixel detection');
