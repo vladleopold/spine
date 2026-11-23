@@ -97,7 +97,7 @@ try{
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
       SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'50'}});
   assert.equal(fiftyResult.status,0,fiftyResult.stderr);
-  const fiftyOutput=Object.fromEntries(fiftyResult.stdout.split('\\n').filter(x=>x.includes('='))
+  const fiftyOutput=Object.fromEntries(fiftyResult.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
   const allFifty=JSON.parse(fiftyOutput.allEntries);
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
