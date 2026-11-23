@@ -6,8 +6,10 @@ on:
   push:
     branches: [main]
     paths:
-      - 'library/**'
-      - 'library_*/**'
+      # Only rebuild when library metadata changes. Preview-view metrics and
+      # generated media live under the same shards but do not affect this index.
+      - 'library/index.json'
+      - 'library_*/index.json'
       - 'scripts/build-sa-reference-index.mjs'
       - 'tests/build-sa-reference-index.test.mjs'
       - '.github/workflows/build-sa-reference-index.yml'
