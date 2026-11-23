@@ -4,7 +4,10 @@ on:
   push:
     branches: [main]
     paths:
+      - .github/workflows/repair-reported-previews.yml
       - scripts/repair-reported-previews.mjs
+      - scripts/test-reported-preview-live-workflow.mjs
+      - scripts/test-preview-log-privacy.mjs
   workflow_dispatch:
   pull_request:
     paths:
