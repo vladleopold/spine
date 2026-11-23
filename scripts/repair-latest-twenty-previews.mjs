@@ -191,13 +191,12 @@ if(action==="matrix"){
   if(process.env.GITHUB_ACTIONS==="true" && process.env.SPINE_REPAIR_INDEX_ONLY!=="1"){
     const sourcePaths=latest.filter(entry=>{
       const files=Array.isArray(entry.files)?entry.files:[];
+      const fileNames=files.map(file=>typeof file==="string"?file:String(file?.path||file?.name||file?.filename||"")).filter(Boolean);
+      const hasSkeleton=fileNames.some(file=>/\.(json|skel)$/i.test(file));
+      const hasAtlas=fileNames.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
+      const hasTexture=fileNames.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
       return typeof entry.defaultAnimation==="string" && entry.defaultAnimation.length>0 &&
-        /\.(json|skel)$/i.test(String(entry.skeleton||"")) &&
-        files.some(file=>/\.(json|skel)$/i.test(String(file))) &&
-        /\.atlas(?:\.txt)?$/i.test(String(entry.atlas||"")) &&
-        files.some(file=>/\.atlas(?:\.txt)?$/i.test(String(file))) &&
-        Array.isArray(entry.textures) && entry.textures.some(file=>/\.(png|jpe?g|webp)$/i.test(String(file))) &&
-        files.some(file=>/\.(png|jpe?g|webp)$/i.test(String(file)));
+        hasSkeleton && hasAtlas && hasTexture;
     }).map(entry=>{
       const relative=String(entry.previewPath||"").replace(/\\/g,"/");
       const resolved=path.resolve(root,relative);
