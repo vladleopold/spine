@@ -90,10 +90,10 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   assert.ok(all.slice(3).filter(x=>x.id!=='fixture-19').every(x=>x.ready&&x.needsRender));
-  const blocked=all.find(x=>x.id==='fixture-19');
-  assert.equal(blocked.ready,false);
-  assert.equal(blocked.needsRender,false);
-  assert.equal(blocked.blockedReason,'INVISIBLE_DEFAULT_SKIN');
+  const formerlyBlocked=all.find(x=>x.id==='fixture-19');
+  assert.equal(formerlyBlocked.ready,true,'new renderer revision must retry previously blocked default skin');
+  assert.equal(formerlyBlocked.needsRender,true);
+  assert.equal(formerlyBlocked.blockedReason,'');
   assert.equal(all[3].animation,'Idle','an unavailable indexed track falls back to a real source track');
   assert.ok(all.slice(4).every(x=>x.animation==='Idle'));
   assert.doesNotMatch(repairSource,/record\.defaultAnimation\.trim\(\)/,
