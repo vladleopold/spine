@@ -36,22 +36,32 @@ export function verifyPosterFirstFrame(videoPath, posterPath) {
   }
   const videoFrame = decodedFirstFrame(videoPath);
   const posterFrame = decodedFirstFrame(posterPath);
-  let sameFrame = videoFrame.length > 0 && videoFrame.length === posterFrame.length;
   let maxDelta = 0;
-  let differingChannels = 0;
-  for (let i = 0; sameFrame && i < videoFrame.length; i += 1) {
+  let totalDelta = 0;
+  let highDeltaChannels = 0;
+  const comparable = videoFrame.length > 0 && videoFrame.length === posterFrame.length;
+  if (!comparable) throw new Error('WebP dimensions do not match the decoded first frame');
+  for (let i = 0; i < videoFrame.length; i += 1) {
     const delta = Math.abs(videoFrame[i] - posterFrame[i]);
     if (delta > maxDelta) maxDelta = delta;
-    if (delta > 1) {
-      differingChannels += 1;
-      sameFrame = false;
-    }
+    totalDelta += delta;
+    if (delta > 16) highDeltaChannels += 1;
   }
-  if (!sameFrame) {
-    throw new Error('WebP is not the same first frame of its paired WebM' +
-      ' (maxDelta=' + maxDelta + ', differingChannels=' + differingChannels + ')');
+  const meanDelta = totalDelta / videoFrame.length;
+  const highDeltaRatio = highDeltaChannels / videoFrame.length;
+  // Card posters are deliberately lossy WebP for fast decode. Keep a strict
+  // perceptual guard against a wrong/later frame while allowing codec noise.
+  if (maxDelta > 64 || meanDelta > 3.5 || highDeltaRatio > 0.025) {
+    throw new Error('WebP is not a faithful first frame of its paired WebM' +
+      ' (maxDelta=' + maxDelta + ', meanDelta=' + meanDelta.toFixed(3) +
+      ', highDeltaRatio=' + highDeltaRatio.toFixed(4) + ')');
   }
-  return { ...videoSize, bytes: fs.statSync(posterPath).size };
+  return {
+    ...videoSize,
+    bytes: fs.statSync(posterPath).size,
+    maxDelta,
+    meanDelta: Number(meanDelta.toFixed(3)),
+  };
 }
 
 export function generateFirstFrameWebp(videoPath, posterPath) {
@@ -71,7 +81,8 @@ export function generateFirstFrameWebp(videoPath, posterPath) {
     }
     execFileSync('ffmpeg', [
       '-y', '-v', 'error', '-i', framePath, '-frames:v', '1',
-      '-c:v', 'libwebp', '-lossless', '1', '-quality', '100', posterPath,
+      '-c:v', 'libwebp', '-lossless', '0', '-quality', '88',
+      '-compression_level', '6', posterPath,
     ], { timeout: FFMPEG_TIMEOUT_MS, stdio: ['ignore', 'ignore', 'pipe'] });
   } finally {
     fs.rmSync(framePath, { force: true });
