@@ -1,13 +1,6 @@
 # Run with version-matched 4.0/4.1/4.2/4.3 Web Players for all 18 source projects.
 name: Repair and accept 18 reported Spine preview projects
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/repair-reported-previews.yml
-      - scripts/repair-reported-previews.mjs
-      - scripts/test-reported-preview-live-workflow.mjs
-      - scripts/test-preview-log-privacy.mjs
   workflow_dispatch:
   pull_request:
     paths:
