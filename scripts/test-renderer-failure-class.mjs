@@ -53,6 +53,13 @@ assert.equal("selectedSkinCount" in summary,false,
 assert.doesNotMatch(JSON.stringify(summary),/secret-character|private-animation-name|private\/source/,
   "sanitized diagnostics must not expose source paths or animation names");
 
+const noVisibleSourceTrack=summarizeRendererLog(
+  "Skeleton: source (v4.1.24)\\nPLAYER_READY=1\\nCapture failed: No source animation produced visible changing frames"
+);
+assert.equal(noVisibleSourceTrack.reason,"NO_VISIBLE_PIXEL");
+assert.equal(noVisibleSourceTrack.distinctError,"COMPOSITED_FRAMES_NOT_VISIBLE",
+  "source-track discovery with no visible moving animation must be a blocked preview, not an unclassified renderer failure");
+
 const invalidAnimationLog="Error: Animation 'missing-track' not found in skeleton";
 const invalidAnimation=summarizeRendererLog(invalidAnimationLog);
 assert.equal(classifyRendererError(invalidAnimationLog),"ANIMATION_SELECTION");
