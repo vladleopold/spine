@@ -71,18 +71,18 @@ test('Spine 3.7 binary .skel is blocked before player creation; same-version JSO
 });
 
 
-test('WebM exporter never substitutes an alternate or candidate animation', () => {
+test('WebM exporter uses exact explicit tracks and falls back only when the track is absent from animated source tracks', () => {
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   const selector = fs.readFileSync(new URL('./preview-animation-choice.mjs', import.meta.url), 'utf8');
-  assert.match(exporter, /const targetAnimation = choosePreviewAnimation\(availableAnimations, requestedAnimation\)/,
-    'the renderer must receive only the exact requested/indexed animation');
-  assert.ok(!exporter.includes('alternatePreviewAnimations'),
-    'the exporter must not search alternate preview animations');
+  assert.match(exporter, /const targetAnimation = requestedAnimation && availableAnimations\.includes\(requestedAnimation\)/,
+    'the renderer must preserve an explicit track when it is animated');
+  assert.match(exporter, /choosePreviewAnimation\(availableAnimations, ''\)/,
+    'the renderer may select a source-declared moving track when the requested track is absent/static');
+  assert.ok(!exporter.includes('alternatePreviewAnimations'));
   assert.ok(!exporter.split(String.fromCharCode(10)).some(line =>
-    line.includes('targetAnimation') && line.includes('candidate')),
-    'no candidate animation may replace the selected animation');
-  assert.match(selector, /return typeof preferred === 'string' \? preferred : ''/,
-    'an unavailable explicit name must remain unchanged so the render can fail/ block');
+    line.includes('targetAnimation') && line.includes('candidate')));
+  assert.match(selector, /if \(typeof preferred === 'string' && preferred\.length > 0\) return preferred;/,
+    'the selector preserves explicit strings; source-aware callers decide when fallback is needed');
 });
 
 
