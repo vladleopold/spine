@@ -74,8 +74,8 @@ test('Spine 3.7 binary .skel is blocked before player creation; same-version JSO
 test('WebM exporter uses exact explicit tracks and falls back only when the track is absent from animated source tracks', () => {
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   const selector = fs.readFileSync(new URL('./preview-animation-choice.mjs', import.meta.url), 'utf8');
-  assert.match(exporter, /const targetAnimation = requestedAnimation && availableAnimations\.includes\(requestedAnimation\)/,
-    'the renderer must preserve an explicit track when it is animated');
+  assert.match(exporter, /let targetAnimation = autoAnimation \? '' : \(requestedAnimation && availableAnimations\.includes\(requestedAnimation\)/,
+    'the renderer must preserve an explicit track when it is animated and leave binary auto-selection unresolved until runtime');
   assert.match(exporter, /choosePreviewAnimation\(availableAnimations, ''\)/,
     'the renderer may select a source-declared moving track when the requested track is absent/static');
   assert.ok(!exporter.includes('alternatePreviewAnimations'));
