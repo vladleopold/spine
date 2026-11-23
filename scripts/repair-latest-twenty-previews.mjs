@@ -33,13 +33,42 @@ function newestEntries() {
   }
   return entries.sort((a,b)=>b.at-a.at).slice(0,repairLimit);
 }
-function sourceIssue(entry){
-  const p=path.resolve(root,entry.previewPath);
-  if(!p.startsWith(root+path.sep))return 'UNSAFE_PREVIEW_PATH';
+function inspectSourceTree(entry){
+  const rootPath=path.resolve(root,entry.previewPath);
+  if(!rootPath.startsWith(root+path.sep))return {complete:false,reason:'UNSAFE_PREVIEW_PATH'};
+  let bestReason='MISSING_SOURCE_TRIAD',foundTriad=false;
+  const priority=['UNSUPPORTED_SPINE_EXPORT_3_8_75','ATLAS_PAGE_SOURCE_MISSING',
+    'ATLAS_SOURCE_UNREADABLE','ATLAS_PAGE_INVENTORY_UNKNOWN','MISSING_SOURCE_TRIAD'];
+  function walk(directory,depth=0){
+    if(depth>6)return null;
+    let items=[];
+    try{items=fs.readdirSync(directory,{withFileTypes:true});}catch{return null;}
+    const files=items.filter(item=>item.isFile()).map(item=>item.name);
+    const triad=files.some(name=>/\.(json|skel)$/i.test(name))&&
+      files.some(name=>/\.atlas(?:\.txt|\.docx)?$/i.test(name))&&
+      files.some(name=>/\.(png|jpe?g|webp|dds)$/i.test(name));
+    if(triad){
+      foundTriad=true;
+      const result=inspectAtlasSourceBundle(directory,files);
+      if(result.complete)return {complete:true,reason:'COMPLETE'};
+      if(priority.indexOf(result.reason)<priority.indexOf(bestReason))bestReason=result.reason;
+    }
+    for(const item of items){
+      if(item.isDirectory()&&!item.name.endsWith('.__chunks')){
+        const result=walk(path.join(directory,item.name),depth+1);
+        if(result?.complete)return result;
+      }
+    }
+    return null;
+  }
   try{
-    const files=fs.readdirSync(p).filter(x=>fs.statSync(path.join(p,x)).isFile());
-    return inspectAtlasSourceBundle(p,files).reason;
-  }catch{return 'MISSING_SOURCE_TRIAD';}
+    const result=walk(rootPath);
+    if(result?.complete)return result;
+  }catch{}
+  return {complete:false,reason:foundTriad?bestReason:'MISSING_SOURCE_TRIAD'};
+}
+function sourceIssue(entry){
+  return inspectSourceTree(entry).reason;
 }
 function readSourceAnimationNames(entry, record) {
   const directory=path.resolve(root,entry.previewPath);
@@ -88,20 +117,15 @@ function readSourceAnimationNames(entry, record) {
 function bundleOk(entry) {
   const p=path.resolve(root,entry.previewPath);
   if(!p.startsWith(root+path.sep))return false;
-  let files=[],indexOnly=false;
-  try{files=fs.readdirSync(p).filter(f=>fs.statSync(path.join(p,f)).isFile());}
+  try{fs.statSync(p);}
   catch{
-    // Inventory checks indexes only; the render/publish jobs validate
-    // the authoritative source pages from the sparse-checked-out files.
-    indexOnly=true;
-    files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
+    // Inventory checks indexes only; render/publish jobs validate the source.
+    const files=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id)?.files||[];
+    return files.some(f=>/\.(json|skel)$/i.test(f))&&
+      files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f))&&
+      files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
   }
-  const triad=files.some(f=>/\.(json|skel)$/i.test(f)) &&
-    files.some(f=>/\.atlas(?:\.txt|\.docx)?$/i.test(f)) &&
-    files.some(f=>/\.(png|jpe?g|webp|dds)$/i.test(f));
-  if(!triad)return false;
-  if(indexOnly)return true;
-  return inspectAtlasSourceBundle(p,files).complete;
+  return inspectSourceTree(entry).complete;
 }
 const mediaNames=["preview.webm","preview-medium.webm","preview-low.webm",
   "preview.webp","preview-medium.webp","preview-low.webp"];
