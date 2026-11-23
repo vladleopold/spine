@@ -64,8 +64,21 @@ function readSourceAnimationNames(entry, record) {
   for(const file of files){
     try{
       const data=JSON.parse(fs.readFileSync(file,'utf8'));
-      if(Array.isArray(data?.bones)&&data.animations&&typeof data.animations==='object')
-        return Object.keys(data.animations);
+      if(Array.isArray(data?.bones)&&data.animations&&typeof data.animations==='object'){
+        const names=Object.keys(data.animations);
+        const moving=names.filter(name=>{
+          const times=new Set();
+          const walk=value=>{
+            if(!value||typeof value!=='object')return;
+            if(Array.isArray(value)){for(const item of value)walk(item);return;}
+            if(typeof value.time==='number')times.add(value.time);
+            for(const key of Object.keys(value))walk(value[key]);
+          };
+          walk(data.animations[name]);
+          return times.size>1;
+        });
+        return moving.length?moving:names;
+      }
     }catch{}
   }
   return Array.isArray(record?.animations)
