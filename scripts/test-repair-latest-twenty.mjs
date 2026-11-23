@@ -163,6 +163,24 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'binary-only skeletons defer animation selection to the pinned Spine runtime');
   assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.ready&&x.needsRender));
   assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
+  assert.equal(Number(fiftyOutput.totalCount),60,'the inventory must report the full public archive size');
+  assert.equal(Number(fiftyOutput.nextOffset),50,'the first batch must expose the next archive offset');
+
+  const olderResult=spawnSync(process.execPath,[script,'matrix'],{
+    cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
+      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'10',SPINE_REPAIR_OFFSET:'50'}});
+  assert.equal(olderResult.status,0,olderResult.stderr);
+  const olderOutput=Object.fromEntries(olderResult.stdout.split('\\n').filter(x=>x.includes('='))
+    .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
+  const olderBatch=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
+  assert.equal(olderBatch.length,10,'the final partial archive batch must be selectable');
+  assert.equal(Number(olderOutput.offset),50);
+  assert.equal(Number(olderOutput.totalCount),60);
+  assert.equal(Number(olderOutput.nextOffset),60,'the final batch must stop exactly at the archive end');
+  assert.notEqual(olderBatch[0].id,allFifty[0].id,'offset 50 must not repeat the newest batch');
+  assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
+  assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
+  assert.match(workflowSource,/actions:\\s*write/,'the batch runner needs permission to dispatch its successor');
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
   const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
   assert.match(verifySource,/blocked-invisible-default-skin/);
