@@ -46,6 +46,17 @@ try{
   records[4].webpPoster='https://example.test/preview.webp';
   records[4].previewFrameCount=12;
   records[4].previewDuration=2;
+  // A previously accepted preview whose status was metadata-blocked can be
+  // restored without rerendering only when the exact selected track and media
+  // set remain present; the production job additionally verifies bytes/motion.
+  records[5].webmStatus='blocked-missing-animation-selection';
+  records[5].previewStatus='blocked';
+  records[5].previewAnimation='Idle';
+  records[5].allAnimationPreviews={Idle:{webmPreview:'https://example.test/preview.webm'}};
+  records[5].webmPreview='https://example.test/preview.webm';
+  records[5].webpPoster='https://example.test/preview.webp';
+  records[5].previewFrameCount=60;
+  records[5].previewDuration=2;
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -68,8 +79,8 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  assert.equal(matrix.length,19);
-  assert.equal(Number(output.renderCount),19);
+  assert.equal(matrix.length,18);
+  assert.equal(Number(output.renderCount),18);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
@@ -90,7 +101,10 @@ try{
   assert.equal(all[2].ready,false);
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
-  assert.ok(all.slice(3).filter(x=>x.id!=='fixture-19').every(x=>x.ready&&x.needsRender));
+  assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
+  assert.equal(all[5].ready,true);
+  assert.equal(all[5].needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
+  assert.ok(!matrix.some(x=>x.id==='fixture-05'));
   const formerlyBlocked=all.find(x=>x.id==='fixture-19');
   assert.equal(formerlyBlocked.ready,true,'new renderer revision must retry previously blocked default skin');
   assert.equal(formerlyBlocked.needsRender,true);
@@ -128,8 +142,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,49,'all source-complete entries are eligible after deterministic animation and skin recovery');
-  assert.equal(Number(fiftyOutput.renderCount),49);
+  assert.equal(matrixFifty.length,48,'all source-complete entries except one verified reusable preview are eligible for rendering');
+  assert.equal(Number(fiftyOutput.renderCount),48);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
