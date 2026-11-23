@@ -8,8 +8,8 @@ export function classifyRendererError(text) {
   if(x.includes("unsupported_spine_export_3_8_75"))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
   if (x.includes("couldn't load texture atlas page")||x.includes("couldn't load image")||x.includes("assets could not be loaded")||x.includes("could not load atlas")||x.includes("failed to fetch atlas")||x.includes("texture atlas page")) return "ATLAS_TEXTURE_LOAD";
   if (x.includes("unknown format")||x.includes("unsupported skeleton")||x.includes("unsupported spine")) return "SKELETON_RUNTIME_VERSION";
-  if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
   if (x.includes("animation")&&(x.includes("not found")||x.includes("invalid"))) return "ANIMATION_SELECTION";
+  if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
   if (x.includes("net::err_")||x.includes("failed to load resource")||x.includes("networkidle")||x.includes("could not resolve host")) return "NETWORK_ASSET";
   if (x.includes("timed out waiting for player ready")||x.includes("waiting for player ready")||x.includes("waitforfunction")&&x.includes("timeout")) return "PLAYER_INITIALIZATION_TIMEOUT";
   if (x.includes("no skin produced visible content")||x.includes("no visible real-time spine frames")||x.includes("no visible pixels from the selected default spine skin")||x.includes("frame peak=0")||x.includes("rendered no visible content")) return "NO_VISIBLE_PIXEL";
