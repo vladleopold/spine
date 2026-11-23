@@ -30,9 +30,11 @@ function normalizedPreviewPath(basePath,value,id) {
     parts.some(part=>!part||part==="."||part===".."))
     throw new Error("Unsafe preview path metadata");
   // Older indexes stored only the ID; interpret that as relative to the
-  // collection shard. Multi-segment paths may point to a migrated folder,
-  // but must remain strictly inside this repository checkout.
+  // collection shard. Multi-segment paths must already name that same shard,
+  // matching the frozen-manifest publisher's source-integrity contract.
   const candidate=parts.length===1?String(basePath)+"/"+relative:relative;
+  if(!candidate.startsWith(String(basePath)+"/"))
+    throw new Error("Preview path does not match its source collection");
   const resolved=path.resolve(root,candidate);
   if(!resolved.startsWith(root+path.sep))throw new Error("Unsafe preview path metadata");
   return candidate;
