@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
+import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
@@ -34,6 +35,61 @@ const report={
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
+const runCaptured=(cmd,args)=>{
+ try{
+  const stdout=execFileSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
+  if(stdout)process.stdout.write(stdout);
+  return stdout;
+ }catch(error){
+  const stdout=String(error.stdout||''),stderr=String(error.stderr||'');
+  if(stdout)process.stdout.write(stdout);
+  if(stderr)process.stderr.write(stderr);
+  error.renderOutput=stdout+'\n'+stderr;
+  throw error;
+ }
+};
+async function markBlockedRender(status,distinctError){
+ const expectedFingerprint=previewSourceFingerprint(found.entry);
+ const expectedSkin=String(found.entry.defaultSkin||found.entry.skin||'');
+ const animation=selection.animation;
+ const message=status==='blocked-static-animation'
+  ?'Selected default animation has no changing frames; choose an animated track before rendering'
+  :'Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering';
+ for(let attempt=0;attempt<5;attempt++){
+  run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
+  run('git',['reset','--hard','origin/main']);
+  const current=entryForUpload(process.cwd(),id);
+  if(!current||!Array.isArray(current.index))throw new Error('Upload index unavailable');
+  const index=current.index;
+  const indexPosition=index.findIndex(entry=>entry?.id===id);
+  if(indexPosition<0)throw new Error('Upload removed before blocked render status update');
+  const record=index[indexPosition];
+  if(record.defaultAnimation!==animation)throw new Error('Default animation changed before blocked render status update');
+  const fingerprint=previewSourceFingerprint(record);
+  const skin=String(record.defaultSkin||record.skin||'');
+  if(fingerprint!==expectedFingerprint||skin!==expectedSkin)throw new Error('Source or skin selection changed before blocked render status update');
+  record.webmStatus=status;
+  record.previewStatus='blocked';
+  record.previewBlockedAnimation=animation;
+  record.previewBlockedSourceFingerprint=fingerprint;
+  record.previewBlockedSkin=skin;
+  record.previewBlockedDistinctError=distinctError;
+  record.previewBlockedAt=new Date().toISOString();
+  record.previewError=message;
+  record.lastPreviewRetryError='';
+  const indexPath=path.join(current.basePath,'index.json');
+  fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
+  run('git',['add','--',indexPath]);
+  if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+  run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m','Mark non-renderable Spine preview as blocked']);
+  try{
+   run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
+   return;
+  }catch(error){
+   if(attempt===4)throw error;
+  }
+ }
+}
 async function markBlockedSelection(){
   for(let attempt=0;attempt<5;attempt++){
     run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
@@ -86,7 +142,28 @@ if(selection.status==='blocked'){
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
-run('node',['scripts/spine-export-webm.mjs',...flags]);
+try{
+ runCaptured('node',['scripts/spine-export-webm.mjs',...flags]);
+}catch(error){
+ const logPath=path.join(temp,'renderer.log');
+ fs.writeFileSync(logPath,String(error.renderOutput||error.message||''));
+ const classified=execFileSync('node',['scripts/renderer-failure-class.mjs',logPath],{encoding:'utf8'});
+ console.log(classified.trim());
+ const result=JSON.parse(classified.replace(/^SANITIZED_RENDER_RESULT=/,'').trim());
+ const blockedStatus=result.distinctError==='COMPOSITED_FRAMES_IDENTICAL'
+  ?'blocked-static-animation'
+  :['COMPOSITED_FRAMES_NOT_VISIBLE','RUNTIME_ALL_SKINS_INVISIBLE'].includes(result.distinctError)
+   ?'blocked-invisible-default-skin':'';
+ if(blockedStatus){
+  await markBlockedRender(blockedStatus,result.distinctError);
+  report.status='blocked';
+  report.code=blockedStatus==='blocked-static-animation'?'STATIC_ANIMATION':'INVISIBLE_DEFAULT_SKIN';
+  writeReport();
+  console.error('SPINE_PREVIEW_BLOCKED='+report.code);
+  process.exit(0);
+ }
+ throw error;
+}
 const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
 report.status='rendering';
 report.code=null;
