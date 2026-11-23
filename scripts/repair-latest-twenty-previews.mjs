@@ -200,7 +200,7 @@ if(action==="matrix"){
     }).map(entry=>{
       const relative=String(entry.previewPath||"").replace(/\\/g,"/");
       const resolved=path.resolve(root,relative);
-      if(!relative || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
+      if(!relative.startsWith(String(entry.basePath||"")+"/") || relative.split("/").includes("..") || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
       return relative+"/";
     });
     if(sourcePaths.length)execFileSync("git",["sparse-checkout","add",...sourcePaths],{stdio:"inherit"});
