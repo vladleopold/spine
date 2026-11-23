@@ -22,8 +22,10 @@ for (const selected of ['Walk', 'Missing', ' Walk ', ' ']) {
   assert.equal(choosePreviewAnimation(['Walk'], selected), selected,
     'explicit animation names, including unavailable and whitespace-padded names, must remain byte-for-byte unchanged');
 }
-assert.equal(choosePreviewAnimation(['Walk']), '',
-  'no selection must not infer the first animation');
+assert.equal(choosePreviewAnimation(['Walk']), 'Walk',
+  'without an explicit selection, preview recovery must preserve the first source track when no Idle track exists');
+assert.equal(choosePreviewAnimation(['Walk', 'Idle']), 'Idle',
+  'without an explicit selection, preview recovery must prefer the source Idle track');
 
 const environment = {
   REPAIR_IDS_JSON: raw,
