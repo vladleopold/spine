@@ -57,7 +57,18 @@ try{
       ?record.previewPath:'library_02/'+record.previewPath;
     const directory=path.join(root,relative);
     fs.mkdirSync(directory,{recursive:true});
-    fs.writeFileSync(path.join(directory,'test.skel'),Buffer.from('synthetic-spine-fixture'));
+    if(record.id==='older-fixture-35'){
+      // This record intentionally has no indexed/source animation names:
+      // preserve a supported binary-only source so the runtime chooses tracks.
+      fs.writeFileSync(path.join(directory,'test.skel'),
+        Buffer.concat([versionString('legacy-hash'),versionString('4.2.11'),Buffer.alloc(32)]));
+    }else{
+      fs.writeFileSync(path.join(directory,'test.json'),JSON.stringify({
+        skeleton:{spine:'4.2.11'},bones:[{name:'root'}],
+        animations:{Idle:{bones:{root:{rotate:[{time:0,angle:0},{time:1,angle:10}]}}},
+          Walk:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:10,y:0}]}}}}
+      }));
+    }
     fs.writeFileSync(path.join(directory,'test.atlas'),'test.png\nsize: 1,1\nformat: RGBA8888\n');
     fs.writeFileSync(path.join(directory,'test.png'),Buffer.alloc(24));
   }
