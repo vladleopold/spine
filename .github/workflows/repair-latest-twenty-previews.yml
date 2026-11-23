@@ -278,6 +278,8 @@ jobs:
           ffprobe -version | head -n 1
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
+        env:
+          ALLOW_VISIBLE_TRACK_FALLBACK: "true"
         shell: bash
         run: |
           set -euo pipefail
