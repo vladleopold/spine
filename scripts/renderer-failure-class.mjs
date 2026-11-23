@@ -72,6 +72,11 @@ export function summarizeRendererLog(text) {
     /No visible pixels from any available Spine skin/i.test(log)?"RUNTIME_ALL_SKINS_INVISIBLE":
     /Cannot establish playable animation duration/i.test(log)?"UNKNOWN_ANIMATION_DURATION":
     /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":
+    reason==="ANIMATION_SELECTION"?"ANIMATION_SELECTION":
+    reason==="SOURCE_GRAPH_MISSING"?"SOURCE_GRAPH_MISSING":
+    reason==="SKELETON_RUNTIME_VERSION"?"SKELETON_RUNTIME_VERSION":
+    reason==="UNSUPPORTED_SPINE_EXPORT_VERSION"?"UNSUPPORTED_SPINE_EXPORT_VERSION":
+    reason==="ATLAS_TEXTURE_LOAD"?"ATLAS_TEXTURE_LOAD":
     "UNCLASSIFIED";
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
   const canvasSizes=[...log.matchAll(/canvas=(\d+)x(\d+)/gi)]
