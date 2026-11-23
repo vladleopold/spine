@@ -32,6 +32,12 @@ try{
   records[22].defaultAnimation=undefined;
   records[21].files=['test.skel'];
   records[20].defaultAnimation=' Walk ';
+  records[4].webmStatus='ready';
+  records[4].previewStatus='failed';
+  records[4].webmPreview='https://example.test/preview.webm';
+  records[4].webpPoster='https://example.test/preview.webp';
+  records[4].previewFrameCount=12;
+  records[4].previewDuration=2;
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -59,6 +65,7 @@ try{
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
   assert.equal(all[19].id,'fixture-04');
+  assert.equal(all[19].needsRender,true,'a failed preview status must force rerender even when old WebM metadata exists');
   for(const id of [
     'Spine-animation-2026-11-17T18-44-12-762Z',
     'Spine-animation-2026-11-17T18-45-14-132Z',
