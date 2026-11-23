@@ -17,6 +17,8 @@ const root=process.cwd();
 const PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
+const repairOffset=Number(process.env.SPINE_REPAIR_OFFSET||0);
+if(!Number.isInteger(repairOffset)||repairOffset<0)throw new Error('SPINE_REPAIR_OFFSET must be a non-negative integer');
 // Work names include wolf, cherry, characters and user-defined prefixes.
 // Filtering only "Spine-animation-*" silently excluded genuinely new uploads.
 const idPattern=/^[a-z0-9][a-z0-9._-]{0,200}$/i;
@@ -31,7 +33,7 @@ function newestEntries() {
         at:timestamp});
     }
   }
-  return entries.sort((a,b)=>b.at-a.at).slice(0,repairLimit);
+  return entries.sort((a,b)=>b.at-a.at);
 }
 function inspectSourceTree(entry){
   const rootPath=path.resolve(root,entry.previewPath);
@@ -267,7 +269,8 @@ async function originalMediaFilesOk(entry){
   }catch{return false;}
 }
 const action=process.argv[2]||"matrix";
-const latest=action==="matrix"?newestEntries():[];
+const allEntries=action==="matrix"?newestEntries():[];
+const latest=action==="matrix"?allEntries.slice(repairOffset,repairOffset+repairLimit):[];
 if(action==="matrix"){
   if(latest.length!==repairLimit)throw new Error(`Cannot find ${repairLimit} recent entries`);
   // In the production inventory job, hydrate only source-complete entries with
@@ -347,6 +350,9 @@ if(action==="matrix"){
   fs.writeFileSync(path.join(root,"repair-manifest.json"),JSON.stringify(matrix));
   console.log("matrix="+JSON.stringify(required.length?required:[matrix[0]]));
   console.log("renderCount="+required.length);
+  console.log("offset="+repairOffset);
+  console.log("totalCount="+allEntries.length);
+  console.log("nextOffset="+Math.min(repairOffset+repairLimit,allEntries.length));
   const sparse=[
     "/scripts/","/package.json","/package-lock.json",
     "/public/vendor-spine-player-3.7.js","/public/vendor-spine-player-3.7.css",
