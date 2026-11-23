@@ -314,22 +314,15 @@ if(action==="matrix"){
   // can prove that URLs exist, but cannot prove that the stored WebM actually
   // contains moving frames or that all three quality tiers decode correctly.
   if(process.env.GITHUB_ACTIONS==="true" && process.env.SPINE_REPAIR_INDEX_ONLY!=="1"){
-    const sourcePaths=latest.filter(entry=>{
-      const record=(readIndex(root,entry.basePath)||[]).find(item=>item.id===entry.id);
-      const files=Array.isArray(record?.files)?record.files:[];
-      const fileNames=files.map(file=>typeof file==="string"?file:String(file?.path||file?.name||file?.filename||"")).filter(Boolean);
-      const hasSkeleton=fileNames.some(file=>/\.(json|skel)$/i.test(file));
-      const hasAtlas=fileNames.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
-      const hasTexture=fileNames.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
-      // Hydrate every complete source bundle, including records with no
-      // indexed defaultAnimation. The renderer now selects a deterministic
-      // source track without rewriting the original upload metadata.
-      return Boolean(record) && hasSkeleton && hasAtlas && hasTexture;
-    }).map(entry=>{
-      const relative=normalizedPreviewPath(entry.basePath,entry.previewPath,entry.id);
-      return relative+"/";
-    });
-    if(sourcePaths.length)execFileSync("git",["sparse-checkout","add",...sourcePaths],{stdio:"inherit"});
+    // Hydrate every selected source directory before deciding whether the
+    // source triad exists. Older records may have valid .json/.skel + atlas +
+    // textures on disk while their legacy index "files" array is empty or
+    // incomplete; filtering by that array falsely marked those works blocked.
+    // The renderer inspects the hydrated bytes and fails closed when files are
+    // genuinely absent. Never echo private source paths into CI logs.
+    const sourcePaths=latest.map(entry=>
+      normalizedPreviewPath(entry.basePath,entry.previewPath,entry.id)+"/");
+    if(sourcePaths.length)execFileSync("git",["sparse-checkout","add",...sourcePaths],{stdio:"ignore"});
     console.error("PREVIEW_SOURCE_HYDRATION_COUNT="+sourcePaths.length);
   }
   const matrix=[];
