@@ -39,7 +39,7 @@ assert.equal(classifyRendererError(privateRenderLog),"NO_VISIBLE_PIXEL");
 assert.equal(summary.reason,"NO_VISIBLE_PIXEL");
 assert.equal(summary.distinctError,"COMPOSITED_FRAMES_NOT_VISIBLE");
 assert.equal(summary.version,"3.8.59");
-assert.equal(summary.attempts,1,"only the source default skin is attempted");
+assert.equal(summary.attempts,1,"this diagnostic fixture contains one attempted source skin");
 assert.equal(summary.skinSelectionMode,"source-default");
 assert.equal(summary.stages.skeletonParsed,true);
 assert.equal(summary.stages.playerReady,true,
@@ -88,7 +88,11 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
-assert.match(exporter,/const skinCandidates = Object\.freeze\(\[null,\.\.\.readSkinNames\(skeletonFilePath\)\]\)/,
-  "diagnostic markers may inspect only skins declared by the same source skeleton");
+assert.match(exporter,/const skinCandidates = \[null,\.\.\.readSkinNames\(skeletonFilePath\)\]/,
+  "try the source default first, then declared source skins");
+assert.match(exporter,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
+  "binary-only skeletons expose source skin names from their loaded runtime");
+assert.match(exporter,/skinCandidates\.push\(name\)/,
+  "runtime skins are tried only after the default skin produces no visible frame");
 assert.doesNotMatch(exporter,/alternatePreviewAnimations|targetAnimation\s*=\s*candidate/);
-console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas without leaking source metadata");
+console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas and keep runtime skin fallback source-bound");
