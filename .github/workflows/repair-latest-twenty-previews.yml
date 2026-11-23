@@ -324,7 +324,14 @@ jobs:
               const staticTrack=result.distinctError==="COMPOSITED_FRAMES_IDENTICAL";
               const invisible=result.distinctError==="COMPOSITED_FRAMES_NOT_VISIBLE" ||
                 result.distinctError==="RUNTIME_ALL_SKINS_INVISIBLE";
-              const reason=staticTrack?"blocked-static-animation":invisible?"blocked-invisible-default-skin":"render-failed";
+              const invalidAnimation=result.distinctError==="ANIMATION_SELECTION";
+              const incompleteSource=["SOURCE_GRAPH_MISSING","ATLAS_TEXTURE_LOAD"].includes(result.distinctError);
+              const unsupportedRuntime=["SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION"].includes(result.distinctError);
+              const reason=staticTrack?"blocked-static-animation":
+                invisible?"blocked-invisible-default-skin":
+                invalidAnimation?"blocked-invalid-default-animation":
+                incompleteSource?"blocked-incomplete-source":
+                unsupportedRuntime?"blocked-unsupported-runtime":"render-failed";
               fs.writeFileSync(process.argv[2],JSON.stringify({ok:false,reason,distinctError:result.distinctError||"UNCLASSIFIED"}));
             ' "$diagnostic_json" "out/$REPAIR_SLOT/meta.json"
             if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
