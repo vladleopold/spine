@@ -168,6 +168,12 @@ jobs:
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-preview-log-privacy.mjs
           echo "LATEST20_INVENTORY_VALID"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: latest50-manifest
+          path: repair-manifest.json
+          if-no-files-found: error
+          retention-days: 1
   runtime-package-smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
@@ -310,14 +316,24 @@ jobs:
             fi
           fi
           if (( code != 0 )); then
-            node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log"
+            diagnostic=$(node scripts/renderer-failure-class.mjs "$RUNNER_TEMP/renderer.log")
+            printf '%s\n' "$diagnostic"
+            diagnostic_json="${diagnostic#SANITIZED_RENDER_RESULT=}"
+            node --input-type=module -e '
+              import fs from "node:fs";
+              const result=JSON.parse(process.argv[1]);
+              const staticTrack=result.distinctError==="COMPOSITED_FRAMES_IDENTICAL";
+              const invisible=result.distinctError==="COMPOSITED_FRAMES_NOT_VISIBLE" ||
+                result.distinctError==="RUNTIME_ALL_SKINS_INVISIBLE";
+              const reason=staticTrack?"blocked-static-animation":invisible?"blocked-invisible-default-skin":"render-failed";
+              fs.writeFileSync(process.argv[2],JSON.stringify({ok:false,reason,distinctError:result.distinctError||"UNCLASSIFIED"}));
+            ' "$diagnostic_json" "out/$REPAIR_SLOT/meta.json"
             if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
               echo "RENDERER_DIAGNOSTICS_BEGIN"
               grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
               echo "RENDERER_DIAGNOSTICS_END"
             fi
-            echo '{"ok":false,"reason":"render-failed"}' > "out/$REPAIR_SLOT/meta.json"
-            echo "::warning::Real render failed acceptance; publish other valid works and report this one"
+            echo "::warning::Render is blocked when the selected source animation has no visible changing frames; no alternate animation or skin is guessed"
             exit 0
           fi
           for suffix in '' '-medium' '-low'; do
@@ -361,6 +377,7 @@ jobs:
     needs: [inventory, render]
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
+      REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     permissions:
       contents: write
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
@@ -377,16 +394,20 @@ jobs:
             /scripts/
             /library/index.json
             /library_*/index.json
+      - uses: actions/download-artifact@v4
+        with:
+          name: latest50-manifest
+          path: repair-manifest
       - name: Mask and hydrate exact latest-20 source directories
         env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+          REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
         shell: bash
         run: |
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
-          const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+          const selected=JSON.parse(await (await import('node:fs/promises')).readFile(process.env.REPAIR_IDS_FILE,'utf8'));
           if(selected.length!==Number(process.env.SPINE_REPAIR_LIMIT||20))throw new Error('Missing exact repair manifest');
           const paths=new Set();
           for(const item of selected){
@@ -461,6 +482,7 @@ jobs:
     needs: [inventory, render, publish]
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
+      REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -475,9 +497,13 @@ jobs:
             /scripts/mask-preview-manifest.mjs
             /scripts/lib/preview-manifest-redaction.mjs
             /scripts/lib/export-log-redaction.mjs
+      - uses: actions/download-artifact@v4
+        with:
+          name: latest50-manifest
+          path: repair-manifest
       - name: Mask exact production audit manifest
         env:
-          REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
+          REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
         run: node scripts/mask-preview-manifest.mjs
       - uses: actions/setup-node@v4
         with:
