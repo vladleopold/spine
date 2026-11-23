@@ -11,6 +11,7 @@ on:
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
+      - scripts/lib/repair-manifest-guard.mjs
       - scripts/prepare-render.mjs
       - scripts/resolve-export-animation.mjs
       - scripts/test-spine-export-matrix.mjs
@@ -54,6 +55,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /scripts/lib/repair-manifest-guard.mjs
             /library_02/index.json
             /.github/workflows/spine-export-full.yml
             /.github/workflows/repair-last-ten-previews.yml
