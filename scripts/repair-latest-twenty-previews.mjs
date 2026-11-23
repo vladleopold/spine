@@ -14,6 +14,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
+const PREVIEW_RENDERER_REVISION="visibility-contrast-v2";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 // Work names include wolf, cherry, characters and user-defined prefixes.
@@ -223,6 +224,7 @@ if(action==="matrix"){
     const blockedSameSelection=blockedStatuses.has(record?.webmStatus) &&
       record?.previewBlockedAnimation===animation &&
       record?.previewBlockedSourceFingerprint===sourceFingerprint &&
+      record?.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
     const sourceReady=bundleOk(e);
     const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
@@ -296,6 +298,7 @@ if(action==="matrix"){
     const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
       record.previewBlockedAnimation===selectedAnimation &&
       record.previewBlockedSourceFingerprint===item.sourceFingerprint &&
+      record.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record.previewBlockedSkin||"")===String(record.defaultSkin||record.skin||"");
     if(blockedSameSelection){
       summary.blocked++;
@@ -396,6 +399,7 @@ if(action==="matrix"){
         record.previewStatus="blocked";
         record.previewBlockedAnimation=selectedAnimation;
         record.previewBlockedSourceFingerprint=item.sourceFingerprint;
+        record.previewBlockedRendererRevision=PREVIEW_RENDERER_REVISION;
         record.previewBlockedSkin=String(record.defaultSkin||record.skin||"");
         record.previewBlockedAt=new Date().toISOString();
         record.previewError=meta.reason==="blocked-static-animation"
@@ -431,6 +435,7 @@ if(action==="matrix"){
     record.previewError="";
     delete record.previewBlockedAnimation;
     delete record.previewBlockedSourceFingerprint;
+    delete record.previewBlockedRendererRevision;
     delete record.previewBlockedSkin;
     delete record.previewBlockedAt;
     const now=new Date().toISOString();
