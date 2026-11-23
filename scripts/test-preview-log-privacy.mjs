@@ -127,6 +127,9 @@ assert.match(latestTwenty, /name: Mask and hydrate source-ready latest-50 source
 assert.match(latestTwenty, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_FILE:/,
   'latest-50 production audit manifest must be loaded from a private artifact file');
 assert.ok(latestTwenty.includes('name: latest50-manifest'));
+assert.match(latestTwenty, /verify-production:\n    needs: \[inventory, render, publish\][\s\S]*?if: always\(\) && github\.ref == 'refs\/heads\/main' && needs\.publish\.result == 'success'/,
+  'production verification must still run after partial matrix render failures when publication succeeded');
+
 assert.match(latestTwenty,/if\(item\.ready!==true\)continue;/,
   'publish hydration must skip entries without a complete source bundle');
 assert.ok(latestTwenty.includes('path: repair-manifest.json'));
