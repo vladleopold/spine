@@ -108,6 +108,16 @@ function inspectSourceTree(entry,record){
 function sourceIssue(entry,record){
   return inspectSourceTree(entry,record).reason;
 }
+function indexedSourceBundleCheck(record){
+  const files=Array.isArray(record?.files)?record.files:[];
+  const names=files.map(file=>typeof file==="string"?file:
+    String(file?.path||file?.name||file?.filename||"")).filter(Boolean);
+  const hasSkeleton=names.some(file=>/\.(json|skel)$/i.test(file));
+  const hasAtlas=names.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
+  const hasTexture=names.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
+  return {complete:hasSkeleton&&hasAtlas&&hasTexture,
+    reason:hasSkeleton&&hasAtlas&&hasTexture?"COMPLETE":"MISSING_SOURCE_TRIAD"};
+}
 function readSourceAnimationNames(entry, record) {
   const directory=path.resolve(root,entry.previewPath);
   if(!directory.startsWith(root+path.sep))return [];
@@ -332,7 +342,12 @@ if(action==="matrix"){
      const repairSlot=offset+batchIndex;
     const record=(readIndex(root,e.basePath)||[]).find(x=>x.id===e.id);
     const incompatible=record?.webmStatus==="blocked-incompatible-source-version";
-    const sourceCheck=inspectSourceTree(e,record);
+    const sourceDirectory=path.resolve(root,e.previewPath);
+    // INDEX_ONLY is a test/inventory mode with source directories intentionally
+    // absent. Use the declared file manifest only in that mode; production
+    // always inspects the hydrated bytes above.
+    const sourceCheck=process.env.SPINE_REPAIR_INDEX_ONLY==="1"&&!fs.existsSync(sourceDirectory)
+      ?indexedSourceBundleCheck(record):inspectSourceTree(e,record);
     const sourceReady=sourceCheck.complete;
     const sourceAnimations=readSourceAnimationNames(e,record);
     // Keep an explicit selection verbatim; when it is absent, prefer Idle
