@@ -204,7 +204,7 @@ if(action==="matrix"){
       if(!relative || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
       return relative+"/";
     });
-    if(sourcePaths.length)execFileSync("git",["sparse-checkout","add","--skip-checks",...sourcePaths],{stdio:"inherit"});
+    if(sourcePaths.length)execFileSync("git",["sparse-checkout","add",...sourcePaths],{stdio:"inherit"});
     console.error("PREVIEW_SOURCE_HYDRATION_COUNT="+sourcePaths.length);
   }
   const matrix=[];
