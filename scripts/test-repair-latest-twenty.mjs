@@ -116,7 +116,7 @@ try{
   assert.equal(fiftyResult.status,0,fiftyResult.stderr);
   const fiftyOutput=Object.fromEntries(fiftyResult.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
-  const allFifty=JSON.parse(fiftyOutput.allEntries);
+  const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
   assert.equal(matrixFifty.length,46,'only 46 entries with exact animation, complete source and no prior invisible-skin block may render');
