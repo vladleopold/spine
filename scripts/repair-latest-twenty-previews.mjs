@@ -192,14 +192,14 @@ if(action==="matrix"){
     const sourcePaths=latest.filter(entry=>{
       const files=Array.isArray(entry.files)?entry.files:[];
       return typeof entry.defaultAnimation==="string" && entry.defaultAnimation.length>0 &&
-        /\\.(json|skel)$/i.test(String(entry.skeleton||"")) &&
-        files.some(file=>/\\.(json|skel)$/i.test(String(file))) &&
-        /\\.atlas(?:\\.txt)?$/i.test(String(entry.atlas||"")) &&
-        files.some(file=>/\\.atlas(?:\\.txt)?$/i.test(String(file))) &&
-        Array.isArray(entry.textures) && entry.textures.some(file=>/\\.(png|jpe?g|webp)$/i.test(String(file))) &&
-        files.some(file=>/\\.(png|jpe?g|webp)$/i.test(String(file)));
+        /\.(json|skel)$/i.test(String(entry.skeleton||"")) &&
+        files.some(file=>/\.(json|skel)$/i.test(String(file))) &&
+        /\.atlas(?:\.txt)?$/i.test(String(entry.atlas||"")) &&
+        files.some(file=>/\.atlas(?:\.txt)?$/i.test(String(file))) &&
+        Array.isArray(entry.textures) && entry.textures.some(file=>/\.(png|jpe?g|webp)$/i.test(String(file))) &&
+        files.some(file=>/\.(png|jpe?g|webp)$/i.test(String(file)));
     }).map(entry=>{
-      const relative=String(entry.previewPath||"").replace(/\\\\/g,"/");
+      const relative=String(entry.previewPath||"").replace(/\\/g,"/");
       const resolved=path.resolve(root,relative);
       if(!relative || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
       return relative+"/";
