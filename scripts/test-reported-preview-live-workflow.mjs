@@ -165,6 +165,10 @@ assert.ok(hourlyTest >= 0 && hourlyVerify > hourlyTest,
 
 assert.match(repairWorkflow, /pull_request:/,
   'the repair workflow must validate pull-request changes');
+assert.match(repairWorkflow, /workflow_dispatch:/,
+  'targeted reported-preview repairs must remain manually dispatchable');
+assert.doesNotMatch(repairWorkflow, /^\\s*push:/m,
+  'the targeted repair must not race the canonical newest-first archive recovery on every main push');
 assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
   'workflow-wide permissions must be read-only');
 const publishStart = repairWorkflow.indexOf('  publish:');
