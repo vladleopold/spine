@@ -86,6 +86,18 @@ test('WebM exporter uses exact explicit tracks and falls back only when the trac
 });
 
 
+test('binary-only skeletons defer preview animation selection to the loaded Spine runtime', () => {
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  const repair = fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs', import.meta.url), 'utf8');
+  const workflow = fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml', import.meta.url), 'utf8');
+  assert.match(repair, /sourceReady\?'__SPINE_AUTO__':''/);
+  assert.match(exporter, /const autoAnimation = requestedAnimation === '__SPINE_AUTO__'/);
+  assert.match(exporter, /window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/);
+  assert.match(exporter, /const pinnedAnimation = autoAnimation[\s\S]*?choosePreviewAnimation\(runtimeAnimations, ''\)/);
+  assert.match(workflow, /expectedAnimation==="__SPINE_AUTO__"[\s\S]*?m\.animation\.length>0/);
+  assert.match(repair, /item\.animation==="__SPINE_AUTO__"[\s\S]*?meta\?\.animation/);
+});
+
 test('latest-ten recovery exposes only numeric slots and sanitized metadata publicly', () => {
   const workflow = fs.readFileSync(new URL('../.github/workflows/repair-last-ten-previews.yml', import.meta.url), 'utf8');
   const repair = fs.readFileSync(new URL('./repair-last-ten-previews.mjs', import.meta.url), 'utf8');
