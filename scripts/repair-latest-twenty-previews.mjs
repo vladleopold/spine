@@ -184,6 +184,29 @@ const action=process.argv[2]||"matrix";
 const latest=action==="matrix"?newestEntries():[];
 if(action==="matrix"){
   if(latest.length!==repairLimit)throw new Error(`Cannot find ${repairLimit} recent entries`);
+  // In the production inventory job, hydrate only source-complete entries with
+  // an explicit animation before checking existing media. Index-only metadata
+  // can prove that URLs exist, but cannot prove that the stored WebM actually
+  // contains moving frames or that all three quality tiers decode correctly.
+  if(process.env.GITHUB_ACTIONS==="true" && process.env.SPINE_REPAIR_INDEX_ONLY!=="1"){
+    const sourcePaths=latest.filter(entry=>{
+      const files=Array.isArray(entry.files)?entry.files:[];
+      return typeof entry.defaultAnimation==="string" && entry.defaultAnimation.length>0 &&
+        /\\.(json|skel)$/i.test(String(entry.skeleton||"")) &&
+        files.some(file=>/\\.(json|skel)$/i.test(String(file))) &&
+        /\\.atlas(?:\\.txt)?$/i.test(String(entry.atlas||"")) &&
+        files.some(file=>/\\.atlas(?:\\.txt)?$/i.test(String(file))) &&
+        Array.isArray(entry.textures) && entry.textures.some(file=>/\\.(png|jpe?g|webp)$/i.test(String(file))) &&
+        files.some(file=>/\\.(png|jpe?g|webp)$/i.test(String(file)));
+    }).map(entry=>{
+      const relative=String(entry.previewPath||"").replace(/\\\\/g,"/");
+      const resolved=path.resolve(root,relative);
+      if(!relative || !resolved.startsWith(root+path.sep))throw new Error("Unsafe preview hydration path");
+      return relative+"/";
+    });
+    if(sourcePaths.length)execFileSync("git",["sparse-checkout","add","--skip-checks",...sourcePaths],{stdio:"inherit"});
+    console.error("PREVIEW_SOURCE_HYDRATION_COUNT="+sourcePaths.length);
+  }
   const matrix=[];
   // Bound concurrent production probes so the gallery is not flooded.
   for(let offset=0;offset<latest.length;offset+=4){
