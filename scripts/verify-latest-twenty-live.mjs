@@ -5,7 +5,9 @@ import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const repo='vladleopold/spine';
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
-const snapshot=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
+const snapshot=process.env.REPAIR_IDS_FILE
+  ? JSON.parse(await (await import('node:fs/promises')).readFile(process.env.REPAIR_IDS_FILE,'utf8'))
+  : JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
 if(snapshot.length!==repairLimit)throw Error(`Expected frozen snapshot of ${repairLimit} works`);
 const token=process.env.GITHUB_TOKEN||'';
 const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Bearer '+token}:{})};
@@ -77,6 +79,14 @@ for(const work of snapshot){
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
   if(record.webmStatus==='blocked-missing-animation-selection'&&record.previewStatus==='blocked'&&!String(record.defaultAnimation||'').trim()){
+    blocked++;
+    continue;
+  }
+  if(['blocked-invisible-default-skin','blocked-static-animation'].includes(record.webmStatus) &&
+      record.previewStatus==='blocked' &&
+      record.previewBlockedAnimation===record.defaultAnimation &&
+      record.previewBlockedSourceFingerprint===work.sourceFingerprint &&
+      String(record.previewBlockedSkin||'')===String(record.defaultSkin||record.skin||'')){
     blocked++;
     continue;
   }
