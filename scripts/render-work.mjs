@@ -2,7 +2,7 @@ import {publishLargeDownload} from './publish-large-download.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {execFileSync} from 'node:child_process';
+import {execFileSync,spawnSync} from 'node:child_process';
 import {entryForUpload} from './resolve-library.mjs';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
@@ -36,17 +36,18 @@ const report={
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
 const runCaptured=(cmd,args)=>{
- try{
-  const stdout=execFileSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
-  if(stdout)process.stdout.write(stdout);
-  return stdout;
- }catch(error){
-  const stdout=String(error.stdout||''),stderr=String(error.stderr||'');
-  if(stdout)process.stdout.write(stdout);
-  if(stderr)process.stderr.write(stderr);
+ const result=spawnSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
+ const stdout=String(result.stdout||''),stderr=String(result.stderr||'');
+ if(stdout)process.stdout.write(stdout);
+ if(stderr)process.stderr.write(stderr);
+ if(result.error)throw result.error;
+ if(result.status!==0){
+  const error=new Error(`Renderer command failed with exit code ${result.status}`);
   error.renderOutput=stdout+'\n'+stderr;
+  error.status=result.status;
   throw error;
  }
+ return stdout;
 };
 async function markBlockedRender(status,distinctError){
  const expectedFingerprint=previewSourceFingerprint(found.entry);
