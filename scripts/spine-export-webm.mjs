@@ -411,7 +411,9 @@ const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
 const indexedAnimation = typeof entry.defaultAnimation === 'string' ? entry.defaultAnimation : '';
 const requestedAnimation = args.animation !== '' ? args.animation : indexedAnimation;
-const targetAnimation = choosePreviewAnimation(availableAnimations, requestedAnimation);
+const targetAnimation = requestedAnimation && availableAnimations.includes(requestedAnimation)
+  ? requestedAnimation
+  : (availableAnimations.length ? choosePreviewAnimation(availableAnimations, '') : requestedAnimation);
 if (!targetAnimation) {
   console.error('NO_DEFAULT_SPINE_ANIMATION: refusing to guess a runtime track');
   process.exit(1);
