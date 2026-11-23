@@ -86,9 +86,14 @@ function readSourceAnimationNames(entry, record) {
   }
   walk(directory);
   const requested=path.basename(String(record?.skeleton||record?.skeletonFile||''));
+  const requestedStem=requested.replace(/\.(?:json|skel)$/i,'').toLowerCase();
   files.sort((a,b)=>{
-    const ae=path.basename(a)===requested?0:1,be=path.basename(b)===requested?0:1;
-    return ae-be;
+    const score=file=>{
+      const name=path.basename(file);
+      const stem=name.replace(/\.(?:json|skel)$/i,'').toLowerCase();
+      return name===requested?0:(requestedStem&&stem===requestedStem?1:2);
+    };
+    return score(a)-score(b);
   });
   for(const file of files){
     try{
