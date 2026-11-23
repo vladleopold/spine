@@ -82,7 +82,8 @@ for(const work of snapshot){
     blocked++;
     continue;
   }
-  if(['blocked-invisible-default-skin','blocked-static-animation'].includes(record.webmStatus) &&
+  if(['blocked-invisible-default-skin','blocked-static-animation','blocked-invalid-default-animation',
+      'blocked-incomplete-source','blocked-unsupported-runtime'].includes(record.webmStatus) &&
       record.previewStatus==='blocked' &&
       record.previewBlockedAnimation===record.defaultAnimation &&
       record.previewBlockedSourceFingerprint===work.sourceFingerprint &&
@@ -114,6 +115,6 @@ for(const work of snapshot){
 }
 console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
   total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
-  expectedMedia:snapshot.length*fields.length,mutatedSource
+  expectedMedia:ready*fields.length,mutatedSource
 }));
 if(failed||ready+blocked!==snapshot.length)process.exitCode=1;
