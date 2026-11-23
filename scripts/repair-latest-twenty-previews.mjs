@@ -429,8 +429,11 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
+    const animationMatches=item.animation==="__SPINE_AUTO__"
+      ?typeof meta?.animation==="string"&&meta.animation.length>0
+      :choosePreviewAnimation([],meta?.animation)===choosePreviewAnimation([],item.animation);
     let complete=meta?.ok===true && meta?.animationMatches===true &&
-      choosePreviewAnimation([],meta?.animation)===choosePreviewAnimation([],item.animation) && names.every(n=>
+      animationMatches && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
