@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const renderWork=fs.readFileSync(new URL('./render-work.mjs',import.meta.url),'utf8');
+const classifier=fs.readFileSync(new URL('./renderer-failure-class.mjs',import.meta.url),'utf8');
+const blockedStart=renderWork.indexOf('async function markBlockedRender(');
+const blockedEnd=renderWork.indexOf('async function markBlockedSelection()',blockedStart);
+assert.ok(blockedStart>=0&&blockedEnd>blockedStart,'per-upload renderer must have a guarded blocked-state publisher');
+const blocked=renderWork.slice(blockedStart,blockedEnd);
+assert.match(blocked,/record\.webmStatus=status/);
+assert.match(blocked,/record\.previewStatus='blocked'/);
+assert.match(blocked,/previewBlockedAnimation/);
+assert.match(blocked,/previewBlockedSourceFingerprint/);
+assert.match(blocked,/previewBlockedSkin/);
+assert.match(renderWork,/renderer-failure-class\.mjs/);
+assert.match(renderWork,/blocked-static-animation/);
+assert.match(renderWork,/blocked-invisible-default-skin/);
+assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
+assert.match(renderWork,/process\.exit\(0\)/,'expected blocked states must not become retrying workflow failures');
+assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
+assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
+console.log('PASS per-upload renderer records static and invisible default selections as blocked');
