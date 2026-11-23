@@ -360,7 +360,7 @@ jobs:
             const animationMatches=typeof process.env.ENTRY_ANIMATION==="string"&&m.animation===process.env.ENTRY_ANIMATION;
             if(!m.sha256||!m.bytes||!animationMatches||!m.width||!m.height)
               throw new Error("Export metadata incomplete or selected animation mismatch");
-            const safe={ok:true,animationMatches:true,width:m.width,height:m.height,
+            const safe={ok:true,animationMatches:true,animation:m.animation,width:m.width,height:m.height,
               animationDuration:m.animationDuration,qualityWidths:m.qualityWidths};
             fs.writeFileSync(p,JSON.stringify(safe));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
