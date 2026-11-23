@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fail-closed 10-most-recent Spine preview repair.
+ * Fail-closed repair for the explicitly reported Spine preview set.
  * Runs only on authenticated private Github Actions workers.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
@@ -87,14 +87,18 @@ if(action==="matrix"){
   if(latest.length!==requestedIds.length)throw new Error("Cannot find 10 recent entries");
   const matrix=latest.map((e,repairSlot)=>{
     const sourceReady=bundleOk(e);
-    const animation=choosePreviewAnimation([],e.defaultAnimation);
+    const indexedAnimation=choosePreviewAnimation([],e.defaultAnimation);
+    // Keep the source index default untouched. If it is absent, ask the native
+    // renderer to discover a real source-declared track and accept it only
+    // after its own visible-motion checks pass.
+    const animation=indexedAnimation||(sourceReady?"__SPINE_AUTO__":"");
     const ready=sourceReady&&Boolean(animation);
     const rel=String(e.previewPath).replace(/\\/g,"/");
     if(!rel.startsWith(e.basePath+"/")||rel.split("/").includes(".."))
       throw new Error("Unsafe preview path");
     return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,ready,
-      needsRender:ready&&!existingMediaOk(e,animation),animation,
-      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":!animation?"MISSING_DEFAULT_ANIMATION":""};
+      needsRender:ready&&(animation==="__SPINE_AUTO__"||!existingMediaOk(e,animation)),animation,
+      blockedReason:!sourceReady?"MISSING_SOURCE_BUNDLE":""};
   });
   const required=matrix.filter(x=>x.needsRender);
   // GitHub Actions rejects an empty matrix. Keep one no-op entry when every
@@ -142,14 +146,15 @@ if(action==="matrix"){
     }
     const selectedAnimation=choosePreviewAnimation([],item.animation);
     const indexedAnimation=choosePreviewAnimation([],record.defaultAnimation);
+    const automaticSelection=item.animation==="__SPINE_AUTO__";
     if(!selectedAnimation){
       record.webmStatus="blocked-missing-animation";
       record.previewStatus="blocked";
-      record.previewError="No exact selected/default animation is available";
+      record.previewError="No source-declared animation could be selected";
       summary.blocked++;
       continue;
     }
-    if(selectedAnimation!==indexedAnimation){
+    if(!automaticSelection&&selectedAnimation!==indexedAnimation){
       record.webmStatus="blocked-animation-selection-mismatch";
       record.previewStatus="blocked";
       record.previewError="Selected animation does not match the unchanged index default";
@@ -173,8 +178,9 @@ if(action==="matrix"){
     try{meta=JSON.parse(fs.readFileSync(metaPath,"utf8"));}catch{}
     const names=["preview.webm","preview-medium.webm","preview-low.webm",
       "preview.webp","preview-medium.webp","preview-low.webp"];
-    let complete=meta?.ok===true && meta?.animationMatches===true &&
-      choosePreviewAnimation([],meta?.animation)===selectedAnimation && names.every(n=>
+    const renderedAnimation=choosePreviewAnimation([],meta?.animation);
+    const animationMatches=automaticSelection?Boolean(renderedAnimation):renderedAnimation===selectedAnimation;
+    let complete=meta?.ok===true && meta?.animationMatches===true && animationMatches && names.every(n=>
       fs.existsSync(path.join(artifact,n)) && fs.statSync(path.join(artifact,n)).size>128);
     let mainVideo=null;
     if(complete) {
@@ -209,7 +215,7 @@ if(action==="matrix"){
     const destination=path.resolve(root,entryInfo.previewPath);
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
-    const animation=selectedAnimation;
+    const animation=automaticSelection?renderedAnimation:selectedAnimation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
     record.webmPreview=webm;
     record.webmPreviewMedium=prefix+"preview-medium.webm";
@@ -220,6 +226,8 @@ if(action==="matrix"){
     record.webpPosterLow=prefix+"preview-low.webp";
     record.webmStatus="ready";
     record.previewStatus="ready";
+    // Record the exact source track rendered; never rewrite defaultAnimation.
+    record.previewAnimation=animation;
     record.dispatchStatus="rendered";
     record.previewError="";
     const now=new Date().toISOString();
