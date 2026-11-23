@@ -126,8 +126,8 @@ try{
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.blockedReason==='MISSING_DEFAULT_ANIMATION'));
   assert.ok(allFifty.some(x=>x.id==='fixture-19'&&x.blockedReason==='INVISIBLE_DEFAULT_SKIN'&&!x.needsRender));
   assert.ok(allFifty.every(x=>/^[a-f0-9]{64}$/.test(x.sourceFingerprint)));
-  const verifySource=fs.readFileSync(path.join(root,'scripts/verify-latest-twenty-live.mjs'),'utf8');
-  const maskSource=fs.readFileSync(path.join(root,'scripts/mask-preview-manifest.mjs'),'utf8');
+  const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
+  const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
   assert.match(verifySource,/blocked-invisible-default-skin/);
   assert.match(verifySource,/blocked-static-animation/);
   assert.match(verifySource,/REPAIR_IDS_FILE/);
