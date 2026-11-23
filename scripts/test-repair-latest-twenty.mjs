@@ -79,7 +79,7 @@ try{
   fs.writeFileSync(path.join(shard,'index.json'),JSON.stringify(records));
   const result=spawnSync(process.execPath,[script,'matrix'],{
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
-      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'20'}});
+      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'20',SPINE_REPAIR_OFFSET:'0'}});
   assert.equal(result.status,0,result.stderr);
   const output=Object.fromEntries(result.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
@@ -152,7 +152,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
 
   const fiftyResult=spawnSync(process.execPath,[script,'matrix'],{
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
-      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'50'}});
+      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'50',SPINE_REPAIR_OFFSET:'0'}});
   assert.equal(fiftyResult.status,0,fiftyResult.stderr);
   const fiftyOutput=Object.fromEntries(fiftyResult.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
