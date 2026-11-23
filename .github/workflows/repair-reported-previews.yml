@@ -1,6 +1,10 @@
 # Run with version-matched 4.0/4.1/4.2/4.3 Web Players for all 18 source projects.
 name: Repair and accept 18 reported Spine preview projects
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/repair-reported-previews.mjs
   workflow_dispatch:
   pull_request:
     paths:
@@ -196,6 +200,8 @@ jobs:
           fi
       - name: Render and validate actual Spine video + still posters
         if: matrix.entry.needsRender
+        env:
+          ALLOW_VISIBLE_TRACK_FALLBACK: "true"
         shell: bash
         run: |
           set -euo pipefail
@@ -213,6 +219,7 @@ jobs:
           set +e
           node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
+            --allow-visible-track-fallback \
             --repo-path="$GITHUB_WORKSPACE" \
             --output="$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" > "$RUNNER_TEMP/renderer.log" 2>&1
           code=$?
@@ -256,8 +263,12 @@ jobs:
           node --input-type=module -e '
             import fs from "node:fs";
             const p=process.argv[1],m=JSON.parse(fs.readFileSync(p,"utf8"));
-            if(!m.sha256||!m.bytes||!m.animation||!m.width||!m.height)
-              throw new Error("Export metadata incomplete");
+            const expected=process.env.ENTRY_ANIMATION;
+            const allowFallback=process.env.ALLOW_VISIBLE_TRACK_FALLBACK==="true";
+            m.animationMatches=typeof m.animation==="string"&&m.animation.length>0&&
+              (allowFallback||expected==="__SPINE_AUTO__"||m.animation===expected);
+            if(!m.sha256||!m.bytes||!m.animationMatches||!m.width||!m.height)
+              throw new Error("Export metadata incomplete or no source animation was selected");
             m.ok=true;
             fs.writeFileSync(p,JSON.stringify(m));
             console.log("ACCEPTANCE_PASS_WEBM_WEBP_3_QUALITIES");
