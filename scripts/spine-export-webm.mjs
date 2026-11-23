@@ -982,9 +982,9 @@ try {
     // a different timeline for the work.
     console.error(`Skin ${label}: frame peak=${framePeak}, canvas=${canvasWidth}x${canvasHeight}, duration=${animDuration}s`);
     if (framePeak < FRAME_PEAK_MIN) {
-      lastCaptureError = 'No visible pixels from the selected default Spine skin';
+      lastCaptureError = 'No visible pixels from the selected source skin';
       console.error('NO_VISIBLE_SPINE_FRAME');
-      break;
+      continue;
     }
 
     // Preserve only the selected animation's own duration.
