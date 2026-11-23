@@ -120,11 +120,13 @@ for (const [label, workflow] of [['reported', reported], ['latest-ten', latestTe
     label + ' must execute the privacy regression');
 }
 assert.ok(latestTwenty.includes('node scripts/mask-preview-manifest.mjs'));
-assert.match(latestTwenty, /name: Mask and hydrate exact latest-20 source directories\n        env:\n          REPAIR_IDS_FILE:/,
+assert.match(latestTwenty, /name: Mask and hydrate source-ready latest-50 source directories\n        env:\n          REPAIR_IDS_FILE:/,
   'latest-50 publish manifest must be loaded from a private artifact file');
 assert.match(latestTwenty, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_FILE:/,
   'latest-50 production audit manifest must be loaded from a private artifact file');
 assert.ok(latestTwenty.includes('name: latest50-manifest'));
+assert.match(latestTwenty,/if\(item\.ready!==true\)continue;/,
+  'publish hydration must skip entries without a complete source bundle');
 assert.ok(latestTwenty.includes('path: repair-manifest.json'));
 assert.match(latestTen, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_JSON:/,
   'latest-10 production audit manifest must remain scoped to its masking step');
@@ -136,8 +138,8 @@ assert.doesNotMatch(reportedRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(reportedRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
 const latestTwentyRender = latestTwenty.slice(latestTwenty.indexOf('  render:'), latestTwenty.indexOf('  publish:'));
-assert.match(latestTwentyRender, /name: validate-latest20-\$\{\{ matrix\.entry\.repairSlot \}\}/);
-assert.match(latestTwentyRender, /name: latest20-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(latestTwentyRender, /name: validate-latest50-\$\{\{ matrix\.entry\.repairSlot \}\}/);
+assert.match(latestTwentyRender, /name: latest50-\$\{\{ matrix\.entry\.repairSlot \}\}/);
 assert.doesNotMatch(latestTwentyRender, /name:.*matrix\.entry\.id/);
 assert.doesNotMatch(latestTwentyRender, /\/\$\{\{ matrix\.entry\.previewPath \}\}\//);
 
@@ -163,7 +165,7 @@ assert.match(reportedRepair, /blocked-missing-animation/);
 assert.match(reportedRepair, /BLOCKED_SOURCE_BUNDLE=/);
 assert.match(reportedRepair, /BLOCKED_MISSING_ANIMATION=/);
 assert.match(reportedRepair, /meta\?\.animationMatches===true/);
-assert.match(latestTwentyRepair, /latest20-"\+item\.repairSlot/);
+assert.match(latestTwentyRepair, /latest50-"\+item\.repairSlot/);
 assert.doesNotMatch(latestTwentyRepair, /record\.defaultAnimation\.trim\(\)/);
 assert.match(latestTwentyRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
 assert.match(latestTenRepair, /choosePreviewAnimation\(\[\],record\?\.defaultAnimation\)/);
