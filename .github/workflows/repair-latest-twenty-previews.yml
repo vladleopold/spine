@@ -81,6 +81,13 @@ on:
       - scripts/lib/spine-export-entry.mjs
       - scripts/test-upload-default-animation.mjs
   workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Number of newest works to audit and repair'
+        required: true
+        type: choice
+        options: ['20', '50']
+        default: '20'
 permissions:
   contents: read
 concurrency:
@@ -125,10 +132,11 @@ jobs:
           export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
-      - name: Enumerate 20 newest uploads and validate required source file triads
+      - name: Enumerate requested newest uploads and validate required source file triads
         id: latest
         env:
           SPINE_REPAIR_INDEX_ONLY: '1'
+          SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
           SPINE_REPAIR_SKIP_LIVE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -352,6 +360,8 @@ jobs:
           retention-days: 1
   publish:
     needs: [inventory, render]
+    env:
+      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
     permissions:
       contents: write
     if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
@@ -378,7 +388,7 @@ jobs:
           node --input-type=module <<'NODE'
           import { execFileSync } from 'node:child_process';
           const selected=JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-          if(selected.length!==20)throw new Error('Missing exact repair manifest');
+          if(selected.length!==Number(process.env.SPINE_REPAIR_LIMIT||20))throw new Error('Missing exact repair manifest');
           const paths=new Set();
           for(const item of selected){
             const source=String(item.previewPath||'');
@@ -437,7 +447,7 @@ jobs:
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
-            git commit -m 'fix: restore validated previews for latest 20 Spine uploads'
+            git commit -m "fix: restore validated previews for latest ${SPINE_REPAIR_LIMIT} Spine uploads"
             if git push origin HEAD:main; then
               echo "LATEST20_REPAIR_PUBLISHED"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST20_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
@@ -450,6 +460,8 @@ jobs:
 
   verify-production:
     needs: [inventory, render, publish]
+    env:
+      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'push' && '50' || inputs.limit || '20' }}
     if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -471,7 +483,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify 20 actual public media responses after publication
+      - name: Verify every selected public media response after publication
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/verify-latest-twenty-live.mjs
