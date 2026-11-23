@@ -6,6 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
+import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
