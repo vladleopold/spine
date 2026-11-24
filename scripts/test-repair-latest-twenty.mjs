@@ -313,8 +313,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the second batch must be limited to the remaining 20 works, not another 50');
   assert.ok(workflowSource.includes("needs.render.result == 'success'") &&
     workflowSource.includes("needs.publish.result == 'success'") &&
-    workflowSource.includes("needs.verify-production.result == 'success'"),
-    'a later batch must require successful rendering, publication, and production verification');
+    !workflowSource.includes("needs.verify-production.result == 'success'"),
+    'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
