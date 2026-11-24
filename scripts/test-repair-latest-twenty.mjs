@@ -327,15 +327,15 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
   assert.match(maskSource,/REPAIR_IDS_FILE/);
 
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
-  assert.match(workflowSource,/render:\\s+name: validate-latest50-[\\s\\S]*?runs-on: \\[self-hosted, linux, X64, spine-archive\\]/,
+  assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
-  assert.match(workflowSource,/group: spine-preview-latest-twenty-\\$\\{\\{ github\\.ref \\}\\}-\\$\\{\\{ inputs\\.offset \\|\\| '0' \\}\\}/,
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ inputs.offset || '0' }}"),
     'push recovery must share the offset-zero concurrency group so it can supersede an old hosted render batch');
-  assert.match(workflowSource,/cancel-in-progress: true/,
+  assert.ok(workflowSource.includes('cancel-in-progress: true'),
     'a corrected runner target must cancel an already-running hosted batch');
-  assert.match(workflowSource,/fromJSON\\(needs\\.inventory\\.outputs\\.nextOffset\\) < 70/,
+  assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < 70'),
     'automatic recovery must stop after the newest 70 works');
-  assert.match(workflowSource,/remaining=\\$\\(\\( 70 - NEXT_OFFSET \\)\\)/,
+  assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
     'the second batch must be limited to the remaining 20 works, not another 50');
 
   console.log('PASS latest50: source-track fallback, skin retry, frozen source, incomplete-source guard, no fake media');
