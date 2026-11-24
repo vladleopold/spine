@@ -22,6 +22,8 @@ permissions:
   contents: write
 # Run on the hosted Ubuntu repair path so existing, exact default-animation WebMs
 # can regain their matching first-frame posters without local editor access.
+# A workflow-file-only push is also a safe manual dispatch path when the UI/API
+# dispatch endpoint is unavailable; the inventory job remains read-only.
 concurrency:
   group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}
   cancel-in-progress: false
