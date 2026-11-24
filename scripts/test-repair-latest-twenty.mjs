@@ -17,10 +17,10 @@ const lastTenWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath
 const reportedWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-reported-previews.yml'),'utf8');
 const privateRunner='runs-on: [self-hosted, linux, X64, spine-archive]';
 function jobUsesPrivateRunner(source,jobName){
-  const marker=`  ${jobName}:\\n`;
+  const marker=`  ${jobName}:\n`;
   const start=source.indexOf(marker);
   if(start<0)return false;
-  const next=/\\n  [A-Za-z0-9_-]+:\\n/g;
+  const next=/\n  [A-Za-z0-9_-]+:\n/g;
   next.lastIndex=start+marker.length;
   const match=next.exec(source);
   const block=source.slice(start,match?match.index:source.length);
