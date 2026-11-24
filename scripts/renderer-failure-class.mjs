@@ -38,7 +38,7 @@ export function classifyFfmpegFailure(text) {
   if (x.includes("error while opening encoder")||x.includes("error initializing output stream")||x.includes("failed to initialize encoder")||x.includes("could not write header")) return "FFMPEG_OUTPUT_INITIALIZATION";
   if (x.includes("invalid data found when processing input")||x.includes("ebml header parsing failed")||x.includes("could not find codec parameters")) return "FFMPEG_INPUT_INVALID";
   if (x.includes("broken pipe")||x.includes("error writing trailer")||x.includes("error writing output")||x.includes("av_interleaved_write_frame")) return "FFMPEG_OUTPUT_WRITE";
-  if (x.includes("no such file or directory")||x.includes("cannot open input")||x.includes("error opening input")) return "FFMPEG_INPUT_MISSING";
+  if (x.includes("cannot open input")||x.includes("error opening input")||(x.includes("no such file or directory")&&x.includes("ffmpeg"))) return "FFMPEG_INPUT_MISSING";
   if (x.includes("webp is not the same first frame")) return "POSTER_FRAME_MISMATCH";
   if (x.includes("webp generation failed")) return "WEBP_POSTER_FAILURE";
   if (x.includes("ffmpeg processing failed")||x.includes("command failed: ffmpeg")||x.includes("conversion failed")) return "FFMPEG_UNCLASSIFIED";
