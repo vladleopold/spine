@@ -69,6 +69,12 @@ const invalidAnimation=summarizeRendererLog(invalidAnimationLog);
 assert.equal(classifyRendererError(invalidAnimationLog),"ANIMATION_SELECTION");
 assert.equal(invalidAnimation.distinctError,"ANIMATION_SELECTION");
 
+const missingAnimationExistsLog="Capture with skin (default) failed: Player creation failed: Error: animation 'missing-track' does not exist in skeleton.";
+const missingAnimationExists=summarizeRendererLog(missingAnimationExistsLog);
+assert.equal(classifyRendererError(missingAnimationExistsLog),"ANIMATION_SELECTION");
+assert.equal(missingAnimationExists.distinctError,"ANIMATION_SELECTION",
+  "a source animation missing from the skeleton must be marked as an invalid selected track, not a generic runtime failure");
+
 const betaRuntimeLog="Skeleton: Ranger.json (v3.8.11-beta)\\nPlayer creation failed: spine.SpinePlayer is not a function";
 const betaRuntime=summarizeRendererLog(betaRuntimeLog);
 assert.equal(betaRuntime.version,"3.8.11-beta","version diagnostics retain supported beta suffixes");
