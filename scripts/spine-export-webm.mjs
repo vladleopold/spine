@@ -985,6 +985,16 @@ try {
     // Older Spine runtimes may omit named skins from runtime metadata.
     // Retry only selectable source/runtime-declared names after the native
     // default. The synthetic "default" alias is represented by null.
+    // The runtime-native default is tried first. Some Spine Player/runtime
+    // combinations do not apply the source's named default automatically, so
+    // retry the actual defaultSkin exposed by the loaded skeleton by name.
+    const runtimeDefaultName = typeof runtimeSkinNames.defaultName === 'string'
+      ? runtimeSkinNames.defaultName.trim() : '';
+    if (runtimeDefaultName && !skinCandidates.includes(runtimeDefaultName) &&
+        skinCandidates.length < 13) {
+      skinCandidates.push(runtimeDefaultName);
+      console.error('SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1');
+    }
     const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
     for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
       const normalizedName = typeof name === 'string' ? name.trim() : '';
