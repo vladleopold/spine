@@ -13,12 +13,12 @@ assert.match(source,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAn
   'the preview may change tracks only after a candidate shows visible changing pixels');
 assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureAnimation\)\} \|\|[\s\S]*?window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/,
   'binary-only sources prefer a runtime Idle track before the first declared track');
-assert.match(source,/const skinCandidates = \[null,\.\.\.readSkinNames\(skeletonFilePath\)\];/,
-  'try the original default skin first, then JSON-declared source skins');
+assert.match(source,/const skinCandidates = \[null\];/,
+  'try the original default skin first; named alternatives must come from the loaded runtime');
 assert.match(source,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
   'binary-only sources expose skin names from the loaded runtime');
-assert.match(source,/if \(skinIndex === 0 && skinCandidates\.length === 1\)[\s\S]*?skinCandidates\.push\(name\)/,
-  'when the default is invisible, try runtime-discovered skins from the same skeleton');
+assert.match(source,/if \(skinIndex === 0\)[\s\S]*?skinCandidates\.push\(name\)/,
+  'when the default is invisible, try only selectable skins discovered from the loaded runtime');
 assert.match(source,/if \(framePeak < FRAME_PEAK_MIN\) \{[\s\S]*?continue;/,
   'an invisible default skin advances to the next source-declared or runtime-discovered skin without editing source files');
 assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
