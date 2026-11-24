@@ -9,15 +9,15 @@ export function configuredPreviewSkinCandidates(config) {
   const defaultSkin = typeof config.defaultSkin === 'string' ? config.defaultSkin.trim() : '';
   const seen = new Set();
   const result = [];
-  const add = value => {
+  const add = (value, allowExplicitDefault = false) => {
     const name = typeof value === 'string'
       ? value.trim()
       : (value && typeof value.name === 'string' ? value.name.trim() : '');
-    if (!name || name.toLowerCase() === 'default' || seen.has(name)) return;
+    if (!name || (!allowExplicitDefault && name.toLowerCase() === 'default') || seen.has(name)) return;
     seen.add(name);
     result.push(name);
   };
-  add(defaultSkin);
+  add(defaultSkin, true);
   for (const value of raw) add(value);
   return result;
 }
