@@ -350,7 +350,8 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
   assert.ok(!workflowSource.includes('  schedule:'),
     'archive recovery must not run unattended every day');
 
-  assert.match(singleWorkflowSource,/export:\\s+[\\s\\S]*?runs-on: \\[self-hosted, linux, X64, spine-archive\\]/,
+  assert.ok(singleWorkflowSource.includes('  export:') &&
+    singleWorkflowSource.includes('runs-on: [self-hosted, linux, X64, spine-archive]'),
     'single-item WebM rendering must also use the private Ubuntu worker');
   assert.ok(singleWorkflowSource.includes("- 'scripts/render-check.json'") &&
     !singleWorkflowSource.includes("- 'scripts/spine-export-webm.mjs'"),
