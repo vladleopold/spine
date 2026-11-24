@@ -290,6 +290,10 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'historical failures for sources known to be unsupported by the pinned runtime are reported as blockers');
   assert.match(verifySource,/work\.ready===false && record\.previewStatus==='blocked'[\s\S]*?record\.webmStatus\.startsWith\('blocked-'\)/,
     'known incomplete or unsupported source configurations stay blocked instead of becoming production failures');
+assert.match(verifySource,/work\.ready===false[\s\S]*?record\.webmStatus!=='ready' \|\| fields\.some\(\(\[key\]\)=>!record\[key\]\)/,
+  'unrecoverable source records stay blocked unless they already have complete ready media');
+assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.ready===false\)blocked\+\+;else failed\+\+;continue;\}/,
+  'missing public media is blocked when source files are unavailable');
   assert.match(verifySource,/blocked-static-animation/);
   for(const status of ['blocked-invalid-default-animation','blocked-incomplete-source','blocked-unsupported-runtime']){
     assert.match(repairSource,new RegExp(status));
