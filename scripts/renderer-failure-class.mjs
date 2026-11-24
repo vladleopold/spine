@@ -84,6 +84,7 @@ export function summarizeRendererLog(text) {
     reason==="UNSUPPORTED_SPINE_EXPORT_VERSION"?"UNSUPPORTED_SPINE_EXPORT_VERSION":
     reason==="UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"?"UNSUPPORTED_SPINE_3_7_BINARY_SKELETON":
     reason==="ATLAS_TEXTURE_LOAD"?"ATLAS_TEXTURE_LOAD":
+    reason==="ATLAS_REGION_MISSING"?"ATLAS_REGION_MISSING":
     reason==="NO_VISIBLE_PIXEL"?"COMPOSITED_FRAMES_NOT_VISIBLE":
     "UNCLASSIFIED";
   const peaks=[...log.matchAll(/frame peak=([0-9.-]+)/gi)].map(x=>Number(x[1])).filter(Number.isFinite);
