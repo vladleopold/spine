@@ -329,8 +329,12 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
-  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ inputs.offset || '0' }}"),
-    'push recovery must share the offset-zero concurrency group so it can supersede an old hosted render batch');
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}"),
+    'only one archive repair batch may run at a time');
+  assert.match(workflowSource,/cancel-hosted-batches:[\\s\\S]*?actions:\\s*write[\\s\\S]*?actions\\/runs\\/\\$\\{run_id\\}\\/cancel/,
+    'the first main-branch batch must cancel legacy GitHub-hosted render batches');
+  assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
+    'real rendering must wait until legacy hosted batches have been cancelled');
   assert.ok(workflowSource.includes('cancel-in-progress: true'),
     'a corrected runner target must cancel an already-running hosted batch');
   assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < 70'),
