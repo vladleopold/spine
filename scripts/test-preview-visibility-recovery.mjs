@@ -2,10 +2,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
+import {configuredPreviewSkinCandidates} from './preview-skin-choice.mjs';
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexistent');
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
 assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
   'missing index/default selection prefers a declared Idle source track');
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','Goat']}),['Goat'],
+  'configured non-default skins are retained as source-declared visibility fallbacks');
+assert.deepEqual(configuredPreviewSkinCandidates({skins:['Lamb','Goat']}),['Lamb','Goat'],
+  'all explicitly configured skins remain available when no default is declared');
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','',null,'Goat','Goat']}),['Goat'],
+  'configured skin candidates are normalized and deduplicated');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 assert.match(source,/if \(args\.allowVisibleTrackFallback\)[\s\S]*?const candidates = \[targetAnimation, \.\.\.alternatives\.slice\(0, 7\)\]/,
   'source-declared alternatives are considered only in the explicit repair mode');
