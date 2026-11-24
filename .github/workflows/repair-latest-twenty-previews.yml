@@ -119,6 +119,7 @@ jobs:
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
             /scripts/
+            /scripts/source-skeleton-choice.mjs
             /library/index.json
             /library_*/index.json
       - uses: actions/setup-node@v4
