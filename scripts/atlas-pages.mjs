@@ -5,13 +5,13 @@ import path from "node:path";
 // Strip only this unsupported metadata for legacy runtimes; keep page names,
 // region names, UVs and geometry byte-for-byte otherwise unchanged.
 export function stripLegacyPmaMetadata(atlasText) {
-  const lines=String(atlasText).split(/\\r?\\n/);
+  const lines=String(atlasText).split(/\r?\n/);
   let removed=0;
   const kept=lines.filter(line=>{
-    if(/^[ \\t]*pma\\s*:/i.test(line)){removed++;return false;}
+    if(/^[ \t]*pma\s*:/i.test(line)){removed++;return false;}
     return true;
   });
-  return {text:kept.join("\\n"),removed};
+  return {text:kept.join("\n"),removed};
 }
 
 export function chooseAtlasForSkeleton(skeletonName, atlasNames) {
