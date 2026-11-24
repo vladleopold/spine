@@ -34,9 +34,13 @@ assert.match(source,/const skinCandidates = \[null\];/,
   'try the original default skin first; named alternatives must come from the loaded runtime');
 assert.match(source,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
   'binary-only sources expose skin names from the loaded runtime');
-assert.match(source,/const sourceSkinNames = readSkinNames\(skeletonFilePath\)[\s\S]*?name\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(name\)/,
+assert.match(source,/hasExplicitSkinList = configuredList\.length > 0[\s\S]*?const sourceSkinNames = hasExplicitSkinList \? \[\] : readSkinNames\(skeletonFilePath\)\.slice\(0, 12\)/,
+  'explicit config skin lists are preferred and source fallback attempts are bounded');
+assert.match(source,/skinCandidates\.length < 13/,
+  'runtime skin discovery cannot create an unbounded render loop');
+assert.match(source,/const runtimeFallbacks = hasExplicitSkinList \? \[\] : runtimeSkinNames\.names\.slice\(0, 12\)/,
   'legacy runtimes may fall back to exact source JSON skins but never pass the synthetic default skin');
-assert.match(source,/for \(const name of \[\.\.\.runtimeSkinNames\.names, \.\.\.sourceSkinNames\]\)[\s\S]*?normalizedName\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(normalizedName\)/,
+assert.match(source,/for \(const name of \[\.\.\.runtimeFallbacks, \.\.\.sourceSkinNames\]\)[\s\S]*?normalizedName\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(normalizedName\)/,
   'runtime-discovered skins also exclude the synthetic default alias, which is not selectable by name');
 assert.ok(!source.includes('if (skinIndex === 0)'),
   'source/runtime skin candidates are discovered before capture and are not mutated mid-loop');
