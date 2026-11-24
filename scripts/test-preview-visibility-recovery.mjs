@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
-import {configuredPreviewSkinCandidates} from './preview-skin-choice.mjs';
+import {configuredPreviewSkinCandidates, sourcePreviewSkinNames} from './preview-skin-choice.mjs';
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexistent');
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
 assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
@@ -17,6 +17,12 @@ assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lam
   'configured skin candidates are normalized and deduplicated');
 assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['default','hero']}),['hero'],
   'the synthetic default skin is never passed as a named fallback');
+assert.deepEqual(sourcePreviewSkinNames({'0':{name:'default'},'1':{name:'Lamb'},'2':{name:'Goat'}}),['default','Lamb','Goat'],
+  'numeric-keyed Spine 3.8 skin objects must expose their embedded skin names');
+assert.deepEqual(sourcePreviewSkinNames({Lamb:{attachments:{}},Goat:{attachments:{}}}),['Lamb','Goat'],
+  'older object skin maps without embedded names fall back to their keys');
+assert.deepEqual(sourcePreviewSkinNames([{name:'default'},{name:'Lamb'}]),['default','Lamb'],
+  'array-based Spine skin maps preserve their declared names');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 assert.match(source,/if \(args\.allowVisibleTrackFallback\)[\s\S]*?const candidates = \[targetAnimation, \.\.\.alternatives\.slice\(0, 7\)\]/,
   'source-declared alternatives are considered only in the explicit repair mode');
