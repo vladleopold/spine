@@ -64,6 +64,10 @@ concurrency:
   # One archive batch per branch. New main-branch runs supersede older batches.
   group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
+      - .github/workflows/spine-export-all.yml
+      - .github/workflows/spine-export-full.yml
+      - .github/workflows/repair-last-ten-previews.yml
+      - .github/workflows/repair-reported-previews.yml
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -84,6 +88,8 @@ jobs:
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/spine-export-webm.yml
+            /.github/workflows/spine-export-all.yml
+            /.github/workflows/spine-export-full.yml
             /scripts/
             /scripts/source-skeleton-choice.mjs
             /library/index.json
