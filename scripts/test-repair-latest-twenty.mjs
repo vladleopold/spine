@@ -25,7 +25,7 @@ try{
     const date=new Date(Date.UTC(2026,10,17,0,i,0)).toISOString();
     return {id,uploadedAt:date,previewPath:'library_02/'+id,
       webmStatus:'failed',defaultAnimation:i===22?undefined:'idle',animations:['Idle','Walk'],
-      files:['test.skel','test.atlas','test.png']};
+      files:['test.json','test.atlas','test.png']};
   });
   // These historical records have no explicit default. Their source-declared
   // animation names are used only for preview rendering, never written back.
