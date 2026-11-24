@@ -546,7 +546,7 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.render.result == 'success' && needs.publish.result == 'success' && needs.verify-production.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
