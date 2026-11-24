@@ -200,7 +200,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
   assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.dispatchStatus==="rendered"[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?record\.webmStatus="ready"[\s\S]*?summary\.ready\+\+/,
     "previously accepted media can be restored after a source-only downgrade only when all six files pass local, live and repository verification");
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v11-atlas-alpha-and-source-hydration"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v12-runtime-default-skin-fallback"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
