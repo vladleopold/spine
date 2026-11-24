@@ -102,8 +102,10 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: spine-preview-latest-twenty-${{ github.ref }}
-  cancel-in-progress: true
+  # Keep independent archive offsets alive; push-triggered maintenance must not
+  # cancel a long-running render batch. Serialize retries only for the same offset.
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.offset || 'push' }}
+  cancel-in-progress: false
 jobs:
   inventory:
     runs-on: ubuntu-24.04
