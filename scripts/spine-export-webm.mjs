@@ -19,7 +19,7 @@ import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
-import { shouldUseGameCamera } from './lib/game-camera.mjs';
+import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
 
 const args = {
   uploadId: '',
@@ -454,9 +454,9 @@ const MAX_PREVIEW_CAPTURE_SECONDS = 30;
 // Override per upload with --game-camera=WIDTHxHEIGHT when the game uses a
 // different logical viewport. The camera is centered on the Spine origin.
 const cameraFlag = process.argv.find(arg => arg.startsWith('--game-camera='));
-const cameraMatch = cameraFlag?.split('=')[1]?.match(/^(\\d+)x(\\d+)$/i);
-const gameCameraWidth = cameraMatch ? Math.min(3840, Math.max(320, Number(cameraMatch[1]))) : 1920;
-const gameCameraHeight = cameraMatch ? Math.min(2160, Math.max(240, Number(cameraMatch[2]))) : 1080;
+const cameraMatch = parseGameCamera(cameraFlag?.split('=')[1] || '');
+const gameCameraWidth = cameraMatch?.width ?? 1920;
+const gameCameraHeight = cameraMatch?.height ?? 1080;
 const hugeScene = shouldUseGameCamera(
   skeletonBounds,
   { width: gameCameraWidth, height: gameCameraHeight },
