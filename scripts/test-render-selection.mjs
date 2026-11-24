@@ -64,7 +64,7 @@ test('unsupported web-player versions and Spine 3.7 binary .skel are blocked bef
   });
   assert.deepEqual(spinePlayerSourceBlocker('2.1.27', 'skeleton.json'), {
     code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
-    message: 'No bundled Spine Web Player runtime supports Spine 2.1.27; use a matching supported Spine runtime before browser preview generation.',
+    message: 'No bundled Spine Web Player runtime supports Spine 2.1.27; re-export with Spine 3.7+ before browser preview generation.',
   });
   assert.deepEqual(spinePlayerSourceBlocker('3.6.53', 'skeleton.json'), {
     code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
