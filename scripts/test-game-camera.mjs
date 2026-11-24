@@ -1,5 +1,16 @@
 import assert from 'node:assert/strict';
-import { shouldUseGameCamera } from './lib/game-camera.mjs';
+import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
+
+assert.deepEqual(
+  parseGameCamera('1920x1080'),
+  { width: 1920, height: 1080 },
+  'explicit game camera dimensions must parse from the workflow setting',
+);
+assert.equal(
+  parseGameCamera('1920-by-1080'),
+  null,
+  'invalid game camera dimensions must be rejected',
+);
 
 const camera = { width: 1920, height: 1080 };
 
