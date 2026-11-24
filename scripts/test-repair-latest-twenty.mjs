@@ -204,10 +204,10 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   const legacyBinary=all.find(x=>x.id==='fixture-18');
-  assert.equal(legacyBinary.ready,false);
-  assert.equal(legacyBinary.needsRender,false);
-  assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
-    'Spine 3.7 binary-only source without same-work JSON must not enter native rendering');
+  assert.equal(legacyBinary.ready,true);
+  assert.equal(legacyBinary.needsRender,true);
+  assert.equal(legacyBinary.blockedReason,'',
+    'Spine 3.7 binary-only source must enter the render matrix through the bundled 3.8 runtime');
   assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
   const posterFailure=all.find(x=>x.id==='fixture-06');
   assert.equal(posterFailure.posterRefreshFailed,true,
