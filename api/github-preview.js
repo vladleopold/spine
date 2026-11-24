@@ -4,7 +4,6 @@ import { cacheProfiles, setCacheHeaders, setNoStoreHeaders } from '../lib/cache-
 import { appendAssetVersion, assetVersionForEntry } from '../lib/asset-version.js';
 import { cachedGithubText } from '../lib/github-content-cache.js';
 import { resolveIndexedPreviewSet } from '../scripts/lib/preview-set-selection.mjs';
-import { spineSkeletonUrlConfig } from '../scripts/lib/spine-player-skeleton-config.mjs';
 
 const defaultOwner = 'vladleopold';
 const defaultRepo = 'spine';
@@ -2599,7 +2598,7 @@ async function createDynamicPreview(settings, uploadPath, origin, requestedAnima
     sets.push({
       label: directory.name,
       skeleton: skeletonUrl,
-      ...spineSkeletonUrlConfig(skeleton.name, skeletonVersion, skeletonUrl),
+      ...(skeleton.name.toLowerCase().endsWith('.skel') ? { skelUrl: skeletonUrl } : { jsonUrl: skeletonUrl }),
       atlas: atlasUrl,
       atlasUrl,
       animation: defaultAnimation,
