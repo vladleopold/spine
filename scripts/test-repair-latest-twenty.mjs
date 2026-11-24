@@ -95,13 +95,13 @@ try{
     const directory=path.join(root,'library_02',record.id);
     fs.mkdirSync(directory,{recursive:true});
     const names=Array.isArray(record.files)?record.files:[];
-    const skeleton=names.find(name=>/\\.(json|skel)$/i.test(name));
-    const atlas=names.find(name=>/\\.atlas(?:\\.txt|\\.docx)?$/i.test(name));
-    const texture=names.find(name=>/\\.(png|jpe?g|webp|dds)$/i.test(name));
+    const skeleton=names.find(name=>/\.(json|skel)$/i.test(name));
+    const atlas=names.find(name=>/\.atlas(?:\.txt|\.docx)?$/i.test(name));
+    const texture=names.find(name=>/\.(png|jpe?g|webp|dds)$/i.test(name));
     if(skeleton){
       const target=path.join(directory,skeleton);
       if(!fs.existsSync(target)){
-        if(/\\.json$/i.test(skeleton)){
+        if(/\.json$/i.test(skeleton)){
           fs.writeFileSync(target,JSON.stringify({skeleton:{spine:'4.2'},bones:[{name:'root'}],
             animations:{idle:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:1,y:0}]}}}}}));
         }else fs.writeFileSync(target,Buffer.from('fixture-spine-skeleton'));
