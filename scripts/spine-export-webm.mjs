@@ -1226,6 +1226,18 @@ try {
                         height: slot.attachment.region.page.texture._image.naturalHeight || slot.attachment.region.page.texture._image.height || 0,
                       }
                     : null,
+                  slotColor: slot.color ? { r: slot.color.r, g: slot.color.g, b: slot.color.b, a: slot.color.a } : null,
+                  attachmentColor: slot.attachment && slot.attachment.color
+                    ? { r: slot.attachment.color.r, g: slot.attachment.color.g, b: slot.attachment.color.b, a: slot.attachment.color.a }
+                    : null,
+                  worldVertices: (() => {
+                    try {
+                      if (!slot.attachment || !slot.attachment.computeWorldVertices) return [];
+                      const vertices = new Float32Array(8);
+                      slot.attachment.computeWorldVertices(slot, vertices, 0, 2);
+                      return Array.from(vertices);
+                    } catch { return []; }
+                  })(),
                   bone: slot.bone && slot.bone.data && slot.bone.data.name || '',
                 }))
               : [],
@@ -1241,7 +1253,13 @@ try {
               contextLost: p.context.gl.isContextLost(),
             } : null,
             canvas: p && p.canvas ? { width: p.canvas.width, height: p.canvas.height } : null,
-            viewport: p && p.currentViewport ? p.currentViewport : null,
+            viewport: p && p.currentViewport ? {
+              x: p.currentViewport.x, y: p.currentViewport.y,
+              width: p.currentViewport.width, height: p.currentViewport.height,
+              padLeft: p.currentViewport.padLeft, padRight: p.currentViewport.padRight,
+              padTop: p.currentViewport.padTop, padBottom: p.currentViewport.padBottom,
+            } : null,
+            configuredViewport: p && p.config ? p.config.viewport : null,
           };
         }).catch(error => ({ diagnosticError: String(error && error.message || error) }));
         await page.waitForTimeout(250);
