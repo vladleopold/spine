@@ -69,6 +69,13 @@ const invalidAnimation=summarizeRendererLog(invalidAnimationLog);
 assert.equal(classifyRendererError(invalidAnimationLog),"ANIMATION_SELECTION");
 assert.equal(invalidAnimation.distinctError,"ANIMATION_SELECTION");
 
+const betaRuntimeLog="Skeleton: Ranger.json (v3.8.11-beta)\\nPlayer creation failed: spine.SpinePlayer is not a function";
+const betaRuntime=summarizeRendererLog(betaRuntimeLog);
+assert.equal(betaRuntime.version,"3.8.11-beta","version diagnostics retain supported beta suffixes");
+assert.equal(betaRuntime.reason,"SPINE_RUNTIME_INITIALIZATION");
+assert.equal(betaRuntime.distinctError,"SPINE_RUNTIME_INITIALIZATION",
+  "player initialization failures must not be hidden as unclassified");
+
 const incompleteSourceLog="Error: skeleton file not found while loading atlas source";
 const incompleteSource=summarizeRendererLog(incompleteSourceLog);
 assert.equal(classifyRendererError(incompleteSourceLog),"SOURCE_GRAPH_MISSING");
