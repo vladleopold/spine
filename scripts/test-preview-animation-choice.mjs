@@ -14,6 +14,7 @@ assert.equal(choosePreviewAnimation(['Idle','Walk'], 'Missing'), 'Missing',
 assert.equal(choosePreviewAnimation(['Idle','Walk'], 'background'), 'background',
   'preserve an explicit static string verbatim; renderer callers select a moving fallback');
 assert.equal(choosePreviewAnimation([], 'Missing'), 'Missing',
+  'preserve exact selection when binary source track names are not locally inspectable');
 assert.equal(resolvePreviewAnimation(['Idle','Walk'], 'Idle', true), 'Idle',
   'preserve an available explicit animation during recovery');
 assert.equal(resolvePreviewAnimation(['Walk','Run'], 'Missing', true), 'Walk',
@@ -22,7 +23,6 @@ assert.equal(resolvePreviewAnimation(['Walk','Run'], 'Missing', false), 'Missing
   'do not silently change explicit selections outside recovery mode');
 assert.equal(resolvePreviewAnimation(['Walk','Run'], '', false), 'Walk',
   'choose a source track when the upload has no explicit animation');
-  'preserve exact selection when binary source track names are not locally inspectable');
 assert.equal(choosePreviewAnimation(['mask','background']), 'mask',
   'preserve source order when no idle exists');
 assert.equal(choosePreviewAnimation([]), '');
