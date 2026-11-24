@@ -10,6 +10,7 @@ import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
+const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>[\s\S]*?normalizedPreviewPath\(entry\.basePath,entry\.previewPath,entry\.id\)/,
@@ -349,5 +350,11 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
   assert.ok(!workflowSource.includes('  schedule:'),
     'archive recovery must not run unattended every day');
 
-  console.log('PASS latest50: source-track fallback, skin retry, frozen source, incomplete-source guard, no fake media');
+  assert.match(singleWorkflowSource,/export:\\s+[\\s\\S]*?runs-on: \\[self-hosted, linux, X64, spine-archive\\]/,
+    'single-item WebM rendering must also use the private Ubuntu worker');
+  assert.ok(singleWorkflowSource.includes("- 'scripts/render-check.json'") &&
+    !singleWorkflowSource.includes("- 'scripts/spine-export-webm.mjs'"),
+    'renderer code changes must not launch a new one-off export');
+
+  console.log('PASS latest50: source-track fallback, skin retry, frozen source, private runner, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
