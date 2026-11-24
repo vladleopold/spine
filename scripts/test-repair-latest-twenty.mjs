@@ -12,6 +12,10 @@ const repairSource=fs.readFileSync(script,'utf8');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
+assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>[\s\S]*?normalizedPreviewPath\(entry\.basePath,entry\.previewPath,entry\.id\)/,
+  'production inventory hydrates every selected source directory before inspecting source completeness');
+assert.ok(!repairSource.includes('const sourcePaths=latest.filter(entry=>'),
+  'optional legacy index.files metadata must not hide existing source bundles from sparse checkout');
 const liveAudit=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'verify-latest-twenty-live.mjs'),'utf8');
 assert.match(liveAudit,/const expectedBlockedAnimation=String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/);
 assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'[\s\S]*?Boolean\(String\(record\.previewBlockedAnimation\|\|''\)\.trim\(\)\)/);
