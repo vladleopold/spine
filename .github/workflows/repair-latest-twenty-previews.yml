@@ -391,6 +391,8 @@ jobs:
           retention-days: 1
   publish:
     needs: [inventory, render]
+    outputs:
+      published_sha: ${{ steps.publish.outputs.published_sha }}
     env:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
       SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || inputs.offset || '0' }}
@@ -468,6 +470,7 @@ jobs:
       - name: Verify real high/medium/low WebP posters against their own WebM frame zero
         run: node scripts/test-first-frame-poster-real.mjs
       - name: Publish verified only, retain source untouched, flag missing and failed
+        id: publish
         shell: bash
         run: |
           set -euo pipefail
@@ -485,12 +488,14 @@ jobs:
             git add -A -- library_*
             if git diff --cached --quiet; then
               echo "NO_PREVIEW_CHANGES"
+              echo "published_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
             git commit -m "fix: restore validated previews for archive batch offset ${SPINE_REPAIR_OFFSET} limit ${SPINE_REPAIR_LIMIT}"
             if git push origin HEAD:main; then
               echo "LATEST50_REPAIR_PUBLISHED"
+              echo "published_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
               node -e 'const s=require("./preview-repair-summary.json");console.log("LATEST50_PUBLISH_SUMMARY="+JSON.stringify(s));if(s.failed>0)console.warn("Unresolved previews fail the separate production gate")'
               exit 0
             fi
@@ -505,6 +510,7 @@ jobs:
       SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
       SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || inputs.offset || '0' }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
+      PUBLISHED_SHA: ${{ needs.publish.outputs.published_sha }}
     if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
