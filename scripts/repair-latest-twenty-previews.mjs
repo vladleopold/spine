@@ -315,23 +315,14 @@ const allEntries=action==="matrix"?newestEntries():[];
 const latest=action==="matrix"?allEntries.slice(repairOffset,repairOffset+repairLimit):[];
 if(action==="matrix"){
   if(latest.length!==repairLimit)throw new Error(`Cannot find ${repairLimit} recent entries`);
-  // In the production inventory job, hydrate only source-complete entries with
-  // an explicit animation before checking existing media. Index-only metadata
-  // can prove that URLs exist, but cannot prove that the stored WebM actually
-  // contains moving frames or that all three quality tiers decode correctly.
+  // Hydrate every selected source directory before checking its source
+  // graph. Legacy index records may omit the `files` array even when the
+  // complete skeleton/atlas/texture bundle exists in Git; using that optional
+  // metadata as a hydration gate makes sparse checkout report false blockers.
+  // Paths are normalized against the collection shard before being passed to
+  // git, and only the current bounded batch is hydrated.
   if(process.env.GITHUB_ACTIONS==="true" && process.env.SPINE_REPAIR_INDEX_ONLY!=="1"){
-    const sourcePaths=latest.filter(entry=>{
-      const record=(readIndex(root,entry.basePath)||[]).find(item=>item.id===entry.id);
-      const files=Array.isArray(record?.files)?record.files:[];
-      const fileNames=files.map(file=>typeof file==="string"?file:String(file?.path||file?.name||file?.filename||"")).filter(Boolean);
-      const hasSkeleton=fileNames.some(file=>/\.(json|skel)$/i.test(file));
-      const hasAtlas=fileNames.some(file=>/\.atlas(?:\.txt|\.docx)?$/i.test(file));
-      const hasTexture=fileNames.some(file=>/\.(png|jpe?g|webp|dds)$/i.test(file));
-      // Hydrate every complete source bundle, including records with no
-      // indexed defaultAnimation. The renderer now selects a deterministic
-      // source track without rewriting the original upload metadata.
-      return Boolean(record) && hasSkeleton && hasAtlas && hasTexture;
-    }).map(entry=>{
+    const sourcePaths=latest.map(entry=>{
       const relative=normalizedPreviewPath(entry.basePath,entry.previewPath,entry.id);
       return relative+"/";
     });
