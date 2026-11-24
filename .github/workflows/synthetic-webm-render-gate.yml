@@ -33,6 +33,10 @@ on:
       - '.github/workflows/spine-export-full.yml'
       - '.github/workflows/spine-export-webm.yml'
       - '.github/workflows/synthetic-webm-render-gate.yml'
+      - '.github/workflows/spine-export-all.yml'
+      - '.github/workflows/repair-last-ten-previews.yml'
+      - '.github/workflows/repair-latest-twenty-previews.yml'
+      - '.github/workflows/repair-reported-previews.yml'
   push:
     branches: [main]
     paths:
@@ -66,10 +70,6 @@ on:
 permissions:
   contents: read
 
-      - .github/workflows/spine-export-all.yml
-      - .github/workflows/repair-last-ten-previews.yml
-      - .github/workflows/repair-latest-twenty-previews.yml
-      - .github/workflows/repair-reported-previews.yml
 jobs:
   synthetic-render-gate:
     runs-on: ubuntu-24.04
