@@ -81,6 +81,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install pinned Spine Player runtimes for source rendering fallback
+        run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
+      - name: Install Playwright Chromium for native source rendering fallback
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.59.1
+          npx playwright install chromium --with-deps
       - name: Install FFmpeg for native WebM frame verification
         run: |
           if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then

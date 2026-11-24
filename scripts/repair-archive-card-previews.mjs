@@ -90,14 +90,14 @@ function makeBatches(items, size = 12) {
   for (let i = 0; i < items.length; i += size) {
     const entries = items.slice(i, i + size);
     const paths = new Set([
-      '/scripts/repair-archive-card-previews.mjs',
-      '/scripts/resolve-library.mjs',
-      '/scripts/repair-manifest-guard.mjs',
-      '/scripts/lib/first-frame-poster.mjs',
+      '/scripts/',
+      '/package.json',
+      '/package-lock.json',
       '/library/index.json',
       '/library_*/index.json',
     ]);
     for (const entry of entries) {
+      paths.add('/' + entry.previewPath + '/');
       for (const file of [
         path.posix.join(entry.previewPath, entry.sourceMediumSuffix),
         path.posix.join(entry.previewPath, entry.sourceLowSuffix),
@@ -193,15 +193,50 @@ function render() {
         actualSourceKind = 'root';
         actualSourceFingerprint = item.rootMediaFingerprint;
       }
-      if (!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) {
-        throw new Error('selected animation and root WebM pairs are missing');
+      let nativeSourceRender = false;
+      let mediumInfo, lowInfo;
+      try {
+        if (!fs.existsSync(sourceMedium) || !fs.existsSync(sourceLow)) {
+          throw new Error('stored preview videos are missing');
+        }
+        mediumInfo = probeVideo(sourceMedium);
+        lowInfo = probeVideo(sourceLow);
+      } catch {
+        // A stale or unusable stored WebM must not block a work whose exact
+        // Spine source is still present. Re-render the indexed animation only;
+        // never guess a replacement animation or skin.
+        const nativeBase = path.join(
+          process.env.RUNNER_TEMP || path.dirname(dir),
+          'archive-source-' + safeAnimationName(item.id) + '.webm',
+        );
+        const nativeMeta = nativeBase + '.json';
+        try {
+          execFileSync(process.execPath, [
+            path.join(ROOT, 'scripts', 'spine-export-webm.mjs'),
+            `--upload-id=${item.id}`,
+            `--animation=${item.animation}`,
+            `--repo-path=${ROOT}`,
+            `--output=${nativeBase}`,
+          ], { cwd: ROOT, timeout: 480000, stdio: 'ignore', env: process.env });
+          const nativeDetails = JSON.parse(fs.readFileSync(nativeMeta, 'utf8'));
+          if (nativeDetails.animation !== item.animation || nativeDetails.animationFallbackUsed === true) {
+            throw new Error('native renderer did not preserve the selected animation');
+          }
+          sourceMedium = nativeBase.replace(/\\.webm$/, '-medium.webm');
+          sourceLow = nativeBase.replace(/\\.webm$/, '-low.webm');
+          mediumInfo = probeVideo(sourceMedium);
+          lowInfo = probeVideo(sourceLow);
+          nativeSourceRender = true;
+          actualSourceKind = 'root';
+          actualSourceFingerprint = item.rootMediaFingerprint;
+        } catch {
+          throw new Error('stored WebM failed motion acceptance and exact-animation source rendering failed');
+        }
       }
-      const mediumInfo = probeVideo(sourceMedium);
-      const lowInfo = probeVideo(sourceLow);
       const mediumHash = sha256(sourceMedium);
       const lowHash = sha256(sourceLow);
-      const replaceMediumVideo = !fs.existsSync(rootMedium) || sha256(rootMedium) !== mediumHash;
-      const replaceLowVideo = !fs.existsSync(rootLow) || sha256(rootLow) !== lowHash;
+      const replaceMediumVideo = nativeSourceRender || !fs.existsSync(rootMedium) || sha256(rootMedium) !== mediumHash;
+      const replaceLowVideo = nativeSourceRender || !fs.existsSync(rootLow) || sha256(rootLow) !== lowHash;
       if (replaceMediumVideo) fs.copyFileSync(sourceMedium, path.join(dir, 'preview-medium.webm'));
       if (replaceLowVideo) fs.copyFileSync(sourceLow, path.join(dir, 'preview-low.webm'));
       const mediumPoster = path.join(dir, 'preview-medium.webp');
