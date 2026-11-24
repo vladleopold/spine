@@ -88,10 +88,9 @@ on:
 permissions:
   contents: read
 concurrency:
-  # Keep independent archive offsets alive; push-triggered maintenance must not
-  # cancel a long-running render batch. Serialize retries only for the same offset.
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.offset || 'push' }}
-  cancel-in-progress: false
+  # One archive batch per branch. New main-branch runs supersede older batches.
+  group: spine-preview-latest-twenty-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -205,11 +204,32 @@ jobs:
           path: ${{ runner.temp }}/spine-player-runtimes/
           if-no-files-found: error
           retention-days: 1
+  cancel-hosted-batches:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+    steps:
+      - name: Cancel older archive render batches before private rendering
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" \
+            --jq '.workflow_runs[] | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.path == ".github/workflows/repair-latest-twenty-previews.yml") | select(.status == "queued" or .status == "in_progress") | .id' |
+          while IFS= read -r run_id; do
+            [ -n "$run_id" ] || continue
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel"
+            echo "CANCELLED_LEGACY_RENDER_BATCH=$run_id"
+          done
+
   render:
     name: validate-latest50-${{ matrix.entry.repairSlot }}
-    needs: [inventory, runtime-package-smoke]
+    needs: [inventory, runtime-package-smoke, cancel-hosted-batches]
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    # Real source rendering runs only on the dedicated private Ubuntu worker.
+    runs-on: [self-hosted, linux, X64, spine-archive]
     timeout-minutes: 35
     strategy:
       fail-fast: false
@@ -552,7 +572,7 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
@@ -566,7 +586,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))
+          remaining=$(( 70 - NEXT_OFFSET ))
+          available=$(( TOTAL_COUNT - NEXT_OFFSET ))
+          if (( remaining > available )); then remaining=$available; fi
           next_limit=$(( remaining < 50 ? remaining : 50 ))
           gh api --method POST \
             "repos/${GITHUB_REPOSITORY}/actions/workflows/repair-latest-twenty-previews.yml/dispatches" \
