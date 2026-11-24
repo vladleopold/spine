@@ -109,6 +109,7 @@ concurrency:
 jobs:
   inventory:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
