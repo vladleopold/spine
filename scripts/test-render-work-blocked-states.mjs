@@ -22,6 +22,9 @@ assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
 assert.match(renderWork,/process\.exit\(0\)/,'expected blocked states must not become retrying workflow failures');
 assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION[\s\S]*?process\.exit\(0\)/,
   'an indexed work with no selected animation is a successfully recorded blocked state, not a failed CI job');
+assert.match(renderWork,/STALE_RENDER_SUPERSEDED/);
+assert.match(renderWork,/report\.status='superseded'[\s\S]*?process\.exit\(0\)/,
+  'a render superseded by a newer source/selection commit must exit cleanly without overwriting newer metadata');
 assert.match(renderWork,/async function dispatchFullExport\(payload\)/,
   'full-export dispatch must use one bounded retry path');
 assert.match(renderWork,/FULL_EXPORT_DISPATCH_RETRY=/,
