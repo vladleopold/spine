@@ -1,6 +1,6 @@
 // Resolve skins explicitly declared by the uploaded source config.
-// The runtime-native default is tried first; the configured default is the first
-// explicit retry because it may differ from Spine's implicit default skin.
+// The runtime-native default is tried first. A configured non-default skin is
+// retried by name because some player versions do not apply it consistently.
 export function configuredPreviewSkinCandidates(config) {
   if (!config || typeof config !== 'object' || Array.isArray(config)) return [];
   const raw = Array.isArray(config.skins)
@@ -9,17 +9,15 @@ export function configuredPreviewSkinCandidates(config) {
   const defaultSkin = typeof config.defaultSkin === 'string' ? config.defaultSkin.trim() : '';
   const seen = new Set();
   const result = [];
-  const add = (value, allowSyntheticDefault = false) => {
+  const add = value => {
     const name = typeof value === 'string'
       ? value.trim()
       : (value && typeof value.name === 'string' ? value.name.trim() : '');
-    if (!name || (!allowSyntheticDefault && name.toLowerCase() === 'default') || seen.has(name)) return;
+    if (!name || name.toLowerCase() === 'default' || seen.has(name)) return;
     seen.add(name);
     result.push(name);
   };
-  // A configured default is an explicit source choice and must be retried,
-  // even when the runtime's implicit default skin is different.
-  if (defaultSkin) add(defaultSkin, true);
+  add(defaultSkin);
   for (const value of raw) add(value);
   return result;
 }
