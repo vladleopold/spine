@@ -88,9 +88,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  # A corrected runner target or newer manifest supersedes the previous batch.
-  # One archive batch is serialized at a time; push and manual offset 0 share a key.
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ inputs.offset || '0' }}
+  # One archive batch per branch. New main-branch runs supersede older batches.
+  group: spine-preview-latest-twenty-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   inventory:
@@ -205,9 +204,29 @@ jobs:
           path: ${{ runner.temp }}/spine-player-runtimes/
           if-no-files-found: error
           retention-days: 1
+  cancel-hosted-batches:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+    steps:
+      - name: Cancel older archive render batches before private rendering
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" \
+            --jq '.workflow_runs[] | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.path == ".github/workflows/repair-latest-twenty-previews.yml") | select(.status == "queued" or .status == "in_progress") | .id' |
+          while IFS= read -r run_id; do
+            [ -n "$run_id" ] || continue
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel"
+            echo "CANCELLED_LEGACY_RENDER_BATCH=$run_id"
+          done
+
   render:
     name: validate-latest50-${{ matrix.entry.repairSlot }}
-    needs: [inventory, runtime-package-smoke]
+    needs: [inventory, runtime-package-smoke, cancel-hosted-batches]
     if: github.ref == 'refs/heads/main'
     # Real source rendering runs only on the dedicated private Ubuntu worker.
     runs-on: [self-hosted, linux, X64, spine-archive]
