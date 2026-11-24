@@ -46,7 +46,7 @@ try{
   const legacyDirectory=path.join(root,'library_02','fixture-18');
   fs.mkdirSync(legacyDirectory,{recursive:true});
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
-  fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
+  fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\nsize: 1,1\nformat: RGBA8888\n');
   fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
   records[21].files=['test.skel'];
   const blockedRecord=records[19];
@@ -109,7 +109,7 @@ try{
     }
     if(atlas&&!fs.existsSync(path.join(directory,atlas))){
       fs.writeFileSync(path.join(directory,atlas),texture
-        ?texture+'\\nsize: 1,1\\nformat: RGBA8888\\nfilter: Linear,Linear\\nrepeat: none\\n'
+        ?texture+'\nsize: 1,1\nformat: RGBA8888\nfilter: Linear,Linear\nrepeat: none\n'
         :'');
     }
     if(texture&&!fs.existsSync(path.join(directory,texture)))fs.writeFileSync(path.join(directory,texture),pngHeader);
