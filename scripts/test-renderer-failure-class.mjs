@@ -73,7 +73,8 @@ const betaRuntimeLog="Skeleton: Ranger.json (v3.8.11-beta)\\nPlayer creation fai
 const betaRuntime=summarizeRendererLog(betaRuntimeLog);
 assert.equal(betaRuntime.version,"3.8.11-beta","version diagnostics retain supported beta suffixes");
 assert.equal(betaRuntime.reason,"SPINE_RUNTIME_INITIALIZATION");
-assert.equal(betaRuntime.distinctError,"SPINE_RUNTIME_INITIALIZATION",
+assert.equal(betaRuntime.runtimeInitFailure,"SPINE_PLAYER_GLOBAL_MISSING");
+assert.equal(betaRuntime.distinctError,"SPINE_PLAYER_GLOBAL_MISSING",
   "player initialization failures must not be hidden as unclassified");
 
 const incompleteSourceLog="Error: skeleton file not found while loading atlas source";
