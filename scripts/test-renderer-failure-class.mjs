@@ -12,6 +12,10 @@ assert.equal(classifyFfmpegFailure("Resource temporarily unavailable"), "FFMPEG_
 assert.equal(classifyFfmpegFailure("WebP is not the same first frame of its paired WebM"), "POSTER_FRAME_MISMATCH");
 assert.equal(classifyFfmpegFailure("FFmpeg processing failed or skipped: Command failed"), "FFMPEG_UNCLASSIFIED");
 assert.equal(classifyFfmpegFailure("ordinary render log"), "NONE");
+assert.equal(classifyFfmpegFailure("Error: ENOENT: no such file or directory, open 'library_02/missing/source.json'"), "NONE",
+  "a missing Spine source file is not an FFmpeg input failure");
+assert.equal(classifyFfmpegFailure("ffmpeg: No such file or directory while opening input"), "FFMPEG_INPUT_MISSING");
+
 
 const syntheticPrivateLog = [
   "FFmpeg command failed for /private/upload/secret-character/preview.webm",
