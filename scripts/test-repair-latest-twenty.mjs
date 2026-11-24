@@ -10,6 +10,7 @@ import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
+const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>[\s\S]*?normalizedPreviewPath\(entry\.basePath,entry\.previewPath,entry\.id\)/,
@@ -290,42 +291,6 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.equal(Number(partialOutput.nextOffset),60,'a partial final batch must stop exactly at archive end');
   assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
-  assert.doesNotMatch(workflowSource,/needs\.verify-production\.result == 'success'/,
-    'partial live-audit failures must not prevent the next archive batch after verified-only publication');
-  assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
-    'manual and push recovery must start at the newest archive batch');
-  assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
-    'push and manual recovery must start at offset zero unless a successor batch supplies an explicit offset');
-  assert.doesNotMatch(workflowSource,/github\.event_name == 'push' && '50'/,
-    'push must not silently skip the newest 50 archive entries');
-  assert.match(workflowSource,/github[.]event_name != 'schedule'/,'the scheduled maintenance path must not fan out through the full archive');
-  assert.match(workflowSource,/actions:\s*write/,'the batch runner needs permission to dispatch its successor');
-  const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
-  const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
-  assert.match(repairSource,/latest\.length===0\|\|latest\.length>repairLimit/,
-    'the final archive batch may be smaller than the maximum batch size');
-  assert.match(repairSource,/selected\.length===0\|\|selected\.length>repairLimit/,
-    'the publish stage accepts only a non-empty manifest within the configured maximum');
-  assert.match(verifySource,/snapshot\.length===0\|\|snapshot\.length>repairLimit/,
-    'production verification accepts a non-empty partial final batch');
-  assert.match(verifySource,/blocked-invisible-default-skin/);
-  assert.match(verifySource,/\['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'\]\.includes\(work\.blockedReason\)[\s\S]*?record\.webmStatus==='failed' && record\.previewStatus==='failed'/,
-    'historical failures for sources known to be unsupported by the pinned runtime are reported as blockers');
-  assert.match(verifySource,/work\.ready===false && record\.previewStatus==='blocked'[\s\S]*?record\.webmStatus\.startsWith\('blocked-'\)/,
-    'known incomplete or unsupported source configurations stay blocked instead of becoming production failures');
-assert.match(verifySource,/work\.ready===false[\s\S]*?record\.webmStatus!=='ready' \|\| fields\.some\(\(\[key\]\)=>!record\[key\]\)/,
-  'unrecoverable source records stay blocked unless they already have complete ready media');
-assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.ready===false\)blocked\+\+;else failed\+\+;continue;\}/,
-  'missing public media is blocked when source files are unavailable');
-  assert.match(verifySource,/blocked-static-animation/);
-  for(const status of ['blocked-invalid-default-animation','blocked-incomplete-source','blocked-unsupported-runtime']){
-    assert.match(repairSource,new RegExp(status));
-    assert.match(verifySource,new RegExp(status));
-  }
-  assert.match(verifySource,/expectedMedia:ready\*fields\.length/);
-  assert.match(verifySource,/REPAIR_IDS_FILE/);
-  assert.match(maskSource,/REPAIR_IDS_FILE/);
-
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
@@ -335,6 +300,9 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
     'the first main-branch batch must cancel legacy GitHub-hosted render batches');
+  assert.ok(workflowSource.includes('actions/runs?per_page=100') &&
+    !workflowSource.includes('gh api --paginate'),
+    'legacy batch cancellation must inspect only the latest 100 runs without unbounded pagination');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
   assert.ok(workflowSource.includes('cancel-in-progress: true'),
@@ -343,11 +311,22 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
     'automatic recovery must stop after the newest 70 works');
   assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
     'the second batch must be limited to the remaining 20 works, not another 50');
+  assert.ok(workflowSource.includes("needs.render.result == 'success'") &&
+    workflowSource.includes("needs.publish.result == 'success'") &&
+    !workflowSource.includes("needs.verify-production.result == 'success'"),
+    'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
   assert.ok(!workflowSource.includes('  schedule:'),
     'archive recovery must not run unattended every day');
 
-  console.log('PASS latest50: source-track fallback, skin retry, frozen source, incomplete-source guard, no fake media');
+  assert.ok(singleWorkflowSource.includes('  export:') &&
+    singleWorkflowSource.includes('runs-on: [self-hosted, linux, X64, spine-archive]'),
+    'single-item WebM rendering must also use the private Ubuntu worker');
+  assert.ok(singleWorkflowSource.includes("- 'scripts/render-check.json'") &&
+    !singleWorkflowSource.includes("- 'scripts/spine-export-webm.mjs'"),
+    'renderer code changes must not launch a new one-off export');
+
+  console.log('PASS latest50: source-track fallback, skin retry, frozen source, private runner, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}

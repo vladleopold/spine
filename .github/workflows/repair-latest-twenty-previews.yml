@@ -13,6 +13,7 @@ on:
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - .github/workflows/spine-export-webm.yml
       - scripts/test-render-selection.mjs
       - scripts/lib/spine-player-source-support.mjs
       - scripts/verify-preview-motion.mjs
@@ -35,7 +36,6 @@ on:
       - scripts/lib/preview-visibility-recovery.mjs
       - scripts/atlas-pages.mjs
       - scripts/test-atlas-pages.mjs
-      - .github/workflows/spine-export-webm.yml
       - scripts/test-preview-visibility-recovery.mjs
       - scripts/preview-animation-choice.mjs
       - scripts/test-preview-animation-choice.mjs
@@ -83,6 +83,7 @@ jobs:
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/spine-export-webm.yml
             /scripts/
             /scripts/source-skeleton-choice.mjs
             /library/index.json
@@ -189,7 +190,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" \
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" \
             --jq '.workflow_runs[] | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.path == ".github/workflows/repair-latest-twenty-previews.yml") | select(.status == "queued" or .status == "in_progress") | .id' |
           while IFS= read -r run_id; do
             [ -n "$run_id" ] || continue
@@ -545,13 +546,13 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.render.result == 'success' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
       contents: read
     steps:
-      - name: Queue the next older archive batch after publication and audit
+      - name: Queue the next older archive batch after verified-only publication
         env:
           GH_TOKEN: ${{ github.token }}
           NEXT_OFFSET: ${{ needs.inventory.outputs.nextOffset }}
