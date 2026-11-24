@@ -962,7 +962,7 @@ try {
       const png=await page.locator('#player canvas').first().screenshot({type:'png',timeout:15000});
       const rgb=execFileSync('ffmpeg',[
         '-v','error','-f','image2pipe','-i','pipe:0',
-        '-vf','scale=32:32','-f','rawvideo','-pix_fmt','rgb24','pipe:1'
+        '-vf','scale=64:64','-f','rawvideo','-pix_fmt','rgb24','pipe:1'
       ],{input:png,timeout:20000,maxBuffer:32768});
       return hasVisibleScreenshotPixels(rgb);
     } catch { return false; }
