@@ -16,6 +16,9 @@ on:
       - 'scripts/render-check.json'
       - 'scripts/render-work.mjs'
       - 'scripts/test-render-work-blocked-states.mjs'
+      - 'scripts/test-game-camera.mjs'
+      - 'scripts/lib/game-camera.mjs'
+      - 'scripts/spine-export-webm.mjs'
       - '.github/workflows/spine-export-webm.yml'
 permissions:
   contents: write
@@ -45,6 +48,8 @@ jobs:
         run: node scripts/test-renderer-failure-class.mjs
       - name: Test binary-only preview animation selection
         run: node scripts/test-render-work-blocked-states.mjs
+      - name: Test explicit game camera viewport
+        run: node scripts/test-game-camera.mjs
       - name: Validate exact animation and pinned runtime selection
         if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
         run: node scripts/test-spine-player-runtime-assets.mjs
