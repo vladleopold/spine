@@ -14,6 +14,11 @@ on:
   push:
     paths:
       - 'scripts/render-check.json'
+      - 'scripts/render-work.mjs'
+      - 'scripts/test-render-work-blocked-states.mjs'
+      - 'scripts/test-game-camera.mjs'
+      - 'scripts/lib/game-camera.mjs'
+      - 'scripts/spine-export-webm.mjs'
 permissions:
   contents: write
 jobs:
