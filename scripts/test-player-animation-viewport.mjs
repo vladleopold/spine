@@ -1,3 +1,4 @@
+// Regression coverage: animation changes must also recalculate the SpinePlayer viewport.
 import assert from 'node:assert/strict';
 import { setPlayerAnimation } from './lib/player-animation.mjs';
 
