@@ -202,12 +202,20 @@ function refreshStoredPostersAndTimestamp(record,entryInfo,stagingRoot) {
     record.posterGeneratedAt=new Date().toISOString();
   return changed;
 }
+function existingPreviewAnimationName(record){
+  const current=typeof record?.previewAnimation==="string"?record.previewAnimation.trim():"";
+  if(current && current!=="__SPINE_AUTO__")return current;
+  const previews=record?.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
+    ?record.allAnimationPreviews:{};
+  const matches=Object.entries(previews).filter(([name,item])=>
+    name && item?.webmPreview===record?.webmPreview && item?.webpPoster===record?.webpPoster);
+  if(matches.length===1)return matches[0][0];
+  return typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+}
 function existingMediaOk(entry){
   const collection=readIndex(root,entry.basePath)||[];
   const record=collection.find(x=>x.id===entry.id);
-  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
-    ?record.previewAnimation
-    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  const selectedName=existingPreviewAnimationName(record);
   const selectedSet=selectedName&&record?.allAnimationPreviews&&typeof record.allAnimationPreviews==="object"
     ?record.allAnimationPreviews[selectedName]:null;
   // A previously accepted render can be safely restored after a metadata-only
@@ -257,9 +265,7 @@ const mediaFields=[
 async function liveMediaOk(entry){
   if(process.env.SPINE_REPAIR_SKIP_LIVE==="1")return existingMediaOk(entry);
   const record=(readIndex(root,entry.basePath)||[]).find(x=>x.id===entry.id);
-  const selectedName=typeof record?.previewAnimation==="string"&&record.previewAnimation.trim()
-    ?record.previewAnimation
-    :typeof record?.defaultAnimation==="string"?record.defaultAnimation:"";
+  const selectedName=existingPreviewAnimationName(record);
   if(!record || !selectedName || !record?.allAnimationPreviews?.[selectedName] ||
     !mediaFields.every(([key])=>record[key]))return false;
   const pathPrefix="/assets/"+entry.previewPath+"/";
@@ -421,6 +427,18 @@ if(action==="matrix"){
     if(!record)throw new Error("Index record disappeared before repair");
     const sourceCheck=inspectSourceTree(entryInfo,record);
     if(!sourceCheck.complete){
+      // Source loss must not hide a previously accepted preview. Preserve it
+      // only when all six local files, the exact selected-animation mapping,
+      // live production URLs, and repository copies still pass independent checks.
+      if(record.webmStatus==="ready" && record.previewStatus==="ready" &&
+         record.webmPreview && record.webpPoster &&
+         existingMediaOk(entryInfo) && await liveMediaOk(entryInfo) &&
+         await originalMediaFilesOk(entryInfo)){
+        const retainedAnimation=existingPreviewAnimationName(record);
+        if(retainedAnimation)record.previewAnimation=retainedAnimation;
+        summary.ready++;
+        continue;
+      }
       const unsupported38=sourceCheck.reason==="UNSUPPORTED_SPINE_EXPORT_3_8_75";
       const unsupported37=sourceCheck.reason==="UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
       record.webmStatus=unsupported38?"blocked-incompatible-source-version":
@@ -462,7 +480,8 @@ if(action==="matrix"){
           // Existing accepted WebM stays byte-for-byte unchanged; rebuild only
           // its matching WebP posters from frame zero of each quality tier.
           refreshStoredPostersAndTimestamp(record,entryInfo,base);
-          record.previewAnimation=selectedAnimation;
+          const retainedAnimation=existingPreviewAnimationName(record);
+          if(retainedAnimation)record.previewAnimation=retainedAnimation;
           record.webmStatus="ready";
           record.previewStatus="ready";
           record.dispatchStatus="rendered";
