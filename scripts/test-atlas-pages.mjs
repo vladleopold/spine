@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha, isLegacyAtlasFormat } from "./atlas-pages.mjs";
 
 assert.equal(
   chooseAtlasForSkeleton("Werewolf Cowgirl.skel",
