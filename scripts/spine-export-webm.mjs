@@ -910,18 +910,28 @@ try {
   // `default` entry that Spine Player does not expose as a selectable named skin.
   // Discover selectable alternatives from the successfully loaded runtime instead.
   const skinCandidates = [null];
+  let configuredDefaultSkin = '';
   // config.json is part of the original upload and explicitly lists selectable
   // skins. Some legacy Spine 3.8 binary runtimes do not expose their skin list
   // through skeleton.data, so retain those source-declared alternatives.
   try {
     const skinConfig = JSON.parse(fs.readFileSync(path.join(previewDir, 'config.json'), 'utf8'));
+    configuredDefaultSkin = typeof skinConfig.defaultSkin === 'string' ? skinConfig.defaultSkin : '';
     for (const name of configuredPreviewSkinCandidates(skinConfig)) {
       if (!skinCandidates.includes(name)) skinCandidates.push(name);
     }
-    if (skinCandidates.length > 1) {
-      console.error(`SOURCE_CONFIG_SKIN_FALLBACK=${skinCandidates.slice(1).join(',')}`);
-    }
   } catch { /* uploads without a skin config keep the runtime-discovered path */ }
+  // JSON source skins are authoritative when the legacy runtime omits its
+  // runtimeData.skins list. Skip Spine's synthetic "default" skin and the
+  // configured default already attempted by the native runtime.
+  const sourceSkinNames = readSkinNames(skeletonFilePath);
+  for (const name of sourceSkinNames) {
+    if (name.toLowerCase() !== 'default' && name !== configuredDefaultSkin &&
+        !skinCandidates.includes(name)) skinCandidates.push(name);
+  }
+  if (skinCandidates.length > 1) {
+    console.error(`SOURCE_DECLARED_SKIN_FALLBACK=${skinCandidates.slice(1).join(',')}`);
+  }
 
   let chosenSkin = null;
   let animDuration = 0;
