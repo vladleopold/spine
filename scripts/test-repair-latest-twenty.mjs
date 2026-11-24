@@ -184,7 +184,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'a preview may use another source-declared animation only after visible motion is verified');
   assert.match(repairSource,/record\.previewAnimation=animation/,
     'the exact rendered track is stored separately from the source default');
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v6-runtime-skin-selection"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v7-source-skin-discovery"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
