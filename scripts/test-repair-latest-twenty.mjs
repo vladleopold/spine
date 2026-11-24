@@ -250,6 +250,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
   const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
   assert.match(verifySource,/blocked-invisible-default-skin/);
+  assert.match(verifySource,/\['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'\]\.includes\(work\.blockedReason\)[\s\S]*?record\.webmStatus==='failed' && record\.previewStatus==='failed'/,
+    'historical failures for sources known to be unsupported by the pinned runtime are reported as blockers');
   assert.match(verifySource,/work\.ready===false && record\.previewStatus==='blocked'[\s\S]*?record\.webmStatus\.startsWith\('blocked-'\)/,
     'known incomplete or unsupported source configurations stay blocked instead of becoming production failures');
   assert.match(verifySource,/blocked-static-animation/);

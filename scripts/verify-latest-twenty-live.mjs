@@ -87,6 +87,15 @@ for(const work of snapshot){
   // that could not be rendered because it is incomplete or unsupported remains
   // a blocker even when the publisher uses a more general blocked-missing-source
   // status (for example, an atlas with unprovided secondary pages).
+  if(work.ready===false &&
+      ['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'].includes(work.blockedReason) &&
+      record.webmStatus==='failed' && record.previewStatus==='failed'){
+    // The inventory has proved these exact sources cannot be rendered by the
+    // pinned runtime. Historical failed labels are source blockers, not new
+    // production-media failures; keep any ready media on the normal verify path.
+    blocked++;
+    continue;
+  }
   if(work.ready===false && record.previewStatus==='blocked' &&
       typeof record.webmStatus==='string' && record.webmStatus.startsWith('blocked-')){
     blocked++;
