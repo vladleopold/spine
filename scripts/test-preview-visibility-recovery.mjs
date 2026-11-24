@@ -7,8 +7,8 @@ assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexisten
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
 assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
   'missing index/default selection prefers a declared Idle source track');
-assert.deepEqual(configuredPreviewSkinCandidates({skins:['default','hero','alternate']}),['hero','alternate'],
-  'the synthetic default entry is not passed as a named player skin');
+assert.deepEqual(configuredPreviewSkinCandidates({skins:['default','hero','alternate']}),['default','hero','alternate'],
+  'an explicitly configured default skin is a real source choice and must be passed as a named fallback');
 assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','Goat']}),['Lamb','Goat'],
   'configured non-default skins are retained as source-declared visibility fallbacks');
 assert.deepEqual(configuredPreviewSkinCandidates({skins:['Lamb','Goat']}),['Lamb','Goat'],
