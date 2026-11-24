@@ -28,7 +28,7 @@ assert.throws(
 );
 
 import fs from 'node:fs';
-const rendererSource = fs.readFileSync(new URL('../spine-export-webm.mjs', import.meta.url), 'utf8');
+const rendererSource = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
 assert.ok(rendererSource.includes('setPlayerAnimation.toString()'),
   'the browser capture page must use the tested viewport-aware animation helper');
 assert.equal((rendererSource.match(/animationState\\.setAnimation/g) || []).length, 0,
