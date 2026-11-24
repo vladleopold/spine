@@ -42,4 +42,8 @@ assert.match(renderWork,/selection\.animation==='__SPINE_AUTO__'[\s\S]*?allow-vi
 assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
 assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 assert.match(classifier,/reason==="ANIMATION_SELECTION"\?"ANIMATION_SELECTION"/);
+assert.ok(renderWork.includes("const gameCamera=String(config.gameCamera||'').trim()"),
+  'per-upload render config must accept an explicit game camera');
+assert.ok(renderWork.includes("flags.push(`--game-camera=${gameCamera}`)"),
+  'the configured game camera must reach the actual WebM renderer');
 console.log('PASS per-upload renderer records static and invisible default selections as blocked');
