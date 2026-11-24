@@ -146,3 +146,11 @@ test('published preview commits use generic messages without private IDs or sour
   assert.ok(!renderWork.includes('Publish rendered asset'));
   assert.ok(!renderWork.includes('Publish verified media index for'));
 });
+
+
+test('archive preview capture is bounded for pathological long source timelines', () => {
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  assert.match(exporter, /const MAX_PREVIEW_CAPTURE_SECONDS = 30/);
+  assert.match(exporter, /captureDuration = Math\.min\(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS\)/);
+  assert.match(exporter, /PREVIEW_CAPTURE_DURATION_CAPPED/);
+});
