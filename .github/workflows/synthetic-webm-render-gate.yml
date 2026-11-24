@@ -20,6 +20,7 @@ on:
       - 'scripts/lib/preview-visibility-recovery.mjs'
       - 'scripts/lib/spine-player-runtime-assets.mjs'
       - 'scripts/test-render-selection.mjs'
+      - 'scripts/test-renderer-failure-class.mjs'
       - 'scripts/lib/spine-player-source-support.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
@@ -52,6 +53,7 @@ on:
       - 'scripts/lib/preview-visibility-recovery.mjs'
       - 'scripts/lib/spine-player-runtime-assets.mjs'
       - 'scripts/test-render-selection.mjs'
+      - 'scripts/test-renderer-failure-class.mjs'
       - 'scripts/lib/spine-player-source-support.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
@@ -109,5 +111,6 @@ jobs:
           node --check scripts/spine-export-webm.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-render-selection.mjs
+          node scripts/test-renderer-failure-class.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
