@@ -18,7 +18,7 @@ export function configuredPreviewSkinCandidates(config) {
     result.push(name);
   };
   add(defaultSkin, true);
-  for (const value of raw) add(value);
+  for (const value of raw) add(value, true);
   return result;
 }
 
