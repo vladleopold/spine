@@ -105,6 +105,14 @@ for(const work of snapshot){
     blocked++;
     continue;
   }
+  // If the inventory cannot render this source, stale failed/pending labels or
+  // incomplete old media must not be reported as renderer regressions. Preserve
+  // verified existing media, but classify unrecoverable source records as blocked.
+  if(work.ready===false &&
+      (record.webmStatus!=='ready' || fields.some(([key])=>!record[key]))){
+    blocked++;
+    continue;
+  }
   if(record.webmStatus==='blocked-missing-animation-selection'&&record.previewStatus==='blocked'&&!String(record.defaultAnimation||'').trim()){
     blocked++;
     continue;
@@ -136,12 +144,13 @@ for(const work of snapshot){
     continue;
   }
   if(record.webmStatus!=='ready'||fields.some(([key])=>!record[key])){failed++;continue;}
-  if(!await exactMediaFilesExist(work)){failed++;continue;}
+  if(!await exactMediaFilesExist(work)){if(work.ready===false)blocked++;else failed++;continue;}
   const prefix='/assets/'+work.previewPath+'/';
   const checks=await Promise.all(fields.map(async ([key,type])=>
     checkMedia(record[key],type,prefix)));
   verifiedMedia+=checks.filter(Boolean).length;
   if(checks.every(Boolean))ready++;
+  else if(work.ready===false)blocked++;
   else failed++;
 }
 console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
