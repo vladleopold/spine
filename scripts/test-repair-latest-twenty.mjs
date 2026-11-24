@@ -253,7 +253,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
       SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'10',SPINE_REPAIR_OFFSET:'55'}});
   assert.equal(partialResult.status,0,partialResult.stderr);
-  const partialOutput=Object.fromEntries(partialResult.stdout.split('\\n').filter(x=>x.includes('='))
+  const partialOutput=Object.fromEntries(partialResult.stdout.split('\n').filter(x=>x.includes('='))
     .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
   const partialBatch=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   assert.equal(partialBatch.length,5,'the final archive batch may contain fewer than the configured maximum');
