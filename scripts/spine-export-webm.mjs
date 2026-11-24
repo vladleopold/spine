@@ -915,19 +915,21 @@ try {
   // `default` entry that Spine Player does not expose as a selectable named skin.
   // Discover selectable alternatives from the successfully loaded runtime instead.
   const skinCandidates = [null];
-  // config.json is part of the original upload and explicitly lists skins.
-  // Its defaultSkin is retried by name after the runtime-native default because
-  // some player versions do not apply the source default consistently.
+  let hasExplicitSkinList = false;
+  // config.json is the authoritative UI skin list when present. Its defaultSkin
+  // is retried by name after the runtime-native default.
   try {
     const skinConfig = JSON.parse(fs.readFileSync(path.join(previewDir, 'config.json'), 'utf8'));
-    for (const name of configuredPreviewSkinCandidates(skinConfig)) {
+    const configuredList = Array.isArray(skinConfig.skins) ? skinConfig.skins
+      : (skinConfig.skins && typeof skinConfig.skins === 'object' ? Object.keys(skinConfig.skins) : []);
+    hasExplicitSkinList = configuredList.length > 0;
+    for (const name of configuredPreviewSkinCandidates(skinConfig).slice(0, 12)) {
       if (!skinCandidates.includes(name)) skinCandidates.push(name);
     }
   } catch { /* uploads without a skin config keep the source/runtime discovery path */ }
-  // JSON source skins are authoritative when legacy runtimes omit their
-  // runtimeData.skins list. Skip the synthetic "default" entry: null already
-  // selects Spine's default skin, while configured named defaults are retried above.
-  const sourceSkinNames = readSkinNames(skeletonFilePath);
+  // JSON source skins are authoritative when no upload config lists selectable
+  // skins. Bound fallbacks so huge Spine 3.8 skin maps cannot stall a batch.
+  const sourceSkinNames = hasExplicitSkinList ? [] : readSkinNames(skeletonFilePath).slice(0, 12);
   for (const name of sourceSkinNames) {
     if (name && name.toLowerCase() !== 'default' && !skinCandidates.includes(name)) {
       skinCandidates.push(name);
@@ -993,10 +995,13 @@ try {
       // Retry only selectable source/runtime-declared names after the native
       // default. The synthetic "default" alias is already represented by null
       // and is not selectable by name in Spine Player 3.8+.
-      for (const name of [...runtimeSkinNames.names, ...sourceSkinNames]) {
+      const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
+      for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
         const normalizedName = typeof name === 'string' ? name.trim() : '';
         if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
-            !skinCandidates.includes(normalizedName)) skinCandidates.push(normalizedName);
+            !skinCandidates.includes(normalizedName) && skinCandidates.length < 13) {
+          skinCandidates.push(normalizedName);
+        }
       }
     }
 
