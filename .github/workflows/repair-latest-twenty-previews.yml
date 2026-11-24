@@ -13,6 +13,7 @@ on:
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - .github/workflows/spine-export-webm.yml
       - scripts/test-render-selection.mjs
       - scripts/lib/spine-player-source-support.mjs
       - scripts/verify-preview-motion.mjs
@@ -83,6 +84,7 @@ jobs:
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/spine-export-webm.yml
             /scripts/
             /scripts/source-skeleton-choice.mjs
             /library/index.json
