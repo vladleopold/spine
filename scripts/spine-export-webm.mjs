@@ -11,7 +11,7 @@ import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
-import { choosePreviewAnimation } from './preview-animation-choice.mjs';
+import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { configuredPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
@@ -1034,9 +1034,14 @@ try {
     console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
-    const pinnedAnimation = autoAnimation
-      ? choosePreviewAnimation(runtimeAnimations, '')
-      : targetAnimation;
+    const pinnedAnimation = resolvePreviewAnimation(
+      runtimeAnimations,
+      autoAnimation ? '' : targetAnimation,
+      args.allowVisibleTrackFallback,
+    );
+    if (!autoAnimation && pinnedAnimation !== targetAnimation) {
+      console.error('REQUESTED_ANIMATION_FALLBACK=1');
+    }
     if (!pinnedAnimation || !runtimeAnimations.includes(pinnedAnimation)) {
       lastCaptureError = 'SELECTED_SPINE_ANIMATION_UNAVAILABLE';
       console.error('SELECTED_SPINE_ANIMATION_UNAVAILABLE');
