@@ -57,10 +57,22 @@ test('blocked status is written as a diagnostic artifact before the workflow exi
 });
 
 
-test('Spine 3.7 binary .skel is blocked before player creation; same-version JSON remains usable', () => {
+test('unsupported web-player versions and Spine 3.7 binary .skel are blocked before player creation', () => {
   assert.deepEqual(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), {
     code: 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
     message: 'Spine Player 3.7 requires jsonUrl; binary .skel cannot be loaded without a same-work JSON skeleton.',
+  });
+  assert.deepEqual(spinePlayerSourceBlocker('2.1.27', 'skeleton.json'), {
+    code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
+    message: 'No bundled Spine Web Player runtime supports Spine 2.1.27; re-export with Spine 3.7+ before browser preview generation.',
+  });
+  assert.deepEqual(spinePlayerSourceBlocker('3.6.53', 'skeleton.json'), {
+    code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
+    message: 'No bundled Spine Web Player runtime supports Spine 3.6.53; re-export with Spine 3.7+ before browser preview generation.',
+  });
+  assert.deepEqual(spinePlayerSourceBlocker('unknown', 'skeleton.json'), {
+    code: 'SPINE_VERSION_UNKNOWN',
+    message: 'Spine export version could not be detected; the renderer will not guess a player runtime.',
   });
   assert.equal(spinePlayerSourceBlocker('3.7.93', 'skeleton.json'), null);
   assert.equal(spinePlayerSourceBlocker('3.8.99', 'skeleton.skel'), null);
