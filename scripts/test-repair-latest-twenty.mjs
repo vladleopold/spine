@@ -156,7 +156,7 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,blockedReason:x.blockedReason,animation:x.animation}))));
+  if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
   assert.equal(matrix.length,17);
   assert.equal(Number(output.renderCount),17);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
@@ -188,6 +188,8 @@ try{
     'Spine 3.7 binary-only source without same-work JSON must not enter native rendering');
   assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
   const posterFailure=all.find(x=>x.id==='fixture-06');
+  assert.equal(posterFailure.posterRefreshFailed,true,
+    'the indexed poster-refresh error must survive inventory normalization');
   assert.equal(posterFailure.needsRender,true,
     'a failed exact first-frame WebP recovery must force a fresh render even when old media passes reuse checks');
   assert.ok(matrix.some(x=>x.id==='fixture-06'));
