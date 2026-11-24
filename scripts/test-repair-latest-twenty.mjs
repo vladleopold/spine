@@ -11,6 +11,21 @@ const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.
 const repairSource=fs.readFileSync(script,'utf8');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
+const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-all.yml'),'utf8');
+const exportFullWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-full.yml'),'utf8');
+const lastTenWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-last-ten-previews.yml'),'utf8');
+const reportedWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-reported-previews.yml'),'utf8');
+const privateRunner='runs-on: [self-hosted, linux, X64, spine-archive]';
+function jobUsesPrivateRunner(source,jobName){
+  const marker=`  ${jobName}:\\n`;
+  const start=source.indexOf(marker);
+  if(start<0)return false;
+  const next=/\\n  [A-Za-z0-9_-]+:\\n/g;
+  next.lastIndex=start+marker.length;
+  const match=next.exec(source);
+  const block=source.slice(start,match?match.index:source.length);
+  return block.includes(privateRunner);
+}
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>[\s\S]*?normalizedPreviewPath\(entry\.basePath,entry\.previewPath,entry\.id\)/,
@@ -327,6 +342,16 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(singleWorkflowSource.includes("- 'scripts/render-check.json'") &&
     !singleWorkflowSource.includes("- 'scripts/spine-export-webm.mjs'"),
     'renderer code changes must not launch a new one-off export');
+
+  assert.ok(jobUsesPrivateRunner(exportAllWorkflowSource,'export'),
+    'full archive export rendering must use the private Ubuntu worker');
+  assert.ok(jobUsesPrivateRunner(exportFullWorkflowSource,'export-opaque') &&
+    jobUsesPrivateRunner(exportFullWorkflowSource,'export-alpha'),
+    'both full-export render lanes must use the private Ubuntu worker');
+  assert.ok(jobUsesPrivateRunner(lastTenWorkflowSource,'render'),
+    'last-ten recovery rendering must use the private Ubuntu worker');
+  assert.ok(jobUsesPrivateRunner(reportedWorkflowSource,'render'),
+    'reported-project recovery rendering must use the private Ubuntu worker');
 
   console.log('PASS latest50: source-track fallback, skin retry, frozen source, private runner, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
