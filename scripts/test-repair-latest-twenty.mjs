@@ -17,6 +17,11 @@ assert.match(repairSource,/const sourcePaths=latest\.map\(entry=>[\s\S]*?normali
 assert.ok(!repairSource.includes('const sourcePaths=latest.filter(entry=>'),
   'optional legacy index.files metadata must not hide existing source bundles from sparse checkout');
 const liveAudit=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'verify-latest-twenty-live.mjs'),'utf8');
+assert.match(liveAudit,/publishedSha=String\(process\.env\.PUBLISHED_SHA\|\|''\)/);
+assert.match(liveAudit,/raw\.githubusercontent\.com\/['"]\+repo\+['"]\/['"]\+publishedSha/);
+assert.match(workflowSource,/published_sha: \\$\\{\\{ steps\\.publish\\.outputs\\.published_sha \\}\\}/);
+assert.match(workflowSource,/PUBLISHED_SHA: \\$\\{\\{ needs\\.publish\\.outputs\\.published_sha \\}\\}/);
+assert.match(workflowSource,/echo \\"published_sha=\\$\\(git rev-parse HEAD\\)\\" >> \\"\\$GITHUB_OUTPUT\\"/);
 assert.match(liveAudit,/const expectedBlockedAnimation=String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/);
 assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'[\s\S]*?Boolean\(String\(record\.previewBlockedAnimation\|\|''\)\.trim\(\)\)/);
 assert.match(liveAudit,/blockedAnimationMatches[\s\S]*?previewBlockedSourceFingerprint===work\.sourceFingerprint/);
