@@ -76,6 +76,12 @@ assert.equal(classifyRendererError(missingAtlasRegionLog),"ATLAS_REGION_MISSING"
 assert.equal(missingAtlasRegion.distinctError,"ATLAS_REGION_MISSING",
   "a missing atlas region is a source-bundle blocker, not an unclassified runtime failure");
 
+const missingSourceLog="Error: ENOENT: no such file or directory, open 'library_02/missing/source.json'";
+const missingSource=summarizeRendererLog(missingSourceLog);
+assert.equal(classifyRendererError(missingSourceLog),"SOURCE_GRAPH_MISSING");
+assert.equal(missingSource.distinctError,"SOURCE_GRAPH_MISSING",
+  "a missing hydrated source file is an incomplete source bundle, not a generic renderer failure");
+
 const unsupportedRuntimeLog="Error: unsupported Spine skeleton version";
 const unsupportedRuntime=summarizeRendererLog(unsupportedRuntimeLog);
 assert.equal(classifyRendererError(unsupportedRuntimeLog),"SKELETON_RUNTIME_VERSION");
