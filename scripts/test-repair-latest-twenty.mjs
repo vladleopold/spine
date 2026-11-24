@@ -303,6 +303,10 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(workflowSource.includes('actions/runs?per_page=100') &&
     !workflowSource.includes('gh api --paginate'),
     'legacy batch cancellation must inspect only the latest 100 runs without unbounded pagination');
+  assert.ok(workflowSource.includes('jq -r --arg current_run "$GITHUB_RUN_ID"') &&
+    !workflowSource.includes('env.GITHUB_RUN_ID') &&
+    workflowSource.includes('select(.head_branch == "main")'),
+    'the cancellation filter must explicitly exclude this run and only cancel older main-branch batches');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
   assert.ok(workflowSource.includes('cancel-in-progress: true'),

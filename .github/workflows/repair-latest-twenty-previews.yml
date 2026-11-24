@@ -190,8 +190,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh api "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" \
-            --jq '.workflow_runs[] | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.path == ".github/workflows/repair-latest-twenty-previews.yml") | select(.status == "queued" or .status == "in_progress") | .id' |
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" |
+            jq -r --arg current_run "$GITHUB_RUN_ID" '.workflow_runs[] |
+              select((.id | tostring) != $current_run) |
+              select(.path == ".github/workflows/repair-latest-twenty-previews.yml") |
+              select(.head_branch == "main") |
+              select(.status == "queued" or .status == "in_progress") | .id' |
           while IFS= read -r run_id; do
             [ -n "$run_id" ] || continue
             gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel"
