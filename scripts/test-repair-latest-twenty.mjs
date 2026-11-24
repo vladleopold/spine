@@ -184,6 +184,10 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'a preview may use another source-declared animation only after visible motion is verified');
   assert.match(repairSource,/record\.previewAnimation=animation/,
     'the exact rendered track is stored separately from the source default');
+  assert.match(repairSource,/function existingPreviewAnimationName\(record\)[\s\S]*?current!=="__SPINE_AUTO__"[\s\S]*?item\?\.webmPreview===record\?\.webmPreview/,
+    "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
+  assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.webmStatus==="ready"[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?summary\.ready\+\+/,
+    "previously accepted six-file previews remain visible when source files are incomplete, but only after local, live and repository verification");
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v7-source-skin-discovery"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
