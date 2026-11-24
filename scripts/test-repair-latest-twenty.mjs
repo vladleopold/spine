@@ -178,8 +178,9 @@ try{
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
   if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
-  assert.equal(matrix.length,17);
-  assert.equal(Number(output.renderCount),17);
+  assert.equal(matrix.length,18,
+    'the supported Spine 3.7 binary fixture must join the render matrix through the 3.8 runtime');
+  assert.equal(Number(output.renderCount),18);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
