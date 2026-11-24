@@ -336,6 +336,9 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
     'the first main-branch batch must cancel legacy GitHub-hosted render batches');
+  assert.ok(workflowSource.includes('actions/runs?per_page=100') &&
+    !workflowSource.includes('gh api --paginate'),
+    'legacy batch cancellation must inspect only the latest 100 runs without unbounded pagination');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
   assert.ok(workflowSource.includes('cancel-in-progress: true'),
