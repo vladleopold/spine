@@ -12,7 +12,11 @@ on:
         required: false
         type: string
   push:
-    paths: ['scripts/render-check.json']
+    paths:
+      - 'scripts/render-check.json'
+      - 'scripts/render-work.mjs'
+      - 'scripts/test-render-work-blocked-states.mjs'
+      - '.github/workflows/spine-export-webm.yml'
 permissions:
   contents: write
 jobs:
