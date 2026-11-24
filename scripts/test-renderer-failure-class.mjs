@@ -102,9 +102,9 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
-assert.match(exporter,/const skinCandidates = \\[null\\]/,
+assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
   "try the source default first, then declared source skins");
-assert.match(exporter,/const runtimeSkinNames = await page\\.evaluate/,
+assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
   "binary-only skeletons expose source skin names from their loaded runtime");
 assert.match(exporter,/skinCandidates\.push\(name\)/,
   "runtime skins are tried only after the default skin produces no visible frame");
