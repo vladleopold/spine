@@ -74,6 +74,13 @@ const betaRuntime=summarizeRendererLog(betaRuntimeLog);
 assert.equal(betaRuntime.version,"3.8.11-beta","version diagnostics retain supported beta suffixes");
 assert.equal(betaRuntime.reason,"SPINE_RUNTIME_INITIALIZATION");
 assert.equal(betaRuntime.runtimeInitFailure,"SPINE_PLAYER_GLOBAL_MISSING");
+const namedSkinFallback=summarizeRendererLog(
+  "Skeleton: source (v3.8.99)\\nSOURCE_SKIN_MODE=default\\nSOURCE_DECLARED_SKIN_FALLBACK=default,hero"
+);
+assert.equal(namedSkinFallback.skinFallbackCount,2);
+assert.equal(namedSkinFallback.attempts,3);
+assert.equal(namedSkinFallback.skinSelectionMode,"source-default+named-fallback");
+
 assert.equal(betaRuntime.distinctError,"SPINE_PLAYER_GLOBAL_MISSING",
   "player initialization failures must not be hidden as unclassified");
 
