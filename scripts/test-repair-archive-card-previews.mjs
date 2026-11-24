@@ -178,8 +178,12 @@ test('matrix render job names do not expose per-work identifiers', () => {
   const end = workflow.indexOf('  publish:', start);
   assert.ok(start >= 0 && end > start, 'render job must exist');
   const render = workflow.slice(start, end);
-  assert.ok(render.includes('    name: Render archive preview batch\n'), 'matrix job name must be a fixed, anonymous label');
-  assert.doesNotMatch(render, /name:.*matrix\.batch/);
+  assert.ok(render.includes('    name: Render archive preview batch ${{ matrix.batchIndex }}\n'), 'matrix job names may expose only numeric batch indexes');
+  assert.ok(render.includes('batchIndex: ${{ fromJson(needs.inventory.outputs.matrix) }}'));
+  assert.ok(render.includes('name: archive-card-previews-${{ matrix.batchIndex }}'));
+  assert.ok(render.includes('REPAIR_BATCH_FILE: repair-batch.json'));
+  assert.doesNotMatch(render, /matrix\.batch\.(?:entries|sparseCheckout)/, 'private identifiers must not be matrix values or job-name metadata');
+  assert.ok(workflow.includes('name: archive-preview-matrix'), 'private batch metadata must travel in an artifact, not the matrix output');
   assert.ok(workflow.includes("group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}"), 'PR checks must not queue behind the main repair run');
 });
 

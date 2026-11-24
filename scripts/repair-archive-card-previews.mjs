@@ -164,13 +164,16 @@ function matrix() {
     }
   }
   const batches = makeBatches(items);
-  console.log('matrix=' + JSON.stringify(batches));
+  fs.writeFileSync('archive-preview-matrix.json', JSON.stringify(batches));
+  console.log('matrix=' + JSON.stringify(batches.map((_, batchIndex) => ({ batchIndex }))));
   console.log('candidateCount=' + items.length);
   console.error('ARCHIVE_PREVIEW_CANDIDATES=' + items.length + ' BATCHES=' + batches.length);
 }
 
 function render() {
-  const entries = JSON.parse(process.env.REPAIR_BATCH_JSON || '[]');
+  const entries = JSON.parse(process.env.REPAIR_BATCH_FILE
+    ? fs.readFileSync(process.env.REPAIR_BATCH_FILE, 'utf8')
+    : process.env.REPAIR_BATCH_JSON || '[]');
   if (!Array.isArray(entries) || entries.length === 0) throw new Error('empty render batch');
   fs.rmSync('out', { recursive: true, force: true });
   const summary = { rendered: 0, skipped: 0, entries: [] };

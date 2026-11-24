@@ -61,9 +61,15 @@ jobs:
           node --check scripts/repair-archive-card-previews.mjs
           node scripts/test-repair-archive-card-previews.mjs
           echo "ARCHIVE_PREVIEW_INVENTORY_VALID"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-preview-matrix
+          path: archive-preview-matrix.json
+          if-no-files-found: error
+          retention-days: 1
 
   render:
-    name: Render archive preview batch
+    name: Render archive preview batch ${{ matrix.batchIndex }}
     needs: inventory
     if: github.ref == 'refs/heads/main' && needs.inventory.outputs.candidateCount != '0'
     runs-on: ubuntu-24.04
@@ -72,12 +78,36 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        batch: ${{ fromJson(needs.inventory.outputs.matrix) }}
+        batchIndex: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
-          sparse-checkout: ${{ matrix.batch.sparseCheckout }}
+          sparse-checkout: |
+            /scripts/
+            /package.json
+            /package-lock.json
+            /library/index.json
+            /library_*/index.json
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive-preview-matrix
+      - name: Hydrate the selected private archive batch without exposing its identifiers
+        env:
+          BATCH_INDEX: ${{ matrix.batchIndex }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const batches = JSON.parse(fs.readFileSync('archive-preview-matrix.json', 'utf8'));
+          const batch = batches[Number(process.env.BATCH_INDEX)];
+          if (!batch || !Array.isArray(batch.entries) || typeof batch.sparseCheckout !== 'string') {
+            throw new Error('Selected archive batch is unavailable');
+          }
+          const paths = batch.sparseCheckout.split('\\n').filter(Boolean);
+          execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', ...paths], { stdio: 'ignore' });
+          fs.writeFileSync('repair-batch.json', JSON.stringify(batch.entries));
+          NODE
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -97,11 +127,11 @@ jobs:
           fi
       - name: Generate each poster from its own selected animation WebM
         env:
-          REPAIR_BATCH_JSON: ${{ toJson(matrix.batch.entries) }}
+          REPAIR_BATCH_FILE: repair-batch.json
         run: node scripts/repair-archive-card-previews.mjs render
       - uses: actions/upload-artifact@v4
         with:
-          name: archive-card-previews-${{ strategy.job-index }}
+          name: archive-card-previews-${{ matrix.batchIndex }}
           path: out/
           if-no-files-found: error
           retention-days: 1
