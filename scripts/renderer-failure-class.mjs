@@ -74,7 +74,8 @@ export function summarizeRendererLog(text) {
   // encoder failure, even when FFmpeg is the component that notices it.
   const sourceBlocker=new Set(["SOURCE_GRAPH_MISSING","ATLAS_TEXTURE_LOAD","ATLAS_REGION_MISSING",
     "SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION",
-    "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"]).has(reason);
+    "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"]).has(reason) &&
+    !(ffmpegFailure==="FFMPEG_INPUT_MISSING" && /ffmpeg/i.test(log));
   const distinctError=sourceBlocker?reason:ffmpegFailure!=="NONE"?ffmpegFailure:
     /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
