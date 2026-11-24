@@ -32,6 +32,8 @@ assert.match(renderWork,/FULL_EXPORT_DISPATCH_HTTP_/,
   'a rejected follow-up dispatch must retain its HTTP status in the failure code');
 assert.match(renderWork,/report\.status==='ready'[\s\S]*?report\.status='partial'[\s\S]*?report\.renderStatus='ready'/,
   'a follow-up dispatch failure must not misreport already-published media as a render failure');
+assert.match(renderWork,/selection\\.animation==='__SPINE_AUTO__'[\\s\\S]*?allow-visible-track-fallback/,
+  'binary-only skeleton preview must opt into runtime-discovered visible-track selection');
 assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
 assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 assert.match(classifier,/reason==="ANIMATION_SELECTION"\?"ANIMATION_SELECTION"/);
