@@ -54,8 +54,10 @@ export function summarizeRendererLog(text) {
   const reason=classifiedLog==="OTHER_RENDER_FAILURE"&&secondary!=="NONE"?secondary:classifiedLog;
   const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?(?:-[a-z0-9.-]+)?)\)/i)?.[1]||"unknown";
   const sourceDefaultSkin=/SOURCE_SKIN_MODE=default|Skin \(default\):/i.test(log);
+  const skinFallbackLine=log.match(/SOURCE_DECLARED_SKIN_FALLBACK=([^\\r\\n]*)/i)?.[1]||"";
+  const skinFallbackCount=skinFallbackLine.split(",").map(x=>x.trim()).filter(Boolean).length;
   const recordingStarted=/RECORDER_STATE=recording|recorder recording/i.test(log);
-  const attempts=sourceDefaultSkin?1:(log.match(/Skin candidates:/g)||[]).length;
+  const attempts=sourceDefaultSkin?1+skinFallbackCount:(log.match(/Skin candidates:/g)||[]).length;
   const stages={
     skeletonParsed:/Skeleton:/i.test(log),
     // Recording starts only after the player success callback has completed.
@@ -106,11 +108,11 @@ export function summarizeRendererLog(text) {
     .map(x=>[Number(x[1]),Number(x[2])]).slice(-8);
   const capturedVp9Bytes=[...log.matchAll(/MediaRecorder recording:\s*[^\n]*\((\d+) bytes\)/gi)]
     .map(x=>Number(x[1])).at(-1)||0;
-  const skinSelectionMode=sourceDefaultSkin?"source-default":"unknown";
+  const skinSelectionMode=sourceDefaultSkin?(skinFallbackCount>0?"source-default+named-fallback":"source-default"):"unknown";
   const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
-  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,
+  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,skinFallbackCount,
     peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 
