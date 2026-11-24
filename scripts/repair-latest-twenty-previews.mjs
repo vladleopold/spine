@@ -314,7 +314,7 @@ const action=process.argv[2]||"matrix";
 const allEntries=action==="matrix"?newestEntries():[];
 const latest=action==="matrix"?allEntries.slice(repairOffset,repairOffset+repairLimit):[];
 if(action==="matrix"){
-  if(latest.length!==repairLimit)throw new Error(`Cannot find ${repairLimit} recent entries`);
+  if(latest.length===0||latest.length>repairLimit)throw new Error(`No archive entries found at offset ${repairOffset} (maximum batch ${repairLimit})`);
   // Hydrate every selected source directory before checking its source
   // graph. Legacy index records may omit the `files` array even when the
   // complete skeleton/atlas/texture bundle exists in Git; using that optional
@@ -398,13 +398,13 @@ if(action==="matrix"){
   const selected=process.env.REPAIR_IDS_FILE
     ? JSON.parse(fs.readFileSync(process.env.REPAIR_IDS_FILE,"utf8"))
     : JSON.parse(process.env.REPAIR_IDS_JSON||"[]");
-  if(selected.length!==repairLimit)throw new Error("Missing exact repair manifest");
+  if(!Array.isArray(selected)||selected.length===0||selected.length>repairLimit)throw new Error("Missing or oversized repair manifest");
   const base=path.resolve(root,"downloaded-latest50");
   const indexes=new Map(),summary={ready:0,failed:0,blocked:0};
   const folders=listCollectionFolders(root);
   const seen=new Set(),seenSlots=new Set();
   for(const item of selected){
-    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=repairLimit||seenSlots.has(item.repairSlot))
+    if(!Number.isInteger(item.repairSlot)||item.repairSlot<0||item.repairSlot>=selected.length||seenSlots.has(item.repairSlot))
       throw new Error("Invalid artifact slot");
     seenSlots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
