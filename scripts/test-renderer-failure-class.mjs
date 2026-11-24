@@ -70,6 +70,12 @@ const incompleteSource=summarizeRendererLog(incompleteSourceLog);
 assert.equal(classifyRendererError(incompleteSourceLog),"SOURCE_GRAPH_MISSING");
 assert.equal(incompleteSource.distinctError,"SOURCE_GRAPH_MISSING");
 
+const missingAtlasRegionLog="Capture with skin (default) failed: Player creation failed: Error: Region not set.";
+const missingAtlasRegion=summarizeRendererLog(missingAtlasRegionLog);
+assert.equal(classifyRendererError(missingAtlasRegionLog),"ATLAS_REGION_MISSING");
+assert.equal(missingAtlasRegion.distinctError,"ATLAS_REGION_MISSING",
+  "a missing atlas region is a source-bundle blocker, not an unclassified runtime failure");
+
 const unsupportedRuntimeLog="Error: unsupported Spine skeleton version";
 const unsupportedRuntime=summarizeRendererLog(unsupportedRuntimeLog);
 assert.equal(classifyRendererError(unsupportedRuntimeLog),"SKELETON_RUNTIME_VERSION");
