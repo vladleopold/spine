@@ -56,8 +56,8 @@ assert.match(strippedLegacyAtlas.text,/^Ren_10$/m);
 assert.match(strippedLegacyAtlas.text,/^14505-1\.png$/m);
 console.log("PASS legacy Spine 3.8 atlas strips unsupported pma metadata without changing regions");
 
-assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1"),true,
-  "atlas without pma metadata uses Spine's premultiplied-alpha default");
+assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1"),false,
+  "atlas without pma metadata uses straight alpha per the Spine atlas format");
 assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1\npma: false"),false);
 assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1\npma: true"),true);
 assert.throws(()=>readAtlasPremultipliedAlpha("one.png\npma: true\n\ntwo.png\npma: false"),/disagree/);
