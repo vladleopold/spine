@@ -20,6 +20,18 @@ assert.match(renderWork,/blocked-incomplete-source/);
 assert.match(renderWork,/blocked-unsupported-runtime/);
 assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
 assert.match(renderWork,/process\.exit\(0\)/,'expected blocked states must not become retrying workflow failures');
+assert.match(renderWork,/async function dispatchFullExport\(payload\)/,
+  'full-export dispatch must use one bounded retry path');
+assert.match(renderWork,/FULL_EXPORT_DISPATCH_RETRY=/,
+  'transient GitHub dispatch failures must be retried with backoff');
+assert.match(renderWork,/\[408,422,429,500,502,503,504\]/,
+  'rate-limit, spam-protection and transient server responses must be retried');
+assert.match(renderWork,/X-GitHub-Api-Version/,
+  'repository dispatch must use an explicit GitHub API version');
+assert.match(renderWork,/FULL_EXPORT_DISPATCH_HTTP_/,
+  'a rejected follow-up dispatch must retain its HTTP status in the failure code');
+assert.match(renderWork,/report\.status==='ready'[\s\S]*?report\.status='partial'[\s\S]*?report\.renderStatus='ready'/,
+  'a follow-up dispatch failure must not misreport already-published media as a render failure');
 assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
 assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 assert.match(classifier,/reason==="ANIMATION_SELECTION"\?"ANIMATION_SELECTION"/);
