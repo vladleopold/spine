@@ -145,17 +145,13 @@ test('publish-time source guard rejects works hidden after inventory', () => {
   }
 });
 
-test('invalid stored WebM falls back to an exact-animation native Spine source render', () => {
-  const repair = readFileSync(new URL('./repair-archive-card-previews.mjs', import.meta.url), 'utf8');
-  const workflow = readFileSync(new URL('../.github/workflows/repair-archive-card-previews.yml', import.meta.url), 'utf8');
-  assert.match(repair, /spine-export-webm\\.mjs/);
-  assert.match(repair, /--animation=\\$\\{item\\.animation\\}/);
-  assert.match(repair, /nativeDetails\\.animation !== item\\.animation/);
-  assert.match(repair, /actualSourceKind = 'root'/);
-  assert.match(workflow, /install-pinned-spine-players\\.sh/);
-  assert.match(workflow, /playwright install chromium --with-deps/);
-  assert.match(repair, /paths\\.add\\('\\/' \\+ entry\\.previewPath \\+ '\\/'\\)/);
-});
+  assert.ok(repair.includes('spine-export-webm.mjs'));
+  assert.ok(repair.includes('--animation=${item.animation}'));
+  assert.ok(repair.includes('nativeDetails.animation !== item.animation'));
+  assert.ok(repair.includes("actualSourceKind = 'root'"));
+  assert.ok(workflow.includes('install-pinned-spine-players.sh'));
+  assert.ok(workflow.includes('playwright install chromium --with-deps'));
+  assert.ok(repair.includes("paths.add('/' + entry.previewPath + '/');"));
 
 test('repair workflow fails closed when no preview pair is restored and preserves skip reasons', () => {
   const repair = readFileSync(new URL('./repair-archive-card-previews.mjs', import.meta.url), 'utf8');
