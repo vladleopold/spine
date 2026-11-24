@@ -920,7 +920,18 @@
     "dispatchStatus": "pending",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
     "previewStatus": "blocked",
-    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle",
+    "animations": [
+      "attack_bk",
+      "death",
+      "idleBattle",
+      "idle_action",
+      "special_attack_1",
+      "special_attack_2",
+      "victory",
+      "victory_loop"
+    ],
+    "defaultAnimation": "idleBattle"
   },
   {
     "id": "Spine-animation-2026-11-23T22-53-55-846Z",
