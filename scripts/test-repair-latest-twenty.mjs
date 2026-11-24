@@ -43,6 +43,7 @@ try{
   records[18].files=['hero.skel','hero.atlas','hero.png'];
   const versionString=value=>Buffer.concat([Buffer.from([value.length+1]),Buffer.from(value)]);
   const legacy37=Buffer.concat([versionString('legacy-hash'),versionString('3.7.93'),Buffer.alloc(32)]);
+  const supportedBinary42=Buffer.concat([versionString('fixture-hash'),versionString('4.2.34'),Buffer.alloc(32)]);
   const legacyDirectory=path.join(root,'library_02','fixture-18');
   fs.mkdirSync(legacyDirectory,{recursive:true});
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
@@ -104,7 +105,7 @@ try{
         if(/\.json$/i.test(skeleton)){
           fs.writeFileSync(target,JSON.stringify({skeleton:{spine:'4.2'},bones:[{name:'root'}],
             animations:{Idle:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:1,y:0}]}}}}}));
-        }else fs.writeFileSync(target,Buffer.from('fixture-spine-skeleton'));
+        }else fs.writeFileSync(target,supportedBinary42);
       }
     }
     if(atlas&&!fs.existsSync(path.join(directory,atlas))){
