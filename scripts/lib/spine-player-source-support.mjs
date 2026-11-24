@@ -17,6 +17,12 @@ export function spinePlayerSourceBlocker(version, skeletonFile) {
 
   const major = Number(versionMatch[1]);
   const minor = Number(versionMatch[2]);
+  if (major < 3 || (major === 3 && minor < 7)) {
+    return {
+      code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
+      message: `No bundled Spine Web Player runtime supports Spine ${normalizedVersion}; re-export with Spine 3.7+ before browser preview generation.`,
+    };
+  }
   const supportedRuntime =
     (major === 3 && (minor === 7 || minor === 8)) ||
     (major === 4 && minor >= 0 && minor <= 3);
