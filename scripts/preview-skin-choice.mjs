@@ -12,7 +12,7 @@ export function configuredPreviewSkinCandidates(config) {
     const name = typeof value === 'string'
       ? value.trim()
       : (value && typeof value.name === 'string' ? value.name.trim() : '');
-    if (!name || name === defaultSkin || seen.has(name)) continue;
+    if (!name || name.toLowerCase() === 'default' || name.toLowerCase() === defaultSkin.toLowerCase() || seen.has(name)) continue;
     seen.add(name);
     result.push(name);
   }
