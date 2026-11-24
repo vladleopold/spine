@@ -46,6 +46,10 @@ on:
       - api/github-upload.js
       - scripts/lib/spine-export-entry.mjs
       - scripts/test-upload-default-animation.mjs
+      - .github/workflows/spine-export-all.yml
+      - .github/workflows/spine-export-full.yml
+      - .github/workflows/repair-last-ten-previews.yml
+      - .github/workflows/repair-reported-previews.yml
   workflow_dispatch:
     inputs:
       limit:
@@ -64,10 +68,6 @@ concurrency:
   # One archive batch per branch. New main-branch runs supersede older batches.
   group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
-      - .github/workflows/spine-export-all.yml
-      - .github/workflows/spine-export-full.yml
-      - .github/workflows/repair-last-ten-previews.yml
-      - .github/workflows/repair-reported-previews.yml
 jobs:
   inventory:
     runs-on: ubuntu-24.04
