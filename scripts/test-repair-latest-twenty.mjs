@@ -203,8 +203,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,48,'all source-complete entries except one verified reusable preview are eligible for rendering');
-  assert.equal(Number(fiftyOutput.renderCount),48);
+  assert.equal(matrixFifty.length,47,'incomplete and unsupported sources stay blocked; one verified reusable preview is not rerendered');
+  assert.equal(Number(fiftyOutput.renderCount),47);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
