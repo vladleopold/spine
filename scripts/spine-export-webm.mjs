@@ -968,17 +968,50 @@ try {
     } catch { return false; }
   }
 
+  // Preload the default runtime once and freeze the full skin candidate list
+  // before capture begins. This prevents adding new candidates while iterating.
+  await page.setContent(buildCaptureHtml(null), { waitUntil: 'load', timeout: 60000 });
+  let defaultReady = true;
+  try {
+    await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+  } catch {
+    defaultReady = false;
+  }
+  const defaultCaptureError = defaultReady
+    ? await page.evaluate(() => window.__captureError || null)
+    : 'Timed out waiting for player ready';
+  if (!defaultCaptureError) {
+    const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
+    // Older Spine runtimes may omit named skins from runtime metadata.
+    // Retry only selectable source/runtime-declared names after the native
+    // default. The synthetic "default" alias is represented by null.
+    const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
+    for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
+      const normalizedName = typeof name === 'string' ? name.trim() : '';
+      if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
+          !skinCandidates.includes(normalizedName) && skinCandidates.length < 13) {
+        skinCandidates.push(normalizedName);
+      }
+    }
+  }
+
   for (let skinIndex = 0; skinIndex < skinCandidates.length; skinIndex++) {
     const skin = skinCandidates[skinIndex];
     const label = skin === null ? '(default)' : `'${skin}'`;
-    await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
-    let ready = true;
-    try {
-      await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
-    } catch {
-      ready = false;
+    if (skinIndex > 0) {
+      await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
     }
-    const error = ready ? await page.evaluate(() => window.__captureError || null) : 'Timed out waiting for player ready';
+    let ready = skinIndex === 0 ? defaultReady : true;
+    if (skinIndex > 0) {
+      try {
+        await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
+      } catch {
+        ready = false;
+      }
+    }
+    const error = skinIndex === 0
+      ? defaultCaptureError
+      : (ready ? await page.evaluate(() => window.__captureError || null) : 'Timed out waiting for player ready');
     if (error) {
       lastCaptureError = error;
       console.error(`Capture with skin ${label} failed: ${error}`);
@@ -989,21 +1022,6 @@ try {
     console.error('PLAYER_READY=1');
     console.error('SOURCE_SKIN_MODE=default');
     console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
-    if (skinIndex === 0) {
-      const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
-      // Older Spine runtimes may omit named skins from runtime metadata.
-      // Retry only selectable source/runtime-declared names after the native
-      // default. The synthetic "default" alias is already represented by null
-      // and is not selectable by name in Spine Player 3.8+.
-      const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
-      for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
-        const normalizedName = typeof name === 'string' ? name.trim() : '';
-        if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
-            !skinCandidates.includes(normalizedName) && skinCandidates.length < 13) {
-          skinCandidates.push(normalizedName);
-        }
-      }
-    }
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
     const pinnedAnimation = autoAnimation
