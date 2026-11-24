@@ -19,6 +19,7 @@ import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
+import { shouldUseGameCamera } from './lib/game-camera.mjs';
 
 const args = {
   uploadId: '',
@@ -456,8 +457,11 @@ const cameraFlag = process.argv.find(arg => arg.startsWith('--game-camera='));
 const cameraMatch = cameraFlag?.split('=')[1]?.match(/^(\\d+)x(\\d+)$/i);
 const gameCameraWidth = cameraMatch ? Math.min(3840, Math.max(320, Number(cameraMatch[1]))) : 1920;
 const gameCameraHeight = cameraMatch ? Math.min(2160, Math.max(240, Number(cameraMatch[2]))) : 1080;
-const hugeScene = skeletonBounds.width > gameCameraWidth * 1.5 ||
-  skeletonBounds.height > gameCameraHeight * 1.5;
+const hugeScene = shouldUseGameCamera(
+  skeletonBounds,
+  { width: gameCameraWidth, height: gameCameraHeight },
+  Boolean(cameraMatch),
+);
 if (hugeScene) console.error(`Huge game scene: ${skeletonBounds.width}x${skeletonBounds.height}; capturing ${gameCameraWidth}x${gameCameraHeight} camera at native scale, not off-screen content`);
 
 const rawSkelWidth = skeletonBounds.width;
