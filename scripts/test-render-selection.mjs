@@ -107,7 +107,7 @@ test('binary-only skeletons defer preview animation selection to the loaded Spin
   assert.match(repair, /sourceReady\?'__SPINE_AUTO__':''/);
   assert.match(exporter, /const autoAnimation = requestedAnimation === '__SPINE_AUTO__'/);
   assert.match(exporter, /window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/);
-  assert.match(exporter, /const pinnedAnimation = autoAnimation[\s\S]*?choosePreviewAnimation\(runtimeAnimations, ''\)/);
+  assert.match(exporter, /const pinnedAnimation = resolvePreviewAnimation\([\s\S]*?autoAnimation \? '' : targetAnimation,[\s\S]*?args\.allowVisibleTrackFallback/);
   assert.match(workflow, /ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   assert.match(workflow, /--allow-visible-track-fallback/);
   assert.match(workflow, /allowFallback\|\|expectedAnimation==="__SPINE_AUTO__"/);
