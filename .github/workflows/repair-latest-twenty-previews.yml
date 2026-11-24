@@ -88,10 +88,10 @@ on:
 permissions:
   contents: read
 concurrency:
-  # Keep independent archive offsets alive; push-triggered maintenance must not
-  # cancel a long-running render batch. Serialize retries only for the same offset.
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.offset || 'push' }}
-  cancel-in-progress: false
+  # A corrected runner target or newer manifest supersedes the previous batch.
+  # One archive batch is serialized at a time; push and manual offset 0 share a key.
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ inputs.offset || '0' }}
+  cancel-in-progress: true
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -209,7 +209,8 @@ jobs:
     name: validate-latest50-${{ matrix.entry.repairSlot }}
     needs: [inventory, runtime-package-smoke]
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    # Real source rendering runs only on the dedicated private Ubuntu worker.
+    runs-on: [self-hosted, linux, X64, spine-archive]
     timeout-minutes: 35
     strategy:
       fail-fast: false
@@ -552,7 +553,7 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
@@ -566,7 +567,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))
+          remaining=$(( 70 - NEXT_OFFSET ))
+          available=$(( TOTAL_COUNT - NEXT_OFFSET ))
+          if (( remaining > available )); then remaining=$available; fi
           next_limit=$(( remaining < 50 ? remaining : 50 ))
           gh api --method POST \
             "repos/${GITHUB_REPOSITORY}/actions/workflows/repair-latest-twenty-previews.yml/dispatches" \
