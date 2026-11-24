@@ -991,10 +991,13 @@ try {
     if (skinIndex === 0) {
       const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
       // Older Spine runtimes may omit named skins from runtime metadata.
-      // Retry every source/runtime-declared name after the native default,
-      // including the named default skin for older player versions.
+      // Retry only selectable source/runtime-declared names after the native
+      // default. The synthetic "default" alias is already represented by null
+      // and is not selectable by name in Spine Player 3.8+.
       for (const name of [...runtimeSkinNames.names, ...sourceSkinNames]) {
-        if (name && !skinCandidates.includes(name)) skinCandidates.push(name);
+        const normalizedName = typeof name === 'string' ? name.trim() : '';
+        if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
+            !skinCandidates.includes(normalizedName)) skinCandidates.push(normalizedName);
       }
     }
 
