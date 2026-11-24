@@ -450,7 +450,7 @@ jobs:
               !source.startsWith(String(item.basePath||'')+'/'))throw new Error('Invalid source directory in repair manifest');
             paths.add(source);
           }
-          for(const source of paths)execFileSync('git',['sparse-checkout','add',source+'/'],{stdio:'ignore'});
+          if(paths.size)execFileSync('git',['sparse-checkout','add',...Array.from(paths,source=>source+'/')],{stdio:'ignore'});
           console.log('SOURCE_PATHS_HYDRATED');
           NODE
       - uses: actions/download-artifact@v4
