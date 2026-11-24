@@ -127,7 +127,7 @@ jobs:
     name: validate-reported-preview-${{ matrix.entry.repairSlot }}
     needs: inventory
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, linux, X64, spine-archive]
     timeout-minutes: 35
     strategy:
       fail-fast: false
