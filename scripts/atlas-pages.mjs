@@ -4,6 +4,18 @@ import path from "node:path";
 // that metadata line as a region name and then fails on the following region.
 // Strip only this unsupported metadata for legacy runtimes; keep page names,
 // region names, UVs and geometry byte-for-byte otherwise unchanged.
+// Atlas PMA is true by default when the field is omitted (Spine packer default).
+// All pages must agree because Spine Player exposes one renderer-wide flag.
+export function readAtlasPremultipliedAlpha(atlasText, fallback = true) {
+  const values = String(atlasText).split(/\r?\n/)
+    .map(line => line.trim().match(/^pma\s*:\s*(true|false)$/i))
+    .filter(Boolean)
+    .map(match => match[1].toLowerCase());
+  const unique = [...new Set(values)];
+  if (unique.length > 1) throw new Error('Atlas pages disagree on pma metadata');
+  return unique.length ? unique[0] === 'true' : fallback;
+}
+
 export function stripLegacyPmaMetadata(atlasText) {
   const lines=String(atlasText).split(/\r?\n/);
   let removed=0;
