@@ -344,6 +344,10 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
     'automatic recovery must stop after the newest 70 works');
   assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
     'the second batch must be limited to the remaining 20 works, not another 50');
+  assert.ok(workflowSource.includes("needs.render.result == 'success'") &&
+    workflowSource.includes("needs.verify-production.result == 'success'") &&
+    workflowSource.includes("needs.publish.result == 'success'"),
+    'a later batch must not dispatch when rendering or production verification fails');
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
