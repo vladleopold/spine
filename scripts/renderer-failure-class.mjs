@@ -12,7 +12,7 @@ export function classifyRendererError(text) {
   if ((x.includes("enoent")||x.includes("no such file or directory")||x.includes("file not found")) &&
       /library(?:_\d+)?\/[^'"]+\.(?:json|skel|atlas(?:\.txt)?|png|jpe?g|webp|dds|astc|ktx2?)(?=['"\s]|$)/i.test(x)) return "SOURCE_GRAPH_MISSING";
   if (x.includes("unknown format")||x.includes("unsupported skeleton")||x.includes("unsupported spine")) return "SKELETON_RUNTIME_VERSION";
-  if (x.includes("animation")&&(x.includes("not found")||x.includes("invalid"))) return "ANIMATION_SELECTION";
+  if (x.includes("animation")&&(x.includes("not found")||x.includes("invalid")||x.includes("does not exist"))) return "ANIMATION_SELECTION";
   if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
   if (x.includes("net::err_")||x.includes("failed to load resource")||x.includes("networkidle")||x.includes("could not resolve host")) return "NETWORK_ASSET";
   if (x.includes("timed out waiting for player ready")||x.includes("waiting for player ready")||x.includes("waitforfunction")&&x.includes("timeout")) return "PLAYER_INITIALIZATION_TIMEOUT";
