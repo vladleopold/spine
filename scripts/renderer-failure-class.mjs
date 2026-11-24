@@ -67,7 +67,13 @@ export function summarizeRendererLog(text) {
     canvasFallbackPassed:/CANVAS_FALLBACK_CAPTURE=passed|REALTIME_CANVAS_CAPTURE_PASS/i.test(log),
   };
   const ffmpegFailure=classifyFfmpegFailure(log);
-  const distinctError=ffmpegFailure!=="NONE"?ffmpegFailure:
+  // Source-graph and atlas blockers take precedence over FFmpeg's generic
+  // ENOENT classification. A missing hydrated skeleton/atlas is not an
+  // encoder failure, even when FFmpeg is the component that notices it.
+  const sourceBlocker=new Set(["SOURCE_GRAPH_MISSING","ATLAS_TEXTURE_LOAD","ATLAS_REGION_MISSING",
+    "SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION",
+    "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"]).has(reason);
+  const distinctError=sourceBlocker?reason:ffmpegFailure!=="NONE"?ffmpegFailure:
     /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
     /timeout|timed out/i.test(log)?"RENDER_TIMEOUT":
