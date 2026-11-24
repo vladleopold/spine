@@ -13,8 +13,16 @@ const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
 const liveAudit=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'verify-latest-twenty-live.mjs'),'utf8');
-assert.match(liveAudit,/record\.previewBlockedAnimation===String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/,
-  'the production audit must compare blocked metadata to the frozen selected source track, not only the original default');
+assert.match(liveAudit,/const expectedBlockedAnimation=String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/);
+assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'[\s\S]*?Boolean\(String\(record\.previewBlockedAnimation\|\|''\)\.trim\(\)\)/);
+assert.match(liveAudit,/blockedAnimationMatches[\s\S]*?previewBlockedSourceFingerprint===work\.sourceFingerprint/);
+const blockedAnimationMatches=(expected,actual)=>expected==='__SPINE_AUTO__'?Boolean(String(actual||'').trim()):actual===expected;
+assert.equal(blockedAnimationMatches('__SPINE_AUTO__','Idle'),true,
+  'automatic selection may record the actual resolved track name');
+assert.equal(blockedAnimationMatches('__SPINE_AUTO__',''),false,
+  'automatic selection still requires a recorded blocked track');
+assert.equal(blockedAnimationMatches('Walk','Walk'),true);
+assert.equal(blockedAnimationMatches('Walk','Idle'),false);
 assert.ok(!repairSource.includes('record.animations=meta.animations'),
   'publishing a preview must never rewrite source animation names');
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'spine-latest20-'));
