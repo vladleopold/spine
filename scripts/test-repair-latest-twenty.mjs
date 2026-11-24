@@ -309,7 +309,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
-  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}-${{ github.run_id }}") &&
+    workflowSource.includes("cancel-in-progress: false"),
     'only one archive repair batch may run at a time');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
     workflowSource.includes('actions: write') &&
