@@ -32,6 +32,8 @@ assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureA
   'binary-only sources prefer a runtime Idle track before the first declared track');
 assert.match(source,/const skinCandidates = \[null\];/,
   'try the original default skin first; named alternatives must come from the loaded runtime');
+assert.match(source,/runtimeSkinNames\.defaultName[\s\S]*?SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1/,
+  'retry the runtime-exposed named default skin after the native default');
 assert.match(source,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
   'binary-only sources expose skin names from the loaded runtime');
 assert.match(source,/hasExplicitSkinList = configuredList\.length > 0[\s\S]*?const sourceSkinNames = hasExplicitSkinList \? \[\] : readSkinNames\(skeletonFilePath\)\.slice\(0, 12\)/,
