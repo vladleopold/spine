@@ -32,8 +32,11 @@ assert.equal(detectBinarySpineVersion(Buffer.concat([Buffer.alloc(8), text('../e
 assert.equal(spinePlayerSourceBlocker('4.1-from-4.2.43', 'wolf.json'), null);
 assert.equal(spinePlayerSourceBlocker('4.1.24', 'wolf.json'), null);
 assert.equal(spinePlayerSourceBlocker('4.3.26', 'character.json'), null);
-assert.equal(spinePlayerSourceBlocker('5.0.0', 'character.json'), 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
-assert.equal(spinePlayerSourceBlocker('unknown', 'character.json'), 'SPINE_VERSION_UNKNOWN');
+assert.equal(spinePlayerSourceBlocker('5.0.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('4.4.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('3.9.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('2.1.27', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('unknown', 'character.json')?.code, 'SPINE_VERSION_UNKNOWN');
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'spine-version-header-'));
 try {
