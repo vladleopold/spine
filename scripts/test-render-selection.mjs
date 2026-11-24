@@ -113,7 +113,7 @@ test('binary-only skeletons defer preview animation selection to the loaded Spin
   assert.match(workflow, /allowFallback\|\|expectedAnimation==="__SPINE_AUTO__"/);
   assert.match(workflow, /animationFallbackUsed:Boolean\(m\.animationFallbackUsed\)/);
   assert.match(repair, /meta\.animationFallbackUsed===true/);
-  assert.match(repair, /PREVIEW_RENDERER_REVISION="auto-track-recovery-v11-atlas-alpha-and-source-hydration"/);
+  assert.match(repair, /PREVIEW_RENDERER_REVISION="auto-track-recovery-v12-runtime-default-skin-fallback"/);
 });
 
 test('latest-ten recovery exposes only numeric slots and sanitized metadata publicly', () => {
