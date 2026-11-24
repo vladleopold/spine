@@ -902,7 +902,10 @@ try {
   // No attachments or source files are edited; the selected skin is recorded
   // as preview metadata only.
   const FRAME_PEAK_MIN = 40;
-  const skinCandidates = [null,...readSkinNames(skeletonFilePath)];
+  // Start with the runtime's true default skin. JSON skin maps can include a synthetic
+  // `default` entry that Spine Player does not expose as a selectable named skin.
+  // Discover selectable alternatives from the successfully loaded runtime instead.
+  const skinCandidates = [null];
 
   let chosenSkin = null;
   let animDuration = 0;
@@ -954,7 +957,7 @@ try {
     console.error('PLAYER_READY=1');
     console.error('SOURCE_SKIN_MODE=default');
     console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
-    if (skinIndex === 0 && skinCandidates.length === 1) {
+    if (skinIndex === 0) {
       const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
       for (const name of runtimeSkinNames.names) {
         if (name && name !== runtimeSkinNames.defaultName && !skinCandidates.includes(name)) skinCandidates.push(name);
