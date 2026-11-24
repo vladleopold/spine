@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { detectBinarySpineVersion, detectSkeletonVersion } from './spine-version-detect.mjs';
+import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 function varint(n) {
   const bytes = [];
@@ -28,6 +29,11 @@ assert.equal(detectBinarySpineVersion(legacy), '3.8.99');
 assert.equal(detectBinarySpineVersion(legacy21), '2.1.27');
 assert.equal(detectBinarySpineVersion(Buffer.from([0,1,2,3,4])), 'unknown');
 assert.equal(detectBinarySpineVersion(Buffer.concat([Buffer.alloc(8), text('../evil')])), 'unknown');
+assert.equal(spinePlayerSourceBlocker('4.1-from-4.2.43', 'wolf.json'), null);
+assert.equal(spinePlayerSourceBlocker('4.1.24', 'wolf.json'), null);
+assert.equal(spinePlayerSourceBlocker('4.3.26', 'character.json'), null);
+assert.equal(spinePlayerSourceBlocker('5.0.0', 'character.json'), 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('unknown', 'character.json'), 'SPINE_VERSION_UNKNOWN');
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'spine-version-header-'));
 try {
