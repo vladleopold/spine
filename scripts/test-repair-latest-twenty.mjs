@@ -124,6 +124,7 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
+  if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,blockedReason:x.blockedReason,animation:x.animation}))));
   assert.equal(matrix.length,17);
   assert.equal(Number(output.renderCount),17);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
