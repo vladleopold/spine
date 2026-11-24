@@ -111,8 +111,9 @@ assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
 assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
 assert.ok(exporter.includes("configuredPreviewSkinCandidates(skinConfig)"), "use only skin names explicitly declared by the uploaded source config");
 assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
-assert.match(exporter,/skinCandidates\.push\(name\)/,
+assert.match(exporter,/skinCandidates\.push\(normalizedName\)/,
   "runtime skins are tried only after the default skin produces no visible frame");
+assert.match(exporter,/normalizedName\.toLowerCase\(\) !== 'default'/);
 assert.match(exporter,/if \(args\.allowVisibleTrackFallback\)/);
 assert.match(exporter,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
   "alternate source tracks are accepted only after visible motion is detected");
