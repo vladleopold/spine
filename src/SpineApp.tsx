@@ -25,6 +25,7 @@ import {
   ZoomOut,
 } from "lucide-react";
 import type { SpinePlayer as SpinePlayerInstance, SpinePlayerConfig } from "@esotericsoftware/spine-player";
+import { spineSkeletonUrlConfig } from "../scripts/lib/spine-player-skeleton-config.mjs";
 
 type AppProps = {
   initialFiles?: File[];
@@ -3540,7 +3541,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
         host.innerHTML = "";
         const player = new SpinePlayer(host, {
           skeleton: prepared.skeletonName,
-          ...(extensionOf(prepared.skeletonName) === "skel" ? { skelUrl: prepared.skeletonName } : { jsonUrl: prepared.skeletonName }),
+          ...spineSkeletonUrlConfig(prepared.skeletonName, prepared.skeletonVersion || "", prepared.skeletonName),
           atlas: prepared.atlasName,
           atlasUrl: prepared.atlasName,
           rawDataURIs: prepared.rawDataURIs,
@@ -3668,7 +3669,7 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
     resetPlayer();
     const config = {
       skeleton: configuredSpine.skeletonName,
-      ...(extensionOf(configuredSpine.skeletonName) === "skel" ? { skelUrl: configuredSpine.skeletonName } : { jsonUrl: configuredSpine.skeletonName }),
+      ...spineSkeletonUrlConfig(configuredSpine.skeletonName, configuredSpine.skeletonVersion || "", configuredSpine.skeletonName),
       atlas: configuredSpine.atlasName,
       atlasUrl: configuredSpine.atlasName,
       rawDataURIs: configuredSpine.rawDataURIs,
