@@ -104,7 +104,7 @@ jobs:
           if (!batch || !Array.isArray(batch.entries) || typeof batch.sparseCheckout !== 'string') {
             throw new Error('Selected archive batch is unavailable');
           }
-          const paths = batch.sparseCheckout.split('\\n').filter(Boolean);
+          const paths = batch.sparseCheckout.split('\n').filter(Boolean);
           execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', ...paths], { stdio: 'ignore' });
           fs.writeFileSync('repair-batch.json', JSON.stringify(batch.entries));
           NODE

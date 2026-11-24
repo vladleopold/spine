@@ -182,6 +182,7 @@ test('matrix render job names do not expose per-work identifiers', () => {
   assert.ok(render.includes('batchIndex: ${{ fromJson(needs.inventory.outputs.matrix) }}'));
   assert.ok(render.includes('name: archive-card-previews-${{ matrix.batchIndex }}'));
   assert.ok(render.includes('REPAIR_BATCH_FILE: repair-batch.json'));
+  assert.ok(render.includes("split('\\n')"), 'hydration must split the private sparse-checkout manifest on real line breaks');
   assert.doesNotMatch(render, /matrix\.batch\.(?:entries|sparseCheckout)/, 'private identifiers must not be matrix values or job-name metadata');
   assert.ok(workflow.includes('name: archive-preview-matrix'), 'private batch metadata must travel in an artifact, not the matrix output');
   assert.ok(workflow.includes("group: ${{ github.event_name == 'pull_request' && 'spine-archive-card-preview-repair-pr' || 'spine-archive-card-preview-repair' }}"), 'PR checks must not queue behind the main repair run');
