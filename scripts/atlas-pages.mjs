@@ -4,9 +4,9 @@ import path from "node:path";
 // that metadata line as a region name and then fails on the following region.
 // Strip only this unsupported metadata for legacy runtimes; keep page names,
 // region names, UVs and geometry byte-for-byte otherwise unchanged.
-// Atlas PMA is true by default when the field is omitted (Spine packer default).
+// Atlas pages without an explicit pma flag use straight alpha (false).
 // All pages must agree because Spine Player exposes one renderer-wide flag.
-export function readAtlasPremultipliedAlpha(atlasText, fallback = true) {
+export function readAtlasPremultipliedAlpha(atlasText, fallback = false) {
   const values = String(atlasText).split(/\r?\n/)
     .map(line => line.trim().match(/^pma\s*:\s*(true|false)$/i))
     .filter(Boolean)
