@@ -12,22 +12,15 @@ on:
         required: false
         type: string
   push:
+    branches: [main]
     paths:
       - 'scripts/render-check.json'
-      - 'scripts/render-work.mjs'
-      - 'scripts/test-render-work-blocked-states.mjs'
-      - 'scripts/test-game-camera.mjs'
-      - 'scripts/test-player-animation-viewport.mjs'
-      - 'scripts/lib/player-animation.mjs'
-      - 'scripts/lib/game-camera.mjs'
-      - 'scripts/spine-export-webm.mjs'
-      - 'scripts/renderer-failure-class.mjs'
-      - 'scripts/test-renderer-failure-class.mjs'
 permissions:
   contents: write
 jobs:
   export:
-    runs-on: ubuntu-24.04
+    # Single-item source rendering also stays on the private Ubuntu worker.
+    runs-on: [self-hosted, linux, X64, spine-archive]
     timeout-minutes: 45
     concurrency:
       group: spine-webm-render
