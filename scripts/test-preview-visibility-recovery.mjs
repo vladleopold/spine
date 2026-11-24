@@ -15,8 +15,8 @@ assert.deepEqual(configuredPreviewSkinCandidates({skins:['Lamb','Goat']}),['Lamb
   'all explicitly configured skins remain available when no default is declared');
 assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','',null,'Goat','Goat']}),['Lamb','Goat'],
   'configured skin candidates are normalized and deduplicated');
-assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['default','hero']}),['hero'],
-  'the synthetic default skin is never passed as a named fallback');
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['default','hero']}),['default','hero'],
+  'an explicitly configured defaultSkin is a real source choice and is retried by name');
 assert.deepEqual(sourcePreviewSkinNames({'0':{name:'default'},'1':{name:'Lamb'},'2':{name:'Goat'}}),['default','Lamb','Goat'],
   'numeric-keyed Spine 3.8 skin objects must expose their embedded skin names');
 assert.deepEqual(sourcePreviewSkinNames({Lamb:{attachments:{}},Goat:{attachments:{}}}),['Lamb','Goat'],
@@ -42,7 +42,7 @@ assert.match(source,/skinCandidates\.length < 13/,
   'runtime skin discovery cannot create an unbounded render loop');
 assert.match(source,/const runtimeFallbacks = hasExplicitSkinList \? \[\] : runtimeSkinNames\.names\.slice\(0, 12\)/,
   'legacy runtimes may fall back to exact source JSON skins but never pass the synthetic default skin');
-assert.match(source,/for \(const name of \[\.\.\.runtimeFallbacks, \.\.\.sourceSkinNames\]\)[\s\S]*?normalizedName\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(normalizedName\)/,
+assert.match(source,/for \(const name of \[\.\.\.runtimeFallbacks, \.\.\.sourceSkinNames\]\)[\s\S]*?sourceSkinNames\.includes\(normalizedName\)[\s\S]*?skinCandidates\.push\(normalizedName\)/,
   'runtime aliases exclude the synthetic default, but an explicitly source-declared default skin remains selectable');
 assert.match(source,/if \(framePeak < FRAME_PEAK_MIN\) \{[\s\S]*?continue;/,
   'an invisible default skin advances to the next source-declared or runtime-discovered skin without editing source files');
