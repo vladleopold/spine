@@ -7,6 +7,7 @@ export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
   if(x.includes("unsupported_spine_export_3_8_75"))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
+  if(x.includes("unsupported_spine_web_player_version")||x.includes("no bundled spine web player runtime supports"))return "SKELETON_RUNTIME_VERSION";
   if (x.includes("couldn't load texture atlas page")||x.includes("couldn't load image")||x.includes("assets could not be loaded")||x.includes("could not load atlas")||x.includes("failed to fetch atlas")||x.includes("texture atlas page")) return "ATLAS_TEXTURE_LOAD";
   if (x.includes("region not set")||x.includes("could not find atlas region")) return "ATLAS_REGION_MISSING";
   if ((x.includes("enoent")||x.includes("no such file or directory")||x.includes("file not found")) &&
