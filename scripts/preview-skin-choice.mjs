@@ -18,7 +18,10 @@ export function configuredPreviewSkinCandidates(config) {
     result.push(name);
   };
   add(defaultSkin, true);
-  for (const value of raw) add(value, true);
+  // The literal `default` in a skins array is the runtime's synthetic
+  // default entry, not a source-declared skin to pass back to setSkinByName.
+  // Only an explicit config.defaultSkin may intentionally name `default`.
+  for (const value of raw) add(value, false);
   return result;
 }
 
