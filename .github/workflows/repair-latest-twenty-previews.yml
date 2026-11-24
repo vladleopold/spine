@@ -16,6 +16,7 @@ on:
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
       - scripts/test-render-selection.mjs
+      - scripts/lib/spine-player-source-support.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
@@ -53,6 +54,8 @@ on:
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/test-render-selection.mjs
+      - scripts/lib/spine-player-source-support.mjs
       - scripts/verify-preview-motion.mjs
       - scripts/renderer-failure-class.mjs
       - scripts/test-renderer-failure-class.mjs
