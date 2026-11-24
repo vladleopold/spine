@@ -120,6 +120,12 @@ assert.equal(classifyRendererError(unsupported37Log),"UNSUPPORTED_SPINE_3_7_BINA
 assert.equal(unsupported37.distinctError,"UNSUPPORTED_SPINE_3_7_BINARY_SKELETON",
   'Spine 3.7 binary-only input must have a stable blocker classification, never UNCLASSIFIED');
 
+const unsupportedWebPlayerLog="UNSUPPORTED_SPINE_WEB_PLAYER_VERSION: No bundled Spine Web Player runtime supports Spine 2.1.27; use a matching supported Spine runtime before browser preview generation.";
+const unsupportedWebPlayer=summarizeRendererLog(unsupportedWebPlayerLog);
+assert.equal(classifyRendererError(unsupportedWebPlayerLog),"SKELETON_RUNTIME_VERSION");
+assert.equal(unsupportedWebPlayer.distinctError,"SKELETON_RUNTIME_VERSION",
+  'a source version without a bundled Web Player runtime must be a stable unsupported-runtime blocker, never UNCLASSIFIED');
+
 const startupFailure=summarizeRendererLog(
   "Skeleton: source (v3.8.59)\nCapture with skin (default) failed: Timed out waiting for player ready"
 );
