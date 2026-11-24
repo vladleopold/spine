@@ -25,6 +25,16 @@ assert.equal(
   'wanted.json',
   'when the upload did not specify a skeleton, choose a valid JSON skeleton first'
 );
+assert.equal(
+  chooseSourceSkeleton('config.json',['config.json','player-main.json','player-main.atlas'],name=>name==='player-main.json'),
+  'player-main.json',
+  'a stale config.json skeleton pointer is repaired only when exactly one valid skeleton exists'
+);
+assert.throws(
+  ()=>chooseSourceSkeleton('config.json',['config.json','player-main.json','other.skel'],name=>name==='player-main.json'),
+  /Requested source skeleton is missing or invalid/,
+  'ambiguous alternate skeletons must never be guessed'
+);
 assert.throws(
   ()=>chooseSourceSkeleton('missing.skel',['other.skel'],isValidJson),
   /Requested source skeleton is missing or invalid/,
