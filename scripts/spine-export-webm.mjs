@@ -1178,8 +1178,13 @@ try {
               width: page.width || 0,
               height: page.height || 0,
               textureLoaded: Boolean(page.texture),
-              textureWidth: page.texture && (page.texture.width || page.texture.image && page.texture.image.width) || 0,
-              textureHeight: page.texture && (page.texture.height || page.texture.image && page.texture.image.height) || 0,
+              textureWidth: page.texture && page.texture._image
+                ? (page.texture._image.naturalWidth || page.texture._image.width || 0)
+                : 0,
+              textureHeight: page.texture && page.texture._image
+                ? (page.texture._image.naturalHeight || page.texture._image.height || 0)
+                : 0,
+              glTextureCreated: Boolean(page.texture && page.texture.texture),
             })) : [];
           } catch (error) {
             atlasPages = [{ error: String(error && error.message || error) }];
@@ -1202,6 +1207,14 @@ try {
               ? skeleton.slots.filter(slot => slot && slot.attachment).map(slot => ({
                   slot: slot.data && slot.data.name || '',
                   attachment: slot.attachment && slot.attachment.name || '',
+                  region: slot.attachment && slot.attachment.region && slot.attachment.region.name || '',
+                  page: slot.attachment && slot.attachment.region && slot.attachment.region.page && slot.attachment.region.page.name || '',
+                  image: slot.attachment && slot.attachment.region && slot.attachment.region.page && slot.attachment.region.page.texture && slot.attachment.region.page.texture._image
+                    ? {
+                        width: slot.attachment.region.page.texture._image.naturalWidth || slot.attachment.region.page.texture._image.width || 0,
+                        height: slot.attachment.region.page.texture._image.naturalHeight || slot.attachment.region.page.texture._image.height || 0,
+                      }
+                    : null,
                   bone: slot.bone && slot.bone.data && slot.bone.data.name || '',
                 }))
               : [],
@@ -1212,6 +1225,10 @@ try {
               : [],
             atlasPages,
             assetErrors: p && p.assetManager && p.assetManager.getErrors ? p.assetManager.getErrors() : [],
+            gl: p && p.context && p.context.gl ? {
+              error: p.context.gl.getError(),
+              contextLost: p.context.gl.isContextLost(),
+            } : null,
             canvas: p && p.canvas ? { width: p.canvas.width, height: p.canvas.height } : null,
             viewport: p && p.currentViewport ? p.currentViewport : null,
           };
