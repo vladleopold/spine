@@ -103,7 +103,7 @@ try{
       if(!fs.existsSync(target)){
         if(/\.json$/i.test(skeleton)){
           fs.writeFileSync(target,JSON.stringify({skeleton:{spine:'4.2'},bones:[{name:'root'}],
-            animations:{idle:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:1,y:0}]}}}}}));
+            animations:{Idle:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:1,y:0}]}}}}}));
         }else fs.writeFileSync(target,Buffer.from('fixture-spine-skeleton'));
       }
     }
