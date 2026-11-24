@@ -291,8 +291,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.equal(Number(partialOutput.nextOffset),60,'a partial final batch must stop exactly at archive end');
   assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
-  assert.doesNotMatch(workflowSource,/needs\.verify-production\.result == 'success'/,
-    'partial live-audit failures must not prevent the next archive batch after verified-only publication');
+  assert.match(workflowSource,/needs\.verify-production\.result == 'success'/,
+    'a failed production audit must stop the next archive batch');
   assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
     'manual and push recovery must start at the newest archive batch');
   assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
