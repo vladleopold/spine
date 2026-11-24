@@ -366,7 +366,7 @@ if(action==="matrix"){
       indexedPreviewSetNames:record?.allAnimationPreviews&&typeof record.allAnimationPreviews==='object'
         ?Object.keys(record.allAnimationPreviews).slice(0,8):[],
       hasExplicitAnimation:Boolean(animation),
-      ready,needsRender:ready && !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e)),
+      ready,needsRender:ready && (String(e.previewError||'').includes('Existing WebM could not produce its exact first-frame WebP poster') || !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e))),
       animation,
       blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":
         !sourceReady?sourceCheck.reason:!animation?"MISSING_SOURCE_ANIMATION":
