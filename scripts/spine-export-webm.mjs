@@ -925,11 +925,13 @@ try {
     }
   } catch { /* uploads without a skin config keep the source/runtime discovery path */ }
   // JSON source skins are authoritative when legacy runtimes omit their
-  // runtimeData.skins list. Retry every declared name, including "default",
-  // explicitly after the native-default attempt.
+  // runtimeData.skins list. Skip the synthetic "default" entry: null already
+  // selects Spine's default skin, while configured named defaults are retried above.
   const sourceSkinNames = readSkinNames(skeletonFilePath);
   for (const name of sourceSkinNames) {
-    if (name && !skinCandidates.includes(name)) skinCandidates.push(name);
+    if (name && name.toLowerCase() !== 'default' && !skinCandidates.includes(name)) {
+      skinCandidates.push(name);
+    }
   }
   if (skinCandidates.length > 1) {
     console.error(`SOURCE_DECLARED_SKIN_FALLBACK=${skinCandidates.slice(1).join(',')}`);
