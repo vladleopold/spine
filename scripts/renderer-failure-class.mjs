@@ -77,6 +77,8 @@ export function summarizeRendererLog(text) {
     "SKELETON_RUNTIME_VERSION","UNSUPPORTED_SPINE_EXPORT_VERSION",
     "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON"]).has(reason) &&
     !(ffmpegFailure==="FFMPEG_INPUT_MISSING" && /ffmpeg/i.test(log));
+  const runtimeInitFailure=/spineplayer is not a function/i.test(log)?"SPINE_PLAYER_GLOBAL_MISSING":
+    /player creation failed/i.test(log)?"PLAYER_CREATION_FAILED":"NONE";
   const distinctError=sourceBlocker?reason:ffmpegFailure!=="NONE"?ffmpegFailure:
     /no frame with visible content in the clip/i.test(log)?"POSTER_NO_VISIBLE_FRAMES":
     /could not.*(file|path)|no such file/i.test(log)?"MISSING_RENDER_INPUT":
@@ -89,7 +91,7 @@ export function summarizeRendererLog(text) {
     /No visible pixels from any available Spine skin/i.test(log)?"RUNTIME_ALL_SKINS_INVISIBLE":
     /Cannot establish playable animation duration/i.test(log)?"UNKNOWN_ANIMATION_DURATION":
     /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":
-    reason==="SPINE_RUNTIME_INITIALIZATION"?"SPINE_RUNTIME_INITIALIZATION":
+    reason==="SPINE_RUNTIME_INITIALIZATION"?(runtimeInitFailure!=="NONE"?runtimeInitFailure:"SPINE_RUNTIME_INITIALIZATION"):
     reason==="ANIMATION_SELECTION"?"ANIMATION_SELECTION":
     reason==="SOURCE_GRAPH_MISSING"?"SOURCE_GRAPH_MISSING":
     reason==="SKELETON_RUNTIME_VERSION"?"SKELETON_RUNTIME_VERSION":
@@ -108,7 +110,7 @@ export function summarizeRendererLog(text) {
   const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
-  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,
+  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,
     peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 
