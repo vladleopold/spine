@@ -66,4 +66,14 @@ const nearUniform=Buffer.alloc(32*32*3,7);
 for(let i=100;i<120;i++)nearUniform[i*3]=16;
 assert.equal(hasVisibleScreenshotPixels(nearUniform),false,
   'minor pixel noise must not make a blank canvas visible');
+const smallDarkArtwork=Buffer.alloc(64*64*3,7);
+for(let i=0;i<13;i++)smallDarkArtwork.fill(24,i*3,i*3+3);
+assert.equal(hasVisibleScreenshotPixels(smallDarkArtwork),true,
+  'higher-resolution sampling must retain small dark artwork that a 32x32 downsample can erase');
+const smallNoise=Buffer.alloc(64*64*3,7);
+for(let i=0;i<20;i++)smallNoise.fill(16,i*3,i*3+3);
+assert.equal(hasVisibleScreenshotPixels(smallNoise),false,
+  'higher-resolution sampling must still reject low-contrast pixel noise');
+assert.match(source,/scale=64:64/,
+  'composited canvas visibility uses a higher-resolution sample for small artwork');
 console.log('PASS Spine preview: deterministic source animation/skin recovery, including binary runtime fallback; contrast-based real-pixel detection');
