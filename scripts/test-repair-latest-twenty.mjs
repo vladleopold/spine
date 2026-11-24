@@ -177,7 +177,7 @@ try{
   assert.match(repairSource,/downloaded-latest50/);
 assert.match(repairSource,/latest50-/);
 assert.match(workflowSource,/animation:m\.animation/);
-assert.match(workflowSource,/if\(item\.ready!==true\)continue;/);
+assert.match(workflowSource,/hasExistingAcceptedMedia[\s\S]*?item\.indexedWebmStatus==='ready'[\s\S]*?item\.indexedPreviewStatus==='ready'[\s\S]*?item\.ready!==true && !hasExistingAcceptedMedia/);
 assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
     'a renderer policy update must permit one retry of an earlier deterministic block');
   assert.match(repairSource,/meta\.animationFallbackUsed===true/,
