@@ -130,8 +130,8 @@ assert.ok(latestTwenty.includes('name: latest50-manifest'));
 assert.match(latestTwenty, /verify-production:\n    needs: \[inventory, render, publish\][\s\S]*?if: always\(\) && github\.ref == 'refs\/heads\/main' && needs\.publish\.result == 'success'/,
   'production verification must still run after partial matrix render failures when publication succeeded');
 
-assert.match(latestTwenty,/if\(item\.ready!==true\)continue;/,
-  'publish hydration must skip entries without a complete source bundle');
+assert.match(latestTwenty,/const hasExistingAcceptedMedia=item\.indexedWebmStatus==='ready' \|\|\s*item\.indexedPreviewStatus==='ready' \|\|\s*\(Array\.isArray\(item\.indexedPreviewSetNames\) && item\.indexedPreviewSetNames\.length>0\);\s*if\(item\.ready!==true && !hasExistingAcceptedMedia\)continue;/,
+  'publish hydration must skip incomplete source bundles unless indexed accepted media needs safe restoration');
 assert.ok(latestTwenty.includes('path: repair-manifest.json'));
 assert.match(latestTen, /name: Mask exact production audit manifest\n        env:\n          REPAIR_IDS_JSON:/,
   'latest-10 production audit manifest must remain scoped to its masking step');
