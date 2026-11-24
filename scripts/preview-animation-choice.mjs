@@ -11,3 +11,17 @@ export function choosePreviewAnimation(names, preferred = '') {
     available[0] ||
     '';
 }
+
+/**
+ * Resolve the animation requested for a preview render. Explicit source
+ * selections remain exact unless the recovery pipeline explicitly opts into
+ * visible-track fallback; in that case a missing/stale selection falls back
+ * to a real source animation instead of aborting the render.
+ */
+export function resolvePreviewAnimation(names, preferred = '', allowFallback = false) {
+  const available = Array.isArray(names) ? names.filter(name => typeof name === 'string' && name.trim()) : [];
+  const requested = typeof preferred === 'string' ? preferred : '';
+  if (!requested) return choosePreviewAnimation(available, '');
+  if (available.includes(requested)) return requested;
+  return allowFallback ? choosePreviewAnimation(available, '') : requested;
+}
