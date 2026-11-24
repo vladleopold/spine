@@ -81,6 +81,9 @@ const missingSource=summarizeRendererLog(missingSourceLog);
 assert.equal(classifyRendererError(missingSourceLog),"SOURCE_GRAPH_MISSING");
 assert.equal(missingSource.distinctError,"SOURCE_GRAPH_MISSING",
   "a missing hydrated source file is an incomplete source bundle, not a generic renderer failure");
+const ffmpegMissingInput=summarizeRendererLog("ffmpeg: error opening input: No such file or directory");
+assert.equal(ffmpegMissingInput.distinctError,"FFMPEG_INPUT_MISSING",
+  "missing FFmpeg input must remain distinct from a missing hydrated Spine source");
 
 const unsupportedRuntimeLog="Error: unsupported Spine skeleton version";
 const unsupportedRuntime=summarizeRendererLog(unsupportedRuntimeLog);
