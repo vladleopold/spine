@@ -84,7 +84,9 @@ try{
     records.push({id,uploadedAt:new Date(Date.UTC(2026,10,16,0,i,0)).toISOString(),
       previewPath:'library_02/'+id,webmStatus:'failed',
       ...(i===35?{}:{defaultAnimation:'idle'}),
-      files:['test.skel','test.atlas','test.png']});
+      // Use a valid JSON skeleton for ordinary older fixtures. Keep only the
+      // final record binary-only to exercise runtime-deferred animation choice.
+      files:i===35?['test.skel','test.atlas','test.png']:['test.json','test.atlas','test.png']});
   }
   // Materialize source triads for every fixture. The production inventory
   // now inspects real files rather than trusting index.files alone.
@@ -182,7 +184,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     'a preview may use another source-declared animation only after visible motion is verified');
   assert.match(repairSource,/record\.previewAnimation=animation/,
     'the exact rendered track is stored separately from the source default');
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v5-visible-moving-track"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v6-runtime-skin-selection"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
