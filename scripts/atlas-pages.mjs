@@ -6,6 +6,14 @@ import path from "node:path";
 // region names, UVs and geometry byte-for-byte otherwise unchanged.
 // Atlas pages without an explicit pma flag use straight alpha (false).
 // All pages must agree because Spine Player exposes one renderer-wide flag.
+// The old xy/size atlas format predates the pma metadata line. Spine Editor's
+// default texture export is PMA, while the newer bounds/offsets format omits
+// pma when straight alpha is used.
+export function isLegacyAtlasFormat(atlasText) {
+  const text = String(atlasText);
+  return /^\s*xy\s*:/m.test(text) && !/^\s*bounds\s*:/m.test(text);
+}
+
 export function readAtlasPremultipliedAlpha(atlasText, fallback = false) {
   const values = String(atlasText).split(/\r?\n/)
     .map(line => line.trim().match(/^pma\s*:\s*(true|false)$/i))
