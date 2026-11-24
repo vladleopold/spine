@@ -30,6 +30,8 @@ assert.match(source,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
   'binary-only sources expose skin names from the loaded runtime');
 assert.match(source,/const sourceSkinNames = readSkinNames\(skeletonFilePath\)[\s\S]*?name\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(name\)/,
   'legacy runtimes may fall back to exact source JSON skins but never pass the synthetic default skin');
+assert.match(source,/for \(const name of \[\.\.\.runtimeSkinNames\.names, \.\.\.sourceSkinNames\]\)[\s\S]*?normalizedName\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(normalizedName\)/,
+  'runtime-discovered skins also exclude the synthetic default alias, which is not selectable by name');
 assert.match(source,/if \(skinIndex === 0\)[\s\S]*?skinCandidates\.push\(name\)/,
   'when the default is invisible, try only selectable skins discovered from the loaded runtime');
 assert.match(source,/if \(framePeak < FRAME_PEAK_MIN\) \{[\s\S]*?continue;/,
