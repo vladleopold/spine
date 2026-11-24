@@ -7,6 +7,7 @@ import {entryForUpload} from './resolve-library.mjs';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
+import {parseGameCamera} from './lib/game-camera.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -192,8 +193,8 @@ if(selection.status==='blocked'){
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
-const gameCamera=String(config.gameCamera||'').trim();
-if(/^\d+x\d+$/i.test(gameCamera))flags.push(`--game-camera=${gameCamera}`);
+const gameCamera=parseGameCamera(config.gameCamera);
+if(gameCamera)flags.push(`--game-camera=${gameCamera.width}x${gameCamera.height}`);
 if(selection.animation==='__SPINE_AUTO__')flags.push('--allow-visible-track-fallback');
 try{
  runCaptured('node',['scripts/spine-export-webm.mjs',...flags]);
