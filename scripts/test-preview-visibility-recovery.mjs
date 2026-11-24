@@ -9,12 +9,14 @@ assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
   'missing index/default selection prefers a declared Idle source track');
 assert.deepEqual(configuredPreviewSkinCandidates({skins:['default','hero','alternate']}),['hero','alternate'],
   'the synthetic default entry is not passed as a named player skin');
-assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','Goat']}),['Goat'],
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','Goat']}),['Lamb','Goat'],
   'configured non-default skins are retained as source-declared visibility fallbacks');
 assert.deepEqual(configuredPreviewSkinCandidates({skins:['Lamb','Goat']}),['Lamb','Goat'],
   'all explicitly configured skins remain available when no default is declared');
-assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','',null,'Goat','Goat']}),['Goat'],
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lamb','',null,'Goat','Goat']}),['Lamb','Goat'],
   'configured skin candidates are normalized and deduplicated');
+assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['default','hero']}),['hero'],
+  'the synthetic default skin is never passed as a named fallback');
 const source=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 assert.match(source,/if \(args\.allowVisibleTrackFallback\)[\s\S]*?const candidates = \[targetAnimation, \.\.\.alternatives\.slice\(0, 7\)\]/,
   'source-declared alternatives are considered only in the explicit repair mode');
