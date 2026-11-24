@@ -33,6 +33,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test renderer failure classification
+        run: node scripts/test-renderer-failure-class.mjs
       - name: Validate exact animation and pinned runtime selection
         if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
         run: node scripts/test-spine-player-runtime-assets.mjs
