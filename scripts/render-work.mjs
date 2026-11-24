@@ -35,6 +35,7 @@ const report={
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const runCaptured=(cmd,args)=>{
  const result=spawnSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
  const stdout=String(result.stdout||''),stderr=String(result.stderr||'');
@@ -60,7 +61,7 @@ async function markBlockedRender(status,distinctError){
   'blocked-incomplete-source':'The indexed skeleton, atlas or texture source graph cannot be loaded completely',
   'blocked-unsupported-runtime':'The source Spine version is not supported by the pinned renderer',
  }[status]||'Selected Spine preview cannot be rendered with the current source metadata';
- for(let attempt=0;attempt<5;attempt++){
+ for(let attempt=0;attempt<8;attempt++){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
   run('git',['reset','--hard','origin/main']);
   const current=entryForUpload(process.cwd(),id);
@@ -91,12 +92,12 @@ async function markBlockedRender(status,distinctError){
    run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
    return;
   }catch(error){
-   if(attempt===4)throw error;
+   if(attempt===7)throw error;console.warn(`MAIN_PUSH_RETRY=${attempt+1}`);await wait(Math.min(1000*2**attempt,15000));
   }
  }
 }
 async function markBlockedSelection(){
-  for(let attempt=0;attempt<5;attempt++){
+  for(let attempt=0;attempt<8;attempt++){
     run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
     run('git',['reset','--hard','origin/main']);
     const current=entryForUpload(process.cwd(),id);
@@ -117,7 +118,7 @@ async function markBlockedSelection(){
       run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
       return;
     }catch(error){
-      if(attempt===4)throw error;
+      if(attempt===7)throw error;console.warn(`MAIN_PUSH_RETRY=${attempt+1}`);await wait(Math.min(1000*2**attempt,15000));
     }
   }
 }
@@ -202,16 +203,16 @@ async function publish(update){
  // Push one media object at a time. Never recreate a multi-hundred-MB pack
  // after a timeout, and check the remote on retries (a push may have landed).
  for(const file of pending){
-  for(let attempt=0;attempt<5;attempt++){
+  for(let attempt=0;attempt<8;attempt++){
    run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
    run('git',['reset','--hard','origin/main']);
    fs.mkdirSync(path.dirname(file.dst),{recursive:true});fs.copyFileSync(file.src,file.dst);
    run('git',['add','--',file.dst]);
    try{await pushStaged('Publish verified Spine preview media asset');break;}
-   catch(error){if(attempt===4)throw error;}
+   catch(error){if(attempt===7)throw error;console.warn(`MAIN_PUSH_RETRY=${attempt+1}`);await wait(Math.min(1000*2**attempt,15000));}
   }
  }
- for(let attempt=0;attempt<5;attempt++){
+ for(let attempt=0;attempt<8;attempt++){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);run('git',['reset','--hard','origin/main']);
   const current=entryForUpload(process.cwd(),id);if(!current)throw Error('Upload removed during render');
   const idx=current.index.findIndex(e=>e.id===id);
@@ -221,7 +222,7 @@ async function publish(update){
   const indexPath=`${current.basePath}/index.json`;fs.writeFileSync(indexPath,JSON.stringify(current.index,null,2));
   run('git',['add','--',indexPath]);
   try{await pushStaged('Publish verified Spine preview index metadata');pending.length=0;return;}
-  catch(error){if(attempt===4)throw error;}
+  catch(error){if(attempt===7)throw error;console.warn(`MAIN_PUSH_RETRY=${attempt+1}`);await wait(Math.min(1000*2**attempt,15000));}
  }
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
