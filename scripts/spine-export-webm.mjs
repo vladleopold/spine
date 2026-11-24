@@ -12,7 +12,7 @@ import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
-import { configuredPreviewSkinCandidates } from './preview-skin-choice.mjs';
+import { configuredPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
@@ -217,8 +217,7 @@ function readSkinNames(filePath) {
       if(fs.existsSync(sibling))content=JSON.parse(fs.readFileSync(sibling,'utf8'));
     }
     const skins=content?.skins;
-    if(Array.isArray(skins))return skins.map(skin=>String(skin?.name||'')).filter(Boolean);
-    if(skins&&typeof skins==='object')return Object.keys(skins);
+    return sourcePreviewSkinNames(skins);
   }catch{}
   return [];
 }
