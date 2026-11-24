@@ -975,8 +975,16 @@ try {
     console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
     if (skinIndex === 0) {
       const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
-      for (const name of runtimeSkinNames.names) {
-        if (name && name !== runtimeSkinNames.defaultName && !skinCandidates.includes(name)) skinCandidates.push(name);
+      // Older Spine runtimes may omit non-default skins from their runtime
+      // metadata. Recover candidates from the exact source JSON as a second
+      // source of truth, but never pass the synthetic/default skin explicitly:
+      // it is already selected by the null/default player configuration.
+      const sourceSkinNames = readSkinNames(skeletonFilePath);
+      const preferredDefaultSkin = String(entry.defaultSkin || entry.skin || runtimeSkinNames.defaultName || '');
+      for (const name of [...runtimeSkinNames.names, ...sourceSkinNames]) {
+        if (name && name !== runtimeSkinNames.defaultName &&
+            name !== preferredDefaultSkin && name.toLowerCase() !== 'default' &&
+            !skinCandidates.includes(name)) skinCandidates.push(name);
       }
     }
 
