@@ -972,9 +972,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "ca43d40a0bb0194818ff6f78110380cd95f474f7bcf5b6c80f88a535412715e1",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:47.723Z",
+    "previewBlockedAt": "2026-11-24T10:39:30.538Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1006,9 +1006,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "IdleAnim",
     "previewBlockedSourceFingerprint": "cdbe8ed7025cfffcd170f4181d2b0512a0e76b3207a7b4afdd471d532b37cfa3",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:47.728Z"
+    "previewBlockedAt": "2026-11-24T10:39:30.545Z"
   },
   {
     "id": "Ranger-2026-11-23T21-17-03-714Z",
@@ -1036,9 +1036,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "IdleAnim",
     "previewBlockedSourceFingerprint": "bfcd8090cbea8114f8828a69e1ffcb1aa315d9f827f6b59a0043a47e241cda6f",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:47.731Z",
+    "previewBlockedAt": "2026-11-24T10:39:30.551Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1070,9 +1070,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "idle",
     "previewBlockedSourceFingerprint": "fb9ece3209da2612d002d56be6a0c8310999360c41aa724d4134baf10a3ba014",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:47.734Z"
+    "previewBlockedAt": "2026-11-24T10:39:30.555Z"
   },
   {
     "id": "girl_andriella_char_hd-2026-11-20T15-25-18-586Z",
@@ -1538,9 +1538,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "blow_in_landscape",
     "previewBlockedSourceFingerprint": "1d89cb037f789be2b74f77039aa36fc4f2074af616cd3b647077b1834723596d",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:52.140Z"
+    "previewBlockedAt": "2026-11-24T10:39:35.238Z"
   },
   {
     "id": "14505-1-2026-11-20T04-20-07-885Z",
@@ -1628,9 +1628,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "89ccd59048e5d7eb24a7658d4120dbae4cc5c232ab6f6db854712cc5692d965e",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:52.616Z",
+    "previewBlockedAt": "2026-11-24T10:39:35.947Z",
     "lastPreviewRetryError": ""
   },
   {
@@ -1850,9 +1850,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "idle",
     "previewBlockedSourceFingerprint": "424f3482e49c3d931c5e6d9ccb5afc2a35adb5225baee7eecc9567f346d91714",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.609Z"
+    "previewBlockedAt": "2026-11-24T10:39:38.457Z"
   },
   {
     "id": "castle_upgrade-2026-11-19T07-30-55-171Z",
@@ -1873,18 +1873,35 @@
     "ownerAnonFingerprint": "y5261hikri8mwn8dykj",
     "publicOwnerId": "u_u16nsg",
     "thumbnail": "",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/castle_upgrade.png?v=2026-11-19T07-30-55.171Z",
-    "webmPreview": "",
-    "webmStatus": "blocked-invisible-default-skin",
-    "dispatchStatus": "pending",
-    "previewStatus": "blocked",
-    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
+    "previewStatus": "ready",
+    "previewError": "",
     "lastPreviewRetryError": "",
-    "previewBlockedAnimation": "idle",
-    "previewBlockedSourceFingerprint": "a61c9fe5f7c8c11ba9b1979d54f4118e025c9501d4138ce8ea4b461de89160ff",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
-    "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.615Z"
+    "previewAnimation": "idle",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-low.webp",
+    "webmGeneratedAt": "2026-11-24T10:39:39.152Z",
+    "posterGeneratedAt": "2026-11-24T10:39:39.152Z",
+    "previewWidth": 960,
+    "previewHeight": 720,
+    "previewFrameCount": 40,
+    "previewDuration": 1.810293,
+    "allAnimationPreviews": {
+      "idle": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/castle_upgrade-2026-11-19T07-30-55-171Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "Spine-animation-2026-11-19T03-01-41-552Z",
@@ -1914,9 +1931,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "9d92915a937ca12e00ac426ea1871eba85a85686c194679707670233eb8f9cf0",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.617Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.157Z"
   },
   {
     "id": "wolf-2026-11-18T17-32-08-569Z",
@@ -1950,9 +1967,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "blow_in_landscape",
     "previewBlockedSourceFingerprint": "02aae223b2d94aad4749d36e3033a81b45d6ca6128ff7360890720b4835340b2",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.623Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.166Z"
   },
   {
     "id": "Spine-animation-2026-11-18T16-58-40-631Z",
@@ -1986,9 +2003,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "1fd25c7dd19b2f6eda530db1b63f340d4886d76d1f199e5a54c920237373de57",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.626Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.170Z"
   },
   {
     "id": "Spine-animation-2026-11-18T16-54-44-655Z",
@@ -2032,9 +2049,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "5688bd0bfe787df089fc4e5fdbb0eecd7c79f8271777bbf98b72725906ceab1e",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.629Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.174Z"
   },
   {
     "id": "Spine-animation-2026-11-18T16-53-44-355Z",
@@ -2074,9 +2091,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "4806cf7a8835465d1ddeb226a5cd203a5234f59e47f69bf59cc385054081d2ad",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:54.632Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.179Z"
   },
   {
     "id": "Spine-animation-2026-11-18T12-11-23-130Z",
@@ -2240,9 +2257,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-37-48-529Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "44635c8d3337d5d38500a04be070148e5f39a1693ec31faf993f1bf1e56914ae",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:55.137Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.858Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-35-35-972Z",
@@ -2298,9 +2315,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-35-35-972Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "00db60a803a36b3c619b4268ca68ff9241b0b267449487998513570d3d59b7ac",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:55.140Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.862Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-35-23-423Z",
@@ -2356,9 +2373,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-35-23-423Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "856db6cec1d36b4f0079448a9c9c4a73eeb9480dcda274d8078ebfe49e1839ae",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:55.142Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.865Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-34-55-088Z",
@@ -2414,9 +2431,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-34-55-088Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "0acda1bcc783948293f596da4cd8d2dbdd0a19490d898de504c55c020ea9a49d",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:55.144Z"
+    "previewBlockedAt": "2026-11-24T10:39:39.868Z"
   },
   {
     "id": "Spine-animation-2026-11-17T18-26-20-981Z",
@@ -2937,9 +2954,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "3daa3daaf72f0bb2bdcaeff9c2d7661208c9ac3ef58378245f56f6818f1772a6",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:27:56.004Z"
+    "previewBlockedAt": "2026-11-24T10:39:40.945Z"
   },
   {
     "id": "Spine-animation-2026-11-17T18-36-51-976Z",
@@ -3645,9 +3662,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "6ae6fa48fa00c3af1c8f18c89c17a85aac57425c37f86465ee1b5c7005317cd8",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:28:00.619Z",
+    "previewBlockedAt": "2026-11-24T10:39:47.002Z",
     "lastPreviewRetryError": ""
   },
   {
@@ -3686,9 +3703,9 @@
     "lastPreviewRetryError": "",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "112b07a876432fe5ba0e534fc46872c82cd151b76f4cfc76186bc567ee170b40",
-    "previewBlockedRendererRevision": "auto-track-recovery-v10-bounded-source-skin",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T10:28:00.621Z"
+    "previewBlockedAt": "2026-11-24T10:39:47.006Z"
   },
   {
     "id": "Spine-animation-2026-11-17T17-50-04-803Z",
