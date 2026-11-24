@@ -91,6 +91,18 @@ try{
   records[5].webpPoster='https://example.test/preview.webp';
   records[5].previewFrameCount=60;
   records[5].previewDuration=2;
+  // A failed frame-zero poster refresh must force a fresh render even when
+  // the previous WebM/metadata set still passes the lightweight reuse check.
+  records[6].webmStatus='failed';
+  records[6].previewStatus='failed';
+  records[6].previewAnimation='Idle';
+  records[6].allAnimationPreviews={Idle:{webmPreview:'https://example.test/preview.webm',
+    webpPoster:'https://example.test/preview.webp'}};
+  records[6].webmPreview='https://example.test/preview.webm';
+  records[6].webpPoster='https://example.test/preview.webp';
+  records[6].previewFrameCount=12;
+  records[6].previewDuration=2;
+  records[6].previewError='Existing WebM could not produce its exact first-frame WebP poster';
   records.push({id:'synthetic-hidden',uploadedAt:'2026-11-19T06:00:00Z',
     previewPath:'library_02/synthetic-hidden',testOnly:true,hiddenFromPublicLibrary:true,
     files:['test.skel','test.atlas','test.png']});
@@ -145,8 +157,8 @@ try{
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
   if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,blockedReason:x.blockedReason,animation:x.animation}))));
-  assert.equal(matrix.length,17);
-  assert.equal(Number(output.renderCount),17);
+  assert.equal(matrix.length,18);
+  assert.equal(Number(output.renderCount),18);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
@@ -175,6 +187,10 @@ try{
   assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
     'Spine 3.7 binary-only source without same-work JSON must not enter native rendering');
   assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
+  const posterFailure=all.find(x=>x.id==='fixture-06');
+  assert.equal(posterFailure.needsRender,true,
+    'a failed exact first-frame WebP recovery must force a fresh render even when old media passes reuse checks');
+  assert.ok(matrix.some(x=>x.id==='fixture-06'));
   const reusable=all.find(x=>x.id==='fixture-05');
   assert.equal(reusable.ready,true);
   assert.equal(reusable.needsRender,false,'previously accepted exact preview media should be restored after live verification rather than rerendered');
