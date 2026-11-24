@@ -102,10 +102,9 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
-assert.ok(exporter.includes("const skinCandidates = [null]"),
-  "try the source default first; named alternatives must come from the loaded runtime");
-assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"),
-  "binary-only skeletons expose source skin names from their loaded runtime");
+assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
+assert.ok(exporter.includes("configuredPreviewSkinCandidates(skinConfig)"), "use only skin names explicitly declared by the uploaded source config");
+assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
 assert.match(exporter,/skinCandidates\.push\(name\)/,
   "runtime skins are tried only after the default skin produces no visible frame");
 assert.match(exporter,/if \(args\.allowVisibleTrackFallback\)/);
