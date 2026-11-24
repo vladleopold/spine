@@ -85,6 +85,35 @@ try{
       ...(i===35?{}:{defaultAnimation:'idle'}),
       files:['test.skel','test.atlas','test.png']});
   }
+  // Materialize source triads for every fixture. The production inventory
+  // now inspects real files rather than trusting index.files alone.
+  const pngHeader=Buffer.alloc(24);
+  Buffer.from([137,80,78,71,13,10,26,10]).copy(pngHeader,0);
+  pngHeader.writeUInt32BE(1,16);
+  pngHeader.writeUInt32BE(1,20);
+  for(const record of records){
+    const directory=path.join(root,'library_02',record.id);
+    fs.mkdirSync(directory,{recursive:true});
+    const names=Array.isArray(record.files)?record.files:[];
+    const skeleton=names.find(name=>/\\.(json|skel)$/i.test(name));
+    const atlas=names.find(name=>/\\.atlas(?:\\.txt|\\.docx)?$/i.test(name));
+    const texture=names.find(name=>/\\.(png|jpe?g|webp|dds)$/i.test(name));
+    if(skeleton){
+      const target=path.join(directory,skeleton);
+      if(!fs.existsSync(target)){
+        if(/\\.json$/i.test(skeleton)){
+          fs.writeFileSync(target,JSON.stringify({skeleton:{spine:'4.2'},bones:[{name:'root'}],
+            animations:{idle:{bones:{root:{translate:[{time:0,x:0,y:0},{time:1,x:1,y:0}]}}}}}));
+        }else fs.writeFileSync(target,Buffer.from('fixture-spine-skeleton'));
+      }
+    }
+    if(atlas&&!fs.existsSync(path.join(directory,atlas))){
+      fs.writeFileSync(path.join(directory,atlas),texture
+        ?texture+'\\nsize: 1,1\\nformat: RGBA8888\\nfilter: Linear,Linear\\nrepeat: none\\n'
+        :'');
+    }
+    if(texture&&!fs.existsSync(path.join(directory,texture)))fs.writeFileSync(path.join(directory,texture),pngHeader);
+  }
   fs.writeFileSync(path.join(shard,'index.json'),JSON.stringify(records));
   const result=spawnSync(process.execPath,[script,'matrix'],{
     cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
