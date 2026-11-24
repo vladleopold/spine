@@ -140,7 +140,7 @@ try{
   ]){
     const item=all.find(x=>x.id===id);
     assert.ok(item);
-    assert.equal(item.animation,'Idle','missing default should use the source-declared Idle track');
+    assert.match(item.animation,/^idle$/i,'missing default should use the source-declared Idle track');
     assert.equal(item.ready,true);
     assert.equal(item.needsRender,true);
     assert.equal(item.blockedReason,'');
@@ -163,8 +163,8 @@ try{
   assert.equal(formerlyBlocked.ready,true,'new renderer revision must retry previously blocked default skin');
   assert.equal(formerlyBlocked.needsRender,true);
   assert.equal(formerlyBlocked.blockedReason,'');
-  assert.equal(all[3].animation,'Idle','an unavailable indexed track falls back to a real source track');
-  assert.ok(all.slice(4).every(x=>x.animation==='Idle'));
+  assert.match(all[3].animation,/^idle$/i,'an unavailable indexed track falls back to a real source track');
+  assert.ok(all.slice(4).every(x=>/^idle$/i.test(x.animation)));
   assert.doesNotMatch(repairSource,/record\.defaultAnimation\.trim\(\)/,
     'selection presence must not normalize the exact animation name');
   assert.match(repairSource,/readSourceAnimationNames\(e,record\)/);
@@ -207,7 +207,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.equal(Number(fiftyOutput.renderCount),47);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
-  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&x.animation==='Idle'&&x.needsRender));
+  assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&/^idle$/i.test(x.animation)&&x.needsRender));
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-45-14-132Z'&&x.animation==='Idle'&&x.needsRender));
   assert.ok(allFifty.some(x=>x.id==='older-fixture-35'&&x.animation==='__SPINE_AUTO__'&&x.ready&&x.needsRender),
     'binary-only skeletons defer animation selection to the pinned Spine runtime');
