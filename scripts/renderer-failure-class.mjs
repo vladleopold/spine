@@ -66,7 +66,9 @@ export function summarizeRendererLog(text) {
     canvasFallbackAttempted:/CANVAS_FALLBACK_CAPTURE=started|REALTIME_CANVAS_CAPTURE_PASS|No visible real-time Spine frames/i.test(log),
     canvasFallbackPassed:/CANVAS_FALLBACK_CAPTURE=passed|REALTIME_CANVAS_CAPTURE_PASS/i.test(log),
   };
-  const ffmpegFailure=classifyFfmpegFailure(log);
+  const sourceGraphMissing=/ENOENT:\s*no such file or directory,\s*open\s+/i.test(log)||
+    /missing required files|no spine sets found|atlas file missing/i.test(log);
+  const ffmpegFailure=sourceGraphMissing?"NONE":classifyFfmpegFailure(log);
   // Source-graph and atlas blockers take precedence over FFmpeg's generic
   // ENOENT classification. A missing hydrated skeleton/atlas is not an
   // encoder failure, even when FFmpeg is the component that notices it.
