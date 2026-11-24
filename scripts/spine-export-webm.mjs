@@ -1208,6 +1208,17 @@ try {
                   slot: slot.data && slot.data.name || '',
                   attachment: slot.attachment && slot.attachment.name || '',
                   region: slot.attachment && slot.attachment.region && slot.attachment.region.name || '',
+                  attachmentSize: slot.attachment ? { width: slot.attachment.width || 0, height: slot.attachment.height || 0 } : null,
+                  regionSize: slot.attachment && slot.attachment.region ? {
+                    width: slot.attachment.region.width || 0,
+                    height: slot.attachment.region.height || 0,
+                    originalWidth: slot.attachment.region.originalWidth || 0,
+                    originalHeight: slot.attachment.region.originalHeight || 0,
+                    u: slot.attachment.region.u || 0,
+                    v: slot.attachment.region.v || 0,
+                    u2: slot.attachment.region.u2 || 0,
+                    v2: slot.attachment.region.v2 || 0,
+                  } : null,
                   page: slot.attachment && slot.attachment.region && slot.attachment.region.page && slot.attachment.region.page.name || '',
                   image: slot.attachment && slot.attachment.region && slot.attachment.region.page && slot.attachment.region.page.texture && slot.attachment.region.page.texture._image
                     ? {
