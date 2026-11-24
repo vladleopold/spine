@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha } from "./atlas-pages.mjs";
 
 assert.equal(
   chooseAtlasForSkeleton("Werewolf Cowgirl.skel",
@@ -55,3 +55,10 @@ assert.doesNotMatch(strippedLegacyAtlas.text,/^\s*pma\s*:/m);
 assert.match(strippedLegacyAtlas.text,/^Ren_10$/m);
 assert.match(strippedLegacyAtlas.text,/^14505-1\.png$/m);
 console.log("PASS legacy Spine 3.8 atlas strips unsupported pma metadata without changing regions");
+
+assert.equal(readAtlasPremultipliedAlpha("page.png\\nsize: 1,1"),true,
+  "atlas without pma metadata uses Spine's premultiplied-alpha default");
+assert.equal(readAtlasPremultipliedAlpha("page.png\\nsize: 1,1\\npma: false"),false);
+assert.equal(readAtlasPremultipliedAlpha("page.png\\nsize: 1,1\\npma: true"),true);
+assert.throws(()=>readAtlasPremultipliedAlpha("one.png\\npma: true\\n\\ntwo.png\\npma: false"),/disagree/);
+console.log("PASS atlas PMA defaults and explicit page metadata");
