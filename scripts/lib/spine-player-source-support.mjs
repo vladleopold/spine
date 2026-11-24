@@ -1,9 +1,30 @@
-// Spine Player 3.7 validates jsonUrl only; it has no skelUrl/binaryUrl path.
-// Never pass a binary .skel to that runtime or let the player fail ambiguously.
+// Browser preview generation is limited to runtimes for which this repository
+// ships a matching Spine Web Player bundle. Older skeletons must be re-exported;
+// never load a mismatched or nonexistent player runtime and misreport a 404 as
+// a network outage.
 export function spinePlayerSourceBlocker(version, skeletonFile) {
   const normalizedVersion = String(version || '').trim();
+  const versionMatch = normalizedVersion.match(/^(\d+)\.(\d+)(?:\.|$)/);
+  if (!versionMatch) {
+    return {
+      code: 'SPINE_VERSION_UNKNOWN',
+      message: 'Spine export version could not be detected; the renderer will not guess a player runtime.',
+    };
+  }
+
+  const major = Number(versionMatch[1]);
+  const minor = Number(versionMatch[2]);
+  if (major < 3 || (major === 3 && minor < 7)) {
+    return {
+      code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
+      message: `No bundled Spine Web Player runtime supports Spine ${normalizedVersion}; re-export with Spine 3.7+ before browser preview generation.`,
+    };
+  }
+
+  // Spine Player 3.7 validates jsonUrl only; it has no skelUrl/binaryUrl path.
+  // Never pass a binary .skel to that runtime or let the player fail ambiguously.
   const isBinarySkeleton = /\.skel$/i.test(String(skeletonFile || ''));
-  if (/^3\.7(?:\.|$)/.test(normalizedVersion) && isBinarySkeleton) {
+  if (major === 3 && minor === 7 && isBinarySkeleton) {
     return {
       code: 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
       message: 'Spine Player 3.7 requires jsonUrl; binary .skel cannot be loaded without a same-work JSON skeleton.',
