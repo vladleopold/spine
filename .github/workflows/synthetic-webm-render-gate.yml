@@ -66,6 +66,10 @@ on:
 permissions:
   contents: read
 
+      - .github/workflows/spine-export-all.yml
+      - .github/workflows/repair-last-ten-previews.yml
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - .github/workflows/repair-reported-previews.yml
 jobs:
   synthetic-render-gate:
     runs-on: ubuntu-24.04
@@ -84,6 +88,7 @@ jobs:
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-full.yml
+            /.github/workflows/spine-export-all.yml
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
