@@ -8,6 +8,7 @@ export function classifyRendererError(text) {
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
   if(x.includes("unsupported_spine_export_3_8_75"))return "UNSUPPORTED_SPINE_EXPORT_VERSION";
   if (x.includes("couldn't load texture atlas page")||x.includes("couldn't load image")||x.includes("assets could not be loaded")||x.includes("could not load atlas")||x.includes("failed to fetch atlas")||x.includes("texture atlas page")) return "ATLAS_TEXTURE_LOAD";
+  if (x.includes("region not set")||x.includes("could not find atlas region")) return "ATLAS_REGION_MISSING";
   if (x.includes("unknown format")||x.includes("unsupported skeleton")||x.includes("unsupported spine")) return "SKELETON_RUNTIME_VERSION";
   if (x.includes("animation")&&(x.includes("not found")||x.includes("invalid"))) return "ANIMATION_SELECTION";
   if (x.includes("skeleton")&&x.includes("not found")||x.includes("no spine sets found")||x.includes("missing required files")||x.includes("atlas file missing")) return "SOURCE_GRAPH_MISSING";
