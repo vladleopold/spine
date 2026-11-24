@@ -9,6 +9,11 @@ permissions:
 jobs:
   cancel-unrelated-full-export:
     runs-on: ubuntu-24.04
+    # Acquire the shared library-write lock with cancellation enabled to evict
+    # the stuck full-export commit that is holding up the requested recovery.
+    concurrency:
+      group: spine-library-commit
+      cancel-in-progress: true
     steps:
       - name: Cancel the stalled all-animation export that is blocking archive recovery
         env:
