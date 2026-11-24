@@ -103,7 +103,7 @@ permissions:
   contents: read
 concurrency:
   group: spine-preview-latest-twenty-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   inventory:
     runs-on: ubuntu-24.04
