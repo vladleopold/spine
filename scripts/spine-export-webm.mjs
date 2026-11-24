@@ -444,6 +444,9 @@ if (sourceBlocker) {
 const PAD_RATIO = 0.14; // 14% padding on each side
 const MIN_VIDEO_DIM = 200;
 const MAX_VIDEO_DIM = 1920;
+// Bound archive previews even when source animations contain unusually long timelines.
+// The selected source track still loops from its first key; only preview capture length is capped.
+const MAX_PREVIEW_CAPTURE_SECONDS = 30;
 
 // Huge skeleton bounds commonly include off-camera game assets. Preserve a
 // native 1:1 game-camera crop instead of zooming out to show every attachment.
@@ -1108,7 +1111,10 @@ try {
     }
 
     // Preserve only the selected animation's own duration.
-    captureDuration = effectiveDuration;
+    captureDuration = Math.min(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS);
+    if (captureDuration < effectiveDuration) {
+      console.error(`PREVIEW_CAPTURE_DURATION_CAPPED source=${effectiveDuration}s preview=${captureDuration}s`);
+    }
     // A 1/30-second fallback produces a technically decodable but invisible
     // 8-frame clip. When an old binary omits a duration, sample a real 2s
     // loop of the actual Spine runtime instead. Source duration stays marked
