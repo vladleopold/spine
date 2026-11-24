@@ -193,7 +193,7 @@ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
 const gameCamera=String(config.gameCamera||'').trim();
-if(/^\\d+x\\d+$/i.test(gameCamera))flags.push(`--game-camera=${gameCamera}`);
+if(/^\d+x\d+$/i.test(gameCamera))flags.push(`--game-camera=${gameCamera}`);
 if(selection.animation==='__SPINE_AUTO__')flags.push('--allow-visible-track-fallback');
 try{
  runCaptured('node',['scripts/spine-export-webm.mjs',...flags]);
