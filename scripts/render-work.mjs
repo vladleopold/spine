@@ -83,6 +83,11 @@ const runCaptured=(cmd,args)=>{
  }
  return stdout;
 };
+function staleRenderError(message){
+ const error=new Error(message);
+ error.code='STALE_RENDER_SUPERSEDED';
+ return error;
+}
 async function markBlockedRender(status,distinctError){
  const expectedFingerprint=previewSourceFingerprint(found.entry);
  const expectedSkin=String(found.entry.defaultSkin||found.entry.skin||'');
@@ -98,15 +103,15 @@ async function markBlockedRender(status,distinctError){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
   run('git',['reset','--hard','origin/main']);
   const current=entryForUpload(process.cwd(),id);
-  if(!current||!Array.isArray(current.index))throw new Error('Upload index unavailable');
+  if(!current||!Array.isArray(current.index))throw staleRenderError('Upload index unavailable');
   const index=current.index;
   const indexPosition=index.findIndex(entry=>entry?.id===id);
-  if(indexPosition<0)throw new Error('Upload removed before blocked render status update');
+  if(indexPosition<0)throw staleRenderError('Upload removed before blocked render status update');
   const record=index[indexPosition];
-  if(record.defaultAnimation!==animation)throw new Error('Default animation changed before blocked render status update');
+  if(record.defaultAnimation!==animation)throw staleRenderError('Default animation changed before blocked render status update');
   const fingerprint=previewSourceFingerprint(record);
   const skin=String(record.defaultSkin||record.skin||'');
-  if(fingerprint!==expectedFingerprint||skin!==expectedSkin)throw new Error('Source or skin selection changed before blocked render status update');
+  if(fingerprint!==expectedFingerprint||skin!==expectedSkin)throw staleRenderError('Source or skin selection changed before blocked render status update');
   record.webmStatus=status;
   record.previewStatus='blocked';
   record.previewBlockedAnimation=animation;
@@ -134,13 +139,13 @@ async function markBlockedSelection(){
     run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);
     run('git',['reset','--hard','origin/main']);
     const current=entryForUpload(process.cwd(),id);
-    if(!current||!Array.isArray(current.index))throw new Error('Upload index unavailable');
+    if(!current||!Array.isArray(current.index))throw staleRenderError('Upload index unavailable');
     const index=current.index;
     const indexPosition=index.findIndex(entry=>entry?.id===id);
-    if(indexPosition<0)throw new Error('Upload removed before blocked status update');
+    if(indexPosition<0)throw staleRenderError('Upload removed before blocked status update');
     const record=index[indexPosition];
     const blocked=missingAnimationPreviewMetadata(record);
-    if(!blocked)throw new Error('Explicit animation selection changed before blocked status update');
+    if(!blocked)throw staleRenderError('Explicit animation selection changed before blocked status update');
     Object.assign(record,blocked);
     const indexPath=path.join(current.basePath,'index.json');
     fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
@@ -157,6 +162,11 @@ async function markBlockedSelection(){
 }
 process.on('uncaughtException',error=>{
  const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
+ if(safeCode==='STALE_RENDER_SUPERSEDED'){
+  report.status='superseded';report.code=safeCode;writeReport();
+  console.log('SPINE_RENDER_SUPERSEDED=SOURCE_CHANGED_DURING_RENDER');
+  process.exit(0);
+ }
  if(report.status==='ready'&&safeCode.startsWith('FULL_EXPORT_DISPATCH_')){
   report.status='partial';report.renderStatus='ready';report.dispatchStatus='failed';report.code=safeCode;
   writeReport();console.error(`SPINE_EXPORT_PARTIAL=${safeCode}`);
