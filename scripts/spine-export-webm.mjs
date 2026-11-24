@@ -998,7 +998,8 @@ try {
     const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
     for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
       const normalizedName = typeof name === 'string' ? name.trim() : '';
-      if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
+      const sourceDeclaredName = sourceSkinNames.includes(normalizedName);
+      if (normalizedName && (normalizedName.toLowerCase() !== 'default' || sourceDeclaredName) &&
           !skinCandidates.includes(normalizedName) && skinCandidates.length < 13) {
         skinCandidates.push(normalizedName);
       }
