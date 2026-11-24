@@ -4211,8 +4211,16 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/FreeSpinsNightBG-2026-10-23T09-39-43-204Z/freespinsnightbg_8.webp?v=2026-10-23T09-39-43.204Z",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-invisible-default-skin",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewBlockedAnimation": "animation",
+    "previewBlockedSourceFingerprint": "66e3e0b592b6b77687413a5ca2fadee7b0675a49fd5a811fb12ef0362d462bab",
+    "previewBlockedRendererRevision": "auto-track-recovery-v12-runtime-default-skin-fallback",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T10:32:39.054Z",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "Test_Marchenko-2026-11-15T20-19-59-177Z",
@@ -5113,15 +5121,38 @@
     "ownerAnonFingerprint": "pp4pnz",
     "publicOwnerId": "u_j1p1w2",
     "thumbnail": "",
-    "thumbnailPoster": "",
-    "webmPreview": "",
-    "webmStatus": "blocked-missing-source",
-    "dispatchStatus": "pending",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
     "ownerName": "Vladyslav Chaplygin",
     "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
-    "previewStatus": "blocked",
-    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
+    "previewStatus": "ready",
+    "previewError": "",
+    "previewAnimation": "animation3",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-low.webp",
+    "webmGeneratedAt": "2026-11-24T10:32:37.893Z",
+    "posterGeneratedAt": "2026-11-24T10:32:37.893Z",
+    "previewWidth": 1920,
+    "previewHeight": 1080,
+    "previewFrameCount": 180,
+    "previewDuration": 6,
+    "lastPreviewRetryError": "",
+    "allAnimationPreviews": {
+      "animation3": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-653Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "Playtopic-2026-10-26T21-43-25-650Z",
@@ -5131,13 +5162,38 @@
     "ownerAnonFingerprint": "pp4pnz",
     "publicOwnerId": "u_j1p1w2",
     "thumbnail": "",
-    "thumbnailPoster": "",
-    "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
     "ownerEmail": "vladyslavchaplygin@gmail.com",
     "ownerName": "Vladyslav Chaplygin",
-    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c"
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
+    "previewAnimation": "animation3",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-low.webp",
+    "previewStatus": "ready",
+    "previewError": "",
+    "webmGeneratedAt": "2026-11-24T10:32:38.719Z",
+    "posterGeneratedAt": "2026-11-24T10:32:38.719Z",
+    "previewWidth": 1920,
+    "previewHeight": 1080,
+    "previewFrameCount": 180,
+    "previewDuration": 6,
+    "lastPreviewRetryError": "",
+    "allAnimationPreviews": {
+      "animation3": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Playtopic-2026-10-26T21-43-25-650Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "Spine-animation-2026-11-11T16-11-58-603Z",
@@ -6164,7 +6220,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/build_char_377_gdglow-2026-10-31T01-59-20-411Z/default-preview.webp?v=2026-10-31T01-59-20.411Z",
     "thumbnailPosterPath": "build_char_377_gdglow-2026-10-31T01-59-20-411Z/default-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -6365,8 +6421,8 @@
     },
     "webmPreviewPath": "library_02/build_char_377_gdglow-2026-10-31T01-59-20-411Z/preview.webm",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "cherry-2026-10-30T11-24-57-053Z",
@@ -6403,7 +6459,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp?v=2026-10-30T11-24-57.053Z",
     "thumbnailPosterPath": "cherry-2026-10-30T11-24-57-053Z/cherry-celebrate-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -6684,8 +6740,8 @@
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-11-07T22:18:35.737Z",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "yuuka_home-2026-10-30T05-22-48-582Z",
@@ -6759,7 +6815,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/yuuka_home-2026-10-30T05-22-48-582Z/dev_bg_fx-preview.webp?v=2026-10-30T05-22-48.582Z",
     "thumbnailPosterPath": "yuuka_home-2026-10-30T05-22-48-582Z/dev_bg_fx-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -6953,8 +7009,8 @@
     },
     "webmPreviewPath": "library_02/yuuka_home-2026-10-30T05-22-48-582Z/preview.webm",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "turret_grave-2026-10-28T16-07-13-274Z",
@@ -6990,7 +7046,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/turret_grave-2026-10-28T16-07-13-274Z/idle-preview.webp?v=2026-10-28T16-07-13.274Z",
     "thumbnailPosterPath": "turret_grave-2026-10-28T16-07-13-274Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -7191,8 +7247,8 @@
     },
     "webmPreviewPath": "library_02/turret_grave-2026-10-28T16-07-13-274Z/preview.webm",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "big_win-2026-10-26T22-02-37-490Z",
@@ -7239,7 +7295,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/big_win-2026-10-26T22-02-37-490Z/1_great_win_in-preview.webp?v=2026-10-26T22-02-37.490Z",
     "thumbnailPosterPath": "big_win-2026-10-26T22-02-37-490Z/1_great_win_in-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -7447,8 +7503,8 @@
     "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
     "webmPreviewPath": "library_02/big_win-2026-10-26T22-02-37-490Z/preview.webm",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance"
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-26T09-18-14-451Z",
@@ -7460,8 +7516,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-26T01-22-27-253Z",
@@ -7473,8 +7531,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-26T01-21-09-243Z",
@@ -7486,8 +7546,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-26T01-20-40-393Z",
@@ -7499,8 +7561,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-58-09-052Z",
@@ -7538,7 +7602,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-58-09-052Z/idle-preview.webp?v=2026-10-25T16-58-09.052Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-58-09-052Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -7735,7 +7799,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-58-09-052Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-58-09-052Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-58-09-052Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-58-09-052Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-42-41-493Z",
@@ -7773,7 +7839,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-42-41-493Z/idle-preview.webp?v=2026-10-25T16-42-41.493Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-42-41-493Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -7970,7 +8036,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-42-41-493Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-42-41-493Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-42-41-493Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-42-41-493Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-27-47-511Z",
@@ -8008,7 +8076,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-27-47-511Z/idle-preview.webp?v=2026-10-25T16-27-47.511Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-27-47-511Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -8205,7 +8273,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-27-47-511Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-27-47-511Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-27-47-511Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-27-47-511Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-18-51-649Z",
@@ -8243,7 +8313,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-18-51-649Z/idle-preview.webp?v=2026-10-25T16-18-51.649Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-18-51-649Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -8440,7 +8510,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-18-51-649Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-18-51-649Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-18-51-649Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-18-51-649Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-16-11-083Z",
@@ -8478,7 +8550,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-16-11-083Z/idle-preview.webp?v=2026-10-25T16-16-11.083Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-16-11-083Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -8675,7 +8747,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-16-11-083Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-16-11-083Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-16-11-083Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-16-11-083Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-25T16-11-53-127Z",
@@ -8713,7 +8787,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-11-53-127Z/idle-preview.webp?v=2026-10-25T16-11-53.127Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-25T16-11-53-127Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -8910,7 +8984,9 @@
       "anchorPath": "321-spine-2025-2026-10-25T16-11-53-127Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-25T16-11-53-127Z/blockchain-anchor.json"
     },
-    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-11-53-127Z/preview.webm"
+    "webmPreviewPath": "library_02/321-spine-2025-2026-10-25T16-11-53-127Z/preview.webm",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-25T01-11-25-210Z",
@@ -8922,8 +8998,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-25T01-11-25-153Z",
@@ -8935,8 +9013,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-24T23-10-28-743Z",
@@ -8974,7 +9054,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T23-10-28-743Z/idle-preview.webp?v=2026-10-24T23-10-28.743Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-24T23-10-28-743Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9170,7 +9250,9 @@
       },
       "anchorPath": "321-spine-2025-2026-10-24T23-10-28-743Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T23-10-28-743Z/blockchain-anchor.json"
-    }
+    },
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-24T23-08-19-870Z",
@@ -9208,7 +9290,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T23-08-19-870Z/idle-preview.webp?v=2026-10-24T23-08-19.870Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-24T23-08-19-870Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9404,7 +9486,9 @@
       },
       "anchorPath": "321-spine-2025-2026-10-24T23-08-19-870Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T23-08-19-870Z/blockchain-anchor.json"
-    }
+    },
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-24T22-17-53-463Z",
@@ -9442,7 +9526,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T22-17-53-463Z/idle-preview.webp?v=2026-10-24T22-17-53.463Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-24T22-17-53-463Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9638,7 +9722,9 @@
       },
       "anchorPath": "321-spine-2025-2026-10-24T22-17-53-463Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T22-17-53-463Z/blockchain-anchor.json"
-    }
+    },
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "321-spine-2025-2026-10-24T21-48-38-912Z",
@@ -9676,7 +9762,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T21-48-38-912Z/idle-preview.webp?v=2026-10-24T21-48-38.912Z",
     "thumbnailPosterPath": "321-spine-2025-2026-10-24T21-48-38-912Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -9872,7 +9958,9 @@
       },
       "anchorPath": "321-spine-2025-2026-10-24T21-48-38-912Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/321-spine-2025-2026-10-24T21-48-38-912Z/blockchain-anchor.json"
-    }
+    },
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "276-Spine-2014--2026-10-24T21-46-51-258Z",
@@ -9885,7 +9973,7 @@
     "thumbnailPoster": "",
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-258Z/preview.webm",
     "webmStatus": "ready",
-    "dispatchStatus": "pending",
+    "dispatchStatus": "rendered",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-258Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-258Z/preview-low.webm",
     "webmPreviewPath": "library_02/276-Spine-2014--2026-10-24T21-46-51-258Z/preview.webm",
@@ -10009,9 +10097,11 @@
     "previewStatus": "ready",
     "previewError": "",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "posterGeneratedAt": "2026-11-24T10:32:39.031Z",
     "skeletonWidth": 33,
-    "skeletonHeight": 50
+    "skeletonHeight": 50,
+    "previewAnimation": "idle",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "276-Spine-2014--2026-10-24T21-46-51-278Z",
@@ -10021,10 +10111,35 @@
     "ownerAnonFingerprint": "otflqv",
     "publicOwnerId": "u_1tsml1b",
     "thumbnail": "",
-    "thumbnailPoster": "",
-    "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
+    "previewAnimation": "idle",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-low.webp",
+    "previewStatus": "ready",
+    "previewError": "",
+    "webmGeneratedAt": "2026-11-24T10:32:38.874Z",
+    "posterGeneratedAt": "2026-11-24T10:32:38.874Z",
+    "previewWidth": 200,
+    "previewHeight": 200,
+    "previewFrameCount": 21,
+    "previewDuration": 0.676054,
+    "lastPreviewRetryError": "",
+    "allAnimationPreviews": {
+      "idle": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/276-Spine-2014--2026-10-24T21-46-51-278Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "276-spine-2014-2026-10-24T21-47-41-860Z",
@@ -10062,7 +10177,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/276-spine-2014-2026-10-24T21-47-41-860Z/idle-preview.webp?v=2026-10-24T21-47-41.860Z",
     "thumbnailPosterPath": "276-spine-2014-2026-10-24T21-47-41-860Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -10258,7 +10373,9 @@
       },
       "anchorPath": "276-spine-2014-2026-10-24T21-47-41-860Z/blockchain-anchor.json",
       "anchorUrl": "https://spine-link.vercel.app/assets/276-spine-2014-2026-10-24T21-47-41-860Z/blockchain-anchor.json"
-    }
+    },
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T18-14-57-620Z",
@@ -10270,8 +10387,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T18-14-41-582Z",
@@ -10283,8 +10402,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T18-13-25-465Z",
@@ -10296,8 +10417,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T18-12-51-084Z",
@@ -10309,8 +10432,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T10-05-48-375Z",
@@ -10322,8 +10447,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "anniu-2026-10-24T02-06-22-726Z",
@@ -10335,8 +10462,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-24T02-04-39-137Z",
@@ -10348,8 +10477,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-22T15-08-06-875Z",
@@ -10361,8 +10492,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-22T15-08-06-862Z",
@@ -10374,8 +10507,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "wins-2026-10-22T10-56-30-508Z",
@@ -10414,7 +10549,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/wins-2026-10-22T10-56-30-508Z/count_up_in-preview.webp?v=2026-10-22T10-56-30.508Z",
     "thumbnailPosterPath": "wins-2026-10-22T10-56-30-508Z/count_up_in-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "pending",
+    "webmStatus": "blocked-missing-source",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -10619,7 +10754,9 @@
     },
     "ownerEmail": "vladyslavchaplygin@gmail.com",
     "ownerName": "Vladyslav Chaplygin",
-    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c"
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocJ5MFhU3Gtrjf9o1WFV8vtfuY7YLa1WoEJYBANmX4GyZT3dN1Q7=s96-c",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "manifest-2026-10-21T12-31-23-529Z",
@@ -10631,8 +10768,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "manifest-2026-10-21T12-31-23-528Z",
@@ -10644,8 +10783,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-21T08-05-41-617Z",
@@ -10657,8 +10798,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-21T08-05-41-563Z",
@@ -10670,8 +10813,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "boss_spider_01_Atlas-2026-10-20T16-21-39-035Z",
@@ -10683,8 +10828,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "boss_spider_01_Atlas-2026-10-20T16-21-38-966Z",
@@ -10696,8 +10843,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-20T11-08-43-079Z",
@@ -10709,8 +10858,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-20T11-08-43-076Z",
@@ -10722,8 +10873,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "character-2026-10-20T09-50-47-424Z",
@@ -10735,8 +10888,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "superboxbot-2026-10-18T03-51-48-728Z",
@@ -10746,10 +10901,35 @@
     "ownerAnonFingerprint": "mr7mapbm2emvdagxdi",
     "publicOwnerId": "u_bw5ha",
     "thumbnail": "",
-    "thumbnailPoster": "",
-    "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
+    "previewAnimation": "idle",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-low.webp",
+    "previewStatus": "ready",
+    "previewError": "",
+    "webmGeneratedAt": "2026-11-24T10:32:39.271Z",
+    "posterGeneratedAt": "2026-11-24T10:32:39.271Z",
+    "previewWidth": 256,
+    "previewHeight": 358,
+    "previewFrameCount": 46,
+    "previewDuration": 1.560172,
+    "lastPreviewRetryError": "",
+    "allAnimationPreviews": {
+      "idle": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-728Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "superboxbot-2026-10-18T03-51-48-726Z",
@@ -10759,10 +10939,35 @@
     "ownerAnonFingerprint": "mr7mapbm2emvdagxdi",
     "publicOwnerId": "u_bw5ha",
     "thumbnail": "",
-    "thumbnailPoster": "",
-    "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview.webp",
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview.webm",
+    "webmStatus": "ready",
+    "dispatchStatus": "rendered",
+    "previewAnimation": "idle",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-low.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-low.webp",
+    "previewStatus": "ready",
+    "previewError": "",
+    "webmGeneratedAt": "2026-11-24T10:32:39.467Z",
+    "posterGeneratedAt": "2026-11-24T10:32:39.467Z",
+    "previewWidth": 256,
+    "previewHeight": 358,
+    "previewFrameCount": 48,
+    "previewDuration": 1.566536,
+    "lastPreviewRetryError": "",
+    "allAnimationPreviews": {
+      "idle": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/superboxbot-2026-10-18T03-51-48-726Z/preview-low.webp"
+      }
+    }
   },
   {
     "id": "Spine-animation-2026-10-18T03-46-02-876Z",
@@ -10774,8 +10979,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-18T02-56-44-226Z",
@@ -10787,8 +10994,10 @@
     "thumbnail": "",
     "thumbnailPoster": "",
     "webmPreview": "",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-10-18T02-56-44-224Z",
