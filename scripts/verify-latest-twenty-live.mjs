@@ -153,8 +153,13 @@ for(const work of snapshot){
   else if(work.ready===false)blocked++;
   else failed++;
 }
+const renderableCandidates=snapshot.filter(work=>work.ready===true).length;
+const inventoryBlocked=snapshot.length-renderableCandidates;
 console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
-  total:snapshot.length,ready,blocked,failed,mediaVerified:verifiedMedia,
+  total:snapshot.length,renderableCandidates,inventoryBlocked,ready,blocked,failed,mediaVerified:verifiedMedia,
   expectedMedia:ready*fields.length,mutatedSource
 }));
-if(failed||blocked||ready!==snapshot.length||ready+blocked!==snapshot.length)process.exitCode=1;
+// A source blocker is not a renderer regression. Keep it visible in the audit,
+// but do not halt the 50-item pagination chain: later offsets still need repair.
+// Fail only for failed production media, source mutation, or unclassified rows.
+if(failed||mutatedSource||ready+blocked!==snapshot.length)process.exitCode=1;
