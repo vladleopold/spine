@@ -182,6 +182,7 @@ if(selection.status==='blocked'){
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const base=path.join(temp,'preview.webm');
 const flags=[`--upload-id=${id}`,`--animation=${selection.animation}`,`--repo-path=${process.cwd()}`,`--origin=${origin}`,`--output=${base}`];
+if(selection.animation==='__SPINE_AUTO__')flags.push('--allow-visible-track-fallback');
 try{
  runCaptured('node',['scripts/spine-export-webm.mjs',...flags]);
 }catch(error){
