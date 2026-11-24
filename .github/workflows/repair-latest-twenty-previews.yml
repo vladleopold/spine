@@ -93,7 +93,8 @@ concurrency:
 jobs:
   inventory:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    # Inventory now hydrates all source directories in the bounded batch.
+    timeout-minutes: 20
     outputs:
       matrix: ${{ steps.latest.outputs.matrix }}
       renderCount: ${{ steps.latest.outputs.renderCount }}
