@@ -60,6 +60,12 @@ assert.equal(isLegacyAtlasFormat("page.png\nsize: 1,1\n  xy: 0,0"),true,
   "legacy xy/size atlas format has no pma flag and uses the Spine Editor PMA default");
 assert.equal(isLegacyAtlasFormat("page.png\nsize: 1,1\n  bounds: 0,0,1,1"),false,
   "new bounds/offsets atlas format uses the straight-alpha default when pma is omitted");
+assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1\n  xy: 0,0",
+  isLegacyAtlasFormat("page.png\nsize: 1,1\n  xy: 0,0")),true,
+  "legacy atlas detection selects the PMA fallback when the old format omits metadata");
+assert.equal(readAtlasPremultipliedAlpha("page.png\nsize: 1,1\n  bounds: 0,0,1,1",
+  isLegacyAtlasFormat("page.png\nsize: 1,1\n  bounds: 0,0,1,1")),false,
+  "modern atlas detection selects straight alpha when pma is omitted");
 const legacyNoPma="page.png\nsize: 1,1\n  xy: 0,0";
 const modernNoPma="page.png\nsize: 1,1\n  bounds: 0,0,1,1";
 assert.equal(readAtlasPremultipliedAlpha(legacyNoPma,isLegacyAtlasFormat(legacyNoPma)),true,
