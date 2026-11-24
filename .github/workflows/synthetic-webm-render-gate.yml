@@ -12,6 +12,8 @@ on:
       - 'scripts/test-spine-export-matrix.mjs'
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
+      - 'scripts/test-render-selection.mjs'
+      - 'scripts/lib/spine-player-source-support.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
@@ -34,6 +36,8 @@ on:
       - 'scripts/test-spine-export-matrix.mjs'
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
+      - 'scripts/test-render-selection.mjs'
+      - 'scripts/lib/spine-player-source-support.mjs'
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
@@ -75,6 +79,7 @@ jobs:
           node --check scripts/repair-reported-previews.mjs
           node --check scripts/repair-latest-twenty-previews.mjs
           node --check scripts/source-skeleton-choice.mjs
+          node --check scripts/lib/spine-player-source-support.mjs
           node --check scripts/repair-last-ten-previews.mjs
           node --check scripts/preview-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
@@ -84,5 +89,6 @@ jobs:
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-render-selection.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
