@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     concurrency:
-      group: spine-library-commit
+      group: spine-webm-render
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
