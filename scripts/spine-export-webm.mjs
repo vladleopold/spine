@@ -20,6 +20,7 @@ import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
+import { setPlayerAnimation } from './lib/player-animation.mjs';
 
 const args = {
   uploadId: '',
@@ -629,6 +630,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   window.__ready = false;
 
   var player;
+  window.__setPlayerAnimation = (${setPlayerAnimation.toString()});
   // Peak brightness of the currently rendered frame (center sample).
   // Used by the exporter to detect "rendered nothing but background" and
   // mark the selected preview as blocked. Requires preserveDrawingBuffer (set below).
@@ -713,10 +715,7 @@ ${skinLine}    showLoading: false,
         window.__animationNames.find(function(name) { return /^idle$/i.test(name); }) ||
         window.__animationNames.find(function(name) { return /idle/i.test(name); }) ||
         window.__animationNames[0] || '';
-      if (window.__selectedAnimation && player.animationState) {
-        player.animationState.clearTracks();
-        player.animationState.setAnimation(0, window.__selectedAnimation, true);
-      }
+      if (window.__selectedAnimation) window.__setPlayerAnimation(player, window.__selectedAnimation);
       window.__ready = true;
       window.__canvasWidth = player.canvas ? player.canvas.width : 0;
       window.__canvasHeight = player.canvas ? player.canvas.height : 0;
@@ -1121,9 +1120,7 @@ try {
             ? data.findAnimation(name)
             : (data && data.animations || []).find(item => item && item.name === name);
           try {
-            p.animationState.clearTracks();
-            p.animationState.setAnimation(0, name, true);
-            p.paused = false;
+            window.__setPlayerAnimation(p, name);
             window.__selectedAnimation = name;
             window.__animDuration = animation && Number(animation.duration) || 0;
             return { duration: window.__animDuration };
@@ -1327,9 +1324,7 @@ try {
       await page.clock.pauseAt(new Date('2020-01-01T00:01:00Z'));
       await page.evaluate(name => {
         const p = window.__exportPlayer;
-        p.animationState.clearTracks();
-        p.animationState.setAnimation(0, name, true);
-        p.paused = false;
+        window.__setPlayerAnimation(p, name);
       }, targetAnimation);
       const count = Math.max(1, Math.ceil(captureDuration * args.fps));
       for (let index = 0; index < count; index++) {
@@ -1348,9 +1343,7 @@ try {
         const p=window.__exportPlayer;
         if(!p?.animationState)return false;
         try {
-          p.animationState.clearTracks();
-          p.animationState.setAnimation(0,name,true);
-          p.paused=false;
+          window.__setPlayerAnimation(p, name);
           return true;
         }catch{return false;}
       },targetAnimation);
@@ -1485,9 +1478,7 @@ try {
         const player=window.__exportPlayer;
         if(!player || !player.canvas || !player.animationState)
           throw new Error('No active Spine runtime for real-time fallback');
-        player.animationState.clearTracks();
-        player.animationState.setAnimation(0,name,true);
-        player.paused=false;
+        window.__setPlayerAnimation(player, name);
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
       const canvasHost=page.locator('#player canvas').first();
