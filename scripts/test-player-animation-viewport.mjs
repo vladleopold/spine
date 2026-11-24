@@ -27,4 +27,11 @@ assert.throws(
   /SpinePlayer\.setAnimation/,
 );
 
+import fs from 'node:fs';
+const rendererSource = fs.readFileSync(new URL('../spine-export-webm.mjs', import.meta.url), 'utf8');
+assert.ok(rendererSource.includes('setPlayerAnimation.toString()'),
+  'the browser capture page must use the tested viewport-aware animation helper');
+assert.equal((rendererSource.match(/animationState\\.setAnimation/g) || []).length, 0,
+  'the capture renderer must not bypass SpinePlayer.setAnimation');
+
 console.log('PASS animation changes update the SpinePlayer viewport');
