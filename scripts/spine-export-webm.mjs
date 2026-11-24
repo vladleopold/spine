@@ -1162,6 +1162,35 @@ try {
           const skeleton = p && p.skeleton;
           const data = skeleton && skeleton.data || p && p.skeletonData;
           const track = p && p.animationState && p.animationState.getCurrent(0);
+          const offset = { x: 0, y: 0 };
+          const size = { x: 0, y: 0 };
+          try {
+            skeleton && skeleton.updateWorldTransform && skeleton.updateWorldTransform();
+            skeleton && skeleton.getBounds && skeleton.getBounds(offset, size);
+          } catch {}
+          let atlasPages = [];
+          try {
+            const atlas = p && p.assetManager && p.config && p.config.atlasUrl
+              ? p.assetManager.require(p.config.atlasUrl)
+              : null;
+            atlasPages = atlas && Array.isArray(atlas.pages) ? atlas.pages.map(page => ({
+              name: page.name || '',
+              width: page.width || 0,
+              height: page.height || 0,
+              textureLoaded: Boolean(page.texture),
+              textureWidth: page.texture && (page.texture.width || page.texture.image && page.texture.image.width) || 0,
+              textureHeight: page.texture && (page.texture.height || page.texture.image && page.texture.image.height) || 0,
+            })) : [];
+          } catch (error) {
+            atlasPages = [{ error: String(error && error.message || error) }];
+          }
+          try {
+            if (p && p.config && p.config.debug) {
+              p.config.debug.bones = true;
+              p.config.debug.regions = true;
+              p.config.debug.bounds = true;
+            }
+          } catch {}
           return {
             selectedAnimation: window.__selectedAnimation || '',
             trackAnimation: track && track.animation && track.animation.name || '',
@@ -1176,10 +1205,18 @@ try {
                   bone: slot.bone && slot.bone.data && slot.bone.data.name || '',
                 }))
               : [],
+            bounds: { x: offset.x, y: offset.y, width: size.x, height: size.y },
+            bones: skeleton && Array.isArray(skeleton.bones)
+              ? skeleton.bones.filter(bone => ['wolf', 'head', 'body', 'fence'].includes(bone.data && bone.data.name))
+                  .map(bone => ({ name: bone.data.name, x: bone.worldX, y: bone.worldY, scaleX: bone.worldScaleX, scaleY: bone.worldScaleY }))
+              : [],
+            atlasPages,
+            assetErrors: p && p.assetManager && p.assetManager.getErrors ? p.assetManager.getErrors() : [],
             canvas: p && p.canvas ? { width: p.canvas.width, height: p.canvas.height } : null,
             viewport: p && p.currentViewport ? p.currentViewport : null,
           };
         }).catch(error => ({ diagnosticError: String(error && error.message || error) }));
+        await page.waitForTimeout(250);
         console.error('SPINE_RUNTIME_DIAGNOSTICS=' + JSON.stringify(runtimeDiagnostics));
         const diagnosticScreenshot = await page.locator('#player')
           .screenshot({ type: 'jpeg', quality: 35 }).catch(() => null);
