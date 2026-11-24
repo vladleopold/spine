@@ -248,6 +248,19 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.equal(Number(olderOutput.nextOffset),60,'the final batch must stop exactly at the archive end');
   assert.notEqual(olderBatch[0].id,allFifty[0].id,'offset 50 must not repeat the newest batch');
   assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
+
+  const partialResult=spawnSync(process.execPath,[script,'matrix'],{
+    cwd:root,encoding:'utf8',env:{...process.env,SPINE_REPAIR_INDEX_ONLY:'1',
+      SPINE_REPAIR_SKIP_LIVE:'1',SPINE_REPAIR_LIMIT:'10',SPINE_REPAIR_OFFSET:'55'}});
+  assert.equal(partialResult.status,0,partialResult.stderr);
+  const partialOutput=Object.fromEntries(partialResult.stdout.split('\\n').filter(x=>x.includes('='))
+    .map(x=>[x.slice(0,x.indexOf('=')),x.slice(x.indexOf('=')+1)]));
+  const partialBatch=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
+  assert.equal(partialBatch.length,5,'the final archive batch may contain fewer than the configured maximum');
+  assert.equal(Number(partialOutput.offset),55);
+  assert.equal(Number(partialOutput.totalCount),60);
+  assert.equal(Number(partialOutput.nextOffset),60,'a partial final batch must stop exactly at archive end');
+  assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   assert.doesNotMatch(workflowSource,/needs\.verify-production\.result == 'success'/,
     'partial live-audit failures must not prevent the next archive batch after verified-only publication');
@@ -261,6 +274,12 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(workflowSource,/actions:\s*write/,'the batch runner needs permission to dispatch its successor');
   const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
   const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
+  assert.match(repairSource,/latest\.length===0\|\|latest\.length>repairLimit/,
+    'the final archive batch may be smaller than the maximum batch size');
+  assert.match(repairSource,/selected\.length===0\|\|selected\.length>repairLimit/,
+    'the publish stage accepts only a non-empty manifest within the configured maximum');
+  assert.match(verifySource,/snapshot\.length===0\|\|snapshot\.length>repairLimit/,
+    'production verification accepts a non-empty partial final batch');
   assert.match(verifySource,/blocked-invisible-default-skin/);
   assert.match(verifySource,/\['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'\]\.includes\(work\.blockedReason\)[\s\S]*?record\.webmStatus==='failed' && record\.previewStatus==='failed'/,
     'historical failures for sources known to be unsupported by the pinned runtime are reported as blockers');
