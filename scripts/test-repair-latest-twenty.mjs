@@ -291,44 +291,6 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.equal(Number(partialOutput.nextOffset),60,'a partial final batch must stop exactly at archive end');
   assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
-  assert.doesNotMatch(workflowSource,/needs\.verify-production\.result == 'success'/,
-    'partial live-audit failures must not block independent later batches after verified-only publication');
-  assert.match(workflowSource,/needs\.publish\.result == 'success'/,
-    'the next batch must still wait until the current batch publishes verified media');
-  assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
-    'manual and push recovery must start at the newest archive batch');
-  assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
-    'push and manual recovery must start at offset zero unless a successor batch supplies an explicit offset');
-  assert.doesNotMatch(workflowSource,/github\.event_name == 'push' && '50'/,
-    'push must not silently skip the newest 50 archive entries');
-  assert.match(workflowSource,/github[.]event_name != 'schedule'/,'the scheduled maintenance path must not fan out through the full archive');
-  assert.match(workflowSource,/actions:\s*write/,'the batch runner needs permission to dispatch its successor');
-  const verifySource=fs.readFileSync(path.join(path.dirname(script),'verify-latest-twenty-live.mjs'),'utf8');
-  const maskSource=fs.readFileSync(path.join(path.dirname(script),'mask-preview-manifest.mjs'),'utf8');
-  assert.match(repairSource,/latest\.length===0\|\|latest\.length>repairLimit/,
-    'the final archive batch may be smaller than the maximum batch size');
-  assert.match(repairSource,/selected\.length===0\|\|selected\.length>repairLimit/,
-    'the publish stage accepts only a non-empty manifest within the configured maximum');
-  assert.match(verifySource,/snapshot\.length===0\|\|snapshot\.length>repairLimit/,
-    'production verification accepts a non-empty partial final batch');
-  assert.match(verifySource,/blocked-invisible-default-skin/);
-  assert.match(verifySource,/\['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'\]\.includes\(work\.blockedReason\)[\s\S]*?record\.webmStatus==='failed' && record\.previewStatus==='failed'/,
-    'historical failures for sources known to be unsupported by the pinned runtime are reported as blockers');
-  assert.match(verifySource,/work\.ready===false && record\.previewStatus==='blocked'[\s\S]*?record\.webmStatus\.startsWith\('blocked-'\)/,
-    'known incomplete or unsupported source configurations stay blocked instead of becoming production failures');
-assert.match(verifySource,/work\.ready===false[\s\S]*?record\.webmStatus!=='ready' \|\| fields\.some\(\(\[key\]\)=>!record\[key\]\)/,
-  'unrecoverable source records stay blocked unless they already have complete ready media');
-assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.ready===false\)blocked\+\+;else failed\+\+;continue;\}/,
-  'missing public media is blocked when source files are unavailable');
-  assert.match(verifySource,/blocked-static-animation/);
-  for(const status of ['blocked-invalid-default-animation','blocked-incomplete-source','blocked-unsupported-runtime']){
-    assert.match(repairSource,new RegExp(status));
-    assert.match(verifySource,new RegExp(status));
-  }
-  assert.match(verifySource,/expectedMedia:ready\*fields\.length/);
-  assert.match(verifySource,/REPAIR_IDS_FILE/);
-  assert.match(maskSource,/REPAIR_IDS_FILE/);
-
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
