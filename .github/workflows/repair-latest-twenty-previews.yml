@@ -311,7 +311,7 @@ jobs:
             exit 0
           fi
           set +e
-          node scripts/spine-export-webm.mjs \
+          timeout --signal=TERM --kill-after=30s 8m node scripts/spine-export-webm.mjs \
             --upload-id="$ENTRY_ID" --animation="$ENTRY_ANIMATION" \
             --allow-visible-track-fallback \
             --repo-path="$GITHUB_WORKSPACE" \
