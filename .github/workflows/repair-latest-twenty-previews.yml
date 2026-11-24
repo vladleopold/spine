@@ -62,7 +62,7 @@ permissions:
   contents: read
 concurrency:
   # One archive batch per branch. New main-branch runs supersede older batches.
-  group: spine-preview-latest-twenty-${{ github.ref }}
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 jobs:
   inventory:
