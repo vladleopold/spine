@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { resolveRenderSelection, writeRenderVerification } from './lib/render-selection.mjs';
-import { spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
+import { runtimeVersionOverrideForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 test('missing explicit and indexed animation is reported as blocked', () => {
   assert.deepEqual(resolveRenderSelection({}, { animations: ['idle', 'run'] }), {
@@ -57,11 +57,11 @@ test('blocked status is written as a diagnostic artifact before the workflow exi
 });
 
 
-test('unsupported web-player versions and Spine 3.7 binary .skel are blocked before player creation', () => {
-  assert.deepEqual(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), {
-    code: 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
-    message: 'Spine Player 3.7 requires jsonUrl; binary .skel cannot be loaded without a same-work JSON skeleton.',
-  });
+test('unsupported web-player versions are blocked and Spine 3.7 binary uses the compatible 3.8 runtime', () => {
+  assert.equal(runtimeVersionOverrideForSpineSkeleton('3.7.93', 'skeleton.skel'), '3.8');
+  assert.equal(runtimeVersionOverrideForSpineSkeleton('3.7.93', 'skeleton.json'), '');
+  assert.equal(runtimeVersionOverrideForSpineSkeleton('3.8.99', 'skeleton.skel'), '');
+  assert.equal(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), null);
   assert.deepEqual(spinePlayerSourceBlocker('2.1.27', 'skeleton.json'), {
     code: 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION',
     message: 'No bundled Spine Web Player runtime supports Spine 2.1.27; use a matching supported Spine runtime before browser preview generation.',
@@ -79,6 +79,8 @@ test('unsupported web-player versions and Spine 3.7 binary .skel are blocked bef
   assert.equal(spinePlayerSourceBlocker('4.3.26', 'skeleton.skel'), null);
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   assert.match(exporter, /const sourceBlocker = spinePlayerSourceBlocker\(skeletonVersion, skeletonFile\)/);
+  assert.match(exporter, /const runtimeOverride = runtimeVersionOverrideForSpineSkeleton\(skeletonVersion, skeletonFile\)/);
+  assert.match(exporter, /runtimeOverride \|\| skeletonVersion\.split\('\.'\)\[1\]/);
   assert.match(exporter, /if \(sourceBlocker\) \{[\s\S]*?process\.exit\(1\);[\s\S]*?\}/);
 });
 
