@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha } from "./atlas-pages.mjs";
 import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -517,7 +517,7 @@ async function warmUpAnimations() {
 
   const page = await browser.newPage();
   try {
-    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${playerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${playerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonRawUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:false,preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
+    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${playerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${playerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonRawUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:${atlasPremultipliedAlpha},preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
     await page.setContent(warmupHtml, { waitUntil: 'networkidle', timeout: 60000 });
     let names = [];
     for (let i = 0; i < 40; i++) {
@@ -557,6 +557,7 @@ let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
 const reconciledAtlas = reconcileDdsAtlasPages(atlasContent,textureFiles);
 atlasContent = reconciledAtlas.text;
+const atlasPremultipliedAlpha = readAtlasPremultipliedAlpha(atlasContent);
 if (isLegacy) {
   const legacyAtlas = stripLegacyPmaMetadata(atlasContent);
   atlasContent = legacyAtlas.text;
@@ -682,7 +683,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
     textures: ${JSON.stringify(textureRawUrls)},
     animation: ${captureAnimation ? JSON.stringify(captureAnimation) : 'undefined'},
 ${skinLine}    showLoading: false,
-    premultipliedAlpha: false,
+    premultipliedAlpha: ${atlasPremultipliedAlpha},
     preserveDrawingBuffer: true,
     alpha: true,
     backgroundColor: '${args.alpha ? '#00000000' : '#050607'}',
