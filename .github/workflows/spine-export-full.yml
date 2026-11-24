@@ -62,6 +62,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /scripts/source-skeleton-choice.mjs
             /scripts/lib/repair-manifest-guard.mjs
             /library_02/index.json
             /.github/workflows/spine-export-full.yml
