@@ -695,6 +695,16 @@ ${skinLine}    showLoading: false,
       var runtimeSkins = runtimeData && runtimeData.skins;
       window.__skinNames = Array.isArray(runtimeSkins) ? runtimeSkins.map(function(s) { return s && s.name; }).filter(Boolean) : (runtimeSkins && typeof runtimeSkins === 'object' ? Object.keys(runtimeSkins) : []);
       window.__defaultSkinName = runtimeData && runtimeData.defaultSkin && runtimeData.defaultSkin.name ? runtimeData.defaultSkin.name : '';
+      // Some legacy Spine 3.8 players do not apply the implicit default skin
+      // automatically. Apply the runtime's actual Skin object, never its name.
+      var runtimeSkeleton = player.skeleton;
+      var runtimeDefaultSkin = runtimeData && runtimeData.defaultSkin;
+      if (${activeSkin === null ? 'true' : 'false'} && runtimeDefaultSkin && runtimeSkeleton &&
+          typeof runtimeSkeleton.setSkin === 'function') {
+        runtimeSkeleton.setSkin(runtimeDefaultSkin);
+        if (typeof runtimeSkeleton.setSlotsToSetupPose === 'function') runtimeSkeleton.setSlotsToSetupPose();
+        window.__defaultSkinApplied = true;
+      }
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)} ||
         window.__animationNames.find(function(name) { return /^idle$/i.test(name); }) ||
         window.__animationNames.find(function(name) { return /idle/i.test(name); }) ||

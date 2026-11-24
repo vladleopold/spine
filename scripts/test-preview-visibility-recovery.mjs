@@ -32,6 +32,8 @@ assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureA
   'binary-only sources prefer a runtime Idle track before the first declared track');
 assert.match(source,/const skinCandidates = \[null\];/,
   'try the original default skin first; named alternatives must come from the loaded runtime');
+assert.match(source,/var runtimeDefaultSkin = runtimeData && runtimeData\.defaultSkin[\s\S]*?runtimeSkeleton\.setSkin\(runtimeDefaultSkin\)[\s\S]*?setSlotsToSetupPose/,
+  'legacy runtimes apply the actual default Skin object instead of calling setSkinByName(default)');
 assert.match(source,/if \(runtimeDefaultName && runtimeDefaultName\.toLowerCase\(\) !== 'default'[\s\S]*?SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1/,
   'retry only a non-synthetic runtime-exposed named default skin');
 assert.match(source,/window\.__skinNames = Array\.isArray\(runtimeSkins\)/,
