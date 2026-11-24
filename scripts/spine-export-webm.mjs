@@ -12,6 +12,7 @@ import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation } from './preview-animation-choice.mjs';
+import { configuredPreviewSkinCandidates } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
@@ -909,6 +910,18 @@ try {
   // `default` entry that Spine Player does not expose as a selectable named skin.
   // Discover selectable alternatives from the successfully loaded runtime instead.
   const skinCandidates = [null];
+  // config.json is part of the original upload and explicitly lists selectable
+  // skins. Some legacy Spine 3.8 binary runtimes do not expose their skin list
+  // through skeleton.data, so retain those source-declared alternatives.
+  try {
+    const skinConfig = JSON.parse(fs.readFileSync(path.join(previewDir, 'config.json'), 'utf8'));
+    for (const name of configuredPreviewSkinCandidates(skinConfig)) {
+      if (!skinCandidates.includes(name)) skinCandidates.push(name);
+    }
+    if (skinCandidates.length > 1) {
+      console.error(`SOURCE_CONFIG_SKIN_FALLBACK=${skinCandidates.slice(1).join(',')}`);
+    }
+  } catch { /* uploads without a skin config keep the runtime-discovered path */ }
 
   let chosenSkin = null;
   let animDuration = 0;
