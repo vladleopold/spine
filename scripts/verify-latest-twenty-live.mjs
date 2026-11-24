@@ -78,6 +78,25 @@ for(const work of snapshot){
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
+  // Classify source blockers from the frozen inventory snapshot. Some blockers
+  // (notably legacy binary-only Spine 3.7 and incomplete atlas page inventories)
+  // are intentionally written without renderer-selection fingerprints because
+  // no render was attempted. Requiring those render-only fields mislabels safe,
+  // unchanged blocked sources as production failures.
+  const expectedBlockerStatus={
+    UNSUPPORTED_SPINE_3_7_BINARY_SKELETON:'blocked-unsupported-runtime',
+    UNSUPPORTED_SPINE_EXPORT_3_8_75:'blocked-incompatible-source-version',
+    MISSING_SOURCE_TRIAD:'blocked-missing-source',
+    ATLAS_PAGE_SOURCE_MISSING:'blocked-missing-source',
+    ATLAS_SOURCE_UNREADABLE:'blocked-missing-source',
+    ATLAS_PAGE_INVENTORY_UNKNOWN:'blocked-missing-source',
+    INVISIBLE_DEFAULT_SKIN:'blocked-invisible-default-skin',
+  }[work.blockedReason];
+  if(work.ready===false && expectedBlockerStatus &&
+      record.webmStatus===expectedBlockerStatus && record.previewStatus==='blocked'){
+    blocked++;
+    continue;
+  }
   if(record.webmStatus==='blocked-missing-animation-selection'&&record.previewStatus==='blocked'&&!String(record.defaultAnimation||'').trim()){
     blocked++;
     continue;
