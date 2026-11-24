@@ -44,6 +44,7 @@ try{
   const versionString=value=>Buffer.concat([Buffer.from([value.length+1]),Buffer.from(value)]);
   const legacy37=Buffer.concat([versionString('legacy-hash'),versionString('3.7.93'),Buffer.alloc(32)]);
   const legacyDirectory=path.join(root,'library_02','fixture-18');
+  fs.mkdirSync(legacyDirectory,{recursive:true});
   fs.writeFileSync(path.join(legacyDirectory,'hero.skel'),legacy37);
   fs.writeFileSync(path.join(legacyDirectory,'hero.atlas'),'hero.png\\nsize: 1,1\\nformat: RGBA8888\\n');
   fs.writeFileSync(path.join(legacyDirectory,'hero.png'),Buffer.alloc(24));
@@ -199,8 +200,8 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
   assert.notEqual(olderBatch[0].id,allFifty[0].id,'offset 50 must not repeat the newest batch');
   assert.ok(olderBatch.every(x=>x.id.startsWith('older-fixture-')),'the older batch must contain older public records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
-  assert.match(workflowSource,/needs\.verify-production\.result == 'success'/,
-    'the next batch must wait for a successful live production audit of the current batch');
+  assert.doesNotMatch(workflowSource,/needs\.verify-production\.result == 'success'/,
+    'partial live-audit failures must not prevent the next archive batch after verified-only publication');
   assert.match(workflowSource,/description: 'Zero-based offset into the public archive, newest first'[\s\S]*?default: 0/,
     'manual and push recovery must start at the newest archive batch');
   assert.match(workflowSource,/SPINE_REPAIR_OFFSET:.*inputs\.offset \|\| '0'/,
