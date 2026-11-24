@@ -48,6 +48,8 @@ jobs:
         run: node scripts/test-game-camera.mjs
       - name: Test SpinePlayer animation viewport updates
         run: node scripts/test-player-animation-viewport.mjs
+      - name: Test Spine 3.7 binary compatibility through the 3.8 runtime
+        run: node scripts/test-spine-37-binary-runtime.mjs
       - name: Validate exact animation and pinned runtime selection
         if: steps.source.outputs.dispatch_only != 'true' && steps.source.outputs.skip_render != 'true'
         run: node scripts/test-spine-player-runtime-assets.mjs
