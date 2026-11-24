@@ -9,18 +9,17 @@ export function configuredPreviewSkinCandidates(config) {
   const defaultSkin = typeof config.defaultSkin === 'string' ? config.defaultSkin.trim() : '';
   const seen = new Set();
   const result = [];
-  const add = (value, allowExplicitDefault = false) => {
+  const add = value => {
     const name = typeof value === 'string'
       ? value.trim()
       : (value && typeof value.name === 'string' ? value.name.trim() : '');
-    if (!name || (!allowExplicitDefault && name.toLowerCase() === 'default') || seen.has(name)) return;
+    if (!name || name.toLowerCase() === 'default' || seen.has(name)) return;
     seen.add(name);
     result.push(name);
   };
-  add(defaultSkin, true);
-  // The literal `default` in a skins array is the runtime's synthetic
-  // default entry, not a source-declared skin to pass back to setSkinByName.
-  // Only an explicit config.defaultSkin may intentionally name `default`.
+  add(defaultSkin);
+  // The runtime-native default is represented by null and must never be
+  // passed to setSkinByName, including when config.defaultSkin is `default`.
   for (const value of raw) add(value, false);
   return result;
 }

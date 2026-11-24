@@ -984,13 +984,13 @@ try {
     const runtimeSkinNames = await page.evaluate(() => ({ names: window.__skinNames || [], defaultName: window.__defaultSkinName || '' }));
     // Older Spine runtimes may omit named skins from runtime metadata.
     // Retry only selectable source/runtime-declared names after the native
-    // default. The synthetic "default" alias is represented by null.
-    // The runtime-native default is tried first. Some Spine Player/runtime
-    // combinations do not apply the source's named default automatically, so
-    // retry the actual defaultSkin exposed by the loaded skeleton by name.
+    // default. The synthetic "default" alias is represented by null and is never
+    // passed to setSkinByName, even when legacy JSON/runtime metadata exposes it.
+    // Retry only a genuinely named defaultSkin when the runtime reports one.
     const runtimeDefaultName = typeof runtimeSkinNames.defaultName === 'string'
       ? runtimeSkinNames.defaultName.trim() : '';
-    if (runtimeDefaultName && !skinCandidates.includes(runtimeDefaultName) &&
+    if (runtimeDefaultName && runtimeDefaultName.toLowerCase() !== 'default' &&
+        !skinCandidates.includes(runtimeDefaultName) &&
         skinCandidates.length < 13) {
       skinCandidates.push(runtimeDefaultName);
       console.error('SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1');
@@ -998,8 +998,7 @@ try {
     const runtimeFallbacks = hasExplicitSkinList ? [] : runtimeSkinNames.names.slice(0, 12);
     for (const name of [...runtimeFallbacks, ...sourceSkinNames]) {
       const normalizedName = typeof name === 'string' ? name.trim() : '';
-      const sourceDeclaredName = sourceSkinNames.includes(normalizedName);
-      if (normalizedName && (normalizedName.toLowerCase() !== 'default' || sourceDeclaredName) &&
+      if (normalizedName && normalizedName.toLowerCase() !== 'default' &&
           !skinCandidates.includes(normalizedName) && skinCandidates.length < 13) {
         skinCandidates.push(normalizedName);
       }
