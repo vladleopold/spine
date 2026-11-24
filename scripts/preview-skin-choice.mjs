@@ -21,3 +21,18 @@ export function configuredPreviewSkinCandidates(config) {
   for (const value of raw) add(value);
   return result;
 }
+
+ 
+// Spine 3.8 JSON exports can encode skins as numeric object keys whose values
+// carry the actual skin name. Prefer those names; use keys only for older maps.
+export function sourcePreviewSkinNames(skins) {
+  if (Array.isArray(skins)) {
+    return skins.map(skin => typeof skin?.name === 'string' ? skin.name.trim() : '')
+      .filter(Boolean);
+  }
+  if (!skins || typeof skins !== 'object') return [];
+  const values = Object.values(skins);
+  const names = values.map(skin => typeof skin?.name === 'string' ? skin.name.trim() : '')
+    .filter(Boolean);
+  return names.length ? names : Object.keys(skins);
+}
