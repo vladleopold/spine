@@ -43,7 +43,7 @@ assert.match(source,/skinCandidates\.length < 13/,
 assert.match(source,/const runtimeFallbacks = hasExplicitSkinList \? \[\] : runtimeSkinNames\.names\.slice\(0, 12\)/,
   'legacy runtimes may fall back to exact source JSON skins but never pass the synthetic default skin');
 assert.match(source,/for \(const name of \[\.\.\.runtimeFallbacks, \.\.\.sourceSkinNames\]\)[\s\S]*?normalizedName\.toLowerCase\(\) !== 'default'[\s\S]*?skinCandidates\.push\(normalizedName\)/,
-  'runtime-discovered skins also exclude the synthetic default alias, which is not selectable by name');
+  'runtime aliases exclude the synthetic default, but an explicitly source-declared default skin remains selectable');
 assert.match(source,/if \(framePeak < FRAME_PEAK_MIN\) \{[\s\S]*?continue;/,
   'an invisible default skin advances to the next source-declared or runtime-discovered skin without editing source files');
 assert.match(source,/SELECTED_SPINE_ANIMATION_UNAVAILABLE/);
