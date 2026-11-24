@@ -8,7 +8,7 @@ if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error
 const snapshot=process.env.REPAIR_IDS_FILE
   ? JSON.parse(await (await import('node:fs/promises')).readFile(process.env.REPAIR_IDS_FILE,'utf8'))
   : JSON.parse(process.env.REPAIR_IDS_JSON||'[]');
-if(snapshot.length!==repairLimit)throw Error(`Expected frozen snapshot of ${repairLimit} works`);
+if(!Array.isArray(snapshot)||snapshot.length===0||snapshot.length>repairLimit)throw Error(`Expected a non-empty frozen snapshot of at most ${repairLimit} works`);
 const token=process.env.GITHUB_TOKEN||'';
 const headers={Accept:'application/vnd.github+json',...(token?{Authorization:'Bearer '+token}:{})};
 const cache=new Map();
