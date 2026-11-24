@@ -105,10 +105,14 @@ for(const work of snapshot){
     blocked++;
     continue;
   }
+  const expectedBlockedAnimation=String(work.animation||record.defaultAnimation||'');
+  const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'
+    ? Boolean(String(record.previewBlockedAnimation||'').trim())
+    : record.previewBlockedAnimation===expectedBlockedAnimation;
   if(['blocked-invisible-default-skin','blocked-static-animation','blocked-invalid-default-animation',
       'blocked-incomplete-source','blocked-unsupported-runtime'].includes(record.webmStatus) &&
       record.previewStatus==='blocked' &&
-      record.previewBlockedAnimation===String(work.animation||record.defaultAnimation||'') &&
+      blockedAnimationMatches &&
       record.previewBlockedSourceFingerprint===work.sourceFingerprint &&
       String(record.previewBlockedSkin||'')===String(record.defaultSkin||record.skin||'')){
     blocked++;
