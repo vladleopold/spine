@@ -7,6 +7,10 @@ on:
       uploadId:
         required: true
         type: string
+      animation:
+        description: 'Exact animation name to render (optional; defaults to the indexed animation)'
+        required: false
+        type: string
   push:
     paths: ['scripts/render-check.json']
 permissions:
