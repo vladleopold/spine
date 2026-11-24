@@ -331,7 +331,9 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
     'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}"),
     'only one archive repair batch may run at a time');
-  assert.match(workflowSource,/cancel-hosted-batches:[\\s\\S]*?actions:\\s*write[\\s\\S]*?actions\\/runs\\/\\$\\{run_id\\}\\/cancel/,
+  assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
+    workflowSource.includes('actions: write') &&
+    workflowSource.includes('actions/runs/${run_id}/cancel'),
     'the first main-branch batch must cancel legacy GitHub-hosted render batches');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
