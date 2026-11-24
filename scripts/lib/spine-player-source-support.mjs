@@ -4,7 +4,10 @@
 // a network outage.
 export function spinePlayerSourceBlocker(version, skeletonFile) {
   const normalizedVersion = String(version || '').trim();
-  const versionMatch = normalizedVersion.match(/^(\d+)\.(\d+)(?:\.|$)/);
+  // Exported skeletons can carry provenance suffixes such as
+  // "4.1-from-4.2.43". The leading major/minor still identifies the
+  // serialized format and must be parsed before the suffix.
+  const versionMatch = normalizedVersion.match(/^(\d+)\.(\d+)(?:[.-]|$)/);
   if (!versionMatch) {
     return {
       code: 'SPINE_VERSION_UNKNOWN',
