@@ -1544,14 +1544,14 @@
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview.webm",
     "webmStatus": "ready",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "ready",
+    "previewError": "",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
-    "previewBlockedAnimation": "blow_in_landscape",
+    "previewBlockedAnimation": "",
     "previewBlockedSourceFingerprint": "1d89cb037f789be2b74f77039aa36fc4f2074af616cd3b647077b1834723596d",
     "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T14:36:30.733Z",
+    "previewBlockedAt": null,
     "webmError": null,
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-low.webm",
@@ -1593,7 +1593,23 @@
       "tail_right_backup",
       "tail_right_portrait_backup"
     ],
-    "webmGeneratedAt": "2026-11-24T15:04:16.382Z"
+    "webmGeneratedAt": "2026-11-24T15:04:16.382Z",
+    "allAnimationPreviews": {
+      "blow_loop_landscape": {
+        "webmPreview": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview.webm",
+        "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-medium.webm",
+        "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-low.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview.webp",
+        "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-medium.webp",
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/wolf-2026-11-20T05-12-56-813Z/preview-low.webp",
+        "previewDuration": 4.1666998863220215,
+        "qualityWidths": {
+          "high": 1920,
+          "medium": 1266,
+          "low": 634
+        }
+      }
+    }
   },
   {
     "id": "14505-1-2026-11-20T04-20-07-885Z",
