@@ -3,6 +3,8 @@
 // Only aggregated counts are emitted: never print original filenames or pixels.
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const repo='vladleopold/spine';
+const publishedSha=String(process.env.PUBLISHED_SHA||'');
+if(!/^[a-f0-9]{40}$/i.test(publishedSha))throw new Error('Missing immutable published commit SHA');
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const snapshot=process.env.REPAIR_IDS_FILE
@@ -19,7 +21,9 @@ async function getIndex(collection){
   // files larger than 1 MiB. library_02/index.json exceeds that limit, so
   // parsing body.content produces `Unexpected end of JSON input` after a
   // successful publication. Read the public raw JSON directly instead.
-  const rawUrl='https://raw.githubusercontent.com/'+repo+'/main/'+
+  // Pin the index to the exact commit published by the preceding job.
+  // raw.githubusercontent.com may briefly serve a stale main ref via its CDN.
+  const rawUrl='https://raw.githubusercontent.com/'+repo+'/'+publishedSha+'/'+
     collection+'/index.json';
   const response=await fetch(rawUrl,{
     signal:AbortSignal.timeout(30000),cache:'no-store',
