@@ -344,5 +344,10 @@ assert.match(verifySource,/if\(!await exactMediaFilesExist\(work\)\)\{if\(work\.
   assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
     'the second batch must be limited to the remaining 20 works, not another 50');
 
+  assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
+    'only the explicit latest-70 trigger file may start an automatic archive batch');
+  assert.ok(!workflowSource.includes('  schedule:'),
+    'archive recovery must not run unattended every day');
+
   console.log('PASS latest50: source-track fallback, skin retry, frozen source, incomplete-source guard, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
