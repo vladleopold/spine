@@ -356,6 +356,7 @@ if(action==="matrix"){
       record?.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
       String(record?.previewBlockedSkin||"")===String(record?.defaultSkin||record?.skin||"");
     const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
+    const posterRefreshFailed=String(record?.previewError||'').includes('Existing WebM could not produce its exact first-frame WebP poster');
     const rel=normalizedPreviewPath(e.basePath,e.previewPath,e.id);
      return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
       uploadedAt:e.at,sourceFingerprint,rendererRevision:PREVIEW_RENDERER_REVISION,
@@ -366,7 +367,8 @@ if(action==="matrix"){
       indexedPreviewSetNames:record?.allAnimationPreviews&&typeof record.allAnimationPreviews==='object'
         ?Object.keys(record.allAnimationPreviews).slice(0,8):[],
       hasExplicitAnimation:Boolean(animation),
-      ready,needsRender:ready && (String(record?.previewError||'').includes('Existing WebM could not produce its exact first-frame WebP poster') || !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e))),
+      ready,posterRefreshFailed,
+      needsRender:ready && (posterRefreshFailed || !(existingMediaOk(e) && await liveMediaOk(e) && await originalMediaFilesOk(e))),
       animation,
       blockedReason:incompatible?"INCOMPATIBLE_SOURCE_VERSION":
         !sourceReady?sourceCheck.reason:!animation?"MISSING_SOURCE_ANIMATION":
