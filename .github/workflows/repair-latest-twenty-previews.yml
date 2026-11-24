@@ -65,9 +65,10 @@ on:
 permissions:
   contents: read
 concurrency:
-  # One archive batch per branch. New main-branch runs supersede older batches.
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
-  cancel-in-progress: true
+  # Each run can start its bounded cleanup job; cleanup cancels stale runs
+  # before rendering, while publish has its own serialized write lock.
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}-${{ github.run_id }}
+  cancel-in-progress: false
 jobs:
   inventory:
     runs-on: ubuntu-24.04
