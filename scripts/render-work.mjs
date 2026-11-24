@@ -9,6 +9,41 @@ import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
 const config=process.env.GITHUB_EVENT_NAME==='push'?JSON.parse(fs.readFileSync('scripts/render-check.json','utf8')):(event.client_payload||event.inputs||{});
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function dispatchFullExport(payload){
+ const endpoint=`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`;
+ const body=JSON.stringify({event_type:'spine-export-full',client_payload:payload});
+ for(let attempt=0;attempt<5;attempt++){
+  let response;
+  try{
+   response=await fetch(endpoint,{method:'POST',headers:{
+    Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,
+    Accept:'application/vnd.github+json',
+    'Content-Type':'application/json',
+    'X-GitHub-Api-Version':'2022-11-28',
+   },body});
+  }catch{
+   if(attempt===4){const error=new Error('Full export dispatch network failure');error.code='FULL_EXPORT_DISPATCH_NETWORK_ERROR';throw error;}
+   console.warn(`FULL_EXPORT_DISPATCH_RETRY=${attempt+1} NETWORK`);
+   await wait(Math.min(1000*2**attempt,15000));
+   continue;
+  }
+  if(response.ok){console.log('FULL_EXPORT_DISPATCH_ACCEPTED=1');return;}
+  const status=response.status;
+  if([408,422,429,500,502,503,504].includes(status)&&attempt<4){
+   const retryAfter=Number(response.headers?.get?.('retry-after')||0)*1000;
+   console.warn(`FULL_EXPORT_DISPATCH_RETRY=${attempt+1} HTTP_${status}`);
+   await wait(Math.max(retryAfter,Math.min(1000*2**attempt,15000)));
+   continue;
+  }
+  const error=new Error(`Full export dispatch failed: HTTP ${status}`);
+  error.code=`FULL_EXPORT_DISPATCH_HTTP_${status}`;
+  throw error;
+ }
+ const error=new Error('Full export dispatch retries exhausted');
+ error.code='FULL_EXPORT_DISPATCH_RETRIES_EXHAUSTED';
+ throw error;
+}
 const id=String(config.uploadId||'');
 if(id)console.log(`::add-mask::${id}`);
 if(!/^[\w.-]+$/.test(id)||id.includes('..'))throw Error('Invalid upload ID');
@@ -16,8 +51,7 @@ const origin=new URL(config.origin||'https://spine-link.vercel.app').origin;
 if(origin!=='https://spine-link.vercel.app')throw Error('Unsupported preview origin');
 const found=entryForUpload(process.cwd(),id);if(!found)throw Error('Upload not found');
 if (config.dispatchOnly === true && process.env.GITHUB_EVENT_NAME === 'push') {
-  const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:id,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
-  if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
+  await dispatchFullExport({uploadId:id,origin,owner:'vladleopold',repo:'spine',branch:'main'});
   console.log('Full export verification dispatched');process.exit(0);
 }
 const selection=resolveRenderSelection(config,found.entry);
@@ -35,7 +69,6 @@ const report={
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
 const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
-const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const runCaptured=(cmd,args)=>{
  const result=spawnSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
  const stdout=String(result.stdout||''),stderr=String(result.stderr||'');
@@ -123,12 +156,13 @@ async function markBlockedSelection(){
   }
 }
 process.on('uncaughtException',error=>{
- report.status='failed';
- report.code=report.code||'RENDER_FAILED';
  const safeCode=typeof error?.code==='string'&&/^[A-Z0-9_]{2,64}$/.test(error.code)?error.code:'RENDER_FAILED';
- report.code=safeCode;
- writeReport();
- console.error(`SPINE_RENDER_FAILED=${safeCode}`);
+ if(report.status==='ready'&&safeCode.startsWith('FULL_EXPORT_DISPATCH_')){
+  report.status='partial';report.renderStatus='ready';report.dispatchStatus='failed';report.code=safeCode;
+  writeReport();console.error(`SPINE_EXPORT_PARTIAL=${safeCode}`);
+ }else{
+  report.status='failed';report.code=safeCode;writeReport();console.error(`SPINE_RENDER_FAILED=${safeCode}`);
+ }
  process.exit(1);
 });
 if(selection.status==='blocked'){
@@ -256,7 +290,6 @@ report.status='ready';
 report.code=null;
 writeReport();
 for (const targetId of new Set([id, ...(process.env.GITHUB_EVENT_NAME === 'push' ? (config.verifyUploadIds || []) : [])])) {
- const response=await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/dispatches`,{method:'POST',headers:{Authorization:`Bearer ${process.env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({event_type:'spine-export-full',client_payload:{uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'}})});
- if(!response.ok)throw Error('Full export dispatch failed: '+response.status);
+ await dispatchFullExport({uploadId:targetId,origin,owner:'vladleopold',repo:'spine',branch:'main'});
 }
 console.log(JSON.stringify({ok:true,...report}));
