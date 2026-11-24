@@ -15,6 +15,7 @@ on:
       - 'scripts/repair-last-ten-previews.mjs'
       - 'scripts/test-repair-last-ten-previews.mjs'
       - 'scripts/test-repair-latest-twenty.mjs'
+      - 'scripts/source-skeleton-choice.mjs'
       - 'scripts/verify-latest-twenty-live.mjs'
       - 'scripts/repair-manifest-guard.mjs'
       - '.github/workflows/spine-export-full.yml'
@@ -71,6 +72,7 @@ jobs:
           node --check scripts/resolve-export-animation.mjs
           node --check scripts/repair-reported-previews.mjs
           node --check scripts/repair-latest-twenty-previews.mjs
+          node --check scripts/source-skeleton-choice.mjs
           node --check scripts/repair-last-ten-previews.mjs
           node --check scripts/preview-animation-choice.mjs
           node --check scripts/verify-reported-preview-live.mjs
