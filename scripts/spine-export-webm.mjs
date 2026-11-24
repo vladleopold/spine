@@ -1157,6 +1157,34 @@ try {
         }
       }
       if (!acceptedAnimation) {
+        const runtimeDiagnostics = await page.evaluate(() => {
+          const p = window.__exportPlayer;
+          const skeleton = p && p.skeleton;
+          const data = skeleton && skeleton.data || p && p.skeletonData;
+          const track = p && p.animationState && p.animationState.getCurrent(0);
+          return {
+            selectedAnimation: window.__selectedAnimation || '',
+            trackAnimation: track && track.animation && track.animation.name || '',
+            trackTime: track && Number(track.trackTime) || 0,
+            defaultSkin: data && data.defaultSkin && data.defaultSkin.name || '',
+            skinNames: window.__skinNames || [],
+            activeSkin: skeleton && skeleton.skin && skeleton.skin.name || '',
+            attachedSlots: skeleton && Array.isArray(skeleton.slots)
+              ? skeleton.slots.filter(slot => slot && slot.attachment).map(slot => ({
+                  slot: slot.data && slot.data.name || '',
+                  attachment: slot.attachment && slot.attachment.name || '',
+                  bone: slot.bone && slot.bone.data && slot.bone.data.name || '',
+                }))
+              : [],
+            canvas: p && p.canvas ? { width: p.canvas.width, height: p.canvas.height } : null,
+            viewport: p && p.currentViewport ? p.currentViewport : null,
+          };
+        }).catch(error => ({ diagnosticError: String(error && error.message || error) }));
+        console.error('SPINE_RUNTIME_DIAGNOSTICS=' + JSON.stringify(runtimeDiagnostics));
+        const diagnosticScreenshot = await page.locator('#player')
+          .screenshot({ type: 'jpeg', quality: 35 }).catch(() => null);
+        if (diagnosticScreenshot)
+          console.error('SPINE_SCREENSHOT_JPEG_BASE64=' + diagnosticScreenshot.toString('base64'));
         lastCaptureError = 'No source animation produced visible changing frames';
         console.error('NO_VISIBLE_MOVING_SOURCE_TRACK');
         continue;
