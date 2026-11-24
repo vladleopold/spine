@@ -26,6 +26,12 @@ export function chooseSourceSkeleton(requested, files, isValidJson) {
       if(alias)return alias;
     }
     if(exact&&/\.skel$/i.test(exact))return exact;
+    // A stale index may point at config.json even though the upload contains
+    // exactly one valid skeleton. Recover only when the source set is unambiguous.
+    const validJson=names.filter(name=>/\.json$/i.test(name)&&isValidJson(name));
+    const binary=names.filter(name=>/\.skel$/i.test(name));
+    const validCandidates=[...validJson,...binary];
+    if(validCandidates.length===1)return validCandidates[0];
     throw new Error('Requested source skeleton is missing or invalid: '+wanted);
   }
   return names.find(name=>/\.json$/i.test(name)&&isValidJson(name))||
