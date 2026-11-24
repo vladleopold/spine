@@ -51,6 +51,11 @@ on:
 # ═══════════════════════════════════════════════════════════════════════════
 #  STAGE 1 — Read index.json and produce the animation matrix
 # ═══════════════════════════════════════════════════════════════════════════
+      - .github/workflows/spine-export-all.yml
+      - .github/workflows/repair-last-ten-previews.yml
+      - .github/workflows/repair-latest-twenty-previews.yml
+      - .github/workflows/repair-reported-previews.yml
+      - .github/workflows/spine-export-webm.yml
 jobs:
   validate-contract:
     name: Validate full-export privacy and selection contract
@@ -70,6 +75,7 @@ jobs:
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/spine-export-webm.yml
+            /.github/workflows/spine-export-all.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22
