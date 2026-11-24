@@ -177,7 +177,7 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
+  if(matrix.length!==18)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
   assert.equal(matrix.length,18,
     'the supported Spine 3.7 binary fixture must join the render matrix through the 3.8 runtime');
   assert.equal(Number(output.renderCount),18);
@@ -267,8 +267,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,47,'incomplete and unsupported sources stay blocked; one verified reusable preview is not rerendered');
-  assert.equal(Number(fiftyOutput.renderCount),47);
+  assert.equal(matrixFifty.length,48,'the compatible Spine 3.7 binary joins the render matrix; incomplete sources stay blocked and one verified reusable preview is not rerendered');
+  assert.equal(Number(fiftyOutput.renderCount),48);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&/^idle$/i.test(x.animation)&&x.needsRender));
