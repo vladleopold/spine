@@ -25,6 +25,11 @@ assert.match(workflowSource,/echo "published_sha=\$\(git rev-parse HEAD\)" >> "\
 assert.match(liveAudit,/const expectedBlockedAnimation=String\(work\.animation\|\|record\.defaultAnimation\|\|''\)/);
 assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'[\s\S]*?Boolean\(String\(record\.previewBlockedAnimation\|\|''\)\.trim\(\)\)/);
 assert.match(liveAudit,/blockedAnimationMatches[\s\S]*?previewBlockedSourceFingerprint===work\.sourceFingerprint/);
+assert.match(liveAudit,/renderableCandidates=snapshot\.filter\(work=>work\.ready===true\)\.length/);
+assert.match(liveAudit,/if\(failed\|\|mutatedSource\|\|ready\+blocked!==snapshot\.length\)process\.exitCode=1/,
+  'known source blockers must remain visible without stopping later archive offsets');
+assert.ok(!liveAudit.includes('if(failed||blocked||ready!==snapshot.length'),
+  'a source-blocked record must not prevent later batches from being repaired');
 const blockedAnimationMatches=(expected,actual)=>expected==='__SPINE_AUTO__'?Boolean(String(actual||'').trim()):actual===expected;
 assert.equal(blockedAnimationMatches('__SPINE_AUTO__','Idle'),true,
   'automatic selection may record the actual resolved track name');
