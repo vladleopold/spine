@@ -21045,7 +21045,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-33-24-562Z/preview.webp?v=2026-10-03T21%3A27%3A21.605Z",
     "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T17-33-24-562Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -21295,9 +21295,15 @@
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-33-24-562Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-33-24-562Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "c432f5a1fe0d6528a3207bfdeb4419fa3c4e5d162523acaf4f808c17e3bdd0d5",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:10.940Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "321-spine-2025-2026-09-05T17-27-23-147Z",
@@ -21335,7 +21341,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-27-23-147Z/preview.webp?v=2026-10-03T21%3A27%3A21.921Z",
     "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T17-27-23-147Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -21585,9 +21591,15 @@
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-27-23-147Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T17-27-23-147Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "42be6804efcf5a2a1afb69f8f73b330c8e3cd5a08fbc3ecad037249fb29e1132",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:11.012Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "skeleton-2026-09-05T12-13-33-957Z",
@@ -21598,7 +21610,7 @@
     "showOwnerLibrary": true,
     "portfolioMode": false,
     "uploadedAt": "2026-09-05T12:13:33.957Z",
-    "webmGeneratedAt": "2026-09-28T23:45:18.409Z",
+    "webmGeneratedAt": "2026-11-24T12:10:11.829Z",
     "skeleton": "skeleton.json",
     "atlas": "skeleton.atlas",
     "textures": [
@@ -21620,7 +21632,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webp?v=2026-09-28T23%3A45%3A18.409Z",
     "thumbnailPath": "library/skeleton-2026-09-05T12-13-33-957Z/preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webp?v=2026-10-03T21%3A27%3A22.470Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webp",
     "thumbnailPosterPath": "library/skeleton-2026-09-05T12-13-33-957Z/idle-preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -21834,7 +21846,7 @@
     "webmPreviewPath": "library/skeleton-2026-09-05T12-13-33-957Z/preview.webm",
     "previewWidth": 538,
     "previewHeight": 1262,
-    "previewDuration": 2.6667,
+    "previewDuration": 2.667,
     "skeletonWidth": 420.03,
     "skeletonHeight": 986.7,
     "allAnimationPreviews": {
@@ -21844,22 +21856,28 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/skeleton-2026-09-05T12-13-33-957Z/animations/idle/skeleton-2026-09-05T12-13-33-957Z-anim-idle-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-05T12:25:47.912Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "posterGeneratedAt": "2026-11-24T12:10:11.829Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview-low.webp",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "idle",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-09-05T12-13-33-957Z/preview.webp",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 81,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "321-spine-2025-2026-09-05T02-47-54-327Z",
@@ -21897,7 +21915,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-47-54-327Z/preview.webp?v=2026-10-03T21%3A27%3A22.780Z",
     "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T02-47-54-327Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -22147,9 +22165,15 @@
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-47-54-327Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-47-54-327Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "268bb8b5a25c068b70a60c3a0eaa9b9d544359c1463a39a520a5c7a8a304d267",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:11.900Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "321-spine-2025-2026-09-05T02-44-53-850Z",
@@ -22187,7 +22211,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-53-850Z/preview.webp?v=2026-10-03T21%3A27%3A23.092Z",
     "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T02-44-53-850Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -22437,9 +22461,15 @@
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-53-850Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-53-850Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "4389814846b22f1d3049e6fdba352d9287e0be0f7d58fa716e1775cd8d5660b8",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:11.986Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "321-spine-2025-2026-09-05T02-44-05-724Z",
@@ -22477,7 +22507,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-05-724Z/preview.webp?v=2026-10-03T21%3A27%3A23.409Z",
     "thumbnailPosterPath": "library/321-spine-2025-2026-09-05T02-44-05-724Z/idle-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -22727,9 +22757,15 @@
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-05-724Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/321-spine-2025-2026-09-05T02-44-05-724Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "3c0c37ba4a354c256724474ca08dec2e4d66fda4c6512ca22940ba19f1437576",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:12.056Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "angel_captain_front-2026-09-03T11-27-44-913Z",
@@ -22930,7 +22966,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/angel_captain_front-2026-09-03T11-27-44-913Z/down-run_front-preview.webp?v=2026-10-03T21%3A27%3A24.023Z",
     "thumbnailPosterPath": "library/angel_captain_front-2026-09-03T11-27-44-913Z/down-run_front-preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -24980,10 +25016,16 @@
     "fullExportGeneratedAt": "2026-09-03T12:58:11.090Z",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/angel_captain_front-2026-09-03T11-27-44-913Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/angel_captain_front-2026-09-03T11-27-44-913Z/preview-low.webp",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:51:07.513Z",
-    "posterGeneratedAt": "2026-11-19T21:51:07.513Z"
+    "posterGeneratedAt": "2026-11-19T21:51:07.513Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "5d97bbf823fe9d921b71584ab42d449a941f0bc9b45fe8319cddff5108596a21",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:12.124Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "attractframe-2026-09-03T09-48-50-705Z",
@@ -25029,7 +25071,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/attractframe-2026-09-03T09-48-50-705Z/preview.webp?v=2026-10-03T21%3A27%3A24.423Z",
     "thumbnailPosterPath": "attractframe-2026-09-03T09-48-50-705Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -25350,9 +25392,15 @@
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/attractframe-2026-09-03T09-48-50-705Z/preview-medium.webp",
     "webpPoster": "",
     "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "previewStatus": "ready",
-    "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "super_boost_3",
+    "previewBlockedSourceFingerprint": "eb32fbb71ab91c64b9b77167e182c42a3fc3ec17aef1659122e4edd951e4dbe3",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:12.193Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "anticipation2-2026-09-03T09-45-43-854Z",
@@ -25601,10 +25649,10 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-low.webm",
     "webmPreviewPath": "library/anticipation2-2026-09-03T09-45-43-854Z/preview.webm",
-    "webmGeneratedAt": "2026-09-28T23:45:18.409Z",
+    "webmGeneratedAt": "2026-11-24T12:10:12.523Z",
     "previewWidth": 960,
     "previewHeight": 720,
-    "previewDuration": 0.9667,
+    "previewDuration": 0.966,
     "allAnimationPreviews": {
       "anticipation": {
         "mp4PreviewLow": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-preview-low.mp4",
@@ -25612,23 +25660,28 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-45-43-854Z/animations/anticipation/anticipation2-2026-09-03T09-45-43-854Z-anim-anticipation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-03T09:54:30.646Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-45-43-854Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:12.523Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "anticipation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 30,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "anticipation2-2026-09-03T09-44-08-758Z",
@@ -25877,10 +25930,10 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-low.webm",
     "webmPreviewPath": "library/anticipation2-2026-09-03T09-44-08-758Z/preview.webm",
-    "webmGeneratedAt": "2026-09-28T23:29:42.186Z",
+    "webmGeneratedAt": "2026-11-24T12:10:12.855Z",
     "previewWidth": 960,
     "previewHeight": 720,
-    "previewDuration": 0.9667,
+    "previewDuration": 0.966,
     "allAnimationPreviews": {
       "anticipation": {
         "mp4PreviewLow": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-preview-low.mp4",
@@ -25888,23 +25941,28 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/anticipation2-2026-09-03T09-44-08-758Z/animations/anticipation/anticipation2-2026-09-03T09-44-08-758Z-anim-anticipation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-03T09:51:46.074Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/anticipation2-2026-09-03T09-44-08-758Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:12.855Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "anticipation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 30,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z",
@@ -25936,7 +25994,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animation-preview.webp?v=2026-09-29T00%3A03%3A31.373Z",
     "thumbnailPath": "library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animation-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webp?v=2026-10-03T21%3A27%3A27.192Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webp",
     "thumbnailPosterPath": "img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -26148,9 +26206,9 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-low.webm",
     "webmPreviewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webm",
-    "webmGeneratedAt": "2026-09-29T00:03:31.373Z",
+    "webmGeneratedAt": "2026-11-24T12:10:14.775Z",
     "previewWidth": 1920,
-    "previewHeight": 1920,
+    "previewHeight": 1080,
     "skeletonWidth": 1705,
     "skeletonHeight": 1946,
     "allAnimationPreviews": {
@@ -26160,24 +26218,29 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z-anim-animation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-02T17:32:49.915Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview-medium.webp",
-    "webpPoster": "",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T16-43-59-687Z/preview.webp",
     "previewDuration": 3,
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "posterGeneratedAt": "2026-11-24T12:10:14.775Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "animation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 90,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z",
@@ -26209,7 +26272,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animation-preview.webp?v=2026-09-29T00%3A03%3A31.373Z",
     "thumbnailPath": "library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animation-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webp?v=2026-10-03T21%3A27%3A28.453Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webp",
     "thumbnailPosterPath": "img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -26421,9 +26484,9 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-low.webm",
     "webmPreviewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webm",
-    "webmGeneratedAt": "2026-09-29T00:03:31.373Z",
+    "webmGeneratedAt": "2026-11-24T12:10:16.677Z",
     "previewWidth": 1920,
-    "previewHeight": 1920,
+    "previewHeight": 1080,
     "skeletonWidth": 1705,
     "skeletonHeight": 1946,
     "allAnimationPreviews": {
@@ -26433,23 +26496,29 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z-anim-animation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-02T11:19:19.538Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T11-11-03-339Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:16.677Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "animation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 90,
+    "previewDuration": 3,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z",
@@ -26481,7 +26550,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animation-preview.webp?v=2026-09-29T00%3A03%3A31.373Z",
     "thumbnailPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animation-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webp?v=2026-10-03T21%3A27%3A29.724Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webp",
     "thumbnailPosterPath": "img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -26693,9 +26762,9 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-low.webm",
     "webmPreviewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webm",
-    "webmGeneratedAt": "2026-09-29T00:03:31.373Z",
+    "webmGeneratedAt": "2026-11-24T12:10:18.603Z",
     "previewWidth": 1920,
-    "previewHeight": 1920,
+    "previewHeight": 1080,
     "skeletonWidth": 1705,
     "skeletonHeight": 1946,
     "allAnimationPreviews": {
@@ -26705,23 +26774,29 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z-anim-animation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-02T11:07:53.820Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-57-08-491Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:18.603Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "animation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 90,
+    "previewDuration": 3,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z",
@@ -26753,7 +26828,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animation-preview.webp?v=2026-09-29T00%3A03%3A31.373Z",
     "thumbnailPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animation-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webp?v=2026-10-03T21%3A27%3A30.977Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webp",
     "thumbnailPosterPath": "img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -26965,9 +27040,9 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-low.webm",
     "webmPreviewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webm",
-    "webmGeneratedAt": "2026-09-29T00:03:31.373Z",
+    "webmGeneratedAt": "2026-11-24T12:10:20.504Z",
     "previewWidth": 1920,
-    "previewHeight": 1920,
+    "previewHeight": 1080,
     "skeletonWidth": 1705,
     "skeletonHeight": 1946,
     "allAnimationPreviews": {
@@ -26977,23 +27052,29 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z-anim-animation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-02T11:04:11.341Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-55-26-593Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:20.504Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "animation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 90,
+    "previewDuration": 3,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z",
@@ -27025,7 +27106,7 @@
     "repositoryUrl": "",
     "thumbnail": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animation-preview.webp?v=2026-09-29T00%3A03%3A31.373Z",
     "thumbnailPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animation-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webp?v=2026-10-03T21%3A27%3A32.259Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webp",
     "thumbnailPosterPath": "img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -27237,9 +27318,9 @@
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-low.webm",
     "webmPreviewPath": "library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webm",
-    "webmGeneratedAt": "2026-09-29T00:03:31.373Z",
+    "webmGeneratedAt": "2026-11-24T12:10:22.515Z",
     "previewWidth": 1920,
-    "previewHeight": 1920,
+    "previewHeight": 1080,
     "skeletonWidth": 1705,
     "skeletonHeight": 1946,
     "allAnimationPreviews": {
@@ -27249,23 +27330,29 @@
         "mp4PreviewMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-preview-medium.mp4",
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-medium.webm",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-preview.webm",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webm",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/animations/animation/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z-anim-animation-alpha.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-medium.webp",
-        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-low.webp"
+        "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-low.webp",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webp"
       }
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-02T10:23:37.068Z",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-low.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview-medium.webp",
-    "webpPoster": "",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/img_emotion_rare_erpass_4166-2026-09-02T10-10-03-061Z/preview.webp",
+    "posterGeneratedAt": "2026-11-24T12:10:22.515Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "animation",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 90,
+    "previewDuration": 3,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "illust_kamael_cursed-2026-09-01T17-20-47-704Z",
@@ -27301,7 +27388,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/illust_kamael_cursed-2026-09-01T17-20-47-704Z/preview.webp?v=2026-10-03T21%3A27%3A32.802Z",
     "thumbnailPosterPath": "illust_kamael_cursed-2026-09-01T17-20-47-704Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -27549,10 +27636,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T18:24:01.192Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "entrance",
+    "previewBlockedSourceFingerprint": "13c322fb69f6b470d49b09a4394dd1e06f948e192882f7cf5fb797f46ad498d7",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.603Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "illust_kamael_cursed-2026-09-01T17-14-09-007Z",
@@ -27588,7 +27681,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/illust_kamael_cursed-2026-09-01T17-14-09-007Z/preview.webp?v=2026-10-03T21%3A27%3A33.345Z",
     "thumbnailPosterPath": "illust_kamael_cursed-2026-09-01T17-14-09-007Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -27836,10 +27929,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T17:28:50.898Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "entrance",
+    "previewBlockedSourceFingerprint": "a1e7f0872422bf9325d983c866873f9779e3ade1b56d0d01f3c322fee09f0e4e",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.670Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "illust_kamael_cursed-2026-09-01T16-51-19-231Z",
@@ -27875,7 +27974,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/illust_kamael_cursed-2026-09-01T16-51-19-231Z/preview.webp?v=2026-10-03T21%3A27%3A33.889Z",
     "thumbnailPosterPath": "illust_kamael_cursed-2026-09-01T16-51-19-231Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -28123,10 +28222,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T18:04:57.957Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "entrance",
+    "previewBlockedSourceFingerprint": "b27d2b126ad7736d6e39851d5a39f0486938869f6fb926df04e45aff4b3ba9da",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.746Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "illust_kamael_cursed-2026-09-01T16-47-57-537Z",
@@ -28162,7 +28267,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/illust_kamael_cursed-2026-09-01T16-47-57-537Z/preview.webp?v=2026-10-03T21%3A27%3A34.446Z",
     "thumbnailPosterPath": "illust_kamael_cursed-2026-09-01T16-47-57-537Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -28410,10 +28515,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T18:01:07.212Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "entrance",
+    "previewBlockedSourceFingerprint": "498b9c3484536045c960fbe532a40c5c4efd50dba8c2da2870e38c5ae3b330f0",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.806Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "illust_kamael_cursed-2026-09-01T16-45-26-276Z",
@@ -28449,7 +28560,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/illust_kamael_cursed-2026-09-01T16-45-26-276Z/preview.webp?v=2026-10-03T21%3A27%3A35.007Z",
     "thumbnailPosterPath": "illust_kamael_cursed-2026-09-01T16-45-26-276Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -28697,10 +28808,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T17:01:38.825Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "entrance",
+    "previewBlockedSourceFingerprint": "20932b5ee72e81af89c28e8dad9726d434cd1ea8aa71876dbd49069a79751181",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.866Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "mecha_android_front-2026-09-01T10-06-48-642Z",
@@ -28899,7 +29016,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/mecha_android_front-2026-09-01T10-06-48-642Z/preview.webp?v=2026-10-03T21%3A27%3A35.531Z",
     "thumbnailPosterPath": "mecha_android_front-2026-09-01T10-06-48-642Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -31427,10 +31544,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T13:44:54.860Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "670c5acaea53642db69b5365bada261aeb282be8f147d82bb5086830b24eaf5c",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.926Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "android_hitori_front-2026-09-01T10-04-27-925Z",
@@ -31636,7 +31759,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/android_hitori_front-2026-09-01T10-04-27-925Z/preview.webp?v=2026-10-03T21%3A27%3A36.005Z",
     "thumbnailPosterPath": "android_hitori_front-2026-09-01T10-04-27-925Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -34262,10 +34385,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T13:48:00.089Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "2222bc9cf29466d55e9477a0f346a3fb4f0a912ba263989181717c2ae7faaa70",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:22.987Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "knight_female_fake_android_front-2026-09-01T09-58-24-032Z",
@@ -34466,7 +34595,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/knight_female_fake_android_front-2026-09-01T09-58-24-032Z/preview.webp?v=2026-10-03T21%3A27%3A36.526Z",
     "thumbnailPosterPath": "knight_female_fake_android_front-2026-09-01T09-58-24-032Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -37022,10 +37151,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T13:46:55.406Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "a74ec98c39b576adb8cfa4add5f4cbb83e688b1c82760bdd4469aba7aa11938e",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.049Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "bard_girl_front-2026-09-01T09-09-18-272Z",
@@ -37224,7 +37359,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/bard_girl_front-2026-09-01T09-09-18-272Z/preview.webp?v=2026-10-03T21%3A27%3A37.006Z",
     "thumbnailPosterPath": "bard_girl_front-2026-09-01T09-09-18-272Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -39752,10 +39887,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T13:44:30.752Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "618ced2ad8c333462c8ddc8f0cbe06b1fcceb0358a22f70f5afca224b5e5d8f5",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.133Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "future_princess_pv_costume_front-2026-09-01T09-06-03-173Z",
@@ -39964,7 +40105,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/future_princess_pv_costume_front-2026-09-01T09-06-03-173Z/preview.webp?v=2026-10-03T21%3A27%3A37.587Z",
     "thumbnailPosterPath": "future_princess_pv_costume_front-2026-09-01T09-06-03-173Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -42623,10 +42764,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T13:45:10.059Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "4a708962bda316469c51f19d8cdee8744e87657048d7e08987216da8cae3f3e3",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.195Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "villain_android_courier_front-2026-09-01T09-05-32-220Z",
@@ -42826,7 +42973,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/villain_android_courier_front-2026-09-01T09-05-32-220Z/preview.webp?v=2026-10-03T21%3A27%3A38.142Z",
     "thumbnailPosterPath": "villain_android_courier_front-2026-09-01T09-05-32-220Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -45368,10 +45515,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T11:06:33.060Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "078b1b612b107c92c1823057711981a531b76442f18fb893b922eddef33920cd",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.255Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "villain_android_front-2026-09-01T09-04-31-737Z",
@@ -45571,7 +45724,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/villain_android_front-2026-09-01T09-04-31-737Z/preview.webp",
     "thumbnailPosterPath": "villain_android_front-2026-09-01T09-04-31-737Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -48113,10 +48266,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T11:05:49.048Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "2201daf171938f61aab570024273128861be2f6e302f4693c824d4f14c7b2ce2",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.317Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "butterfly-2026-09-01T08-05-29-129Z",
@@ -48154,7 +48313,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/butterfly-2026-09-01T08-05-29-129Z/preview.webp?v=2026-10-03T21%3A27%3A39.316Z",
     "thumbnailPosterPath": "butterfly-2026-09-01T08-05-29-129Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -48428,10 +48587,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T08:50:22.626Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "idle_front",
+    "previewBlockedSourceFingerprint": "a3f68705be5d13689cfe15cb063b8eeaea8613e1ebdfb5ffdfd87912d1770b78",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.376Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "knight_female_hero_side-2026-09-01T08-02-42-709Z",
@@ -48657,7 +48822,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/knight_female_hero_side-2026-09-01T08-02-42-709Z/preview.webp?v=2026-10-03T21%3A27%3A39.882Z",
     "thumbnailPosterPath": "knight_female_hero_side-2026-09-01T08-02-42-709Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -48879,10 +49044,16 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/knight_female_hero_side-2026-09-01T08-02-42-709Z/preview-low.webp"
       }
     },
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:51:07.513Z",
-    "posterGeneratedAt": "2026-11-19T21:51:07.513Z"
+    "posterGeneratedAt": "2026-11-19T21:51:07.513Z",
+    "previewBlockedAnimation": "[down]run_side",
+    "previewBlockedSourceFingerprint": "76c5e16c04160ef5d05e42015b0e8b1f1c3a983d8e2dd7bd70e6a9d514c6294d",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.435Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "knight_male_hero_front-2026-09-01T08-00-52-362Z",
@@ -49086,7 +49257,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/knight_male_hero_front-2026-09-01T08-00-52-362Z/preview.webp?v=2026-10-03T21%3A27%3A40.417Z",
     "thumbnailPosterPath": "knight_male_hero_front-2026-09-01T08-00-52-362Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -51684,10 +51855,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T08:51:02.237Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "964830dd39a9110074928340221e417b5ad64f6b8ce3d95313f666e57634c84d",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.523Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "mechagirl_b_front-2026-08-31T22-09-19-878Z",
@@ -51889,7 +52066,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/mechagirl_b_front-2026-08-31T22-09-19-878Z/preview.webp?v=2026-10-03T21%3A27%3A41.011Z",
     "thumbnailPosterPath": "mechagirl_b_front-2026-08-31T22-09-19-878Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -54459,10 +54636,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:42:21.213Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "e497200b2458a7e0a60133609f24bcd556efad8fcaa38e8a62000ad0dfd4a95b",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.583Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "demon_engineer_bunny_android_side-2026-08-31T21-43-26-392Z",
@@ -54688,7 +54871,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/demon_engineer_bunny_android_side-2026-08-31T21-43-26-392Z/preview.webp?v=2026-10-03T21%3A27%3A41.497Z",
     "thumbnailPosterPath": "demon_engineer_bunny_android_side-2026-08-31T21-43-26-392Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -57594,10 +57777,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:08:25.053Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_side",
+    "previewBlockedSourceFingerprint": "f2238a9fce0a7d6e30c77616380d809512a956d918f702f7bed5db424c8dc5e3",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.644Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "streamer_girl_front-2026-08-31T21-40-49-006Z",
@@ -57799,7 +57988,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/streamer_girl_front-2026-08-31T21-40-49-006Z/preview.webp?v=2026-10-03T21%3A27%3A42.066Z",
     "thumbnailPosterPath": "streamer_girl_front-2026-08-31T21-40-49-006Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -60369,10 +60558,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:07:43.888Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "d78420716aa8d98a61e28fc1918953e683f61fd2e466194d1646e3f822d2c83d",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.706Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "hero_ai_boss_kaden_front-2026-08-31T21-39-45-963Z",
@@ -60573,7 +60768,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/hero_ai_boss_kaden_front-2026-08-31T21-39-45-963Z/preview.webp?v=2026-10-03T21%3A27%3A42.654Z",
     "thumbnailPosterPath": "hero_ai_boss_kaden_front-2026-08-31T21-39-45-963Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -63129,10 +63324,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:07:25.670Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "65cb7df484ceae1cbd7d7ffaab2ca6a5721e16fc586f7fab0fdb6eefcb3d170f",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.766Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "akayuki_5_front-2026-08-31T21-31-10-597Z",
@@ -63336,7 +63537,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/akayuki_5_front-2026-08-31T21-31-10-597Z/preview.webp?v=2026-10-03T21%3A27%3A43.144Z",
     "thumbnailPosterPath": "akayuki_5_front-2026-08-31T21-31-10-597Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -65934,10 +66135,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:06:51.246Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "c6d2748d28436b4432aba4be98c657e9d48569cb8e20e159f8f14e8f1a3cc2d7",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.824Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "sunyeo_bunnygirl_side-2026-08-31T21-25-51-125Z",
@@ -66164,7 +66371,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/sunyeo_bunnygirl_side-2026-08-31T21-25-51-125Z/preview.webp?v=2026-10-03T21%3A27%3A43.696Z",
     "thumbnailPosterPath": "sunyeo_bunnygirl_side-2026-08-31T21-25-51-125Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -69084,10 +69291,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:06:15.433Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_side",
+    "previewBlockedSourceFingerprint": "526d68e5166f9167ed8979dd2f718390fe3a1389217b8a6883dc22752233883f",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.911Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "sunyeo_bunnygirl_front-2026-08-31T21-23-16-489Z",
@@ -69293,7 +69506,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/sunyeo_bunnygirl_front-2026-08-31T21-23-16-489Z/preview.webp?v=2026-10-03T21%3A27%3A44.249Z",
     "thumbnailPosterPath": "sunyeo_bunnygirl_front-2026-08-31T21-23-16-489Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -71917,10 +72130,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:06:34.889Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "6b1abfff5736b51be615f3caf52573702f4c773bb91ad88998cc3207559bb30e",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:23.973Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "mecha_android_courier_front-2026-08-31T21-21-57-284Z",
@@ -72119,7 +72338,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/mecha_android_courier_front-2026-08-31T21-21-57-284Z/preview.webp?v=2026-10-03T21%3A27%3A44.831Z",
     "thumbnailPosterPath": "mecha_android_courier_front-2026-08-31T21-21-57-284Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -74647,10 +74866,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:07:10.697Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "332a18b88883ad88aef5071880103e4f7000ed0388ecd039abc1598aaa9fe95d",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.035Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "mecha_android_overload_front-2026-08-31T21-21-07-040Z",
@@ -74849,7 +75074,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/mecha_android_overload_front-2026-08-31T21-21-07-040Z/preview.webp?v=2026-10-03T21%3A27%3A45.452Z",
     "thumbnailPosterPath": "mecha_android_overload_front-2026-08-31T21-21-07-040Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -77377,10 +77602,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:08:51.096Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "e0da61df7077f6d38051c1d46140e4fa76d276783403a6f0d16e01a202caced4",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.097Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z",
@@ -77583,7 +77814,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z/preview.webp?v=2026-10-03T21%3A27%3A45.962Z",
     "thumbnailPosterPath": "alpaca_girl_cheerleader_front-2026-08-31T21-19-33-125Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -80167,10 +80398,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:08:00.942Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "e44331b256f0cab01e424d0920701114091e33b7a1bfaf912458cbbf6453287f",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.155Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "archangel_d_front-2026-08-31T21-16-49-232Z",
@@ -80374,7 +80611,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/archangel_d_front-2026-08-31T21-16-49-232Z/preview.webp?v=2026-10-03T21%3A27%3A46.465Z",
     "thumbnailPosterPath": "archangel_d_front-2026-08-31T21-16-49-232Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -82972,10 +83209,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:40:07.148Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "baa87e8bae8c867b39390937028a5b3705106591898934c420814d4daf2898e0",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.215Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "admiral_test_front-2026-08-31T21-14-04-455Z",
@@ -83180,7 +83423,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/admiral_test_front-2026-08-31T21-14-04-455Z/preview.webp?v=2026-10-03T21%3A27%3A46.964Z",
     "thumbnailPosterPath": "admiral_test_front-2026-08-31T21-14-04-455Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -85792,10 +86035,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T04:31:04.015Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "4a7046cb55524f1a40d6fe0675aff9bd29233783bc6c6fd8f7a65ea8db68c9e5",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.299Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "mecha_android_front-2026-08-31T21-12-13-721Z",
@@ -85994,7 +86243,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/mecha_android_front-2026-08-31T21-12-13-721Z/preview.webp?v=2026-10-03T21%3A27%3A47.481Z",
     "thumbnailPosterPath": "mecha_android_front-2026-08-31T21-12-13-721Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -88514,10 +88763,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:06:03.594Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "be67a2a689a9d7688a359b85fd2dcd86fc9605ecf82fd44d09020de905e67f89",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.362Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "android_a_back-2026-08-31T21-07-10-426Z",
@@ -88695,7 +88950,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/android_a_back-2026-08-31T21-07-10-426Z/preview.webp?v=2026-10-03T21%3A27%3A47.952Z",
     "thumbnailPosterPath": "android_a_back-2026-08-31T21-07-10-426Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -90929,10 +91184,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T05:05:43.937Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_back",
+    "previewBlockedSourceFingerprint": "0fa6735805279d3368372d91771e4909783682e8b2a5a58db995e9d00ef8f4a0",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.421Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z",
@@ -91131,7 +91392,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z/preview.webp?v=2026-10-03T21%3A27%3A48.410Z",
     "thumbnailPosterPath": "akayuki_devil_ghost_front-2026-08-31T21-01-11-724Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -93659,10 +93920,16 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-09-01T02:17:27.361Z",
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewBlockedAnimation": "[down]run_front",
+    "previewBlockedSourceFingerprint": "ad24e8d8c49bcef8473efd3c8cc4a8b074aac04ba91a54817aae6daa3b66554a",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:24.479Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "skeleton-2026-08-31T14-32-12-333Z",
@@ -93697,7 +93964,7 @@
     "repositoryUrl": "",
     "thumbnail": "",
     "thumbnailPath": "library/skeleton-2026-08-31T14-32-12-333Z/idle-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webp?v=2026-10-03T21%3A27%3A48.727Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webp",
     "thumbnailPosterPath": "skeleton-2026-08-31T14-32-12-333Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -93908,16 +94175,16 @@
       "anchorUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/blockchain-anchor.json"
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webm",
-    "webpPoster": "",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webp",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-medium.webm",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-medium.webp",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-low.webm",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-low.webp",
     "webmPreviewPath": "library/skeleton-2026-08-31T14-32-12-333Z/preview.webm",
-    "webmGeneratedAt": "2026-09-02T17:10:46.266Z",
+    "webmGeneratedAt": "2026-11-24T12:10:24.664Z",
     "previewWidth": 200,
     "previewHeight": 200,
-    "previewDuration": 0.666700005531311,
+    "previewDuration": 0.635565,
     "skeletonWidth": 47.74,
     "skeletonHeight": 41.08,
     "allAnimationPreviews": {
@@ -93957,8 +94224,8 @@
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-medium.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview-medium.webp",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-preview.webm",
-        "webpPoster": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-preview.webp",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T14-32-12-333Z/preview.webp",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T14-32-12-333Z/animations/idle/skeleton-2026-08-31T14-32-12-333Z-anim-idle-alpha.webm"
@@ -93983,7 +94250,11 @@
     "previewStatus": "ready",
     "previewError": "",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-24T12:10:24.664Z",
+    "previewAnimation": "idle",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 20,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "boomscale_k-2026-08-31T14-22-24-767Z",
@@ -94017,7 +94288,7 @@
     "repositoryUrl": "",
     "thumbnail": "",
     "thumbnailPath": "library/boomscale_k-2026-08-31T14-22-24-767Z/idle-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webp?v=2026-10-03T21%3A27%3A49.127Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webp",
     "thumbnailPosterPath": "boomscale_k-2026-08-31T14-22-24-767Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -94226,13 +94497,13 @@
       "anchorUrl": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/blockchain-anchor.json"
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webm",
-    "webpPoster": "",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webp",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-medium.webm",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-medium.webp",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-low.webm",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-low.webp",
     "webmPreviewPath": "library/boomscale_k-2026-08-31T14-22-24-767Z/preview.webm",
-    "webmGeneratedAt": "2026-09-28T22:48:51.329Z",
+    "webmGeneratedAt": "2026-11-24T12:10:25.097Z",
     "previewWidth": 512,
     "previewHeight": 512,
     "skeletonWidth": 400,
@@ -94246,8 +94517,8 @@
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-medium.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview-medium.webp",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-preview.webm",
-        "webpPoster": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-preview.webp",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/boomscale_k-2026-08-31T14-22-24-767Z/preview.webp",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/boomscale_k-2026-08-31T14-22-24-767Z/animations/idle/boomscale_k-2026-08-31T14-22-24-767Z-anim-idle-alpha.webm"
@@ -94283,10 +94554,15 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-08-31T14:42:45.713Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "posterGeneratedAt": "2026-11-24T12:10:25.097Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "idle",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 84,
+    "previewDuration": 2.8,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "skeleton-2026-08-31T13-55-20-594Z",
@@ -94321,7 +94597,7 @@
     "repositoryUrl": "",
     "thumbnail": "",
     "thumbnailPath": "library/skeleton-2026-08-31T13-55-20-594Z/idle-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webp?v=2026-10-03T21%3A27%3A49.445Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webp",
     "thumbnailPosterPath": "skeleton-2026-08-31T13-55-20-594Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -94532,16 +94808,16 @@
       "anchorUrl": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/blockchain-anchor.json"
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webm",
-    "webpPoster": "",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webp",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-medium.webm",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-medium.webp",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-low.webm",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-low.webp",
     "webmPreviewPath": "library/skeleton-2026-08-31T13-55-20-594Z/preview.webm",
-    "webmGeneratedAt": "2026-09-02T17:10:46.266Z",
+    "webmGeneratedAt": "2026-11-24T12:10:25.307Z",
     "previewWidth": 200,
     "previewHeight": 200,
-    "previewDuration": 0.666700005531311,
+    "previewDuration": 0.655275,
     "skeletonWidth": 47.74,
     "skeletonHeight": 41.08,
     "allAnimationPreviews": {
@@ -94581,8 +94857,8 @@
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-medium.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview-medium.webp",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-preview.webm",
-        "webpPoster": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-preview.webp",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/skeleton-2026-08-31T13-55-20-594Z/preview.webp",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/skeleton-2026-08-31T13-55-20-594Z/animations/idle/skeleton-2026-08-31T13-55-20-594Z-anim-idle-alpha.webm"
@@ -94607,7 +94883,11 @@
     "previewStatus": "ready",
     "previewError": "",
     "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "posterGeneratedAt": "2026-11-24T12:10:25.307Z",
+    "previewAnimation": "idle",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 21,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "logo-small-2026-08-31T09-10-40-489Z",
@@ -94652,7 +94932,7 @@
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/logo-small-2026-08-31T09-10-40-489Z/preview.webp?v=2026-10-03T21%3A27%3A49.953Z",
     "thumbnailPosterPath": "logo-small-2026-08-31T09-10-40-489Z/preview.webp",
     "thumbnailType": "image",
-    "webmStatus": "ready",
+    "webmStatus": "blocked-invisible-default-skin",
     "sourceProof": {
       "type": "SpineLinkSourceProof",
       "version": 1,
@@ -94891,10 +95171,16 @@
         "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/logo-small-2026-08-31T09-10-40-489Z/preview-low.webp"
       }
     },
-    "previewStatus": "ready",
-    "previewError": "",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewStatusGeneratedAt": "2026-11-19T21:39:54.681Z",
-    "posterGeneratedAt": "2026-11-19T21:39:54.681Z"
+    "posterGeneratedAt": "2026-11-19T21:39:54.681Z",
+    "previewBlockedAnimation": "IN",
+    "previewBlockedSourceFingerprint": "6e4215216e23e332300f265f2f14e5f16d3b914116bb48a2a06d963dabc01b94",
+    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-24T12:10:25.377Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "scatter_bonus-2026-08-31T08-50-07-351Z",
@@ -94930,7 +95216,7 @@
     "repositoryUrl": "",
     "thumbnail": "",
     "thumbnailPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z/idle-preview.webp",
-    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webp?v=2026-10-03T21%3A27%3A50.451Z",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webp",
     "thumbnailPosterPath": "scatter_bonus-2026-08-31T08-50-07-351Z/preview.webp",
     "thumbnailType": "image",
     "webmStatus": "ready",
@@ -95141,13 +95427,13 @@
       "anchorUrl": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/blockchain-anchor.json"
     },
     "webmPreview": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webm",
-    "webpPoster": "",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webp",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-medium.webm",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-medium.webp",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-low.webm",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-low.webp",
     "webmPreviewPath": "library/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webm",
-    "webmGeneratedAt": "2026-09-28T23:45:18.409Z",
+    "webmGeneratedAt": "2026-11-24T12:10:25.918Z",
     "previewWidth": 974,
     "previewHeight": 660,
     "skeletonWidth": 761.9568,
@@ -95161,8 +95447,8 @@
         "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-medium.webm",
         "webpPosterMedium": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview-medium.webp",
         "mp4Preview": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-preview.mp4",
-        "webmPreview": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-preview.webm",
-        "webpPoster": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-preview.webp",
+        "webmPreview": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webm",
+        "webpPoster": "https://spine-link.vercel.app/assets/library_01/scatter_bonus-2026-08-31T08-50-07-351Z/preview.webp",
         "webmAlphaLow": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-alpha-low.webm",
         "webmAlphaMedium": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-alpha-medium.webm",
         "webmAlpha": "https://spine-link.vercel.app/assets/library/scatter_bonus-2026-08-31T08-50-07-351Z/animations/Idle/scatter_bonus-2026-08-31T08-50-07-351Z-anim-Idle-alpha.webm"
@@ -95226,10 +95512,15 @@
     },
     "fullExportStatus": "ready",
     "fullExportGeneratedAt": "2026-08-31T08:05:48.185Z",
-    "posterGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "posterGeneratedAt": "2026-11-24T12:10:25.918Z",
     "previewStatus": "ready",
     "previewError": "",
-    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z"
+    "previewStatusGeneratedAt": "2026-11-19T21:36:37.583Z",
+    "previewAnimation": "Idle",
+    "dispatchStatus": "rendered",
+    "previewFrameCount": 30,
+    "previewDuration": 1,
+    "lastPreviewRetryError": ""
   },
   {
     "id": "candy-2026-08-31T08-48-52-657Z",
