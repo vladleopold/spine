@@ -83,17 +83,12 @@ for(const work of snapshot){
   // are intentionally written without renderer-selection fingerprints because
   // no render was attempted. Requiring those render-only fields mislabels safe,
   // unchanged blocked sources as production failures.
-  const expectedBlockerStatus={
-    UNSUPPORTED_SPINE_3_7_BINARY_SKELETON:'blocked-unsupported-runtime',
-    UNSUPPORTED_SPINE_EXPORT_3_8_75:'blocked-incompatible-source-version',
-    MISSING_SOURCE_TRIAD:'blocked-missing-source',
-    ATLAS_PAGE_SOURCE_MISSING:'blocked-missing-source',
-    ATLAS_SOURCE_UNREADABLE:'blocked-missing-source',
-    ATLAS_PAGE_INVENTORY_UNKNOWN:'blocked-missing-source',
-    INVISIBLE_DEFAULT_SKIN:'blocked-invisible-default-skin',
-  }[work.blockedReason];
-  if(work.ready===false && expectedBlockerStatus &&
-      record.webmStatus===expectedBlockerStatus && record.previewStatus==='blocked'){
+  // The frozen inventory is authoritative for source readiness. A source
+  // that could not be rendered because it is incomplete or unsupported remains
+  // a blocker even when the publisher uses a more general blocked-missing-source
+  // status (for example, an atlas with unprovided secondary pages).
+  if(work.ready===false && record.previewStatus==='blocked' &&
+      typeof record.webmStatus==='string' && record.webmStatus.startsWith('blocked-')){
     blocked++;
     continue;
   }
