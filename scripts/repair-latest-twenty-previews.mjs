@@ -17,7 +17,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="auto-track-recovery-v8-source-skin-and-preserve";
+const PREVIEW_RENDERER_REVISION="auto-track-recovery-v9-frozen-renderer-revision";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const repairOffset=Number(process.env.SPINE_REPAIR_OFFSET||0);
@@ -367,7 +367,7 @@ if(action==="matrix"){
     const ready=!incompatible&&!blockedSameSelection&&Boolean(animation)&&sourceReady;
     const rel=normalizedPreviewPath(e.basePath,e.previewPath,e.id);
      return {repairSlot,id:e.id,basePath:e.basePath,previewPath:rel,
-      uploadedAt:e.at,sourceFingerprint,
+      uploadedAt:e.at,sourceFingerprint,rendererRevision:PREVIEW_RENDERER_REVISION,
       indexedWebmStatus:String(record?.webmStatus||''),
       indexedPreviewStatus:String(record?.previewStatus||''),
       indexedPreviewAnimation:typeof record?.previewAnimation==='string'?record.previewAnimation:'',
@@ -417,6 +417,11 @@ if(action==="matrix"){
       throw new Error("Invalid artifact slot");
     seenSlots.add(item.repairSlot);
     const entryInfo=validateFrozenRepairRecord(root,item,folders,readIndex);
+    // The render matrix and publish job can run across a newer main commit.
+    // Freeze the renderer revision from the artifact; old manifests fall back
+    // to the workflow event SHA, never the publisher's newer checkout revision.
+    const itemRendererRevision=typeof item.rendererRevision==="string"&&item.rendererRevision
+      ?item.rendererRevision:String(process.env.GITHUB_SHA||PREVIEW_RENDERER_REVISION);
     const uniqueKey=entryInfo.basePath+"/"+entryInfo.id;
     if(seen.has(uniqueKey))throw new Error("Duplicate repair entry");
     seen.add(uniqueKey);
@@ -464,7 +469,7 @@ if(action==="matrix"){
     const blockedSameSelection=blockedStatuses.has(record.webmStatus) &&
       record.previewBlockedAnimation===selectedAnimation &&
       record.previewBlockedSourceFingerprint===item.sourceFingerprint &&
-      record.previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION &&
+      record.previewBlockedRendererRevision===itemRendererRevision &&
       String(record.previewBlockedSkin||"")===String(record.defaultSkin||record.skin||"");
     if(blockedSameSelection){
       summary.blocked++;
@@ -577,7 +582,7 @@ if(action==="matrix"){
         record.previewStatus="blocked";
         record.previewBlockedAnimation=selectedAnimation;
         record.previewBlockedSourceFingerprint=item.sourceFingerprint;
-        record.previewBlockedRendererRevision=PREVIEW_RENDERER_REVISION;
+        record.previewBlockedRendererRevision=itemRendererRevision;
         record.previewBlockedSkin=String(record.defaultSkin||record.skin||"");
         record.previewBlockedAt=new Date().toISOString();
         record.previewError={
