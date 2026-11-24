@@ -430,12 +430,18 @@ if(action==="matrix"){
       // Source loss must not hide a previously accepted preview. Preserve it
       // only when all six local files, the exact selected-animation mapping,
       // live production URLs, and repository copies still pass independent checks.
-      if(record.webmStatus==="ready" && record.previewStatus==="ready" &&
-         record.webmPreview && record.webpPoster &&
+      if(record.dispatchStatus==="rendered" && record.webmPreview && record.webpPoster &&
          existingMediaOk(entryInfo) && await liveMediaOk(entryInfo) &&
          await originalMediaFilesOk(entryInfo)){
+        // The previous accepted status may already have been downgraded by an
+        // earlier source-only audit. Restore it only after re-proving the exact
+        // six-file media set locally, on production, and in the repository.
         const retainedAnimation=existingPreviewAnimationName(record);
         if(retainedAnimation)record.previewAnimation=retainedAnimation;
+        record.webmStatus="ready";
+        record.previewStatus="ready";
+        record.previewError="";
+        record.lastPreviewRetryError="";
         summary.ready++;
         continue;
       }
