@@ -1,5 +1,19 @@
 import path from "node:path";
 
+// Spine 3.8's atlas reader predates the page-level pma flag. It treats
+// that metadata line as a region name and then fails on the following region.
+// Strip only this unsupported metadata for legacy runtimes; keep page names,
+// region names, UVs and geometry byte-for-byte otherwise unchanged.
+export function stripLegacyPmaMetadata(atlasText) {
+  const lines=String(atlasText).split(/\\r?\\n/);
+  let removed=0;
+  const kept=lines.filter(line=>{
+    if(/^[ \\t]*pma\\s*:/i.test(line)){removed++;return false;}
+    return true;
+  });
+  return {text:kept.join("\\n"),removed};
+}
+
 export function chooseAtlasForSkeleton(skeletonName, atlasNames) {
   const stem=String(skeletonName||"").replace(/\.(json|skel)$/i,"").toLowerCase();
   const matches=atlasNames.filter(x=>/\.(atlas|atlas\.txt|atlas\.docx)$/i.test(x));

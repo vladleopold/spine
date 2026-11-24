@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata } from "./atlas-pages.mjs";
 
 assert.equal(
   chooseAtlasForSkeleton("Werewolf Cowgirl.skel",
@@ -43,3 +43,15 @@ assert.equal(ambiguous.aliases,0);
 assert.equal(ambiguous.unresolved,1);
 assert.match(ambiguous.text,/^missing\.png/);
 console.log("PASS atlas: unambiguous pages by source dimensions; ambiguous cases fail closed");
+
+const legacyPmaAtlas = [
+  "", "14505-1.png", "size: 2048,512", "format: RGBA8888",
+  "filter: Linear,Linear", "repeat: none", "pma: false", "Ren_10",
+  "  rotate: false", "  xy: 200,57", "  size: 26,26",
+].join("\\n");
+const strippedLegacyAtlas = stripLegacyPmaMetadata(legacyPmaAtlas);
+assert.equal(strippedLegacyAtlas.removed,1);
+assert.doesNotMatch(strippedLegacyAtlas.text,/^\\s*pma\\s*:/m);
+assert.match(strippedLegacyAtlas.text,/^Ren_10$/m);
+assert.match(strippedLegacyAtlas.text,/^14505-1\\.png$/m);
+console.log("PASS legacy Spine 3.8 atlas strips unsupported pma metadata without changing regions");

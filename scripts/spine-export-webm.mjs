@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
-import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences } from "./atlas-pages.mjs";
+import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata } from "./atlas-pages.mjs";
 import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -557,6 +557,11 @@ let atlasContent = fs.readFileSync(atlasLocalPath, 'utf8');
 atlasContent = atlasContent.replace(/^\.\.[\/\\]textures[\/\\]/gm, '');
 const reconciledAtlas = reconcileDdsAtlasPages(atlasContent,textureFiles);
 atlasContent = reconciledAtlas.text;
+if (isLegacy) {
+  const legacyAtlas = stripLegacyPmaMetadata(atlasContent);
+  atlasContent = legacyAtlas.text;
+  if (legacyAtlas.removed) console.error(`LEGACY_ATLAS_PMA_STRIPPED=${legacyAtlas.removed}`);
+}
 const textureMetadata=textureFiles.map(name=>{
   let width=0,height=0;
   try{
