@@ -52,7 +52,7 @@ export function summarizeRendererLog(text) {
   const secondary=lastCause?classifyRendererError(lastCause):"NONE";
   const classifiedLog=classifyRendererError(log);
   const reason=classifiedLog==="OTHER_RENDER_FAILURE"&&secondary!=="NONE"?secondary:classifiedLog;
-  const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?)\)/i)?.[1]||"unknown";
+  const version=log.match(/Skeleton:\s*.*?\s+\(v(\d+\.\d+(?:\.\d+)?(?:-[a-z0-9.-]+)?)\)/i)?.[1]||"unknown";
   const sourceDefaultSkin=/SOURCE_SKIN_MODE=default|Skin \(default\):/i.test(log);
   const recordingStarted=/RECORDER_STATE=recording|recorder recording/i.test(log);
   const attempts=sourceDefaultSkin?1:(log.match(/Skin candidates:/g)||[]).length;
@@ -89,6 +89,7 @@ export function summarizeRendererLog(text) {
     /No visible pixels from any available Spine skin/i.test(log)?"RUNTIME_ALL_SKINS_INVISIBLE":
     /Cannot establish playable animation duration/i.test(log)?"UNKNOWN_ANIMATION_DURATION":
     /No frame with visible content/i.test(log)?"DECODED_FRAMES_INVISIBLE":
+    reason==="SPINE_RUNTIME_INITIALIZATION"?"SPINE_RUNTIME_INITIALIZATION":
     reason==="ANIMATION_SELECTION"?"ANIMATION_SELECTION":
     reason==="SOURCE_GRAPH_MISSING"?"SOURCE_GRAPH_MISSING":
     reason==="SKELETON_RUNTIME_VERSION"?"SKELETON_RUNTIME_VERSION":
