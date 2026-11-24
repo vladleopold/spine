@@ -178,8 +178,8 @@ try{
 assert.match(repairSource,/latest50-/);
 assert.match(workflowSource,/animation:m\.animation/);
 assert.match(workflowSource,/hasExistingAcceptedMedia[\s\S]*?item\.indexedWebmStatus==='ready'[\s\S]*?item\.indexedPreviewStatus==='ready'[\s\S]*?item\.ready!==true && !hasExistingAcceptedMedia/);
-assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REVISION/,
-    'a renderer policy update must permit one retry of an earlier deterministic block');
+assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?itemRendererRevision=typeof item\.rendererRevision==="string"[\s\S]*?previewBlockedRendererRevision===itemRendererRevision[\s\S]*?previewBlockedRendererRevision=itemRendererRevision/,
+    'the renderer revision must be frozen in the manifest so a newer publisher checkout cannot falsely mark an older render as current');
   assert.match(repairSource,/meta\.animationFallbackUsed===true/,
     'a preview may use another source-declared animation only after visible motion is verified');
   assert.match(repairSource,/record\.previewAnimation=animation/,
@@ -188,7 +188,7 @@ assert.match(repairSource,/previewBlockedRendererRevision===PREVIEW_RENDERER_REV
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
   assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.dispatchStatus==="rendered"[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?record\.webmStatus="ready"[\s\S]*?summary\.ready\+\+/,
     "previously accepted media can be restored after a source-only downgrade only when all six files pass local, live and repository verification");
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v8-source-skin-and-preserve"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v9-frozen-renderer-revision"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
