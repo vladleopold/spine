@@ -1,5 +1,250 @@
 [
   {
+    "id": "ari-2026-11-25T03-18-58-412Z",
+    "title": "ari",
+    "ownerEmail": "davantonelli@email.com",
+    "ownerName": "David Antonelli",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocKoW5YR9arNnGZ4CKwaMlyLrDV8lNft0NNedoaeND6NBYWzbY9-=s96-c",
+    "publicOwnerId": "u_u6o58j",
+    "ownerAnonId": "anon_4bjr6u_e65bde",
+    "ownerAnonFingerprint": "4bjr6u",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-11-25T03:18:58.412Z",
+    "webmGeneratedAt": "2026-11-25T03:18:58.412Z",
+    "skeleton": "Ari.json",
+    "atlas": "Ari.atlas",
+    "textures": [
+      "Ari.png"
+    ],
+    "animations": [
+      "BoxAnim",
+      "BoxAwayAnim",
+      "Idle",
+      "IdleAnim",
+      "IdleTalk",
+      "RainCoat",
+      "SelectAnim",
+      "WalkAnim",
+      "WaveAnim"
+    ],
+    "defaultAnimation": "Idle",
+    "files": [
+      "ari/Ari.json",
+      "ari/Ari.atlas",
+      "ari/Ari.png",
+      "idle-preview.webp",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "ari-2026-11-25T03-18-58-412Z",
+    "repositoryUrl": "",
+    "thumbnail": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/idle-preview.webp?v=2026-11-25T03-18-58.412Z",
+    "thumbnailPath": "ari-2026-11-25T03-18-58-412Z/idle-preview.webp",
+    "thumbnailPoster": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/idle-preview.webp?v=2026-11-25T03-18-58.412Z",
+    "thumbnailPosterPath": "ari-2026-11-25T03-18-58-412Z/idle-preview.webp",
+    "thumbnailType": "image",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "ari-2026-11-25T03-18-58-412Z",
+      "title": "ari",
+      "uploadedAt": "2026-11-25T03:18:58.412Z",
+      "proofPath": "ari-2026-11-25T03-18-58-412Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/source-proof.json?v=2026-11-25T03-18-58.412Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "096bc231136c2a5982ebe0e70820b19941fb1f8f9b7560f6acc4b574ef9b5220",
+        "anonymousAccountId": "anon_4bjr6u_e65bde",
+        "anonymousFingerprint": "4bjr6u",
+        "browserFingerprintSha256": "662b4633ce9f97c17ba0b38c733a717cca93eaf007a10bd5c92888a82a90a035",
+        "browserEnvironmentHashSha256": "89c66b58fd473b8437a4d362802218b15259dfae3f77c4319410623c2ccae488",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 OPR/104.0.0.0",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1280,
+            "height": 800,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Phoenix",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "ari-2026-11-25T03-18-58-412Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:4c2704949addb6b8533ac5824c3fbe0ae478be59b941497e4356972c4b4a9349",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "ari/Ari.atlas",
+          "bytes": 4238,
+          "sha256": "a8c5742f03a15a57d3194c4c2efe3b377b31e97c341def0f4253b92593772b52"
+        },
+        {
+          "name": "ari/Ari.json",
+          "bytes": 47722,
+          "sha256": "0e50e9adfea1131d2670c6e7db628a279a83248fc3585513f4d800bf5d01f1d7"
+        },
+        {
+          "name": "ari/Ari.png",
+          "bytes": 68637,
+          "sha256": "d4a23bea944b9d4425bfcdc560b0a1f7d8cab7b2f7b35683e883f577a21e260c"
+        },
+        {
+          "name": "idle-preview.webp",
+          "bytes": 3066,
+          "sha256": "cf39df9b51493099f5e807cab30d26d82483422b46839d26a9d2bf59dfa7ada3"
+        }
+      ],
+      "proofHash": "4c2704949addb6b8533ac5824c3fbe0ae478be59b941497e4356972c4b4a9349"
+    },
+    "sourceProofPath": "ari-2026-11-25T03-18-58-412Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/source-proof.json?v=2026-11-25T03-18-58.412Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-11-25T03:19:01.766Z",
+      "entryId": "ari-2026-11-25T03-18-58-412Z",
+      "title": "ari",
+      "uploadedAt": "2026-11-25T03:18:58.412Z",
+      "sourceProofHash": "4c2704949addb6b8533ac5824c3fbe0ae478be59b941497e4356972c4b4a9349",
+      "sourceProofPath": "ari-2026-11-25T03-18-58-412Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/source-proof.json?v=2026-11-25T03-18-58.412Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "096bc231136c2a5982ebe0e70820b19941fb1f8f9b7560f6acc4b574ef9b5220",
+        "anonymousAccountId": "anon_4bjr6u_e65bde",
+        "anonymousFingerprint": "4bjr6u",
+        "browserFingerprintSha256": "662b4633ce9f97c17ba0b38c733a717cca93eaf007a10bd5c92888a82a90a035",
+        "browserEnvironmentHashSha256": "89c66b58fd473b8437a4d362802218b15259dfae3f77c4319410623c2ccae488",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 OPR/104.0.0.0",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1280,
+            "height": 800,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Phoenix",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "ari-2026-11-25T03-18-58-412Z",
+        "files": [
+          {
+            "name": "Ari.json",
+            "path": "ari-2026-11-25T03-18-58-412Z/ari/Ari.json",
+            "bytes": 47722,
+            "sha256": "0e50e9adfea1131d2670c6e7db628a279a83248fc3585513f4d800bf5d01f1d7",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Ari.atlas",
+            "path": "ari-2026-11-25T03-18-58-412Z/ari/Ari.atlas",
+            "bytes": 4238,
+            "sha256": "a8c5742f03a15a57d3194c4c2efe3b377b31e97c341def0f4253b92593772b52",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Ari.png",
+            "path": "ari-2026-11-25T03-18-58-412Z/ari/Ari.png",
+            "bytes": 68637,
+            "sha256": "d4a23bea944b9d4425bfcdc560b0a1f7d8cab7b2f7b35683e883f577a21e260c",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "idle-preview.webp",
+            "path": "ari-2026-11-25T03-18-58-412Z/idle-preview.webp",
+            "bytes": 3066,
+            "sha256": "cf39df9b51493099f5e807cab30d26d82483422b46839d26a9d2bf59dfa7ada3",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "ari-2026-11-25T03-18-58-412Z/source-proof.json",
+            "bytes": 2522,
+            "sha256": "2b8d10c0935ebbf6b62582082bb4acb8e25a31a5d10407af29cfefbd54f6450e",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "ari-2026-11-25T03-18-58-412Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "837f4a883f2f1f703c0ac1c61a031881204ff55d8953f64b5769202a9a01c5ab",
+      "recommendedAnchorPayload": "sha256:837f4a883f2f1f703c0ac1c61a031881204ff55d8953f64b5769202a9a01c5ab",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0x837f4a883f2f1f703c0ac1c61a031881204ff55d8953f64b5769202a9a01c5ab",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "ari-2026-11-25T03-18-58-412Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "Spine-animation-2026-11-24T23-48-06-620Z",
     "uploadedAt": "2026-11-24T23:48:06.620Z",
     "previewPath": "library_02/Spine-animation-2026-11-24T23-48-06-620Z",

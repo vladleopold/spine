@@ -1,0 +1,72 @@
+{
+  "type": "SpineLinkSourceProof",
+  "version": 1,
+  "hashAlgorithm": "SHA-256",
+  "entryId": "ari-2026-11-25T03-18-58-412Z",
+  "title": "ari",
+  "uploadedAt": "2026-11-25T03:18:58.412Z",
+  "proofPath": "ari-2026-11-25T03-18-58-412Z/source-proof.json",
+  "proofUrl": "https://spine-link.vercel.app/assets/ari-2026-11-25T03-18-58-412Z/source-proof.json?v=2026-11-25T03-18-58.412Z",
+  "uploader": {
+    "mode": "google-account",
+    "googleEmailSha256": "096bc231136c2a5982ebe0e70820b19941fb1f8f9b7560f6acc4b574ef9b5220",
+    "anonymousAccountId": "anon_4bjr6u_e65bde",
+    "anonymousFingerprint": "4bjr6u",
+    "browserFingerprintSha256": "662b4633ce9f97c17ba0b38c733a717cca93eaf007a10bd5c92888a82a90a035",
+    "browserEnvironmentHashSha256": "89c66b58fd473b8437a4d362802218b15259dfae3f77c4319410623c2ccae488",
+    "browserEnvironment": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 OPR/104.0.0.0",
+      "platform": "Linux armv81",
+      "language": "en-US",
+      "languages": [
+        "en-US"
+      ],
+      "hardwareConcurrency": 8,
+      "deviceMemory": 4,
+      "screen": {
+        "width": 1280,
+        "height": 800,
+        "colorDepth": 24,
+        "pixelRatio": 1
+      },
+      "timezone": "America/Phoenix",
+      "timezoneOffset": 420,
+      "maxTouchPoints": 5,
+      "cookieEnabled": true
+    }
+  },
+  "github": {
+    "owner": "vladleopold",
+    "repo": "spine",
+    "branch": "main",
+    "previewPath": "ari-2026-11-25T03-18-58-412Z"
+  },
+  "blockchain": {
+    "status": "ready-to-anchor",
+    "recommendedAnchorPayload": "sha256:4c2704949addb6b8533ac5824c3fbe0ae478be59b941497e4356972c4b4a9349",
+    "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+  },
+  "files": [
+    {
+      "name": "ari/Ari.atlas",
+      "bytes": 4238,
+      "sha256": "a8c5742f03a15a57d3194c4c2efe3b377b31e97c341def0f4253b92593772b52"
+    },
+    {
+      "name": "ari/Ari.json",
+      "bytes": 47722,
+      "sha256": "0e50e9adfea1131d2670c6e7db628a279a83248fc3585513f4d800bf5d01f1d7"
+    },
+    {
+      "name": "ari/Ari.png",
+      "bytes": 68637,
+      "sha256": "d4a23bea944b9d4425bfcdc560b0a1f7d8cab7b2f7b35683e883f577a21e260c"
+    },
+    {
+      "name": "idle-preview.webp",
+      "bytes": 3066,
+      "sha256": "cf39df9b51493099f5e807cab30d26d82483422b46839d26a9d2bf59dfa7ada3"
+    }
+  ],
+  "proofHash": "4c2704949addb6b8533ac5824c3fbe0ae478be59b941497e4356972c4b4a9349"
+}
