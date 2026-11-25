@@ -1,5 +1,139 @@
 [
   {
+    "id": "ranger-2026-11-25T03-20-33-422Z",
+    "name": "ranger",
+    "updatedAt": "2026-11-25T03:20:37.620Z",
+    "animation_asset": {
+      "id": "ranger-2026-11-25T03-20-33-422Z",
+      "name": "ranger",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "callanim",
+          "idleanim",
+          "talkanim",
+          "talkingrefanim",
+          "umbrella",
+          "umbrella2",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-idleanim"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "ranger-2026-11-25T03-20-33-422Z",
+      "manifestPath": "ranger-2026-11-25T03-20-33-422Z/manifest.json",
+      "files": [
+        {
+          "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.json",
+          "name": "ranger/Ranger.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.atlas",
+          "name": "ranger/Ranger.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.png",
+          "name": "ranger/Ranger.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "ranger-2026-11-25T03-20-33-422Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "ranger-2026-11-25T03-20-33-422Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "Ranger.json",
+      "atlas": "Ranger.atlas",
+      "textures": [
+        "Ranger.png"
+      ],
+      "animationCount": 6,
+      "animationNames": [
+        "CallAnim",
+        "IdleAnim",
+        "TalkAnim",
+        "TalkingRefAnim",
+        "Umbrella",
+        "Umbrella2"
+      ],
+      "defaultAnimation": "IdleAnim",
+      "fileCount": 5,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 1
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ari-2026-11-25T03-18-58-412Z",
     "name": "ari",
     "updatedAt": "2026-11-25T03:19:01.774Z",

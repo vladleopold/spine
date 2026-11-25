@@ -1,5 +1,224 @@
 [
   {
+    "id": "ranger-2026-11-25T03-20-33-422Z",
+    "title": "ranger",
+    "ownerEmail": "davantonelli@email.com",
+    "ownerName": "David Antonelli",
+    "ownerPicture": "https://lh3.googleusercontent.com/a/ACg8ocKoW5YR9arNnGZ4CKwaMlyLrDV8lNft0NNedoaeND6NBYWzbY9-=s96-c",
+    "publicOwnerId": "u_u6o58j",
+    "ownerAnonId": "anon_4bjr6u_e65bde",
+    "ownerAnonFingerprint": "4bjr6u",
+    "showOwnerLibrary": true,
+    "portfolioMode": false,
+    "uploadedAt": "2026-11-25T03:20:33.422Z",
+    "webmGeneratedAt": "2026-11-25T03:20:33.422Z",
+    "skeleton": "Ranger.json",
+    "atlas": "Ranger.atlas",
+    "textures": [
+      "Ranger.png"
+    ],
+    "animations": [
+      "CallAnim",
+      "IdleAnim",
+      "TalkAnim",
+      "TalkingRefAnim",
+      "Umbrella",
+      "Umbrella2"
+    ],
+    "defaultAnimation": "IdleAnim",
+    "files": [
+      "ranger/Ranger.json",
+      "ranger/Ranger.atlas",
+      "ranger/Ranger.png",
+      "source-proof.json",
+      "blockchain-anchor.json"
+    ],
+    "previewPath": "ranger-2026-11-25T03-20-33-422Z",
+    "repositoryUrl": "",
+    "webmStatus": "pending",
+    "sourceProof": {
+      "type": "SpineLinkSourceProof",
+      "version": 1,
+      "hashAlgorithm": "SHA-256",
+      "entryId": "ranger-2026-11-25T03-20-33-422Z",
+      "title": "ranger",
+      "uploadedAt": "2026-11-25T03:20:33.422Z",
+      "proofPath": "ranger-2026-11-25T03-20-33-422Z/source-proof.json",
+      "proofUrl": "https://spine-link.vercel.app/assets/ranger-2026-11-25T03-20-33-422Z/source-proof.json?v=2026-11-25T03-20-33.422Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "096bc231136c2a5982ebe0e70820b19941fb1f8f9b7560f6acc4b574ef9b5220",
+        "anonymousAccountId": "anon_4bjr6u_e65bde",
+        "anonymousFingerprint": "4bjr6u",
+        "browserFingerprintSha256": "662b4633ce9f97c17ba0b38c733a717cca93eaf007a10bd5c92888a82a90a035",
+        "browserEnvironmentHashSha256": "89c66b58fd473b8437a4d362802218b15259dfae3f77c4319410623c2ccae488",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 OPR/104.0.0.0",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1280,
+            "height": 800,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Phoenix",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "previewPath": "ranger-2026-11-25T03-20-33-422Z"
+      },
+      "blockchain": {
+        "status": "ready-to-anchor",
+        "recommendedAnchorPayload": "sha256:98731ad5568ce0579b46520e69879cdcd2f960a468f21791eeeebef64b950a9a",
+        "note": "Anchor proofHash on-chain together with the GitHub commit/file path to timestamp the original upload evidence."
+      },
+      "files": [
+        {
+          "name": "ranger/Ranger.atlas",
+          "bytes": 3752,
+          "sha256": "6ffed706badd312f9333ac9fd347efca0913ade83ad714cfec1d641e8e0574ca"
+        },
+        {
+          "name": "ranger/Ranger.json",
+          "bytes": 44936,
+          "sha256": "25529cce9773c6da1649a06a855d239b2d7971a3a8abf785b87e1e6d9e0c028b"
+        },
+        {
+          "name": "ranger/Ranger.png",
+          "bytes": 106370,
+          "sha256": "94552c3da3814abbd5a4fb40dd866c566bb4b0598f96f5ef0679c104f6c0faf2"
+        }
+      ],
+      "proofHash": "98731ad5568ce0579b46520e69879cdcd2f960a468f21791eeeebef64b950a9a"
+    },
+    "sourceProofPath": "ranger-2026-11-25T03-20-33-422Z/source-proof.json",
+    "sourceProofUrl": "https://spine-link.vercel.app/assets/ranger-2026-11-25T03-20-33-422Z/source-proof.json?v=2026-11-25T03-20-33.422Z",
+    "blockchainAnchor": {
+      "type": "SpineLinkGitHubBlockchainAnchor",
+      "version": 1,
+      "createdAt": "2026-11-25T03:20:37.611Z",
+      "entryId": "ranger-2026-11-25T03-20-33-422Z",
+      "title": "ranger",
+      "uploadedAt": "2026-11-25T03:20:33.422Z",
+      "sourceProofHash": "98731ad5568ce0579b46520e69879cdcd2f960a468f21791eeeebef64b950a9a",
+      "sourceProofPath": "ranger-2026-11-25T03-20-33-422Z/source-proof.json",
+      "sourceProofUrl": "https://spine-link.vercel.app/assets/ranger-2026-11-25T03-20-33-422Z/source-proof.json?v=2026-11-25T03-20-33.422Z",
+      "uploader": {
+        "mode": "google-account",
+        "googleEmailSha256": "096bc231136c2a5982ebe0e70820b19941fb1f8f9b7560f6acc4b574ef9b5220",
+        "anonymousAccountId": "anon_4bjr6u_e65bde",
+        "anonymousFingerprint": "4bjr6u",
+        "browserFingerprintSha256": "662b4633ce9f97c17ba0b38c733a717cca93eaf007a10bd5c92888a82a90a035",
+        "browserEnvironmentHashSha256": "89c66b58fd473b8437a4d362802218b15259dfae3f77c4319410623c2ccae488",
+        "browserEnvironment": {
+          "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 OPR/104.0.0.0",
+          "platform": "Linux armv81",
+          "language": "en-US",
+          "languages": [
+            "en-US"
+          ],
+          "hardwareConcurrency": 8,
+          "deviceMemory": 4,
+          "screen": {
+            "width": 1280,
+            "height": 800,
+            "colorDepth": 24,
+            "pixelRatio": 1
+          },
+          "timezone": "America/Phoenix",
+          "timezoneOffset": 420,
+          "maxTouchPoints": 5,
+          "cookieEnabled": true
+        }
+      },
+      "github": {
+        "owner": "vladleopold",
+        "repo": "spine",
+        "branch": "main",
+        "repositoryUrl": "https://github.com/vladleopold/spine",
+        "uploadPath": "ranger-2026-11-25T03-20-33-422Z",
+        "files": [
+          {
+            "name": "Ranger.json",
+            "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.json",
+            "bytes": 44936,
+            "sha256": "25529cce9773c6da1649a06a855d239b2d7971a3a8abf785b87e1e6d9e0c028b",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Ranger.atlas",
+            "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.atlas",
+            "bytes": 3752,
+            "sha256": "6ffed706badd312f9333ac9fd347efca0913ade83ad714cfec1d641e8e0574ca",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "Ranger.png",
+            "path": "ranger-2026-11-25T03-20-33-422Z/ranger/Ranger.png",
+            "bytes": 106370,
+            "sha256": "94552c3da3814abbd5a4fb40dd866c566bb4b0598f96f5ef0679c104f6c0faf2",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          },
+          {
+            "name": "source-proof.json",
+            "path": "ranger-2026-11-25T03-20-33-422Z/source-proof.json",
+            "bytes": 2404,
+            "sha256": "b8648fac0651efd6ac2a8ade9e00cf602967c83058f6e23cafb49b5b844cbb7a",
+            "github": {
+              "contentSha": "",
+              "commitSha": "",
+              "commitUrl": "",
+              "downloadUrl": ""
+            }
+          }
+        ],
+        "anchorPath": "ranger-2026-11-25T03-20-33-422Z/blockchain-anchor.json",
+        "anchorUrl": "https://spine-link.vercel.app/assets/ranger-2026-11-25T03-20-33-422Z/blockchain-anchor.json"
+      },
+      "legalEvidence": {
+        "statement": "This record links file SHA-256 hashes, browser/account identity hashes, browser environment evidence, GitHub repository writes, and an optional EVM transaction payload for source-origin evidence.",
+        "privacy": "Email is stored only as SHA-256 in the proof. Anonymous browser/account identifiers are pseudonymous and should be treated as evidence metadata, not personal identity by themselves."
+      },
+      "anchorHash": "af46c55e0b1b667d3187ca1adaeef4a0142f11fea384036f9f6cd2f7a1db65b5",
+      "recommendedAnchorPayload": "sha256:af46c55e0b1b667d3187ca1adaeef4a0142f11fea384036f9f6cd2f7a1db65b5",
+      "blockchain": {
+        "status": "disabled",
+        "chain": "evm",
+        "transactionData": "0xaf46c55e0b1b667d3187ca1adaeef4a0142f11fea384036f9f6cd2f7a1db65b5",
+        "message": "Blockchain anchoring is temporarily disabled."
+      },
+      "anchorPath": "ranger-2026-11-25T03-20-33-422Z/blockchain-anchor.json",
+      "anchorUrl": "https://spine-link.vercel.app/assets/ranger-2026-11-25T03-20-33-422Z/blockchain-anchor.json"
+    }
+  },
+  {
     "id": "ari-2026-11-25T03-18-58-412Z",
     "title": "ari",
     "ownerEmail": "davantonelli@email.com",
