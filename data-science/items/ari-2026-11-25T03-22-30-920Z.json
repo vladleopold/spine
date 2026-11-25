@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "spine-link-data-science-v1",
+  "taxonomyVersion": "2026-05-02",
+  "createdAt": "2026-11-25T03:22:30.920Z",
+  "updatedAt": "2026-11-25T03:22:35.249Z",
+  "animation_asset": {
+    "id": "ari-2026-11-25T03-22-30-920Z",
+    "name": "ari",
+    "domain": "gamedev",
+    "asset_category": "weather",
+    "animation_type": "nature",
+    "skeleton_type": "environment",
+    "content_type": "fx",
+    "taxonomy": {
+      "category": "environment",
+      "class": "weather",
+      "type": "weather-fx",
+      "tags": [
+        "rain"
+      ]
+    },
+    "tags": {
+      "element": [
+        "weather"
+      ],
+      "biome": [
+        "outdoor"
+      ],
+      "animation_state": [
+        "boxanim",
+        "boxawayanim",
+        "idle",
+        "idleanim",
+        "idletalk",
+        "raincoat",
+        "selectanim",
+        "walkanim",
+        "waveanim"
+      ],
+      "loop_type": [
+        "loop-candidate",
+        "loop"
+      ],
+      "state": [
+        "default-idle"
+      ],
+      "action": [
+        "walk"
+      ],
+      "platform": [
+        "web"
+      ],
+      "resolution": [
+        "texture-png"
+      ],
+      "rig_type": [
+        "spine-json"
+      ],
+      "quality_level": [
+        "auto-tagged"
+      ],
+      "material": [
+        "atlas-mapped"
+      ],
+      "procedural": false,
+      "modular": false,
+      "runtime_capable": true
+    }
+  },
+  "source": {
+    "storage": "github",
+    "repository": "vladleopold/spine",
+    "branch": "main",
+    "previewPath": "ari-2026-11-25T03-22-30-920Z",
+    "manifestPath": "ari-2026-11-25T03-22-30-920Z/manifest.json",
+    "files": [
+      {
+        "path": "ari-2026-11-25T03-22-30-920Z/ari/Ari.json",
+        "name": "ari/Ari.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "ari-2026-11-25T03-22-30-920Z/ari/Ari.atlas",
+        "name": "ari/Ari.atlas",
+        "role": "atlas",
+        "format": "atlas"
+      },
+      {
+        "path": "ari-2026-11-25T03-22-30-920Z/ari/Ari.png",
+        "name": "ari/Ari.png",
+        "role": "texture",
+        "format": "png"
+      },
+      {
+        "path": "ari-2026-11-25T03-22-30-920Z/source-proof.json",
+        "name": "source-proof.json",
+        "role": "skeleton",
+        "format": "json"
+      },
+      {
+        "path": "ari-2026-11-25T03-22-30-920Z/blockchain-anchor.json",
+        "name": "blockchain-anchor.json",
+        "role": "skeleton",
+        "format": "json"
+      }
+    ]
+  },
+  "spine_spec": {
+    "skeleton": "Ari.json",
+    "atlas": "Ari.atlas",
+    "textures": [
+      "Ari.png"
+    ],
+    "animationCount": 9,
+    "animationNames": [
+      "BoxAnim",
+      "BoxAwayAnim",
+      "Idle",
+      "IdleAnim",
+      "IdleTalk",
+      "RainCoat",
+      "SelectAnim",
+      "WalkAnim",
+      "WaveAnim"
+    ],
+    "defaultAnimation": "Idle",
+    "fileCount": 5,
+    "skeletonCount": 3,
+    "atlasCount": 1,
+    "textureCount": 1
+  },
+  "inference": {
+    "method": "filename-animation-keyword-rules",
+    "matchedKeywords": [
+      "rain"
+    ],
+    "confidence": 0.55,
+    "needsHumanReview": true
+  },
+  "privacy": {
+    "public": false,
+    "ownerScoped": false,
+    "ownerFieldsRemoved": true,
+    "exposeInSitemap": false,
+    "exposeInProfile": false,
+    "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+  }
+}
