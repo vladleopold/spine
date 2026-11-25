@@ -1,5 +1,136 @@
 [
   {
+    "id": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z",
+    "name": "youy_260117_9ren_c7",
+    "updatedAt": "2026-11-25T17:50:32.270Z",
+    "animation_asset": {
+      "id": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z",
+      "name": "youy_260117_9ren_c7",
+      "domain": "gamedev",
+      "asset_category": "object",
+      "animation_type": "object",
+      "skeleton_type": "object",
+      "content_type": "object",
+      "taxonomy": {
+        "category": "object",
+        "class": "game-object",
+        "type": "prop"
+      },
+      "tags": {
+        "gameplay_role": [
+          "game-object"
+        ],
+        "rig_type": [
+          "skeletal-2d",
+          "spine-json"
+        ],
+        "quality_level": [
+          "unreviewed",
+          "auto-tagged"
+        ],
+        "animation_state": [
+          "c7_idle",
+          "idle"
+        ],
+        "loop_type": [
+          "loop-candidate",
+          "loop"
+        ],
+        "state": [
+          "default-c7_idle"
+        ],
+        "platform": [
+          "web"
+        ],
+        "resolution": [
+          "texture-png",
+          "texture-webp"
+        ],
+        "material": [
+          "atlas-mapped"
+        ],
+        "procedural": false,
+        "modular": false,
+        "runtime_capable": true
+      }
+    },
+    "source": {
+      "storage": "github",
+      "repository": "vladleopold/spine",
+      "branch": "main",
+      "previewPath": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z",
+      "manifestPath": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/manifest.json",
+      "files": [
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/youy_260117_9ren_c7/youy_260117_9ren_c7.json",
+          "name": "youy_260117_9ren_c7/youy_260117_9ren_c7.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/youy_260117_9ren_c7/youy_260117_9ren_c7.atlas",
+          "name": "youy_260117_9ren_c7/youy_260117_9ren_c7.atlas",
+          "role": "atlas",
+          "format": "atlas"
+        },
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/youy_260117_9ren_c7/youy_260117_9ren_c7.png",
+          "name": "youy_260117_9ren_c7/youy_260117_9ren_c7.png",
+          "role": "texture",
+          "format": "png"
+        },
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/c7_idle-preview.webp",
+          "name": "c7_idle-preview.webp",
+          "role": "texture",
+          "format": "webp"
+        },
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/source-proof.json",
+          "name": "source-proof.json",
+          "role": "skeleton",
+          "format": "json"
+        },
+        {
+          "path": "youy_260117_9ren_c7-2026-11-25T17-50-30-512Z/blockchain-anchor.json",
+          "name": "blockchain-anchor.json",
+          "role": "skeleton",
+          "format": "json"
+        }
+      ]
+    },
+    "spine_spec": {
+      "skeleton": "youy_260117_9ren_c7.json",
+      "atlas": "youy_260117_9ren_c7.atlas",
+      "textures": [
+        "youy_260117_9ren_c7.png"
+      ],
+      "animationCount": 1,
+      "animationNames": [
+        "c7_idle"
+      ],
+      "defaultAnimation": "c7_idle",
+      "fileCount": 6,
+      "skeletonCount": 3,
+      "atlasCount": 1,
+      "textureCount": 2
+    },
+    "inference": {
+      "method": "filename-animation-keyword-rules",
+      "matchedKeywords": [],
+      "confidence": 0.35,
+      "needsHumanReview": true
+    },
+    "privacy": {
+      "public": false,
+      "ownerScoped": false,
+      "ownerFieldsRemoved": true,
+      "exposeInSitemap": false,
+      "exposeInProfile": false,
+      "note": "Internal data-science catalog entry. Do not expose through public pages, sitemap, or profile libraries."
+    }
+  },
+  {
     "id": "ari-2026-11-25T03-22-30-920Z",
     "name": "ari",
     "updatedAt": "2026-11-25T03:22:35.249Z",
