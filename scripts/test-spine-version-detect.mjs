@@ -35,6 +35,8 @@ assert.equal(spinePlayerSourceBlocker('4.3.26', 'character.json'), null);
 assert.equal(spinePlayerSourceBlocker('5.0.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
 assert.equal(spinePlayerSourceBlocker('4.4.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
 assert.equal(spinePlayerSourceBlocker('3.9.0', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
+assert.equal(spinePlayerSourceBlocker('3.7.93', 'character.skel')?.code, 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON');
+assert.equal(spinePlayerSourceBlocker('3.7.93', 'character.json'), null);
 assert.equal(spinePlayerSourceBlocker('2.1.27', 'character.json')?.code, 'UNSUPPORTED_SPINE_WEB_PLAYER_VERSION');
 assert.equal(spinePlayerSourceBlocker('unknown', 'character.json')?.code, 'SPINE_VERSION_UNKNOWN');
 
