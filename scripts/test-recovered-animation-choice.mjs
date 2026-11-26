@@ -22,6 +22,10 @@ assert.equal(chooseRecoveryAnimation('', ''), '',
 assert.equal(chooseRecoveryAnimation(undefined, undefined), '',
   'missing animation metadata must not select the first available track');
 
+assert.equal(chooseRecoveryAnimation('__SPINE_AUTO__', '', 'RuntimeIdle'), 'RuntimeIdle');
+assert.equal(chooseRecoveryAnimation('__SPINE_AUTO__', 'indexed-default', ''), 'indexed-default');
+assert.equal(chooseRecoveryAnimation('__SPINE_AUTO__', '', ''), '');
+
 const recoverySource = fs.readFileSync(new URL('./recover-recorded-webm.mjs', import.meta.url), 'utf8');
 assert.match(recoverySource, /chooseRecoveryAnimation\(/,
   'the recovery script must use the tested exact-selection helper');
@@ -29,3 +33,10 @@ assert.doesNotMatch(recoverySource, /animations\?\.\[0\]/,
   'the recovery script must never select the first animation as a fallback');
 
 console.log('PASS recorded-WebM recovery preserves only the explicit or indexed animation; no first-track fallback');
+
+assert.match(recoverySource, /process\.argv\[5\]/);
+assert.match(recoverySource, /SPINE_SELECTED_ANIMATION_B64/);
+const latest50Workflow = fs.readFileSync(new URL('../.github/workflows/repair-latest-twenty-previews.yml', import.meta.url), 'utf8');
+const latest10Workflow = fs.readFileSync(new URL('../.github/workflows/repair-last-ten-previews.yml', import.meta.url), 'utf8');
+assert.match(latest50Workflow, /\$RUNNER_TEMP\/renderer\.log.*recovery\.log/);
+assert.match(latest10Workflow, /\$RUNNER_TEMP\/renderer\.log.*recovery\.log/);
