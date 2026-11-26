@@ -180,6 +180,7 @@ jobs:
             /scripts/lib/canvas-fallback.mjs
             /scripts/test-canvas-fallback.mjs
             /scripts/lib/spine-json-runtime-compat.mjs
+            /scripts/test-spine-json-runtime-compat.mjs
             /scripts/spine-export-webm.mjs
             /scripts/test-preview-visibility-recovery.mjs
       - uses: actions/setup-node@v4
@@ -187,9 +188,10 @@ jobs:
           node-version: '22'
       - name: Verify all four pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
-      - name: Verify preview visibility and deterministic canvas fallback bounds
+      - name: Verify preview visibility, Spine 3.8 skin maps, and deterministic canvas fallback bounds
         run: |
           node scripts/test-preview-visibility-recovery.mjs
+          node scripts/test-spine-json-runtime-compat.mjs
           node scripts/test-canvas-fallback.mjs
       - uses: actions/upload-artifact@v4
         with:
