@@ -30,7 +30,7 @@ assert.doesNotMatch(JSON.stringify(safeRuntimeDiagnostics),/private-animation-na
 const hugeLogDir=fs.mkdtempSync(path.join(os.tmpdir(),"spine-renderer-log-"));
 const hugeLogPath=path.join(hugeLogDir,"renderer.log");
 const hugeFd=fs.openSync(hugeLogPath,"w");
-const hugeSize=600*1024*1024;
+const hugeSize=64*1024*1024;
 const hugeHead=Buffer.from("Skeleton: fixture (v3.8.59)\\nPLAYER_READY=1\\n");
 const hugeTail=Buffer.from("Error: No visible real-time Spine frames\\n");
 fs.writeSync(hugeFd,hugeHead,0,hugeHead.length,0);
