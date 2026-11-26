@@ -15,11 +15,13 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: spine-library-commit
+  # This workflow writes only to the isolated sa-reference-index branch; it
+  # must not hold the main library-media publication lock.
+  group: sa-reference-index-build
   cancel-in-progress: true
 jobs:
   build-index:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
