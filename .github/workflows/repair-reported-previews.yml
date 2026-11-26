@@ -373,7 +373,7 @@ jobs:
 
   verify-production:
     needs: [inventory, render, publish]
-    if: github.ref == 'refs/heads/main' && needs.publish.result == 'success'
+    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     steps:
