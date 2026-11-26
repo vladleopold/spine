@@ -1080,6 +1080,7 @@ try {
       break;
     }
     targetAnimation = pinnedAnimation;
+    console.error('SPINE_SELECTED_ANIMATION_B64=' + Buffer.from(targetAnimation, 'utf8').toString('base64'));
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
