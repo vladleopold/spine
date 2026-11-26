@@ -91,8 +91,11 @@ const media=fs.readFileSync(video);
 const metaPath=video+'.json';
 let previous={};
 try{previous=JSON.parse(fs.readFileSync(metaPath,'utf8'))}catch{}
-const metadata={...previous,animation,animationDuration:duration,
-width,height,bytes:media.length,sha256:createHash('sha256').update(media).digest('hex'),
+const metadata={...previous,animation,
+animationFallbackUsed:process.argv[3]==='__SPINE_AUTO__' &&
+  Boolean(runtimeSelectedAnimation) && animation!==String(record?.defaultAnimation||''),
+animationDuration:duration,width,height,bytes:media.length,
+sha256:createHash('sha256').update(media).digest('hex'),
 qualityWidths:widths,files:Object.fromEntries(Object.entries(files).map(([key,p])=>[key,fs.statSync(p).size]))};
 fs.writeFileSync(metaPath,JSON.stringify(metadata,null,2));
 console.log('ACTUAL_SPINE_WEBM_RECOVERED',JSON.stringify({frames,width,height,distinctSamples:samples.size,
