@@ -3,6 +3,7 @@ import fs from 'node:fs';
 
 const renderWork=fs.readFileSync(new URL('./render-work.mjs',import.meta.url),'utf8');
 const classifier=fs.readFileSync(new URL('./renderer-failure-class.mjs',import.meta.url),'utf8');
+const webmRenderer=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 const blockedStart=renderWork.indexOf('async function markBlockedRender(');
 const blockedEnd=renderWork.indexOf('async function markBlockedSelection()',blockedStart);
 assert.ok(blockedStart>=0&&blockedEnd>blockedStart,'per-upload renderer must have a guarded blocked-state publisher');
@@ -39,6 +40,8 @@ assert.match(renderWork,/report\.status==='ready'[\s\S]*?report\.status='partial
   'a follow-up dispatch failure must not misreport already-published media as a render failure');
 assert.match(renderWork,/selection\.animation==='__SPINE_AUTO__'[\s\S]*?allow-visible-track-fallback/,
   'binary-only skeleton preview must opt into runtime-discovered visible-track selection');
+assert.doesNotMatch(webmRenderer,/window\.__spinePatched|AtlasAttachmentLoader\.prototype|p\.findRegion\s*=|computeUVs\s*=/,
+  'WebM rendering must not suppress atlas-region errors or create null attachments');
 assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
 assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 assert.match(classifier,/reason==="ANIMATION_SELECTION"\?"ANIMATION_SELECTION"/);
