@@ -18,10 +18,10 @@ concurrency:
 jobs:
   restore:
     # Renaming 996 works in a 6 GB repository needs well past the default 6 minutes.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
