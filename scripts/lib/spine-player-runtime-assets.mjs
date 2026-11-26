@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 
 export function resolveLocalSpinePlayerAssets({
@@ -17,7 +18,7 @@ export function resolveLocalSpinePlayerAssets({
         url: playerJsUrl,
         filename: path.join(repoRoot, 'public', 'vendor-spine-player-' + version + '.js'),
         type: 'application/javascript',
-        required: false,
+        required: true,
       },
       {
         url: playerCssUrl,
@@ -44,4 +45,22 @@ export function resolveLocalSpinePlayerAssets({
       required: true,
     },
   ];
+}
+
+export function createInlineSpinePlayerAssetUrls(assets, fallback = {}) {
+  const find = type => (Array.isArray(assets) ? assets : []).find(asset => asset && asset.type === type);
+  const toDataUrl = (asset, type, fallbackUrl) => {
+    if (!asset) return fallbackUrl || '';
+    if (!fs.existsSync(asset.filename)) {
+      if (asset.required) throw new Error('PINNED_SPINE_PLAYER_ASSET_MISSING_' + path.basename(asset.filename));
+      return fallbackUrl || '';
+    }
+    const bytes = fs.readFileSync(asset.filename);
+    const mime = type === 'application/javascript' ? 'application/javascript' : 'text/css';
+    return 'data:' + mime + ';base64,' + bytes.toString('base64');
+  };
+  return {
+    playerJsUrl: toDataUrl(find('application/javascript'), 'application/javascript', fallback.playerJsUrl),
+    playerCssUrl: toDataUrl(find('text/css'), 'text/css', fallback.playerCssUrl),
+  };
 }
