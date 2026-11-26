@@ -7,39 +7,34 @@ import fs from "node:fs";
 // Keep diagnostics bounded even when Chromium emits huge data-URI or minified
 // asset lines. Preserve the log header (version/stage markers) and its tail
 // (the final failure), while never materializing an unbounded file as a string.
-export function readRendererLogExcerpt(filePath, maxBytes = 5 * 1024 * 1024, headBytes = 64 * 1024) {
-  if (!Number.isSafeInteger(maxBytes) || maxBytes < 128) {
-    throw new RangeError("maxBytes must be an integer of at least 128");
-  }
-  if (!Number.isSafeInteger(headBytes) || headBytes < 0) {
-    throw new RangeError("headBytes must be a non-negative integer");
+export function readRendererLogExcerpt(filePath, maxBytes = 64 * 1024, headBytes = Math.floor(maxBytes / 2)) {
+  const limit = Number(maxBytes);
+  const headLimit = Number(headBytes);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1024 * 1024 ||
+      !Number.isSafeInteger(headLimit) || headLimit < 0 || headLimit > limit) {
+    throw new RangeError("Renderer log excerpt limits must be valid byte counts no greater than 1048576");
   }
   const fd = fs.openSync(filePath, "r");
   try {
     const size = fs.fstatSync(fd).size;
-    const readAt = (length, position) => {
-      const buffer = Buffer.alloc(length);
-      let offset = 0;
-      while (offset < length) {
-        const count = fs.readSync(fd, buffer, offset, length - offset, position + offset);
-        if (count === 0) break;
-        offset += count;
-      }
-      return buffer.subarray(0, offset).toString("utf8");
-    };
-    if (size <= maxBytes) return readAt(size, 0);
-    const marker = "\n...[renderer log excerpt truncated]...\n";
-    const payloadBytes = maxBytes - Buffer.byteLength(marker);
-    const headLength = Math.min(headBytes, Math.floor(payloadBytes / 2), size);
-    const tailLength = Math.min(payloadBytes - headLength, size - headLength);
-    const head = readAt(headLength, 0);
-    const tail = readAt(tailLength, size - tailLength);
-    return head + marker + tail;
+    if (size <= limit) {
+      const whole = Buffer.alloc(size);
+      if (size > 0) fs.readSync(fd, whole, 0, size, 0);
+      return whole.toString("utf8");
+    }
+    const firstLength = Math.min(size, headLimit);
+    const separator = "\\n[... renderer log middle omitted ...]\\n";
+    const separatorBytes = Buffer.byteLength(separator);
+    const lastLength = Math.min(Math.max(0, limit - firstLength - separatorBytes), size - firstLength);
+    const first = Buffer.alloc(firstLength);
+    const last = Buffer.alloc(lastLength);
+    if (firstLength > 0) fs.readSync(fd, first, 0, firstLength, 0);
+    if (lastLength > 0) fs.readSync(fd, last, 0, lastLength, size - lastLength);
+    return first.toString("utf8") + separator + last.toString("utf8");
   } finally {
     fs.closeSync(fd);
   }
 }
-
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
