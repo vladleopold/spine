@@ -24,7 +24,10 @@ function probe(file) {
   const countRaw = execFileSync('ffprobe',['-v','error','-select_streams','v:0',
     '-count_frames','-show_entries','stream=nb_read_frames','-of','default=nw=1:nk=1',file],{encoding:'utf8'}).trim();
   const frames = Number(countRaw) || 0;
-  // WebM often reports avg_frame_rate=0/0. Derive an observed average from decoded frames.\n  const observedFps = duration > 0 ? frames / duration : 0;\n  const fps = declaredFps > 0 && declaredFps < 240 ? Math.min(declaredFps, observedFps) : observedFps;\n  return { fps, declaredFps, observedFps, duration, frames, width:Number(stream.width)||0, height:Number(stream.height)||0 };
+  // WebM often reports avg_frame_rate=0/0. Derive an observed average from decoded frames.
+  const observedFps = duration > 0 ? frames / duration : 0;
+  const fps = declaredFps > 0 && declaredFps < 240 ? Math.min(declaredFps, observedFps) : observedFps;
+  return { fps, declaredFps, observedFps, duration, frames, width:Number(stream.width)||0, height:Number(stream.height)||0 };
 }
 function valid(v) { return v.duration >= minDuration && v.frames > 5 && v.fps >= minFps - 0.1; }
 for (const folder of listCollectionFolders(root)) {
