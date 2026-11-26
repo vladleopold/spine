@@ -7,26 +7,23 @@ const workflow = fs.readFileSync(
   'utf8',
 );
 
-test('Spine-Link project export is exposed as a reusable workflow', () => {
-  assert.ok(workflow.includes('workflow_call:'));
-  assert.ok(workflow.includes('upload_id:'));
-  assert.ok(workflow.includes('type: string'));
+test('public storage repository directly receives Spine project export dispatches', () => {
+  assert.ok(workflow.includes('repository_dispatch:'));
+  assert.ok(workflow.includes('types: [spine-project-export]'));
+  assert.ok(workflow.includes('runs-on: ubuntu-24.04'));
+  assert.ok(!workflow.includes('workflow_call:'));
+  assert.ok(!workflow.includes('3Spine-core'));
 });
 
-test('all executor jobs use GitHub-hosted Ubuntu and never self-hosted runners', () => {
-  assert.ok((workflow.match(/runs-on: ubuntu-24\.04/g) || []).length >= 3);
-  assert.doesNotMatch(workflow, /self-hosted/i);
-});
-
-test('private source reads use the caller token while storage writes use a separate token', () => {
-  assert.ok(workflow.includes("if: github.repository == 'vladleopold/3Spine-core'"));
-  assert.ok(workflow.includes('SOURCE_REPO_TOKEN: ${{ github.token }}'));
-  assert.ok(workflow.includes('STORAGE_GITHUB_TOKEN: ${{ secrets.STORAGE_GITHUB_TOKEN }}'));
+test('public exporter uses its own least-privilege GitHub token for storage writes', () => {
+  assert.ok(workflow.includes('permissions:\\n  contents: write'));
+  assert.ok(workflow.includes('STORAGE_GITHUB_TOKEN: ${{ github.token }}'));
   assert.ok(workflow.includes('GH_TOKEN="$STORAGE_GITHUB_TOKEN"'));
-  assert.ok(!workflow.includes('GH_TOKEN="$SOURCE_REPO_TOKEN"'));
 });
 
-test('licensed export runs only for the private control-plane caller and not on pull requests', () => {
-  assert.ok(workflow.includes("if: github.repository == 'vladleopold/3Spine-core' && github.event_name != 'pull_request'"));
+test('licensed Editor configuration is checked before any project is marked ready', () => {
+  assert.ok(workflow.includes('SPINE_LICENSE'));
+  assert.ok(workflow.includes('SPINE_LINUX_URL'));
   assert.ok(workflow.includes('SPINE_LINK_LICENSED_EXPORT_WAITING_FOR_SECRETS'));
+  assert.ok(workflow.includes('Install licensed Spine 4.3.26 Linux Editor'));
 });
