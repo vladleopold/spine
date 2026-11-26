@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog, readRendererLogSample, sanitizeRuntimeDiagnostics, readRendererLogExcerpt } from "./renderer-failure-class.mjs";
 
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libwebp'"), "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
@@ -212,6 +213,13 @@ console.log("PASS renderer stage diagnostics distinguish player-ready from invis
     assert.ok(excerpt.includes("Skeleton: source (v4.3.26)"),"the beginning of the log must retain the skeleton version");
     assert.match(excerpt,/No visible real-time Spine frames/,"the end of the log must retain the final failure");
     assert.doesNotMatch(excerpt,/PRIVATE_MIDDLE_MARKER/,"private middle content must not be copied into the diagnostic");
+    const tinyExcerpt=readRendererLogExcerpt(file,16,16);
+    assert.ok(Buffer.byteLength(tinyExcerpt)<=16,"small byte limits must never be exceeded by the truncation marker");
+    const cli=spawnSync(process.execPath,[new URL("./renderer-failure-class.mjs",import.meta.url).pathname,file],{encoding:"utf8"});
+    assert.equal(cli.status,0,cli.stderr);
+    assert.match(cli.stdout,/SANITIZED_RENDER_RESULT=/,"the diagnostic CLI must use the bounded excerpt reader");
+    assert.match(cli.stdout,/"reason":"NO_VISIBLE_PIXEL"/,"the CLI excerpt must retain the final actionable failure");
+    assert.doesNotMatch(cli.stdout,/PRIVATE_MIDDLE_MARKER/,"the real CLI must not disclose private middle log content");
   } finally {
     fs.rmSync(root,{recursive:true,force:true});
   }
