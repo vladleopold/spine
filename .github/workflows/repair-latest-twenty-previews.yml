@@ -213,7 +213,7 @@ jobs:
     needs: [inventory, runtime-package-smoke, cancel-hosted-batches]
     if: github.ref == 'refs/heads/main'
     # Real source rendering runs only on the dedicated private Ubuntu worker.
-    runs-on: [self-hosted, linux, X64, spine-archive]
+    runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
       fail-fast: false
