@@ -1,0 +1,47 @@
+name: Debug Rabbit source texture
+on:
+  push:
+    branches: [debug/rabbit-source-image]
+    paths:
+      - .github/workflows/debug-rabbit-source-image.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect original source texture and atlas
+        shell: bash
+        run: |
+          set -euo pipefail
+          file library_02/rabbit-2026-11-23T21-16-31-801Z/rabbit.png
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          import json
+          root=Path('library_02/rabbit-2026-11-23T21-16-31-801Z')
+          image=Image.open(root/'rabbit.png').convert('RGBA')
+          alpha=image.getchannel('A')
+          bbox=alpha.getbbox()
+          print(json.dumps({
+            'size': image.size,
+            'mode': image.mode,
+            'alpha_extrema': alpha.getextrema(),
+            'nontransparent_bbox': bbox,
+            'nontransparent_pixels': sum(1 for value in alpha.getdata() if value>0),
+            'opaque_pixels': sum(1 for value in alpha.getdata() if value==255),
+            'total_pixels': image.width*image.height,
+            'rgb_extrema': image.convert('RGB').getextrema(),
+          }, indent=2))
+          print((root/'rabbit.atlas').read_text()[:1800])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rabbit-source-assets
+          path: |
+            library_02/rabbit-2026-11-23T21-16-31-801Z/rabbit.png
+            library_02/rabbit-2026-11-23T21-16-31-801Z/rabbit.atlas
+            library_02/rabbit-2026-11-23T21-16-31-801Z/rabbit.json
+          retention-days: 1
