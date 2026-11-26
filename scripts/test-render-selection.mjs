@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { resolveRenderSelection, writeRenderVerification } from './lib/render-selection.mjs';
-import { runtimeVersionOverrideForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
+import { runtimeVersionOverrideForSpineSkeleton, runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 
 test('missing explicit and indexed animation is reported as blocked', () => {
   assert.deepEqual(resolveRenderSelection({}, { animations: ['idle', 'run'] }), {
@@ -59,6 +59,9 @@ test('blocked status is written as a diagnostic artifact before the workflow exi
 
 test('unsupported web-player versions are blocked and Spine 3.7 binary uses the compatible 3.8 runtime', () => {
   assert.equal(runtimeVersionOverrideForSpineSkeleton('3.7.93', 'skeleton.skel'), '3.8');
+  assert.equal(runtimeMinorForSpineSkeleton('3.7.93', 'skeleton.skel'), '8', '3.7 binary must resolve to vendor-spine-player-3.8, not a malformed 3.3.8 path');
+  assert.equal(runtimeMinorForSpineSkeleton('3.7.93', 'skeleton.json'), '7');
+  assert.equal(runtimeMinorForSpineSkeleton('3.8.99', 'skeleton.skel'), '8');
   assert.equal(runtimeVersionOverrideForSpineSkeleton('3.7.93', 'skeleton.json'), '');
   assert.equal(runtimeVersionOverrideForSpineSkeleton('3.8.99', 'skeleton.skel'), '');
   assert.equal(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), null);
