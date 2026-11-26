@@ -28,6 +28,40 @@ function decodedFirstFrame(file) {
   });
 }
 
+export function frameDifferenceMetrics(videoFrame, posterFrame) {
+  if (!videoFrame?.length || videoFrame.length !== posterFrame?.length ||
+      videoFrame.length % 4 !== 0) {
+    throw new Error('WebP dimensions do not match the decoded first frame');
+  }
+  let maxDelta = 0;
+  let totalDelta = 0;
+  let highDeltaChannels = 0;
+  for (let i = 0; i < videoFrame.length; i += 4) {
+    const videoAlpha = videoFrame[i + 3] / 255;
+    const posterAlpha = posterFrame[i + 3] / 255;
+    // RGB values beneath zero alpha are undefined and visually irrelevant.
+    // Compare premultiplied RGB so transparent-edge codec noise cannot reject
+    // an otherwise faithful WebP poster; compare alpha independently.
+    for (let channel = 0; channel < 3; channel += 1) {
+      const videoVisible = Math.round(videoFrame[i + channel] * videoAlpha);
+      const posterVisible = Math.round(posterFrame[i + channel] * posterAlpha);
+      const delta = Math.abs(videoVisible - posterVisible);
+      if (delta > maxDelta) maxDelta = delta;
+      totalDelta += delta;
+      if (delta > 16) highDeltaChannels += 1;
+    }
+    const alphaDelta = Math.abs(videoFrame[i + 3] - posterFrame[i + 3]);
+    if (alphaDelta > maxDelta) maxDelta = alphaDelta;
+    totalDelta += alphaDelta;
+    if (alphaDelta > 16) highDeltaChannels += 1;
+  }
+  return {
+    maxDelta,
+    meanDelta: totalDelta / videoFrame.length,
+    highDeltaRatio: highDeltaChannels / videoFrame.length,
+  };
+}
+
 export function verifyPosterFirstFrame(videoPath, posterPath) {
   const videoSize = dimensions(videoPath);
   const posterSize = dimensions(posterPath);
@@ -36,19 +70,8 @@ export function verifyPosterFirstFrame(videoPath, posterPath) {
   }
   const videoFrame = decodedFirstFrame(videoPath);
   const posterFrame = decodedFirstFrame(posterPath);
-  let maxDelta = 0;
-  let totalDelta = 0;
-  let highDeltaChannels = 0;
-  const comparable = videoFrame.length > 0 && videoFrame.length === posterFrame.length;
-  if (!comparable) throw new Error('WebP dimensions do not match the decoded first frame');
-  for (let i = 0; i < videoFrame.length; i += 1) {
-    const delta = Math.abs(videoFrame[i] - posterFrame[i]);
-    if (delta > maxDelta) maxDelta = delta;
-    totalDelta += delta;
-    if (delta > 16) highDeltaChannels += 1;
-  }
-  const meanDelta = totalDelta / videoFrame.length;
-  const highDeltaRatio = highDeltaChannels / videoFrame.length;
+  const metrics = frameDifferenceMetrics(videoFrame, posterFrame);
+  const { maxDelta, meanDelta, highDeltaRatio } = metrics;
   // Card posters are deliberately lossy WebP for fast decode. Keep a strict
   // perceptual guard against a wrong/later frame while allowing codec noise.
   if (maxDelta > 64 || meanDelta > 3.5 || highDeltaRatio > 0.025) {
