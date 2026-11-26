@@ -31,7 +31,7 @@ function legacy38SkinRecord(key, value) {
 
 export function normalizeSpineJsonForLegacy38Runtime(source, version) {
   const text = Buffer.isBuffer(source) ? source.toString('utf8') : String(source);
-  if (!/^3\\.8(?:[.-]|$)/.test(String(version || '').trim())) return text;
+  if (!/^3\.8(?:[.-]|$)/.test(String(version || '').trim())) return text;
   const data = JSON.parse(text);
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
     throw new Error('Invalid Spine JSON root');
