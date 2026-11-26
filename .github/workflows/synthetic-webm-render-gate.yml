@@ -85,6 +85,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /scripts/audit-preview-videos.mjs
+            /scripts/test-audit-preview-videos.mjs
             /public/vendor-spine-player-3.7.js
             /public/vendor-spine-player-3.7.css
             /public/vendor-spine-player-3.8.js
