@@ -1,4 +1,5 @@
 name: Synthetic WebM render gate
+# Use the exact PR head for deterministic synthetic render verification.
 
 on:
   pull_request:
