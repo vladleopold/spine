@@ -20,6 +20,10 @@ test('public exporter uses its own least-privilege GitHub token for storage writ
   assert.ok(workflow.includes('STORAGE_GITHUB_TOKEN: ${{ github.token }}'));
 });
 
+test('pending project queue is rescanned at least every fifteen minutes', () => {
+  assert.ok(workflow.includes("cron: '*/15 * * * *'"));
+});
+
 test('licensed Editor configuration is checked before any project is marked ready', () => {
   assert.ok(workflow.includes('SPINE_LICENSE'));
   assert.ok(workflow.includes('SPINE_LINUX_URL'));
