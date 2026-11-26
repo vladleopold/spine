@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import {shouldUseCanvasFallback,fallbackFrameCount,deterministicFallbackFps} from "./lib/canvas-fallback.mjs";
+import {shouldUseCanvasFallback,fallbackFrameCount,deterministicFallbackFps,shouldRecoverVisibleCanvas} from "./lib/canvas-fallback.mjs";
 assert.equal(shouldUseCanvasFallback({bytes:2743,frames:1,fps:30,duration:2.2}),true);
 assert.equal(shouldUseCanvasFallback({bytes:0,frames:0,fps:30,duration:1}),true);
 assert.equal(shouldUseCanvasFallback({bytes:70000,frames:66,fps:30,duration:2.2}),false);
@@ -19,3 +19,8 @@ assert.equal(deterministicFallbackFps(15),15);
 assert.equal(deterministicFallbackFps(12),12);
 assert.equal(fallbackFrameCount({fps:deterministicFallbackFps(30),duration:30}),450);
 console.log("PASS deterministic canvas recovery is bounded to 15fps and 450 frames for 30s previews");
+
+assert.equal(shouldRecoverVisibleCanvas({alpha:false,peak:241,minPeak:40}),true);
+assert.equal(shouldRecoverVisibleCanvas({alpha:false,peak:39,minPeak:40}),false);
+assert.equal(shouldRecoverVisibleCanvas({alpha:true,peak:241,minPeak:40}),false);
+console.log("PASS visible live Spine canvas is recoverable even if MediaRecorder returns no blob");
