@@ -36,10 +36,8 @@ type AppProps = {
 declare global {
   interface Window {
     __spineLinkReceiveFiles?: (files: File[]) => void;
-    __spinePatched?: boolean;
     spine?: {
       SpinePlayer?: new (parent: HTMLElement | string, config: SpinePlayerConfig) => SpinePlayerInstance;
-      AtlasAttachmentLoader?: new () => unknown;
     };
   }
 }
@@ -650,8 +648,6 @@ function loadSpinePlayerModule() {
       import("@esotericsoftware/spine-player/dist/spine-player.css"),
     ]).then(([module]) => {
       (module.GLTexture as unknown as { DISABLE_UNPACK_PREMULTIPLIED_ALPHA_WEBGL?: boolean }).DISABLE_UNPACK_PREMULTIPLIED_ALPHA_WEBGL = true;
-      patchAtlasAttachmentLoader(module.AtlasAttachmentLoader, module);
-      setTimeout(() => patchAtlasAttachmentLoader(window.spine?.AtlasAttachmentLoader, window.spine), 100);
       return module;
     });
   }
@@ -659,45 +655,6 @@ function loadSpinePlayerModule() {
   return spinePlayerModulePromise;
 }
 
-function patchAtlasAttachmentLoader(Al: unknown, spineNs?: unknown) {
-  if (!Al || window.__spinePatched) return;
-  window.__spinePatched = true;
-  const p = (Al as Record<string, unknown>).prototype as Record<string, unknown>;
-
-  const origFindRegion = p.findRegion as (...args: unknown[]) => unknown;
-  if (typeof origFindRegion === "function") {
-    (p as Record<string, (...args: unknown[]) => unknown>).findRegion = function (this: unknown, ...args: unknown[]) {
-      try { return origFindRegion.apply(this, args); } catch { return null; }
-    };
-  }
-  const origFindRegions = p.findRegions as (...args: unknown[]) => unknown;
-  if (typeof origFindRegions === "function") {
-    (p as Record<string, (...args: unknown[]) => unknown>).findRegions = function (this: unknown, ...args: unknown[]) {
-      try { return origFindRegions.apply(this, args); } catch { return []; }
-    };
-  }
-  const methods = ["newRegionAttachment", "newMeshAttachment", "newBoundingBoxAttachment", "newPathAttachment", "newPointAttachment", "newClippingAttachment"];
-  for (const method of methods) {
-    const orig = p[method] as (...args: unknown[]) => unknown;
-    if (typeof orig !== "function") continue;
-    (p as Record<string, (...args: unknown[]) => unknown>)[method] = function (this: unknown, ...args: unknown[]) {
-      try { return orig.apply(this, args); } catch { return null; }
-    };
-  }
-
-  const ns = spineNs as Record<string, unknown> | undefined;
-  if (!ns) return;
-  for (const ctorName of ["RegionAttachment", "MeshAttachment"]) {
-    const ctor = ns[ctorName];
-    if (typeof ctor !== "function") continue;
-    const proto = (ctor as unknown as Record<string, unknown>).prototype as Record<string, unknown>;
-    const orig = proto.computeUVs as (...args: unknown[]) => unknown;
-    if (typeof orig !== "function") continue;
-    (proto as Record<string, (...args: unknown[]) => unknown>).computeUVs = function (this: unknown, ...args: unknown[]) {
-      try { return orig.apply(this, args); } catch { return; }
-    };
-  }
-}
 
 function loadScriptOnce(src: string) {
   return new Promise<void>((resolve, reject) => {
@@ -771,7 +728,6 @@ async function loadSpinePlayerForSet(preparedSpine?: Pick<PreparedSpine, "skelet
       await loadScriptOnce(`/vendor-spine-player-${runtime}.js`);
       const SpinePlayer = window.spine?.SpinePlayer;
       if (!SpinePlayer) throw new Error(`Legacy Spine ${runtime} runtime could not be loaded.`);
-      patchAtlasAttachmentLoader(window.spine?.AtlasAttachmentLoader, window.spine);
       return { SpinePlayer };
       })(),
     );
@@ -3290,17 +3246,6 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
     if (playerHostRef.current) playerHostRef.current.innerHTML = "";
   }, []);
 
-  useEffect(() => {
-    const handler = (event: ErrorEvent) => {
-      const msg = event.message ?? "";
-      if (msg.includes("Region not set") || msg.includes("Region not found")) {
-        event.preventDefault();
-      }
-    };
-    window.addEventListener("error", handler);
-    return () => window.removeEventListener("error", handler);
-  }, []);
-
   const toggleLoopEnabled = useCallback(() => {
     setLoopEnabled((currentLoopEnabled) => {
       const nextLoopEnabled = !currentLoopEnabled;
@@ -3735,9 +3680,10 @@ export function App({ initialFiles, initialOpenLibrary = false, initialLogin = f
           };
         }
       })
-      .catch(() => {
+      .catch((runtimeError: unknown) => {
         if (isCancelled) return;
-        setError("Spine runtime could not be loaded.");
+        const message = runtimeError instanceof Error ? runtimeError.message : String(runtimeError || "");
+        setError(message.trim() || "Spine runtime could not be loaded.");
         setStatus("Preview error.");
       });
 
