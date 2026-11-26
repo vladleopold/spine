@@ -9,6 +9,9 @@ import {fileURLToPath} from 'node:url';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
+const liveVerifySource=fs.readFileSync(new URL('./verify-latest-twenty-live.mjs',import.meta.url),'utf8');
+assert.ok(liveVerifySource.includes('UNSUPPORTED_SPINE_3_7_BINARY_SKELETON'),
+  'known unsupported Spine 3.7 binary sources must remain blocked, not fail the production gate');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
 const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-all.yml'),'utf8');
@@ -181,10 +184,10 @@ try{
   const all=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrix=JSON.parse(output.matrix);
   assert.equal(all.length,20);
-  if(matrix.length!==18)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
-  assert.equal(matrix.length,18,
+  if(matrix.length!==17)console.log('FIXTURE_MATRIX_DIAGNOSTICS='+JSON.stringify(all.map(x=>({id:x.id,ready:x.ready,needsRender:x.needsRender,posterRefreshFailed:x.posterRefreshFailed,blockedReason:x.blockedReason,animation:x.animation}))));
+  assert.equal(matrix.length,17,
     'the supported Spine 3.7 binary fixture must join the render matrix through the 3.8 runtime');
-  assert.equal(Number(output.renderCount),18);
+  assert.equal(Number(output.renderCount),17);
   assert.ok(all.every(x=>x.id!=='synthetic-hidden'));
   assert.equal(all[0].id,'Spine-animation-2026-11-17T18-44-12-762Z');
   assert.equal(all[1].id,'Spine-animation-2026-11-17T18-45-14-132Z');
@@ -208,10 +211,11 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   const legacyBinary=all.find(x=>x.id==='fixture-18');
-  assert.equal(legacyBinary.ready,true);
-  assert.equal(legacyBinary.needsRender,true);
-  assert.equal(legacyBinary.blockedReason,'',
-    'Spine 3.7 binary-only source must enter the render matrix through the bundled 3.8 runtime');
+  assert.equal(legacyBinary.ready,false);
+  assert.equal(legacyBinary.needsRender,false);
+  assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
+    'Spine 3.7 binary-only source is blocked until a same-work JSON export is available');
+  assert.ok(!matrix.some(x=>x.id==='fixture-18'),'unsupported Spine 3.7 binary must not enter the render matrix');
   assert.ok(all.slice(3).filter(x=>!['fixture-19','fixture-18','fixture-05'].includes(x.id)).every(x=>x.ready&&x.needsRender));
   const posterFailure=all.find(x=>x.id==='fixture-06');
   assert.equal(posterFailure.posterRefreshFailed,true,
@@ -271,8 +275,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   const allFifty=JSON.parse(fs.readFileSync(path.join(root,'repair-manifest.json'),'utf8'));
   const matrixFifty=JSON.parse(fiftyOutput.matrix);
   assert.equal(allFifty.length,50,'the requested 50 newest public works must be inventoried');
-  assert.equal(matrixFifty.length,48,'the compatible Spine 3.7 binary joins the render matrix; incomplete sources stay blocked and one verified reusable preview is not rerendered');
-  assert.equal(Number(fiftyOutput.renderCount),48);
+  assert.equal(matrixFifty.length,47,'unsupported Spine 3.7 binary and incomplete sources stay blocked; one verified reusable preview is not rerendered');
+  assert.equal(Number(fiftyOutput.renderCount),47);
   assert.ok(allFifty.slice(24).every(x=>x.ready&&x.needsRender),
     'the additional 26 older-but-in-window fixtures must remain eligible');
   assert.ok(allFifty.some(x=>x.id==='Spine-animation-2026-11-17T18-44-12-762Z'&&/^idle$/i.test(x.animation)&&x.needsRender));
