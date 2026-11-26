@@ -387,6 +387,22 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
+
+  const resumeTrigger=JSON.parse(fs.readFileSync(
+    new URL('./repair-latest-70-trigger.json',import.meta.url),'utf8'));
+  assert.ok(Number.isInteger(resumeTrigger.offset)&&resumeTrigger.offset>=0&&
+    Number.isInteger(resumeTrigger.limit)&&resumeTrigger.limit>=1&&
+    resumeTrigger.limit<=50&&resumeTrigger.offset+resumeTrigger.limit<=70,
+    'the explicit trigger must carry a bounded resumable archive offset and limit');
+  assert.ok(workflowSource.includes('SPINE_REPAIR_OFFSET=$batch_offset')&&
+    workflowSource.includes('SPINE_REPAIR_LIMIT=$batch_limit'),
+    'push-triggered recovery must read its explicit resumable batch range');
+  assert.ok(workflowSource.includes('batchOffset: ${{ steps.latest.outputs.batchOffset }}')&&
+    workflowSource.includes('batchLimit: ${{ steps.latest.outputs.batchLimit }}'),
+    'inventory must export the resolved batch range to downstream jobs');
+  assert.ok(workflowSource.includes('SPINE_REPAIR_OFFSET: ${{ needs.inventory.outputs.batchOffset }}')&&
+    workflowSource.includes('SPINE_REPAIR_LIMIT: ${{ needs.inventory.outputs.batchLimit }}'),
+    'publish and production verification must use the exact inventory batch range');
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v17-spine38-json-skin-map-normalization"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
