@@ -978,6 +978,7 @@ try {
   let canvasHeight = videoHeight;
   let videoDataUrl = null;
   let lastCaptureError = null;
+  let lastVisibleFramePeak = -1;
 
   // WebGL readPixels sometimes returns an empty back buffer even when the
   // browser compositor draws the real skeleton. Confirm visible pixels from
@@ -1317,6 +1318,8 @@ try {
       continue;
     }
 
+    lastVisibleFramePeak = Math.max(lastVisibleFramePeak, framePeak);
+
     // Preserve only the selected animation's own duration.
     captureDuration = Math.min(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS);
     if (captureDuration < effectiveDuration) {
@@ -1398,13 +1401,14 @@ try {
   }
 
   if (!videoDataUrl) {
-    const peak = await page.evaluate(() =>
+    const livePeak = await page.evaluate(() =>
       typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
-    if (!args.alpha && peak >= FRAME_PEAK_MIN &&
-        lastCaptureError === 'No video data captured by MediaRecorder') {
-      // Preserve the selected real Spine runtime canvas and draw frames with
-      // the CDP renderer, instead of exiting before the existing fallback.
-      console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
+    const peak = Math.max(lastVisibleFramePeak, livePeak);
+    if (shouldRecoverVisibleCanvas({alpha:args.alpha,peak,minPeak:FRAME_PEAK_MIN})) {
+      // Preserve the last validated visible-frame peak: WebGL readPixels may
+      // stop reporting pixels after MediaRecorder stops, despite the selected
+      // track having been visibly moving immediately before capture.
+      console.error('MEDIARECORDER_CAPTURE_INCOMPLETE: recovering validated visible live canvas');
       videoDataUrl = 'canvas-fallback';
     } else {
       throw new Error(`Capture failed: ${lastCaptureError || 'selected default skin produced no visible content'}`);
@@ -1482,8 +1486,12 @@ try {
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
       const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
-      const frameCount = fallbackFrameCount({fps:args.fps,duration});
-      const intervalMs = duration * 1000 / frameCount;
+      // The CDP screenshot path is much slower than MediaRecorder. Cap it at
+      // 15fps so the 30-second maximum stays within the hosted renderer budget.
+      const fallbackFps = deterministicFallbackFps(args.fps);
+      const frameCount = fallbackFrameCount({fps:fallbackFps,duration});
+      const intervalMs = 1000 / fallbackFps;
+      console.error('DETERMINISTIC_CAPTURE_FPS=' + fallbackFps + ' FRAME_COUNT=' + frameCount);
       // The browser still renders a visible WebGL scene, but Playwright's
       // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
       // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
@@ -1519,12 +1527,24 @@ try {
       console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
       console.error('CANVAS_FALLBACK_CAPTURE=passed');
       const recovered=path.join(tempDir,'deterministic.webm');
-      execFileSync('ffmpeg',[
+      const encodeArgs=[
         '-y','-v','error','-framerate',String(frameCount/duration),
-        '-i',path.join(framesDir,'%06d.png'),
+        '-start_number','0','-i',path.join(framesDir,'%06d.png'),
         '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
         '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
-      ],{stdio:'inherit'});
+      ];
+      try {
+        execFileSync('ffmpeg',encodeArgs,{stdio:['ignore','pipe','pipe'],maxBuffer:4*1024*1024});
+      } catch (error) {
+        const stderr=String(error.stderr||'').replaceAll(tempDir,'[renderer-temp]').slice(0,1200);
+        console.error('DETERMINISTIC_FFMPEG_ENCODE_FAILED ' + JSON.stringify({
+          status:Number.isInteger(error.status)?error.status:null,
+          signal:error.signal||null,
+          code:error.code||null,
+          stderr,
+        }));
+        throw error;
+      }
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
       if (!hasSufficientMotion(recovered))
