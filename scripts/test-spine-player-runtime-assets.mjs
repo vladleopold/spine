@@ -71,8 +71,8 @@ test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', ()
     ]);
     assert.equal(Buffer.from(inline.playerJsUrl.split(',')[1], 'base64').toString(), 'window.spine = { ready: true };');
     assert.equal(Buffer.from(inline.playerCssUrl.split(',')[1], 'base64').toString(), '#player { width: 100%; }');
-    assert.match(inline.playerJsUrl, /^data:application\\/javascript;base64,/);
-    assert.match(inline.playerCssUrl, /^data:text\\/css;base64,/);
+    assert.match(inline.playerJsUrl, /^data:application\/javascript;base64,/);
+    assert.match(inline.playerCssUrl, /^data:text\/css;base64,/);
     assert.throws(() => createInlineSpinePlayerAssetUrls([
       { filename: path.join(temp, 'missing.js'), type: 'application/javascript', required: true },
     ]), /PINNED_SPINE_PLAYER_ASSET_MISSING/);
