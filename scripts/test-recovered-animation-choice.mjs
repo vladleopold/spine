@@ -45,3 +45,8 @@ assert.doesNotMatch(recoverySource, /animations\?\.\[0\]/,
   'the recovery script must never select the first animation as a fallback');
 
 console.log('PASS recorded-WebM recovery preserves only the explicit or indexed animation; no first-track fallback');
+
+assert.match(recoverySource, /process\.argv\[5\]/,
+  'recovery must receive the private renderer log to recover the actual selected animation');
+assert.match(recoverySource, /SPINE_SELECTED_ANIMATION_B64/,
+  'recovery must prefer the exact track reported by the renderer');
