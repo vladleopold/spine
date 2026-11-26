@@ -351,11 +351,11 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(jobUsesPublicRunner(exportAllWorkflowSource,'export'),
     'full archive export rendering must use public ubuntu-24.04');
   assert.ok(jobUsesPublicRunner(exportFullWorkflowSource,'export-opaque') &&
-    jobUsesPrivateRunner(exportFullWorkflowSource,'export-alpha'),
+    jobUsesPublicRunner(exportFullWorkflowSource,'export-alpha'),
     'both full-export render lanes must use public ubuntu-24.04');
-  assert.ok(jobUsesPrivateRunner(lastTenWorkflowSource,'render'),
+  assert.ok(jobUsesPublicRunner(lastTenWorkflowSource,'render'),
     'last-ten recovery rendering must use public ubuntu-24.04');
-  assert.ok(jobUsesPrivateRunner(reportedWorkflowSource,'render'),
+  assert.ok(jobUsesPublicRunner(reportedWorkflowSource,'render'),
     'reported-project recovery rendering must use public ubuntu-24.04');
 
   console.log('PASS latest50: source-track fallback, skin retry, frozen source, public runner, no fake media');
