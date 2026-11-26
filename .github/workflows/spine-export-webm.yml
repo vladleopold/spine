@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     concurrency:
-      group: spine-webm-render
+      group: spine-webm-render-public-${{ github.ref }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
