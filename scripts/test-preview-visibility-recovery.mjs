@@ -3,6 +3,26 @@ import fs from 'node:fs';
 import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
 import {configuredPreviewSkinCandidates, sourcePreviewSkinNames} from './preview-skin-choice.mjs';
+import {normalizeSpineJsonForLegacy38Runtime} from './lib/spine-json-runtime-compat.mjs';
+const objectSkinJson=JSON.stringify({skeleton:{spine:'3.8.11-beta'},bones:[],skins:{
+  default:{attachments:{body:{body:{type:'region',path:'body'}}}},
+  hero:{attachments:{body:{hero:{type:'region',path:'hero'}}}},
+}});
+const normalizedObjectSkins=JSON.parse(normalizeSpineJsonForLegacy38Runtime(objectSkinJson,'3.8.11-beta'));
+assert.deepEqual(normalizedObjectSkins.skins.map(s=>s.name),['default','hero'],
+  'Spine 3.8 object-map skins must become the array format required by the bundled 3.8.75 JSON reader');
+assert.deepEqual(normalizedObjectSkins.skins[0].attachments.default.body,
+  {type:'region',path:'body'},'skin attachments must remain byte-equivalent in meaning');
+assert.deepEqual(normalizedObjectSkins.skins[1].attachments.body.hero,
+  {type:'region',path:'hero'},'non-default source skin attachments must be preserved');
+const arraySkinJson=JSON.stringify({skeleton:{spine:'3.8.99'},skins:[{name:'default',attachments:{}}]});
+assert.equal(normalizeSpineJsonForLegacy38Runtime(arraySkinJson,'3.8.99'),arraySkinJson,
+  'already-array Spine 3.8 skins must not be rewritten');
+const spine37ObjectJson=JSON.stringify({skeleton:{spine:'3.7.94'},skins:{default:{attachments:{}}}});
+assert.equal(normalizeSpineJsonForLegacy38Runtime(spine37ObjectJson,'3.7.94'),spine37ObjectJson,
+  'Spine 3.7 JSON must retain its native skin-map format');
+assert.throws(()=>normalizeSpineJsonForLegacy38Runtime('{broken','3.8.99'),
+  'malformed JSON must fail closed instead of producing a replacement skeleton');
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'nonexistent'), 'nonexistent');
 assert.equal(choosePreviewAnimation(['idle', 'run'], 'idle'), 'idle');
 assert.equal(choosePreviewAnimation(['idle', 'run'], ''), 'idle',
