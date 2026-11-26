@@ -20,8 +20,8 @@ assert.match(renderWork,/blocked-incomplete-source/);
 assert.match(renderWork,/blocked-unsupported-runtime/);
 assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
 assert.match(renderWork,/process\.exit\(1\)/,'a blocked preview must fail the render workflow after its blocked state is published');
-assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION[\s\S]*?process\.exit\(0\)/,
-  'an indexed work with no selected animation is a successfully recorded blocked state, not a failed CI job');
+assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION[\s\S]*?process\.exit\(1\)/,
+  'an indexed work with no selected animation must be recorded as blocked and fail CI rather than appear successfully rendered');
 assert.match(renderWork,/STALE_RENDER_SUPERSEDED/);
 assert.match(renderWork,/report\.status='superseded'[\s\S]*?process\.exit\(0\)/,
   'a render superseded by a newer source/selection commit must exit cleanly without overwriting newer metadata');
