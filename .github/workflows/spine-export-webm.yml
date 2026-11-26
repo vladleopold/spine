@@ -30,6 +30,7 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /.github/workflows/spine-export-webm.yml
             /scripts/
             /library*/index.json
             /public/vendor-spine-player-3.7.js
