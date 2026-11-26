@@ -12,6 +12,9 @@ on:
       - scripts/test-spine-link-public-export-workflow.mjs
       - tests/spine-link-project-queue.test.mjs
       - tests/spine-editor-export.test.mjs
+      - scripts/spine-link-project-queue.mjs
+      - scripts/spine-link-project-cloud-export.mjs
+      - scripts/spine-editor-export.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
@@ -43,6 +46,9 @@ on:
       - scripts/test-spine-link-public-export-workflow.mjs
       - tests/spine-link-project-queue.test.mjs
       - tests/spine-editor-export.test.mjs
+      - scripts/spine-link-project-queue.mjs
+      - scripts/spine-link-project-cloud-export.mjs
+      - scripts/spine-editor-export.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
