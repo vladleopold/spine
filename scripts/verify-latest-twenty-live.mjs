@@ -156,11 +156,12 @@ for(const work of snapshot){
 }
 const renderableCandidates=snapshot.filter(work=>work.ready===true).length;
 const inventoryBlocked=snapshot.length-renderableCandidates;
+const expectedMedia=claimedReady*fields.length;
 console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
   total:snapshot.length,renderableCandidates,inventoryBlocked,ready,blocked,failed,mediaVerified:verifiedMedia,
-  expectedMedia:claimedReady*fields.length,mutatedSource
+  expectedMedia,mutatedSource
 }));
 // A failed render for one item is reported, but it must not stop the next
 // archive offset. Every record marked ready must still have all production media
 // verified, and the source fingerprint / row classification must remain intact.
-if(mutatedSource||verifiedMedia!==claimedReady*fields.length||ready+blocked+failed!==snapshot.length)process.exitCode=1;
+if(mutatedSource||verifiedMedia!==expectedMedia||ready+blocked+failed!==snapshot.length)process.exitCode=1;
