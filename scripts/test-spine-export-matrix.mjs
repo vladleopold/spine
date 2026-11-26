@@ -85,25 +85,93 @@ const previews = {
 
 const missingDefault = mergeFullExportMetadata(source, previews, '2026-11-20T00:00:00.000Z');
 assert.equal(missingDefault.defaultAnimation, 'Missing',
-  'an unavailable explicit selection must remain unchanged');
-assert.equal(missingDefault.previewDuration, undefined,
-  'another animation duration must never become the selected preview duration');
+  'the interactive player default must remain unchanged');
+assert.equal(missingDefault.previewAnimation, 'walk',
+  'a playable WebM track must be selected independently when the default is unavailable');
+assert.equal(missingDefault.previewDuration, 9);
+assert.equal(missingDefault.webmPreview, '/walk.webm');
 assert.equal(missingDefault.fullExportStatus, 'partial');
 
 const selectedDefault = mergeFullExportMetadata({
   ...source,
   defaultAnimation: 'idle',
 }, previews, '2026-11-20T00:00:00.000Z');
-assert.equal(selectedDefault.defaultAnimation, 'idle');
-assert.equal(selectedDefault.previewDuration, 1.25,
-  'work-level duration must come from the exact selected animation, not the longest track');
+assert.equal(selectedDefault.defaultAnimation, 'idle',
+  'video selection must not change the interactive player default');
+assert.equal(selectedDefault.previewAnimation, 'walk',
+  'a short default track must not suppress a longer generated WebM preview');
+assert.equal(selectedDefault.previewDuration, 9,
+  'work-level duration must describe the selected video preview');
 
 const noDefault = mergeFullExportMetadata({
   ...source,
   defaultAnimation: undefined,
 }, previews, '2026-11-20T00:00:00.000Z');
 assert.equal(noDefault.defaultAnimation, undefined);
-assert.equal(noDefault.previewDuration, undefined);
+assert.equal(noDefault.previewAnimation, 'walk');
+assert.equal(noDefault.previewDuration, 9);
+
+const qualityPreviews = {
+  appear: {
+    previewDuration: 0.6667,
+    webmPreview: '/appear.webm',
+    webmPreviewMedium: '/appear-medium.webm',
+    webmPreviewLow: '/appear-low.webm',
+    webpPoster: '/appear.webp',
+    webpPosterMedium: '/appear-medium.webp',
+    webpPosterLow: '/appear-low.webp',
+  },
+  disappear: {
+    previewDuration: 0.6667,
+    webmPreview: '/disappear.webm',
+  },
+  hit: {
+    previewDuration: 2,
+    webmPreview: '/hit.webm',
+    webmPreviewMedium: '/hit-medium.webm',
+    webmPreviewLow: '/hit-low.webm',
+    webpPoster: '/hit.webp',
+    webpPosterMedium: '/hit-medium.webp',
+    webpPosterLow: '/hit-low.webp',
+    qualityWidths: { high: 960, medium: 640, low: 320 },
+  },
+  idle: {
+    previewDuration: 1,
+    webmPreview: '/idle.webm',
+  },
+};
+const selectedPlayable = mergeFullExportMetadata({
+  ...source,
+  animations: ['appear', 'disappear', 'hit', 'idle'],
+  defaultAnimation: 'appear',
+  webmPreview: '/old-appear.webm',
+  webmPreviewMedium: '/old-appear-medium.webm',
+  webmPreviewLow: '/old-appear-low.webm',
+  webpPoster: '/old-appear.webp',
+}, qualityPreviews, '2026-11-20T00:00:00.000Z');
+assert.equal(selectedPlayable.defaultAnimation, 'appear');
+assert.equal(selectedPlayable.previewAnimation, 'hit');
+assert.equal(selectedPlayable.previewDuration, 2);
+assert.equal(selectedPlayable.webmPreview, '/hit.webm');
+assert.equal(selectedPlayable.webmPreviewMedium, '/hit-medium.webm');
+assert.equal(selectedPlayable.webmPreviewLow, '/hit-low.webm');
+assert.equal(selectedPlayable.webpPoster, '/hit.webp');
+assert.equal(selectedPlayable.webpPosterMedium, '/hit-medium.webp');
+assert.equal(selectedPlayable.webpPosterLow, '/hit-low.webp');
+
+const noPlayable = mergeFullExportMetadata({
+  ...source,
+  animations: ['appear', 'idle'],
+  defaultAnimation: 'appear',
+  previewAnimation: 'idle',
+}, {
+  appear: { previewDuration: 0.6667, webmPreview: '/appear.webm' },
+  idle: { previewDuration: 1, webmPreview: '/idle.webm' },
+}, '2026-11-20T00:00:00.000Z');
+assert.equal(noPlayable.defaultAnimation, 'appear');
+assert.equal(noPlayable.previewAnimation, undefined,
+  'short animations must not be promoted to the work-level video preview');
+assert.equal(noPlayable.previewDuration, 0.6667);
 
 // Exercise the numeric matrix against the repository's real public indexes without logging
 // any work IDs or animation names. Each index must resolve back to its exact source string.
