@@ -20,7 +20,7 @@ permissions:
 jobs:
   export:
     # Public GitHub-hosted runner: private archive runners are retired.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     concurrency:
       group: spine-webm-render-public-${{ github.ref }}
