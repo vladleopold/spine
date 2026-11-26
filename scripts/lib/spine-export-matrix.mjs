@@ -46,7 +46,7 @@ export function resolveAnimationIndex(entry, indexValue) {
 }
 
 function firstString(...values) {
-  return values.find((value) => typeof value === 'string' && value.length > 0) || '';
+  return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim() || '';
 }
 
 function selectPlayablePreviewAnimation(entry, allAnimationPreviews) {
@@ -108,12 +108,12 @@ export function mergeFullExportMetadata(entry, previews, generatedAt) {
     next.previewDuration = playable.duration;
     for (const key of REQUIRED_FULL_EXPORT_KEYS) {
       if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {
-        next[key] = playable.preview[key];
+        next[key] = playable.preview[key].trim();
       }
     }
     for (const key of ['webpPoster', 'webpPosterMedium', 'webpPosterLow']) {
       if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {
-        next[key] = playable.preview[key];
+        next[key] = playable.preview[key].trim();
       }
     }
     if (playable.preview.qualityWidths && typeof playable.preview.qualityWidths === 'object') {
