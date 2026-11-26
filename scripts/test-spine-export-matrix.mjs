@@ -159,6 +159,24 @@ assert.equal(selectedPlayable.webpPoster, '/hit.webp');
 assert.equal(selectedPlayable.webpPosterMedium, '/hit-medium.webp');
 assert.equal(selectedPlayable.webpPosterLow, '/hit-low.webp');
 
+const preserveChosenPreview = mergeFullExportMetadata({
+  ...source,
+  animations: ['appear', 'disappear', 'hit', 'idle'],
+  defaultAnimation: 'idle',
+  previewAnimation: 'hit',
+}, qualityPreviews, '2026-11-20T00:00:00.000Z');
+assert.equal(preserveChosenPreview.defaultAnimation, 'idle');
+assert.equal(preserveChosenPreview.previewAnimation, 'hit',
+  'a previously selected playable preview must remain selected');
+
+const playableDefault = mergeFullExportMetadata({
+  ...source,
+  defaultAnimation: 'walk',
+}, previews, '2026-11-20T00:00:00.000Z');
+assert.equal(playableDefault.defaultAnimation, 'walk');
+assert.equal(playableDefault.previewAnimation, 'walk',
+  'a playable player default should remain the video preview');
+
 const noPlayable = mergeFullExportMetadata({
   ...source,
   animations: ['appear', 'idle'],
