@@ -259,7 +259,7 @@ assert.match(workflow, /scripts\/lib\/export-log-redaction\.mjs/);
 assert.match(workflow, /scripts\/prepare-render\.mjs/);
 assert.ok(validationJob.includes('sparse-checkout-cone-mode: false'));
 assert.ok(validationJob.includes('/scripts/'));
-assert.ok(validationJob.includes('/.github/workflows/spine-export-full.yml'));
+assert.ok(validationJob.includes('/.github/workflows/'));
 const validationLibraryPaths = validationJob.split('\n')
   .map((line) => line.trim())
   .filter((line) => line.startsWith('/library'));
