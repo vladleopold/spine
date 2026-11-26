@@ -1,4 +1,5 @@
 name: Recover archive Spine WebP and WebM previews in 50-item batches
+# PR-head regression checks explicitly test the source branch and include the synthetic gate file.
 # Canonical automatic recovery pipeline. Targeted latest-10 and reported-project repair
 # workflows remain manually/feature-branch invoked to prevent overlapping main-branch writes.
 on:
