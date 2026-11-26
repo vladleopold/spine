@@ -18,7 +18,7 @@ permissions:
   contents: read
 jobs:
   formats:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 120
     strategy:
       fail-fast: false
@@ -28,8 +28,8 @@ jobs:
           - p2_master1200-v5-2026-09-12T12-18-44-041Z
           - full_body_skins_cow-2026-09-12T11-21-25-772Z
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install encoder and browser
