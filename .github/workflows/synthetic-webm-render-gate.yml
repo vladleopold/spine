@@ -5,6 +5,9 @@ on:
   pull_request:
     paths:
       - 'scripts/prepare-render.mjs'
+      - 'scripts/audit-preview-videos.mjs'
+      - 'scripts/test-audit-preview-videos.mjs'
+      - '.github/workflows/audit-preview-videos.yml'
       - 'scripts/test-synthetic-render-skip.mjs'
       - 'scripts/lib/spine-export-matrix.mjs'
       - 'scripts/lib/export-log-redaction.mjs'
@@ -103,6 +106,8 @@ jobs:
       - name: Verify syntax and synthetic-only exclusion
         run: |
           node --check scripts/prepare-render.mjs
+          node --check scripts/audit-preview-videos.mjs
+          node scripts/test-audit-preview-videos.mjs
           node --check scripts/test-synthetic-render-skip.mjs
           node --check scripts/lib/spine-export-matrix.mjs
           node --check scripts/lib/export-log-redaction.mjs
