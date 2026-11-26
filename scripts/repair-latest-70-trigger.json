@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "retry only failed items from batch 0-49 with bounded private-safe renderer diagnostics, then continue batch 50-69",
-  "revision": 12,
-  "requestedAt": "2026-11-26T14:33:00Z"
+  "reason": "resume batch 50-69 after aligning renderer-revision regression tests; first 50 already live-verified",
+  "revision": 13,
+  "requestedAt": "2026-11-26T14:49:00Z"
 }
