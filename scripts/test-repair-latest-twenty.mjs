@@ -347,7 +347,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     workflowSource.includes("needs.publish.result == 'success'") &&
     !workflowSource.includes("needs.verify-production.result == 'success'"),
     'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
-  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\\n'));
+  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\n'));
   assert.match(dispatchJobBlock,/if:\\s*always\\(\\)\\s*&&/,
     'next archive batch must still dispatch when the independent live audit reports failed items');
 
