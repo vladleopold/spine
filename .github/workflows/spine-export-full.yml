@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/**
       - library_01/index.json
       - library_01/preview-index/**
       - scripts/build-library01-preview-index.mjs
@@ -93,7 +94,7 @@ jobs:
             /library_02/index.json
             /library_01/index.json
             /library_01/preview-index/
-            /.github/workflows/spine-export-full.yml
+            /.github/workflows/
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
@@ -126,6 +127,7 @@ jobs:
           node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
+          node scripts/test-public-ubuntu-workflows.mjs
           node --test scripts/test-library01-preview-index.mjs
           node scripts/build-library01-preview-index.mjs
           git diff --exit-code -- library_01/preview-index
