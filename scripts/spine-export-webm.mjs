@@ -22,6 +22,7 @@ import { runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/sp
 import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
 import { setPlayerAnimation } from './lib/player-animation.mjs';
 import { normalizeSpineJsonForLegacy38Runtime } from './lib/spine-json-runtime-compat.mjs';
+import { sanitizeRuntimeDiagnostics } from './renderer-failure-class.mjs';
 
 const args = {
   uploadId: '',
@@ -1277,11 +1278,7 @@ try {
           };
         }).catch(error => ({ diagnosticError: String(error && error.message || error) }));
         await page.waitForTimeout(250);
-        console.error('SPINE_RUNTIME_DIAGNOSTICS=' + JSON.stringify(runtimeDiagnostics));
-        const diagnosticScreenshot = await page.locator('#player')
-          .screenshot({ type: 'jpeg', quality: 35 }).catch(() => null);
-        if (diagnosticScreenshot)
-          console.error('SPINE_SCREENSHOT_JPEG_BASE64=' + diagnosticScreenshot.toString('base64'));
+        console.error('SPINE_RUNTIME_DIAGNOSTICS=' + JSON.stringify(sanitizeRuntimeDiagnostics(runtimeDiagnostics)));
         lastCaptureError = 'No source animation produced visible changing frames';
         console.error('NO_VISIBLE_MOVING_SOURCE_TRACK');
         continue;
