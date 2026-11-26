@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: vladleopold/spine
-          ref: main
+          ref: ${{ github.event.pull_request.head.repo.full_name == 'vladleopold/spine' && github.event.pull_request.head.ref || 'main' }}
           persist-credentials: false
       - name: Verify public runner and workflow contract
         run: |
