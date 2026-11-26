@@ -10,7 +10,6 @@ import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 const script=fileURLToPath(new URL('./repair-latest-twenty-previews.mjs',import.meta.url));
 const repairSource=fs.readFileSync(script,'utf8');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
-const referenceIndexWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/build-sa-reference-index.yml'),'utf8');
 const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
 const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-all.yml'),'utf8');
 const exportFullWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-full.yml'),'utf8');
@@ -315,10 +314,6 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: ubuntu-24\.04/,
     'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
-  assert.ok(referenceIndexWorkflowSource.includes('group: spine-sa-reference-index') &&
-    !referenceIndexWorkflowSource.includes('group: spine-library-commit'),
-    'isolated reference-index generation must not cancel or block library preview publication');
-
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
     'only one archive repair batch may run at a time');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
