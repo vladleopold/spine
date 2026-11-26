@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { generateFirstFrameWebp, verifyPosterFirstFrame } from './lib/first-frame-poster.mjs';
+import { frameDifferenceMetrics, generateFirstFrameWebp, verifyPosterFirstFrame } from './lib/first-frame-poster.mjs';
 
 const exporter=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 const repair=fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs',import.meta.url),'utf8');
@@ -20,6 +20,15 @@ assert.match(helper,/Math\.abs\(videoFrame\[i\] - posterFrame\[i\]\)/);
 assert.match(helper, /'-lossless', '0', '-quality', '88'/);
 assert.match(helper, /meanDelta > 3\.5/);
 assert.match(helper, /highDeltaRatio > 0\.025/);
+const transparentPixelDifference=frameDifferenceMetrics(
+  Buffer.from([255,0,0,0, 100,120,140,255]),
+  Buffer.from([0,255,255,0, 105,115,145,255]),
+);
+assert.equal(transparentPixelDifference.maxDelta,10,
+  'RGB differences under fully transparent pixels must not affect visual poster fidelity');
+assert.ok(transparentPixelDifference.meanDelta < 3,
+  'transparent RGB noise must not inflate average visual difference');
+
 assert.doesNotMatch(helper,/-ss|positions|pickPosterFrame|scan real timeline/);
 assert.match(repair,/generateFirstFrameWebp/);
 assert.doesNotMatch(repair,/frames\/seconds>=15|f\/duration<15|18-39-06-745Z/);
