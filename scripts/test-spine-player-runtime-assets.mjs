@@ -82,5 +82,7 @@ test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', ()
 
   const exporterSource = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   assert.match(exporterSource, /resolveLocalSpinePlayerAssets/);
-  assert.match(exporterSource, /if \(required\) throw new Error\('PINNED_SPINE_PLAYER_ASSET_MISSING_'/);
+  assert.match(exporterSource, /createInlineSpinePlayerAssetUrls/);
+  assert.match(exporterSource, /capturePlayerJsUrl/);
+  assert.match(exporterSource, /capturePlayerCssUrl/);
 });
