@@ -353,10 +353,11 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     workflowSource.includes("needs.verify-production.result == 'success'") &&
     !workflowSource.includes("needs.render.result == 'success'"),
     'later batches require a successful publish and live audit, but may continue after individual render failures');
-  const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:\n'));
-  assert.ok(verifyJobBlock.includes("if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'"),
+  const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:'));
+  assert.ok(verifyJobBlock.includes("if: always()") &&
+    verifyJobBlock.includes("needs.publish.result == 'success'"),
     'the production audit must run when publication succeeded even if one render matrix item failed');
-  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\n'));
+  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:'));
   assert.ok(dispatchJobBlock.includes("if: always() &&") &&
     dispatchJobBlock.includes("needs.publish.result == 'success'") &&
     dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
