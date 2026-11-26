@@ -61,6 +61,6 @@ export function spinePlayerSourceBlocker(version, skeletonFile) {
 export function runtimeMinorForSpineSkeleton(version, skeletonFile) {
   const override = runtimeVersionOverrideForSpineSkeleton(version, skeletonFile);
   const selected = override || String(version || '').trim();
-  const match = selected.match(/^\\d+\\.(\\d+)(?:[.-]|$)/);
+  const match = selected.match(/^\d+\.(\d+)(?:[.-]|$)/);
   return match ? match[1] : '8';
 }
