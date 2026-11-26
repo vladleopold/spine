@@ -26,3 +26,12 @@ export function deterministicFallbackFps(fps=30){
   const rate=Math.min(120,Math.max(1,Number(fps)||30));
   return Math.min(rate,15);
 }
+
+/**
+ * Recover a visible live Spine canvas whenever MediaRecorder produces no
+ * playable blob. The same-animation visibility/motion gate still runs before
+ * any media is accepted; alpha exports keep their separate encoder path.
+ */
+export function shouldRecoverVisibleCanvas({alpha=false,peak=-1,minPeak=40}={}){
+  return !alpha && Number.isFinite(Number(peak)) && Number(peak)>=Number(minPeak);
+}
