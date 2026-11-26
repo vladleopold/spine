@@ -12,12 +12,20 @@ const project = {
 test('licensed exporter targets only fixed storage repo', () => {
   assert.equal(STORAGE_REPO, 'vladleopold/spine');
 });
-test('queued and previously blocked source projects are eligible', () => {
+test('pending projects are eligible; failed projects require an explicit retry', () => {
   assert.ok(eligible(project));
-  assert.ok(eligible({...project,conversionStatus:'needs-editor'}));
+  assert.ok(!eligible({...project,conversionStatus:'needs-editor'}, '', {editorReady:false}));
+  assert.ok(eligible({...project,conversionStatus:'needs-editor'}, '', {editorReady:true}));
   assert.ok(!eligible({...project,conversionStatus:'ready'}));
   assert.ok(!eligible({...project,conversionStatus:'failed'}));
   assert.ok(eligible({...project,conversionStatus:'failed'}, 'example-001'));
+});
+
+test('needs-editor projects wait for a licensed editor unless explicitly retried', () => {
+  const blocked = {...project, conversionStatus:'needs-editor'};
+  assert.equal(eligible(blocked, '', {editorReady:false}), false);
+  assert.equal(eligible(blocked, '', {editorReady:true}), true);
+  assert.equal(eligible(blocked, blocked.id, {editorReady:false}), true);
 });
 test('never process substituted repos, unrelated files, path traversal or invalid IDs', () => {
   assert.ok(!eligible({...project,previewPath:'library_02/other-id'}));
