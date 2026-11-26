@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog, readRendererLogTail } from "./renderer-failure-class.mjs";
+import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog, readRendererLogExcerpt } from "./renderer-failure-class.mjs";
 
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libwebp'"), "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libvpx-vp9'"), "FFMPEG_VP9_ENCODER_UNAVAILABLE");
