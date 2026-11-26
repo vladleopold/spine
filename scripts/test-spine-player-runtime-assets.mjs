@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
+import { resolveLocalSpinePlayerAssets, createInlineSpinePlayerAssetUrls } from './lib/spine-player-runtime-assets.mjs';
 
 test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', () => {
   const root = path.join(os.tmpdir(), 'spine-player-runtimes');
@@ -52,12 +52,33 @@ test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', ()
     playerCssUrl: cssUrl,
   });
   assert.equal(legacy[0].filename, path.join('/repo', 'public', 'vendor-spine-player-3.8.js'));
-  assert.equal(legacy.every(asset => asset.required === false), true,
-    'legacy vendor files remain optional and may use their existing CDN path');
+  assert.equal(legacy.every(asset => asset.required === true), true,
+    'legacy previews must fail fast rather than silently fall back to a remote runtime');
 
   assert.deepEqual(resolveLocalSpinePlayerAssets({
     isLegacy: false, modernRuntime: '4.3', playerJsUrl: jsUrl, playerCssUrl: cssUrl,
   }), [], 'without a pinned runtime root the existing CDN path remains available');
+
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'spine-player-inline-'));
+  try {
+    const jsFile = path.join(temp, 'player.js');
+    const cssFile = path.join(temp, 'player.css');
+    fs.writeFileSync(jsFile, 'window.spine = { ready: true };');
+    fs.writeFileSync(cssFile, '#player { width: 100%; }');
+    const inline = createInlineSpinePlayerAssetUrls([
+      { filename: jsFile, type: 'application/javascript', required: true },
+      { filename: cssFile, type: 'text/css', required: true },
+    ]);
+    assert.equal(Buffer.from(inline.playerJsUrl.split(',')[1], 'base64').toString(), 'window.spine = { ready: true };');
+    assert.equal(Buffer.from(inline.playerCssUrl.split(',')[1], 'base64').toString(), '#player { width: 100%; }');
+    assert.match(inline.playerJsUrl, /^data:application\\/javascript;base64,/);
+    assert.match(inline.playerCssUrl, /^data:text\\/css;base64,/);
+    assert.throws(() => createInlineSpinePlayerAssetUrls([
+      { filename: path.join(temp, 'missing.js'), type: 'application/javascript', required: true },
+    ]), /PINNED_SPINE_PLAYER_ASSET_MISSING/);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
 
   const exporterSource = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   assert.match(exporterSource, /resolveLocalSpinePlayerAssets/);
