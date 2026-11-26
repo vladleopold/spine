@@ -5,6 +5,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { runLicensedSpineExport } from './spine-editor-export.mjs';
+import { conversionExitCode } from './spine-link-project-status.mjs';
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
 const event = eventPath ? JSON.parse(await fs.readFile(eventPath, 'utf8')) : {};
@@ -202,4 +203,4 @@ if (status === 'ready') {
   } catch(error) {console.warn('Video export dispatch failed:',String(error));}
 }
 
-if (status !== 'ready') process.exitCode = 1;
+process.exitCode = conversionExitCode(status);

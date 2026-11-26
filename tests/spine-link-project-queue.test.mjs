@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { eligible, STORAGE_REPO } from '../scripts/spine-link-project-queue.mjs';
+import { conversionExitCode } from '../scripts/spine-link-project-status.mjs';
 
 const project = {
   sourceKind:'spine-project', id:'example-001',
@@ -46,7 +47,7 @@ test('output uses real licensed editor and nested export that the player discove
   assert.match(exporter, /output = path\.resolve\(folder, 'export'\)/);
   assert.match(exporter, /conversionStatus:status/);
   assert.match(exporter, /webmStatus:'pending'/);
-  assert.match(exporter, /status !== 'ready'/);
+  assert.match(exporter, /conversionExitCode\(status\)/);
 });
 
 const publicWorkflow = fs.readFileSync(
@@ -61,4 +62,10 @@ test('public repository directly receives project export dispatch and executes o
   assert.ok(publicWorkflow.includes('STORAGE_GITHUB_TOKEN: ${{ github.token }}'));
   assert.ok(!publicWorkflow.includes('workflow_call:'));
   assert.ok(!publicWorkflow.includes('3Spine-core'));
+});
+
+test('missing licensed Editor is a recorded needs-editor state, not a failed runner job', () => {
+  assert.equal(conversionExitCode('needs-editor'), 0);
+  assert.equal(conversionExitCode('ready'), 0);
+  assert.equal(conversionExitCode('failed'), 1);
 });
