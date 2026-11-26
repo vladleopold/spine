@@ -319,8 +319,10 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the publisher must run after a partial render failure so verified artifacts can still be published');
   assert.doesNotMatch(publishJobBlock,/needs\.render\.result == 'success'/,
     'a failed item must not suppress publication of other independently verified previews');
-  assert.match(publishJobBlock,/node scripts\/publish-verified-preview-artifacts\.mjs/,
-    'the publisher must filter artifacts by their explicit successful acceptance metadata');
+  assert.ok(publishJobBlock.includes("node scripts/repair-latest-twenty-previews.mjs merge") &&
+    repairSource.includes("meta?.ok===true") &&
+    repairSource.includes("meta?.animationMatches===true"),
+    'the publisher must merge only artifacts with explicit successful and animation-matched acceptance metadata');
 
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
