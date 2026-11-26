@@ -3,6 +3,51 @@
 // or raw browser console messages. Only stable error categories and counts.
 import fs from "node:fs";
 
+export function sanitizeRuntimeDiagnostics(diagnostics={}) {
+  const list=value=>Array.isArray(value)?value:[];
+  const numeric=value=>Number.isFinite(Number(value))?Number(value):0;
+  const slots=list(diagnostics.attachedSlots);
+  const pages=list(diagnostics.atlasPages);
+  return {
+    selectedAnimationPresent:Boolean(diagnostics.selectedAnimation),
+    trackAnimationPresent:Boolean(diagnostics.trackAnimation),
+    trackTime:numeric(diagnostics.trackTime),
+    defaultSkinPresent:Boolean(diagnostics.defaultSkin),
+    skinCount:list(diagnostics.skinNames).length,
+    activeSkinPresent:Boolean(diagnostics.activeSkin),
+    attachedSlotCount:slots.length,
+    attachedSlotWithWorldVerticesCount:slots.filter(slot=>list(slot?.worldVertices).length>=4).length,
+    bounds:{width:numeric(diagnostics.bounds?.width),height:numeric(diagnostics.bounds?.height)},
+    boneCount:list(diagnostics.bones).length,
+    atlasPageCount:pages.length,
+    loadedAtlasPageCount:pages.filter(page=>Boolean(page?.textureLoaded)).length,
+    assetErrorCount:list(diagnostics.assetErrors).length,
+    gl:diagnostics.gl?{error:numeric(diagnostics.gl.error),contextLost:Boolean(diagnostics.gl.contextLost)}:null,
+    canvas:diagnostics.canvas?{width:numeric(diagnostics.canvas.width),height:numeric(diagnostics.canvas.height)}:null,
+    viewport:diagnostics.viewport?{width:numeric(diagnostics.viewport.width),height:numeric(diagnostics.viewport.height)}:null,
+  };
+}
+
+// Public runner logs can contain large browser diagnostics. Read a bounded
+// head/tail sample so one oversized line can never exceed V8's string limit.
+export function readRendererLogSample(filePath,{headBytes=256*1024,tailBytes=2*1024*1024}={}) {
+  const fd=fs.openSync(filePath,"r");
+  try {
+    const size=fs.fstatSync(fd).size;
+    const headLength=Math.min(size,Math.max(0,headBytes));
+    const head=Buffer.alloc(headLength);
+    if(headLength)fs.readSync(fd,head,0,headLength,0);
+    const tailStart=Math.max(headLength,size-Math.max(0,tailBytes));
+    const tailLength=Math.max(0,size-tailStart);
+    const tail=Buffer.alloc(tailLength);
+    if(tailLength)fs.readSync(fd,tail,0,tailLength,tailStart);
+    const omitted=Math.max(0,size-headLength-tailLength);
+    return head.toString("utf8")+"\\n[RENDERER_LOG_SAMPLE omitted_bytes="+omitted+"]\\n"+tail.toString("utf8");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
@@ -118,6 +163,6 @@ export function summarizeRendererLog(text) {
 }
 
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
-  const log=fs.readFileSync(process.argv[2],"utf8");
+  const log=readRendererLogSample(process.argv[2]);
   console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
 }
