@@ -207,8 +207,8 @@ try{
   assert.equal(all[2].needsRender,false);
   assert.equal(all[2].blockedReason,'MISSING_SOURCE_TRIAD');
   const legacyBinary=all.find(x=>x.id==='fixture-18');
-  assert.equal(legacyBinary.ready,true);
-  assert.equal(legacyBinary.needsRender,true);
+  assert.equal(legacyBinary.ready,false);
+  assert.equal(legacyBinary.needsRender,false);
   assert.equal(legacyBinary.blockedReason,'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
     'Spine 3.7 binary-only source is blocked until a same-work JSON export is available');
   assert.ok(!matrix.some(x=>x.id==='fixture-18'),'unsupported Spine 3.7 binary must not enter the render matrix');
