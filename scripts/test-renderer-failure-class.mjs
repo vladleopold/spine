@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog } from "./renderer-failure-class.mjs";
+import os from "node:os";
+import path from "node:path";
+import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog, readRendererLogTail } from "./renderer-failure-class.mjs";
 
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libwebp'"), "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libvpx-vp9'"), "FFMPEG_VP9_ENCODER_UNAVAILABLE");
@@ -163,3 +165,17 @@ assert.match(exporter,/if \(args\.allowVisibleTrackFallback\)/);
 assert.match(exporter,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
   "alternate source tracks are accepted only after visible motion is detected");
 console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas and keep runtime skin fallback source-bound");
+
+{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),"renderer-log-tail-"));
+  try {
+    const file=path.join(root,"renderer.log");
+    fs.writeFileSync(file,"PRIVATE_PREFIX_MARKER\\n"+"x".repeat(2*1024*1024)+"\\nPLAYER_READY=1\\nError: No visible real-time Spine frames\\n");
+    const tail=readRendererLogTail(file,256);
+    assert.ok(Buffer.byteLength(tail)<=256,"diagnostic reader must cap bytes rather than materialize the full log");
+    assert.match(tail,/No visible real-time Spine frames/,"the useful failure at the end of a large log must be retained");
+    assert.doesNotMatch(tail,/PRIVATE_PREFIX_MARKER/,"earlier private log content must not be copied into the diagnostic");
+  } finally {
+    fs.rmSync(root,{recursive:true,force:true});
+  }
+}
