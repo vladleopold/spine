@@ -86,6 +86,6 @@ test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', ()
   assert.match(exporterSource, /createInlineSpinePlayerAssetUrls/);
   assert.match(exporterSource, /capturePlayerJsUrl/);
   assert.match(exporterSource, /capturePlayerCssUrl/);
-  assert.match(singleExportWorkflow, /public\\/vendor-spine-player-3\\.7\\.js/);
-  assert.match(singleExportWorkflow, /public\\/vendor-spine-player-3\\.8\\.js/);
+  assert.ok(singleExportWorkflow.includes('public/vendor-spine-player-3.7.js'));
+  assert.ok(singleExportWorkflow.includes('public/vendor-spine-player-3.8.js'));
 });
