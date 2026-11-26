@@ -12,6 +12,8 @@ const repairSource=fs.readFileSync(script,'utf8');
 const liveVerifySource=fs.readFileSync(new URL('./verify-latest-twenty-live.mjs',import.meta.url),'utf8');
 assert.ok(liveVerifySource.includes('UNSUPPORTED_SPINE_3_7_BINARY_SKELETON'),
   'known unsupported Spine 3.7 binary sources must remain blocked, not fail the production gate');
+assert.ok(liveVerifySource.includes("'blocked-deterministic-capture'"),
+  'blank deterministic WebM captures must remain a verified blocker, not a production audit failure');
 const workflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-latest-twenty-previews.yml'),'utf8');
 const singleWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-webm.yml'),'utf8');
 const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-all.yml'),'utf8');
