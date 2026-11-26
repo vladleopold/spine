@@ -15,7 +15,9 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: spine-library-commit
+  # This workflow publishes only the isolated sa-reference-index branch.
+  # It must not contend with or cancel writes to the public library index.
+  group: spine-sa-reference-index
   cancel-in-progress: true
 jobs:
   build-index:
