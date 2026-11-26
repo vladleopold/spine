@@ -28,6 +28,17 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/spine-player-build.yml
+            /package.json
+            /package-lock.json
+            /index.html
+            /vite.config.ts
+            /tsconfig*.json
+            /src/
+            /public/
+            /scripts/test-spine-player-error-propagation.mjs
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
