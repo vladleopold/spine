@@ -16,3 +16,13 @@ export function fallbackFrameCount({fps=30,duration=0}){
   const rate=Math.min(120,Math.max(1,Number(fps)||30));
   return Math.max(8,Math.min(900,Math.ceil(Math.min(30,Math.max(.25,Number(duration)||.25))*rate)));
 }
+
+/**
+ * Deterministic PNG capture calls the browser compositor once per frame.
+ * Cap that slower recovery path at 15fps; the regular MediaRecorder path
+ * continues to use the requested export FPS.
+ */
+export function deterministicFallbackFps(fps=30){
+  const rate=Math.min(120,Math.max(1,Number(fps)||30));
+  return Math.min(rate,15);
+}
