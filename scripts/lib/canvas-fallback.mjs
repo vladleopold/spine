@@ -26,3 +26,12 @@ export function deterministicFallbackFps(fps=30){
   const rate=Math.min(120,Math.max(1,Number(fps)||30));
   return Math.min(rate,15);
 }
+
+/**
+ * Reuse the last validated live-frame peak when MediaRecorder stops. WebGL
+ * readPixels can return an empty buffer after stop even though the same track
+ * was visibly moving immediately before recording ended.
+ */
+export function shouldRecoverVisibleCanvas({alpha=false,peak=-1,minPeak=40}={}){
+  return !alpha && Number.isFinite(Number(peak)) && Number(peak)>=Number(minPeak);
+}

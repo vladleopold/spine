@@ -174,3 +174,13 @@ test('reference index rebuild uses an isolated lock and public pinned Ubuntu run
   assert.ok(workflow.includes('runs-on: ubuntu-24.04'));
   assert.ok(workflow.includes('cancel-in-progress: true'));
 });
+
+
+test('visible canvas recovery survives recorder stop and exposes exact selected animation for salvage', () => {
+  const fallback = fs.readFileSync(new URL('./lib/canvas-fallback.mjs', import.meta.url), 'utf8');
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  assert.match(fallback, /shouldRecoverVisibleCanvas/);
+  assert.match(exporter, /lastVisibleFramePeak = Math\.max\(lastVisibleFramePeak, framePeak\)/);
+  assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
+  assert.match(exporter, /SPINE_SELECTED_ANIMATION_B64=/);
+});
