@@ -214,14 +214,7 @@ assert.equal(noPlayable.previewDuration, 0.6667);
 // any work IDs or animation names. Each index must resolve back to its exact source string.
 const realEntries = listCollectionFolders(process.cwd())
   .flatMap((folder) => readIndex(process.cwd(), folder) || []);
-const realEntry = realEntries.find((entry) =>
-  Array.isArray(entry?.animations) &&
-  entry.animations.length > 0 &&
-  typeof entry.skeleton === 'string' &&
-  typeof entry.atlas === 'string' &&
-  Array.isArray(entry.textures) &&
-  entry.textures.length > 0,
-);
+const realEntry = realEntries.find((entry) => buildAnimationIndexMatrix(entry).hasItems);
 assert.ok(realEntry, 'a source-backed archive entry is required for the matrix integration test');
 const realMatrix = buildAnimationIndexMatrix(realEntry);
 assert.equal(realMatrix.hasItems, true);
