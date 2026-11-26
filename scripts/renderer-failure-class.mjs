@@ -3,6 +3,43 @@
 // or raw browser console messages. Only stable error categories and counts.
 import fs from "node:fs";
 
+ 
+// Keep diagnostics bounded even when Chromium emits huge data-URI or minified
+// asset lines. Preserve the log header (version/stage markers) and its tail
+// (the final failure), while never materializing an unbounded file as a string.
+export function readRendererLogExcerpt(filePath, maxBytes = 5 * 1024 * 1024, headBytes = 64 * 1024) {
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 128) {
+    throw new RangeError("maxBytes must be an integer of at least 128");
+  }
+  if (!Number.isSafeInteger(headBytes) || headBytes < 0) {
+    throw new RangeError("headBytes must be a non-negative integer");
+  }
+  const fd = fs.openSync(filePath, "r");
+  try {
+    const size = fs.fstatSync(fd).size;
+    const readAt = (length, position) => {
+      const buffer = Buffer.alloc(length);
+      let offset = 0;
+      while (offset < length) {
+        const count = fs.readSync(fd, buffer, offset, length - offset, position + offset);
+        if (count === 0) break;
+        offset += count;
+      }
+      return buffer.subarray(0, offset).toString("utf8");
+    };
+    if (size <= maxBytes) return readAt(size, 0);
+    const marker = "\n...[renderer log excerpt truncated]...\n";
+    const payloadBytes = maxBytes - Buffer.byteLength(marker);
+    const headLength = Math.min(headBytes, Math.floor(payloadBytes / 2), size);
+    const tailLength = Math.min(payloadBytes - headLength, size - headLength);
+    const head = readAt(headLength, 0);
+    const tail = readAt(tailLength, size - tailLength);
+    return head + marker + tail;
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
@@ -118,6 +155,6 @@ export function summarizeRendererLog(text) {
 }
 
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
-  const log=fs.readFileSync(process.argv[2],"utf8");
+  const log=readRendererLogExcerpt(process.argv[2]);
   console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
 }
