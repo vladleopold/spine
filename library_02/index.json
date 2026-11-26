@@ -4244,16 +4244,16 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T16-53-44-355Z/illust_dating22_1_4.png?v=2026-11-18T16-53-44.355Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-deterministic-capture",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
-    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Deterministic WebM capture produced no verified visible motion; requires native inspection",
+    "lastPreviewRetryError": "",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "4806cf7a8835465d1ddeb226a5cd203a5234f59e47f69bf59cc385054081d2ad",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T14:36:33.960Z"
+    "previewBlockedAt": "2026-11-26T15:03:46.216Z"
   },
   {
     "id": "Spine-animation-2026-11-18T12-11-23-130Z",
@@ -4325,17 +4325,17 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview.webp",
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview.webm",
-    "webmStatus": "blocked-invisible-default-skin",
+    "webmStatus": "ready",
     "dispatchStatus": "rendered",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview.webp",
     "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview-medium.webp",
     "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-18T03-38-09-932Z/preview-low.webp",
-    "previewStatus": "blocked",
-    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
+    "previewStatus": "ready",
+    "previewError": "",
     "webmGeneratedAt": "2026-11-22T12:10:30.963Z",
-    "posterGeneratedAt": "2026-11-19T20:52:18.901Z",
+    "posterGeneratedAt": "2026-11-26T15:03:47.034Z",
     "animations": [
       "attack",
       "breathe",
@@ -4422,9 +4422,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-37-48-529Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "44635c8d3337d5d38500a04be070148e5f39a1693ec31faf993f1bf1e56914ae",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T11:21:32.903Z"
+    "previewBlockedAt": "2026-11-26T15:03:47.040Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-35-35-972Z",
@@ -4480,9 +4480,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-35-35-972Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "00db60a803a36b3c619b4268ca68ff9241b0b267449487998513570d3d59b7ac",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T11:21:32.906Z"
+    "previewBlockedAt": "2026-11-26T15:03:47.047Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-35-23-423Z",
@@ -4538,9 +4538,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-35-23-423Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "856db6cec1d36b4f0079448a9c9c4a73eeb9480dcda274d8078ebfe49e1839ae",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T11:21:32.908Z"
+    "previewBlockedAt": "2026-11-26T15:03:47.056Z"
   },
   {
     "id": "Spine-animation-2026-11-18T03-34-55-088Z",
@@ -4596,9 +4596,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-18T03-34-55-088Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "0acda1bcc783948293f596da4cd8d2dbdd0a19490d898de504c55c020ea9a49d",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T11:21:32.911Z"
+    "previewBlockedAt": "2026-11-26T15:03:47.060Z"
   },
   {
     "id": "Spine-animation-2026-11-17T18-26-20-981Z",
@@ -4621,10 +4621,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-26-20-981Z/019.png?v=2026-11-17T18-26-20.981Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-missing-source",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle",
     "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
   },
   {
@@ -5085,10 +5085,10 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webp",
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webm",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-invisible-default-skin",
     "dispatchStatus": "rendered",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview-low.webm",
     "webpPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webp",
@@ -5119,9 +5119,9 @@
     "webmPreviewPath": "library_02/Spine-animation-2026-11-17T18-39-06-745Z/preview.webm",
     "previewBlockedAnimation": "animation",
     "previewBlockedSourceFingerprint": "3daa3daaf72f0bb2bdcaeff9c2d7661208c9ac3ef58378245f56f6818f1772a6",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T11:21:33.752Z"
+    "previewBlockedAt": "2026-11-26T15:03:48.077Z"
   },
   {
     "id": "Spine-animation-2026-11-17T18-36-51-976Z",
@@ -5770,7 +5770,7 @@
     "dispatchStatus": "rendered",
     "previewStatus": "ready",
     "previewError": "",
-    "lastPreviewRetryError": "New version failed frame-density acceptance; previous media retained",
+    "lastPreviewRetryError": "",
     "previewAnimation": "Camera/Idle",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-07-35-146Z/preview-medium.webm",
     "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-07-35-146Z/preview-low.webm",
@@ -5821,16 +5821,16 @@
     "thumbnail": "",
     "thumbnailPoster": "https://spine-link.vercel.app/assets/library_02/Spine-animation-2026-11-17T18-06-25-641Z/Dark%20Knight%20Worship_2.png?v=2026-11-17T18-06-25.641Z",
     "webmPreview": "",
-    "webmStatus": "failed",
+    "webmStatus": "blocked-invisible-default-skin",
     "dispatchStatus": "pending",
-    "previewStatus": "failed",
-    "previewError": "Native preview render did not pass media acceptance",
+    "previewStatus": "blocked",
+    "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "6ae6fa48fa00c3af1c8f18c89c17a85aac57425c37f86465ee1b5c7005317cd8",
-    "previewBlockedRendererRevision": "auto-track-recovery-v15-configured-default-skin-list",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-24T14:36:39.674Z",
-    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance"
+    "previewBlockedAt": "2026-11-26T15:03:54.116Z",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "Spine-animation-2026-11-17T18-04-48-688Z",
