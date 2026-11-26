@@ -42,6 +42,8 @@ jobs:
           node-version: 22
       - name: Test renderer failure classification
         run: node scripts/test-renderer-failure-class.mjs
+      - name: Test transparent WebP poster fidelity
+        run: node scripts/test-first-frame-poster.mjs
       - name: Test binary-only preview animation selection
         run: node scripts/test-render-work-blocked-states.mjs
       - name: Test explicit game camera viewport
