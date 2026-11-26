@@ -1,0 +1,231 @@
+name: Spine-Link project export • public Ubuntu executor
+
+on:
+  workflow_call:
+    inputs:
+      upload_id:
+        required: false
+        type: string
+        default: ''
+    secrets:
+      STORAGE_GITHUB_TOKEN:
+        required: false
+      SPINE_LICENSE:
+        required: false
+      SPINE_LINUX_URL:
+        required: false
+  pull_request:
+    paths:
+      - '.github/workflows/spine-link-project-export.yml'
+      - 'scripts/test-spine-link-public-export-workflow.mjs'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/spine-link-project-export.yml'
+      - 'scripts/test-spine-link-public-export-workflow.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spine-link-public-export-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  runner-probe:
+    name: Public GitHub-hosted Ubuntu 24.04 probe
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: vladleopold/spine
+          ref: main
+          persist-credentials: false
+      - name: Verify public runner and workflow contract
+        run: |
+          set -euo pipefail
+          test "$RUNNER_OS" = "Linux"
+          test -n "$RUNNER_NAME"
+          node --test scripts/test-spine-link-public-export-workflow.mjs
+          uname -s
+
+  execute-private-checks:
+    if: github.repository == 'vladleopold/3Spine-core'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SOURCE_REPO_TOKEN: ${{ github.token }}
+    steps:
+      - name: Require caller-scoped private source access
+        run: |
+          set -euo pipefail
+          test -n "$SOURCE_REPO_TOKEN"
+      - name: Checkout private source from 3Spine-core
+        uses: actions/checkout@v4
+        with:
+          repository: vladleopold/3Spine-core
+          ref: main
+          token: ${{ env.SOURCE_REPO_TOKEN }}
+          path: private-source
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/spine-link-project-queue.mjs
+            scripts/spine-link-project-cloud-export.mjs
+            scripts/spine-editor-export.mjs
+            .github/workflows/spine-link-project-export.yml
+            tests/spine-link-project-queue.test.mjs
+            tests/spine-editor-export.test.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run private Spine-Link contract tests
+        working-directory: private-source
+        run: |
+          set -euo pipefail
+          node --check scripts/spine-link-project-cloud-export.mjs
+          node --test tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs
+
+  licensed-project-export:
+    name: Licensed Spine-Link project export • public Ubuntu 24.04
+    needs: execute-private-checks
+    if: github.repository == 'vladleopold/3Spine-core' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      SOURCE_REPO_TOKEN: ${{ github.token }}
+    steps:
+      - name: Wait safely for licensed export configuration
+        id: credentials
+        shell: bash
+        env:
+          STORAGE_GITHUB_TOKEN: ${{ secrets.STORAGE_GITHUB_TOKEN }}
+          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
+          SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
+        run: |
+          set -euo pipefail
+          missing=()
+          for key in SOURCE_REPO_TOKEN STORAGE_GITHUB_TOKEN SPINE_LICENSE SPINE_LINUX_URL; do
+            if [ -z "${!key}" ]; then missing+=("$key"); fi
+          done
+          storage_push=false
+          if [ -n "$STORAGE_GITHUB_TOKEN" ]; then
+            storage_push="$(GH_TOKEN="$STORAGE_GITHUB_TOKEN" gh api repos/vladleopold/spine --jq '.permissions.push' 2>/dev/null || true)"
+          fi
+          if [ "$storage_push" != "true" ]; then
+            missing+=("STORAGE_REPOSITORY_WRITE_PERMISSION")
+            echo "SPINE_LINK_STORAGE_WRITE_PERMISSION_MISSING" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ "${#missing[@]}" -gt 0 ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "SPINE_LINK_LICENSED_EXPORT_WAITING_FOR_SECRETS" >> "$GITHUB_STEP_SUMMARY"
+            printf 'Missing public-executor configuration: %s\n' "${missing[*]}"
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+      - name: Checkout trusted Spine-Link queue and native export implementation
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: vladleopold/3Spine-core
+          ref: main
+          token: ${{ env.SOURCE_REPO_TOKEN }}
+          path: private-source
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/spine-link-project-queue.mjs
+            scripts/spine-link-project-cloud-export.mjs
+            scripts/spine-editor-export.mjs
+            .github/workflows/spine-link-project-export.yml
+            tests/spine-link-project-queue.test.mjs
+            tests/spine-editor-export.test.mjs
+          sparse-checkout-cone-mode: false
+      - name: Set up Node.js 24
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Re-run queue and native export contract tests on public executor
+        if: steps.credentials.outputs.ready == 'true'
+        working-directory: private-source
+        run: |
+          set -euo pipefail
+          node --check scripts/spine-link-project-cloud-export.mjs
+          node --test tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs
+      - name: Select authorized project from Spine-Link storage queue
+        if: steps.credentials.outputs.ready == 'true'
+        id: pick
+        working-directory: private-source
+        env:
+          STORAGE_GITHUB_TOKEN: ${{ secrets.STORAGE_GITHUB_TOKEN }}
+          REQUESTED_UPLOAD_ID: ${{ github.event.client_payload.uploadId || inputs.upload_id || '' }}
+        run: node scripts/spine-link-project-queue.mjs
+      - name: Require licensed Spine Editor configuration
+        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        env:
+          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
+          SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
+          STORAGE_GITHUB_TOKEN: ${{ secrets.STORAGE_GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$SPINE_LICENSE"
+          test -n "$SPINE_LINUX_URL"
+          test -n "$STORAGE_GITHUB_TOKEN"
+      - name: Download only the selected project from public Spine storage
+        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        env:
+          UPLOAD_PATH: ${{ steps.pick.outputs.uploadPath }}
+          PROJECT_FILE: ${{ steps.pick.outputs.projectFile }}
+        run: |
+          set -euo pipefail
+          git clone --quiet --single-branch --branch main --depth=1 --filter=blob:none \
+            --no-checkout https://github.com/vladleopold/spine.git storage
+          git -C storage sparse-checkout init --cone
+          git -C storage sparse-checkout set -- "$UPLOAD_PATH"
+          git -C storage checkout --quiet main
+          test -s "storage/$UPLOAD_PATH/$PROJECT_FILE"
+          test -d "storage/$UPLOAD_PATH/images"
+      - name: Install licensed Spine 4.3.26 Linux Editor
+        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        env:
+          SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb x11-utils x11-xserver-utils \
+            libxrandr2 libgl1-mesa-dri libgl1 libxrender1 libxi6 libxext6 libxfixes3 libxcursor1
+          curl --fail --location --silent --show-error --max-time 600 --retry 2 \
+            -A 'Mozilla/5.0 (X11; Linux x86_64)' "$SPINE_LINUX_URL" \
+            -o "$RUNNER_TEMP/spine-linux.gz"
+          gzip -t "$RUNNER_TEMP/spine-linux.gz"
+          mkdir -p "$RUNNER_TEMP/spine"
+          gzip -dc "$RUNNER_TEMP/spine-linux.gz" | tar -xf - -C "$RUNNER_TEMP/spine"
+          SPINE_CLI="$RUNNER_TEMP/spine/Spine/Spine.sh"
+          test -x "$SPINE_CLI"
+          echo "SPINE_CLI=$SPINE_CLI" >> "$GITHUB_ENV"
+      - name: Export actual Spine JSON, atlas and texture pages
+        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        working-directory: private-source
+        env:
+          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
+          STORAGE_GITHUB_TOKEN: ${{ secrets.STORAGE_GITHUB_TOKEN }}
+          SPINE_STORAGE_WORKSPACE: ${{ github.workspace }}/storage
+          SPINE_UPLOAD_ID: ${{ steps.pick.outputs.uploadId }}
+          SPINE_UPLOAD_PATH: ${{ steps.pick.outputs.uploadPath }}
+          SPINE_PROJECT_FILE: ${{ steps.pick.outputs.projectFile }}
+          SPINE_SITE_ORIGIN: https://spine-link.vercel.app
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          GALLIUM_DRIVER: llvmpipe
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s '-screen 0 1600x1000x24' \
+            node scripts/spine-link-project-cloud-export.mjs
+      - name: Deactivate licensed Spine session on the ephemeral public runner
+        if: ${{ always() && steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true' }}
+        env:
+          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
+        run: |
+          if [ -n "${SPINE_CLI:-}" ] && [ -x "$SPINE_CLI" ]; then
+            timeout 180 xvfb-run -a "$SPINE_CLI" -l >/dev/null 2>&1 || true
+          fi
