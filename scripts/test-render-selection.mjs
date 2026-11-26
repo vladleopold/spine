@@ -184,3 +184,10 @@ test('visible canvas recovery survives recorder stop and exposes exact selected 
   assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
   assert.match(exporter, /SPINE_SELECTED_ANIMATION_B64=/);
 });
+
+
+test('normal preview publication stores actual previewAnimation and removes auto sentinel', () => {
+  const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+  assert.match(renderWork, /previewAnimation:meta\.animation/);
+  assert.match(renderWork, /delete existingPreviews\.__SPINE_AUTO__/);
+});
