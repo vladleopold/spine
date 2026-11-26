@@ -15,8 +15,8 @@ const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPa
 const exportFullWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-full.yml'),'utf8');
 const lastTenWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-last-ten-previews.yml'),'utf8');
 const reportedWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-reported-previews.yml'),'utf8');
-const privateRunner='runs-on: [self-hosted, linux, X64, spine-archive]';
-function jobUsesPrivateRunner(source,jobName){
+const publicRunner='runs-on: ubuntu-24.04';
+function jobUsesPublicRunner(source,jobName){
   const marker=`  ${jobName}:\n`;
   const start=source.indexOf(marker);
   if(start<0)return false;
@@ -24,7 +24,7 @@ function jobUsesPrivateRunner(source,jobName){
   next.lastIndex=start+marker.length;
   const match=next.exec(source);
   const block=source.slice(start,match?match.index:source.length);
-  return block.includes(privateRunner);
+  return block.includes(publicRunner) && !block.includes('self-hosted');
 }
 assert.ok(!repairSource.includes('record.defaultAnimation=animation'),
   'publishing a preview must never rewrite the source index default animation');
@@ -309,7 +309,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
-    'actual Spine rendering must use the private spine-archive Ubuntu runner, never GitHub-hosted runners');
+    'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
     'only one archive repair batch may run at a time');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
@@ -342,21 +342,21 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'archive recovery must not run unattended every day');
 
   assert.ok(singleWorkflowSource.includes('  export:') &&
-    singleWorkflowSource.includes('runs-on: [self-hosted, linux, X64, spine-archive]'),
-    'single-item WebM rendering must also use the private Ubuntu worker');
+    singleWorkflowSource.includes('runs-on: ubuntu-24.04'),
+    'single-item WebM rendering must also use public ubuntu-24.04');
   assert.ok(singleWorkflowSource.includes("- 'scripts/render-check.json'") &&
     !singleWorkflowSource.includes("- 'scripts/spine-export-webm.mjs'"),
     'renderer code changes must not launch a new one-off export');
 
-  assert.ok(jobUsesPrivateRunner(exportAllWorkflowSource,'export'),
-    'full archive export rendering must use the private Ubuntu worker');
+  assert.ok(jobUsesPublicRunner(exportAllWorkflowSource,'export'),
+    'full archive export rendering must use public ubuntu-24.04');
   assert.ok(jobUsesPrivateRunner(exportFullWorkflowSource,'export-opaque') &&
     jobUsesPrivateRunner(exportFullWorkflowSource,'export-alpha'),
-    'both full-export render lanes must use the private Ubuntu worker');
+    'both full-export render lanes must use public ubuntu-24.04');
   assert.ok(jobUsesPrivateRunner(lastTenWorkflowSource,'render'),
-    'last-ten recovery rendering must use the private Ubuntu worker');
+    'last-ten recovery rendering must use public ubuntu-24.04');
   assert.ok(jobUsesPrivateRunner(reportedWorkflowSource,'render'),
-    'reported-project recovery rendering must use the private Ubuntu worker');
+    'reported-project recovery rendering must use public ubuntu-24.04');
 
   console.log('PASS latest50: source-track fallback, skin retry, frozen source, private runner, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
