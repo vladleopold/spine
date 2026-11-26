@@ -37,6 +37,24 @@ assert.deepEqual(parsed.skins[1].attachments, source.skins.custom.attachments,
 assert.equal(sourceBuffer.toString('utf8'), sourceText,
   'normalization must not mutate the uploaded source buffer');
 
+const directSlotMapSource = {
+  skeleton: { spine: '3.8.97' },
+  skins: {
+    default: {
+      body: { region: { type: 'region', path: 'body', width: 24, height: 32 } },
+      head: { mesh: { type: 'mesh', uvs: [0, 0], vertices: [1, 2], triangles: [0] } },
+    },
+  },
+};
+const directSlotMap = JSON.parse(normalizeSpineJsonForLegacy38Runtime(
+  JSON.stringify(directSlotMapSource),
+  '3.8.97',
+));
+assert.deepEqual(Object.keys(directSlotMap.skins[0].attachments), ['body', 'head'],
+  'legacy object-map slot attachments must be nested under the official attachments property');
+assert.deepEqual(directSlotMap.skins[0].attachments, directSlotMapSource.skins.default,
+  'normalization must preserve every slot attachment');
+
 const arraySource = JSON.stringify({
   skeleton: { spine: '3.8.75' },
   skins: [{ name: 'default', attachments: {} }],
