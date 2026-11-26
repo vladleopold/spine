@@ -39,3 +39,9 @@ test('reference index publisher commits only the generated index from a clean sp
  assert.match(workflow,/git -c http\.version=HTTP\/1\.1 push --force/);
  assert.doesNotMatch(workflow,/git rm -rf \\./);
 });
+
+test('reference index publishes under an isolated concurrency group',()=>{
+ const workflow=fs.readFileSync(new URL('../.github/workflows/build-sa-reference-index.yml',import.meta.url),'utf8');
+ assert.match(workflow,/group: spine-sa-reference-index/);
+ assert.doesNotMatch(workflow,/group: spine-library-commit/);
+});
