@@ -11,7 +11,7 @@ const objectSkinJson=JSON.stringify({skeleton:{spine:'3.8.11-beta'},bones:[],ski
 const normalizedObjectSkins=JSON.parse(normalizeSpineJsonForLegacy38Runtime(objectSkinJson,'3.8.11-beta'));
 assert.deepEqual(normalizedObjectSkins.skins.map(s=>s.name),['default','hero'],
   'Spine 3.8 object-map skins must become the array format required by the bundled 3.8.75 JSON reader');
-assert.deepEqual(normalizedObjectSkins.skins[0].attachments.default.body,
+assert.deepEqual(normalizedObjectSkins.skins[0].attachments.body.body,
   {type:'region',path:'body'},'skin attachments must remain byte-equivalent in meaning');
 assert.deepEqual(normalizedObjectSkins.skins[1].attachments.body.hero,
   {type:'region',path:'hero'},'non-default source skin attachments must be preserved');
