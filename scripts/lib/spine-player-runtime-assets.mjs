@@ -24,7 +24,7 @@ export function resolveLocalSpinePlayerAssets({
         url: playerCssUrl,
         filename: path.join(repoRoot, 'public', 'vendor-spine-player-' + version + '.css'),
         type: 'text/css',
-        required: false,
+        required: true,
       },
     ];
   }
