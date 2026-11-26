@@ -2,6 +2,10 @@
 name: Repair and accept 18 reported Spine preview projects
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/repair-reported-previews-trigger.json
   pull_request:
     paths:
       - .github/workflows/repair-reported-previews.yml
@@ -110,6 +114,20 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /api/github-preview.js
+            /assets/
+            /index.html
+            /lib/spine-data-science.js
+            /package.json
+            /package-lock.json
+            /public/
+            /scripts/batch-export-all.mjs
+            /src/
+            /tsconfig.json
+            /vite.config.ts
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

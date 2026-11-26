@@ -14,13 +14,14 @@ import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mj
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { configuredPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
-import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
+import { resolveLocalSpinePlayerAssets, createInlineSpinePlayerAssetUrls } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
 import { setPlayerAnimation } from './lib/player-animation.mjs';
+import { normalizeSpineJsonForLegacy38Runtime } from './lib/spine-json-runtime-compat.mjs';
 
 const args = {
   uploadId: '',
@@ -498,6 +499,18 @@ const playerCssUrl = isLegacy
   : modernRuntime === '4.3' ? 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.13/dist/spine-player.css'
     : `https://unpkg.com/@esotericsoftware/spine-player@${modernRuntime}.*/dist/spine-player.css`;
 
+const versionedRuntimeRoot = process.env.SPINE_VERSIONED_PLAYER_DIR || '';
+const localPlayerAssets = resolveLocalSpinePlayerAssets({
+  isLegacy, versionedRuntimeRoot, modernRuntime, repoRoot, versionMajor, runtimeMinor,
+  playerJsUrl, playerCssUrl,
+});
+const inlinePlayerAssets = createInlineSpinePlayerAssetUrls(localPlayerAssets, { playerJsUrl, playerCssUrl });
+const capturePlayerJsUrl = inlinePlayerAssets.playerJsUrl;
+const capturePlayerCssUrl = inlinePlayerAssets.playerCssUrl;
+for (const asset of localPlayerAssets) {
+  if (fs.existsSync(asset.filename)) console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(asset.filename));
+}
+
 const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'skeleton';
 const atlasKey = 'atlas';
 
@@ -521,7 +534,7 @@ async function warmUpAnimations() {
 
   const page = await browser.newPage();
   try {
-    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${playerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${playerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonRawUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:${atlasPremultipliedAlpha},preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
+    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${capturePlayerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${capturePlayerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonRawUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:${atlasPremultipliedAlpha},preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
     await page.setContent(warmupHtml, { waitUntil: 'networkidle', timeout: 60000 });
     let names = [];
     for (let i = 0; i < 40; i++) {
@@ -613,7 +626,7 @@ return `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="${playerCssUrl}">
+<link rel="stylesheet" href="${capturePlayerCssUrl}">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent' : '#050607'}; overflow: hidden; }
@@ -622,7 +635,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
 </head>
 <body>
 <div id="player"></div>
-<script src="${playerJsUrl}"></script>
+<script src="${capturePlayerJsUrl}"></script>
 <script>
 (function() {
   window.__captureError = null;
@@ -884,32 +897,6 @@ try {
     throw new Error('HEADLESS_WEBGL_UNAVAILABLE: ' + JSON.stringify(webglProbe));
   console.error('HEADLESS_WEBGL_READY ' + JSON.stringify(webglProbe));
 
-  // Serve the exact matching runtime from the isolated pinned package. Never
-  // mix a 4.3 runtime with the unversioned root node_modules path.
-  const versionedRuntimeRoot = process.env.SPINE_VERSIONED_PLAYER_DIR || '';
-  const localPlayerAssets = resolveLocalSpinePlayerAssets({
-    isLegacy,
-    versionedRuntimeRoot,
-    modernRuntime,
-    repoRoot,
-    versionMajor,
-    runtimeMinor,
-    playerJsUrl,
-    playerCssUrl,
-  });
-  for (const { url, filename, type, required } of localPlayerAssets) {
-    if (!fs.existsSync(filename)) {
-      console.error('LOCAL_SPINE_RUNTIME_MISSING ' + path.basename(filename));
-      if (required) throw new Error('PINNED_SPINE_PLAYER_ASSET_MISSING_' + modernRuntime);
-      continue;
-    }
-    await page.route(url, route => route.fulfill({
-      status: 200, contentType: type, body: fs.readFileSync(filename),
-    }));
-    console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(filename));
-    if (required) console.error('VERSIONED_LOCAL_PLAYER_READY ' + modernRuntime);
-  }
-
   page.on('console', msg => console.error(`[BROWSER ${msg.type()}] ${msg.text()}`));
   page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.stack || err.message}`));
 
@@ -926,7 +913,9 @@ try {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
       body = args.sanitizeSkel ? sanitizedSkelBuffer(rawBuffer, skeletonVersion) : rawBuffer;
     } else {
-      body = fs.readFileSync(skeletonFilePath, 'utf8');
+      const sourceJson = fs.readFileSync(skeletonFilePath, 'utf8');
+      body = normalizeSpineJsonForLegacy38Runtime(sourceJson, skeletonVersion);
+      if (body !== sourceJson) console.error('LEGACY_SPINE38_SKIN_MAP_NORMALIZED=1');
     }
     await route.fulfill({
       status: 200,
