@@ -21,6 +21,7 @@ import { chooseSourceSet } from './lib/source-set-choice.mjs';
 import { runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
 import { setPlayerAnimation } from './lib/player-animation.mjs';
+import { normalizeSpineJsonForLegacy38Runtime } from './lib/spine-json-runtime-compat.mjs';
 
 const args = {
   uploadId: '',
@@ -898,7 +899,9 @@ try {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
       body = args.sanitizeSkel ? sanitizedSkelBuffer(rawBuffer, skeletonVersion) : rawBuffer;
     } else {
-      body = fs.readFileSync(skeletonFilePath, 'utf8');
+      const sourceJson = fs.readFileSync(skeletonFilePath, 'utf8');
+      body = normalizeSpineJsonForLegacy38Runtime(sourceJson, skeletonVersion);
+      if (body !== sourceJson) console.error('LEGACY_SPINE38_SKIN_MAP_NORMALIZED=1');
     }
     await route.fulfill({
       status: 200,
