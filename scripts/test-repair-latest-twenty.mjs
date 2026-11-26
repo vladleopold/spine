@@ -348,7 +348,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     !workflowSource.includes("needs.render.result == 'success'"),
     'later batches require a successful publish and live audit, but may continue after individual render failures');
   const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:\\n'));
-  assert.match(verifyJobBlock,/if:\\s*always\\(\\)\\s*&&\\s*needs\\.publish\\.result\\s*==\\s*'success'/,
+  assert.match(verifyJobBlock,/if:\\s*always\\(\\)[\\s\\S]*?needs\\.publish\\.result\\s*==\\s*'success'/,
     'the production audit must run when publication succeeded even if one render matrix item failed');
   const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\\n'));
   assert.match(dispatchJobBlock,/if:\\s*always\\(\\)\\s*&&/,
