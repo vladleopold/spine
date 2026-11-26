@@ -348,11 +348,14 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     !workflowSource.includes("needs.render.result == 'success'"),
     'later batches require a successful publish and live audit, but may continue after individual render failures');
   const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:\\n'));
-  assert.match(verifyJobBlock,/if:\\s*always\\(\\)[\\s\\S]*?needs\\.publish\\.result\\s*==\\s*'success'/,
+  assert.ok(verifyJobBlock.includes("if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'"),
     'the production audit must run when publication succeeded even if one render matrix item failed');
   const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\\n'));
-  assert.match(dispatchJobBlock,/if:\\s*always\\(\\)\\s*&&/,
-    'next archive batch must still dispatch when the independent live audit reports failed items');
+  assert.ok(dispatchJobBlock.includes("if: always() &&") &&
+    dispatchJobBlock.includes("needs.publish.result == 'success'") &&
+    dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
+    !dispatchJobBlock.includes("needs.render.result == 'success'"),
+    'next archive batch requires verified publication, not every render matrix item to pass');
 
   const exactPrHeadRef='ref: ${{ github.event.pull_request.head.sha || github.sha }}';
   for(const [name,source] of [
