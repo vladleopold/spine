@@ -32,6 +32,8 @@ jobs:
           sparse-checkout: |
             /scripts/
             /library*/index.json
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
             /public/vendor-spine-player-3.8.js
             /public/vendor-spine-player-3.8.css
       - name: Checkout only this work
