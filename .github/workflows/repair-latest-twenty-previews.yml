@@ -338,7 +338,7 @@ jobs:
             # and rebuild the missing output files instead of dropping it.
             if node scripts/recover-recorded-webm.mjs \
               "$RUNNER_TEMP/slot-$REPAIR_SLOT-preview.webm" "$ENTRY_ANIMATION" "$ENTRY_ID" \
-              > "$RUNNER_TEMP/recovery.log" 2>&1; then
+              "$RUNNER_TEMP/renderer.log" > "$RUNNER_TEMP/recovery.log" 2>&1; then
               echo "REAL_RECORDED_SPINE_WEBM_SALVAGED"
               code=0
             else
