@@ -626,7 +626,7 @@ return `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="${playerCssUrl}">
+<link rel="stylesheet" href="${capturePlayerCssUrl}">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent' : '#050607'}; overflow: hidden; }
@@ -635,7 +635,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
 </head>
 <body>
 <div id="player"></div>
-<script src="${playerJsUrl}"></script>
+<script src="${capturePlayerJsUrl}"></script>
 <script>
 (function() {
   window.__captureError = null;
