@@ -193,6 +193,10 @@ assert.match(repairScript, /__SPINE_AUTO__/,
   'missing defaults must enter the native source-track discovery path');
 assert.match(repairScript, /record\.previewAnimation=animation/,
   'the exact rendered track must be recorded without rewriting defaultAnimation');
+assert.ok(repairScript.includes('meta?.distinctError==="DETERMINISTIC_WEBM_BLANK"') &&
+  repairScript.includes('record.webmStatus="blocked-deterministic-capture"') &&
+  repairScript.includes('record.previewStatus="blocked"'),
+  'blank deterministic captures must be blocked for native inspection instead of published or retried as successful');
 assert.match(repairWorkflow, /apt-get install[^\n]*ffmpeg|command -v ffmpeg/,
   'post-publish audit must install a real media decoder');
 const repairTest = repairVerifyJob.indexOf('node scripts/test-reported-preview-live.mjs');
