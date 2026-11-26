@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Fail-closed 20-most-recent Spine preview repair.
- * Runs only on authenticated private Github Actions workers.
+ * Runs only on the dedicated public GitHub-hosted Ubuntu runner.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
 import fs from "node:fs";
@@ -17,7 +17,7 @@ import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="auto-track-recovery-v17-spine38-json-skin-map-normalization";
+const PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const repairOffset=Number(process.env.SPINE_REPAIR_OFFSET||0);
