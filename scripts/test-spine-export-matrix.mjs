@@ -228,11 +228,11 @@ for (let index = 0; index < realEntry.animations.length; index += 1) {
 
 const batchWorkflow = fs.readFileSync(new URL('../.github/workflows/spine-export-all.yml', import.meta.url), 'utf8');
 assert.match(batchWorkflow, /FAILED_EXPORTS/);
-assert.match(batchWorkflow, /if ! node scripts\\/spine-export-webm\\.mjs/);
-assert.match(batchWorkflow, /if \\[ "\\$FAILED_EXPORTS" -gt 0 \\]; then/);
-assert.doesNotMatch(batchWorkflow, /\\|\\| echo "Export failed/);
-assert.match(batchWorkflow, /name: Prepare Artifacts[\\s\\S]*?if: always\\(\\)/);
-assert.match(batchWorkflow, /name: Upload Artifact[\\s\\S]*?if: always\\(\\)/);
+assert.match(batchWorkflow, /if ! node scripts\/spine-export-webm\.mjs/);
+assert.match(batchWorkflow, /if \[ "\$FAILED_EXPORTS" -gt 0 \]; then/);
+assert.doesNotMatch(batchWorkflow, /\|\| echo "Export failed/);
+assert.match(batchWorkflow, /name: Prepare Artifacts[\s\S]*?if: always\(\)/);
+assert.match(batchWorkflow, /name: Upload Artifact[\s\S]*?if: always\(\)/);
 
 const workflow = fs.readFileSync(new URL('../.github/workflows/spine-export-full.yml', import.meta.url), 'utf8');
 const validationJob = workflow.split('  validate-contract:')[1]?.split('  generate-matrix:')[0] || '';
