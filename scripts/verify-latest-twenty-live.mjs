@@ -123,7 +123,7 @@ for(const work of snapshot){
     ? Boolean(String(record.previewBlockedAnimation||'').trim())
     : record.previewBlockedAnimation===expectedBlockedAnimation;
   if(['blocked-invisible-default-skin','blocked-static-animation','blocked-invalid-default-animation',
-      'blocked-incomplete-source','blocked-unsupported-runtime'].includes(record.webmStatus) &&
+      'blocked-incomplete-source','blocked-unsupported-runtime','blocked-deterministic-capture'].includes(record.webmStatus) &&
       record.previewStatus==='blocked' &&
       blockedAnimationMatches &&
       record.previewBlockedSourceFingerprint===work.sourceFingerprint &&
