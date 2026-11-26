@@ -35,8 +35,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: spine-link-project-export
-  cancel-in-progress: false
+  group: spine-link-project-export-${{ github.event_name == 'pull_request' && github.ref || 'queue' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
