@@ -342,6 +342,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
+  assert.match(repairScriptSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v16-inline-player-json-skin-map"/,
+    'a runtime compatibility change must invalidate previous blocked-preview decisions');
+
   assert.ok(!workflowSource.includes('  schedule:'),
     'archive recovery must not run unattended every day');
 
