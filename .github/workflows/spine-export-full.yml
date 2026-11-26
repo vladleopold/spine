@@ -96,6 +96,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Lint public Spine-Link GitHub Actions workflow
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+          "$(go env GOPATH)/bin/actionlint" .github/workflows/spine-link-project-export.yml
       - name: Run numeric matrix and no-fallback regressions
         run: |
           node --check scripts/lib/spine-export-matrix.mjs
