@@ -308,7 +308,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
-  assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: \[self-hosted, linux, X64, spine-archive\]/,
+  assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: ubuntu-24\.04/,
     'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
     'only one archive repair batch may run at a time');
@@ -350,7 +350,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
 
   assert.ok(jobUsesPublicRunner(exportAllWorkflowSource,'export'),
     'full archive export rendering must use public ubuntu-24.04');
-  assert.ok(jobUsesPrivateRunner(exportFullWorkflowSource,'export-opaque') &&
+  assert.ok(jobUsesPublicRunner(exportFullWorkflowSource,'export-opaque') &&
     jobUsesPrivateRunner(exportFullWorkflowSource,'export-alpha'),
     'both full-export render lanes must use public ubuntu-24.04');
   assert.ok(jobUsesPrivateRunner(lastTenWorkflowSource,'render'),
@@ -358,5 +358,5 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(jobUsesPrivateRunner(reportedWorkflowSource,'render'),
     'reported-project recovery rendering must use public ubuntu-24.04');
 
-  console.log('PASS latest50: source-track fallback, skin retry, frozen source, private runner, no fake media');
+  console.log('PASS latest50: source-track fallback, skin retry, frozen source, public runner, no fake media');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
