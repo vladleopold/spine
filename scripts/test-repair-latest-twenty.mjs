@@ -15,6 +15,7 @@ const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPa
 const exportFullWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-full.yml'),'utf8');
 const lastTenWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-last-ten-previews.yml'),'utf8');
 const reportedWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-reported-previews.yml'),'utf8');
+const syntheticRenderWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/synthetic-webm-render-gate.yml'),'utf8');
 const publicRunner='runs-on: ubuntu-24.04';
 function jobUsesPublicRunner(source,jobName){
   const marker=`  ${jobName}:\n`;
@@ -342,6 +343,16 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     workflowSource.includes("needs.publish.result == 'success'") &&
     !workflowSource.includes("needs.verify-production.result == 'success'"),
     'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
+
+  const exactPrHeadRef='ref: ${{ github.event.pull_request.head.sha || github.sha }}';
+  for(const [name,source] of [
+    ['latest-twenty repair',workflowSource],
+    ['synthetic WebM gate',syntheticRenderWorkflowSource],
+    ['full export',exportFullWorkflowSource],
+  ]){
+    assert.ok(source.includes(exactPrHeadRef),
+      `${name} must test the exact PR head, not a stale base/merge ref`);
+  }
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
