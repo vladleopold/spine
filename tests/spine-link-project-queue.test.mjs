@@ -47,7 +47,7 @@ test('output uses real licensed editor and nested export that the player discove
   assert.match(exporter, /output = path\.resolve\(folder, 'export'\)/);
   assert.match(exporter, /conversionStatus:status/);
   assert.match(exporter, /webmStatus:'pending'/);
-  assert.match(exporter, /status !== 'ready'/);
+  assert.match(exporter, /conversionExitCode\(status\)/);
 });
 
 const publicWorkflow = fs.readFileSync(
