@@ -166,15 +166,17 @@ assert.match(exporter,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?target
   "alternate source tracks are accepted only after visible motion is detected");
 console.log("PASS renderer stage diagnostics distinguish player-ready from invisible source-default canvas and keep runtime skin fallback source-bound");
 
+
 {
-  const root=fs.mkdtempSync(path.join(os.tmpdir(),"renderer-log-tail-"));
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),"renderer-log-excerpt-"));
   try {
     const file=path.join(root,"renderer.log");
-    fs.writeFileSync(file,"PRIVATE_PREFIX_MARKER\\n"+"x".repeat(2*1024*1024)+"\\nPLAYER_READY=1\\nError: No visible real-time Spine frames\\n");
-    const tail=readRendererLogTail(file,256);
-    assert.ok(Buffer.byteLength(tail)<=256,"diagnostic reader must cap bytes rather than materialize the full log");
-    assert.match(tail,/No visible real-time Spine frames/,"the useful failure at the end of a large log must be retained");
-    assert.doesNotMatch(tail,/PRIVATE_PREFIX_MARKER/,"earlier private log content must not be copied into the diagnostic");
+    fs.writeFileSync(file,"Skeleton: source (v4.3.26)\nPRIVATE_MIDDLE_MARKER\n"+"x".repeat(2*1024*1024)+"\nError: No visible real-time Spine frames\n");
+    const excerpt=readRendererLogExcerpt(file,256,64);
+    assert.ok(Buffer.byteLength(excerpt)<=256,"diagnostic reader must cap bytes rather than materialize the full log");
+    assert.match(excerpt,/Skeleton: source \(v4\.3\.26\)/,"the beginning of the log must retain the skeleton version");
+    assert.match(excerpt,/No visible real-time Spine frames/,"the end of the log must retain the final failure");
+    assert.doesNotMatch(excerpt,/PRIVATE_MIDDLE_MARKER/,"private middle content must not be copied into the diagnostic");
   } finally {
     fs.rmSync(root,{recursive:true,force:true});
   }
