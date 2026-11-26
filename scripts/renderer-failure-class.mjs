@@ -177,6 +177,33 @@ export function readRendererLogTail(filePath, maxBytes = 64 * 1024) {
   }
 }
 
+
+// Return a bounded excerpt containing the start (for runtime/version context)
+// and end (for the actionable failure) without reading a potentially huge log
+// into memory. The omitted middle may contain private asset names and paths.
+export function readRendererLogExcerpt(filePath, maxBytes = 64 * 1024, headBytes = Math.floor(maxBytes / 2)) {
+  const limit = Number(maxBytes);
+  const headLimit = Number(headBytes);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1024 * 1024 ||
+      !Number.isSafeInteger(headLimit) || headLimit < 0 || headLimit > limit) {
+    throw new RangeError("Renderer log excerpt limits must be valid byte counts no greater than 1048576");
+  }
+  const fd = fs.openSync(filePath, "r");
+  try {
+    const size = fs.fstatSync(fd).size;
+    const firstLength = Math.min(size, headLimit);
+    const lastLength = Math.min(Math.max(0, limit - firstLength), Math.max(0, size - firstLength));
+    const first = Buffer.alloc(firstLength);
+    const last = Buffer.alloc(lastLength);
+    if (firstLength > 0) fs.readSync(fd, first, 0, firstLength, 0);
+    if (lastLength > 0) fs.readSync(fd, last, 0, lastLength, size - lastLength);
+    if (!lastLength) return first.toString("utf8");
+    return first.toString("utf8") + "\\n[... renderer log middle omitted ...]\\n" + last.toString("utf8");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
   const log=readRendererLogExcerpt(process.argv[2]);
   console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
