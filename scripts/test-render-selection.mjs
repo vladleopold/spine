@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { resolveRenderSelection, writeRenderVerification } from './lib/render-selection.mjs';
 import { runtimeVersionOverrideForSpineSkeleton, runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
+import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets.mjs';
 
 test('missing explicit and indexed animation is reported as blocked', () => {
   assert.deepEqual(resolveRenderSelection({}, { animations: ['idle', 'run'] }), {
@@ -62,6 +63,15 @@ test('unsupported web-player versions are blocked and Spine 3.7 binary uses the 
   assert.equal(runtimeMinorForSpineSkeleton('3.7.93', 'skeleton.skel'), '8', '3.7 binary must resolve to vendor-spine-player-3.8, not a malformed 3.3.8 path');
   assert.equal(runtimeMinorForSpineSkeleton('3.7.93', 'skeleton.json'), '7');
   assert.equal(runtimeMinorForSpineSkeleton('3.8.99', 'skeleton.skel'), '8');
+  const runtimeMinor = runtimeMinorForSpineSkeleton('3.7.93', 'skeleton.skel');
+  const legacyAssets = resolveLocalSpinePlayerAssets({
+    isLegacy: true, repoRoot: '/repo', versionMajor: '3', runtimeMinor,
+    playerJsUrl: `https://spine-link.vercel.app/vendor-spine-player-3.${runtimeMinor}.js`,
+    playerCssUrl: `https://spine-link.vercel.app/vendor-spine-player-3.${runtimeMinor}.css`,
+  });
+  assert.equal(legacyAssets[0].filename, path.join('/repo', 'public', 'vendor-spine-player-3.8.js'));
+  assert.equal(legacyAssets[0].url, 'https://spine-link.vercel.app/vendor-spine-player-3.8.js');
+  assert.equal(legacyAssets[1].filename, path.join('/repo', 'public', 'vendor-spine-player-3.8.css'));
   assert.equal(runtimeVersionOverrideForSpineSkeleton('3.7.93', 'skeleton.json'), '');
   assert.equal(runtimeVersionOverrideForSpineSkeleton('3.8.99', 'skeleton.skel'), '');
   assert.equal(spinePlayerSourceBlocker('3.7.93', 'skeleton.skel'), null);
@@ -82,8 +92,8 @@ test('unsupported web-player versions are blocked and Spine 3.7 binary uses the 
   assert.equal(spinePlayerSourceBlocker('4.3.26', 'skeleton.skel'), null);
   const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
   assert.match(exporter, /const sourceBlocker = spinePlayerSourceBlocker\(skeletonVersion, skeletonFile\)/);
-  assert.match(exporter, /const runtimeOverride = runtimeVersionOverrideForSpineSkeleton\(skeletonVersion, skeletonFile\)/);
-  assert.match(exporter, /runtimeOverride \|\| skeletonVersion\.split\('\.'\)\[1\]/);
+  assert.match(exporter, /const runtimeMinor = isLegacy \? runtimeMinorForSpineSkeleton\(skeletonVersion, skeletonFile\) : ''/);
+  assert.match(exporter, /vendor-spine-player-\$\{versionMajor\}\.\$\{runtimeMinor\}\.js/);
   assert.match(exporter, /if \(sourceBlocker\) \{[\s\S]*?process\.exit\(1\);[\s\S]*?\}/);
 });
 

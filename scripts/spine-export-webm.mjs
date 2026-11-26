@@ -18,7 +18,7 @@ import { resolveLocalSpinePlayerAssets } from './lib/spine-player-runtime-assets
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
 import { chooseSourceSet } from './lib/source-set-choice.mjs';
-import { runtimeVersionOverrideForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
+import { runtimeMinorForSpineSkeleton, spinePlayerSourceBlocker } from './lib/spine-player-source-support.mjs';
 import { parseGameCamera, shouldUseGameCamera } from './lib/game-camera.mjs';
 import { setPlayerAnimation } from './lib/player-animation.mjs';
 
@@ -478,8 +478,7 @@ const videoHeight = hugeScene ? (gameCameraHeight & ~1) : (Math.min(MAX_VIDEO_DI
 
 const versionMajor = skeletonVersion.split('.')[0] || '4';
 const isLegacy = parseInt(versionMajor, 10) < 4;
-const runtimeOverride = runtimeVersionOverrideForSpineSkeleton(skeletonVersion, skeletonFile);
-const runtimeMinor = isLegacy ? (runtimeOverride || skeletonVersion.split('.')[1] || '8') : '';
+const runtimeMinor = isLegacy ? runtimeMinorForSpineSkeleton(skeletonVersion, skeletonFile) : '';
 const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersion.slice(0,3) : '4.3';
 // Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
 // skeleton/atlas keys were introduced later; passing them leaves a blank canvas.

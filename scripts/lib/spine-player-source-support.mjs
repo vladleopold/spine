@@ -53,3 +53,14 @@ export function spinePlayerSourceBlocker(version, skeletonFile) {
   }
   return null;
 }
+
+
+// Return only the minor component expected by the legacy vendor asset paths.
+// Binary Spine 3.7 is parsed by the compatible 3.8 runtime; returning the
+// full override ("3.8") here would construct the invalid 3.3.8 asset URL.
+export function runtimeMinorForSpineSkeleton(version, skeletonFile) {
+  const override = runtimeVersionOverrideForSpineSkeleton(version, skeletonFile);
+  const selected = override || String(version || '').trim();
+  const match = selected.match(/^\\d+\\.(\\d+)(?:[.-]|$)/);
+  return match ? match[1] : '8';
+}
