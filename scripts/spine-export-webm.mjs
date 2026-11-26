@@ -978,6 +978,7 @@ try {
   let canvasHeight = videoHeight;
   let videoDataUrl = null;
   let lastCaptureError = null;
+  let lastVisibleFramePeak = -1;
 
   // WebGL readPixels sometimes returns an empty back buffer even when the
   // browser compositor draws the real skeleton. Confirm visible pixels from
@@ -1317,6 +1318,8 @@ try {
       continue;
     }
 
+    lastVisibleFramePeak = Math.max(lastVisibleFramePeak, framePeak);
+
     // Preserve only the selected animation's own duration.
     captureDuration = Math.min(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS);
     if (captureDuration < effectiveDuration) {
@@ -1398,13 +1401,14 @@ try {
   }
 
   if (!videoDataUrl) {
-    const peak = await page.evaluate(() =>
+    const livePeak = await page.evaluate(() =>
       typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
-    if (!args.alpha && peak >= FRAME_PEAK_MIN &&
-        lastCaptureError === 'No video data captured by MediaRecorder') {
-      // Preserve the selected real Spine runtime canvas and draw frames with
-      // the CDP renderer, instead of exiting before the existing fallback.
-      console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
+    const peak = Math.max(lastVisibleFramePeak, livePeak);
+    if (shouldRecoverVisibleCanvas({alpha:args.alpha,peak,minPeak:FRAME_PEAK_MIN})) {
+      // Keep the last validated visible-frame peak: WebGL readPixels may stop
+      // reporting pixels after MediaRecorder stops, even though the selected
+      // track was visibly moving immediately before capture.
+      console.error('MEDIARECORDER_CAPTURE_INCOMPLETE: recovering validated visible live canvas');
       videoDataUrl = 'canvas-fallback';
     } else {
       throw new Error(`Capture failed: ${lastCaptureError || 'selected default skin produced no visible content'}`);
