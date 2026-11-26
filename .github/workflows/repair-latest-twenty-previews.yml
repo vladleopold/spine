@@ -177,6 +177,8 @@ jobs:
             /scripts/preview-skin-choice.mjs
             /scripts/preview-animation-choice.mjs
             /scripts/lib/preview-visibility-recovery.mjs
+            /scripts/lib/canvas-fallback.mjs
+            /scripts/test-canvas-fallback.mjs
             /scripts/lib/spine-json-runtime-compat.mjs
             /scripts/spine-export-webm.mjs
             /scripts/test-preview-visibility-recovery.mjs
@@ -185,8 +187,10 @@ jobs:
           node-version: '22'
       - name: Verify all four pinned Spine runtime bundles load from disk
         run: bash scripts/install-pinned-spine-players.sh "$RUNNER_TEMP/spine-player-runtimes"
-      - name: Verify legacy Spine default skin is never passed as a named skin
-        run: node scripts/test-preview-visibility-recovery.mjs
+      - name: Verify preview visibility and deterministic canvas fallback bounds
+        run: |
+          node scripts/test-preview-visibility-recovery.mjs
+          node scripts/test-canvas-fallback.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: spine-player-runtimes
