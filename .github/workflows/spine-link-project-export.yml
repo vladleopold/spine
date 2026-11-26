@@ -79,7 +79,7 @@ jobs:
         with:
           node-version: '24'
       - name: Select authorized project from public storage queue
-                id: pick
+        id: pick
         env:
           REQUESTED_UPLOAD_ID: ${{ github.event.client_payload.uploadId || inputs.upload_id || '' }}
         run: node scripts/spine-link-project-queue.mjs
