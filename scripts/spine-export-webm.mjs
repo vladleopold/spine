@@ -1481,6 +1481,7 @@ try {
         window.__setPlayerAnimation(player, name);
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
+      console.error('DETERMINISTIC_CAPTURE_SOURCE=PAGE_COMPOSITOR');
       const canvasHost=page.locator('#player canvas').first();
       await canvasHost.waitFor({state:'visible',timeout:10000});
       let visibleFrames=0;
@@ -1491,7 +1492,7 @@ try {
         if(peak>=40)visibleFrames++;
         // CDP screenshot captures the actual composited canvas, including
         // graphics that do not survive canvas.toDataURL in headless WebGL.
-        const png=await canvasHost.screenshot({type:'png',timeout:15000});
+        const png=await page.screenshot({type:'png',timeout:15000});
         if(!png||png.length<100)throw new Error('Real-time canvas screenshot failed');
         frameHashes.add(createHash('sha256').update(png).digest('hex'));
         fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),png);
