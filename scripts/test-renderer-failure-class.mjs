@@ -148,6 +148,9 @@ assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
+assert.match(exporter,/const png=await page\.screenshot\(\{type:'png',timeout:15000\}\)/,
+  'deterministic fallback must capture the page compositor, not an isolated WebGL canvas that can encode blank frames');
+assert.doesNotMatch(exporter,/canvasHost\.screenshot/);
 assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
 assert.ok(exporter.includes("configuredPreviewSkinCandidates(skinConfig)"), "use only skin names explicitly declared by the uploaded source config");
 assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
