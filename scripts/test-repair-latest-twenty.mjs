@@ -315,8 +315,12 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.equal(Number(partialOutput.nextOffset),60,'a partial final batch must stop exactly at archive end');
   assert.ok(partialBatch.every(x=>x.id.startsWith('older-fixture-')),'partial batch must retain the exact older records');
   const publishJobBlock=workflowSource.split('  publish:\n')[1]?.split('\n  verify-production:')[0]||'';
-  assert.match(publishJobBlock,/if:.*needs\.render\.result == 'success'/,
-    'preview publication must not run after a failed or cancelled render matrix');
+  assert.match(publishJobBlock,/if:.*always\(\).*needs\.inventory\.result == 'success'/,
+    'the publisher must run after a partial render failure so verified artifacts can still be published');
+  assert.doesNotMatch(publishJobBlock,/needs\.render\.result == 'success'/,
+    'a failed item must not suppress publication of other independently verified previews');
+  assert.match(publishJobBlock,/node scripts\/publish-verified-preview-artifacts\.mjs/,
+    'the publisher must filter artifacts by their explicit successful acceptance metadata');
 
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
