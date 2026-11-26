@@ -81,6 +81,8 @@ jobs:
       renderCount: ${{ steps.latest.outputs.renderCount }}
       totalCount: ${{ steps.latest.outputs.totalCount }}
       nextOffset: ${{ steps.latest.outputs.nextOffset }}
+      batchOffset: ${{ steps.latest.outputs.batchOffset }}
+      batchLimit: ${{ steps.latest.outputs.batchLimit }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -128,6 +130,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            batch_config=$(node --input-type=module -e '
+              import fs from "node:fs";
+              const trigger=JSON.parse(fs.readFileSync("scripts/repair-latest-70-trigger.json","utf8"));
+              const offset=Number(trigger.offset ?? 0);
+              const limit=Number(trigger.limit ?? 50);
+              if(trigger.scope!=="latest-70" || !Number.isInteger(offset) || offset<0 ||
+                 !Number.isInteger(limit) || limit<1 || limit>50 || offset+limit>70) {
+                throw new Error("Invalid bounded latest-70 resume trigger");
+              }
+              console.log(offset+" "+limit);
+            ')
+            read -r batch_offset batch_limit <<< "$batch_config"
+            SPINE_REPAIR_OFFSET="$batch_offset"
+            SPINE_REPAIR_LIMIT="$batch_limit"
+            export SPINE_REPAIR_OFFSET SPINE_REPAIR_LIMIT
+          fi
+          echo "batchOffset=$SPINE_REPAIR_OFFSET" >> "$GITHUB_OUTPUT"
+          echo "batchLimit=$SPINE_REPAIR_LIMIT" >> "$GITHUB_OUTPUT"
           node scripts/repair-latest-twenty-previews.mjs matrix >> "$GITHUB_OUTPUT"
           node --check api/github-upload.js
           node --check scripts/repair-latest-twenty-previews.mjs
@@ -418,8 +439,8 @@ jobs:
     outputs:
       published_sha: ${{ steps.publish.outputs.published_sha }}
     env:
-      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
-      SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || inputs.offset || '0' }}
+      SPINE_REPAIR_LIMIT: ${{ needs.inventory.outputs.batchLimit }}
+      SPINE_REPAIR_OFFSET: ${{ needs.inventory.outputs.batchOffset }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     permissions:
       contents: write
@@ -532,8 +553,8 @@ jobs:
   verify-production:
     needs: [inventory, render, publish]
     env:
-      SPINE_REPAIR_LIMIT: ${{ github.event_name == 'pull_request' && '20' || inputs.limit || '50' }}
-      SPINE_REPAIR_OFFSET: ${{ github.event_name == 'pull_request' && '0' || inputs.offset || '0' }}
+      SPINE_REPAIR_LIMIT: ${{ needs.inventory.outputs.batchLimit }}
+      SPINE_REPAIR_OFFSET: ${{ needs.inventory.outputs.batchOffset }}
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
       PUBLISHED_SHA: ${{ needs.publish.outputs.published_sha }}
     if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'
