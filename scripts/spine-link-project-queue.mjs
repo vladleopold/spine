@@ -10,16 +10,19 @@ const API = 'https://api.github.com/repos/' + STORAGE_REPO;
 const requested = String(process.env.REQUESTED_UPLOAD_ID || '').trim();
 const idPattern = /^[\w.-]{3,180}$/;
 const pathPattern = /^library(?:_\d+)?\/[\w.-]{3,180}$/;
-export function eligible(entry, requestedId = '') {
+export function eligible(entry, requestedId = '', {
+  editorReady = Boolean(process.env.SPINE_LICENSE && process.env.SPINE_LINUX_URL),
+} = {}) {
   const id = String(entry?.id || '');
   const folder = String(entry?.previewPath || '');
   const project = String(entry?.projectFile || '');
+  const status = String(entry?.conversionStatus || '');
+  const retryRequested = requestedId === id && ['failed', 'needs-editor'].includes(status);
   return entry?.sourceKind === 'spine-project' && entry?.testOnly !== true &&
     idPattern.test(id) && (!requestedId || requestedId === id) &&
     pathPattern.test(folder) && folder.endsWith('/' + id) &&
     /^[^/\\\x00-\x1f\x7f]+\.spine$/i.test(project) &&
-    (['pending','needs-editor'].includes(entry?.conversionStatus) ||
-     (requestedId === id && entry?.conversionStatus === 'failed'));
+    (status === 'pending' || (status === 'needs-editor' && editorReady) || retryRequested);
 }
 async function api(path) {
   const response = await fetch(API + path, {
