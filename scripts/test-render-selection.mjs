@@ -184,3 +184,13 @@ test('visible canvas recovery survives recorder stop and exposes exact selected 
   assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
   assert.match(exporter, /SPINE_SELECTED_ANIMATION_B64=/);
 });
+
+
+test('normal WebM publication records the runtime preview track without rewriting the source default', () => {
+  const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+  assert.match(renderWork, /previewAnimation:meta\\.animation/);
+  assert.doesNotMatch(renderWork, /defaultAnimation:meta\\.animation/,
+    'preview selection must not overwrite the source default animation');
+  assert.match(renderWork, /delete merged\\.allAnimationPreviews\\.__SPINE_AUTO__/,
+    'the renderer command sentinel must never be stored as a public animation key');
+});
