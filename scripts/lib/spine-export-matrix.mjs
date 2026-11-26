@@ -106,16 +106,24 @@ export function mergeFullExportMetadata(entry, previews, generatedAt) {
   if (playable) {
     next.previewAnimation = playable.animation;
     next.previewDuration = playable.duration;
-    for (const key of REQUIRED_FULL_EXPORT_KEYS) {
+    for (const key of [...REQUIRED_FULL_EXPORT_KEYS, 'webpPoster', 'webpPosterMedium', 'webpPosterLow']) {
+      delete next[key];
       if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {
         next[key] = playable.preview[key].trim();
       }
     }
-    for (const key of ['webpPoster', 'webpPosterMedium', 'webpPosterLow']) {
-      if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {
-        next[key] = playable.preview[key].trim();
-      }
-    }
+    next.webmPreview = firstString(
+      playable.preview.webmPreview,
+      playable.preview.webmPreviewMedium,
+      playable.preview.webmPreviewLow,
+    );
+    const poster = firstString(
+      playable.preview.webpPoster,
+      playable.preview.webpPosterMedium,
+      playable.preview.webpPosterLow,
+    );
+    if (poster) next.webpPoster = poster;
+    delete next.qualityWidths;
     if (playable.preview.qualityWidths && typeof playable.preview.qualityWidths === 'object') {
       next.qualityWidths = playable.preview.qualityWidths;
     }
