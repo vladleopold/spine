@@ -2,7 +2,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha, isLegacyAtlasFormat } from "./atlas-pages.mjs";
-import { shouldUseCanvasFallback, fallbackFrameCount, deterministicFallbackFps } from "./lib/canvas-fallback.mjs";
+import { shouldUseCanvasFallback, fallbackFrameCount, deterministicFallbackFps, shouldRecoverVisibleCanvas } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -978,6 +978,7 @@ try {
   let canvasHeight = videoHeight;
   let videoDataUrl = null;
   let lastCaptureError = null;
+  let lastVisibleFramePeak = -1;
 
   // WebGL readPixels sometimes returns an empty back buffer even when the
   // browser compositor draws the real skeleton. Confirm visible pixels from
@@ -1079,6 +1080,7 @@ try {
       break;
     }
     targetAnimation = pinnedAnimation;
+    console.error('SPINE_SELECTED_ANIMATION_B64=' + Buffer.from(targetAnimation, 'utf8').toString('base64'));
     if (!availableAnimations.length) availableAnimations.push(...runtimeAnimations);
     animDuration = await page.evaluate(() => window.__animDuration || 0);
     canvasWidth = await page.evaluate(() => window.__canvasWidth || 0) || videoWidth;
@@ -1317,6 +1319,8 @@ try {
       continue;
     }
 
+    lastVisibleFramePeak = Math.max(lastVisibleFramePeak, framePeak);
+
     // Preserve only the selected animation's own duration.
     captureDuration = Math.min(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS);
     if (captureDuration < effectiveDuration) {
@@ -1398,13 +1402,13 @@ try {
   }
 
   if (!videoDataUrl) {
-    const peak = await page.evaluate(() =>
+    const livePeak = await page.evaluate(() =>
       typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
-    if (!args.alpha && peak >= FRAME_PEAK_MIN &&
-        lastCaptureError === 'No video data captured by MediaRecorder') {
-      // Preserve the selected real Spine runtime canvas and draw frames with
-      // the CDP renderer, instead of exiting before the existing fallback.
-      console.error('MEDIARECORDER_NO_BLOB: recovering visible live canvas');
+    const peak = Math.max(lastVisibleFramePeak, livePeak);
+    if (shouldRecoverVisibleCanvas({alpha:args.alpha,peak,minPeak:FRAME_PEAK_MIN})) {
+      // Keep the last validated visible-frame peak: WebGL readPixels can return
+      // an empty back buffer after MediaRecorder stops despite recent motion.
+      console.error('MEDIARECORDER_CAPTURE_INCOMPLETE: recovering validated visible live canvas');
       videoDataUrl = 'canvas-fallback';
     } else {
       throw new Error(`Capture failed: ${lastCaptureError || 'selected default skin produced no visible content'}`);
