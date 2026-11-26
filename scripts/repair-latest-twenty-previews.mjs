@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Fail-closed 20-most-recent Spine preview repair.
- * Runs only on authenticated private Github Actions workers.
+ * Runs only on the dedicated public GitHub-hosted Ubuntu runner.
  * Source filenames, image bytes and generated previews never appear in logs.
  */
 import fs from "node:fs";
