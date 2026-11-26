@@ -13,8 +13,6 @@ on:
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
       - 'scripts/spine-export-webm.mjs'
-      - 'scripts/lib/first-frame-poster.mjs'
-      - 'scripts/test-first-frame-poster.mjs'
       - 'scripts/atlas-pages.mjs'
       - 'scripts/test-atlas-pages.mjs'
       - 'scripts/preview-skin-choice.mjs'
@@ -52,8 +50,6 @@ on:
       - 'scripts/preview-animation-choice.mjs'
       - 'scripts/test-preview-animation-choice.mjs'
       - 'scripts/spine-export-webm.mjs'
-      - 'scripts/lib/first-frame-poster.mjs'
-      - 'scripts/test-first-frame-poster.mjs'
       - 'scripts/atlas-pages.mjs'
       - 'scripts/test-atlas-pages.mjs'
       - 'scripts/preview-skin-choice.mjs'
@@ -122,6 +118,5 @@ jobs:
           node scripts/test-atlas-pages.mjs
           node scripts/test-render-selection.mjs
           node scripts/test-renderer-failure-class.mjs
-          node scripts/test-first-frame-poster.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
