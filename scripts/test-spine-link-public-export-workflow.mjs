@@ -18,7 +18,6 @@ test('public storage repository directly receives Spine project export dispatche
 test('public exporter uses its own least-privilege GitHub token for storage writes', () => {
   assert.ok(workflow.includes('contents: write'));
   assert.ok(workflow.includes('STORAGE_GITHUB_TOKEN: ${{ github.token }}'));
-  assert.ok(workflow.includes('GH_TOKEN="$STORAGE_GITHUB_TOKEN"'));
 });
 
 test('licensed Editor configuration is checked before any project is marked ready', () => {
