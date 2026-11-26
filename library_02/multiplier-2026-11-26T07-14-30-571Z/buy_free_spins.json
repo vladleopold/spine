@@ -1,0 +1,179 @@
+{
+"skeleton": { "hash": "d/rLbQ8FmIk", "spine": "4.2.43", "x": -960.5, "y": -960.5, "width": 1921, "height": 1921 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "size", "parent": "root", "scaleX": 0.5, "scaleY": 0.5 },
+	{ "name": "Base", "parent": "size" },
+	{ "name": "amount_placeholder", "parent": "Base", "x": 26.5, "y": 111.5 },
+	{ "name": "right_placeholder", "parent": "Base", "x": 537.5, "y": -248.5 },
+	{ "name": "close_placeholder", "parent": "Base", "x": -492.5, "y": -248.5 },
+	{ "name": "buy_fs_placeholder", "parent": "Base", "x": 26.5, "y": 410 }
+],
+"slots": [
+	{ "name": "bg reff", "bone": "size" },
+	{ "name": "base", "bone": "Base", "attachment": "base" },
+	{ "name": "frame", "bone": "Base", "attachment": "frame" },
+	{ "name": "frame2Add", "bone": "Base", "color": "ffffff00", "attachment": "frame", "blend": "additive" },
+	{ "name": "buy_fs_placeholder", "bone": "buy_fs_placeholder" },
+	{ "name": "amount_placeholder", "bone": "amount_placeholder" },
+	{ "name": "close_placeholder", "bone": "close_placeholder" },
+	{ "name": "right_placeholder", "bone": "right_placeholder" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"base": {
+				"base": { "x": 26.5, "y": 109.5, "width": 1937, "height": 1211 }
+			},
+			"frame": {
+				"frame": { "x": 26.5, "y": 111, "width": 2009, "height": 1278 }
+			},
+			"frame2Add": {
+				"frame": { "x": 26.5, "y": 111, "width": 2009, "height": 1278 }
+			}
+		}
+	}
+],
+"animations": {
+	"in": {
+		"slots": {
+			"amount_placeholder": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			},
+			"base": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			},
+			"buy_fs_placeholder": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			},
+			"close_placeholder": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			},
+			"frame": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			},
+			"frame2Add": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffa7" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"right_placeholder": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.2667, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"Base": {
+				"scale": [
+					{ "x": 0.01, "y": 0.01 },
+					{ "time": 0.2667, "x": 1.1, "y": 1.1 },
+					{ "time": 0.4 }
+				]
+			}
+		}
+	},
+	"loop": {
+		"slots": {
+			"frame2Add": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 1.5, "color": "ffffffa3" },
+					{ "time": 3, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Base": {
+				"scale": [
+					{
+						"curve": [ 0.667, 1, 1.333, 1.01, 0.667, 1, 1.333, 1.01 ]
+					},
+					{
+						"time": 2,
+						"x": 1.01,
+						"y": 1.01,
+						"curve": [ 2.333, 1.01, 2.667, 1, 2.333, 1.01, 2.667, 1 ]
+					},
+					{ "time": 3 }
+				]
+			}
+		}
+	},
+	"out": {
+		"slots": {
+			"amount_placeholder": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"base": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"buy_fs_placeholder": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"close_placeholder": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"frame": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"frame2Add": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1333, "color": "ffffff92" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"right_placeholder": {
+				"rgba": [
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Base": {
+				"scale": [
+					{},
+					{ "time": 0.1333, "x": 1.1, "y": 1.1 },
+					{ "time": 0.4, "x": 0.01, "y": 0.01 }
+				]
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,1044 @@
+{
+    "skeleton": {
+        "hash": "JNnSOb97LT0",
+        "spine": "4.2.43",
+        "x": -868.28,
+        "y": -1007.6,
+        "width": 1920,
+        "height": 1920
+    },
+    "bones": [
+        {
+            "name": "root"
+        },
+        {
+            "name": "size",
+            "parent": "root",
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "partical",
+            "parent": "size",
+            "scaleX": 0.6,
+            "scaleY": 0.6
+        },
+        {
+            "name": "partical2",
+            "parent": "partical"
+        },
+        {
+            "name": "partical3",
+            "parent": "partical",
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "partical4",
+            "parent": "partical",
+            "scaleX": 0.8,
+            "scaleY": 0.8
+        },
+        {
+            "name": "partical5",
+            "parent": "partical"
+        },
+        {
+            "name": "partical6",
+            "parent": "partical",
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "partical7",
+            "parent": "partical",
+            "scaleX": 0.6,
+            "scaleY": 0.6
+        },
+        {
+            "name": "partical8",
+            "parent": "partical",
+            "scaleX": 0.9,
+            "scaleY": 0.9
+        },
+        {
+            "name": "partical9",
+            "parent": "partical",
+            "scaleX": 0.3,
+            "scaleY": 0.3
+        },
+        {
+            "name": "partical10",
+            "parent": "partical",
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "partical11",
+            "parent": "partical",
+            "scaleX": 0.7,
+            "scaleY": 0.7
+        },
+        {
+            "name": "partical12",
+            "parent": "partical",
+            "scaleX": 0.9,
+            "scaleY": 0.9
+        },
+        {
+            "name": "partical13",
+            "parent": "partical"
+        },
+        {
+            "name": "hit eff_00",
+            "parent": "size"
+        },
+        {
+            "name": "flareFull",
+            "parent": "size",
+            "y": 3.65,
+            "scaleX": 3,
+            "scaleY": 3
+        },
+        {
+            "name": "flareFull2",
+            "parent": "size",
+            "y": 3.65,
+            "scaleX": 3,
+            "scaleY": 3
+        },
+        {
+            "name": "Mult thunder eff_0",
+            "parent": "size"
+        }
+    ],
+    "slots": [
+        {
+            "name": "bg reffff",
+            "bone": "size"
+        },
+        {
+            "name": "mult refff",
+            "bone": "size"
+        },
+        {
+            "name": "Mult thunder eff_0",
+            "bone": "Mult thunder eff_0",
+            "attachment": "Mult thunder eff/Mult thunder eff_00",
+            "blend": "additive"
+        },
+        {
+            "name": "partical",
+            "bone": "partical2",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical2",
+            "bone": "partical3",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical3",
+            "bone": "partical4",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical4",
+            "bone": "partical5",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical5",
+            "bone": "partical6",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical6",
+            "bone": "partical7",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical7",
+            "bone": "partical8",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical8",
+            "bone": "partical9",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical9",
+            "bone": "partical10",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical10",
+            "bone": "partical11",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical11",
+            "bone": "partical12",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "partical12",
+            "bone": "partical13",
+            "color": "ffffff00",
+            "attachment": "partical",
+            "blend": "additive"
+        },
+        {
+            "name": "hit eff_00",
+            "bone": "hit eff_00",
+            "color": "ffffff00",
+            "attachment": "hit eff/hit eff_",
+            "blend": "additive"
+        },
+        {
+            "name": "flareFull",
+            "bone": "flareFull",
+            "color": "ffffff00",
+            "attachment": "flareFull"
+        },
+        {
+            "name": "flareFull2",
+            "bone": "flareFull2",
+            "color": "ffffff00",
+            "attachment": "flareFull",
+            "blend": "additive"
+        }
+    ],
+    "skins": [
+        {
+            "name": "default",
+            "attachments": {
+                "flareFull": {
+                    "flareFull": {
+                        "width": 113,
+                        "height": 113
+                    }
+                },
+                "flareFull2": {
+                    "flareFull": {
+                        "width": 113,
+                        "height": 113
+                    }
+                },
+                "hit eff_00": {
+                    "hit eff/hit eff_": {
+                        "width": 250,
+                        "height": 250,
+                        "sequence": {
+                            "count": 19,
+                            "start": 0,
+                            "digits": 2
+                        }
+                    }
+                },
+                "Mult thunder eff_0": {
+                    "Mult thunder eff/Mult thunder eff_00": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_01": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_02": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_03": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_04": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_05": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_06": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_07": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_08": {
+                        "width": 500,
+                        "height": 1500
+                    },
+                    "Mult thunder eff/Mult thunder eff_09": {
+                        "width": 500,
+                        "height": 1500
+                    }
+                },
+                "partical": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical2": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical3": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical4": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical5": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical6": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical7": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical8": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical9": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical10": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical11": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                },
+                "partical12": {
+                    "partical": {
+                        "width": 31,
+                        "height": 30
+                    }
+                }
+            }
+        }
+    ],
+    "animations": {
+        "multiplier_hit": {
+            "slots": {
+                "flareFull": {
+                    "rgba": [
+                        {
+                            "time": 0.0667,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.1333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.8,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "flareFull2": {
+                    "rgba": [
+                        {
+                            "time": 0.0667,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.1333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.8,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "hit eff_00": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.2,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.6,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "Mult thunder eff_0": {
+                    "rgba": [
+                        {
+                            "time": 0.4,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.6,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "name": "Mult thunder eff/Mult thunder eff_00"
+                        },
+                        {
+                            "time": 0.0667,
+                            "name": "Mult thunder eff/Mult thunder eff_01"
+                        },
+                        {
+                            "time": 0.1,
+                            "name": "Mult thunder eff/Mult thunder eff_02"
+                        },
+                        {
+                            "time": 0.1333,
+                            "name": "Mult thunder eff/Mult thunder eff_03"
+                        },
+                        {
+                            "time": 0.1667,
+                            "name": "Mult thunder eff/Mult thunder eff_04"
+                        },
+                        {
+                            "time": 0.2,
+                            "name": "Mult thunder eff/Mult thunder eff_05"
+                        },
+                        {
+                            "time": 0.2667,
+                            "name": "Mult thunder eff/Mult thunder eff_06"
+                        },
+                        {
+                            "time": 0.3333,
+                            "name": "Mult thunder eff/Mult thunder eff_07"
+                        },
+                        {
+                            "time": 0.4,
+                            "name": "Mult thunder eff/Mult thunder eff_08"
+                        },
+                        {
+                            "time": 0.4667,
+                            "name": "Mult thunder eff/Mult thunder eff_09"
+                        }
+                    ]
+                },
+                "partical": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical2": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffe3"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffff55"
+                        },
+                        {
+                            "time": 0.6,
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.6333,
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical3": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffff8e"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical4": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffaa"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffff1c"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical5": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.4333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffc6"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical6": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical7": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical8": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.3667,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffff8e"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical9": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical10": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffff99"
+                        },
+                        {
+                            "time": 0.4,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical11": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.4333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffc6"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "partical12": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        }
+                    ]
+                }
+            },
+            "bones": {
+                "partical2": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 0.9667,
+                            "x": 241.36
+                        },
+                        {
+                            "time": 1
+                        }
+                    ]
+                },
+                "partical3": {
+                    "translate": [
+                        {
+                            "x": -94.45
+                        },
+                        {
+                            "time": 0.6,
+                            "x": -249.01
+                        },
+                        {
+                            "time": 0.6333
+                        },
+                        {
+                            "time": 1,
+                            "x": -94.45
+                        }
+                    ]
+                },
+                "partical4": {
+                    "translate": [
+                        {
+                            "x": -2.15,
+                            "y": 153.18
+                        },
+                        {
+                            "time": 0.5,
+                            "x": -4.45,
+                            "y": 317.3
+                        },
+                        {
+                            "time": 0.5333
+                        },
+                        {
+                            "time": 1,
+                            "x": -2.15,
+                            "y": 153.18
+                        }
+                    ]
+                },
+                "partical5": {
+                    "translate": [
+                        {
+                            "x": -3.56,
+                            "y": -143.82
+                        },
+                        {
+                            "time": 0.9667,
+                            "x": -7.94,
+                            "y": -320.84
+                        },
+                        {
+                            "time": 1,
+                            "x": -3.56,
+                            "y": -143.82
+                        }
+                    ]
+                },
+                "partical6": {
+                    "translate": [
+                        {
+                            "x": -49.53,
+                            "y": -77.44
+                        },
+                        {
+                            "time": 0.7333,
+                            "x": -205.21,
+                            "y": -320.84
+                        },
+                        {
+                            "time": 0.7667
+                        },
+                        {
+                            "time": 1,
+                            "x": -49.53,
+                            "y": -77.44
+                        }
+                    ]
+                },
+                "partical7": {
+                    "translate": [
+                        {
+                            "x": -34.41,
+                            "y": 54.71
+                        },
+                        {
+                            "time": 0.8,
+                            "x": -199.56,
+                            "y": 317.3
+                        },
+                        {
+                            "time": 0.8333
+                        },
+                        {
+                            "time": 1,
+                            "x": -34.41,
+                            "y": 54.71
+                        }
+                    ]
+                },
+                "partical8": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 0.9667,
+                            "x": 217.07,
+                            "y": 329.51
+                        },
+                        {
+                            "time": 1
+                        }
+                    ]
+                },
+                "partical9": {
+                    "translate": [
+                        {
+                            "x": 64.14,
+                            "y": -98.9
+                        },
+                        {
+                            "time": 1,
+                            "x": 206.67,
+                            "y": -318.67
+                        }
+                    ]
+                },
+                "partical10": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 0.9667,
+                            "x": -227.74,
+                            "y": 167.72
+                        },
+                        {
+                            "time": 1
+                        }
+                    ]
+                },
+                "partical11": {
+                    "translate": [
+                        {
+                            "x": 185.91,
+                            "y": 128.95
+                        },
+                        {
+                            "time": 0.2,
+                            "x": 234.41,
+                            "y": 162.59
+                        },
+                        {
+                            "time": 0.2333
+                        },
+                        {
+                            "time": 1,
+                            "x": 185.91,
+                            "y": 128.95
+                        }
+                    ]
+                },
+                "partical12": {
+                    "translate": [
+                        {
+                            "x": 56.17,
+                            "y": -37.15
+                        },
+                        {
+                            "time": 1,
+                            "x": 232.69,
+                            "y": -153.91
+                        }
+                    ]
+                },
+                "partical13": {
+                    "translate": [
+                        {
+                            "x": -15.05,
+                            "y": -10.61
+                        },
+                        {
+                            "time": 0.9,
+                            "x": -218.22,
+                            "y": -153.91
+                        },
+                        {
+                            "time": 0.9333
+                        },
+                        {
+                            "time": 1,
+                            "x": -15.05,
+                            "y": -10.61
+                        }
+                    ]
+                },
+                "hit eff_00": {
+                    "scale": [
+                        {},
+                        {
+                            "time": 0.3333,
+                            "x": 1.6,
+                            "y": 1.6
+                        }
+                    ]
+                },
+                "Mult thunder eff_0": {
+                    "translate": [
+                        {
+                            "y": 2440.19
+                        },
+                        {
+                            "time": 0.2,
+                            "y": 594
+                        }
+                    ]
+                },
+                "flareFull": {
+                    "rotate": [
+                        {
+                            "time": 0.0667
+                        },
+                        {
+                            "time": 0.8,
+                            "value": -67.39
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0667
+                        },
+                        {
+                            "time": 0.2,
+                            "x": 2,
+                            "y": 2
+                        },
+                        {
+                            "time": 0.8
+                        }
+                    ]
+                },
+                "flareFull2": {
+                    "rotate": [
+                        {
+                            "time": 0.0667
+                        },
+                        {
+                            "time": 0.8,
+                            "value": 85.79
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0667
+                        },
+                        {
+                            "time": 0.2,
+                            "x": 2,
+                            "y": 2
+                        },
+                        {
+                            "time": 0.8
+                        }
+                    ]
+                }
+            },
+            "attachments": {
+                "default": {
+                    "hit eff_00": {
+                        "hit eff/hit eff_": {
+                            "sequence": [
+                                {
+                                    "mode": "once",
+                                    "delay": 0.0333
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+base_game.webp
+	size: 2048, 2048
+	filter: Linear, Linear
+	scale: 0.5
+Dust1
+	bounds: 1534, 16, 12, 12
+Dust2
+	bounds: 658, 1, 26, 17
+Paper1
+	bounds: 658, 20, 72, 58
+Paper2
+	bounds: 984, 654, 68, 56
+	rotate: 90
+cart
+	bounds: 1, 80, 572, 745
+	offsets: 0, 1, 572, 746
+	rotate: 90
+flag
+	bounds: 1706, 234, 106, 82
+flag 2
+	bounds: 1742, 1273, 111, 150
+poll
+	bounds: 1, 7, 71, 655
+	rotate: 90
+s01 Off
+	bounds: 1, 1345, 982, 702
+	offsets: 4, 5, 990, 707
+s01 On1
+	bounds: 985, 1425, 880, 622
+	offsets: 57, 5, 947, 694
+s01 On2
+	bounds: 1, 654, 981, 689
+	offsets: 4, 4, 988, 695
+s02 Off
+	bounds: 984, 724, 503, 676
+	offsets: 3, 3, 509, 679
+	rotate: 90
+s02 On1
+	bounds: 748, 51, 450, 601
+	offsets: 3, 16, 461, 620
+s03 Off
+	bounds: 1200, 10, 712, 332
+	offsets: 0, 5, 712, 337
+	rotate: 90
+s03 On2
+	bounds: 1706, 318, 659, 275
+	offsets: 5, 5, 668, 285
+	rotate: 90
+s04 Off
+	bounds: 985, 1229, 755, 194
+	offsets: 0, 5, 755, 199
+s04 On1
+	bounds: 1534, 30, 692, 170
+	offsets: 3, 5, 700, 178
+	rotate: 90
+s04 On2
+	bounds: 1867, 1439, 608, 142
+	offsets: 6, 5, 618, 158
+	rotate: 90
+signboard
+	bounds: 1662, 979, 215, 248
+stars
+	bounds: 1706, 148, 86, 84
+	offsets: 4, 4, 90, 91
+
+base_game_2.webp
+	size: 1024, 1024
+	filter: Linear, Linear
+	scale: 0.5
+s02 On2
+	bounds: 1, 189, 482, 539
+	offsets: 3, 3, 488, 598
+s03 On1
+	bounds: 485, 140, 588, 243
+	offsets: 46, 5, 656, 262
+	rotate: 90
