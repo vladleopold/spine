@@ -18,8 +18,8 @@ assert.match(helper,/-pix_fmt', 'rgba'/);
 assert.match(helper,/verifyPosterFirstFrame\(videoPath, posterPath\)/);
 assert.match(helper,/frameDifferenceMetrics/);
 assert.match(helper, /'-lossless', '0', '-quality', '88'/);
-assert.match(helper, /meanDelta > 3\.5/);
-assert.match(helper, /highDeltaRatio > 0\.025/);
+assert.match(helper, /meanDelta <= 3\\.5/);
+assert.match(helper, /highDeltaRatio <= 0\\.025/);
 const transparentPixelDifference=frameDifferenceMetrics(
   Buffer.from([255,0,0,0, 100,120,140,255]),
   Buffer.from([0,255,255,0, 105,115,145,255]),
