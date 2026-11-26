@@ -8,6 +8,8 @@ on:
     branches: [main]
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/spine-link-project-export.yml
+      - scripts/test-spine-link-public-export-workflow.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
@@ -35,6 +37,8 @@ on:
   pull_request:
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/spine-link-project-export.yml
+      - scripts/test-spine-link-public-export-workflow.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
@@ -76,6 +80,7 @@ jobs:
             /.github/workflows/repair-reported-previews.yml
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-all.yml
+            /.github/workflows/spine-link-project-export.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -95,6 +100,7 @@ jobs:
           node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
+          node --test scripts/test-spine-link-public-export-workflow.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
