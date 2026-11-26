@@ -45,8 +45,44 @@ export function resolveAnimationIndex(entry, indexValue) {
   };
 }
 
+function firstString(...values) {
+  return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim() || '';
+}
+
+function selectPlayablePreviewAnimation(entry, allAnimationPreviews) {
+  const animations = Array.isArray(entry?.animations)
+    ? entry.animations
+    : Object.keys(allAnimationPreviews);
+  const candidates = [
+    entry?.previewAnimation,
+    entry?.defaultAnimation,
+    ...animations,
+  ].filter((name, index, list) =>
+    typeof name === 'string' && name.length > 0 && list.indexOf(name) === index,
+  );
+
+  for (const animation of candidates) {
+    const preview = allAnimationPreviews[animation];
+    const duration = Number(preview?.previewDuration);
+    const webm = firstString(
+      preview?.webmPreview,
+      preview?.webmPreviewMedium,
+      preview?.webmPreviewLow,
+    );
+    if (webm && Number.isFinite(duration) && duration >= 2) {
+      return { animation, preview, duration };
+    }
+  }
+  return null;
+}
+
 export function mergeFullExportMetadata(entry, previews, generatedAt) {
-  const allAnimationPreviews = previews && typeof previews === 'object' ? previews : {};
+  const allAnimationPreviews = {
+    ...(entry?.allAnimationPreviews && typeof entry.allAnimationPreviews === 'object'
+      ? entry.allAnimationPreviews
+      : {}),
+    ...(previews && typeof previews === 'object' ? previews : {}),
+  };
   const animations = Array.isArray(entry?.animations) ? entry.animations : [];
   const hasExports = animations.length > 0 && animations.every((name) =>
     REQUIRED_FULL_EXPORT_KEYS.every((key) =>
@@ -55,14 +91,11 @@ export function mergeFullExportMetadata(entry, previews, generatedAt) {
     ),
   );
 
-  // Only the exact indexed/default animation can supply the work-level duration.
-  // Never replace defaultAnimation because another track has a longer preview.
-  const chosenAnimation = typeof entry?.defaultAnimation === 'string'
-    ? entry.defaultAnimation
-    : '';
-  const selectedPreview = chosenAnimation ? allAnimationPreviews[chosenAnimation] : null;
-  const selectedDuration = Number(selectedPreview?.previewDuration);
-
+  // Keep the interactive Spine Player's defaultAnimation untouched. The
+  // work-level video preview is a separate selection and must be long enough
+  // to produce a useful playable clip; prefer an existing valid preview,
+  // then the player default, then source animation order.
+  const playable = selectPlayablePreviewAnimation(entry, allAnimationPreviews);
   const next = {
     ...entry,
     allAnimationPreviews,
@@ -70,10 +103,41 @@ export function mergeFullExportMetadata(entry, previews, generatedAt) {
     fullExportGeneratedAt: generatedAt,
   };
 
-  if (Number.isFinite(selectedDuration) && selectedDuration > 0) {
-    next.previewDuration = selectedDuration;
+  if (playable) {
+    next.previewAnimation = playable.animation;
+    next.previewDuration = playable.duration;
+    for (const key of [...REQUIRED_FULL_EXPORT_KEYS, 'webpPoster', 'webpPosterMedium', 'webpPosterLow']) {
+      delete next[key];
+      if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {
+        next[key] = playable.preview[key].trim();
+      }
+    }
+    next.webmPreview = firstString(
+      playable.preview.webmPreview,
+      playable.preview.webmPreviewMedium,
+      playable.preview.webmPreviewLow,
+    );
+    const poster = firstString(
+      playable.preview.webpPoster,
+      playable.preview.webpPosterMedium,
+      playable.preview.webpPosterLow,
+    );
+    if (poster) next.webpPoster = poster;
+    delete next.qualityWidths;
+    if (playable.preview.qualityWidths && typeof playable.preview.qualityWidths === 'object') {
+      next.qualityWidths = playable.preview.qualityWidths;
+    }
   } else {
-    delete next.previewDuration;
+    delete next.previewAnimation;
+    const defaultPreview = typeof entry?.defaultAnimation === 'string'
+      ? allAnimationPreviews[entry.defaultAnimation]
+      : null;
+    const defaultDuration = Number(defaultPreview?.previewDuration);
+    if (Number.isFinite(defaultDuration) && defaultDuration > 0) {
+      next.previewDuration = defaultDuration;
+    } else {
+      delete next.previewDuration;
+    }
   }
 
   return next;
