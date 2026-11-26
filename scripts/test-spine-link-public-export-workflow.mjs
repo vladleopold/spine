@@ -20,6 +20,12 @@ test('public exporter uses its own least-privilege GitHub token for storage writ
   assert.ok(workflow.includes('STORAGE_GITHUB_TOKEN: ${{ github.token }}'));
 });
 
+test('new Spine project uploads automatically enter the public Ubuntu export queue', () => {
+  assert.ok(workflow.includes("'library_*/index.json'"));
+  assert.ok(workflow.includes("'library_*/**/*.spine'"));
+  assert.ok(workflow.includes("github.event_name == 'push'"));
+});
+
 test('licensed Editor configuration is checked before any project is marked ready', () => {
   assert.ok(workflow.includes('SPINE_LICENSE'));
   assert.ok(workflow.includes('SPINE_LINUX_URL'));
