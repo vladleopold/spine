@@ -9,6 +9,8 @@ on:
         description: "Optional upload ID (empty selects the oldest pending project)"
         required: false
         type: string
+  schedule:
+    - cron: '17 * * * *'
   pull_request:
     paths:
       - '.github/workflows/spine-link-project-export.yml'
@@ -59,13 +61,15 @@ jobs:
   licensed-project-export:
     name: Licensed Spine-Link project export • public Ubuntu 24.04
     needs: validate
-    if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     permissions:
       contents: write
     env:
       STORAGE_GITHUB_TOKEN: ${{ github.token }}
+      SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
+      SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
       SPINE_SITE_ORIGIN: https://spine-link.vercel.app
     steps:
       - uses: actions/checkout@v4
@@ -74,33 +78,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Wait safely for licensed Spine Editor configuration
-        id: credentials
-        shell: bash
-        env:
-          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
-          SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
-        run: |
-          set -euo pipefail
-          missing=()
-          for key in SPINE_LICENSE SPINE_LINUX_URL; do
-            if [ -z "${!key}" ]; then missing+=("$key"); fi
-          done
-          if [ "${#missing[@]}" -gt 0 ]; then
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "SPINE_LINK_LICENSED_EXPORT_WAITING_FOR_SECRETS" >> "$GITHUB_STEP_SUMMARY"
-            printf 'Missing public repository configuration: %s\n' "${missing[*]}"
-            exit 0
-          fi
-          echo "ready=true" >> "$GITHUB_OUTPUT"
       - name: Select authorized project from public storage queue
-        if: steps.credentials.outputs.ready == 'true'
-        id: pick
+                id: pick
         env:
           REQUESTED_UPLOAD_ID: ${{ github.event.client_payload.uploadId || inputs.upload_id || '' }}
         run: node scripts/spine-link-project-queue.mjs
       - name: Checkout only the selected project and its images
-        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        if: steps.pick.outputs.found == 'true'
         uses: actions/checkout@v4
         with:
           repository: vladleopold/spine
@@ -112,7 +96,7 @@ jobs:
             ${{ steps.pick.outputs.uploadPath }}
           sparse-checkout-cone-mode: true
       - name: Verify selected source project and image directory
-        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        if: steps.pick.outputs.found == 'true'
         env:
           UPLOAD_PATH: ${{ steps.pick.outputs.uploadPath }}
           PROJECT_FILE: ${{ steps.pick.outputs.projectFile }}
@@ -121,11 +105,16 @@ jobs:
           test -s "storage/$UPLOAD_PATH/$PROJECT_FILE"
           test -d "storage/$UPLOAD_PATH/images"
       - name: Install licensed Spine 4.3.26 Linux Editor
-        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        if: steps.pick.outputs.found == 'true'
         env:
+          SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
           SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
         run: |
           set -euo pipefail
+          if [ -z "$SPINE_LICENSE" ] || [ -z "$SPINE_LINUX_URL" ]; then
+            echo "Licensed Editor secrets are not configured; conversion will be recorded as needs-editor."
+            exit 0
+          fi
           sudo apt-get update -qq
           sudo apt-get install -y -qq xvfb x11-utils x11-xserver-utils \
             libxrandr2 libgl1-mesa-dri libgl1 libxrender1 libxi6 libxext6 libxfixes3 libxcursor1
@@ -139,7 +128,7 @@ jobs:
           test -x "$SPINE_CLI"
           echo "SPINE_CLI=$SPINE_CLI" >> "$GITHUB_ENV"
       - name: Export actual Spine JSON, atlas and texture pages
-        if: steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true'
+        if: steps.pick.outputs.found == 'true'
         env:
           SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
           SPINE_STORAGE_WORKSPACE: ${{ github.workspace }}/storage
@@ -154,7 +143,7 @@ jobs:
           xvfb-run -a -s '-screen 0 1600x1000x24' \
             node scripts/spine-link-project-cloud-export.mjs
       - name: Deactivate licensed Spine session on the ephemeral public runner
-        if: ${{ always() && steps.credentials.outputs.ready == 'true' && steps.pick.outputs.found == 'true' }}
+        if: ${{ always() && steps.pick.outputs.found == 'true' }}
         env:
           SPINE_LICENSE: ${{ secrets.SPINE_LICENSE }}
         run: |
