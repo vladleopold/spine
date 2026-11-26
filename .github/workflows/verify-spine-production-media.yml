@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -20,7 +20,7 @@ jobs:
             /scripts/verify-ready-preview-live.mjs
             /library/index.json
             /library_*/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Check every ready WebM/WebP via production HTTP and media signatures
