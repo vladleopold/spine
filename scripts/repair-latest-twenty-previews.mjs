@@ -569,9 +569,11 @@ if(action==="matrix"){
       }
       // A blank or frame-identical selected track is not a transient renderer
       // failure. Keep it blocked until the exact animation or skin selection changes.
+      const blockedReason=meta?.distinctError==="DETERMINISTIC_WEBM_BLANK"
+        ? "blocked-deterministic-capture" : meta?.reason;
       if(["blocked-invisible-default-skin","blocked-static-animation","blocked-invalid-default-animation",
-          "blocked-incomplete-source","blocked-unsupported-runtime"].includes(meta?.reason)){
-        record.webmStatus=meta.reason;
+          "blocked-incomplete-source","blocked-unsupported-runtime","blocked-deterministic-capture"].includes(blockedReason)){
+        record.webmStatus=blockedReason;
         record.previewStatus="blocked";
         record.previewBlockedAnimation=selectedAnimation;
         record.previewBlockedSourceFingerprint=item.sourceFingerprint;
@@ -584,7 +586,8 @@ if(action==="matrix"){
           "blocked-invalid-default-animation":"The indexed default animation is not present in the source skeleton; select an exact available animation",
           "blocked-incomplete-source":"The indexed skeleton, atlas or texture source graph cannot be loaded completely",
           "blocked-unsupported-runtime":"The source Spine version is not supported by the pinned renderer",
-        }[meta.reason];
+          "blocked-deterministic-capture":"Deterministic WebM capture produced no verified visible motion; requires native inspection",
+        }[blockedReason];
         record.lastPreviewRetryError="";
         summary.blocked++;
         continue;
