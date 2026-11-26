@@ -394,8 +394,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     Number.isInteger(resumeTrigger.limit)&&resumeTrigger.limit>=1&&
     resumeTrigger.limit<=50&&resumeTrigger.offset+resumeTrigger.limit<=70,
     'the explicit trigger must carry a bounded resumable archive offset and limit');
-  assert.ok(workflowSource.includes('SPINE_REPAIR_OFFSET=$batch_offset')&&
-    workflowSource.includes('SPINE_REPAIR_LIMIT=$batch_limit'),
+  assert.ok(workflowSource.includes('SPINE_REPAIR_OFFSET="$batch_offset"')&&
+    workflowSource.includes('SPINE_REPAIR_LIMIT="$batch_limit"'),
     'push-triggered recovery must read its explicit resumable batch range');
   assert.ok(workflowSource.includes('batchOffset: ${{ steps.latest.outputs.batchOffset }}')&&
     workflowSource.includes('batchLimit: ${{ steps.latest.outputs.batchLimit }}'),
