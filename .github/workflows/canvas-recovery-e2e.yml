@@ -4,6 +4,7 @@ on:
     branches: [fix/mediarecorder-frame-fallback-20261118]
     paths:
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-json-runtime-compat.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/renderer-failure-class.mjs
