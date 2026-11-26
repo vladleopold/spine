@@ -43,7 +43,7 @@ assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==
 assert.match(liveAudit,/blockedAnimationMatches[\s\S]*?previewBlockedSourceFingerprint===work\.sourceFingerprint/);
 assert.match(liveAudit,/renderableCandidates=snapshot\.filter\(work=>work\.ready===true\)\.length/);
 assert.match(liveAudit,/let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0,claimedReady=0/);
-assert.match(liveAudit,/const expectedMedia=claimedReady\\*fields\\.length/);
+assert.match(liveAudit,/const expectedMedia=claimedReady\*fields\.length/);
 assert.match(liveAudit,/expectedMedia,mutatedSource/);
 assert.match(liveAudit,/if\(mutatedSource\|\|verifiedMedia!==expectedMedia\|\|ready\+blocked\+failed!==snapshot\.length\)process\.exitCode=1/,
   'per-item render failures must not halt later archive offsets after every ready media file and source fingerprint has been verified');
