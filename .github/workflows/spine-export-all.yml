@@ -138,17 +138,34 @@ jobs:
             execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', '/' + work + '/'], { stdio: 'inherit' });
           }
           NODE
+          FAILED_EXPORTS=0
+          FAILED_IDS_FILE="$RUNNER_TEMP/spine-export-failures.txt"
+          : > "$FAILED_IDS_FILE"
           while IFS= read -r uploadId; do
             [ -z "$uploadId" ] && continue
             echo "=== Exporting $uploadId ==="
-            node scripts/spine-export-webm.mjs \
+            if ! node scripts/spine-export-webm.mjs \
               --upload-id="$uploadId" \
               --repo-path="${{ github.workspace }}" \
-              --output="${{ github.workspace }}/$uploadId-preview.webm" || echo "Export failed for $uploadId (recorded as error)"
+              --output="${{ github.workspace }}/$uploadId-preview.webm"; then
+              FAILED_EXPORTS=$((FAILED_EXPORTS + 1))
+              printf '%s\n' "$uploadId" >> "$FAILED_IDS_FILE"
+              echo "::error::Export failed for $uploadId"
+            fi
           done < batch-ids.txt
+          if [ "$FAILED_EXPORTS" -gt 0 ]; then
+            echo "::error::${FAILED_EXPORTS} Spine preview export(s) failed; successful artifacts will still be preserved."
+            echo "FAILED_UPLOAD_IDS=$(paste -sd, "$FAILED_IDS_FILE")" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
       - name: Prepare Artifacts
+        if: always()
         run: |
+          if [ ! -f batch-ids.txt ]; then
+            echo "No batch manifest was created; no artifacts to prepare."
+            exit 0
+          fi
           while IFS= read -r uploadId; do
             [ -z "$uploadId" ] && continue
             mkdir -p "batch/$uploadId"
@@ -172,12 +189,14 @@ jobs:
           done < batch-ids.txt
 
       - name: Upload Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: export-${{ strategy.job-index }}
           path: batch/
           retention-days: 1
           overwrite: true
+          if-no-files-found: ignore
 
   commit-all:
     needs: [export]
