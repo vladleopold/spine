@@ -188,9 +188,9 @@ test('visible canvas recovery survives recorder stop and exposes exact selected 
 
 test('normal WebM publication records the runtime preview track without rewriting the source default', () => {
   const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
-  assert.match(renderWork, /previewAnimation:meta\\.animation/);
-  assert.doesNotMatch(renderWork, /defaultAnimation:meta\\.animation/,
+  assert.match(renderWork, /previewAnimation:meta\.animation/);
+  assert.doesNotMatch(renderWork, /defaultAnimation:meta\.animation/,
     'preview selection must not overwrite the source default animation');
-  assert.match(renderWork, /delete merged\\.allAnimationPreviews\\.__SPINE_AUTO__/,
+  assert.match(renderWork, /delete merged\.allAnimationPreviews\.__SPINE_AUTO__/,
     'the renderer command sentinel must never be stored as a public animation key');
 });
