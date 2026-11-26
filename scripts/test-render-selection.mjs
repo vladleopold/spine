@@ -177,4 +177,5 @@ test('reference index rebuild uses an isolated lock and public pinned Ubuntu run
   assert.doesNotMatch(workflow, /group:\\s*spine-library-commit/,
     'a generated-branch index build must not block library media publication');
   assert.match(workflow, /runs-on:\\s*ubuntu-24\\.04/);
+  assert.match(workflow, /cancel-in-progress:\\s*true/);
 });
