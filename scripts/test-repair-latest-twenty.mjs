@@ -353,6 +353,14 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     assert.ok(source.includes(exactPrHeadRef),
       `${name} must test the exact PR head, not a stale base/merge ref`);
   }
+  for(const [name,source] of [
+    ['latest-twenty repair',workflowSource],
+    ['synthetic WebM gate',syntheticRenderWorkflowSource],
+    ['full export',exportFullWorkflowSource],
+  ]){
+    assert.ok(source.includes('/.github/workflows/synthetic-webm-render-gate.yml'),
+      `${name} sparse checkout must include the workflow source inspected by the regression test`);
+  }
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
