@@ -2,7 +2,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha, isLegacyAtlasFormat } from "./atlas-pages.mjs";
-import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
+import { shouldUseCanvasFallback, fallbackFrameCount, deterministicFallbackFps } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1481,9 +1481,14 @@ try {
       console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
-      const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
-      const frameCount = fallbackFrameCount({fps:args.fps,duration});
-      const intervalMs = duration * 1000 / frameCount;
+      const requestedDuration = Math.max(.25, Math.min(30, captureDuration || effectiveDuration || 1));
+      // CDP screenshot capture is much slower than MediaRecorder; cap only this
+      // recovery path at 15fps so 30-second previews stay within hosted budgets.
+      const fallbackFps = deterministicFallbackFps(args.fps);
+      const frameCount = fallbackFrameCount({fps:fallbackFps,duration:requestedDuration});
+      const duration = frameCount / fallbackFps;
+      const intervalMs = 1000 / fallbackFps;
+      console.error('DETERMINISTIC_CAPTURE_FPS=' + fallbackFps + ' FRAME_COUNT=' + frameCount);
       // The browser still renders a visible WebGL scene, but Playwright's
       // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
       // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
@@ -1519,12 +1524,24 @@ try {
       console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
       console.error('CANVAS_FALLBACK_CAPTURE=passed');
       const recovered=path.join(tempDir,'deterministic.webm');
-      execFileSync('ffmpeg',[
-        '-y','-v','error','-framerate',String(frameCount/duration),
-        '-i',path.join(framesDir,'%06d.png'),
+      const encodeArgs=[
+        '-y','-v','error','-framerate',String(fallbackFps),
+        '-start_number','0','-i',path.join(framesDir,'%06d.png'),
         '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
         '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
-      ],{stdio:'inherit'});
+      ];
+      try {
+        execFileSync('ffmpeg',encodeArgs,{stdio:['ignore','pipe','pipe'],maxBuffer:4*1024*1024});
+      } catch (error) {
+        const stderr=String(error.stderr||'').replaceAll(tempDir,'[renderer-temp]').slice(0,1200);
+        console.error('DETERMINISTIC_FFMPEG_ENCODE_FAILED ' + JSON.stringify({
+          status:Number.isInteger(error.status)?error.status:null,
+          signal:error.signal||null,
+          code:error.code||null,
+          stderr,
+        }));
+        throw error;
+      }
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
       if (!hasSufficientMotion(recovered))
