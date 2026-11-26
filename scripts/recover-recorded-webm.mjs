@@ -12,7 +12,20 @@ import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseRecoveryAnimation } from './lib/recovered-animation-choice.mjs';
 const video = path.resolve(process.argv[2] || '');
 const record = process.argv[4] ? entryForUpload(process.cwd(),process.argv[4])?.entry : null;
-const animation = chooseRecoveryAnimation(process.argv[3] ?? '', record?.defaultAnimation ?? '');
+const rendererLogPath = process.argv[5] || '';
+let runtimeSelectedAnimation = '';
+if (rendererLogPath && fs.existsSync(rendererLogPath)) {
+  const rendererLog = fs.readFileSync(rendererLogPath, 'utf8');
+  const selectedMatch = rendererLog.match(/^SPINE_SELECTED_ANIMATION_B64=([A-Za-z0-9+/=]+)$/m);
+  if (selectedMatch?.[1]) {
+    try { runtimeSelectedAnimation = Buffer.from(selectedMatch[1], 'base64').toString('utf8'); } catch {}
+  }
+}
+const animation = chooseRecoveryAnimation(
+  process.argv[3] ?? '',
+  record?.defaultAnimation ?? '',
+  runtimeSelectedAnimation,
+);
 if (!animation) throw Error('No explicit or indexed Spine animation; refusing to guess');
 if (!video.endsWith('.webm') || !fs.existsSync(video) || fs.statSync(video).size < 1000) throw Error('No recorded WebM to recover');
 const run=(cmd,args,opts={})=>execFileSync(cmd,args,{timeout:120000,maxBuffer:16*1024*1024,stdio:['ignore','pipe','pipe'],...opts});
