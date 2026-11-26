@@ -174,3 +174,15 @@ test('reference index rebuild uses an isolated lock and public pinned Ubuntu run
   assert.ok(workflow.includes('runs-on: ubuntu-24.04'));
   assert.ok(workflow.includes('cancel-in-progress: true'));
 });
+
+
+test('deterministic canvas recovery is bounded and retains validated visibility after recorder stop', () => {
+  const fallback = fs.readFileSync(new URL('./lib/canvas-fallback.mjs', import.meta.url), 'utf8');
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  assert.match(fallback, /deterministicFallbackFps/);
+  assert.match(fallback, /shouldRecoverVisibleCanvas/);
+  assert.match(exporter, /const fallbackFps = deterministicFallbackFps\(args\.fps\)/);
+  assert.match(exporter, /lastVisibleFramePeak = Math\.max\(lastVisibleFramePeak, framePeak\)/);
+  assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
+  assert.match(exporter, /DETERMINISTIC_CAPTURE_FPS=/);
+});
