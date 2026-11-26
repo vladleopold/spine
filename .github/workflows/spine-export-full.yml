@@ -10,6 +10,11 @@ on:
       - .github/workflows/spine-export-full.yml
       - .github/workflows/spine-link-project-export.yml
       - scripts/test-spine-link-public-export-workflow.mjs
+      - tests/spine-link-project-queue.test.mjs
+      - tests/spine-editor-export.test.mjs
+      - scripts/spine-link-project-queue.mjs
+      - scripts/spine-link-project-cloud-export.mjs
+      - scripts/spine-editor-export.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
@@ -39,6 +44,11 @@ on:
       - .github/workflows/spine-export-full.yml
       - .github/workflows/spine-link-project-export.yml
       - scripts/test-spine-link-public-export-workflow.mjs
+      - tests/spine-link-project-queue.test.mjs
+      - tests/spine-editor-export.test.mjs
+      - scripts/spine-link-project-queue.mjs
+      - scripts/spine-link-project-cloud-export.mjs
+      - scripts/spine-editor-export.mjs
       - scripts/spine-export-matrix.mjs
       - scripts/lib/spine-export-matrix.mjs
       - scripts/lib/export-log-redaction.mjs
@@ -83,9 +93,15 @@ jobs:
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-all.yml
             /.github/workflows/spine-link-project-export.yml
+            /tests/spine-link-project-queue.test.mjs
+            /tests/spine-editor-export.test.mjs
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Lint public Spine-Link GitHub Actions workflow
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+          "$(go env GOPATH)/bin/actionlint" .github/workflows/spine-link-project-export.yml
       - name: Run numeric matrix and no-fallback regressions
         run: |
           node --check scripts/lib/spine-export-matrix.mjs
@@ -102,7 +118,7 @@ jobs:
           node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
-          node --test scripts/test-spine-link-public-export-workflow.mjs
+          node --test scripts/test-spine-link-public-export-workflow.mjs tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-last-ten-previews.mjs
           node scripts/test-repair-latest-twenty.mjs
