@@ -169,3 +169,12 @@ test('archive preview capture is bounded for pathological long source timelines'
   assert.match(exporter, /captureDuration = Math\.min\(effectiveDuration, MAX_PREVIEW_CAPTURE_SECONDS\)/);
   assert.match(exporter, /PREVIEW_CAPTURE_DURATION_CAPPED/);
 });
+
+
+test('reference index rebuild uses an isolated lock and public pinned Ubuntu runner', () => {
+  const workflow = fs.readFileSync(new URL('../.github/workflows/build-sa-reference-index.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /concurrency:\\s*\\n\\s+group:\\s*sa-reference-index-build/);
+  assert.doesNotMatch(workflow, /group:\\s*spine-library-commit/,
+    'a generated-branch index build must not block library media publication');
+  assert.match(workflow, /runs-on:\\s*ubuntu-24\\.04/);
+});
