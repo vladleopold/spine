@@ -278,12 +278,24 @@ async function publish(update){
  }
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
-await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,previewAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
+const anim=meta.animation;
+if(!anim||anim==='__SPINE_AUTO__')throw Error('Renderer did not report an actual runtime-selected animation');
+const safe=anim.replace(/[^a-zA-Z0-9_-]/g,'_');
+const selectedPreview={
+ ...(found.entry.allAnimationPreviews?.[anim]||{}),
+ webmPreview:url('preview.webm'),
+ webmPreviewMedium:url('preview-medium.webm'),
+ webmPreviewLow:url('preview-low.webm'),
+ webpPoster:url('preview.webp'),
+ webpPosterMedium:url('preview-medium.webp'),
+ webpPosterLow:url('preview-low.webp'),
+ previewDuration:meta.animationDuration,
+ qualityWidths:meta.qualityWidths,
+};
+await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,previewAnimation:anim,allAnimationPreviews:{[anim]:selectedPreview},animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
 // Verify every Download format and size on the requested animation. Remaining
 // animations are handled by the existing full-export workflow after this run.
 run('node',['scripts/spine-export-webm.mjs',...flags.filter(f=>!f.startsWith('--output=')),'--alpha',`--output=${path.join(temp,'alpha.webm')}`]);
-const anim=meta.animation;
-const safe=anim.replace(/[^a-zA-Z0-9_-]/g,'_');
 const downloads={...(found.entry.allAnimationPreviews?.[anim]||{}),qualityWidths:meta.qualityWidths,previewDuration:meta.animationDuration};
 for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
  const opaque=path.join(temp,`preview${suffix}.webm`),alpha=path.join(temp,`alpha${suffix}.webm`);
