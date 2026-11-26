@@ -78,6 +78,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -88,6 +89,7 @@ jobs:
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/synthetic-webm-render-gate.yml
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-all.yml
             /.github/workflows/spine-link-project-export.yml
@@ -133,6 +135,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -168,6 +171,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -304,6 +308,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -457,6 +462,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/

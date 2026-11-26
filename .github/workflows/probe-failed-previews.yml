@@ -24,6 +24,10 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
             /library_02/index.json
             /package.json
             /package-lock.json

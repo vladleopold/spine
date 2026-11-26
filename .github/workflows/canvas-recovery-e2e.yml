@@ -4,6 +4,7 @@ on:
     branches: [fix/mediarecorder-frame-fallback-20261118]
     paths:
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-json-runtime-compat.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/renderer-failure-class.mjs
@@ -56,6 +57,10 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
             /.github/workflows/canvas-recovery-e2e.yml
             /package.json
             /package-lock.json

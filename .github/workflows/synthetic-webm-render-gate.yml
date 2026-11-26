@@ -77,15 +77,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
+            /public/vendor-spine-player-3.7.js
+            /public/vendor-spine-player-3.7.css
+            /public/vendor-spine-player-3.8.js
+            /public/vendor-spine-player-3.8.css
             /scripts/source-skeleton-choice.mjs
             /library/index.json
             /library_*/index.json
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/synthetic-webm-render-gate.yml
             /.github/workflows/build-sa-reference-index.yml
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-full.yml

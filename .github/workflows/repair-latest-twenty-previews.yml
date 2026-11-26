@@ -22,6 +22,7 @@ on:
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
+      - scripts/lib/spine-json-runtime-compat.mjs
       - scripts/test-spine-player-runtime-assets.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
@@ -81,12 +82,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /api/github-upload.js
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
+            /.github/workflows/synthetic-webm-render-gate.yml
             /.github/workflows/build-sa-reference-index.yml
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-all.yml
@@ -164,12 +167,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/install-pinned-spine-players.sh
             /scripts/preview-skin-choice.mjs
             /scripts/preview-animation-choice.mjs
             /scripts/lib/preview-visibility-recovery.mjs
+            /scripts/lib/spine-json-runtime-compat.mjs
             /scripts/spine-export-webm.mjs
             /scripts/test-preview-visibility-recovery.mjs
       - uses: actions/setup-node@v4
@@ -224,6 +229,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -357,7 +363,7 @@ jobs:
             ' "$diagnostic_json" "out/$REPAIR_SLOT/meta.json"
             if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
               echo "RENDERER_DIAGNOSTICS_BEGIN"
-              grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
+              grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture|local_spine_runtime|headless_webgl' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
               echo "RENDERER_DIAGNOSTICS_END"
             fi
             echo "::warning::Render is blocked when the selected source animation has no visible changing frames; no alternate animation or skin is guessed"
@@ -423,6 +429,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
@@ -532,6 +539,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/verify-latest-twenty-live.mjs

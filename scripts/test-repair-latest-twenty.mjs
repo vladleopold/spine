@@ -18,6 +18,7 @@ const exportAllWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPa
 const exportFullWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/spine-export-full.yml'),'utf8');
 const lastTenWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-last-ten-previews.yml'),'utf8');
 const reportedWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/repair-reported-previews.yml'),'utf8');
+const syntheticRenderWorkflowSource=fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)),'../.github/workflows/synthetic-webm-render-gate.yml'),'utf8');
 const publicRunner='runs-on: ubuntu-24.04';
 function jobUsesPublicRunner(source,jobName){
   const marker=`  ${jobName}:\n`;
@@ -45,8 +46,11 @@ assert.match(liveAudit,/const expectedBlockedAnimation=String\(work\.animation\|
 assert.match(liveAudit,/const blockedAnimationMatches=expectedBlockedAnimation==='__SPINE_AUTO__'[\s\S]*?Boolean\(String\(record\.previewBlockedAnimation\|\|''\)\.trim\(\)\)/);
 assert.match(liveAudit,/blockedAnimationMatches[\s\S]*?previewBlockedSourceFingerprint===work\.sourceFingerprint/);
 assert.match(liveAudit,/renderableCandidates=snapshot\.filter\(work=>work\.ready===true\)\.length/);
-assert.match(liveAudit,/if\(failed\|\|mutatedSource\|\|ready\+blocked!==snapshot\.length\)process\.exitCode=1/,
-  'known source blockers must remain visible without stopping later archive offsets');
+assert.match(liveAudit,/let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0,claimedReady=0/);
+assert.match(liveAudit,/const expectedMedia=claimedReady\*fields\.length/);
+assert.match(liveAudit,/expectedMedia,mutatedSource/);
+assert.match(liveAudit,/if\(mutatedSource\|\|verifiedMedia!==expectedMedia\|\|ready\+blocked\+failed!==snapshot\.length\)process\.exitCode=1/,
+  'per-item render failures must not halt later archive offsets after every ready media file and source fingerprint has been verified');
 assert.ok(!liveAudit.includes('if(failed||blocked||ready!==snapshot.length'),
   'a source-blocked record must not prevent later batches from being repaired');
 const blockedAnimationMatches=(expected,actual)=>expected==='__SPINE_AUTO__'?Boolean(String(actual||'').trim()):actual===expected;
@@ -249,7 +253,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
   assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.dispatchStatus==="rendered"[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?record\.webmStatus="ready"[\s\S]*?summary\.ready\+\+/,
     "previously accepted media can be restored after a source-only downgrade only when all six files pass local, live and repository verification");
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v15-configured-default-skin-list"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v17-spine38-json-skin-map-normalization"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
@@ -344,8 +348,29 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     !workflowSource.includes("needs.verify-production.result == 'success'"),
     'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
 
+  const exactPrHeadRef='ref: ${{ github.event.pull_request.head.sha || github.sha }}';
+  for(const [name,source] of [
+    ['latest-twenty repair',workflowSource],
+    ['synthetic WebM gate',syntheticRenderWorkflowSource],
+    ['full export',exportFullWorkflowSource],
+  ]){
+    assert.ok(source.includes(exactPrHeadRef),
+      `${name} must test the exact PR head, not a stale base/merge ref`);
+  }
+  for(const [name,source] of [
+    ['latest-twenty repair',workflowSource],
+    ['synthetic WebM gate',syntheticRenderWorkflowSource],
+    ['full export',exportFullWorkflowSource],
+  ]){
+    assert.ok(source.includes('/.github/workflows/synthetic-webm-render-gate.yml'),
+      `${name} sparse checkout must include the workflow source inspected by the regression test`);
+  }
+
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'only the explicit latest-70 trigger file may start an automatic archive batch');
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v17-spine38-json-skin-map-normalization"/,
+    'a runtime compatibility change must invalidate previous blocked-preview decisions');
+
   assert.ok(!workflowSource.includes('  schedule:'),
     'archive recovery must not run unattended every day');
 
