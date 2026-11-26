@@ -159,6 +159,25 @@ assert.equal(selectedPlayable.webpPoster, '/hit.webp');
 assert.equal(selectedPlayable.webpPosterMedium, '/hit-medium.webp');
 assert.equal(selectedPlayable.webpPosterLow, '/hit-low.webp');
 
+const mediumOnlyPreview = mergeFullExportMetadata({
+  ...source,
+  animations: ['walk'],
+  defaultAnimation: 'walk',
+  webmPreview: '/stale-default.webm',
+  webpPoster: '/stale-default.webp',
+}, {
+  walk: {
+    previewDuration: 3,
+    webmPreviewMedium: '/walk-medium.webm',
+    webpPosterMedium: '/walk-medium.webp',
+  },
+}, '2026-11-20T00:00:00.000Z');
+assert.equal(mediumOnlyPreview.previewAnimation, 'walk');
+assert.equal(mediumOnlyPreview.webmPreview, '/walk-medium.webm',
+  'a medium-only selected WebM must populate the work-level video fallback');
+assert.equal(mediumOnlyPreview.webpPoster, '/walk-medium.webp',
+  'the work-level poster must come from the same selected animation and rendition');
+
 const preserveChosenPreview = mergeFullExportMetadata({
   ...source,
   animations: ['appear', 'disappear', 'hit', 'idle'],
