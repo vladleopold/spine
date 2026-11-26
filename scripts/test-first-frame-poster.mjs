@@ -16,7 +16,7 @@ assert.doesNotMatch(exporter,/pickPosterFrame|frameHasContent|first frame was em
 assert.match(helper,/-frames:v', '1'/);
 assert.match(helper,/-pix_fmt', 'rgba'/);
 assert.match(helper,/verifyPosterFirstFrame\(videoPath, posterPath\)/);
-assert.match(helper,/Math\.abs\(videoFrame\[i\] - posterFrame\[i\]\)/);
+assert.match(helper,/frameDifferenceMetrics/);
 assert.match(helper, /'-lossless', '0', '-quality', '88'/);
 assert.match(helper, /meanDelta > 3\.5/);
 assert.match(helper, /highDeltaRatio > 0\.025/);
