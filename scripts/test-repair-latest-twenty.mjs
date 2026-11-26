@@ -323,6 +323,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     repairSource.includes("meta?.ok===true") &&
     repairSource.includes("meta?.animationMatches===true"),
     'the publisher must merge only artifacts with explicit successful and animation-matched acceptance metadata');
+  assert.ok(repairSource.includes('meta?.distinctError==="DETERMINISTIC_WEBM_BLANK"') &&
+    repairSource.includes('"blocked-deterministic-capture"'),
+    'blank deterministic captures must be blocked for native inspection, not retried indefinitely');
 
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
   // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
