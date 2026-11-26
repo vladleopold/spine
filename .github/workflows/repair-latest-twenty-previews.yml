@@ -25,6 +25,7 @@ on:
       - scripts/lib/spine-player-runtime-assets.mjs
       - scripts/lib/spine-json-runtime-compat.mjs
       - scripts/test-spine-player-runtime-assets.mjs
+      - scripts/test-spine-json-runtime-compat.mjs
       - scripts/source-skeleton-choice.mjs
       - scripts/test-source-skeleton-choice.mjs
       - scripts/lib/first-frame-poster.mjs
@@ -152,6 +153,7 @@ jobs:
           node --check scripts/source-skeleton-choice.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-spine-player-runtime-assets.mjs
+          node scripts/test-spine-json-runtime-compat.mjs
           node scripts/test-public-index-fetch.mjs
           node scripts/test-repair-manifest-guard.mjs
           node scripts/test-preview-log-privacy.mjs
