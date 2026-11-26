@@ -154,6 +154,29 @@ export function summarizeRendererLog(text) {
     peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 
+
+// Read only the last maxBytes from a renderer log. Logs may contain proprietary
+// source paths and can be hundreds of MB; never read the full file just to
+// produce a bounded diagnostic excerpt.
+export function readRendererLogTail(filePath, maxBytes = 64 * 1024) {
+  const limit = Number(maxBytes);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1024 * 1024) {
+    throw new RangeError("Renderer log tail limit must be an integer from 1 to 1048576 bytes");
+  }
+  const fd = fs.openSync(filePath, "r");
+  try {
+    const size = fs.fstatSync(fd).size;
+    const length = Math.min(size, limit);
+    const buffer = Buffer.alloc(length);
+    if (length > 0) fs.readSync(fd, buffer, 0, length, size - length);
+    // A byte window can begin in the middle of a UTF-8 sequence. Decode with
+    // replacement rather than reading extra bytes and exceeding the cap.
+    return buffer.toString("utf8");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
   const log=readRendererLogExcerpt(process.argv[2]);
   console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
