@@ -90,6 +90,7 @@ jobs:
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-all.yml
             /.github/workflows/spine-export-full.yml
+            /.github/workflows/build-sa-reference-index.yml
             /scripts/
             /scripts/source-skeleton-choice.mjs
             /library/index.json
@@ -169,6 +170,7 @@ jobs:
             /scripts/preview-skin-choice.mjs
             /scripts/preview-animation-choice.mjs
             /scripts/lib/preview-visibility-recovery.mjs
+            /scripts/lib/spine-json-runtime-compat.mjs
             /scripts/spine-export-webm.mjs
             /scripts/test-preview-visibility-recovery.mjs
       - uses: actions/setup-node@v4
