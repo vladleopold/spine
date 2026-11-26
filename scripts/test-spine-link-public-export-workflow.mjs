@@ -14,7 +14,7 @@ test('Spine-Link project export is exposed as a reusable workflow', () => {
 });
 
 test('all executor jobs use GitHub-hosted Ubuntu and never self-hosted runners', () => {
-  assert.ok((workflow.match(/runs-on: ubuntu-24\\.04/g) || []).length >= 3);
+  assert.ok((workflow.match(/runs-on: ubuntu-24\.04/g) || []).length >= 3);
   assert.doesNotMatch(workflow, /self-hosted/i);
 });
 
