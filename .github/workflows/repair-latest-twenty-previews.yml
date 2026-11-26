@@ -358,7 +358,7 @@ jobs:
             ' "$diagnostic_json" "out/$REPAIR_SLOT/meta.json"
             if [[ -s "$RUNNER_TEMP/renderer.log" ]]; then
               echo "RENDERER_DIAGNOSTICS_BEGIN"
-              grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
+              grep -Ei 'error|failed|ffmpeg|timeout|unsupported|atlas|texture|local_spine_runtime|headless_webgl' "$RUNNER_TEMP/renderer.log" | tail -n 80 || true
               echo "RENDERER_DIAGNOSTICS_END"
             fi
             echo "::warning::Render is blocked when the selected source animation has no visible changing frames; no alternate animation or skin is guessed"
