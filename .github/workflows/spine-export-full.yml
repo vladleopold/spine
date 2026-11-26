@@ -136,7 +136,7 @@ jobs:
     name: 🎬 Opaque · #${{ matrix.animation_index }}
     needs: generate-matrix
     if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
-    runs-on: [self-hosted, linux, X64, spine-archive]
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -272,7 +272,7 @@ jobs:
     name: 🌀 Alpha · #${{ matrix.animation_index }}
     needs: generate-matrix
     if: github.event_name == 'repository_dispatch' && needs.generate-matrix.outputs.has-items == 'true'
-    runs-on: [self-hosted, linux, X64, spine-archive]
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
