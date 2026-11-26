@@ -196,6 +196,8 @@ test('normal WebM publication records the runtime preview track without rewritin
     'the renderer command sentinel must never be stored as a public animation key');
   assert.ok(renderWork.includes('allAnimationPreviews:{[anim]:selectedPreview}'),
     'the selected preview URL must be published atomically with previewAnimation');
+  assert.ok(renderWork.includes('const downloads={...selectedPreview'),
+    'later download publication must retain the primary WebM and poster URLs');
   assert.ok(renderWork.includes('Renderer did not report an actual runtime-selected animation'),
     'the renderer must not publish an automatic-selection sentinel as a track name');
 });
