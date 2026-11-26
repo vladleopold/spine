@@ -423,7 +423,7 @@ jobs:
       REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
     permissions:
       contents: write
-    if: github.ref == 'refs/heads/main' && needs.inventory.result == 'success' && needs.render.result == 'success'
+    if: always() && github.ref == 'refs/heads/main' && needs.inventory.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     concurrency:
