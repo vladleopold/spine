@@ -2,6 +2,12 @@ name: Audit and repair Spine preview FPS
 on:
   schedule:
     - cron: '17 3 * * 0'
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/audit-preview-videos.yml
+      - scripts/audit-preview-videos.mjs
+      - scripts/test-audit-preview-videos.mjs
   workflow_dispatch:
     inputs:
       repair:
@@ -33,6 +39,8 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
+      - name: Guard the audit script syntax
+        run: node scripts/test-audit-preview-videos.mjs
       - name: Audit previews and optionally repair FPS
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.repair }}" = "true" ]; then
