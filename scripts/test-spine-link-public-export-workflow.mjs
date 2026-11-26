@@ -23,6 +23,8 @@ test('public exporter uses its own least-privilege GitHub token for storage writ
 test('licensed Editor configuration is checked before any project is marked ready', () => {
   assert.ok(workflow.includes('SPINE_LICENSE'));
   assert.ok(workflow.includes('SPINE_LINUX_URL'));
-  assert.ok(workflow.includes('SPINE_LINK_LICENSED_EXPORT_WAITING_FOR_SECRETS'));
-  assert.ok(workflow.includes('Install licensed Spine 4.3.26 Linux Editor'));
+  assert.ok(workflow.includes("cron: '17 * * * *'"));
+  assert.ok(workflow.includes("github.event_name == 'schedule'"));
+  assert.ok(workflow.includes('conversion will be recorded as needs-editor'));
+  assert.ok(workflow.includes('node scripts/spine-link-project-cloud-export.mjs'));
 });
