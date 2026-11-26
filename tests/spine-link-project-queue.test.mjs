@@ -64,8 +64,9 @@ test('public repository directly receives project export dispatch and executes o
   assert.ok(!publicWorkflow.includes('3Spine-core'));
 });
 
-test('missing licensed Editor is a recorded needs-editor state, not a failed runner job', () => {
-  assert.equal(conversionExitCode('needs-editor'), 0);
+test('missing licensed Editor is recorded but must fail the workflow instead of appearing successful', () => {
+  assert.equal(conversionExitCode('needs-editor'), 78);
   assert.equal(conversionExitCode('ready'), 0);
   assert.equal(conversionExitCode('failed'), 1);
+  assert.equal(conversionExitCode('unknown'), 1);
 });
