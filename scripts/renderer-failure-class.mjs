@@ -21,7 +21,7 @@ export function readRendererLogExcerpt(filePath, maxBytes = 64 * 1024, headBytes
       if (size > 0) fs.readSync(fd, whole, 0, size, 0);
       return whole.toString("utf8");
     }
-    const separator = "\\n[... renderer log middle omitted ...]\\n";
+    const separator = "\n[... renderer log middle omitted ...]\n";
     const separatorBytes = Buffer.byteLength(separator);
     const firstLength = Math.min(size, headLimit);
     const lastLength = Math.min(Math.max(0, limit - firstLength - separatorBytes), size - firstLength);
