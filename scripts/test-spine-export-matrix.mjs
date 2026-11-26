@@ -263,8 +263,8 @@ assert.ok(validationJob.includes('/.github/workflows/spine-export-full.yml'));
 const validationLibraryPaths = validationJob.split('\n')
   .map((line) => line.trim())
   .filter((line) => line.startsWith('/library'));
-assert.deepEqual(validationLibraryPaths, ['/library_02/index.json'],
-  'contract validation may fetch the public index but never media directories');
+assert.deepEqual(validationLibraryPaths, ['/library_02/index.json', '/library_01/index.json', '/library_01/preview-index/'],
+  'contract validation may fetch the current index and compact historical lookup shards but never media directories');
 assert.ok(workflow.includes('needs: [generate-matrix, export-opaque, export-alpha]'));
 assert.ok(workflow.includes("needs.generate-matrix.outputs.has-items == 'true'"));
 const uploadIdExpression = String.fromCharCode(36) + '{{ github.event.client_payload.uploadId }}';
