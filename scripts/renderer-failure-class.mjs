@@ -3,6 +3,39 @@
 // or raw browser console messages. Only stable error categories and counts.
 import fs from "node:fs";
 
+// Read a bounded head-and-tail excerpt for diagnostics. Renderer logs can
+// contain huge data-URI lines and proprietary source paths; never materialize
+// the complete file when only the version context and final failure are needed.
+export function readRendererLogExcerpt(filePath, maxBytes = 64 * 1024, headBytes = Math.floor(maxBytes / 2)) {
+  const limit = Number(maxBytes);
+  const headLimit = Number(headBytes);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1024 * 1024 ||
+      !Number.isSafeInteger(headLimit) || headLimit < 0 || headLimit > limit) {
+    throw new RangeError("Renderer log excerpt limits must be valid byte counts no greater than 1048576");
+  }
+  const fd = fs.openSync(filePath, "r");
+  try {
+    const size = fs.fstatSync(fd).size;
+    if (size <= limit) {
+      const whole = Buffer.alloc(size);
+      if (size > 0) fs.readSync(fd, whole, 0, size, 0);
+      return whole.toString("utf8");
+    }
+    const separator = "\\n[... renderer log middle omitted ...]\\n";
+    const separatorBytes = Buffer.byteLength(separator);
+    const firstLength = Math.min(size, headLimit);
+    const lastLength = Math.min(Math.max(0, limit - firstLength - separatorBytes), size - firstLength);
+    const first = Buffer.alloc(firstLength);
+    const last = Buffer.alloc(lastLength);
+    if (firstLength > 0) fs.readSync(fd, first, 0, firstLength, 0);
+    if (lastLength > 0) fs.readSync(fd, last, 0, lastLength, size - lastLength);
+    return first.toString("utf8") + separator + last.toString("utf8");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+
 export function sanitizeRuntimeDiagnostics(diagnostics={}) {
   const list=value=>Array.isArray(value)?value:[];
   const numeric=value=>Number.isFinite(Number(value))?Number(value):0;
