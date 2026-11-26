@@ -274,7 +274,7 @@ async function publish(update){
  }
 }
 const url=file=>`${origin}/assets/${workPath}/${file}`;
-await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,defaultAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
+await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm'),webmPreviewMedium:url('preview-medium.webm'),webmPreviewLow:url('preview-low.webm'),webmPreviewPath:`${workPath}/preview.webm`,webpPoster:url('preview.webp'),webpPosterMedium:url('preview-medium.webp'),webpPosterLow:url('preview-low.webp'),previewWidth:meta.width,previewHeight:meta.height,previewDuration:meta.animationDuration,qualityWidths:meta.qualityWidths,defaultAnimation:meta.animation,previewAnimation:meta.animation,animations:meta.animations,skeleton:meta.skeleton,atlas:meta.atlas,textures:meta.textures,webmGeneratedAt:new Date().toISOString()});
 // Verify every Download format and size on the requested animation. Remaining
 // animations are handled by the existing full-export workflow after this run.
 run('node',['scripts/spine-export-webm.mjs',...flags.filter(f=>!f.startsWith('--output=')),'--alpha',`--output=${path.join(temp,'alpha.webm')}`]);
@@ -299,7 +299,9 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
   }else{add(file,dst);downloads[key+cap]=`${origin}/assets/${dst}`;}
  }
 }
-await publish({allAnimationPreviews:{...entryForUpload(process.cwd(),id).entry.allAnimationPreviews,[anim]:downloads},fullExportStatus:(meta.animations.length===1?'ready':'partial'),fullExportGeneratedAt:new Date().toISOString()});
+const existingPreviews={...(entryForUpload(process.cwd(),id).entry.allAnimationPreviews||{})};
+delete existingPreviews.__SPINE_AUTO__;
+await publish({allAnimationPreviews:{...existingPreviews,[anim]:downloads},fullExportStatus:(meta.animations.length===1?'ready':'partial'),fullExportGeneratedAt:new Date().toISOString()});
 report.status='ready';
 report.code=null;
 writeReport();
