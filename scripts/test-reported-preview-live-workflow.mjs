@@ -117,6 +117,8 @@ const repairVerifyStart = repairWorkflow.indexOf('  verify-production:');
 assert.ok(repairVerifyStart >= 0, 'repair workflow must retain one post-publish production verification job');
 const repairVerifyJob = repairWorkflow.slice(repairVerifyStart);
 const repairVerifySparse = sparseCheckoutPaths(repairVerifyJob, 'post-publish verification job');
+assert.ok(repairVerifyJob.includes("if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'"),
+  'post-publish verification must run when publication succeeded even if one matrix render failed');
 assert.match(repairVerifyJob,/if:\\s*always\\(\\)[\\s\\S]*?needs\\.publish\\.result\\s*==\\s*'success'/,
   'post-publish verification must run when publication succeeded even if one matrix render failed');
 
@@ -169,8 +171,10 @@ assert.match(repairWorkflow, /pull_request:/,
   'the repair workflow must validate pull-request changes');
 assert.match(repairWorkflow, /workflow_dispatch:/,
   'targeted reported-preview repairs must remain manually dispatchable');
-const reportedPushSection=repairWorkflow.split('  push:')[1]?.split('\\n  pull_request:')[0]||'';
-assert.match(reportedPushSection,/branches:\\s*\\[main\\][\\s\\S]*?paths:\\s*\\n\\s*- scripts\\/repair-reported-previews-trigger\\.json/,
+const reportedPushSection=repairWorkflow.split('  push:')[1]?.split('  pull_request:')[0]||'';
+assert.ok(reportedPushSection.includes('branches: [main]') &&
+  reportedPushSection.includes('paths:') &&
+  reportedPushSection.includes('- scripts/repair-reported-previews-trigger.json'),
   'the targeted repair may run on main only through its explicit recovery marker, never on every push');
 assert.match(repairWorkflow, /^permissions:\s*\n\s+contents:\s+read/m,
   'workflow-wide permissions must be read-only');
