@@ -35,7 +35,7 @@ jobs:
       matrix: ${{ steps.plan.outputs.matrix }}
       candidateCount: ${{ steps.plan.outputs.candidateCount }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -49,7 +49,7 @@ jobs:
             /.github/workflows/spine-export-all.yml
             /library/index.json
             /library_*/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Freeze exact default-animation media manifest
@@ -80,7 +80,7 @@ jobs:
       matrix:
         batchIndex: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -108,7 +108,7 @@ jobs:
           execFileSync('git', ['sparse-checkout', 'add', '--skip-checks', ...paths], { stdio: 'ignore' });
           fs.writeFileSync('repair-batch.json', JSON.stringify(batch.entries));
           NODE
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install pinned Spine Player runtimes for source rendering fallback
@@ -145,7 +145,7 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -160,7 +160,7 @@ jobs:
           pattern: archive-card-previews-*
           path: downloaded-previews
           merge-multiple: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Publish only verified media and frozen metadata
@@ -204,7 +204,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -215,7 +215,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: archive-preview-repair-summary
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify every restored WebM and its exact WebP poster on production
