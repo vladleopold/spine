@@ -343,11 +343,14 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'automatic recovery must stop after the newest 70 works');
   assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
     'the second batch must be limited to the remaining 20 works, not another 50');
-  assert.ok(workflowSource.includes("needs.render.result == 'success'") &&
-    workflowSource.includes("needs.publish.result == 'success'") &&
-    !workflowSource.includes("needs.verify-production.result == 'success'"),
-    'a later batch must require successful rendering and verified-only publication, but allow independent batches after partial live-audit failures');
-  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\n'));
+  assert.ok(workflowSource.includes("needs.publish.result == 'success'") &&
+    workflowSource.includes("needs.verify-production.result == 'success'") &&
+    !workflowSource.includes("needs.render.result == 'success'"),
+    'later batches require a successful publish and live audit, but may continue after individual render failures');
+  const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:\\n'));
+  assert.match(verifyJobBlock,/if:\\s*always\\(\\)\\s*&&\\s*needs\\.publish\\.result\\s*==\\s*'success'/,
+    'the production audit must run when publication succeeded even if one render matrix item failed');
+  const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:\\n'));
   assert.match(dispatchJobBlock,/if:\\s*always\\(\\)\\s*&&/,
     'next archive batch must still dispatch when the independent live audit reports failed items');
 
