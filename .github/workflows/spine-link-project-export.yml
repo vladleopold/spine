@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           sparse-checkout-cone-mode: false
@@ -55,7 +55,7 @@ jobs:
             /tests/
             /.github/workflows/spine-link-project-export.yml
             /.github/workflows/spine-export-full.yml
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Run queue, Editor safety and public workflow tests
@@ -80,13 +80,13 @@ jobs:
       SPINE_LINUX_URL: ${{ secrets.SPINE_LINUX_URL }}
       SPINE_SITE_ORIGIN: https://spine-link.vercel.app
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Select authorized project from public storage queue
@@ -96,7 +96,7 @@ jobs:
         run: node scripts/spine-link-project-queue.mjs
       - name: Checkout only the selected project and its images
         if: steps.pick.outputs.found == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: vladleopold/spine
           ref: main
