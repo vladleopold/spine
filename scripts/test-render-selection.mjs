@@ -188,9 +188,14 @@ test('visible canvas recovery survives recorder stop and exposes exact selected 
 
 test('normal WebM publication records the runtime preview track without rewriting the source default', () => {
   const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
-  assert.match(renderWork, /previewAnimation:meta\.animation/);
-  assert.doesNotMatch(renderWork, /defaultAnimation:meta\.animation/,
+  assert.ok(renderWork.includes('previewAnimation:anim'),
+    'the actual runtime-selected track must be stored as previewAnimation');
+  assert.ok(!renderWork.includes('defaultAnimation:meta.animation'),
     'preview selection must not overwrite the source default animation');
-  assert.match(renderWork, /delete merged\.allAnimationPreviews\.__SPINE_AUTO__/,
+  assert.ok(renderWork.includes('delete merged.allAnimationPreviews.__SPINE_AUTO__'),
     'the renderer command sentinel must never be stored as a public animation key');
+  assert.ok(renderWork.includes('allAnimationPreviews:{[anim]:selectedPreview}'),
+    'the selected preview URL must be published atomically with previewAnimation');
+  assert.ok(renderWork.includes('Renderer did not report an actual runtime-selected animation'),
+    'the renderer must not publish an automatic-selection sentinel as a track name');
 });
