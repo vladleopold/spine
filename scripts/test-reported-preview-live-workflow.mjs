@@ -119,8 +119,6 @@ const repairVerifyJob = repairWorkflow.slice(repairVerifyStart);
 const repairVerifySparse = sparseCheckoutPaths(repairVerifyJob, 'post-publish verification job');
 assert.ok(repairVerifyJob.includes("if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success'"),
   'post-publish verification must run when publication succeeded even if one matrix render failed');
-assert.match(repairVerifyJob,/if:\s*always\(\)[\s\S]*?needs\.publish\.result\s*==\s*'success'/,
-  'post-publish verification must run when publication succeeded even if one matrix render failed');
 
 const entrypoints = [
   'scripts/verify-reported-preview-live.mjs',
