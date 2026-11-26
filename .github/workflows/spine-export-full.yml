@@ -636,7 +636,7 @@ jobs:
             git commit -m "Full export: verified preview media"
 
             # 5. Push — retry if rejected by another concurrent push
-            if git push origin main; then
+            if git push origin HEAD:main; then
               echo "Successfully pushed on attempt $i!"
               exit 0
             else

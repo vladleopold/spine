@@ -28,3 +28,13 @@ test('licensed Editor configuration is checked before any project is marked read
   assert.ok(workflow.includes('conversion will be recorded as needs-editor'));
   assert.ok(workflow.includes('node scripts/spine-link-project-cloud-export.mjs'));
 });
+
+const fullExportWorkflow = fs.readFileSync(
+  new URL('../.github/workflows/spine-export-full.yml', import.meta.url),
+  'utf8',
+);
+
+test('full export pushes detached-checkout commits with an explicit main refspec', () => {
+  assert.match(fullExportWorkflow, /git push origin HEAD:main/);
+  assert.doesNotMatch(fullExportWorkflow, /git push origin main/);
+});
