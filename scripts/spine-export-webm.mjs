@@ -1492,7 +1492,7 @@ try {
       // The browser still renders a visible WebGL scene, but Playwright's
       // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
       // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
-      // compositor. All PNGs stay in this private runner's temporary folder.
+      // compositor. All PNGs stay in the hosted runner's temporary folder.
       await page.evaluate(name=>{
         const player=window.__exportPlayer;
         if(!player || !player.canvas || !player.animationState)
