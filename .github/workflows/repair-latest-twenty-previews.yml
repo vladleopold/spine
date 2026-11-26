@@ -82,7 +82,7 @@ jobs:
       totalCount: ${{ steps.latest.outputs.totalCount }}
       nextOffset: ${{ steps.latest.outputs.nextOffset }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -100,7 +100,7 @@ jobs:
             /scripts/source-skeleton-choice.mjs
             /library/index.json
             /library_*/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install pinned FFmpeg binaries for synthetic first-frame poster regression
@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -183,7 +183,7 @@ jobs:
             /scripts/test-preview-visibility-recovery.mjs
             /scripts/test-spine-json-runtime-compat.mjs
             /scripts/test-canvas-fallback.mjs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify all four pinned Spine runtime bundles load from disk
@@ -236,7 +236,7 @@ jobs:
       matrix:
         entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -265,7 +265,7 @@ jobs:
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
           git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - uses: actions/download-artifact@v4
@@ -436,7 +436,7 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -479,7 +479,7 @@ jobs:
           pattern: latest50-*
           path: downloaded-latest50
           merge-multiple: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install pinned FFmpeg binaries for exact first-frame poster refresh
@@ -546,7 +546,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -565,7 +565,7 @@ jobs:
         env:
           REPAIR_IDS_FILE: repair-manifest/repair-manifest.json
         run: node scripts/mask-preview-manifest.mjs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify every selected public media response after publication
