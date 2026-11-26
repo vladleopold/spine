@@ -201,6 +201,6 @@ export function summarizeRendererLog(text) {
 }
 
 if(process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()) && process.argv.length>2){
-  const log=readRendererLogSample(process.argv[2]);
+  const log=readRendererLogExcerpt(process.argv[2]);
   console.log("SANITIZED_RENDER_RESULT="+JSON.stringify(summarizeRendererLog(log)));
 }
