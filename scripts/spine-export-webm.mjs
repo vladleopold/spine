@@ -695,6 +695,34 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
       return (hash >>> 0).toString(16);
     } catch (e) { return ''; }
   };
+
+  window.__captureSpineFrame = function () {
+    try {
+      var c = player && player.canvas;
+      if (!c) return '';
+      var g = c.getContext('webgl2') || c.getContext('webgl');
+      if (!g) return '';
+      var w = g.drawingBufferWidth, h = g.drawingBufferHeight;
+      if (!w || !h) return '';
+      g.finish();
+      var pixels = new Uint8Array(w * h * 4);
+      g.readPixels(0, 0, w, h, g.RGBA, g.UNSIGNED_BYTE, pixels);
+      var flipped = new Uint8ClampedArray(pixels.length);
+      var rowBytes = w * 4;
+      for (var y = 0; y < h; y++) {
+        var sourceStart = (h - 1 - y) * rowBytes;
+        flipped.set(pixels.subarray(sourceStart, sourceStart + rowBytes), y * rowBytes);
+      }
+      var frame = document.createElement('canvas');
+      frame.width = w;
+      frame.height = h;
+      var context = frame.getContext('2d');
+      if (!context) return '';
+      context.putImageData(new ImageData(flipped, w, h), 0, 0);
+      return frame.toDataURL('image/png');
+    } catch (e) { return ''; }
+  };
+
   var config = {
     ${skeletonPlayerKey}: '${skeletonRawUrl}',
     ${atlasPlayerKey}: '${atlasRawUrl}',
@@ -1470,6 +1498,7 @@ try {
         window.__setPlayerAnimation(player, name);
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
+      console.error('DETERMINISTIC_CAPTURE_SOURCE=WEBGL_READPIXELS');
       const canvasHost=page.locator('#player canvas').first();
       await canvasHost.waitFor({state:'visible',timeout:10000});
       let visibleFrames=0;
@@ -1480,7 +1509,10 @@ try {
         if(peak>=40)visibleFrames++;
         // CDP screenshot captures the actual composited canvas, including
         // graphics that do not survive canvas.toDataURL in headless WebGL.
-        const png=await canvasHost.screenshot({type:'png',timeout:15000});
+        const dataUrl=await page.evaluate(()=>window.__captureSpineFrame?.()||'');
+        if(!dataUrl.startsWith('data:image/png;base64,'))throw new Error('WEBGL_READPIXELS_CAPTURE_FAILED');
+        const png=Buffer.from(dataUrl.slice(dataUrl.indexOf(',')+1),'base64');
+        if(png.length<100)throw new Error('WEBGL_READPIXELS_CAPTURE_EMPTY');
         if(!png||png.length<100)throw new Error('Real-time canvas screenshot failed');
         frameHashes.add(createHash('sha256').update(png).digest('hex'));
         fs.writeFileSync(path.join(framesDir,String(frame).padStart(6,'0')+'.png'),png);
