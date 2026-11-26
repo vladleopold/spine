@@ -1482,8 +1482,13 @@ try {
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
       const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
-      const frameCount = fallbackFrameCount({fps:args.fps,duration});
-      const intervalMs = duration * 1000 / frameCount;
+      // The CDP screenshot path is substantially slower than MediaRecorder:
+      // cap it at 15fps so a 30-second source stays within the hosted job's
+      // eight-minute renderer budget. Normal exports still use args.fps.
+      const fallbackFps = deterministicFallbackFps(args.fps);
+      const frameCount = fallbackFrameCount({fps:fallbackFps,duration});
+      const intervalMs = 1000 / fallbackFps;
+      console.error('DETERMINISTIC_CAPTURE_FPS=' + fallbackFps + ' FRAME_COUNT=' + frameCount);
       // The browser still renders a visible WebGL scene, but Playwright's
       // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
       // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
@@ -1519,12 +1524,24 @@ try {
       console.error('REALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES='+visibleFrames+' DISTINCT='+frameHashes.size);
       console.error('CANVAS_FALLBACK_CAPTURE=passed');
       const recovered=path.join(tempDir,'deterministic.webm');
-      execFileSync('ffmpeg',[
+      const encodeArgs=[
         '-y','-v','error','-framerate',String(frameCount/duration),
-        '-i',path.join(framesDir,'%06d.png'),
+        '-start_number','0','-i',path.join(framesDir,'%06d.png'),
         '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
         '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
-      ],{stdio:'inherit'});
+      ];
+      try {
+        execFileSync('ffmpeg',encodeArgs,{stdio:['ignore','pipe','pipe'],maxBuffer:4*1024*1024});
+      } catch (error) {
+        const stderr=String(error.stderr||'').replaceAll(tempDir,'[renderer-temp]').slice(0,1200);
+        console.error('DETERMINISTIC_FFMPEG_ENCODE_FAILED ' + JSON.stringify({
+          status:Number.isInteger(error.status)?error.status:null,
+          signal:error.signal||null,
+          code:error.code||null,
+          stderr,
+        }));
+        throw error;
+      }
       if (!encodedHasContent(recovered,duration))
         throw new Error('Spine runtime generated blank deterministic frames; artwork requires native inspection');
       if (!hasSufficientMotion(recovered))
