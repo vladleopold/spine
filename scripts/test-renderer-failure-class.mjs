@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog } from "./renderer-failure-class.mjs";
+import os from "node:os";
+import path from "node:path";
+import { classifyFfmpegFailure, classifyRendererError, summarizeRendererLog, readRendererLogSample, sanitizeRuntimeDiagnostics } from "./renderer-failure-class.mjs";
 
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libwebp'"), "FFMPEG_WEBP_ENCODER_UNAVAILABLE");
 assert.equal(classifyFfmpegFailure("Unknown encoder 'libvpx-vp9'"), "FFMPEG_VP9_ENCODER_UNAVAILABLE");
@@ -12,6 +14,36 @@ assert.equal(classifyFfmpegFailure("Resource temporarily unavailable"), "FFMPEG_
 assert.equal(classifyFfmpegFailure("WebP is not the same first frame of its paired WebM"), "POSTER_FRAME_MISMATCH");
 assert.equal(classifyFfmpegFailure("FFmpeg processing failed or skipped: Command failed"), "FFMPEG_UNCLASSIFIED");
 assert.equal(classifyFfmpegFailure("ordinary render log"), "NONE");
+const safeRuntimeDiagnostics=sanitizeRuntimeDiagnostics({
+  selectedAnimation:"private-animation-name",trackAnimation:"private-animation-name",trackTime:1.25,
+  defaultSkin:"private-skin-name",skinNames:["default","private-skin-name"],activeSkin:"private-skin-name",
+  attachedSlots:[{slot:"private-slot",attachment:"private-attachment",worldVertices:[1,2,3,4]}],
+  bounds:{x:1,y:2,width:300,height:400},bones:[{name:"private-bone"}],
+  atlasPages:[{name:"private-atlas-page",textureLoaded:true}],assetErrors:["/private/source/secret.png"],
+  gl:{error:0,contextLost:false},canvas:{width:960,height:720},viewport:{x:1,y:2,width:300,height:400},
+});
+assert.equal(safeRuntimeDiagnostics.selectedAnimationPresent,true);
+assert.equal(safeRuntimeDiagnostics.attachedSlotCount,1);
+assert.equal(safeRuntimeDiagnostics.canvas.width,960);
+assert.doesNotMatch(JSON.stringify(safeRuntimeDiagnostics),/private-animation-name|private-skin-name|private-slot|private-attachment|private-bone|private-atlas-page|secret\.png/);
+
+const hugeLogDir=fs.mkdtempSync(path.join(os.tmpdir(),"spine-renderer-log-"));
+const hugeLogPath=path.join(hugeLogDir,"renderer.log");
+const hugeFd=fs.openSync(hugeLogPath,"w");
+const hugeSize=600*1024*1024;
+const hugeHead=Buffer.from("Skeleton: fixture (v3.8.59)\\nPLAYER_READY=1\\n");
+const hugeTail=Buffer.from("Error: No visible real-time Spine frames\\n");
+fs.writeSync(hugeFd,hugeHead,0,hugeHead.length,0);
+fs.ftruncateSync(hugeFd,hugeSize);
+fs.writeSync(hugeFd,hugeTail,0,hugeTail.length,hugeSize-hugeTail.length);
+fs.closeSync(hugeFd);
+const boundedLog=readRendererLogSample(hugeLogPath);
+assert.ok(boundedLog.length<3*1024*1024,"large renderer logs must be sampled, not loaded into one unbounded string");
+assert.match(boundedLog,/Skeleton: fixture/);
+assert.match(boundedLog,/No visible real-time Spine frames/);
+assert.equal(summarizeRendererLog(boundedLog).distinctError,"COMPOSITED_FRAMES_NOT_VISIBLE");
+fs.rmSync(hugeLogDir,{recursive:true,force:true});
+
 assert.equal(classifyFfmpegFailure("Error: ENOENT: no such file or directory, open 'library_02/missing/source.json'"), "NONE",
   "a missing Spine source file is not an FFmpeg input failure");
 assert.equal(classifyFfmpegFailure("ffmpeg: No such file or directory while opening input"), "FFMPEG_INPUT_MISSING");
@@ -153,6 +185,10 @@ assert.ok(exporter.includes('window.__captureSpineFrame = function ()'),
 assert.ok(exporter.includes("const dataUrl=await page.evaluate(()=>window.__captureSpineFrame?.()||'');"));
 assert.ok(exporter.includes('DETERMINISTIC_CAPTURE_SOURCE=WEBGL_READPIXELS'));
 assert.doesNotMatch(exporter,/canvasHost\.screenshot|page\.screenshot/);
+assert.doesNotMatch(exporter,/SPINE_SCREENSHOT_JPEG_BASE64|diagnosticScreenshot/,
+  "private preview pixels must never be embedded in public GitHub Actions logs");
+assert.ok(exporter.includes("sanitizeRuntimeDiagnostics(runtimeDiagnostics)"),
+  "runtime diagnostics must be reduced to safe counts and dimensions before logging");
 assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
 assert.ok(exporter.includes("configuredPreviewSkinCandidates(skinConfig)"), "use only skin names explicitly declared by the uploaded source config");
 assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
