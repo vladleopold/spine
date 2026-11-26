@@ -171,7 +171,7 @@ console.log("PASS renderer stage diagnostics distinguish player-ready from invis
   const root=fs.mkdtempSync(path.join(os.tmpdir(),"renderer-log-excerpt-"));
   try {
     const file=path.join(root,"renderer.log");
-    fs.writeFileSync(file,"Skeleton: source (v4.3.26)\nPRIVATE_MIDDLE_MARKER\n"+"x".repeat(2*1024*1024)+"\nError: No visible real-time Spine frames\n");
+    fs.writeFileSync(file,"Skeleton: source (v4.3.26)\n"+"x".repeat(1024*1024)+"PRIVATE_MIDDLE_MARKER\n"+"x".repeat(1024*1024)+"\nError: No visible real-time Spine frames\n");
     const excerpt=readRendererLogExcerpt(file,256,64);
     assert.ok(Buffer.byteLength(excerpt)<=256,"diagnostic reader must cap bytes rather than materialize the full log");
     assert.match(excerpt,/Skeleton: source \(v4\.3\.26\)/,"the beginning of the log must retain the skeleton version");
