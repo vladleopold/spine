@@ -1426,7 +1426,7 @@ try {
   // Sample the ENCODED result, not just a live player pixel, and if it is
   // effectively blank, capture deterministic PNG frames from the real Spine
   // runtime and encode those as the WebM source. These temporary frames never
-  // leave the private runner and are not included in any artifact.
+  // remain on the hosted runner and are not included in any artifact.
   if (!args.alpha) {
     const seemsVisible = (data) => {
       if (!data || data.length < 200) return false;
@@ -1497,7 +1497,7 @@ try {
       // The browser still renders a visible WebGL scene, but Playwright's
       // fake-clock pause can prevent Spine's rAF/WebGL compositor from drawing.
       // Capture REAL on-screen canvas frames using wall-clock rAF and Chromium's
-      // compositor. All PNGs stay in this private runner's temporary folder.
+      // compositor. All PNGs stay in the hosted runner's temporary folder.
       await page.evaluate(name=>{
         const player=window.__exportPlayer;
         if(!player || !player.canvas || !player.animationState)
