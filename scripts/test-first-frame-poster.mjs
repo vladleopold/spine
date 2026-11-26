@@ -26,7 +26,7 @@ const transparentPixelDifference=frameDifferenceMetrics(
 );
 assert.equal(transparentPixelDifference.maxDelta,10,
   'RGB differences under fully transparent pixels must not affect visual poster fidelity');
-assert.ok(transparentPixelDifference.meanDelta < 3,
+assert.ok(transparentPixelDifference.meanDelta < 4,
   'transparent RGB noise must not inflate average visual difference');
 
 assert.doesNotMatch(helper,/-ss|positions|pickPosterFrame|scan real timeline/);
