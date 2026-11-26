@@ -2,12 +2,6 @@ name: Audit and repair Spine preview FPS
 on:
   schedule:
     - cron: '17 3 * * 0'
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/audit-preview-videos.yml
-      - scripts/audit-preview-videos.mjs
-      - scripts/test-audit-preview-videos.mjs
   workflow_dispatch:
     inputs:
       repair:
