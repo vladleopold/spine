@@ -4,15 +4,10 @@
 // a network outage.
 
 /**
- * Spine 3.7 binary skeletons are readable by the bundled 3.8 player.
- * Keep JSON exports on their native 3.7 path; only binary .skel gets the
- * compatibility override.
+ * Spine 3.7 Web Player accepts JSON only, and the 3.8 runtime cannot parse
+ * 3.7 binary SKEL data. Keep JSON on its native runtime and block binary .skel.
  */
-export function runtimeVersionOverrideForSpineSkeleton(version, skeletonFile) {
-  const normalizedVersion = String(version || '').trim();
-  if (/^3\.7(?:\.|$)/.test(normalizedVersion) && /\.skel$/i.test(String(skeletonFile || ''))) {
-    return '3.8';
-  }
+export function runtimeVersionOverrideForSpineSkeleton(_version, _skeletonFile) {
   return '';
 }
 
@@ -41,23 +36,21 @@ export function spinePlayerSourceBlocker(version, skeletonFile) {
     };
   }
 
-  // Spine 3.7's player accepts JSON only. Binary 3.7 is routed to the
-  // compatible bundled 3.8 player by runtimeVersionOverrideForSpineSkeleton.
+  // Spine 3.7's browser player accepts JSON only; 3.8 cannot parse 3.7 SKEL.
   const isBinarySkeleton = /\.skel$/i.test(String(skeletonFile || ''));
   if (major === 3 && minor === 7 && isBinarySkeleton &&
       !runtimeVersionOverrideForSpineSkeleton(normalizedVersion, skeletonFile)) {
     return {
       code: 'UNSUPPORTED_SPINE_3_7_BINARY_SKELETON',
-      message: 'Spine 3.7 binary .skel requires the compatible bundled 3.8 player.',
+      message: 'Spine 3.7 binary .skel is not supported by the bundled browser player; re-export the same project as JSON using Spine Editor 3.7.',
     };
   }
   return null;
 }
 
 
-// Return only the minor component expected by the legacy vendor asset paths.
-// Binary Spine 3.7 is parsed by the compatible 3.8 runtime; returning the
-// full override ("3.8") here would construct the invalid 3.3.8 asset URL.
+// Return only the minor component expected by supported legacy vendor paths.
+// Spine 3.7 binary is blocked before runtime selection; JSON remains on 3.7.
 export function runtimeMinorForSpineSkeleton(version, skeletonFile) {
   const override = runtimeVersionOverrideForSpineSkeleton(version, skeletonFile);
   const selected = override || String(version || '').trim();

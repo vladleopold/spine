@@ -92,7 +92,7 @@ for(const work of snapshot){
   // a blocker even when the publisher uses a more general blocked-missing-source
   // status (for example, an atlas with unprovided secondary pages).
   if(work.ready===false &&
-      ['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION'].includes(work.blockedReason) &&
+      ['SPINE_VERSION_UNKNOWN','UNSUPPORTED_SPINE_WEB_PLAYER_VERSION','UNSUPPORTED_SPINE_3_7_BINARY_SKELETON'].includes(work.blockedReason) &&
       record.webmStatus==='failed' && record.previewStatus==='failed'){
     // The inventory has proved these exact sources cannot be rendered by the
     // pinned runtime. Historical failed labels are source blockers, not new
