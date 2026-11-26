@@ -174,3 +174,17 @@ test('reference index rebuild uses an isolated lock and public pinned Ubuntu run
   assert.ok(workflow.includes('runs-on: ubuntu-24.04'));
   assert.ok(workflow.includes('cancel-in-progress: true'));
 });
+
+
+test('normal preview publication stores the real selected animation and removes the auto sentinel', () => {
+  const renderWork = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+  assert.match(renderWork, /previewAnimation:meta\.animation/);
+  assert.match(renderWork, /delete existingPreviews\.__SPINE_AUTO__/);
+});
+
+test('renderer preserves the validated visible peak and records its exact selected track', () => {
+  const exporter = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
+  assert.match(exporter, /lastVisibleFramePeak = Math\.max\(lastVisibleFramePeak, framePeak\)/);
+  assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
+  assert.match(exporter, /SPINE_SELECTED_ANIMATION_B64=/);
+});
