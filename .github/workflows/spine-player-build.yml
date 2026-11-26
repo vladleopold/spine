@@ -1,0 +1,51 @@
+name: Spine Player build and error contract
+on:
+  pull_request:
+    paths:
+      - 'src/SpineApp.tsx'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/test-spine-player-error-propagation.mjs'
+      - '.github/workflows/spine-player-build.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/SpineApp.tsx'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/test-spine-player-error-propagation.mjs'
+      - '.github/workflows/spine-player-build.yml'
+permissions:
+  contents: read
+concurrency:
+  group: spine-player-build-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-and-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/spine-player-build.yml
+            /package.json
+            /package-lock.json
+            /index.html
+            /vite.config.ts
+            /tsconfig*.json
+            /src/
+            /public/
+            /scripts/test-spine-player-error-propagation.mjs
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Verify Spine Player error propagation contract
+        run: node scripts/test-spine-player-error-propagation.mjs
+      - name: Build production application
+        run: npm run build
