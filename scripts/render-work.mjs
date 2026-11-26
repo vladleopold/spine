@@ -296,7 +296,7 @@ await publish({webmStatus:'ready',webmError:null,webmPreview:url('preview.webm')
 // Verify every Download format and size on the requested animation. Remaining
 // animations are handled by the existing full-export workflow after this run.
 run('node',['scripts/spine-export-webm.mjs',...flags.filter(f=>!f.startsWith('--output=')),'--alpha',`--output=${path.join(temp,'alpha.webm')}`]);
-const downloads={...(found.entry.allAnimationPreviews?.[anim]||{}),qualityWidths:meta.qualityWidths,previewDuration:meta.animationDuration};
+const downloads={...selectedPreview,qualityWidths:meta.qualityWidths,previewDuration:meta.animationDuration};
 for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
  const opaque=path.join(temp,`preview${suffix}.webm`),alpha=path.join(temp,`alpha${suffix}.webm`);
  probe(alpha);
