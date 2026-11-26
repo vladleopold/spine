@@ -185,4 +185,5 @@ test('deterministic canvas recovery is bounded and retains validated visibility 
   assert.match(exporter, /lastVisibleFramePeak = Math\.max\(lastVisibleFramePeak, framePeak\)/);
   assert.match(exporter, /shouldRecoverVisibleCanvas\(\{alpha:args\.alpha,peak,minPeak:FRAME_PEAK_MIN\}\)/);
   assert.match(exporter, /DETERMINISTIC_CAPTURE_FPS=/);
+  assert.match(exporter, /SPINE_SELECTED_ANIMATION_B64=/);
 });
