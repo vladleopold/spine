@@ -206,6 +206,14 @@ if(action==="matrix"){
         summary.ready++;
         continue;
       }
+      if(meta?.distinctError==="DETERMINISTIC_WEBM_BLANK") {
+        record.webmStatus="blocked-deterministic-capture";
+        record.previewStatus="blocked";
+        record.previewError="Deterministic WebM capture produced no verified visible motion; requires native inspection";
+        record.previewBlockedAt=new Date().toISOString();
+        summary.blocked++;
+        continue;
+      }
       record.webmStatus="failed";
       record.previewStatus="failed";
       record.previewError="Native preview render did not pass media acceptance";
