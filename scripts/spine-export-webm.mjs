@@ -2,7 +2,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { chooseAtlasForSkeleton, reconcileDdsAtlasPages, reconcileAtlasPageReferences, stripLegacyPmaMetadata, readAtlasPremultipliedAlpha, isLegacyAtlasFormat } from "./atlas-pages.mjs";
-import { shouldUseCanvasFallback, fallbackFrameCount } from "./lib/canvas-fallback.mjs";
+import { shouldUseCanvasFallback, fallbackFrameCount, deterministicFallbackFps } from "./lib/canvas-fallback.mjs";
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1481,12 +1481,13 @@ try {
       console.error('RECORDED_WEBM_INCOMPLETE: fallback to deterministic on-screen Spine rendering');
       const framesDir = path.join(tempDir,'deterministic-frames');
       fs.mkdirSync(framesDir,{recursive:true});
-      const duration = Math.max(1/args.fps, captureDuration || effectiveDuration || 1);
+      const requestedDuration = Math.max(.25, Math.min(30, captureDuration || effectiveDuration || 1));
       // The CDP screenshot path is substantially slower than MediaRecorder:
       // cap it at 15fps so a 30-second source stays within the hosted job's
       // eight-minute renderer budget. Normal exports still use args.fps.
       const fallbackFps = deterministicFallbackFps(args.fps);
-      const frameCount = fallbackFrameCount({fps:fallbackFps,duration});
+      const frameCount = fallbackFrameCount({fps:fallbackFps,duration:requestedDuration});
+      const duration = frameCount / fallbackFps;
       const intervalMs = 1000 / fallbackFps;
       console.error('DETERMINISTIC_CAPTURE_FPS=' + fallbackFps + ' FRAME_COUNT=' + frameCount);
       // The browser still renders a visible WebGL scene, but Playwright's
@@ -1525,7 +1526,7 @@ try {
       console.error('CANVAS_FALLBACK_CAPTURE=passed');
       const recovered=path.join(tempDir,'deterministic.webm');
       const encodeArgs=[
-        '-y','-v','error','-framerate',String(frameCount/duration),
+        '-y','-v','error','-framerate',String(fallbackFps),
         '-start_number','0','-i',path.join(framesDir,'%06d.png'),
         '-c:v','libvpx-vp9','-pix_fmt','yuv420p','-deadline','realtime',
         '-cpu-used','8','-threads','3','-auto-alt-ref','0',recovered,
