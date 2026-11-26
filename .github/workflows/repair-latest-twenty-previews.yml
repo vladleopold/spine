@@ -212,7 +212,7 @@ jobs:
     name: validate-latest50-${{ matrix.entry.repairSlot }}
     needs: [inventory, runtime-package-smoke, cancel-hosted-batches]
     if: github.ref == 'refs/heads/main'
-    # Real source rendering runs only on the dedicated private Ubuntu worker.
+    # Real source rendering runs only on the dedicated public GitHub-hosted Ubuntu runner.
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
