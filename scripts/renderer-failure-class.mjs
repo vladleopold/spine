@@ -42,7 +42,7 @@ export function readRendererLogSample(filePath,{headBytes=256*1024,tailBytes=2*1
     const tail=Buffer.alloc(tailLength);
     if(tailLength)fs.readSync(fd,tail,0,tailLength,tailStart);
     const omitted=Math.max(0,size-headLength-tailLength);
-    return head.toString("utf8")+"\\n[RENDERER_LOG_SAMPLE omitted_bytes="+omitted+"]\\n"+tail.toString("utf8");
+    return head.toString("utf8")+"\n[RENDERER_LOG_SAMPLE omitted_bytes="+omitted+"]\n"+tail.toString("utf8");
   } finally {
     fs.closeSync(fd);
   }
