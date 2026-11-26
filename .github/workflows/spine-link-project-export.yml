@@ -35,8 +35,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: spine-link-project-export
-  cancel-in-progress: false
+  group: spine-link-project-export-${{ github.event_name == 'pull_request' && github.ref || 'queue' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
@@ -47,6 +47,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /tests/
+            /.github/workflows/spine-link-project-export.yml
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -75,11 +80,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - name: Select authorized project from public storage queue
-                id: pick
+        id: pick
         env:
           REQUESTED_UPLOAD_ID: ${{ github.event.client_payload.uploadId || inputs.upload_id || '' }}
         run: node scripts/spine-link-project-queue.mjs
