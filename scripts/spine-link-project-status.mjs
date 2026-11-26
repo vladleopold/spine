@@ -1,4 +1,10 @@
-/** Map persisted conversion states to runner exit codes. Missing license is an actionable queue state, not a failed conversion. */
+/**
+ * Map persisted conversion states to runner exit codes.
+ * A missing licensed Editor is persisted as needs-editor, but must fail the
+ * workflow so a green GitHub Actions run always means an actual export ran.
+ */
 export function conversionExitCode(status) {
-  return status === 'failed' ? 1 : 0;
+  if (status === 'ready') return 0;
+  if (status === 'needs-editor') return 78; // EX_CONFIG: licensed Editor configuration is missing
+  return 1;
 }
