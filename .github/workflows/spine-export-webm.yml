@@ -19,8 +19,8 @@ permissions:
   contents: write
 jobs:
   export:
-    # Single-item source rendering also stays on the private Ubuntu worker.
-    runs-on: [self-hosted, linux, X64, spine-archive]
+    # Public GitHub-hosted runner: private archive runners are retired.
+    runs-on: ubuntu-latest
     timeout-minutes: 45
     concurrency:
       group: spine-webm-render
