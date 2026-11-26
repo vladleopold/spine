@@ -75,13 +75,14 @@ async function exactMediaFilesExist(work){
       'preview.webp','preview-medium.webp','preview-low.webp'].every(x=>names.has(x));
   }catch{return false;}
 }
-let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0;
+let ready=0,blocked=0,failed=0,verifiedMedia=0,mutatedSource=0,claimedReady=0;
 for(const work of snapshot){
   const index=await getIndex(work.basePath);
   const matching=index.filter(e=>e.id===work.id);
   if(matching.length!==1){failed++;mutatedSource++;continue;}
   const record=matching[0];
   if(previewSourceFingerprint(record)!==work.sourceFingerprint){failed++;mutatedSource++;continue;}
+  if(record.webmStatus==='ready')claimedReady++;
   // Classify source blockers from the frozen inventory snapshot. Some blockers
   // (notably legacy binary-only Spine 3.7 and incomplete atlas page inventories)
   // are intentionally written without renderer-selection fingerprints because
@@ -157,9 +158,9 @@ const renderableCandidates=snapshot.filter(work=>work.ready===true).length;
 const inventoryBlocked=snapshot.length-renderableCandidates;
 console.log('LATEST_PRODUCTION_MEDIA_AUDIT='+JSON.stringify({limit:repairLimit,
   total:snapshot.length,renderableCandidates,inventoryBlocked,ready,blocked,failed,mediaVerified:verifiedMedia,
-  expectedMedia:ready*fields.length,mutatedSource
+  expectedMedia:claimedReady*fields.length,mutatedSource
 }));
-// A source blocker is not a renderer regression. Keep it visible in the audit,
-// but do not halt the 50-item pagination chain: later offsets still need repair.
-// Fail only for failed production media, source mutation, or unclassified rows.
-if(failed||mutatedSource||ready+blocked!==snapshot.length)process.exitCode=1;
+// A failed render for one item is reported, but it must not stop the next
+// archive offset. Every record marked ready must still have all production media
+// verified, and the source fingerprint / row classification must remain intact.
+if(mutatedSource||verifiedMedia!==claimedReady*fields.length||ready+blocked+failed!==snapshot.length)process.exitCode=1;
