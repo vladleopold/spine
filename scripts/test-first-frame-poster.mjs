@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { frameDifferenceMetrics, generateFirstFrameWebp, verifyPosterFirstFrame } from './lib/first-frame-poster.mjs';
+import { frameDifferenceMetrics, generateFirstFrameWebp, isPosterFrameFaithful, verifyPosterFirstFrame } from './lib/first-frame-poster.mjs';
 
 const exporter=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 const repair=fs.readFileSync(new URL('./repair-latest-twenty-previews.mjs',import.meta.url),'utf8');
@@ -28,6 +28,13 @@ assert.equal(transparentPixelDifference.maxDelta,10,
   'RGB differences under fully transparent pixels must not affect visual poster fidelity');
 assert.ok(transparentPixelDifference.meanDelta < 4,
   'transparent RGB noise must not inflate average visual difference');
+assert.equal(isPosterFrameFaithful({
+  maxDelta:151, meanDelta:0.378, highDeltaRatio:0.0005,
+}),true,'a sparse isolated alpha-edge codec outlier must not reject a visually faithful poster');
+assert.equal(isPosterFrameFaithful({
+  maxDelta:20, meanDelta:12, highDeltaRatio:0.18,
+}),false,'a materially different first frame must still be rejected');
+
 
 assert.doesNotMatch(helper,/-ss|positions|pickPosterFrame|scan real timeline/);
 assert.match(repair,/generateFirstFrameWebp/);
