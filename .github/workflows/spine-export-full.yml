@@ -1,4 +1,5 @@
 name: Spine Export Full (All Animations · Parallel)
+# Use the exact PR head for deterministic full-export validation.
 
 # Triggered automatically by spine-export-webm.yml after the first preview is published
 on:
