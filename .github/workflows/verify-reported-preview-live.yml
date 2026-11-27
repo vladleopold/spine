@@ -28,6 +28,7 @@ jobs:
             /scripts/test-reported-preview-live-workflow.mjs
             /scripts/repair-reported-previews.mjs
             /scripts/verify-preview-motion.mjs
+            /scripts/lib/preview-frame-content.mjs
             /scripts/verify-poster-first-frame.mjs
             /library_02/index.json
       - uses: actions/setup-node@v4
