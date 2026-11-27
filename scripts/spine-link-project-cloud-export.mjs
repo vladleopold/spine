@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { runLicensedSpineExport } from './spine-editor-export.mjs';
 import { conversionExitCode } from './spine-link-project-status.mjs';
+import { fetchWithGitHubRetry } from './github-api-retry.mjs';
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
 const event = eventPath ? JSON.parse(await fs.readFile(eventPath, 'utf8')) : {};
@@ -40,7 +41,7 @@ if (!project.startsWith(folder + path.sep) || !images.startsWith(folder + path.s
 
 const apiRoot = 'https://api.github.com/repos/' + repo;
 async function api(method, url, body) {
-  const response = await fetch(apiRoot + url, {
+  const response = await fetchWithGitHubRetry(fetch, apiRoot + url, {
     method,
     headers: {
       Authorization: 'Bearer ' + token,

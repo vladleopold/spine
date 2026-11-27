@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       upload_id:
-        description: "Optional upload ID (empty selects the oldest pending project)"
+        description: "Optional upload ID (empty selects the newest pending project)"
         required: false
         type: string
   schedule:
@@ -18,6 +18,8 @@ on:
       - 'scripts/spine-link-project-cloud-export.mjs'
       - 'scripts/spine-editor-export.mjs'
       - 'scripts/spine-link-project-status.mjs'
+      - 'scripts/github-api-retry.mjs'
+      - 'tests/github-api-retry.test.mjs'
       - 'scripts/test-spine-link-public-export-workflow.mjs'
       - 'tests/spine-link-project-queue.test.mjs'
       - 'tests/spine-editor-export.test.mjs'
@@ -29,6 +31,8 @@ on:
       - 'scripts/spine-link-project-cloud-export.mjs'
       - 'scripts/spine-editor-export.mjs'
       - 'scripts/spine-link-project-status.mjs'
+      - 'scripts/github-api-retry.mjs'
+      - 'tests/github-api-retry.test.mjs'
       - 'scripts/test-spine-link-public-export-workflow.mjs'
       - 'tests/spine-link-project-queue.test.mjs'
       - 'tests/spine-editor-export.test.mjs'
@@ -64,7 +68,8 @@ jobs:
           node --check scripts/spine-link-project-queue.mjs
           node --check scripts/spine-link-project-cloud-export.mjs
           node --check scripts/spine-editor-export.mjs
-          node --test scripts/test-spine-link-public-export-workflow.mjs tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs
+          node --check scripts/github-api-retry.mjs
+          node --test scripts/test-spine-link-public-export-workflow.mjs tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs tests/github-api-retry.test.mjs
 
   licensed-project-export:
     name: Licensed Spine-Link project export • public Ubuntu 24.04
