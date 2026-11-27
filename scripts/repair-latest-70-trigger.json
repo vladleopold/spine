@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "resume latest-70 preview recovery after cancelled publication; regenerate fresh artifacts and require publish plus production verification",
-  "revision": 15,
-  "requestedAt": "2026-11-27T07:30:00Z"
+  "reason": "Re-run the bounded latest-70 archive recovery after the RGB WebM content-gate fix; revalidate all 70 and publish only entries that pass visible-frame, motion, poster, media-signature, and production URL checks. Expected recovery target: the two previously blank Spine 4.1.11 previews. Preserve all source bytes.",
+  "revision": 16,
+  "requestedAt": "2026-11-27T13:46:00Z"
 }
