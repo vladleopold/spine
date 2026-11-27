@@ -38,6 +38,7 @@ on:
       - scripts/lib/atlas-source-integrity.mjs
       - scripts/install-pinned-spine-players.sh
       - scripts/lib/preview-visibility-recovery.mjs
+      - scripts/lib/preview-frame-content.mjs
       - scripts/atlas-pages.mjs
       - scripts/test-atlas-pages.mjs
       - scripts/test-preview-visibility-recovery.mjs
@@ -178,6 +179,7 @@ jobs:
             /scripts/preview-skin-choice.mjs
             /scripts/preview-animation-choice.mjs
             /scripts/lib/preview-visibility-recovery.mjs
+            /scripts/lib/preview-frame-content.mjs
             /scripts/lib/spine-json-runtime-compat.mjs
             /scripts/lib/canvas-fallback.mjs
             /scripts/spine-export-webm.mjs
