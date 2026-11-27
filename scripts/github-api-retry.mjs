@@ -1,5 +1,5 @@
 const RETRYABLE_STATUSES = new Set([429, 500, 502, 503, 504]);
-const RETRYABLE_GIT_PATH = /\\/git\\/(?:blobs|trees|commits)(?:\\/|$)/;
+const RETRYABLE_GIT_PATH = /\/git\/(?:blobs|trees|commits)(?:\/|$)/;
 
 function canRetry(url, method) {
   if (method === 'GET') return true;
