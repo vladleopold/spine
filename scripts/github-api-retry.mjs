@@ -32,6 +32,7 @@ export async function fetchWithGitHubRetry(fetchImpl, url, init = {}, {
     if (!retryable || !RETRYABLE_STATUSES.has(response.status) || attempt === attempts) {
       return response;
     }
+    await response.body?.cancel?.();
     const retryAfter = Number(response.headers?.get?.('retry-after'));
     const backoff = Number.isFinite(retryAfter) && retryAfter > 0
       ? Math.min(retryAfter * 1000, 10_000)
