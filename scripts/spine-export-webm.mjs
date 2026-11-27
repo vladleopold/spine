@@ -14,6 +14,7 @@ import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mj
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { configuredPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
+import { hasVisibleRgbContent } from './lib/preview-frame-content.mjs';
 import { resolveLocalSpinePlayerAssets, createInlineSpinePlayerAssetUrls } from './lib/spine-player-runtime-assets.mjs';
 import { generateFirstFrameWebp } from './lib/first-frame-poster.mjs';
 import { chooseSourceSkeleton } from './source-skeleton-choice.mjs';
@@ -1429,27 +1430,20 @@ try {
   // runtime and encode those as the WebM source. These temporary frames never
   // leave the private runner and are not included in any artifact.
   if (!args.alpha) {
-    const seemsVisible = (data) => {
-      if (!data || data.length < 200) return false;
-      const background = data[0];
-      let differing = 0, lit = 0;
-      for (let i = 0; i < data.length; i++) {
-        if (Math.abs(data[i] - background) >= 10) differing++;
-        if (data[i] > 24) lit++;
-      }
-      return differing >= 12 || lit >= 24;
-    };
+    // Match the final RGB motion verifier. Grayscale can erase genuine
+    // low-luminance chromatic artwork; the multi-frame motion gate below remains
+    // mandatory, so this does not relax acceptance of blank or static videos.
     const encodedHasContent = (filename, duration) => {
       const seconds = [0,0.18,0.55,1,2];
       if (duration > 0) for (const part of [0.12,0.32,0.57,0.81,0.94])
         seconds.push(Math.max(0, duration * part));
       for (const ss of seconds.filter(x => x < duration || duration <= 0)) {
         try {
-          const gray = execFileSync('ffmpeg', [
+          const rgb = execFileSync('ffmpeg', [
             '-v','error','-ss',String(ss),'-i',filename,'-frames:v','1',
-            '-vf','scale=48:48,format=gray','-f','rawvideo','-',
+            '-vf','scale=48:48,format=rgb24','-f','rawvideo','-pix_fmt','rgb24','-',
           ], {stdio:['ignore','pipe','ignore'],maxBuffer:100000});
-          if (seemsVisible(gray)) return true;
+          if (hasVisibleRgbContent(rgb)) return true;
         } catch {}
       }
       return false;
