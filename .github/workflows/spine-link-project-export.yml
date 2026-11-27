@@ -36,6 +36,8 @@ on:
       - 'scripts/test-spine-link-public-export-workflow.mjs'
       - 'tests/spine-link-project-queue.test.mjs'
       - 'tests/spine-editor-export.test.mjs'
+      - 'library_*/index.json'
+      - 'library_*/**/*.spine'
 
 permissions:
   contents: read
@@ -74,7 +76,7 @@ jobs:
   licensed-project-export:
     name: Licensed Spine-Link project export • public Ubuntu 24.04
     needs: validate
-    if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || github.event_name == 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     permissions:

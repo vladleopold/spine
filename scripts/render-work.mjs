@@ -188,7 +188,7 @@ if(selection.status==='blocked'){
   process.exit(1);
  }
  console.log('SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION');
- process.exit(0);
+ process.exit(1);
 }
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'spine-render-'));
 const base=path.join(temp,'preview.webm');

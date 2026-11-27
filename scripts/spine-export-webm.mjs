@@ -816,33 +816,7 @@ ${skinLine}    showLoading: false,
     }
   };
 
-  if (spine.AtlasAttachmentLoader && !window.__spinePatched) {
-    window.__spinePatched = true;
-    var p = spine.AtlasAttachmentLoader.prototype;
-    var _findRegion = p.findRegion;
-    if (typeof _findRegion === 'function') {
-      p.findRegion = function() { try { return _findRegion.apply(this, arguments); } catch(e) { return null; } };
-    }
-    var _findRegions = p.findRegions;
-    if (typeof _findRegions === 'function') {
-      p.findRegions = function() { try { return _findRegions.apply(this, arguments); } catch(e) { return []; } };
-    }
-    ['newRegionAttachment','newMeshAttachment','newBoundingBoxAttachment','newPathAttachment','newPointAttachment','newClippingAttachment'].forEach(function(m) {
-      var orig = p[m];
-      if (typeof orig !== 'function') return;
-      p[m] = function() { try { return orig.apply(this, arguments); } catch(e) { return null; } };
-    });
 
-    ['RegionAttachment','MeshAttachment'].forEach(function(name) {
-      var ctor = spine[name];
-      if (typeof ctor !== 'function') return;
-      var cuv = ctor.prototype.computeUVs;
-      if (typeof cuv !== 'function') return;
-      ctor.prototype.computeUVs = function() {
-        try { return cuv.apply(this, arguments); } catch(e) {}
-      };
-    });
-  }
 
   try {
     if (typeof spine.SpinePlayer === 'function') {

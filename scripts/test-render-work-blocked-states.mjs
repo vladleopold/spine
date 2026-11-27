@@ -3,6 +3,7 @@ import fs from 'node:fs';
 
 const renderWork=fs.readFileSync(new URL('./render-work.mjs',import.meta.url),'utf8');
 const classifier=fs.readFileSync(new URL('./renderer-failure-class.mjs',import.meta.url),'utf8');
+const webmRenderer=fs.readFileSync(new URL('./spine-export-webm.mjs',import.meta.url),'utf8');
 const blockedStart=renderWork.indexOf('async function markBlockedRender(');
 const blockedEnd=renderWork.indexOf('async function markBlockedSelection()',blockedStart);
 assert.ok(blockedStart>=0&&blockedEnd>blockedStart,'per-upload renderer must have a guarded blocked-state publisher');
@@ -19,9 +20,9 @@ assert.match(renderWork,/blocked-invalid-default-animation/);
 assert.match(renderWork,/blocked-incomplete-source/);
 assert.match(renderWork,/blocked-unsupported-runtime/);
 assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION/);
-assert.match(renderWork,/process\.exit\(0\)/,'expected blocked states must not become retrying workflow failures');
-assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION[\s\S]*?process\.exit\(0\)/,
-  'an indexed work with no selected animation is a successfully recorded blocked state, not a failed CI job');
+assert.match(renderWork,/process\.exit\(1\)/,'a blocked preview must fail the render workflow after its blocked state is published');
+assert.match(renderWork,/SPINE_PREVIEW_BLOCKED=NO_DEFAULT_SPINE_ANIMATION[\s\S]*?process\.exit\(1\)/,
+  'an indexed work with no selected animation must be recorded as blocked and fail CI rather than appear successfully rendered');
 assert.match(renderWork,/STALE_RENDER_SUPERSEDED/);
 assert.match(renderWork,/report\.status='superseded'[\s\S]*?process\.exit\(0\)/,
   'a render superseded by a newer source/selection commit must exit cleanly without overwriting newer metadata');
@@ -39,6 +40,8 @@ assert.match(renderWork,/report\.status==='ready'[\s\S]*?report\.status='partial
   'a follow-up dispatch failure must not misreport already-published media as a render failure');
 assert.match(renderWork,/selection\.animation==='__SPINE_AUTO__'[\s\S]*?allow-visible-track-fallback/,
   'binary-only skeleton preview must opt into runtime-discovered visible-track selection');
+assert.doesNotMatch(webmRenderer,/window\.__spinePatched|AtlasAttachmentLoader\.prototype|p\.findRegion\s*=|computeUVs\s*=/,
+  'WebM rendering must not suppress atlas-region errors or create null attachments');
 assert.match(classifier,/COMPOSITED_FRAMES_IDENTICAL/);
 assert.match(classifier,/COMPOSITED_FRAMES_NOT_VISIBLE/);
 assert.match(classifier,/reason==="ANIMATION_SELECTION"\?"ANIMATION_SELECTION"/);
