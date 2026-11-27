@@ -40,3 +40,15 @@ test('bounds retries and returns the final transient response', async () => {
   assert.equal(result.status, 503);
   assert.equal(calls, 3);
 });
+
+
+test('retries transient network errors on idempotent Git object writes', async () => {
+  let calls = 0;
+  const result = await fetchWithGitHubRetry(async () => {
+    calls++;
+    if (calls < 3) throw new TypeError('temporary network failure');
+    return response(201);
+  }, 'https://api.github.com/repos/o/r/git/trees', { method: 'POST' }, { delayMs: 0 });
+  assert.equal(result.status, 201);
+  assert.equal(calls, 3);
+});
