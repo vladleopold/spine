@@ -39,6 +39,7 @@ on:
       - scripts/lib/reported-preview-media.mjs
       - scripts/test-reported-preview-live.mjs
       - scripts/verify-preview-motion.mjs
+      - scripts/lib/preview-frame-content.mjs
       - scripts/verify-poster-first-frame.mjs
       - scripts/lib/first-frame-poster.mjs
 permissions:
@@ -388,6 +389,7 @@ jobs:
             /scripts/lib/reported-preview-media.mjs
             /scripts/lib/first-frame-poster.mjs
             /scripts/verify-preview-motion.mjs
+            /scripts/lib/preview-frame-content.mjs
             /scripts/verify-poster-first-frame.mjs
             /scripts/test-reported-preview-live.mjs
             /scripts/test-reported-preview-live-workflow.mjs
