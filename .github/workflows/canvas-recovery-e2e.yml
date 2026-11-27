@@ -12,6 +12,7 @@ on:
       - scripts/lib/first-frame-poster.mjs
       - scripts/test-first-frame-poster.mjs
       - scripts/verify-preview-motion.mjs
+      - scripts/lib/preview-frame-content.mjs
       - scripts/test-preview-motion.mjs
       - scripts/verify-poster-first-frame.mjs
       - scripts/test-canvas-recovery-workflow.mjs

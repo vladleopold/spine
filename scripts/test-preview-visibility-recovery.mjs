@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
+import {hasVisibleRgbContent} from './lib/preview-frame-content.mjs';
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
 import {configuredPreviewSkinCandidates, sourcePreviewSkinNames} from './preview-skin-choice.mjs';
 import {normalizeSpineJsonForLegacy38Runtime} from './lib/spine-json-runtime-compat.mjs';
@@ -98,4 +99,23 @@ assert.equal(hasVisibleScreenshotPixels(smallNoise),false,
   'higher-resolution sampling must still reject low-contrast pixel noise');
 assert.match(source,/scale=64:64/,
   'composited canvas visibility uses a higher-resolution sample for small artwork');
+
+const blackRgbFrame=Buffer.alloc(48*48*3,0);
+assert.equal(hasVisibleRgbContent(blackRgbFrame),false,
+  'a decoded black frame must remain rejected');
+const lowLumaRedFrame=Buffer.alloc(48*48*3,0);
+for(let pixel=0;pixel<8;pixel++)lowLumaRedFrame.set([60,0,0],pixel*3);
+assert.equal(hasVisibleRgbContent(lowLumaRedFrame),true,
+  'RGB visibility must preserve low-luminance red artwork that a grayscale threshold of 24 collapses');
+const sevenPixelNoise=Buffer.alloc(48*48*3,0);
+for(let pixel=0;pixel<7;pixel++)sevenPixelNoise.set([60,0,0],pixel*3);
+assert.equal(hasVisibleRgbContent(sevenPixelNoise),false,
+  'sparse sub-threshold noise must not make a blank decoded frame visible');
+assert.match(source,/scale=48:48,format=rgb24/,
+  'encoded-content sampling must preserve RGB rather than collapse chroma through grayscale');
+assert.match(source,/hasVisibleRgbContent/,
+  'the encoded-content gate must use the shared RGB visibility predicate');
+assert.ok(!source.includes('scale=48:48,format=gray'),
+  'the legacy grayscale-only content gate must be removed');
+
 console.log('PASS Spine preview: deterministic source animation/skin recovery, including binary runtime fallback; contrast-based real-pixel detection');

@@ -2,6 +2,7 @@
 // Require at least eight decoded, visibly nonzero, mutually distinct frames.
 // Preserve RGB: grayscale conversion can collapse genuine color-only animation.
 import {execFileSync} from 'node:child_process';
+import {hasVisibleRgbContent} from './lib/preview-frame-content.mjs';
 import {createHash} from 'node:crypto';
 const file=process.argv[2];
 if(!file)throw Error('Missing preview candidate');
@@ -15,13 +16,8 @@ if(raw.length%frameBytes)throw Error('Decoded preview has an incomplete frame');
 const decoded=raw.length/frameBytes;
 const distinct=new Set();let nonzero=0;
 for(let offset=0;offset+frameBytes<=raw.length;offset+=frameBytes){
-  const frame=raw.subarray(offset,offset+frameBytes);let peak=0,litPixels=0;
-  for(let i=0;i<frameBytes;i+=3){
-    const intensity=Math.max(frame[i],frame[i+1],frame[i+2]);
-    if(intensity>8)litPixels++;
-    if(intensity>peak)peak=intensity;
-  }
-  if(peak>=16&&litPixels>=8){
+  const frame=raw.subarray(offset,offset+frameBytes);
+  if(hasVisibleRgbContent(frame)){
     nonzero++;
     distinct.add(createHash('sha256').update(frame).digest('hex'));
   }
