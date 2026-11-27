@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   safety:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Confirm automatic PR closure is disabled
         run: echo "Pull requests remain open for review; CI and repository protections control merging."

@@ -15,7 +15,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout indexes and scripts only
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -88,7 +88,7 @@ jobs:
         batch: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     steps:
       - name: Checkout indexes and scripts only
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -97,7 +97,7 @@ jobs:
             /library_*/index.json
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -195,7 +195,7 @@ jobs:
 
     steps:
       - name: Checkout indexes and merge script only
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -204,7 +204,7 @@ jobs:
             /library_*/index.json
       
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           

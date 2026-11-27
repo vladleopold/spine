@@ -61,7 +61,7 @@ jobs:
       renderCount: ${{ steps.latest.outputs.renderCount }}
       sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -76,7 +76,7 @@ jobs:
             /src/SpineApp.tsx
             /library/index.json
             /library_*/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Enumerate user-reported uploads and validate original Spine source triads
@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -129,7 +129,7 @@ jobs:
             /src/
             /tsconfig.json
             /vite.config.ts
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -154,7 +154,7 @@ jobs:
       matrix:
         entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -181,7 +181,7 @@ jobs:
           set -euo pipefail
           node scripts/mask-preview-manifest.mjs
           git sparse-checkout add "$PREVIEW_PATH/" >/dev/null
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install native Chromium renderer and video/poster encoders
@@ -306,7 +306,7 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -340,7 +340,7 @@ jobs:
           pattern: reported18-*
           path: downloaded-reported18
           merge-multiple: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Publish verified only, retain source untouched, flag missing and failed
@@ -378,7 +378,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -396,7 +396,7 @@ jobs:
             /scripts/repair-reported-previews.mjs
             /scripts/resolve-library.mjs
             /library_02/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install FFmpeg for actual media decoding

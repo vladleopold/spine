@@ -9,6 +9,12 @@ on:
     branches: [main]
     paths:
       - .github/workflows/spine-export-full.yml
+      - .github/workflows/**
+      - library_01/index.json
+      - library_01/preview-index/**
+      - scripts/build-library01-preview-index.mjs
+      - scripts/test-library01-preview-index.mjs
+      - .github/workflows/library01-preview-index.yml
       - .github/workflows/spine-link-project-export.yml
       - scripts/test-spine-link-public-export-workflow.mjs
       - tests/spine-link-project-queue.test.mjs
@@ -77,7 +83,7 @@ jobs:
     if: github.event_name != 'repository_dispatch'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -86,7 +92,9 @@ jobs:
             /scripts/source-skeleton-choice.mjs
             /scripts/lib/repair-manifest-guard.mjs
             /library_02/index.json
-            /.github/workflows/spine-export-full.yml
+            /library_01/index.json
+            /library_01/preview-index/
+            /.github/workflows/
             /.github/workflows/repair-last-ten-previews.yml
             /.github/workflows/repair-latest-twenty-previews.yml
             /.github/workflows/repair-reported-previews.yml
@@ -96,7 +104,7 @@ jobs:
             /.github/workflows/spine-link-project-export.yml
             /tests/spine-link-project-queue.test.mjs
             /tests/spine-editor-export.test.mjs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Lint public Spine-Link GitHub Actions workflow
@@ -119,6 +127,10 @@ jobs:
           node --check scripts/lib/preview-manifest-redaction.mjs
           node scripts/test-spine-export-matrix.mjs
           node scripts/test-preview-log-privacy.mjs
+          node scripts/test-public-ubuntu-workflows.mjs
+          node --test scripts/test-library01-preview-index.mjs
+          node scripts/build-library01-preview-index.mjs
+          git diff --exit-code -- library_01/preview-index
           node --test scripts/test-spine-link-public-export-workflow.mjs tests/spine-link-project-queue.test.mjs tests/spine-editor-export.test.mjs
           node scripts/test-preview-animation-choice.mjs
           node scripts/test-repair-last-ten-previews.mjs
@@ -134,7 +146,7 @@ jobs:
       has-items: ${{ steps.set-matrix.outputs.has_items }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -145,7 +157,7 @@ jobs:
         run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -170,7 +182,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -181,7 +193,7 @@ jobs:
         run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -307,7 +319,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -318,7 +330,7 @@ jobs:
         run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -461,7 +473,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -472,7 +484,7 @@ jobs:
         run: node scripts/prepare-render.mjs
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 

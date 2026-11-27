@@ -39,7 +39,7 @@ const repairWorkflow = fs.readFileSync(
 const verifyStart = repairWorkflow.indexOf("  verify-production:");
 const verifyJob = repairWorkflow.slice(verifyStart);
 const checkoutStart = verifyJob.indexOf("sparse-checkout: |");
-const checkoutEnd = verifyJob.indexOf("      - uses: actions/setup-node@v4", checkoutStart);
+const checkoutEnd = verifyJob.indexOf("      - uses: actions/setup-node@v7", checkoutStart);
 assert.ok(verifyStart >= 0 && checkoutStart >= 0 && checkoutEnd > checkoutStart);
 assert.ok(
   verifyJob.slice(checkoutStart, checkoutEnd).includes("/scripts/lib/reported-preview-live-status.mjs"),

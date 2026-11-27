@@ -1,0 +1,71 @@
+name: Build compact library_01 preview index
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'library_01/index.json'
+      - 'scripts/build-library01-preview-index.mjs'
+      - '.github/workflows/library01-preview-index.yml'
+  pull_request:
+    paths:
+      - 'library_01/index.json'
+      - 'library_01/preview-index/**'
+      - 'scripts/build-library01-preview-index.mjs'
+      - 'scripts/test-library01-preview-index.mjs'
+      - '.github/workflows/library01-preview-index.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: library01-preview-index
+  cancel-in-progress: false
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Test compact preview index generator
+        run: node --test scripts/test-library01-preview-index.mjs
+      - name: Regenerate compact preview index shards
+        run: node scripts/build-library01-preview-index.mjs
+      - name: Verify committed shards match the source index
+        run: git diff --exit-code -- library_01/preview-index
+  publish:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Test compact preview index generator
+        run: node --test scripts/test-library01-preview-index.mjs
+      - name: Build compact preview index shards
+        run: node scripts/build-library01-preview-index.mjs
+      - name: Commit generated shards when changed
+        run: |
+          git add library_01/preview-index
+          if git diff --cached --quiet; then
+            echo 'Preview index shards are already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: refresh compact library_01 preview index'
+          git push origin HEAD:main

@@ -15,7 +15,7 @@ jobs:
       renderCount: ${{ steps.latest.outputs.renderCount }}
       sparseCheckout: ${{ steps.latest.outputs.sparseCheckout }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -25,7 +25,7 @@ jobs:
             /scripts/
             /library/index.json
             /library_*/index.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Enumerate 10 newest uploads and validate required source file triads
@@ -52,12 +52,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /scripts/install-pinned-spine-players.sh
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify all three pinned Spine runtime bundles load from disk
@@ -74,7 +74,7 @@ jobs:
       matrix:
         entry: ${{ fromJson(needs.inventory.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -108,7 +108,7 @@ jobs:
             exit 1
           fi
           git sparse-checkout add "$ENTRY_PATH/"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Install native Chromium renderer and video/poster encoders
@@ -216,7 +216,7 @@ jobs:
       group: spine-library-commit
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -256,7 +256,7 @@ jobs:
           pattern: latest10-*
           path: downloaded-latest10
           merge-multiple: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Publish verified only, retain source untouched, flag missing and failed
@@ -294,7 +294,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -307,7 +307,7 @@ jobs:
         env:
           REPAIR_IDS_JSON: ${{ needs.inventory.outputs.allEntries }}
         run: node scripts/mask-preview-manifest.mjs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify 10 actual public media responses after publication

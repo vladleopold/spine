@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           sparse-checkout-cone-mode: false
@@ -102,7 +102,7 @@ jobs:
             /.github/workflows/spine-export-webm.yml
             /.github/workflows/spine-export-full.yml
             /.github/workflows/spine-export-all.yml
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Verify syntax and synthetic-only exclusion
