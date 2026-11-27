@@ -18,8 +18,10 @@
     ],
     "publicOwnerId": "u_b084bfed6ae41bea6a8d",
     "ownerAnonId": "anon_jjjn2b92_myn3r79hpk",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-missing-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-11-27T04-36-23-280Z",
@@ -40,8 +42,11 @@
     ],
     "publicOwnerId": "u_b084bfed6ae41bea6a8d",
     "ownerAnonId": "anon_jjjn2b92_myn3r79hpk",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "failed",
+    "dispatchStatus": "pending",
+    "lastPreviewRetryError": "Live media missing or replacement failed real motion acceptance",
+    "previewStatus": "failed",
+    "previewError": "Native preview render did not pass media acceptance"
   },
   {
     "id": "YanShi_003_fanji-2026-11-27T02-08-50-459Z",
@@ -63,11 +68,13 @@
     "projectFile": "YanShi_003_fanji.spine",
     "imagesRoot": "images",
     "conversionStatus": "needs-editor",
-    "webmStatus": "waiting-for-editor",
+    "webmStatus": "blocked-missing-source",
     "publicOwnerId": "u_d847112371a034c015fd",
     "ownerAnonId": "anon_t2zosi24_d0amfn84cd",
     "dispatchStatus": "project-export-pending",
-    "conversionError": "Licensed Spine Editor 4.3.26 cloud exporter is not configured"
+    "conversionError": "Licensed Spine Editor 4.3.26 cloud exporter is not configured",
+    "previewStatus": "blocked",
+    "previewError": "Incomplete skeleton, atlas page, or texture bundle"
   },
   {
     "id": "Spine-animation-2026-11-26T11-31-00-747Z",
@@ -95,9 +102,10 @@
     "previewBlockedSourceFingerprint": "c440ab5a0df6e4d0f4109d7cd142b80c44792708c5e252540ea48c6de06ab403",
     "previewBlockedSkin": "",
     "previewBlockedDistinctError": "COMPOSITED_FRAMES_NOT_VISIBLE",
-    "previewBlockedAt": "2026-11-27T02:01:18.290Z",
+    "previewBlockedAt": "2026-11-27T07:39:19.713Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
-    "lastPreviewRetryError": ""
+    "lastPreviewRetryError": "",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"
   },
   {
     "id": "project-import-e2e-2026-11-26T20-00-33-420Z",
@@ -143,8 +151,16 @@
     ],
     "publicOwnerId": "u_359aec5e9301c84ae65e",
     "ownerAnonId": "anon_qplueu3b_dio0t4soct",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-incomplete-source",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "3ff268e8502e45796129f4eb59efea46b75dae15ed13f1e242a0369d446ab683",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
+    "previewBlockedSkin": "",
+    "previewBlockedAt": "2026-11-27T07:39:18.854Z",
+    "previewError": "The indexed skeleton, atlas or texture source graph cannot be loaded completely",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "freespins-2026-11-26T16-10-12-302Z",
@@ -168,7 +184,7 @@
     "publicOwnerId": "u_0a214ff08aff871c9a62",
     "ownerAnonId": "anon_1quh5i1_1ry2579",
     "webmStatus": "ready",
-    "dispatchStatus": "pending",
+    "dispatchStatus": "rendered",
     "webmError": null,
     "webmPreview": "https://spine-link.vercel.app/assets/library_02/freespins-2026-11-26T16-10-12-302Z/preview.webm",
     "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/freespins-2026-11-26T16-10-12-302Z/preview-medium.webm",
@@ -219,7 +235,11 @@
       }
     },
     "fullExportStatus": "ready",
-    "fullExportGeneratedAt": "2026-11-26T16:11:32.345Z"
+    "fullExportGeneratedAt": "2026-11-26T16:11:32.345Z",
+    "posterGeneratedAt": "2026-11-27T07:39:19.202Z",
+    "previewStatus": "ready",
+    "previewError": "",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "licensed-e2e-2026-11-26T14-16-55-447Z",
@@ -976,9 +996,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "53352c0f36491ff760766a09d1c429a8d4707df2fe0fc903956f0b42006062d9",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:10.241Z",
+    "previewBlockedAt": "2026-11-27T07:39:20.763Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1057,9 +1077,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "3f781b716f0a0100567e5053faf6bc96a59587141dbb897e5082a703b9069371",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:10.612Z",
+    "previewBlockedAt": "2026-11-27T07:39:21.255Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1089,9 +1109,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "3d7ae7f35c448f1c4399685ce8155d4b09d00e5ad14a458b236f693023d60198",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:10.615Z",
+    "previewBlockedAt": "2026-11-27T07:39:21.259Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1170,9 +1190,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "5a24676f340f7e6decf0b56fbccc6e1fb077575bd8fdf4da3ccca346da7c7105",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:12.095Z",
+    "previewBlockedAt": "2026-11-27T07:39:23.236Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1454,9 +1474,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "fef76b7d409974d5cb5fd34a64f3b7219b24626954a43a604d84beba4ed3b749",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:13.191Z",
+    "previewBlockedAt": "2026-11-27T07:39:24.640Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1535,9 +1555,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "00cd8b845b7515b282511634614c24fb2a90e20a83b4e5f801588b9fa70c6ca6",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:13.593Z",
+    "previewBlockedAt": "2026-11-27T07:39:25.163Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1567,9 +1587,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "ebdc0e1e2a208dc13956f73a99820f2dd207c7b6620f363a0c6388f837bc3800",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:13.596Z",
+    "previewBlockedAt": "2026-11-27T07:39:25.168Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -1648,9 +1668,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "idle",
     "previewBlockedSourceFingerprint": "df67595d51910ff0174816cab5177cfc176d757c6ab3f598400594122c36b6b9",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:14.986Z",
+    "previewBlockedAt": "2026-11-27T07:39:26.887Z",
     "previewError": "The indexed skeleton, atlas or texture source graph cannot be loaded completely",
     "lastPreviewRetryError": ""
   },
@@ -3351,9 +3371,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "IdleAnim",
     "previewBlockedSourceFingerprint": "cdbe8ed7025cfffcd170f4181d2b0512a0e76b3207a7b4afdd471d532b37cfa3",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:19.737Z"
+    "previewBlockedAt": "2026-11-27T07:39:34.024Z"
   },
   {
     "id": "Ranger-2026-11-23T21-17-03-714Z",
@@ -3381,9 +3401,9 @@
     "previewStatus": "blocked",
     "previewBlockedAnimation": "IdleAnim",
     "previewBlockedSourceFingerprint": "bfcd8090cbea8114f8828a69e1ffcb1aa315d9f827f6b59a0043a47e241cda6f",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:19.741Z",
+    "previewBlockedAt": "2026-11-27T07:39:34.033Z",
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "lastPreviewRetryError": ""
   },
@@ -3415,9 +3435,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "idle",
     "previewBlockedSourceFingerprint": "fb9ece3209da2612d002d56be6a0c8310999360c41aa724d4134baf10a3ba014",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:19.745Z"
+    "previewBlockedAt": "2026-11-27T07:39:34.039Z"
   },
   {
     "id": "girl_andriella_char_hd-2026-11-20T15-25-18-586Z",
@@ -4050,9 +4070,9 @@
     "previewError": "Source-default skin produces no visible Spine pixels; choose an explicit skin before rendering",
     "previewBlockedAnimation": "__SPINE_AUTO__",
     "previewBlockedSourceFingerprint": "89ccd59048e5d7eb24a7658d4120dbae4cc5c232ab6f6db854712cc5692d965e",
-    "previewBlockedRendererRevision": "auto-track-recovery-v17-spine38-json-skin-map-normalization",
+    "previewBlockedRendererRevision": "auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps",
     "previewBlockedSkin": "",
-    "previewBlockedAt": "2026-11-26T14:58:25.632Z",
+    "previewBlockedAt": "2026-11-27T07:39:41.477Z",
     "lastPreviewRetryError": ""
   },
   {
