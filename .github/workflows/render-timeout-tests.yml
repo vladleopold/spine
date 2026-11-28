@@ -9,6 +9,7 @@ on:
       - 'scripts/publish-large-download.test.mjs'
       - 'scripts/test-render-command-timeout.mjs'
       - 'scripts/spine-version-detect.mjs'
+      - 'scripts/lib/spine-skeleton-document.mjs'
       - 'scripts/test-spine-version-detect.mjs'
       - 'scripts/lib/spine-player-source-support.mjs'
       - '.github/workflows/render-timeout-tests.yml'
@@ -21,6 +22,7 @@ on:
       - 'scripts/publish-large-download.test.mjs'
       - 'scripts/test-render-command-timeout.mjs'
       - 'scripts/spine-version-detect.mjs'
+      - 'scripts/lib/spine-skeleton-document.mjs'
       - 'scripts/test-spine-version-detect.mjs'
       - 'scripts/lib/spine-player-source-support.mjs'
       - '.github/workflows/render-timeout-tests.yml'
@@ -50,6 +52,7 @@ jobs:
           node --check scripts/render-work.mjs
           node --check scripts/publish-large-download.mjs
           node --check scripts/spine-version-detect.mjs
+          node --check scripts/lib/spine-skeleton-document.mjs
           node --check scripts/test-spine-version-detect.mjs
       - name: Test child process timeout and exit handling
         run: node --test scripts/test-render-command-timeout.mjs
