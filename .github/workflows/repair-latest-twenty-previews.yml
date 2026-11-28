@@ -78,7 +78,8 @@ permissions:
   contents: read
 concurrency:
   # One queue for scheduled and dispatched batches; never cancel a live sweep.
-  group: spine-preview-latest-twenty-${{ github.ref }}
+  # Keep the frequent newest-50 reconciliation independent from the daily full-archive queue.
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event.schedule == '*/15 * * * *' && 'quick' || 'archive' }}
   cancel-in-progress: false
 jobs:
   inventory:
