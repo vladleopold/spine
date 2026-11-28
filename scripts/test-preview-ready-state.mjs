@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { acceptPreviewRender } from './lib/preview-ready-state.mjs';
 
 const stale = {
@@ -22,6 +23,10 @@ const media = {
   webpPoster: 'https://spine-link.vercel.app/assets/library_02/work-1/preview.webp',
   previewAnimation: 'idle',
 };
+const renderWorkSource = fs.readFileSync(new URL('./render-work.mjs', import.meta.url), 'utf8');
+assert.ok(renderWorkSource.includes('acceptPreviewRender(current.index[idx],update)'),
+  'the production renderer must use the accepted-state transition when publishing successful media');
+
 const accepted = acceptPreviewRender(stale, media, '2026-11-28T18:00:00.000Z');
 
 assert.equal(accepted.webmStatus, 'ready');
