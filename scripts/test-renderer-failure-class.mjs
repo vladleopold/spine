@@ -177,7 +177,7 @@ assert.equal(canvasPass.stages.canvasFallbackPassed,true);
 
 const exporter=fs.readFileSync(new URL("./spine-export-webm.mjs",import.meta.url),"utf8");
 assert.match(exporter,/console\.error\('PLAYER_READY=1'\)/);
-assert.match(exporter,/console\.error\('SOURCE_SKIN_MODE=default'\)/);
+assert.match(exporter,/console\.error\(Array\.isArray\(skin\) \? 'SOURCE_SKIN_MODE=explicit-composite' : 'SOURCE_SKIN_MODE=default'\)/);
 assert.match(exporter,/console\.error\('RECORDER_STATE=recording'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=started'\)/);
 assert.match(exporter,/console\.error\('CANVAS_FALLBACK_CAPTURE=passed'\)/);
