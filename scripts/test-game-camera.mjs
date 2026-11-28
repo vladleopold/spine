@@ -45,3 +45,5 @@ assert.equal(
   true,
   'an explicitly configured camera must override automatic aspect-ratio detection',
 );
+
+console.log('PASS explicit, portrait and landscape game-camera framing');
