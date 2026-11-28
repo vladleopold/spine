@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "Re-run the latest-70 archive recovery after correcting Spine 4.2 player configuration keys (4.2 uses jsonUrl/binaryUrl + atlasUrl). Revalidate the two blocked 4.2.42 Spine-animation uploads and all recent pages; preserve source bytes and publish only verified moving WebM + matching first-frame WebP pairs.",
-  "revision": 17,
-  "requestedAt": "2026-11-28T18:06:00Z"
+  "reason": "Rerun newest archive pages after the Spine 4.2 Unity TextAsset URL-format fix: extracted JSON from .skel must be served under .json; verify actual WebM motion and matching first-frame WebP before publication.",
+  "revision": 18,
+  "requestedAt": "2026-11-28T18:09:00Z"
 }
