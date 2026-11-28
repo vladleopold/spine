@@ -89,3 +89,20 @@ test('pinned Spine 4.3 assets use only the isolated versioned runtime paths', ()
   assert.ok(singleExportWorkflow.includes('public/vendor-spine-player-3.7.js'));
   assert.ok(singleExportWorkflow.includes('public/vendor-spine-player-3.8.js'));
 });
+
+import { spinePlayerConfigKeys } from './lib/spine-player-config.mjs';
+
+test('Spine 4.2 uses jsonUrl/binaryUrl and atlasUrl rather than the 4.3 skeleton/atlas keys', () => {
+  assert.deepEqual(spinePlayerConfigKeys({ isLegacy: false, modernRuntime: '4.2', skeletonIsJson: true }), {
+    skeletonKey: 'jsonUrl', atlasKey: 'atlasUrl',
+  });
+  assert.deepEqual(spinePlayerConfigKeys({ isLegacy: false, modernRuntime: '4.2', skeletonIsJson: false }), {
+    skeletonKey: 'binaryUrl', atlasKey: 'atlasUrl',
+  });
+  assert.deepEqual(spinePlayerConfigKeys({ isLegacy: false, modernRuntime: '4.3', skeletonIsJson: true }), {
+    skeletonKey: 'skeleton', atlasKey: 'atlas',
+  });
+  assert.deepEqual(spinePlayerConfigKeys({ isLegacy: true, modernRuntime: '4.3', skeletonIsJson: true }), {
+    skeletonKey: 'jsonUrl', atlasKey: 'atlasUrl',
+  });
+});
