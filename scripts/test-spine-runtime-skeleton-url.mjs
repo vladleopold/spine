@@ -29,22 +29,22 @@ assert.equal(
 const rendererSource = fs.readFileSync(new URL('./spine-export-webm.mjs', import.meta.url), 'utf8');
 assert.match(
   rendererSource,
-  /resolveSpineRuntimeSkeletonUrl\\(skeletonRawUrl, skeletonIsJson \\? 'json' : 'binary'\\)/,
+  /resolveSpineRuntimeSkeletonUrl\(skeletonRawUrl, skeletonIsJson \? 'json' : 'binary'\)/,
   'the exporter must derive the runtime URL from the actual parsed payload format',
 );
 assert.match(
   rendererSource,
-  /\\$\\{skeletonPlayerKey\\}: '\\$\\{skeletonPlayerUrl\\}'/,
+  /\$\\{skeletonPlayerKey\\}: '\$\\{skeletonPlayerUrl\\}'/,
   'both Spine Player initialization paths must receive the extension-correct runtime URL',
 );
 assert.match(
   rendererSource,
-  /page\\.route\\(skeletonPlayerUrl,/,
+  /page\.route\(skeletonPlayerUrl,/,
   'the synthetic runtime URL must be fulfilled with the extracted JSON bytes',
 );
 assert.doesNotMatch(
   rendererSource,
-  /page\\.route\\(skeletonRawUrl,/,
+  /page\.route\(skeletonRawUrl,/,
   'the original .skel source URL must not be routed as JSON',
 );
 
