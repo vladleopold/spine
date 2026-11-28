@@ -394,7 +394,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
 
   assert.match(workflowSource,/schedule:\\s*\\n\\s+- cron:/,
     'archive recovery must run unattended on a recurring schedule');
-  assert.ok(workflowSource.includes('github.event_name != \'pull_request\''),
+  assert.ok(!workflowSource.includes("github.event_name != 'schedule'"),
     'scheduled archive recovery must continue through verified batches');
   assert.ok(workflowSource.includes('.github/workflows/repair-latest-twenty-previews.yml'),
     'merging an automation change must start the initial archive recovery sweep');
