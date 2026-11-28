@@ -13,6 +13,7 @@ import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 import { spinePlayerConfigKeys } from './lib/spine-player-config.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
+import {resolveSpineRuntimeSkeletonUrl} from './lib/spine-runtime-skeleton-url.mjs';
 import {reconcileSpineJsonAttachmentPaths} from './lib/spine-json-atlas-paths.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { orderedPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
@@ -522,11 +523,15 @@ function rawUrl(filename) {
 }
 
 const skeletonRawUrl = rawUrl(skeletonFile);
+// Unity TextAsset extraction can turn a .skel source into JSON in memory.
+// Spine 4.2/4.3 selects its parser from the URL suffix, so expose those exact
+// extracted bytes under a synthetic .json URL without changing the source file.
+const skeletonPlayerUrl = resolveSpineRuntimeSkeletonUrl(skeletonRawUrl, skeletonIsJson ? 'json' : 'binary');
 const atlasRawUrl = rawUrl(atlasFile);
 const textureRawUrls = textureFiles.map(f => rawUrl(f));
 
 async function warmUpAnimations() {
-  const skelUrl = skeletonKey === 'skelUrl' ? skeletonRawUrl : skeletonRawUrl;
+  const skelUrl = skeletonPlayerUrl;
   const atlasUrl = atlasRawUrl;
   const texUrls = JSON.stringify(textureRawUrls);
   const legacy = isLegacy;
@@ -535,7 +540,7 @@ async function warmUpAnimations() {
 
   const page = await browser.newPage();
   try {
-    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${capturePlayerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${capturePlayerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonRawUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:${atlasPremultipliedAlpha},preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
+    const warmupHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="${capturePlayerCssUrl}"><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;background:transparent;overflow:hidden}#player{width:100%;height:100%}</style></head><body><div id="player"></div><script src="${capturePlayerJsUrl}"></script><script>(function(){window.__warmup=null;var cfg={${skeletonPlayerKey}: '${skeletonPlayerUrl}',${atlasPlayerKey}: '${atlasRawUrl}',textures:${texUrls},showLoading:false,premultipliedAlpha:${atlasPremultipliedAlpha},preserveDrawingBuffer:true,alpha:true,backgroundColor:'#00000000',success:function(p){window.__warmup=p;},error:function(p,e){window.__warmupError=e;}};try{if(typeof spine.SpinePlayer==='function'){new spine.SpinePlayer('player',cfg);}else{window.__warmupError='spine.SpinePlayer is not a function';}}catch(e){window.__warmupError=e.message||e;}})();</script></body></html>`;
     await page.setContent(warmupHtml, { waitUntil: 'networkidle', timeout: 60000 });
     let names = [];
     for (let i = 0; i < 40; i++) {
@@ -727,7 +732,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   };
 
   var config = {
-    ${skeletonPlayerKey}: '${skeletonRawUrl}',
+    ${skeletonPlayerKey}: '${skeletonPlayerUrl}',
     ${atlasPlayerKey}: '${atlasRawUrl}',
     textures: ${JSON.stringify(textureRawUrls)},
     animation: ${captureAnimation ? JSON.stringify(captureAnimation) : 'undefined'},
@@ -921,7 +926,7 @@ try {
       body: atlasContent,
     });
   });
-  await page.route(skeletonRawUrl, async route => {
+  await page.route(skeletonPlayerUrl, async route => {
     let body;
     if (!skeletonIsJson) {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
