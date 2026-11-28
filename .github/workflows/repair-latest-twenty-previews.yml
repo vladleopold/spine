@@ -6,8 +6,8 @@ on:
   schedule:
     # Full archive sweep once daily; it self-dispatches through every 50-item batch.
     - cron: '17 3 * * *'
-    # Re-check newest uploads every two hours without recursively sweeping older batches.
-    - cron: '17 */2 * * *'
+    # Reconcile the newest 50 uploads every 15 minutes; full archive sweep remains daily.
+    - cron: '*/15 * * * *'
   # Start a complete recovery sweep immediately when the automation itself changes.
   push:
     branches: [main]
@@ -585,9 +585,9 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    # The two-hour cadence only checks the newest 50. The daily cadence and
+    # The 15-minute cadence only checks the newest 50. The daily cadence and
     # manual full sweeps continue sequentially until the complete archive ends.
-    if: always() && github.ref == 'refs/heads/main' && github.event.schedule != '17 */2 * * *' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: always() && github.ref == 'refs/heads/main' && github.event.schedule != '*/15 * * * *' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
