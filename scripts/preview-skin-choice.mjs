@@ -46,8 +46,14 @@ export function sourcePreviewSkinNames(skins) {
 export function orderedPreviewSkinCandidates(config) {
   const configured = configuredPreviewSkinCandidates(config);
   const defaultSkin = typeof config?.defaultSkin === 'string' ? config.defaultSkin.trim() : '';
+  const previewSkins = Array.isArray(config?.previewSkins)
+    ? [...new Set(config.previewSkins.map(name => typeof name === 'string' ? name.trim() : '').filter(Boolean))]
+    : [];
   const result = [];
-  if (defaultSkin && defaultSkin.toLowerCase() !== 'default') result.push(defaultSkin);
+  if (previewSkins.length) result.push(previewSkins);
+  if (defaultSkin && defaultSkin.toLowerCase() !== 'default' && !result.some(item => item === defaultSkin)) {
+    result.push(defaultSkin);
+  }
   result.push(null);
   for (const name of configured) {
     if (!result.includes(name)) result.push(name);
