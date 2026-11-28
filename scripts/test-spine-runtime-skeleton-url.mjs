@@ -45,3 +45,8 @@ assert.ok(
 );
 
 console.log('SPINE_RUNTIME_SKELETON_URL_TESTS_PASS');
+
+assert.ok(rendererSource.includes("SPINE_SOURCE_FORMAT="),
+  'render diagnostics must report the detected skeleton payload format');
+assert.ok(rendererSource.includes("SPINE_SKELETON_ROUTE_HIT="),
+  'render diagnostics must prove the synthetic JSON route was actually fulfilled');
