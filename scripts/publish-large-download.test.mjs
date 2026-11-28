@@ -12,3 +12,21 @@ test('binary upload streams exact bytes and reuses verified immutable asset',asy
  };
  try{const options={repository:'test/spine',token:'test',uploadId:'test',fetchImpl:mock};const first=await publishLargeDownload(file,options);assert.equal(await publishLargeDownload(file,options),first);assert.equal(uploads,1);}finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
+
+test('release API requests abort and classify request timeouts', async () => {
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'release-timeout-test-'));
+ const file=path.join(dir,'alpha.mov');
+ fs.writeFileSync(file,Buffer.from([1,2,3]));
+ const hangingFetch=(_url,{signal}={})=>new Promise((_resolve,reject)=>{
+  if(signal?.aborted){reject(signal.reason);return;}
+  signal?.addEventListener('abort',()=>reject(signal.reason||new Error('aborted')),{once:true});
+ });
+ try {
+  await assert.rejects(
+   publishLargeDownload(file,{repository:'test/spine',token:'test',uploadId:'timeout',fetchImpl:hangingFetch,requestTimeoutMs:15}),
+   error=>error.code==='DOWNLOAD_REQUEST_TIMEOUT',
+  );
+ } finally {
+  fs.rmSync(dir,{recursive:true,force:true});
+ }
+});
