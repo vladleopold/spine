@@ -30,6 +30,8 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-player-canvas.mjs
+      - scripts/test-canvas-fallback.mjs
       - scripts/lib/spine-runtime-skeleton-url.mjs
       - scripts/test-spine-runtime-skeleton-url.mjs
       - scripts/lib/spine-skeleton-document.mjs

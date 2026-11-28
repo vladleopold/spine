@@ -14,6 +14,7 @@ import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 import { spinePlayerConfigKeys } from './lib/spine-player-config.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import {resolveSpineRuntimeSkeletonUrl} from './lib/spine-runtime-skeleton-url.mjs';
+import {resolveSpinePlayerCanvas} from './lib/spine-player-canvas.mjs';
 import {reconcileSpineJsonAttachmentPaths} from './lib/spine-json-atlas-paths.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { orderedPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
@@ -653,6 +654,12 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   window.__ready = false;
 
   var player;
+  window.__resolveSpinePlayerCanvas = (${resolveSpinePlayerCanvas.toString()});
+  window.__captureCanvas = function () {
+    var resolved = window.__resolveSpinePlayerCanvas(player, document);
+    window.__captureCanvasSource = resolved.source;
+    return resolved.canvas;
+  };
   ${skinStackLine}
   window.__setPlayerAnimation = (${setPlayerAnimation.toString()});
   // Peak brightness of the currently rendered frame (center sample).
@@ -660,7 +667,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   // mark the selected preview as blocked. Requires preserveDrawingBuffer (set below).
   window.__framePeak = function () {
     try {
-      var c = player && player.canvas;
+      var c = window.__captureCanvas();
       if (!c) return -1;
       var g = c.getContext('webgl2') || c.getContext('webgl');
       if (!g) return -1;
@@ -684,7 +691,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   };
   window.__frameSignature = function () {
     try {
-      var c = player && player.canvas;
+      var c = window.__captureCanvas();
       if (!c) return '';
       var g = c.getContext('webgl2') || c.getContext('webgl');
       if (!g) return '';
@@ -709,7 +716,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
 
   window.__captureSpineFrame = function () {
     try {
-      var c = player && player.canvas;
+      var c = window.__captureCanvas();
       if (!c) return '';
       var g = c.getContext('webgl2') || c.getContext('webgl');
       if (!g) return '';
@@ -806,8 +813,9 @@ ${skinLine}    showLoading: false,
         window.__animationNames[0] || '';
       if (window.__selectedAnimation) window.__setPlayerAnimation(player, window.__selectedAnimation);
       window.__ready = true;
-      window.__canvasWidth = player.canvas ? player.canvas.width : 0;
-      window.__canvasHeight = player.canvas ? player.canvas.height : 0;
+      var initialCanvas = window.__captureCanvas();
+      window.__canvasWidth = initialCanvas ? initialCanvas.width : 0;
+      window.__canvasHeight = initialCanvas ? initialCanvas.height : 0;
       
       // Older runtime TrackEntry implementations may report duration=0
       // even when the decoded animation has real keyframe timelines.
@@ -830,13 +838,15 @@ ${skinLine}    showLoading: false,
       // resizes it: every recorded frame comes out black even though the
       // live canvas renders fine.
       window.__canvasSize = function () {
-        if (player && player.canvas) return [player.canvas.width, player.canvas.height];
+        var canvas = window.__captureCanvas();
+        if (canvas) return [canvas.width, canvas.height];
         return [0, 0];
       };
       window.__startRecording = function () {
         try {
-          if (!player || !player.canvas) return 'no-canvas';
-          var stream = player.canvas.captureStream(${args.fps});
+          var canvas = window.__captureCanvas();
+          if (!canvas) return 'no-canvas';
+          var stream = canvas.captureStream(${args.fps});
           var recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
           var chunks = [];
           recorder.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
@@ -1403,6 +1413,17 @@ try {
       if(!reset)throw new Error('SELECTED_SPINE_ANIMATION_RESET_FAILED');
     }
     // Start recording only now, on the settled canvas showing content.
+    const captureInput = await page.evaluate(() => {
+      const canvas = typeof window.__captureCanvas === 'function' ? window.__captureCanvas() : null;
+      return {
+        source: window.__captureCanvasSource || 'missing',
+        width: canvas ? canvas.width : 0,
+        height: canvas ? canvas.height : 0,
+        captureStream: canvas ? typeof canvas.captureStream : 'missing',
+        mediaRecorder: typeof MediaRecorder,
+      };
+    });
+    console.error('SPINE_CAPTURE_INPUT=' + JSON.stringify(captureInput));
     const recState = await page.evaluate(() => (typeof window.__startRecording === 'function' ? window.__startRecording() : 'missing'));
     console.error(`Skin ${label}: recorder ${recState}`);
     if (recState !== 'recording') {
@@ -1528,8 +1549,9 @@ try {
       // compositor. All PNGs stay in this private runner's temporary folder.
       await page.evaluate(name=>{
         const player=window.__exportPlayer;
-        if(!player || !player.canvas || !player.animationState)
-          throw new Error('No active Spine runtime for real-time fallback');
+        const canvas=typeof window.__captureCanvas==='function'?window.__captureCanvas():null;
+        if(!player || !canvas || !player.animationState)
+          throw new Error('No active Spine runtime or capture canvas for real-time fallback');
         window.__setPlayerAnimation(player, name);
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
