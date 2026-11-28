@@ -43,9 +43,12 @@ export function detectBinarySpineVersion(bytes) {
   const legacy = oldHash && readString(bytes, oldHash.next);
   if (legacy && validVersion(legacy.value)) return legacy.value.trim();
 
-  // Some exports include an additional prefix. Search only the header, not
-  // animation/string-table data, so a filename cannot impersonate a version.
-  const header = Buffer.from(bytes.subarray(0, Math.min(64, bytes.length))).toString('latin1');
+  // Some exports (notably Unity TextAsset wrappers around Spine JSON) add a
+  // textual container before the embedded skeleton metadata. The version can
+  // therefore sit beyond byte 64. Inspect a bounded 256-byte header only; do
+  // not search animation/string-table data, so later content cannot impersonate
+  // the serialized Spine version.
+  const header = Buffer.from(bytes.subarray(0, Math.min(256, bytes.length))).toString('latin1');
   const found = header.match(/(?:^|[^a-z0-9.])([1-9]\d?\.\d{1,2}(?:\.\d{1,3})?(?:-[a-z0-9.-]+)?)(?=$|[^a-z0-9.-])/i);
   return found && validVersion(found[1]) ? found[1] : 'unknown';
 }
