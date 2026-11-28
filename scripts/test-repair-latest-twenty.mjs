@@ -397,10 +397,10 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
-  assert.ok(workflowSource.includes("cron: '17 */2 * * *'"),
-    'the newest archive batch must be checked automatically every two hours');
-  assert.ok(workflowSource.includes("github.event.schedule != '17 */2 * * *'"),
-    'the two-hour quick sweep must not recursively trigger a full archive scan');
+  assert.ok(workflowSource.includes("cron: '*/15 * * * *'"),
+    'the newest archive batch must be checked automatically every 15 minutes');
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
+    'the 15-minute quick sweep must not recursively trigger a full archive scan');
   assert.ok(workflowSource.includes("github.event.schedule == '17 */2 * * *'") ||
     workflowSource.includes("github.event.schedule != '17 */2 * * *'"),
     'scheduled quick and full sweeps must be explicitly distinguished');
