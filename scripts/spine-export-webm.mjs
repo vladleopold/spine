@@ -12,6 +12,7 @@ import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
+import {reconcileSpineJsonAttachmentPaths} from './lib/spine-json-atlas-paths.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { orderedPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
@@ -928,8 +929,12 @@ try {
       body = args.sanitizeSkel ? sanitizedSkelBuffer(rawBuffer, skeletonVersion) : rawBuffer;
     } else {
       const sourceJson = JSON.stringify(skeletonDocument.data);
-      body = normalizeSpineJsonForLegacy38Runtime(sourceJson, skeletonVersion);
-      if (body !== sourceJson) console.error('LEGACY_SPINE38_SKIN_MAP_NORMALIZED=1');
+      const runtimeJson = normalizeSpineJsonForLegacy38Runtime(sourceJson, skeletonVersion);
+      if (runtimeJson !== sourceJson) console.error('LEGACY_SPINE38_SKIN_MAP_NORMALIZED=1');
+      const reconciledAttachments = reconcileSpineJsonAttachmentPaths(runtimeJson, atlasContent);
+      body = reconciledAttachments.text;
+      if (reconciledAttachments.aliases)
+        console.error('SPINE_JSON_ATLAS_ATTACHMENT_PATHS_RECONCILED=' + reconciledAttachments.aliases);
     }
     await route.fulfill({
       status: 200,
