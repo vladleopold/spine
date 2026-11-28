@@ -253,7 +253,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the renderer revision must be frozen in the manifest so a newer publisher checkout cannot falsely mark an older render as current');
   assert.match(repairSource,/meta\.animationFallbackUsed===true/,
     'a preview may use another source-declared animation only after visible motion is verified');
-  assert.match(repairSource,/record\.previewAnimation=animation/,
+  assert.match(repairSource,/previewAnimation:animation/,
     'the exact rendered track is stored separately from the source default');
   assert.match(repairSource,/function existingPreviewAnimationName\(record\)[\s\S]*?current!=="__SPINE_AUTO__"[\s\S]*?item\?\.webmPreview===record\?\.webmPreview/,
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
