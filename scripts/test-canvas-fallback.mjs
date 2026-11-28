@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import {resolveSpinePlayerCanvas} from "./lib/spine-player-canvas.mjs";
 import {shouldUseCanvasFallback,fallbackFrameCount,deterministicFallbackFps,shouldRecoverVisibleCanvas} from "./lib/canvas-fallback.mjs";
 assert.equal(shouldUseCanvasFallback({bytes:2743,frames:1,fps:30,duration:2.2}),true);
 assert.equal(shouldUseCanvasFallback({bytes:0,frames:0,fps:30,duration:1}),true);
@@ -24,3 +26,39 @@ assert.equal(shouldRecoverVisibleCanvas({alpha:false,peak:241,minPeak:40}),true)
 assert.equal(shouldRecoverVisibleCanvas({alpha:false,peak:39,minPeak:40}),false);
 assert.equal(shouldRecoverVisibleCanvas({alpha:true,peak:241,minPeak:40}),false);
 console.log("PASS previously validated visible canvas survives a blank post-recorder readback");
+
+
+const playerCanvas = {
+  width: 960, height: 720,
+  getContext() { return {}; },
+  captureStream() { return {}; },
+};
+const domCanvas = {
+  width: 960, height: 720,
+  getContext() { return {}; },
+  captureStream() { return {}; },
+};
+assert.deepEqual(
+  resolveSpinePlayerCanvas({ canvas: playerCanvas }, { querySelector() { return domCanvas; } }),
+  { canvas: playerCanvas, source: "player-property" },
+);
+assert.deepEqual(
+  resolveSpinePlayerCanvas({}, { querySelector(selector) { return selector === "#player canvas" ? domCanvas : null; } }),
+  { canvas: domCanvas, source: "player-dom" },
+);
+assert.deepEqual(
+  resolveSpinePlayerCanvas({}, { querySelector(selector) { return selector === "canvas" ? domCanvas : null; } }),
+  { canvas: domCanvas, source: "document-dom" },
+);
+assert.deepEqual(
+  resolveSpinePlayerCanvas({}, { querySelector() { return null; } }),
+  { canvas: null, source: "missing" },
+);
+const rendererSource = fs.readFileSync(new URL("./spine-export-webm.mjs", import.meta.url), "utf8");
+assert.ok(rendererSource.includes("window.__resolveSpinePlayerCanvas"),
+  "the capture page must serialize the tested player/DOM canvas resolver");
+assert.ok(rendererSource.includes("SPINE_CAPTURE_INPUT="),
+  "the renderer must log sanitized capture-input availability before MediaRecorder starts");
+assert.ok(!rendererSource.includes("var c = player && player.canvas"),
+  "frame inspection must use the same DOM-aware canvas resolver as recording");
+console.log("PASS Spine Player capture falls back to the real DOM canvas when player.canvas is unavailable");
