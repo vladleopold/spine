@@ -61,6 +61,8 @@ assert.match(source,/const skinCandidates = orderedPreviewSkinCandidates\(skinCo
   'configured default skins take precedence, with the runtime default retained as a fallback');
 assert.match(source,/new spine\.Skin\([\s\S]*?addSkin\([\s\S]*?setupPoseSlots/,
   'modular preview skins are explicitly composed and their setup attachments are restored');
+assert.match(source,/PREVIEW_SKIN_STACK_NOT_APPLIED[\s\S]*?break; \/\/ never publish a partial default-skin preview/,
+  'an explicitly requested full-body preview must fail closed rather than publish a partial skin');
 assert.match(source,/var runtimeDefaultSkin = runtimeData && runtimeData\.defaultSkin[\s\S]*?runtimeSkeleton\.setSkin\(runtimeDefaultSkin\)[\s\S]*?setSlotsToSetupPose/,
   'legacy runtimes apply the actual default Skin object instead of calling setSkinByName(default)');
 assert.match(source,/if \(runtimeDefaultName && runtimeDefaultName\.toLowerCase\(\) !== 'default'[\s\S]*?SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1/,
