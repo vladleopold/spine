@@ -49,7 +49,7 @@ export async function publishLargeDownload(file,{
   if(!list.ok)throw Error('Download assets HTTP '+list.status);
   const existing=(await list.json()).find(asset=>asset.name===name&&asset.size===size&&asset.state==='uploaded');
   if(existing)return existing.browser_download_url;
-  const upload=release.upload_url.replace(/\\{.*$/, '')+'?name='+encodeURIComponent(name);
+  const upload=release.upload_url.replace(/\{.*$/, '')+'?name='+encodeURIComponent(name);
   const result=await fetchWithTimeout(fetchImpl,upload,{method:'POST',headers:{...headers,'Content-Type':'application/octet-stream','Content-Length':String(size)},body:fs.createReadStream(file),duplex:'half'},uploadTimeoutMs);
   if(result.ok)return(await result.json()).browser_download_url;
   if(result.status!==422&&result.status!==429&&result.status<500)throw Error('Download upload HTTP '+result.status);
