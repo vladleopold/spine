@@ -18,7 +18,7 @@ import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
 import { acceptPreviewRender } from "./lib/preview-ready-state.mjs";
 
 const root=process.cwd();
-const PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps";
+const PREVIEW_RENDERER_REVISION="auto-track-recovery-v19-unity-textasset-json-url";
 const repairLimit=Number(process.env.SPINE_REPAIR_LIMIT||20);
 if(!Number.isInteger(repairLimit)||repairLimit<1||repairLimit>50)throw new Error('SPINE_REPAIR_LIMIT must be an integer from 1 to 50');
 const repairOffset=Number(process.env.SPINE_REPAIR_OFFSET||0);

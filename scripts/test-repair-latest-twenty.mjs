@@ -261,7 +261,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     "previously accepted media can be restored from exact six-file proof even when optional dispatch metadata is absent");
   assert.doesNotMatch(repairSource,/record\.dispatchStatus==="rendered"/,
     "a missing dispatchStatus must never downgrade an independently verified existing preview");
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/);
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v19-unity-textasset-json-url"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
   const missingSelectionBranch=repairSource.match(
@@ -398,7 +398,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
     'the explicit repair marker must remain a supported recovery trigger');
-  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
+  assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v19-unity-textasset-json-url"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
   assert.ok(workflowSource.includes("cron: '*/15 * * * *'"),
