@@ -83,6 +83,10 @@ jobs:
           ffprobe -version | head -n 1
       - name: Test transparent WebP poster fidelity
         run: node scripts/test-first-frame-poster.mjs
+      - name: Test render command timeouts
+        run: node scripts/test-render-command-timeout.mjs
+      - name: Test large download request timeouts
+        run: node scripts/publish-large-download.test.mjs
       - name: Render, validate and publish card and downloads
         if: steps.source.outputs.skip_render != 'true'
         run: node scripts/render-work.mjs
