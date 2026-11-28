@@ -191,8 +191,16 @@
     ],
     "publicOwnerId": "u_359aec5e9301c84ae65e",
     "ownerAnonId": "anon_qplueu3b_dio0t4soct",
-    "webmStatus": "pending",
-    "dispatchStatus": "pending"
+    "webmStatus": "blocked-invalid-default-animation",
+    "dispatchStatus": "pending",
+    "previewStatus": "blocked",
+    "previewBlockedAnimation": "idle",
+    "previewBlockedSourceFingerprint": "306114e4134d0a5a757c45e7b4e4f1d33ced045f3733fe93716705c9c02144ab",
+    "previewBlockedSkin": "",
+    "previewBlockedDistinctError": "ANIMATION_SELECTION",
+    "previewBlockedAt": "2026-11-28T14:24:49.110Z",
+    "previewError": "The indexed default animation is not present in the source skeleton; select an exact available animation",
+    "lastPreviewRetryError": ""
   },
   {
     "id": "Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z",
