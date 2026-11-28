@@ -56,3 +56,32 @@ test('release metadata body remains covered by the request timeout', async () =>
   fs.rmSync(dir,{recursive:true,force:true});
  }
 });
+
+
+test('large asset upload aborts a stalled streaming request at its upload timeout', async () => {
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'release-upload-timeout-test-'));
+ const file=path.join(dir,'large.mov');
+ fs.writeFileSync(file,Buffer.alloc(1024,7));
+ let uploadStarted=false;
+ const hangingUploadFetch=async (url,{signal}={})=>{
+  if(url.includes('/releases/tags/'))return Response.json({id:7,upload_url:'https://uploads.github.com/repos/test/spine/releases/7/assets{?name,label}'});
+  if(url.includes('/releases/7/assets?per_page'))return Response.json([]);
+  if(url.startsWith('https://uploads.github.com/')){
+   uploadStarted=true;
+   return await new Promise((_resolve,reject)=>{
+    if(signal?.aborted){reject(signal.reason||new Error('aborted'));return;}
+    signal?.addEventListener('abort',()=>reject(signal.reason||new Error('aborted')),{once:true});
+   });
+  }
+  throw Error(url);
+ };
+ try {
+  await assert.rejects(
+   publishLargeDownload(file,{repository:'test/spine',token:'test',uploadId:'upload-timeout',fetchImpl:hangingUploadFetch,requestTimeoutMs:100,uploadTimeoutMs:20}),
+   error=>error.code==='DOWNLOAD_REQUEST_TIMEOUT'&&error.timeoutMs===20,
+  );
+  assert.equal(uploadStarted,true);
+ } finally {
+  fs.rmSync(dir,{recursive:true,force:true});
+ }
+});
