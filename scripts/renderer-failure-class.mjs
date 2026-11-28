@@ -86,6 +86,22 @@ export function readRendererLogSample(filePath,{headBytes=256*1024,tailBytes=2*1
   }
 }
 
+export function classifyRendererStartupError(text) {
+  const x=String(text||"");
+  if (/ERR_MODULE_NOT_FOUND|Cannot find package|Cannot find module/i.test(x)) return "NODE_MODULE_MISSING";
+  if (/ERR_PACKAGE_PATH_NOT_EXPORTED|ERR_PACKAGE_IMPORT_NOT_DEFINED/i.test(x)) return "NODE_PACKAGE_EXPORT_MISMATCH";
+  if (/ENOENT|no such file or directory/i.test(x)) return "FILE_NOT_FOUND";
+  if (/EACCES|EPERM|permission denied/i.test(x)) return "PERMISSION_DENIED";
+  if (/Invalid URL|ERR_INVALID_URL/i.test(x)) return "INVALID_URL";
+  if (/TimeoutError|timed out/i.test(x)) return "STARTUP_TIMEOUT";
+  if (/SyntaxError/i.test(x)) return "SYNTAX_ERROR";
+  if (/ReferenceError/i.test(x)) return "REFERENCE_ERROR";
+  if (/TypeError/i.test(x)) return "TYPE_ERROR";
+  if (/RangeError/i.test(x)) return "RANGE_ERROR";
+  if (/(?:^|\n)(?:Error|AssertionError)(?: \[ERR_[A-Z0-9_]+\])?:/i.test(x)) return "GENERIC_ERROR";
+  return "NONE";
+}
+
 export function classifyRendererError(text) {
   const x=String(text||"").toLowerCase();
   if(x.includes("unsupported_spine_3_7_binary_skeleton")||x.includes("spine player 3.7 requires jsonurl"))return "UNSUPPORTED_SPINE_3_7_BINARY_SKELETON";
@@ -196,7 +212,8 @@ export function summarizeRendererLog(text) {
   const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
-  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,skinFallbackCount,
+  const startupErrorClass=stages.skeletonParsed?"NONE":classifyRendererStartupError(log);
+  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,skinFallbackCount,startupErrorClass,
     peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 

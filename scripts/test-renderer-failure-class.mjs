@@ -169,6 +169,20 @@ assert.equal(startupFailure.reason,"PLAYER_INITIALIZATION_TIMEOUT");
 assert.equal(startupFailure.secondary,"PLAYER_INITIALIZATION_TIMEOUT",
   "the exact skin-capture failure must be classified even when the player never reaches its ready marker");
 
+const earlyNodeFailure=summarizeRendererLog(
+  "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'playwright' imported from /home/runner/work/spine/spine/scripts/spine-export-webm.mjs"
+);
+assert.equal(earlyNodeFailure.startupErrorClass,"NODE_MODULE_MISSING",
+  "pre-skeleton renderer startup failures must expose a safe, actionable class");
+assert.equal(earlyNodeFailure.version,"unknown");
+assert.doesNotMatch(JSON.stringify(earlyNodeFailure),/playwright|home\/runner|spine-export-webm/);
+const earlyRangeFailure=summarizeRendererLog(
+  "RangeError: Offset is outside the bounds of the DataView"
+);
+assert.equal(earlyRangeFailure.startupErrorClass,"RANGE_ERROR",
+  "early binary parser failures must not collapse into an unclassified render failure");
+
+
 const canvasPass=summarizeRendererLog(
   "PLAYER_READY=1\nSOURCE_SKIN_MODE=default\nCANVAS_FALLBACK_CAPTURE=started\nREALTIME_CANVAS_CAPTURE_PASS VISIBLE_FRAMES=12 DISTINCT=12"
 );
