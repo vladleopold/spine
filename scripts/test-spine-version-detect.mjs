@@ -54,3 +54,7 @@ try {
   fs.rmSync(temp, { recursive: true, force: true });
 }
 console.log('SPINE_BINARY_VERSION_HEADER_TESTS_PASSED');
+
+const unityTextAsset = Buffer.from('TextAsset Base\r\n\tstring m_Name = "20938824"\r\n\tstring m_Script = "{\\"skeleton\\":{\\"hash\\":\\"VGscT4XUSh4\\",\\"spine\\":\\"4.2.42\\"}}"', 'utf8');
+assert.equal(detectBinarySpineVersion(unityTextAsset), '4.2.42',
+  'Unity TextAsset .skel wrappers must detect the Spine version beyond the first 64 header bytes');
