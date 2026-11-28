@@ -340,6 +340,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}") &&
     !workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
     'scheduled and dispatched archive batches must share one serialized queue');
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
+    'the quick sweep must never cancel a running full-archive sweep');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
