@@ -1167,15 +1167,21 @@ try {
           } catch { return null; }
         }, candidate);
         if (!candidateInfo) continue;
-        await new Promise(resolve => setTimeout(resolve, 650));
+        // A short fixed probe falsely rejects slow idle/breathing loops whose
+        // visible pose changes later in their source timeline. Sample a bounded
+        // duration-aware window; never accept a static poster as moving video.
+        const probeWindowMs = Math.min(5000, Math.max(1800,
+          Math.round((Number(candidateInfo.duration) || 2) * 1000)));
+        const probeIntervalMs = Math.max(600, Math.floor(probeWindowMs / 3));
+        await new Promise(resolve => setTimeout(resolve, probeIntervalMs));
         let candidatePeak = await page.evaluate(() =>
           typeof window.__framePeak === 'function' ? window.__framePeak() : -1).catch(() => -1);
         if (candidatePeak < FRAME_PEAK_MIN && await hasVisibleCompositedCanvas())
           candidatePeak = FRAME_PEAK_MIN;
         const signatureA = await compositedCanvasSignature();
-        await new Promise(resolve => setTimeout(resolve, 700));
+        await new Promise(resolve => setTimeout(resolve, probeIntervalMs));
         const signatureB = await compositedCanvasSignature();
-        await new Promise(resolve => setTimeout(resolve, 700));
+        await new Promise(resolve => setTimeout(resolve, probeIntervalMs));
         const signatureC = await compositedCanvasSignature();
         const changing = Boolean(signatureA && signatureB && signatureC &&
           (signatureA !== signatureB || signatureB !== signatureC));
