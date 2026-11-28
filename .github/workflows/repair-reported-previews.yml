@@ -18,6 +18,8 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/test-no-preview-track-or-skin-fallbacks.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-runtime-skeleton-url.mjs
+      - scripts/test-spine-runtime-skeleton-url.mjs
       - scripts/lib/source-set-choice.mjs
       - scripts/test-source-set-choice.mjs
       - scripts/lib/preview-set-selection.mjs
@@ -95,6 +97,7 @@ jobs:
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node scripts/test-preview-animation-choice.mjs
+          node scripts/test-spine-runtime-skeleton-url.mjs
           node scripts/test-no-preview-track-or-skin-fallbacks.mjs
           node --check scripts/lib/source-set-choice.mjs
           node scripts/test-source-set-choice.mjs
