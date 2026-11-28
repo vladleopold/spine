@@ -1549,8 +1549,9 @@ try {
       // compositor. All PNGs stay in this private runner's temporary folder.
       await page.evaluate(name=>{
         const player=window.__exportPlayer;
-        if(!player || !player.canvas || !player.animationState)
-          throw new Error('No active Spine runtime for real-time fallback');
+        const canvas=typeof window.__captureCanvas==='function'?window.__captureCanvas():null;
+        if(!player || !canvas || !player.animationState)
+          throw new Error('No active Spine runtime or capture canvas for real-time fallback');
         window.__setPlayerAnimation(player, name);
       },targetAnimation);
       console.error('CANVAS_FALLBACK_CAPTURE=started');
