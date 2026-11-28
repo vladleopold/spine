@@ -25,6 +25,8 @@ on:
   pull_request:
     paths:
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-json-atlas-paths.mjs
+      - scripts/test-spine-json-atlas-paths.mjs
       - scripts/lib/canvas-fallback.mjs
       - scripts/test-canvas-fallback.mjs
       - scripts/renderer-failure-class.mjs
@@ -76,6 +78,8 @@ jobs:
       - name: Pure fallback unit gate and code syntax
         run: |
           node --check scripts/spine-export-webm.mjs
+          node --check scripts/lib/spine-json-atlas-paths.mjs
+          node scripts/test-spine-json-atlas-paths.mjs
           node scripts/test-canvas-fallback.mjs
           node scripts/test-atlas-pages.mjs
           node --check scripts/renderer-failure-class.mjs
