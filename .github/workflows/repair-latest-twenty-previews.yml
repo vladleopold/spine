@@ -75,7 +75,8 @@ permissions:
 concurrency:
   # One archive batch per branch. New main-branch runs supersede older batches.
   group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
-  cancel-in-progress: true
+  # Scheduled sweeps queue behind an active repair instead of killing it mid-render.
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
 jobs:
   inventory:
     runs-on: ubuntu-24.04
