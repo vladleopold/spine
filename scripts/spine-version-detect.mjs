@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 
 // Modern Spine binary exports begin with an 8-byte fixed hash, followed by
 // a varint-length-prefixed UTF-8 version. Older exports use two strings:
@@ -43,29 +44,29 @@ export function detectBinarySpineVersion(bytes) {
   const legacy = oldHash && readString(bytes, oldHash.next);
   if (legacy && validVersion(legacy.value)) return legacy.value.trim();
 
-  // Some exports include an additional prefix. Search only the header, not
-  // animation/string-table data, so a filename cannot impersonate a version.
-  const header = Buffer.from(bytes.subarray(0, Math.min(64, bytes.length))).toString('latin1');
+  // Some exports (notably Unity TextAsset wrappers around Spine JSON) add a
+  // textual container before the embedded skeleton metadata. The version can
+  // therefore sit beyond byte 64. Inspect a bounded 256-byte header only; do
+  // not search animation/string-table data, so later content cannot impersonate
+  // the serialized Spine version.
+  const header = Buffer.from(bytes.subarray(0, Math.min(256, bytes.length))).toString('latin1');
   const found = header.match(/(?:^|[^a-z0-9.])([1-9]\d?\.\d{1,2}(?:\.\d{1,3})?(?:-[a-z0-9.-]+)?)(?=$|[^a-z0-9.-])/i);
   return found && validVersion(found[1]) ? found[1] : 'unknown';
 }
 
 export function detectSkeletonVersion(filePath) {
   try {
-    if (path.extname(filePath).toLowerCase() === '.json') {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      const value = String(data?.skeleton?.spine || '');
-      return validVersion(value) ? value.trim() : 'unknown';
-    }
-    if (path.extname(filePath).toLowerCase() === '.skel') {
-      const descriptor = fs.openSync(filePath, 'r');
-      try {
-        const head = Buffer.alloc(256);
-        const n = fs.readSync(descriptor, head, 0, head.length, 0);
-        return detectBinarySpineVersion(head.subarray(0, n));
-      } finally {
-        fs.closeSync(descriptor);
+    const descriptor = fs.openSync(filePath, 'r');
+    try {
+      const bytes = fs.readFileSync(descriptor);
+      const document = readSpineSkeletonDocument(bytes);
+      if (document.format === 'json') {
+        const value = String(document.data?.skeleton?.spine || '');
+        return validVersion(value) ? value.trim() : 'unknown';
       }
+      return detectBinarySpineVersion(bytes.subarray(0, 256));
+    } finally {
+      fs.closeSync(descriptor);
     }
   } catch {}
   return 'unknown';

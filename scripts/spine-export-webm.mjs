@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
 import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
+import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
 import { orderedPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
@@ -159,14 +160,13 @@ if (!skeletonFile || !atlasFile || textureFiles.length === 0) {
  */
 function readSkeletonBounds(filePath) {
   try {
-    const ext = path.extname(filePath).toLowerCase();
-    if (ext === '.json') {
-      const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      const w = Number(content?.skeleton?.width) || 0;
-      const h = Number(content?.skeleton?.height) || 0;
+    const document = readSpineSkeletonDocument(fs.readFileSync(filePath));
+    if (document.format === 'json') {
+      const w = Number(document.data?.skeleton?.width) || 0;
+      const h = Number(document.data?.skeleton?.height) || 0;
       return { width: w, height: h };
     }
-    if (ext === '.skel') {
+    if (path.extname(filePath).toLowerCase() === '.skel') {
       const dir = path.dirname(filePath);
       const base = path.basename(filePath, '.skel');
       const jsonSibling = path.join(dir, base + '.json');
@@ -184,10 +184,9 @@ function readSkeletonBounds(filePath) {
 
 function readAnimationNames(filePath) {
   try {
-    const ext = path.extname(filePath).toLowerCase();
-    let content=null;
-    if (ext === '.json') content=JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    else if (ext === '.skel') {
+    const document = readSpineSkeletonDocument(fs.readFileSync(filePath));
+    let content = document.format === 'json' ? document.data : null;
+    if (!content && path.extname(filePath).toLowerCase() === '.skel') {
       const jsonSibling=path.join(path.dirname(filePath),path.basename(filePath,'.skel')+'.json');
       if(fs.existsSync(jsonSibling))content=JSON.parse(fs.readFileSync(jsonSibling,'utf8'));
     }
@@ -214,10 +213,9 @@ function readAnimationNames(filePath) {
 
 function readSkinNames(filePath) {
   try {
-    const ext=path.extname(filePath).toLowerCase();
-    let content=null;
-    if(ext==='.json')content=JSON.parse(fs.readFileSync(filePath,'utf8'));
-    else if(ext==='.skel'){
+    const document = readSpineSkeletonDocument(fs.readFileSync(filePath));
+    let content = document.format === 'json' ? document.data : null;
+    if(!content && path.extname(filePath).toLowerCase() === '.skel'){
       const sibling=path.join(path.dirname(filePath),path.basename(filePath,'.skel')+'.json');
       if(fs.existsSync(sibling))content=JSON.parse(fs.readFileSync(sibling,'utf8'));
     }
@@ -235,11 +233,9 @@ function readSkinNames(filePath) {
  */
 function readJsonAnimationDuration(filePath, animationName) {
   try {
-    const ext = path.extname(filePath).toLowerCase();
-    let content = null;
-    if (ext === '.json') {
-      content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    } else if (ext === '.skel') {
+    const document = readSpineSkeletonDocument(fs.readFileSync(filePath));
+    let content = document.format === 'json' ? document.data : null;
+    if (!content && path.extname(filePath).toLowerCase() === '.skel') {
       const dir = path.dirname(filePath);
       const base = path.basename(filePath, '.skel');
       const jsonSibling = path.join(dir, base + '.json');
@@ -413,6 +409,8 @@ function sanitizedSkelBuffer(buffer, version = "") {
 }
 
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
+const skeletonDocument = readSpineSkeletonDocument(fs.readFileSync(skeletonFilePath));
+const skeletonIsJson = skeletonDocument.format === 'json';
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
@@ -486,8 +484,8 @@ const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersio
 // Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
 // skeleton/atlas keys were introduced later; passing them leaves a blank canvas.
 const oldPlayerConfig = isLegacy || modernRuntime === '4.0' || modernRuntime === '4.1';
-const skeletonPlayerKey = isLegacy ? (skeletonFile.endsWith('.skel') ? 'skelUrl' : 'jsonUrl')
-  : oldPlayerConfig ? (skeletonFile.endsWith('.skel') ? 'binaryUrl' : 'jsonUrl') : 'skeleton';
+const skeletonPlayerKey = isLegacy ? (skeletonIsJson ? 'jsonUrl' : 'skelUrl')
+  : oldPlayerConfig ? (skeletonIsJson ? 'jsonUrl' : 'binaryUrl') : 'skeleton';
 const atlasPlayerKey = oldPlayerConfig ? 'atlasUrl' : 'atlas';
 
 // Use reliable Vercel domain for legacy player assets to avoid DNS resolution issues in GitHub Actions
@@ -513,7 +511,8 @@ for (const asset of localPlayerAssets) {
   if (fs.existsSync(asset.filename)) console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(asset.filename));
 }
 
-const skeletonKey = skeletonFile.toLowerCase().endsWith('.skel') ? 'skelUrl' : 'skeleton';
+const skeletonKey = isLegacy ? (skeletonIsJson ? 'jsonUrl' : 'skelUrl')
+  : oldPlayerConfig ? (skeletonIsJson ? 'jsonUrl' : 'binaryUrl') : 'skeleton';
 const atlasKey = 'atlas';
 
 const setSegments = [path.relative(repoRoot, firstSet.path).split(path.sep).join('/')];
@@ -924,17 +923,17 @@ try {
   });
   await page.route(skeletonRawUrl, async route => {
     let body;
-    if (skeletonFile.toLowerCase().endsWith('.skel')) {
+    if (!skeletonIsJson) {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
       body = args.sanitizeSkel ? sanitizedSkelBuffer(rawBuffer, skeletonVersion) : rawBuffer;
     } else {
-      const sourceJson = fs.readFileSync(skeletonFilePath, 'utf8');
+      const sourceJson = JSON.stringify(skeletonDocument.data);
       body = normalizeSpineJsonForLegacy38Runtime(sourceJson, skeletonVersion);
       if (body !== sourceJson) console.error('LEGACY_SPINE38_SKIN_MAP_NORMALIZED=1');
     }
     await route.fulfill({
       status: 200,
-      contentType: skeletonFile.toLowerCase().endsWith('.skel') ? 'application/octet-stream' : 'application/json',
+      contentType: skeletonIsJson ? 'application/json' : 'application/octet-stream',
       body: body,
     });
   });
