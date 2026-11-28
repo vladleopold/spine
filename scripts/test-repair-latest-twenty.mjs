@@ -245,6 +245,10 @@ try{
 assert.match(repairSource,/latest50-/);
 assert.match(workflowSource,/animation:m\.animation/);
 assert.match(workflowSource,/hasExistingAcceptedMedia[\s\S]*?item\.indexedWebmStatus==='ready'[\s\S]*?item\.indexedPreviewStatus==='ready'[\s\S]*?item\.ready!==true && !hasExistingAcceptedMedia/);
+assert.match(repairSource,/import \\{ acceptPreviewRender \\} from ["']\\.\\/lib\\/preview-ready-state\\.mjs["']/,
+  'verified archive recovery must use the same accepted-preview state transition as new uploads');
+assert.match(repairSource,/acceptPreviewRender\\(record,/,
+  'successfully recovered previews must clear stale blocked/error metadata');
 assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?itemRendererRevision=typeof item\.rendererRevision==="string"[\s\S]*?previewBlockedRendererRevision===itemRendererRevision[\s\S]*?previewBlockedRendererRevision=itemRendererRevision/,
     'the renderer revision must be frozen in the manifest so a newer publisher checkout cannot falsely mark an older render as current');
   assert.match(repairSource,/meta\.animationFallbackUsed===true/,
