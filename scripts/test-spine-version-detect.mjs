@@ -58,3 +58,12 @@ console.log('SPINE_BINARY_VERSION_HEADER_TESTS_PASSED');
 const unityTextAsset = Buffer.from('TextAsset Base\r\n\tstring m_Name = "20938824"\r\n\tstring m_Script = "{\\"skeleton\\":{\\"hash\\":\\"VGscT4XUSh4\\",\\"spine\\":\\"4.2.42\\"}}"', 'utf8');
 assert.equal(detectBinarySpineVersion(unityTextAsset), '4.2.42',
   'Unity TextAsset .skel wrappers must detect the Spine version beyond the first 64 header bytes');
+
+
+// Unity TextAsset wrappers may carry a complete Spine JSON document inside
+// the escaped m_Script YAML scalar, despite the source file having a .skel suffix.
+const { readSpineSkeletonDocument } = await import('./lib/spine-skeleton-document.mjs');
+const unityDocument = readSpineSkeletonDocument(unityTextAsset);
+assert.equal(unityDocument.format, 'json');
+assert.equal(unityDocument.data?.skeleton?.spine, '4.2.42');
+assert.deepEqual(unityDocument.data?.animations && Object.keys(unityDocument.data.animations), ['idle']);
