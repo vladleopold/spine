@@ -348,8 +348,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the cancellation filter must explicitly exclude this run and only cancel older main-branch batches');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
-  assert.ok(workflowSource.includes('cancel-in-progress: true'),
-    'a corrected runner target must cancel an already-running hosted batch');
+  assert.ok(workflowSource.includes("cancel-in-progress: ${{ github.event_name != 'schedule' }}"),
+    'a 15-minute scheduled reconciliation must queue without cancelling an active repair run');
   assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < 70'),
     'automatic recovery must stop after the newest 70 works');
   assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
