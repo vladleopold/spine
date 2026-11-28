@@ -27,6 +27,8 @@ on:
       - scripts/test-renderer-failure-class.mjs
       - scripts/test-preview-motion.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-skeleton-document.mjs
+      - scripts/test-spine-version-detect.mjs
       - scripts/lib/spine-player-runtime-assets.mjs
       - scripts/lib/spine-json-runtime-compat.mjs
       - scripts/test-spine-player-runtime-assets.mjs
