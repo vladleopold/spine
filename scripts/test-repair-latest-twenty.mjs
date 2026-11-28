@@ -403,8 +403,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the 15-minute quick sweep must not recursively trigger a full archive scan');
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event.schedule == '*/15 * * * *' && 'quick' || 'archive' }}"),
     '15-minute repair sweeps must not queue behind the long-running full-archive sweep');
-  assert.ok(workflowSource.includes("github.event.schedule == '17 */2 * * *'") ||
-    workflowSource.includes("github.event.schedule != '17 */2 * * *'"),
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
     'scheduled quick and full sweeps must be explicitly distinguished');
   assert.ok(workflowSource.includes("cron: '17 3 * * *'"),
     'archive recovery must run unattended on a recurring schedule');
