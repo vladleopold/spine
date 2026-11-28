@@ -12,7 +12,7 @@ import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
-import { configuredPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
+import { orderedPreviewSkinCandidates, sourcePreviewSkinNames } from './preview-skin-choice.mjs';
 import { hasVisibleScreenshotPixels } from './lib/preview-visibility-recovery.mjs';
 import { hasVisibleRgbContent } from './lib/preview-frame-content.mjs';
 import { resolveLocalSpinePlayerAssets, createInlineSpinePlayerAssetUrls } from './lib/spine-player-runtime-assets.mjs';
@@ -912,27 +912,19 @@ try {
       });
     });
   }
-  // Try the source default first. If it is empty/invisible, inspect the
-  // exact source skeleton's declared skins and choose the first visible one.
-  // No attachments or source files are edited; the selected skin is recorded
-  // as preview metadata only.
+  // An explicit config.defaultSkin is authoritative for the preview appearance.
+  // Otherwise keep the runtime-native default first, then inspect declared skins.
+  // The runtime default remains a fallback because it supplies base attachments
+  // omitted by a selected modular outfit skin.
   const FRAME_PEAK_MIN = 40;
-  // Start with the runtime's true default skin. JSON skin maps can include a synthetic
-  // `default` entry that Spine Player does not expose as a selectable named skin.
-  // Discover selectable alternatives from the successfully loaded runtime instead.
-  const skinCandidates = [null];
-  let hasExplicitSkinList = false;
-  // config.json is the authoritative UI skin list when present. Its defaultSkin
-  // is retried by name after the runtime-native default.
+  let skinConfig = null;
   try {
-    const skinConfig = JSON.parse(fs.readFileSync(path.join(previewDir, 'config.json'), 'utf8'));
-    const configuredList = Array.isArray(skinConfig.skins) ? skinConfig.skins
-      : (skinConfig.skins && typeof skinConfig.skins === 'object' ? Object.keys(skinConfig.skins) : []);
-    hasExplicitSkinList = configuredList.length > 0;
-    for (const name of configuredPreviewSkinCandidates(skinConfig).slice(0, 12)) {
-      if (!skinCandidates.includes(name)) skinCandidates.push(name);
-    }
+    skinConfig = JSON.parse(fs.readFileSync(path.join(previewDir, 'config.json'), 'utf8'));
   } catch { /* uploads without a skin config keep the source/runtime discovery path */ }
+  const configuredList = Array.isArray(skinConfig?.skins) ? skinConfig.skins
+    : (skinConfig?.skins && typeof skinConfig.skins === 'object' ? Object.keys(skinConfig.skins) : []);
+  const hasExplicitSkinList = configuredList.length > 0;
+  const skinCandidates = orderedPreviewSkinCandidates(skinConfig);
   // JSON source skins are authoritative when no upload config lists selectable
   // skins. Bound fallbacks so huge Spine 3.8 skin maps cannot stall a batch.
   const sourceSkinNames = hasExplicitSkinList ? [] : readSkinNames(skeletonFilePath).slice(0, 12);
