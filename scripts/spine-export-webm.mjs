@@ -414,6 +414,7 @@ function sanitizedSkelBuffer(buffer, version = "") {
 const skeletonFilePath = path.join(firstSet.path, skeletonFile);
 const skeletonDocument = readSpineSkeletonDocument(fs.readFileSync(skeletonFilePath));
 const skeletonIsJson = skeletonDocument.format === 'json';
+console.error('SPINE_SOURCE_FORMAT=' + skeletonDocument.format);
 const skeletonVersion = detectSkeletonVersion(skeletonFilePath);
 const skeletonBounds = readSkeletonBounds(skeletonFilePath);
 const availableAnimations = readAnimationNames(skeletonFilePath);
@@ -527,6 +528,8 @@ const skeletonRawUrl = rawUrl(skeletonFile);
 // Spine 4.2/4.3 selects its parser from the URL suffix, so expose those exact
 // extracted bytes under a synthetic .json URL without changing the source file.
 const skeletonPlayerUrl = resolveSpineRuntimeSkeletonUrl(skeletonRawUrl, skeletonIsJson ? 'json' : 'binary');
+console.error('SPINE_PLAYER_CONFIG_KEYS=' + skeletonPlayerKey + ',' + atlasPlayerKey);
+console.error('SPINE_PLAYER_SKELETON_URL_SUFFIX=' + path.extname(skeletonPlayerUrl.split(/[?#]/)[0]));
 const atlasRawUrl = rawUrl(atlasFile);
 const textureRawUrls = textureFiles.map(f => rawUrl(f));
 
@@ -927,6 +930,7 @@ try {
     });
   });
   await page.route(skeletonPlayerUrl, async route => {
+    console.error('SPINE_SKELETON_ROUTE_HIT=' + (skeletonIsJson ? 'json' : 'binary'));
     let body;
     if (!skeletonIsJson) {
       const rawBuffer = fs.readFileSync(skeletonFilePath);
@@ -940,6 +944,7 @@ try {
       if (reconciledAttachments.aliases)
         console.error('SPINE_JSON_ATLAS_ATTACHMENT_PATHS_RECONCILED=' + reconciledAttachments.aliases);
     }
+    console.error('SPINE_SKELETON_ROUTE_BYTES=' + (Buffer.isBuffer(body) ? body.length : Buffer.byteLength(String(body))));
     await route.fulfill({
       status: 200,
       contentType: skeletonIsJson ? 'application/json' : 'application/octet-stream',
