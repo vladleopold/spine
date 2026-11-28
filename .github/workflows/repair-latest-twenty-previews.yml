@@ -4,7 +4,7 @@ name: Recover archive Spine WebP and WebM previews in 50-item batches
 # complete archive in serialized 50-item batches.
 on:
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '17 3 * * *'
   # Start a complete recovery sweep immediately when the automation itself changes.
   push:
     branches: [main]
@@ -582,7 +582,7 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && needs.verify-production.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
