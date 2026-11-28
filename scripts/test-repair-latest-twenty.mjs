@@ -392,9 +392,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
-  assert.match(workflowSource,/schedule:\\s*\\n\\s+- cron: '11 \\*\\/3 \\* \\* \\*'/,
+  assert.match(workflowSource,/schedule:\s*\n\s+- cron: '11 \*\/3 \* \* \*'/,
     'the newest 50 archive works must be re-audited and repaired automatically every three hours');
-  assert.ok(workflowSource.includes(\"needs.publish.result == 'success'\") && workflowSource.includes(\"needs.verify-production.result == 'success'\"),
+  assert.ok(workflowSource.includes("needs.publish.result == 'success'") && workflowSource.includes("needs.verify-production.result == 'success'"),
     'scheduled repairs must publish only accepted media and pass the production verification gate');
 
   assert.ok(singleWorkflowSource.includes('  export:') &&
