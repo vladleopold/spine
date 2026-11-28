@@ -1,0 +1,82 @@
+name: Lilith isolated render
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lilith-isolated-render
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout selected revision
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Install renderer system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y ffmpeg
+          npx playwright install --with-deps chromium
+
+      - name: Render only Lilith idle into runner temp storage
+        run: |
+          mkdir -p "$RUNNER_TEMP/lilith-render"
+          node scripts/spine-export-webm.mjs \
+            --upload-id=Lilith_01-2026-11-28T05-22-32-356Z \
+            --animation=idle \
+            --repo-path="$GITHUB_WORKSPACE" \
+            --origin=https://spine-link.vercel.app \
+            --output="$RUNNER_TEMP/lilith-render/preview.webm"
+
+      - name: Validate generated WebM
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in preview.webm preview-medium.webm preview-low.webm; do
+            path="$RUNNER_TEMP/lilith-render/$file"
+            test -s "$path"
+            ffprobe -v error -count_frames -select_streams v:0 \
+              -show_entries stream=codec_name,width,height,nb_read_frames \
+              -show_entries format=duration -of json "$path" > "$RUNNER_TEMP/lilith-render/$file.probe.json"
+            node --input-type=module - "$RUNNER_TEMP/lilith-render/$file.probe.json" <<'NODE'
+          import fs from 'node:fs';
+          const data = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          const stream = data.streams?.[0];
+          if (!stream || stream.codec_name !== 'vp9' || !(stream.width > 0) ||
+              !(stream.height > 0) || !(Number(stream.nb_read_frames) > 1) ||
+              !(Number(data.format?.duration) > 0)) {
+            throw new Error('WebM validation failed: ' + process.argv[2]);
+          }
+          console.log(JSON.stringify({codec: stream.codec_name, width: stream.width,
+            height: stream.height, frames: Number(stream.nb_read_frames),
+            duration: Number(data.format.duration)}));
+          NODE
+          done
+
+      - name: Upload private CI artifact
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: lilith-idle-render-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/lilith-render/
+          if-no-files-found: warn
+          retention-days: 3
