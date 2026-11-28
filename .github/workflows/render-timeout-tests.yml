@@ -1,4 +1,4 @@
-name: Render timeout regression tests
+name: Core regression tests
 
 on:
   pull_request:
@@ -8,6 +8,9 @@ on:
       - 'scripts/publish-large-download.mjs'
       - 'scripts/publish-large-download.test.mjs'
       - 'scripts/test-render-command-timeout.mjs'
+      - 'scripts/spine-version-detect.mjs'
+      - 'scripts/test-spine-version-detect.mjs'
+      - 'scripts/lib/spine-player-source-support.mjs'
       - '.github/workflows/render-timeout-tests.yml'
   push:
     branches: [main]
@@ -17,27 +20,40 @@ on:
       - 'scripts/publish-large-download.mjs'
       - 'scripts/publish-large-download.test.mjs'
       - 'scripts/test-render-command-timeout.mjs'
+      - 'scripts/spine-version-detect.mjs'
+      - 'scripts/test-spine-version-detect.mjs'
+      - 'scripts/lib/spine-player-source-support.mjs'
       - '.github/workflows/render-timeout-tests.yml'
 
 permissions:
   contents: read
 
 jobs:
-  timeout-regressions:
+  core-regressions:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /.github/workflows/render-timeout-tests.yml
             /scripts/
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - name: Syntax-check render timeout implementation
-        run: node --check scripts/lib/run-command.mjs && node --check scripts/render-work.mjs && node --check scripts/publish-large-download.mjs
+          package-manager-cache: false
+      - name: Syntax-check render timeout and Spine version detection
+        run: |
+          node --check scripts/lib/run-command.mjs
+          node --check scripts/render-work.mjs
+          node --check scripts/publish-large-download.mjs
+          node --check scripts/spine-version-detect.mjs
+          node --check scripts/test-spine-version-detect.mjs
       - name: Test child process timeout and exit handling
         run: node --test scripts/test-render-command-timeout.mjs
       - name: Test large download request timeout and streaming
         run: node --test scripts/publish-large-download.test.mjs
+      - name: Test binary and Unity TextAsset Spine version detection
+        run: node scripts/test-spine-version-detect.mjs
