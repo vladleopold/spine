@@ -49,6 +49,8 @@ jobs:
         run: node scripts/test-render-work-blocked-states.mjs
       - name: Test explicit game camera viewport
         run: node scripts/test-game-camera.mjs
+      - name: Test configured preview skin selection
+        run: node scripts/test-preview-visibility-recovery.mjs
       - name: Test SpinePlayer animation viewport updates
         run: node scripts/test-player-animation-viewport.mjs
       - name: Validate exact animation and pinned runtime selection
