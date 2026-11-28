@@ -18,6 +18,8 @@ on:
       - scripts/test-preview-animation-choice.mjs
       - scripts/test-no-preview-track-or-skin-fallbacks.mjs
       - scripts/spine-export-webm.mjs
+      - scripts/lib/spine-player-canvas.mjs
+      - scripts/test-canvas-fallback.mjs
       - scripts/lib/spine-runtime-skeleton-url.mjs
       - scripts/test-spine-runtime-skeleton-url.mjs
       - scripts/lib/source-set-choice.mjs
