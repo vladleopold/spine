@@ -1713,9 +1713,12 @@ try {
     return fs.existsSync(filePath) ? fs.statSync(filePath).size : 0;
   }
 
+  let previewFrameCount = 0;
   for (const output of [outPaths.webmHigh, outPaths.webmMedium, outPaths.webmLow]) {
     const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-count_frames', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,nb_read_frames', '-of', 'json', output], { encoding: 'utf8' }));
-    if (!(probe.streams?.[0]?.width > 0) || !(Number(probe.streams[0].nb_read_frames) > 0)) throw new Error(`Invalid rendered video: ${output}`);
+    const frameCount = Number(probe.streams?.[0]?.nb_read_frames);
+    if (!(probe.streams?.[0]?.width > 0) || !Number.isSafeInteger(frameCount) || frameCount <= 0) throw new Error(`Invalid rendered video: ${output}`);
+    if (output === outPaths.webmHigh) previewFrameCount = frameCount;
   }
   const finalWebmBuffer = fs.existsSync(outPaths.webmHigh) ? fs.readFileSync(outPaths.webmHigh) : Buffer.from([]);
   
@@ -1725,6 +1728,7 @@ try {
     animationFallbackUsed: Boolean(args.allowVisibleTrackFallback && targetAnimation !== requestedAnimation),
     skin: chosenSkin === null ? 'default' : chosenSkin,
     animationDuration: captureDuration,
+    previewFrameCount,
     sourceAnimationDuration: effectiveDuration || null,
     previewDurationInferred: !(effectiveDuration >= 0.5),
     // Real pixel width of each tier. The download picker labels its buttons

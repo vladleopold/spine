@@ -106,6 +106,12 @@ export function mergeFullExportMetadata(entry, previews, generatedAt) {
   if (playable) {
     next.previewAnimation = playable.animation;
     next.previewDuration = playable.duration;
+    const frameCount = Number(playable.preview.previewFrameCount);
+    if (Number.isSafeInteger(frameCount) && frameCount > 0) {
+      next.previewFrameCount = frameCount;
+    } else {
+      delete next.previewFrameCount;
+    }
     for (const key of [...REQUIRED_FULL_EXPORT_KEYS, 'webpPoster', 'webpPosterMedium', 'webpPosterLow']) {
       delete next[key];
       if (typeof playable.preview[key] === 'string' && playable.preview[key].length > 0) {

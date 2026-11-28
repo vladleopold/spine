@@ -283,7 +283,7 @@ jobs:
           # Keep only non-identifying render metadata in the public artifact.
           META="${UPLOAD_ID}-anim-${SAFE}-preview.webm.json"
           if [ -s "$META" ]; then
-            node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));const w=m?.qualityWidths&&typeof m.qualityWidths==='object'?m.qualityWidths:{};fs.writeFileSync(process.argv[2],JSON.stringify({animationDuration:Number(m?.animationDuration)||0,qualityWidths:{high:Number(w.high)||0,medium:Number(w.medium)||0,low:Number(w.low)||0}}))" "$META" "$DIR/meta.json"
+            node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));const w=m?.qualityWidths&&typeof m.qualityWidths==='object'?m.qualityWidths:{};fs.writeFileSync(process.argv[2],JSON.stringify({animationDuration:Number(m?.animationDuration)||0,previewFrameCount:Number(m?.previewFrameCount)||0,qualityWidths:{high:Number(w.high)||0,medium:Number(w.medium)||0,low:Number(w.low)||0}}))" "$META" "$DIR/meta.json"
           else
             echo '{}' > "$DIR/meta.json"
           fi
@@ -581,6 +581,10 @@ jobs:
                     const duration = Number(meta?.animationDuration);
                     if (Number.isFinite(duration) && duration > 0) {
                       allAnimPreviews[animName].previewDuration = duration;
+                    }
+                    const frameCount = Number(meta?.previewFrameCount);
+                    if (Number.isSafeInteger(frameCount) && frameCount > 0) {
+                      allAnimPreviews[animName].previewFrameCount = frameCount;
                     }
                     const widths = meta?.qualityWidths;
                     if (widths && typeof widths === 'object') {
