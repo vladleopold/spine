@@ -15,6 +15,7 @@ import { spinePlayerSourceBlocker } from "./lib/spine-player-source-support.mjs"
 import { previewSourceFingerprint, validateFrozenRepairRecord } from "./repair-manifest-guard.mjs";
 import { inspectAtlasSourceBundle } from "./lib/atlas-source-integrity.mjs";
 import { generateFirstFrameWebp } from "./lib/first-frame-poster.mjs";
+import { acceptPreviewRender } from "./lib/preview-ready-state.mjs";
 
 const root=process.cwd();
 const PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps";
@@ -435,11 +436,8 @@ if(action==="matrix"){
         // earlier source-only audit. Restore it only after re-proving the exact
         // six-file media set locally, on production, and in the repository.
         const retainedAnimation=existingPreviewAnimationName(record);
-        if(retainedAnimation)record.previewAnimation=retainedAnimation;
-        record.webmStatus="ready";
-        record.previewStatus="ready";
-        record.previewError="";
-        record.lastPreviewRetryError="";
+        Object.assign(record,acceptPreviewRender(record,
+          retainedAnimation?{previewAnimation:retainedAnimation}:{},new Date().toISOString()));
         summary.ready++;
         continue;
       }
@@ -485,12 +483,8 @@ if(action==="matrix"){
           // its matching WebP posters from frame zero of each quality tier.
           refreshStoredPostersAndTimestamp(record,entryInfo,base);
           const retainedAnimation=existingPreviewAnimationName(record);
-          if(retainedAnimation)record.previewAnimation=retainedAnimation;
-          record.webmStatus="ready";
-          record.previewStatus="ready";
-          record.dispatchStatus="rendered";
-          record.previewError="";
-          record.lastPreviewRetryError="";
+          Object.assign(record,acceptPreviewRender(record,
+            retainedAnimation?{previewAnimation:retainedAnimation}:{},new Date().toISOString()));
           summary.ready++;
         }catch{
           record.webmStatus="failed";
@@ -557,6 +551,7 @@ if(action==="matrix"){
          existingMediaOk(entryInfo)) {
         try{
           refreshStoredPostersAndTimestamp(record,entryInfo,base);
+          Object.assign(record,acceptPreviewRender(record,{},new Date().toISOString()));
           record.lastPreviewRetryError="Concurrent retry had no accepted media; verified original WebM retained";
           summary.ready++;
         }catch{
@@ -604,25 +599,18 @@ if(action==="matrix"){
     for(const name of names)fs.copyFileSync(path.join(artifact,name),path.join(destination,name));
     const prefix="https://spine-link.vercel.app/assets/"+entryInfo.previewPath.replace(/\\/g,"/")+"/";
     const animation=choosePreviewAnimation([],meta.animation);
-    record.previewAnimation=animation;
     const webm=prefix+"preview.webm",poster=prefix+"preview.webp";
-    record.webmPreview=webm;
-    record.webmPreviewMedium=prefix+"preview-medium.webm";
-    record.webmPreviewLow=prefix+"preview-low.webm";
-    record.thumbnailPoster=poster;
-    record.webpPoster=poster;
-    record.webpPosterMedium=prefix+"preview-medium.webp";
-    record.webpPosterLow=prefix+"preview-low.webp";
-    record.webmStatus="ready";
-    record.previewStatus="ready";
-    record.dispatchStatus="rendered";
-    record.previewError="";
-    delete record.previewBlockedAnimation;
-    delete record.previewBlockedSourceFingerprint;
-    delete record.previewBlockedRendererRevision;
-    delete record.previewBlockedSkin;
-    delete record.previewBlockedAt;
     const now=new Date().toISOString();
+    Object.assign(record,acceptPreviewRender(record,{
+      previewAnimation:animation,
+      webmPreview:webm,
+      webmPreviewMedium:prefix+"preview-medium.webm",
+      webmPreviewLow:prefix+"preview-low.webm",
+      thumbnailPoster:poster,
+      webpPoster:poster,
+      webpPosterMedium:prefix+"preview-medium.webp",
+      webpPosterLow:prefix+"preview-low.webp",
+    },now));
     record.webmGeneratedAt=now;
     record.posterGeneratedAt=now;
     // Preserve the source index defaultAnimation; preview publication only adds media metadata.
