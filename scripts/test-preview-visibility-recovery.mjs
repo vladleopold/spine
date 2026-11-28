@@ -40,6 +40,8 @@ assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['
   'the runtime-native default is represented by null and is never retried by name');
 assert.deepEqual(orderedPreviewSkinCandidates({defaultSkin:'outdoor',skins:['default','nude','outdoor']}),['outdoor',null,'nude'],
   'an explicitly configured preview skin is tried before the sparse runtime default while retaining alternate skin fallbacks');
+assert.deepEqual(orderedPreviewSkinCandidates({previewSkins:['default','nude','outdoor'],defaultSkin:'outdoor',skins:['default','nude','outdoor']}),[['default','nude','outdoor'],'outdoor',null,'nude'],
+  'an explicit modular preview skin stack is attempted before individual fallback skins');
 assert.deepEqual(orderedPreviewSkinCandidates({skins:['default','hero']}),[null,'hero'],
   'uploads without an explicit default skin continue to try the runtime default first');
 assert.deepEqual(sourcePreviewSkinNames({'0':{name:'default'},'1':{name:'Lamb'},'2':{name:'Goat'}}),['default','Lamb','Goat'],
@@ -57,6 +59,8 @@ assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureA
   'binary-only sources prefer a runtime Idle track before the first declared track');
 assert.match(source,/const skinCandidates = orderedPreviewSkinCandidates\(skinConfig\);/,
   'configured default skins take precedence, with the runtime default retained as a fallback');
+assert.match(source,/new spine\.Skin\([\s\S]*?addSkin\([\s\S]*?setupPoseSlots/,
+  'modular preview skins are explicitly composed and their setup attachments are restored');
 assert.match(source,/var runtimeDefaultSkin = runtimeData && runtimeData\.defaultSkin[\s\S]*?runtimeSkeleton\.setSkin\(runtimeDefaultSkin\)[\s\S]*?setSlotsToSetupPose/,
   'legacy runtimes apply the actual default Skin object instead of calling setSkinByName(default)');
 assert.match(source,/if \(runtimeDefaultName && runtimeDefaultName\.toLowerCase\(\) !== 'default'[\s\S]*?SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1/,
