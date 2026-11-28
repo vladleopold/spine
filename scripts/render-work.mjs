@@ -76,11 +76,16 @@ const commandTimeoutMs=cmd=>({
  zip:5*60_000,
  node:15*60_000,
 })[path.basename(cmd)]||120_000;
-function executeCommand(cmd,args,stdio,forwardOutput=true){
- const timeoutMs=commandTimeoutMs(cmd);
+function executeCommand(cmd,args,stdio,forwardOutput=true,options={}){
+ const timeoutMs=options.timeoutMs||commandTimeoutMs(cmd);
  const name=path.basename(cmd);
  console.log(`RENDER_COMMAND_START=${name} timeoutMs=${timeoutMs}`);
- const result=runCommand(cmd,args,{stdio,timeoutMs,maxBuffer:64*1024*1024});
+ let result;
+ try{result=runCommand(cmd,args,{...options,stdio,timeoutMs,maxBuffer:64*1024*1024});}
+ catch(error){
+  console.error(`RENDER_COMMAND_FAILED=${name} code=${error.code||'UNKNOWN'} elapsedMs=${error.elapsedMs||0} timeoutMs=${timeoutMs}`);
+  throw error;
+ }
  const stdout=String(result.stdout||''),stderr=String(result.stderr||'');
  if(forwardOutput&&stdout)process.stdout.write(stdout);
  if(forwardOutput&&stderr)process.stderr.write(stderr);
@@ -95,7 +100,7 @@ function executeCommand(cmd,args,stdio,forwardOutput=true){
  }
  return stdout;
 }
-const run=(cmd,args)=>executeCommand(cmd,args,'inherit');
+const run=(cmd,args,options={})=>executeCommand(cmd,args,'inherit',true,options);
 const runCaptured=(cmd,args)=>executeCommand(cmd,args,['inherit','pipe','pipe']);
 const capture=(cmd,args)=>executeCommand(cmd,args,'pipe',false);
 function staleRenderError(message){
@@ -304,7 +309,7 @@ for(const [suffix,cap]of [['',''],['-medium','Medium'],['-low','Low']]){
  run('ffmpeg',['-y','-v','error','-c:v','libvpx-vp9','-i',alpha,'-filter_complex','fps=15,split[a][b];[a]palettegen=reserve_transparent=1[p];[b][p]paletteuse','-loop','0',gif]);
  const pngdir=path.join(temp,`png${suffix}`);fs.mkdirSync(pngdir,{recursive:true});
  run('ffmpeg',['-y','-v','error','-c:v','libvpx-vp9','-i',alpha,'-pix_fmt','rgba',path.join(pngdir,'frame-%06d.png')]);
- execFileSync('zip',['-q',zip,...fs.readdirSync(pngdir)],{cwd:pngdir});
+ run('zip',['-q',zip,...fs.readdirSync(pngdir)],{cwd:pngdir});
  for(const file of [mp4,mov,gif])probe(file);
  for(const [file,key]of [[opaque,'webmPreview'],[alpha,'webmAlpha'],[mp4,'mp4Preview'],[mov,'movAlpha'],[gif,'gifAlpha'],[zip,'pngAlpha'],[path.join(temp,`preview${suffix}.webp`),'webpPoster']]){
   const dst=`${workPath}/animations/${safe}/${path.basename(file)}`;
