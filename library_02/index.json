@@ -215,20 +215,22 @@
     "skeleton": "Arwen_HQ_SexSc1_Bodies.json",
     "animations": [
       "01_insertion2",
-      "02-03_loop_slowtofast",
       "02_loop-slow2",
       "03_loop-fast",
       "04_cum",
       "05_postcum_idle2"
     ],
     "defaultAnimation": "01_insertion2",
-    "atlas": "",
+    "atlas": "Arwen_HQ_SexSc1_Bodies.atlas.txt",
     "textures": [
-      "Arwen_HQ_SexSc1_Bodies.png"
+      "Arwen_HQ_SexSc1_Bodies.png",
+      "preview-low.webp",
+      "preview-medium.webp",
+      "preview.webp"
     ],
     "publicOwnerId": "u_359aec5e9301c84ae65e",
     "ownerAnonId": "anon_qplueu3b_dio0t4soct",
-    "webmStatus": "pending",
+    "webmStatus": "ready",
     "dispatchStatus": "pending",
     "allAnimationPreviews": {
       "01_insertion2": {
@@ -262,7 +264,25 @@
       }
     },
     "fullExportStatus": "partial",
-    "fullExportGeneratedAt": "2026-11-28T05:25:03.829Z"
+    "fullExportGeneratedAt": "2026-11-28T05:25:03.829Z",
+    "webmError": null,
+    "webmPreview": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview.webm",
+    "webmPreviewMedium": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview-medium.webm",
+    "webmPreviewLow": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview-low.webm",
+    "webmPreviewPath": "library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview.webm",
+    "webpPoster": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview.webp",
+    "webpPosterMedium": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview-medium.webp",
+    "webpPosterLow": "https://spine-link.vercel.app/assets/library_02/Arwen_HQ_SexSc1_Bodies-2026-11-28T05-22-08-954Z/preview-low.webp",
+    "previewWidth": 1920,
+    "previewHeight": 1080,
+    "previewDuration": 1.8666667,
+    "qualityWidths": {
+      "high": 1920,
+      "medium": 1266,
+      "low": 634
+    },
+    "previewAnimation": "01_insertion2",
+    "webmGeneratedAt": "2026-11-28T14:28:03.688Z"
   },
   {
     "id": "Spine-animation-2026-11-27T04-40-28-926Z",
