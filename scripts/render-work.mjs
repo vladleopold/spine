@@ -2,7 +2,7 @@ import {publishLargeDownload} from './publish-large-download.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {execFileSync,spawnSync} from 'node:child_process';
+import {runCommand} from './lib/run-command.mjs';
 import {entryForUpload} from './resolve-library.mjs';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
@@ -69,21 +69,35 @@ const report={
  formats:[],
 };
 const writeReport=()=>writeRenderVerification('render-verification.json',report);
-const run=(cmd,args)=>execFileSync(cmd,args,{stdio:'inherit'});
-const runCaptured=(cmd,args)=>{
- const result=spawnSync(cmd,args,{encoding:'utf8',stdio:['inherit','pipe','pipe'],maxBuffer:64*1024*1024});
+const commandTimeoutMs=cmd=>({
+ git:120_000,
+ ffprobe:90_000,
+ ffmpeg:15*60_000,
+ zip:5*60_000,
+ node:15*60_000,
+})[path.basename(cmd)]||120_000;
+function executeCommand(cmd,args,stdio,forwardOutput=true){
+ const timeoutMs=commandTimeoutMs(cmd);
+ const name=path.basename(cmd);
+ console.log(`RENDER_COMMAND_START=${name} timeoutMs=${timeoutMs}`);
+ const result=runCommand(cmd,args,{stdio,timeoutMs,maxBuffer:64*1024*1024});
  const stdout=String(result.stdout||''),stderr=String(result.stderr||'');
- if(stdout)process.stdout.write(stdout);
- if(stderr)process.stderr.write(stderr);
- if(result.error)throw result.error;
+ if(forwardOutput&&stdout)process.stdout.write(stdout);
+ if(forwardOutput&&stderr)process.stderr.write(stderr);
+ console.log(`RENDER_COMMAND_DONE=${name} elapsedMs=${result.elapsedMs} exitCode=${result.status}`);
  if(result.status!==0){
   const error=new Error(`Renderer command failed with exit code ${result.status}`);
-  error.renderOutput=stdout+'\n'+stderr;
+  error.command=cmd;
+  error.elapsedMs=result.elapsedMs;
+  error.renderOutput=stdout+'\\n'+stderr;
   error.status=result.status;
   throw error;
  }
  return stdout;
-};
+}
+const run=(cmd,args)=>executeCommand(cmd,args,'inherit');
+const runCaptured=(cmd,args)=>executeCommand(cmd,args,['inherit','pipe','pipe']);
+const capture=(cmd,args)=>executeCommand(cmd,args,'pipe',false);
 function staleRenderError(message){
  const error=new Error(message);
  error.code='STALE_RENDER_SUPERSEDED';
@@ -125,7 +139,7 @@ async function markBlockedRender(status,distinctError){
   const indexPath=path.join(current.basePath,'index.json');
   fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
   run('git',['add','--',indexPath]);
-  if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+  if(!capture('git',['diff','--cached','--name-only']).trim())return;
   run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m','Mark non-renderable Spine preview as blocked']);
   try{
    run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
@@ -151,7 +165,7 @@ async function markBlockedSelection(){
     const indexPath=path.join(current.basePath,'index.json');
     fs.writeFileSync(indexPath,JSON.stringify(index,null,2));
     run('git',['add','--',indexPath]);
-    if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+    if(!capture('git',['diff','--cached','--name-only']).trim())return;
     run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m','Mark unselected Spine preview as blocked']);
     try{
       run('git',['-c','http.version=HTTP/1.1','push','origin','HEAD:main']);
@@ -201,7 +215,7 @@ try{
 }catch(error){
  const logPath=path.join(temp,'renderer.log');
  fs.writeFileSync(logPath,String(error.renderOutput||error.message||''));
- const classified=execFileSync('node',['scripts/renderer-failure-class.mjs',logPath],{encoding:'utf8'});
+ const classified=capture('node',['scripts/renderer-failure-class.mjs',logPath]);
  console.log(classified.trim());
  const result=JSON.parse(classified.replace(/^SANITIZED_RENDER_RESULT=/,'').trim());
  const blockedStatus=result.distinctError==='COMPOSITED_FRAMES_IDENTICAL'
@@ -234,7 +248,7 @@ const meta=JSON.parse(fs.readFileSync(base+'.json','utf8'));
 report.status='rendering';
 report.code=null;
 function probe(file){
- const data=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file],{encoding:'utf8'}));
+ const data=JSON.parse(capture('ffprobe',['-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=width,height,nb_read_frames,codec_name,pix_fmt:format=duration','-of','json',file]));
  const s=data.streams[0];if(!s?.width||!Number(s.nb_read_frames))throw Error('Empty render: '+file);
  report.formats.push({file:path.basename(file),...s,duration:Number(data.format?.duration)});return s;
 }
@@ -243,7 +257,7 @@ const add=(src,dst)=>{if(!fs.existsSync(src)||fs.statSync(src).size===0)throw Er
 // Publish card first so the animation card does not wait for the full matrix.
 for(const suffix of ['','-medium','-low'])for(const ext of ['webm','webp']){const file=path.join(temp,`preview${suffix}.${ext}`);probe(file);add(file,`${workPath}/preview${suffix}.${ext}`);}
 async function pushStaged(message){
- if(!execFileSync('git',['diff','--cached','--name-only'],{encoding:'utf8'}).trim())return;
+ if(!capture('git',['diff','--cached','--name-only']).trim())return;
  run('git',['-c','user.name=github-actions[bot]','-c','user.email=github-actions[bot]@users.noreply.github.com','commit','-m',message]);
  run('git',['-c','http.version=HTTP/1.1','-c','http.postBuffer=524288000','push','origin','HEAD:main']);
 }
