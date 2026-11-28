@@ -17,7 +17,7 @@ export function readSpineSkeletonDocument(input) {
   // Unity text serialization stores TextAsset.text in a quoted m_Script scalar.
   // JSON.parse handles escaped quotes, slashes and control characters without
   // evaluating source text or executing any embedded content.
-  const match = source.match(/(?:^|\\r?\\n)\\s*string\\s+m_Script\\s*[:=]\\s*("(?:\\\\.|[^"\\\\])*")/m);
+  const match = source.match(/(?:^|\r?\n)\s*string\s+m_Script\s*[:=]\s*("(?:\\.|[^"\\])*")/m);
   if (match) {
     try {
       const embeddedText = JSON.parse(match[1]);
