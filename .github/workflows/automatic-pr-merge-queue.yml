@@ -1,0 +1,79 @@
+name: Automatic PR merge queue
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+concurrency:
+  group: automatic-pr-merge-queue
+  cancel-in-progress: false
+
+jobs:
+  merge-ready-pull-requests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Merge pull requests only after all checks pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          prs="$(gh pr list --repo "$GH_REPO" --state open --limit 100 \
+            --json number,isDraft,mergeable,headRefOid,baseRefName)"
+
+          count="$(jq 'length' <<<"$prs")"
+          echo "Open PRs discovered: $count"
+
+          while IFS= read -r pr; do
+            number="$(jq -r '.number' <<<"$pr")"
+            draft="$(jq -r '.isDraft' <<<"$pr")"
+            mergeable="$(jq -r '.mergeable' <<<"$pr")"
+            head_sha="$(jq -r '.headRefOid' <<<"$pr")"
+            base="$(jq -r '.baseRefName' <<<"$pr")"
+
+            if [[ "$draft" == "true" || "$base" != "main" ]]; then
+              echo "PR #$number: skipped (draft or not targeting main)"
+              continue
+            fi
+
+            if [[ "$mergeable" == "UNKNOWN" || "$mergeable" == "null" ]]; then
+              echo "PR #$number: GitHub is still calculating mergeability"
+              continue
+            fi
+
+            if [[ "$mergeable" != "MERGEABLE" ]]; then
+              echo "PR #$number: merge conflict detected; leaving open for conflict repair"
+              continue
+            fi
+
+            checks="$(gh api --paginate --slurp "repos/$GH_REPO/commits/$head_sha/check-runs?per_page=100" | jq '[.[].check_runs[]]')"
+            check_total="$(jq 'length' <<<"$checks")"
+            check_pending="$(jq '[.[] | select(.status != "completed")] | length' <<<"$checks")"
+            check_failed="$(jq '[.[] | select(.status == "completed" and (.conclusion != "success" and .conclusion != "skipped" and .conclusion != "neutral"))] | length' <<<"$checks")"
+
+            status="$(gh api "repos/$GH_REPO/commits/$head_sha/status")"
+            status_state="$(jq -r '.state' <<<"$status")"
+            status_total="$(jq '.statuses | length' <<<"$status")"
+
+            if (( check_total == 0 && status_total == 0 )); then
+              echo "PR #$number: no CI checks reported; refusing to merge"
+              continue
+            fi
+            if (( check_pending > 0 || check_failed > 0 )) ||
+              { (( status_total > 0 )) && [[ "$status_state" != "success" ]]; }; then
+              echo "PR #$number: checks not all green (pending=$check_pending failed=$check_failed status=$status_state)"
+              continue
+            fi
+
+            echo "PR #$number: all reported checks green; attempting squash merge"
+            gh pr merge "$number" --repo "$GH_REPO" --squash --delete-branch
+          done < <(jq -c '.[]' <<<"$prs")
