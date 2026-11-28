@@ -40,7 +40,9 @@ assert.equal(JSON.parse(exact.text).skins[0].attachments.slot.back_hair.path, un
 
 const ambiguousAtlas = atlas + '\nother/back_hair\n\tbounds: 1,2,3,4';
 const ambiguous = reconcileSpineJsonAttachmentPaths(JSON.stringify(source), ambiguousAtlas);
-assert.equal(ambiguous.aliases, 0, 'ambiguous basenames must not be rewritten');
-assert.equal(JSON.parse(ambiguous.text).skins[0].attachments.back_hair['new/back_hair'].path, undefined);
+assert.equal(ambiguous.aliases, 1, 'only the unrelated unique head region may be rewritten');
+const ambiguousParsed = JSON.parse(ambiguous.text);
+assert.equal(ambiguousParsed.skins[0].attachments.back_hair['new/back_hair'].path, undefined);
+assert.equal(ambiguousParsed.skins[0].attachments.head['new/head'].path, 'head');
 
 console.log('PASS Spine JSON attachment paths reconcile only unique atlas-region basenames');
