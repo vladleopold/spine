@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "Re-run the bounded latest-70 archive recovery after the RGB WebM content-gate fix; revalidate all 70 and publish only entries that pass visible-frame, motion, poster, media-signature, and production URL checks. Expected recovery target: the two previously blank Spine 4.1.11 previews. Preserve all source bytes.",
-  "revision": 16,
-  "requestedAt": "2026-11-27T13:46:00Z"
+  "reason": "Re-run the latest-70 archive recovery after correcting Spine 4.2 player configuration keys (4.2 uses jsonUrl/binaryUrl + atlasUrl). Revalidate the two blocked 4.2.42 Spine-animation uploads and all recent pages; preserve source bytes and publish only verified moving WebM + matching first-frame WebP pairs.",
+  "revision": 17,
+  "requestedAt": "2026-11-28T18:06:00Z"
 }
