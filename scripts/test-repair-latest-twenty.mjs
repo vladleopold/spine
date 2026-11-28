@@ -392,8 +392,10 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
-  assert.ok(!workflowSource.includes('  schedule:'),
-    'archive recovery must not run unattended every day');
+  assert.match(workflowSource,/^  schedule:\n    - cron: '\*\/15 \* \* \* \*'$/m,
+    'the newest 50 previews must be reconciled automatically every 15 minutes');
+  assert.match(workflowSource,/github\.event_name != 'schedule'/,
+    'scheduled reconciliation must stay scoped to the newest 50 and must not cascade through the historical archive');
 
   assert.ok(singleWorkflowSource.includes('  export:') &&
     singleWorkflowSource.includes('runs-on: ubuntu-24.04'),
