@@ -1065,10 +1065,19 @@ try {
       console.error(`Capture with skin ${label} failed: ${error}`);
       break; // player/skeleton broken — another skin will not fix it
     }
+    if (Array.isArray(skin)) {
+      const appliedSkinStack = await page.evaluate(() => window.__previewSkinStackApplied || '');
+      if (!appliedSkinStack) {
+        lastCaptureError = 'PREVIEW_SKIN_STACK_NOT_APPLIED';
+        console.error('PREVIEW_SKIN_STACK_NOT_APPLIED');
+        continue;
+      }
+      console.error('PREVIEW_SKIN_STACK_APPLIED=' + appliedSkinStack);
+    }
 
     // Stable, non-sensitive stage markers distinguish startup from later visibility failure.
     console.error('PLAYER_READY=1');
-    console.error('SOURCE_SKIN_MODE=default');
+    console.error(Array.isArray(skin) ? 'SOURCE_SKIN_MODE=explicit-composite' : 'SOURCE_SKIN_MODE=default');
     console.error('SOURCE_SKIN_FALLBACK=runtime-discovered');
 
     const runtimeAnimations = await page.evaluate(() => window.__animationNames || []);
