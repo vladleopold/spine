@@ -25,14 +25,25 @@ assert.equal(
   'ordinary bounds should retain automatic Spine Player framing',
 );
 assert.equal(
-  shouldUseGameCamera({ width: 3000, height: 800 }, camera, false),
+  shouldUseGameCamera({ width: 3000, height: 1600 }, camera, false),
   true,
   'a scene wider than the game viewport must retain native game-camera framing',
 );
 assert.equal(
-  shouldUseGameCamera({ width: 1000, height: 2000 }, camera, false),
-  true,
-  'a scene taller than the game viewport must retain native game-camera framing',
+  shouldUseGameCamera({ width: 900, height: 2522 }, camera, false),
+  false,
+  'a tall portrait character must not be cropped by the default landscape game camera',
 );
 
-console.log('PASS explicit and bounds-driven game camera selection');
+assert.equal(
+  shouldUseGameCamera({ width: 1800, height: 4000 }, { width: 1080, height: 1920 }, false),
+  true,
+  'large portrait game scenes must be framed by a compatible portrait camera',
+);
+assert.equal(
+  shouldUseGameCamera({ width: 900, height: 2522 }, { width: 1080, height: 1920 }, true),
+  true,
+  'an explicitly configured camera must override automatic aspect-ratio detection',
+);
+
+console.log('PASS explicit, portrait and landscape game-camera framing');
