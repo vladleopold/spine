@@ -68,6 +68,26 @@ assert.equal(unityDocument.format, 'json');
 assert.equal(unityDocument.data?.skeleton?.spine, '4.2.42');
 assert.deepEqual(unityDocument.data?.animations && Object.keys(unityDocument.data.animations), ['idle']);
 
+// Some Unity exports store valid JSON inside m_Script without escaping its
+// inner quotes. It is still a JSON skeleton, not a binary .skel payload.
+const unityRawTextAsset = Buffer.from([
+  'TextAsset Base',
+  '\tstring m_Name = "20938824"',
+  '\tstring m_Script = "{"skeleton":{"hash":"VGscT4XUSh4","spine":"4.2.42"},"bones":[],"animations":{"idle":{}}}"',
+].join('\r\n'), 'utf8');
+const unityRawDocument = readSpineSkeletonDocument(unityRawTextAsset);
+assert.equal(unityRawDocument.format, 'json');
+assert.equal(unityRawDocument.data?.skeleton?.spine, '4.2.42');
+const unityRawFile = path.join(os.tmpdir(), 'unity-raw-textasset-spine.skel');
+try {
+  fs.writeFileSync(unityRawFile, unityRawTextAsset);
+  assert.equal(detectSkeletonVersion(unityRawFile), '4.2.42',
+    'an unescaped Unity m_Script JSON skeleton must be extracted and versioned as JSON');
+} finally {
+  fs.rmSync(unityRawFile, { force: true });
+}
+
+
 const unityFile = path.join(os.tmpdir(), 'unity-textasset-spine.skel');
 try {
   fs.writeFileSync(unityFile, unityTextAsset);
