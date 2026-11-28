@@ -38,3 +38,19 @@ export function sourcePreviewSkinNames(skins) {
     .filter(Boolean);
   return names.length ? names : Object.keys(skins);
 }
+
+/**
+ * Order preview skins so an explicitly configured default appearance wins.
+ * The runtime default remains the fallback for uploads without that setting.
+ */
+export function orderedPreviewSkinCandidates(config) {
+  const configured = configuredPreviewSkinCandidates(config);
+  const defaultSkin = typeof config?.defaultSkin === 'string' ? config.defaultSkin.trim() : '';
+  const result = [];
+  if (defaultSkin && defaultSkin.toLowerCase() !== 'default') result.push(defaultSkin);
+  result.push(null);
+  for (const name of configured) {
+    if (!result.includes(name)) result.push(name);
+  }
+  return result;
+}

@@ -190,8 +190,8 @@ assert.doesNotMatch(exporter,/SPINE_SCREENSHOT_JPEG_BASE64|diagnosticScreenshot/
   "private preview pixels must never be embedded in public GitHub Actions logs");
 assert.ok(exporter.includes("sanitizeRuntimeDiagnostics(runtimeDiagnostics)"),
   "runtime diagnostics must be reduced to safe counts and dimensions before logging");
-assert.ok(exporter.includes("const skinCandidates = [null]"), "try the source default first");
-assert.ok(exporter.includes("configuredPreviewSkinCandidates(skinConfig)"), "use only skin names explicitly declared by the uploaded source config");
+assert.ok(exporter.includes("const skinCandidates = orderedPreviewSkinCandidates(skinConfig)"), "an explicitly configured preview skin is tried before the runtime default");
+assert.ok(exporter.includes("orderedPreviewSkinCandidates(skinConfig)"), "use the configured preview skin order and preserve the runtime-default fallback");
 assert.ok(exporter.includes("const runtimeSkinNames = await page.evaluate"), "binary-only skeletons expose source skin names from their loaded runtime");
 assert.match(exporter,/skinCandidates\.push\(normalizedName\)/,
   "runtime skins are tried only after the default skin produces no visible frame");

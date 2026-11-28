@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {hasVisibleScreenshotPixels} from './lib/preview-visibility-recovery.mjs';
 import {hasVisibleRgbContent} from './lib/preview-frame-content.mjs';
 import {choosePreviewAnimation} from './preview-animation-choice.mjs';
-import {configuredPreviewSkinCandidates, sourcePreviewSkinNames} from './preview-skin-choice.mjs';
+import {configuredPreviewSkinCandidates, orderedPreviewSkinCandidates, sourcePreviewSkinNames} from './preview-skin-choice.mjs';
 import {normalizeSpineJsonForLegacy38Runtime} from './lib/spine-json-runtime-compat.mjs';
 const objectSkinJson=JSON.stringify({skeleton:{spine:'3.8.11-beta'},bones:[],skins:{
   default:{attachments:{body:{body:{type:'region',path:'body'}}}},
@@ -38,6 +38,10 @@ assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'Lamb',skins:['Lam
   'configured skin candidates are normalized and deduplicated');
 assert.deepEqual(configuredPreviewSkinCandidates({defaultSkin:'default',skins:['default','hero']}),['hero'],
   'the runtime-native default is represented by null and is never retried by name');
+assert.deepEqual(orderedPreviewSkinCandidates({defaultSkin:'outdoor',skins:['default','nude','outdoor']}),['outdoor',null,'nude'],
+  'an explicitly configured preview skin is tried before the sparse runtime default while retaining alternate skin fallbacks');
+assert.deepEqual(orderedPreviewSkinCandidates({skins:['default','hero']}),[null,'hero'],
+  'uploads without an explicit default skin continue to try the runtime default first');
 assert.deepEqual(sourcePreviewSkinNames({'0':{name:'default'},'1':{name:'Lamb'},'2':{name:'Goat'}}),['default','Lamb','Goat'],
   'numeric-keyed Spine 3.8 skin objects must expose their embedded skin names');
 assert.deepEqual(sourcePreviewSkinNames({Lamb:{attachments:{}},Goat:{attachments:{}}}),['Lamb','Goat'],
@@ -51,8 +55,8 @@ assert.match(source,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAn
   'the preview may change tracks only after a candidate shows visible changing pixels');
 assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureAnimation\)\} \|\|[\s\S]*?window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/,
   'binary-only sources prefer a runtime Idle track before the first declared track');
-assert.match(source,/const skinCandidates = \[null\];/,
-  'try the original default skin first; named alternatives must come from the loaded runtime');
+assert.match(source,/const skinCandidates = orderedPreviewSkinCandidates\(skinConfig\);/,
+  'configured default skins take precedence, with the runtime default retained as a fallback');
 assert.match(source,/var runtimeDefaultSkin = runtimeData && runtimeData\.defaultSkin[\s\S]*?runtimeSkeleton\.setSkin\(runtimeDefaultSkin\)[\s\S]*?setSlotsToSetupPose/,
   'legacy runtimes apply the actual default Skin object instead of calling setSkinByName(default)');
 assert.match(source,/if \(runtimeDefaultName && runtimeDefaultName\.toLowerCase\(\) !== 'default'[\s\S]*?SOURCE_RUNTIME_DEFAULT_SKIN_FALLBACK=1/,
