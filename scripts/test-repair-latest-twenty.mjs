@@ -245,16 +245,20 @@ try{
 assert.match(repairSource,/latest50-/);
 assert.match(workflowSource,/animation:m\.animation/);
 assert.match(workflowSource,/hasExistingAcceptedMedia[\s\S]*?item\.indexedWebmStatus==='ready'[\s\S]*?item\.indexedPreviewStatus==='ready'[\s\S]*?item\.ready!==true && !hasExistingAcceptedMedia/);
+assert.ok(repairSource.includes('import { acceptPreviewRender } from "./lib/preview-ready-state.mjs"'),
+  'verified archive recovery must use the same accepted-preview state transition as new uploads');
+assert.ok(repairSource.includes('acceptPreviewRender(record,'),
+  'successfully recovered previews must clear stale blocked/error metadata');
 assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?itemRendererRevision=typeof item\.rendererRevision==="string"[\s\S]*?previewBlockedRendererRevision===itemRendererRevision[\s\S]*?previewBlockedRendererRevision=itemRendererRevision/,
     'the renderer revision must be frozen in the manifest so a newer publisher checkout cannot falsely mark an older render as current');
   assert.match(repairSource,/meta\.animationFallbackUsed===true/,
     'a preview may use another source-declared animation only after visible motion is verified');
-  assert.match(repairSource,/record\.previewAnimation=animation/,
+  assert.match(repairSource,/previewAnimation:animation/,
     'the exact rendered track is stored separately from the source default');
   assert.match(repairSource,/function existingPreviewAnimationName\(record\)[\s\S]*?current!=="__SPINE_AUTO__"[\s\S]*?item\?\.webmPreview===record\?\.webmPreview/,
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
-  assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.dispatchStatus==="rendered"[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?record\.webmStatus="ready"[\s\S]*?summary\.ready\+\+/,
-    "previously accepted media can be restored after a source-only downgrade only when all six files pass local, live and repository verification");
+  assert.match(repairSource,/if\(!sourceCheck\.complete\)[\s\S]*?record\.dispatchStatus==="rendered"[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?acceptPreviewRender\(record,[\s\S]*?summary\.ready\+\+/,
+    "previously accepted media can be restored only after all six files pass local, live and repository verification");
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/);
   assert.match(workflowSource,/--allow-visible-track-fallback/);
   assert.match(workflowSource,/ALLOW_VISIBLE_TRACK_FALLBACK: "true"/);
@@ -330,11 +334,12 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'blank deterministic captures must be blocked for native inspection, not retried indefinitely');
 
   assert.match(workflowSource,/dispatch-next-batch/,'successful publication must queue the next archive batch');
-  // The requested latest-70 recovery must render only on the dedicated Ubuntu worker.
+  // The scheduled full-archive recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: ubuntu-24\.04/,
     'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
-  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
-    'only one archive repair batch may run at a time');
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}") &&
+    !workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
+    'scheduled and dispatched archive batches must share one serialized queue');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
@@ -348,16 +353,16 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the cancellation filter must explicitly exclude this run and only cancel older main-branch batches');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
-  assert.ok(workflowSource.includes('cancel-in-progress: true'),
-    'a corrected runner target must cancel an already-running hosted batch');
-  assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < 70'),
-    'automatic recovery must stop after the newest 70 works');
-  assert.ok(workflowSource.includes('remaining=$(( 70 - NEXT_OFFSET ))'),
-    'the second batch must be limited to the remaining 20 works, not another 50');
+  assert.ok(workflowSource.includes('cancel-in-progress: false'),
+    'a verified archive sweep must not be cancelled while its next batch is queued');
+  assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)'),
+    'automatic recovery must sweep the complete archive, not stop at a fixed recent window');
+  assert.ok(workflowSource.includes('remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))'),
+    'automatic recovery must continue until the final archive entry');
   assert.ok(workflowSource.includes("needs.publish.result == 'success'") &&
-    workflowSource.includes("needs.verify-production.result == 'success'") &&
+    !workflowSource.includes("needs.verify-production.result == 'success'") &&
     !workflowSource.includes("needs.render.result == 'success'"),
-    'later batches require a successful publish and live audit, but may continue after individual render failures');
+    'later batches must continue after an item-level or live-audit failure once verified-only publication succeeded');
   const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:'));
   assert.ok(verifyJobBlock.includes("if: always()") &&
     verifyJobBlock.includes("needs.publish.result == 'success'"),
@@ -365,9 +370,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:'));
   assert.ok(dispatchJobBlock.includes("if: always() &&") &&
     dispatchJobBlock.includes("needs.publish.result == 'success'") &&
-    dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
+    !dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
     !dispatchJobBlock.includes("needs.render.result == 'success'"),
-    'next archive batch requires verified publication, not every render matrix item to pass');
+    'next archive batch must continue after a failed per-batch live audit when publication itself succeeded');
 
   const exactPrHeadRef='ref: ${{ github.event.pull_request.head.sha || github.sha }}';
   for(const [name,source] of [
@@ -388,12 +393,21 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   }
 
   assert.ok(workflowSource.includes('scripts/repair-latest-70-trigger.json'),
-    'only the explicit latest-70 trigger file may start an automatic archive batch');
+    'the explicit repair marker must remain a supported recovery trigger');
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
-  assert.ok(!workflowSource.includes('  schedule:'),
-    'archive recovery must not run unattended every day');
+  assert.ok(workflowSource.includes("cron: '17 3 * * *'"),
+    'archive recovery must run unattended on a recurring schedule');
+  assert.ok(!workflowSource.includes("github.event_name != 'schedule'"),
+    'scheduled archive recovery must continue through verified batches');
+  assert.ok(workflowSource.includes('.github/workflows/repair-latest-twenty-previews.yml'),
+    'merging an automation change must start the initial archive recovery sweep');
+  assert.ok(workflowSource.includes('group: spine-preview-latest-twenty-${{ github.ref }}') &&
+    !workflowSource.includes('group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}'),
+    'scheduled and dispatched batches must share one concurrency group');
+  assert.ok(workflowSource.includes('cancel-in-progress: false'),
+    'an active verified archive sweep must not be cancelled by its next batch');
 
   assert.ok(singleWorkflowSource.includes('  export:') &&
     singleWorkflowSource.includes('runs-on: ubuntu-24.04'),

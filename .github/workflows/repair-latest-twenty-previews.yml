@@ -1,20 +1,24 @@
 name: Recover archive Spine WebP and WebM previews in 50-item batches
 # PR-head regression checks explicitly test the source branch and include the synthetic gate file.
-# Canonical automatic recovery pipeline. Targeted latest-10 and reported-project repair
-# workflows remain manually/feature-branch invoked to prevent overlapping main-branch writes.
+# Canonical automatic recovery pipeline. Each scheduled sweep verifies and repairs the
+# complete archive in serialized 50-item batches.
 on:
-  # Archive recovery is intentionally operator-triggered; no unattended schedule.
-  # A single explicit marker starts the one-time newest-70 recovery.
+  schedule:
+    - cron: '17 3 * * *'
+  # Start a complete recovery sweep immediately when the automation itself changes.
   push:
     branches: [main]
     paths:
       - scripts/repair-latest-70-trigger.json
+      - .github/workflows/repair-latest-twenty-previews.yml
   pull_request:
     paths:
       - .github/workflows/repair-latest-twenty-previews.yml
       - scripts/repair-latest-twenty-previews.mjs
       - scripts/verify-latest-twenty-live.mjs
       - scripts/test-repair-latest-twenty.mjs
+      - scripts/test-preview-ready-state.mjs
+      - scripts/lib/preview-ready-state.mjs
       - .github/workflows/spine-export-webm.yml
       - scripts/test-render-selection.mjs
       - scripts/lib/spine-player-source-support.mjs
@@ -70,9 +74,9 @@ on:
 permissions:
   contents: read
 concurrency:
-  # One archive batch per branch. New main-branch runs supersede older batches.
-  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}
-  cancel-in-progress: true
+  # One queue for scheduled and dispatched batches; never cancel a live sweep.
+  group: spine-preview-latest-twenty-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   inventory:
     runs-on: ubuntu-24.04
@@ -139,6 +143,7 @@ jobs:
           node scripts/test-renderer-failure-class.mjs
           node scripts/test-render-selection.mjs
           SPINE_REPAIR_LIMIT=20 node scripts/test-repair-latest-twenty.mjs
+          node scripts/test-preview-ready-state.mjs
           node scripts/test-upload-default-animation.mjs
           node scripts/test-first-frame-poster.mjs
           node --check scripts/verify-poster-first-frame.mjs
@@ -577,7 +582,7 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.event_name != 'schedule' && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && needs.verify-production.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < 70 && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
@@ -591,7 +596,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          remaining=$(( 70 - NEXT_OFFSET ))
+          remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))
           available=$(( TOTAL_COUNT - NEXT_OFFSET ))
           if (( remaining > available )); then remaining=$available; fi
           next_limit=$(( remaining < 50 ? remaining : 50 ))
