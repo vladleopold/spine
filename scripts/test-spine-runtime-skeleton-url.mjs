@@ -34,7 +34,7 @@ assert.match(
 );
 assert.match(
   rendererSource,
-  /\$\\{skeletonPlayerKey\\}: '\$\\{skeletonPlayerUrl\\}'/,
+  /\$\{skeletonPlayerKey\\}: '\$\{skeletonPlayerUrl\\}'/,
   'both Spine Player initialization paths must receive the extension-correct runtime URL',
 );
 assert.match(
