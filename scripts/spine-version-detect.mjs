@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
 
 // Modern Spine binary exports begin with an 8-byte fixed hash, followed by
 // a varint-length-prefixed UTF-8 version. Older exports use two strings:
@@ -55,20 +56,17 @@ export function detectBinarySpineVersion(bytes) {
 
 export function detectSkeletonVersion(filePath) {
   try {
-    if (path.extname(filePath).toLowerCase() === '.json') {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      const value = String(data?.skeleton?.spine || '');
-      return validVersion(value) ? value.trim() : 'unknown';
-    }
-    if (path.extname(filePath).toLowerCase() === '.skel') {
-      const descriptor = fs.openSync(filePath, 'r');
-      try {
-        const head = Buffer.alloc(256);
-        const n = fs.readSync(descriptor, head, 0, head.length, 0);
-        return detectBinarySpineVersion(head.subarray(0, n));
-      } finally {
-        fs.closeSync(descriptor);
+    const descriptor = fs.openSync(filePath, 'r');
+    try {
+      const bytes = fs.readFileSync(descriptor);
+      const document = readSpineSkeletonDocument(bytes);
+      if (document.format === 'json') {
+        const value = String(document.data?.skeleton?.spine || '');
+        return validVersion(value) ? value.trim() : 'unknown';
       }
+      return detectBinarySpineVersion(bytes.subarray(0, 256));
+    } finally {
+      fs.closeSync(descriptor);
     }
   } catch {}
   return 'unknown';
