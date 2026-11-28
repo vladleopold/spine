@@ -3,7 +3,10 @@ name: Recover archive Spine WebP and WebM previews in 50-item batches
 # Canonical automatic recovery pipeline. Targeted latest-10 and reported-project repair
 # workflows remain manually/feature-branch invoked to prevent overlapping main-branch writes.
 on:
-  # Archive recovery is intentionally operator-triggered; no unattended schedule.
+  # Reconcile the newest 50 entries frequently so deleted or stale media is repaired.
+  # Scheduled runs stop after offset 0; historical archive batches remain opt-in.
+  schedule:
+    - cron: '*/15 * * * *'
   # A single explicit marker starts the one-time newest-70 recovery.
   push:
     branches: [main]
