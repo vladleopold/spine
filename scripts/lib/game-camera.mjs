@@ -1,5 +1,5 @@
 export function parseGameCamera(value = '') {
-  const match = String(value || '').trim().match(/^(\\d+)x(\\d+)$/i);
+  const match = String(value || '').trim().match(/^(\d+)x(\d+)$/i);
   if (!match) return null;
   return {
     width: Math.min(3840, Math.max(320, Number(match[1]))),
