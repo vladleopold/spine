@@ -1,0 +1,43 @@
+name: Render timeout regression tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/lib/run-command.mjs'
+      - 'scripts/render-work.mjs'
+      - 'scripts/publish-large-download.mjs'
+      - 'scripts/publish-large-download.test.mjs'
+      - 'scripts/test-render-command-timeout.mjs'
+      - '.github/workflows/render-timeout-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/lib/run-command.mjs'
+      - 'scripts/render-work.mjs'
+      - 'scripts/publish-large-download.mjs'
+      - 'scripts/publish-large-download.test.mjs'
+      - 'scripts/test-render-command-timeout.mjs'
+      - '.github/workflows/render-timeout-tests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  timeout-regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Syntax-check render timeout implementation
+        run: node --check scripts/lib/run-command.mjs && node --check scripts/render-work.mjs && node --check scripts/publish-large-download.mjs
+      - name: Test child process timeout and exit handling
+        run: node --test scripts/test-render-command-timeout.mjs
+      - name: Test large download request timeout and streaming
+        run: node --test scripts/publish-large-download.test.mjs
