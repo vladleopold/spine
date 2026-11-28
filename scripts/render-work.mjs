@@ -6,6 +6,7 @@ import {runCommand} from './lib/run-command.mjs';
 import {entryForUpload} from './resolve-library.mjs';
 import {previewSourceFingerprint} from './repair-manifest-guard.mjs';
 import {missingAnimationPreviewMetadata} from './lib/spine-export-entry.mjs';
+import {acceptPreviewRender} from './lib/preview-ready-state.mjs';
 import {resolveRenderSelection,writeRenderVerification} from './lib/render-selection.mjs';
 import {parseGameCamera} from './lib/game-camera.mjs';
 const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
@@ -283,7 +284,9 @@ async function publish(update){
   run('git',['fetch','--no-tags','origin','+refs/heads/main:refs/remotes/origin/main']);run('git',['reset','--hard','origin/main']);
   const current=entryForUpload(process.cwd(),id);if(!current)throw Error('Upload removed during render');
   const idx=current.index.findIndex(e=>e.id===id);
-  const merged={...current.index[idx],...update};
+  const merged=update.webmStatus==='ready'
+   ?acceptPreviewRender(current.index[idx],update)
+   :{...current.index[idx],...update};
   if(update.allAnimationPreviews)merged.allAnimationPreviews={...current.index[idx].allAnimationPreviews,...update.allAnimationPreviews};
   current.index[idx]=merged;
   const indexPath=`${current.basePath}/index.json`;fs.writeFileSync(indexPath,JSON.stringify(current.index,null,2));
