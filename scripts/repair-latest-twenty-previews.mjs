@@ -429,7 +429,7 @@ if(action==="matrix"){
       // Source loss must not hide a previously accepted preview. Preserve it
       // only when all six local files, the exact selected-animation mapping,
       // live production URLs, and repository copies still pass independent checks.
-      if(record.dispatchStatus==="rendered" && record.webmPreview && record.webpPoster &&
+      if(record.webmPreview && record.webpPoster &&
          existingMediaOk(entryInfo) && await liveMediaOk(entryInfo) &&
          await originalMediaFilesOk(entryInfo)){
         // The previous accepted status may already have been downgraded by an
