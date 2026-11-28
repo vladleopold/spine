@@ -19,7 +19,7 @@ test('preview FPS audit script parses as valid JavaScript before it can run in C
 
 test('full-library preview audit runs daily and automatically requests missing or invalid exports', () => {
   const workflow = fs.readFileSync(path.resolve('.github/workflows/audit-preview-videos.yml'), 'utf8');
-  assert.match(workflow, /schedule:\\s*\\n\\s+- cron: '17 3 \\* \\* \\*'/);
-  assert.match(workflow, /report\\.missing[\\s\\S]*report\\.invalid[\\s\\S]*report\\.errors/);
+  assert.match(workflow, /schedule:\s*\n\s+- cron: '17 3 \* \* \*'/);
+  assert.match(workflow, /report\.missing[\s\S]*report\.invalid[\s\S]*report\.errors/);
   assert.match(workflow, /createWorkflowDispatch/);
 });
