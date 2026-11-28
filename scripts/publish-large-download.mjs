@@ -9,7 +9,7 @@ async function fetchWithTimeout(fetchImpl, url, options, timeoutMs, consumeRespo
   return await consumeResponse(response);
  } catch (cause) {
   if (controller.signal.aborted) {
-   const error = new Error(\`Download request timed out after \${timeoutMs}ms\`);
+   const error = new Error('Download request timed out after '+timeoutMs+'ms');
    error.code = 'DOWNLOAD_REQUEST_TIMEOUT';
    error.timeoutMs = timeoutMs;
    error.cause = cause;
@@ -38,7 +38,7 @@ export async function publishLargeDownload(file,{
  if(size>2*1024**3)throw Error('Download exceeds GitHub release asset limit: '+file);
  const hash=createHash('sha256');for await(const chunk of fs.createReadStream(file))hash.update(chunk);
  const name=hash.digest('hex').slice(0,16)+'-'+file.split('/').pop();
- const headers={Authorization:\`Bearer \${token}\`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+ const headers={Authorization:'Bearer '+token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
  const api='https://api.github.com/repos/'+repository;
  const tag='render-'+uploadId;
  const getRelease=()=>fetchWithTimeout(fetchImpl,api+'/releases/tags/'+encodeURIComponent(tag),{headers},requestTimeoutMs,responseAndJson);
