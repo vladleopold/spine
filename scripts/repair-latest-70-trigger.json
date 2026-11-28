@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "Re-run the bounded latest-70 archive recovery after the RGB WebM content-gate fix; revalidate all 70 and publish only entries that pass visible-frame, motion, poster, media-signature, and production URL checks. Expected recovery target: the two previously blank Spine 4.1.11 previews. Preserve all source bytes.",
-  "revision": 16,
-  "requestedAt": "2026-11-27T13:46:00Z"
+  "reason": "Run a verified latest-70 recovery after restoring archive-card root WebM selection and enabling continuous preview repair. Revalidate source identity, visible motion, poster first frames, all media tiers, signatures, and production URLs. Preserve all source bytes.",
+  "revision": 17,
+  "requestedAt": "2026-11-28T17:40:00Z"
 }
