@@ -67,3 +67,12 @@ const unityDocument = readSpineSkeletonDocument(unityTextAsset);
 assert.equal(unityDocument.format, 'json');
 assert.equal(unityDocument.data?.skeleton?.spine, '4.2.42');
 assert.deepEqual(unityDocument.data?.animations && Object.keys(unityDocument.data.animations), ['idle']);
+
+const unityFile = path.join(os.tmpdir(), 'unity-textasset-spine.skel');
+try {
+  fs.writeFileSync(unityFile, unityTextAsset);
+  assert.equal(detectSkeletonVersion(unityFile), '4.2.42',
+    'a .skel Unity TextAsset containing embedded Spine JSON must use its embedded version');
+} finally {
+  fs.rmSync(unityFile, { force: true });
+}
