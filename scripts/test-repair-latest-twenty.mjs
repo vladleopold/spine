@@ -339,9 +339,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   // The scheduled full-archive recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: ubuntu-24\.04/,
     'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
-  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}") &&
-    !workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
-    'scheduled and dispatched archive batches must share one serialized queue');
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event.schedule == '*/15 * * * *' && 'quick' || 'archive' }}"),
+    'the 15-minute quick sweep must be serialized separately from the full-archive queue');
   assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
     'the quick sweep must never cancel a running full-archive sweep');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
