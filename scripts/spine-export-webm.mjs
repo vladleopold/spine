@@ -1046,18 +1046,19 @@ try {
   for (let skinIndex = 0; skinIndex < skinCandidates.length; skinIndex++) {
     const skin = skinCandidates[skinIndex];
     const label = Array.isArray(skin) ? `[${skin.join('+')}]` : (skin === null ? '(default)' : `'${skin}'`);
-    if (skinIndex > 0) {
+    const useInitialDefaultPage = skinIndex === 0 && skin === null;
+    if (!useInitialDefaultPage) {
       await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
     }
-    let ready = skinIndex === 0 ? defaultReady : true;
-    if (skinIndex > 0) {
+    let ready = useInitialDefaultPage ? defaultReady : true;
+    if (!useInitialDefaultPage) {
       try {
         await page.waitForFunction(() => window.__ready === true || window.__captureError, { timeout: 60000, polling: 200 });
       } catch {
         ready = false;
       }
     }
-    const error = skinIndex === 0
+    const error = useInitialDefaultPage
       ? defaultCaptureError
       : (ready ? await page.evaluate(() => window.__captureError || null) : 'Timed out waiting for player ready');
     if (error) {
