@@ -11,6 +11,7 @@ import { trimBlackLead } from './lib/black-lead.mjs';
 import { collectionPathForUpload, entryForUpload } from './resolve-library.mjs';
 import { detectSkeletonVersion } from './spine-version-detect.mjs';
 import { readSpineSkeletonDocument } from './lib/spine-skeleton-document.mjs';
+import { spinePlayerConfigKeys } from './lib/spine-player-config.mjs';
 import {prepareBinaryJsonSkeletonAliases} from './lib/spine-binary-json-alias.mjs';
 import {reconcileSpineJsonAttachmentPaths} from './lib/spine-json-atlas-paths.mjs';
 import { choosePreviewAnimation, resolvePreviewAnimation } from './preview-animation-choice.mjs';
@@ -484,10 +485,9 @@ const runtimeMinor = isLegacy ? runtimeMinorForSpineSkeleton(skeletonVersion, sk
 const modernRuntime = /^4\.[012](?:\.|$)/.test(skeletonVersion) ? skeletonVersion.slice(0,3) : '4.3';
 // Spine Player 4.0/4.1 consumes jsonUrl/binaryUrl + atlasUrl. The modern
 // skeleton/atlas keys were introduced later; passing them leaves a blank canvas.
-const oldPlayerConfig = isLegacy || modernRuntime === '4.0' || modernRuntime === '4.1';
-const skeletonPlayerKey = isLegacy ? (skeletonIsJson ? 'jsonUrl' : 'skelUrl')
-  : oldPlayerConfig ? (skeletonIsJson ? 'jsonUrl' : 'binaryUrl') : 'skeleton';
-const atlasPlayerKey = oldPlayerConfig ? 'atlasUrl' : 'atlas';
+const playerConfigKeys = spinePlayerConfigKeys({ isLegacy, modernRuntime, skeletonIsJson });
+const skeletonPlayerKey = playerConfigKeys.skeletonKey;
+const atlasPlayerKey = playerConfigKeys.atlasKey;
 
 // Use reliable Vercel domain for legacy player assets to avoid DNS resolution issues in GitHub Actions
 const stableOrigin = 'https://spine-link.vercel.app';
@@ -512,9 +512,8 @@ for (const asset of localPlayerAssets) {
   if (fs.existsSync(asset.filename)) console.error('LOCAL_SPINE_RUNTIME_READY ' + path.basename(asset.filename));
 }
 
-const skeletonKey = isLegacy ? (skeletonIsJson ? 'jsonUrl' : 'skelUrl')
-  : oldPlayerConfig ? (skeletonIsJson ? 'jsonUrl' : 'binaryUrl') : 'skeleton';
-const atlasKey = 'atlas';
+const skeletonKey = skeletonPlayerKey;
+const atlasKey = atlasPlayerKey;
 
 const setSegments = [path.relative(repoRoot, firstSet.path).split(path.sep).join('/')];
 
