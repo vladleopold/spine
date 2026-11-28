@@ -356,9 +356,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(workflowSource.includes('remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))'),
     'automatic recovery must continue until the final archive entry');
   assert.ok(workflowSource.includes("needs.publish.result == 'success'") &&
-    workflowSource.includes("needs.verify-production.result == 'success'") &&
+    !workflowSource.includes("needs.verify-production.result == 'success'") &&
     !workflowSource.includes("needs.render.result == 'success'"),
-    'later batches require a successful publish and live audit, but may continue after individual render failures');
+    'later batches must continue after an item-level or live-audit failure once verified-only publication succeeded');
   const verifyJobBlock=workflowSource.slice(workflowSource.indexOf('  verify-production:'));
   assert.ok(verifyJobBlock.includes("if: always()") &&
     verifyJobBlock.includes("needs.publish.result == 'success'"),
@@ -366,9 +366,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   const dispatchJobBlock=workflowSource.slice(workflowSource.indexOf('  dispatch-next-batch:'));
   assert.ok(dispatchJobBlock.includes("if: always() &&") &&
     dispatchJobBlock.includes("needs.publish.result == 'success'") &&
-    dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
+    !dispatchJobBlock.includes("needs.verify-production.result == 'success'") &&
     !dispatchJobBlock.includes("needs.render.result == 'success'"),
-    'next archive batch requires verified publication, not every render matrix item to pass');
+    'next archive batch must continue after a failed per-batch live audit when publication itself succeeded');
 
   const exactPrHeadRef='ref: ${{ github.event.pull_request.head.sha || github.sha }}';
   for(const [name,source] of [
