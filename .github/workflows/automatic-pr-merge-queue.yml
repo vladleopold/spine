@@ -28,7 +28,7 @@ jobs:
           set -euo pipefail
 
           prs="$(gh pr list --repo "$GH_REPO" --state open --limit 100 \
-            --json number,isDraft,mergeable,mergeStateStatus,headRefOid,baseRefName)"
+            --json number,isDraft,mergeable,headRefOid,baseRefName)"
 
           count="$(jq 'length' <<<"$prs")"
           echo "Open PRs discovered: $count"
@@ -37,7 +37,6 @@ jobs:
             number="$(jq -r '.number' <<<"$pr")"
             draft="$(jq -r '.isDraft' <<<"$pr")"
             mergeable="$(jq -r '.mergeable' <<<"$pr")"
-            merge_state="$(jq -r '.mergeStateStatus' <<<"$pr")"
             head_sha="$(jq -r '.headRefOid' <<<"$pr")"
             base="$(jq -r '.baseRefName' <<<"$pr")"
 
@@ -56,10 +55,10 @@ jobs:
               continue
             fi
 
-            checks="$(gh api "repos/$GH_REPO/commits/$head_sha/check-runs?per_page=100")"
-            check_total="$(jq '.check_runs | length' <<<"$checks")"
-            check_pending="$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"$checks")"
-            check_failed="$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion != "success" and .conclusion != "skipped" and .conclusion != "neutral"))] | length' <<<"$checks")"
+            checks="$(gh api --paginate --slurp "repos/$GH_REPO/commits/$head_sha/check-runs?per_page=100" | jq '[.[].check_runs[]]')"
+            check_total="$(jq 'length' <<<"$checks")"
+            check_pending="$(jq '[.[] | select(.status != "completed")] | length' <<<"$checks")"
+            check_failed="$(jq '[.[] | select(.status == "completed" and (.conclusion != "success" and .conclusion != "skipped" and .conclusion != "neutral"))] | length' <<<"$checks")"
 
             status="$(gh api "repos/$GH_REPO/commits/$head_sha/status")"
             status_state="$(jq -r '.state' <<<"$status")"
@@ -69,7 +68,8 @@ jobs:
               echo "PR #$number: no CI checks reported; refusing to merge"
               continue
             fi
-            if (( check_pending > 0 || check_failed > 0 )) || [[ "$status_state" != "success" ]]; then
+            if (( check_pending > 0 || check_failed > 0 )) ||
+              { (( status_total > 0 )) && [[ "$status_state" != "success" ]]; }; then
               echo "PR #$number: checks not all green (pending=$check_pending failed=$check_failed status=$status_state)"
               continue
             fi
