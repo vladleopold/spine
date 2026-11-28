@@ -212,7 +212,8 @@ jobs:
           if-no-files-found: error
           retention-days: 1
   cancel-hosted-batches:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # The frequent quick sweep must never cancel the active full-archive recovery.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.schedule != '*/15 * * * *'
     runs-on: ubuntu-24.04
     permissions:
       actions: write
