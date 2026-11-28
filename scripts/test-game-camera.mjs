@@ -36,3 +36,9 @@ assert.equal(
 );
 
 console.log('PASS explicit and bounds-driven game camera selection');
+
+assert.equal(
+  shouldUseGameCamera({ width: 900, height: 2522 }, camera, false),
+  false,
+  'a tall portrait character must not be cropped by the default landscape game camera',
+);
