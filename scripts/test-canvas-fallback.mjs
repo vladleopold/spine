@@ -61,4 +61,6 @@ assert.ok(rendererSource.includes("SPINE_CAPTURE_INPUT="),
   "the renderer must log sanitized capture-input availability before MediaRecorder starts");
 assert.ok(!rendererSource.includes("var c = player && player.canvas"),
   "frame inspection must use the same DOM-aware canvas resolver as recording");
+assert.ok(!rendererSource.includes("!player.canvas"),
+  "real-time frame recovery must not bypass the DOM-aware canvas resolver");
 console.log("PASS Spine Player capture falls back to the real DOM canvas when player.canvas is unavailable");
