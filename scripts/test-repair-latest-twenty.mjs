@@ -257,7 +257,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the exact rendered track is stored separately from the source default');
   assert.match(repairSource,/function existingPreviewAnimationName\(record\)[\s\S]*?current!=="__SPINE_AUTO__"[\s\S]*?item\?\.webmPreview===record\?\.webmPreview/,
     "an automatic-selection sentinel must not overwrite the exact animation identity of existing media");
-  assert.match(repairSource,/if\(!sourceCheck\.complete\)\{[\s\S]*?if\(record\.webmPreview\s*&&\s*record\.webpPoster\\s*&&[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?acceptPreviewRender\(record,[\s\S]*?summary\.ready\+\+/,
+  assert.match(repairSource,/if\(!sourceCheck\.complete\)\{[\s\S]*?if\(record\.webmPreview\s*&&\s*record\.webpPoster\s*&&[\s\S]*?existingMediaOk\(entryInfo\)[\s\S]*?await liveMediaOk\(entryInfo\)[\s\S]*?await originalMediaFilesOk\(entryInfo\)[\s\S]*?acceptPreviewRender\(record,[\s\S]*?summary\.ready\+\+/,
     "previously accepted media can be restored from exact six-file proof even when optional dispatch metadata is absent");
   assert.doesNotMatch(repairSource,/record\.dispatchStatus==="rendered"/,
     "a missing dispatchStatus must never downgrade an independently verified existing preview");
