@@ -1070,7 +1070,7 @@ try {
       if (!appliedSkinStack) {
         lastCaptureError = 'PREVIEW_SKIN_STACK_NOT_APPLIED';
         console.error('PREVIEW_SKIN_STACK_NOT_APPLIED');
-        continue;
+        break; // never publish a partial default-skin preview when a stack was requested
       }
       console.error('PREVIEW_SKIN_STACK_APPLIED=' + appliedSkinStack);
     }
