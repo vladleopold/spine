@@ -393,7 +393,7 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
-  assert.match(workflowSource,/schedule:\\s*\\n\\s+- cron:/,
+  assert.match(workflowSource,/schedule:\s*\n\s+- cron:/,
     'archive recovery must run unattended on a recurring schedule');
   assert.ok(!workflowSource.includes("github.event_name != 'schedule'"),
     'scheduled archive recovery must continue through verified batches');
