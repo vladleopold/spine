@@ -98,7 +98,7 @@ export function classifyRendererStartupError(text) {
   if (/ReferenceError/i.test(x)) return "REFERENCE_ERROR";
   if (/TypeError/i.test(x)) return "TYPE_ERROR";
   if (/RangeError/i.test(x)) return "RANGE_ERROR";
-  if (/(?:^|\\n)(?:Error|AssertionError)(?: \\[ERR_[A-Z0-9_]+\\])?:/i.test(x)) return "GENERIC_ERROR";
+  if (/(?:^|\n)(?:Error|AssertionError)(?: \[ERR_[A-Z0-9_]+\])?:/i.test(x)) return "GENERIC_ERROR";
   return "NONE";
 }
 
@@ -212,7 +212,8 @@ export function summarizeRendererLog(text) {
   const sourceSignal=log.includes("NO_VISIBLE_SPINE_FRAME")?"NO_RENDERED_SPINE_PIXELS":
     /No visible real-time Spine frames/i.test(log)?"CANVAS_FALLBACK_NO_VISIBLE_FRAMES":
     log.includes("High quality uses original VP9 recording")?"WEBM_SOURCE_AVAILABLE":"UNKNOWN";
-  const startupErrorClass=stages.skeletonParsed?\"NONE\":classifyRendererStartupError(log);\n  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,skinFallbackCount,startupErrorClass,
+  const startupErrorClass=stages.skeletonParsed?"NONE":classifyRendererStartupError(log);
+  return {ok:false,reason,secondary,version,attempts,stages,distinctError,ffmpegFailure,runtimeInitFailure,skinFallbackCount,startupErrorClass,
     peaks:peaks.slice(-8),canvasSizes,skinSelectionMode,capturedVp9Bytes,sourceSignal};
 }
 
