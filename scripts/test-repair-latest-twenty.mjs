@@ -333,8 +333,9 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   // The scheduled full-archive recovery must render only on the dedicated Ubuntu worker.
   assert.match(workflowSource,/render:\s+name: validate-latest50-[\s\S]*?runs-on: ubuntu-24\.04/,
     'actual Spine rendering must use public GitHub-hosted Ubuntu runners');
-  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
-    'only one archive repair batch may run at a time');
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}") &&
+    !workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
+    'scheduled and dispatched archive batches must share one serialized queue');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
@@ -348,8 +349,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
     'the cancellation filter must explicitly exclude this run and only cancel older main-branch batches');
   assert.ok(workflowSource.includes('needs: [inventory, runtime-package-smoke, cancel-hosted-batches]'),
     'real rendering must wait until legacy hosted batches have been cancelled');
-  assert.ok(workflowSource.includes('cancel-in-progress: true'),
-    'a corrected runner target must cancel an already-running hosted batch');
+  assert.ok(workflowSource.includes('cancel-in-progress: false'),
+    'a verified archive sweep must not be cancelled while its next batch is queued');
   assert.ok(workflowSource.includes('fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)'),
     'automatic recovery must sweep the complete archive, not stop at a fixed recent window');
   assert.ok(workflowSource.includes('remaining=$(( TOTAL_COUNT - NEXT_OFFSET ))'),
