@@ -28,9 +28,15 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      - name: Syntax-check render timeout implementation
+        run: node --check scripts/lib/run-command.mjs && node --check scripts/render-work.mjs && node --check scripts/publish-large-download.mjs
       - name: Test child process timeout and exit handling
         run: node --test scripts/test-render-command-timeout.mjs
       - name: Test large download request timeout and streaming
