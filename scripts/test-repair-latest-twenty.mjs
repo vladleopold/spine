@@ -340,6 +340,8 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}") &&
     !workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event_name }}"),
     'scheduled and dispatched archive batches must share one serialized queue');
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
+    'the quick sweep must never cancel a running full-archive sweep');
   assert.ok(workflowSource.includes('cancel-hosted-batches:') &&
     workflowSource.includes('actions: write') &&
     workflowSource.includes('actions/runs/${run_id}/cancel'),
@@ -397,6 +399,14 @@ assert.match(repairSource,/rendererRevision:PREVIEW_RENDERER_REVISION[\s\S]*?ite
   assert.match(repairSource,/PREVIEW_RENDERER_REVISION="auto-track-recovery-v18-spine38-slot-map-attachments-canvas15fps"/,
     'a runtime compatibility change must invalidate previous blocked-preview decisions');
 
+  assert.ok(workflowSource.includes("cron: '*/15 * * * *'"),
+    'the newest archive batch must be checked automatically every 15 minutes');
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
+    'the 15-minute quick sweep must not recursively trigger a full archive scan');
+  assert.ok(workflowSource.includes("group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event.schedule == '*/15 * * * *' && 'quick' || 'archive' }}"),
+    '15-minute repair sweeps must not queue behind the long-running full-archive sweep');
+  assert.ok(workflowSource.includes("github.event.schedule != '*/15 * * * *'"),
+    'scheduled quick and full sweeps must be explicitly distinguished');
   assert.ok(workflowSource.includes("cron: '17 3 * * *'"),
     'archive recovery must run unattended on a recurring schedule');
   assert.ok(!workflowSource.includes("github.event_name != 'schedule'"),

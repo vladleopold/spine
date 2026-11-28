@@ -4,7 +4,10 @@ name: Recover archive Spine WebP and WebM previews in 50-item batches
 # complete archive in serialized 50-item batches.
 on:
   schedule:
+    # Full archive sweep once daily; it self-dispatches through every 50-item batch.
     - cron: '17 3 * * *'
+    # Reconcile the newest 50 uploads every 15 minutes; full archive sweep remains daily.
+    - cron: '*/15 * * * *'
   # Start a complete recovery sweep immediately when the automation itself changes.
   push:
     branches: [main]
@@ -77,7 +80,8 @@ permissions:
   contents: read
 concurrency:
   # One queue for scheduled and dispatched batches; never cancel a live sweep.
-  group: spine-preview-latest-twenty-${{ github.ref }}
+  # Keep the frequent newest-50 reconciliation independent from the daily full-archive queue.
+  group: spine-preview-latest-twenty-${{ github.ref }}-${{ github.event.schedule == '*/15 * * * *' && 'quick' || 'archive' }}
   cancel-in-progress: false
 jobs:
   inventory:
@@ -210,7 +214,8 @@ jobs:
           if-no-files-found: error
           retention-days: 1
   cancel-hosted-batches:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # The frequent quick sweep must never cancel the active full-archive recovery.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.schedule != '*/15 * * * *'
     runs-on: ubuntu-24.04
     permissions:
       actions: write
@@ -584,7 +589,9 @@ jobs:
         run: node scripts/verify-latest-twenty-live.mjs
   dispatch-next-batch:
     needs: [inventory, render, publish, verify-production]
-    if: always() && github.ref == 'refs/heads/main' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
+    # The 15-minute cadence only checks the newest 50. The daily cadence and
+    # manual full sweeps continue sequentially until the complete archive ends.
+    if: always() && github.ref == 'refs/heads/main' && github.event.schedule != '*/15 * * * *' && needs.publish.result == 'success' && fromJSON(needs.inventory.outputs.nextOffset) < fromJSON(needs.inventory.outputs.totalCount)
     runs-on: ubuntu-24.04
     permissions:
       actions: write
