@@ -55,6 +55,9 @@ assert.match(source,/if \(args\.allowVisibleTrackFallback\)[\s\S]*?const candida
   'source-declared alternatives are considered only in the explicit repair mode');
 assert.match(source,/candidatePeak >= FRAME_PEAK_MIN && changing[\s\S]*?targetAnimation = candidate/,
   'the preview may change tracks only after a candidate shows visible changing pixels');
+assert.ok(source.includes('const probeWindowMs = Math.min(5000, Math.max(1800,') &&
+  source.includes('const probeIntervalMs = Math.max(600, Math.floor(probeWindowMs / 3))'),
+  'recovery-only fallback samples slow source animations over a duration-aware bounded window');
 assert.match(source,/window\.__selectedAnimation = \$\{JSON\.stringify\(captureAnimation\)\} \|\|[\s\S]*?window\.__animationNames\.find\(function\(name\) \{ return \/\^idle\$\/i\.test\(name\); \}\)/,
   'binary-only sources prefer a runtime Idle track before the first declared track');
 assert.match(source,/const skinCandidates = orderedPreviewSkinCandidates\(skinConfig\);/,
