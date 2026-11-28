@@ -132,5 +132,5 @@ console.log('PASS Spine preview: deterministic source animation/skin recovery, i
 
 assert.match(source,/const useInitialDefaultPage = skinIndex === 0 && skin === null/,
   'only the initial null candidate may reuse the preloaded runtime-default page');
-assert.match(source,/if \(!useInitialDefaultPage\) \{[\s\S]*?page\.setContent\(buildCaptureHtml\(skin\)\)/,
+assert.match(source,/if \(!useInitialDefaultPage\) \{[\s\S]*?page\.setContent\(buildCaptureHtml\(skin\),/,
   'configured string and composite skin candidates must each build their own player page');
