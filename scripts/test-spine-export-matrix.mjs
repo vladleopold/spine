@@ -134,6 +134,7 @@ const qualityPreviews = {
     webpPosterMedium: '/hit-medium.webp',
     webpPosterLow: '/hit-low.webp',
     qualityWidths: { high: 960, medium: 640, low: 320 },
+    previewFrameCount: 137,
   },
   idle: {
     previewDuration: 1,
@@ -158,6 +159,8 @@ assert.equal(selectedPlayable.webmPreviewLow, '/hit-low.webm');
 assert.equal(selectedPlayable.webpPoster, '/hit.webp');
 assert.equal(selectedPlayable.webpPosterMedium, '/hit-medium.webp');
 assert.equal(selectedPlayable.webpPosterLow, '/hit-low.webp');
+assert.equal(selectedPlayable.previewFrameCount, 137,
+  'the selected preview must retain its verified decoded frame count');
 
 const mediumOnlyPreview = mergeFullExportMetadata({
   ...source,
@@ -259,6 +262,8 @@ assert.match(workflow, /animation-index\.txt/);
 assert.doesNotMatch(workflow, /anim-name\.txt/);
 assert.doesNotMatch(workflow, /matrix\.animation(?!_index)/);
 assert.match(workflow, /mergeFullExportMetadata/);
+assert.match(workflow, /previewFrameCount:\s*Number\(m\?\.previewFrameCount\)\s*\|\|\s*0/,
+  'opaque artifact metadata must preserve the renderer verified frame count');
 assert.doesNotMatch(workflow, /Automatic preview fallback|effectiveDefault|animOrder/,
   'full export must never switch the indexed/default animation');
 assert.doesNotMatch(workflow, /Animations exported:[^\n]*join\(/,
