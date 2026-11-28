@@ -1,6 +1,6 @@
 {
   "scope": "latest-70",
-  "reason": "Run newest-archive reconciliation after fixes for Spine 4.2 Unity JSON URL parsing and preservation of previously verified previews when optional source/dispatch metadata is absent. Verify live six-file media before restoring status.",
-  "revision": 19,
-  "requestedAt": "2026-11-28T18:10:00Z"
+  "reason": "Run latest-70 automatic archive repair after Spine 4.2 JSON route fix and Unity TextAsset diagnostics; prioritize all recent entries missing WebM/WebP, validate matching animation and poster, and keep needs-editor projects blocked until licensed Editor secrets are configured.",
+  "revision": 20,
+  "requestedAt": "2026-11-28T18:21:00Z"
 }
