@@ -622,7 +622,8 @@ console.error(`Is default: ${isDefault}`);
 // Capture page builder. Keep the source/default skin unchanged. If it draws
 // no visible content, the selected preview is blocked rather than relayered.
 function buildCaptureHtml(activeSkin) {
-const skinLine = activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
+const skinLine = typeof activeSkin === 'string' && activeSkin ? `    skin: ${JSON.stringify(activeSkin)},\n` : '';
+const skinStackLine = Array.isArray(activeSkin) ? `var previewSkinStack = ${JSON.stringify(activeSkin)};` : 'var previewSkinStack = null;';
 return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -645,6 +646,7 @@ html, body { width: 100%; height: 100%; background: ${args.alpha ? 'transparent'
   window.__ready = false;
 
   var player;
+  ${skinStackLine}
   window.__setPlayerAnimation = (${setPlayerAnimation.toString()});
   // Peak brightness of the currently rendered frame (center sample).
   // Used by the exporter to detect "rendered nothing but background" and
@@ -744,14 +746,51 @@ ${skinLine}    showLoading: false,
       var runtimeSkins = runtimeData && runtimeData.skins;
       window.__skinNames = Array.isArray(runtimeSkins) ? runtimeSkins.map(function(s) { return s && s.name; }).filter(Boolean) : (runtimeSkins && typeof runtimeSkins === 'object' ? Object.keys(runtimeSkins) : []);
       window.__defaultSkinName = runtimeData && runtimeData.defaultSkin && runtimeData.defaultSkin.name ? runtimeData.defaultSkin.name : '';
+      // Explicit modular preview stacks combine base/head, body, and outfit
+      // skins into one runtime Skin. This is opt-in per upload via config.json.
+      var runtimeSkeleton = player.skeleton;
+      if (Array.isArray(previewSkinStack) && previewSkinStack.length &&
+          runtimeSkeleton && typeof runtimeSkeleton.setSkin === 'function' &&
+          typeof spine.Skin === 'function') {
+        var combinedPreviewSkin = new spine.Skin('preview-' + previewSkinStack.join('+'));
+        var appliedPreviewSkinNames = [];
+        for (var skinIndex = 0; skinIndex < previewSkinStack.length; skinIndex++) {
+          var skinName = previewSkinStack[skinIndex];
+          var sourceSkin = runtimeData && typeof runtimeData.findSkin === 'function'
+            ? runtimeData.findSkin(skinName)
+            : null;
+          if (!sourceSkin && runtimeData && Array.isArray(runtimeData.skins)) {
+            sourceSkin = runtimeData.skins.find(function(item) { return item && item.name === skinName; });
+          }
+          if (!sourceSkin && runtimeData && runtimeData.skins && !Array.isArray(runtimeData.skins)) {
+            sourceSkin = runtimeData.skins[skinName] || null;
+          }
+          if (sourceSkin && typeof combinedPreviewSkin.addSkin === 'function') {
+            combinedPreviewSkin.addSkin(sourceSkin);
+            appliedPreviewSkinNames.push(skinName);
+          }
+        }
+        if (appliedPreviewSkinNames.length === previewSkinStack.length) {
+          runtimeSkeleton.setSkin(combinedPreviewSkin);
+          if (typeof runtimeSkeleton.setupPoseSlots === 'function') runtimeSkeleton.setupPoseSlots();
+          else if (typeof runtimeSkeleton.setSlotsToSetupPose === 'function') runtimeSkeleton.setSlotsToSetupPose();
+          if (typeof runtimeSkeleton.updateWorldTransform === 'function') {
+            try { runtimeSkeleton.updateWorldTransform(spine.Physics.update); }
+            catch (e) { try { runtimeSkeleton.updateWorldTransform(); } catch (e2) {} }
+          }
+          window.__previewSkinStackApplied = appliedPreviewSkinNames.join('+');
+        } else {
+          window.__captureError = 'PREVIEW_SKIN_STACK_INCOMPLETE';
+        }
+      }
       // Some legacy Spine 3.8 players do not apply the implicit default skin
       // automatically. Apply the runtime's actual Skin object, never its name.
-      var runtimeSkeleton = player.skeleton;
       var runtimeDefaultSkin = runtimeData && runtimeData.defaultSkin;
       if (${activeSkin === null ? 'true' : 'false'} && runtimeDefaultSkin && runtimeSkeleton &&
           typeof runtimeSkeleton.setSkin === 'function') {
         runtimeSkeleton.setSkin(runtimeDefaultSkin);
-        if (typeof runtimeSkeleton.setSlotsToSetupPose === 'function') runtimeSkeleton.setSlotsToSetupPose();
+        if (typeof runtimeSkeleton.setupPoseSlots === 'function') runtimeSkeleton.setupPoseSlots();
+        else if (typeof runtimeSkeleton.setSlotsToSetupPose === 'function') runtimeSkeleton.setSlotsToSetupPose();
         window.__defaultSkinApplied = true;
       }
       window.__selectedAnimation = ${JSON.stringify(captureAnimation)} ||
@@ -1006,7 +1045,7 @@ try {
 
   for (let skinIndex = 0; skinIndex < skinCandidates.length; skinIndex++) {
     const skin = skinCandidates[skinIndex];
-    const label = skin === null ? '(default)' : `'${skin}'`;
+    const label = Array.isArray(skin) ? `[${skin.join('+')}]` : (skin === null ? '(default)' : `'${skin}'`);
     if (skinIndex > 0) {
       await page.setContent(buildCaptureHtml(skin), { waitUntil: 'load', timeout: 60000 });
     }
