@@ -94,7 +94,7 @@ function executeCommand(cmd,args,stdio,forwardOutput=true,options={}){
   const error=new Error(`Renderer command failed with exit code ${result.status}`);
   error.command=cmd;
   error.elapsedMs=result.elapsedMs;
-  error.renderOutput=stdout+'\\n'+stderr;
+  error.renderOutput=stdout+'\n'+stderr;
   error.status=result.status;
   throw error;
  }
