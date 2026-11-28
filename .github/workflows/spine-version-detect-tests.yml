@@ -1,0 +1,42 @@
+name: Spine version detection regression tests
+on:
+  pull_request:
+    paths:
+      - scripts/spine-version-detect.mjs
+      - scripts/test-spine-version-detect.mjs
+      - scripts/lib/spine-player-source-support.mjs
+      - .github/workflows/spine-version-detect-tests.yml
+  push:
+    branches: [main]
+    paths:
+      - scripts/spine-version-detect.mjs
+      - scripts/test-spine-version-detect.mjs
+      - scripts/lib/spine-player-source-support.mjs
+      - .github/workflows/spine-version-detect-tests.yml
+permissions:
+  contents: read
+concurrency:
+  group: spine-version-detection-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  version-detection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/spine-version-detect-tests.yml
+            /scripts/spine-version-detect.mjs
+            /scripts/test-spine-version-detect.mjs
+            /scripts/lib/spine-player-source-support.mjs
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Syntax-check Spine version detection
+        run: node --check scripts/spine-version-detect.mjs && node --check scripts/test-spine-version-detect.mjs
+      - name: Run binary and Unity TextAsset version regressions
+        run: node scripts/test-spine-version-detect.mjs
