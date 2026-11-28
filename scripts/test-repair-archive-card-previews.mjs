@@ -209,3 +209,9 @@ test('Spine export workflow serializes matrix arrays and imports repository modu
   );
   assert.doesNotMatch(workflow, /await import\('\.\/scripts\/resolve-library\.mjs'\)/);
 });
+
+test('archive card media repair runs automatically every day', () => {
+  const workflow = readFileSync(new URL('../.github/workflows/repair-archive-card-previews.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /schedule:\\s*\\n\\s+- cron: '41 4 \\* \\* \\*'/);
+  assert.match(workflow, /verify-production:[\\s\\S]*?Verify every restored WebM/);
+});
